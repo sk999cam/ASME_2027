@@ -8,6 +8,9 @@ For each added figure, record the source script and data in 4dns_filmcooled.
 - `git_sync.sh`: order changed to commit → pull → push (was pull → commit → push). An uncommitted local
   edit to a file that also changed on Overleaf made the old pull fail every night.
 - `plan.md` §3: sync instructions for Overleaf ↔ GitHub ↔ local.
+- First Overleaf push (a0dafbd, affiliation edit in `main.tex`) also reset `git_sync.sh` from mode 755
+  to 644. Cron entry changed to `/bin/bash /home/sk999/Documents/ASME_2027/git_sync.sh` so the mode no
+  longer matters. Mode restored to 755 in 404d5e0.
 
 ## 2026-11-04: repository set up
 

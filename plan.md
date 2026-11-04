@@ -81,6 +81,10 @@ The script commits before pulling: git refuses to pull over uncommitted edits to
 on GitHub. On a merge conflict the script aborts the merge, keeps the local commit, skips the push and
 writes `[FAILED] pull` in `git_sync.log`. Resolve the conflict by hand, then push.
 
+Cron runs the script as `/bin/bash .../git_sync.sh`. Overleaf drops the execute bit when it pushes
+(commit a0dafbd set `git_sync.sh` to mode 644), so the cron line must not depend on it. Run the script
+by hand the same way: `bash git_sync.sh`.
+
 **Avoiding conflicts**
 - Push from Overleaf at the end of each writing session.
 - Pull into Overleaf before editing there.
