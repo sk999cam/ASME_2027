@@ -3,6 +3,12 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-04: kar2026 PDF link
+
+- `references.bib`, `kar2026`: added `url` = https://gpps.global/wp-content/uploads/2026/09/GPPS-TC-2026_005.pdf
+  (HTTP 200, application/pdf, 2 973 676 bytes, same size as the local copy). The reference list prints
+  both the DOI and the URL; the URL gives a working link while the DOI is unregistered.
+
 ## 2026-11-04: reference group added to the bibliography
 
 - `4dns_filmcooled/write_up/literature/refs.json`: new group `reference` with the 2 papers in
