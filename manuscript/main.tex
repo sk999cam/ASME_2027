@@ -1,0 +1,98 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  ASME Turbo Expo 2027 paper. Built on asmeconf v1.47 (copied from ../template, kept unchanged there).
+%%  Overleaf: set Menu -> Main document to manuscript/main.tex. Compiler: pdfLaTeX.
+%%  Figures live in ../figures; references in references.bib (this folder).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% [lineno] numbers lines for drafting and review: remove it for the final version.
+%% [colorlinks]: remove before final submission to get black links for print.
+\documentclass[colorlinks,upint,subscriptcorrection,varvw,hyphenate,balance,lineno]{asmeconf}
+
+\hypersetup{%
+	pdfauthor={Soham Kar},
+	pdftitle={Resolution Ladder for the 7-7-7 Laidback Fan-Shaped Film-Cooling Hole},
+	pdfkeywords={film cooling, laidback fan-shaped hole, DNS, LES, RANS, URANS},
+	pdfsubject={ASME Turbo Expo 2027},
+}
+
+\graphicspath{{../figures/}{figures/}}
+
+\allowdisplaybreaks
+
+%%%%%  Notation macros  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\BR}{\mathit{BR}}
+\newcommand*{\DR}{\mathit{DR}}
+\newcommand*{\Reth}{\mathit{Re}_\theta}
+
+\begin{document}
+
+%% TODO: confirm conference date, city and paper number from the Turbo Expo 2027 call.
+\ConfName{Proceedings of ASME Turbo Expo 2027\linebreak Turbomachinery Technical Conference and Exposition}
+\ConfAcronym{GT2027}
+\ConfDate{June XX--XX, 2027}
+\ConfCity{City, Country}
+\PaperNo{GT2027-XXXXX}
+
+\title{Resolution Ladder for the 7-7-7 Laidback Fan-Shaped Film-Cooling Hole}% working title
+
+%% TODO: co-authors, affiliations and corresponding e-mail.
+\SetAuthors{%
+	Soham Kar\affil{1}\CorrespondingAuthor{email@address}
+	}
+
+\SetAffiliation{1}{Institution, City, Country}
+
+\maketitle
+
+\versionfootnote{Draft: \today.}% delete before final submission
+
+\keywords{film cooling, laidback fan-shaped hole, 7-7-7 database, direct numerical simulation, large-eddy simulation, RANS, URANS}
+
+%%%%%  ABSTRACT (200 words or less)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+Abstract text.
+\end{abstract}
+
+%%%%%  NOMENCLATURE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{nomenclature}
+\EntryHeading{Roman letters}
+\entry{$D$}{Metering-hole diameter [m]}
+
+\EntryHeading{Greek letters}
+\entry{$\eta$}{Adiabatic film-cooling effectiveness}
+
+\EntryHeading{Dimensionless groups}
+\entry{$\BR$}{Blowing ratio}
+\entry{$\DR$}{Density ratio}
+\entry{$\Reth$}{Momentum-thickness Reynolds number}
+\end{nomenclature}
+
+%%%%%  BODY  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section outline follows 4dns_filmcooled/write_up/framework/paper_structure.tex.
+
+\section{Introduction}\label{sec:intro}
+
+\section{Methods}\label{sec:methods}
+\subsection{Configuration and Operating Point}\label{sec:config}
+\subsection{The Simulation Ladder}\label{sec:ladder}
+\subsection{Validation}\label{sec:validation}
+\subsection{Statistics and Sampling}\label{sec:stats}
+\subsection{Analysis Method}\label{sec:analysis}
+
+\section{Results and Discussion}\label{sec:results}
+\subsection{Film-Cooling Performance Across the Ladder}\label{sec:performance}
+\subsection{Where the Modelled Turbulence Departs from the Resolved Turbulence}\label{sec:departures}
+\subsection{What Sets Each Departure: Energy, Length Scale and Alignment}\label{sec:causes}
+\subsection{Attribution to Flow Structures and Mechanisms}\label{sec:mechanisms}
+\subsection{Which Departures Matter for the Effectiveness}\label{sec:effectiveness}
+\subsection{Resolution Requirements and Cost}\label{sec:cost}
+
+\section{Conclusions}\label{sec:conclusions}
+
+\section*{Acknowledgments}
+
+%%%%%  REFERENCES  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{asmeconf}% ASME conference format, do not change
+\bibliography{references}
+
+\end{document}

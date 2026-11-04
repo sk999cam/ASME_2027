@@ -1,0 +1,56 @@
+# Repository synced with Overleaf through GitHub. Keep out anything Overleaf does not need.
+
+# Reference template: local only, left unchanged. Its .tex, sample figures and examples
+# would clutter the Overleaf file tree and confuse main-document detection.
+template/
+
+# LaTeX build products (Overleaf builds its own)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.synctex.gz
+*.synctex(busy)
+*.run.xml
+*-blx.bib
+*.xdv
+*.dvi
+*.bcf
+manuscript/main.pdf
+
+# Editors and OS
+*~
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Raw data stays in 4dns_filmcooled; only finished figures come here
+*.cgns
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.dat
+*.vtk
+*.vtu
+*.sim
+
+# Local tooling
+git_sync.log
+.claude/
