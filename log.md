@@ -3,6 +3,18 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-04: reference group added to the bibliography
+
+- `4dns_filmcooled/write_up/literature/refs.json`: new group `reference` with the 2 papers in
+  `papers/reference/`: 10.33737/gpps26-tc-005 (Kar et al. 2026, GPPS Montreal26) and
+  10.1115/GT2024-124918 (Clark et al. 2024). That repo's 04:05 sync commits the change.
+- `manuscript/references.bib`: `kar2026` and `clark2024` written by hand in asmeconf `@inproceedings`
+  format (paper number, venue, event date). doi.org returned "DOI Not Found" for 10.33737/gpps26-tc-005
+  on 2026-11-04, so its link will not resolve until GPPS registers it. The PDF gives the paper number
+  as GPPS-TC-2026-0005.
+- `main.tex` abstract: "(Kar et al., 2026)" replaced by `\cite{kar2026}`.
+- BibTeX with `asmeconf.bst`: 88 items, 0 errors.
+
 ## 2026-11-04: abstract and paper number
 
 - `main.tex`: paper number set to GT2027-202699.
