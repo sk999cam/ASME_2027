@@ -3,6 +3,14 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-04: abstract and paper number
+
+- `main.tex`: paper number set to GT2027-202699.
+- `main.tex`: abstract inserted from `write_up/framework/abstract.txt` (2026-10-15). Wording unchanged;
+  LaTeX markup only (`\Reth`, en dashes, `\%`, math for $k$--$\omega$ and $x/D$). Schroeder and Thole
+  (2014) replaced by `\cite{schroeder2014}`. Kar et al. (2026) kept as plain text: no bib entry yet.
+  Length 401 words against the ASME limit of 200.
+
 ## 2026-11-04: sync order and instructions
 
 - `git_sync.sh`: order changed to commit → pull → push (was pull → commit → push). An uncommitted local

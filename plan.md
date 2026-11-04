@@ -97,7 +97,7 @@ Outline from `4dns_filmcooled/write_up/framework/paper_structure.tex`.
 
 | section | conceptual draft (write_up) | manuscript |
 |---|---|---|
-| Abstract | `framework/abstract.txt` | not started |
+| Abstract | `framework/abstract.txt` | inserted 2026-11-04, 401 words (limit 200) |
 | 1 Introduction | `literature/`, `framework/mechanisms_from_literature.md` | not started |
 | 2.1 Configuration and operating point | `methods/01_configuration.tex` | not started |
 | 2.2 Simulation ladder | `methods/02_simulation_ladder.tex` | not started |
