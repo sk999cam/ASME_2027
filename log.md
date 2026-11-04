@@ -3,6 +3,12 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-04: sync order and instructions
+
+- `git_sync.sh`: order changed to commit → pull → push (was pull → commit → push). An uncommitted local
+  edit to a file that also changed on Overleaf made the old pull fail every night.
+- `plan.md` §3: sync instructions for Overleaf ↔ GitHub ↔ local.
+
 ## 2026-11-04: repository set up
 
 - Created `plan.md`, `log.md`, `.gitignore`.

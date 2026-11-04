@@ -42,9 +42,50 @@ Rules:
 1. Overleaf: New Project → Import from GitHub → `sk999cam/ASME_2027`.
 2. Menu → Main document: `manuscript/main.tex`. Compiler: pdfLaTeX, TeX Live 2025 or later
    (asmeconf v1.47 does not compile on the local TeX Live 2018).
-3. Edits made on Overleaf reach GitHub only through Overleaf's Menu → GitHub → Push. Edits pushed to
-   GitHub reach Overleaf only through Menu → GitHub → Pull. Push from Overleaf before the 04:10 sync
-   and pull after it to avoid merge conflicts.
+3. GitHub sync needs a paid or institutional Overleaf licence. Without Menu → Sync → GitHub, switch to
+   Overleaf's own git remote (`git.overleaf.com`) and adapt `git_sync.sh`.
+
+### Syncing
+
+Overleaf and GitHub sync only on request. Cron syncs only this clone with GitHub.
+
+```
+Overleaf  <-- manual, Overleaf menu -->  GitHub  <-- cron 04:10, or git by hand -->  local clone
+```
+
+**Overleaf → local**
+1. Overleaf: Menu → Sync → GitHub → *Push Overleaf changes to GitHub*. Enter a commit message.
+2. Local: wait for the 04:10 sync, or run
+   ```
+   cd /home/sk999/Documents/ASME_2027
+   git pull
+   ```
+
+**Local → Overleaf** (figures, `.bib` edits, Claude's changes)
+1. Local: wait for the 04:10 sync, or run
+   ```
+   cd /home/sk999/Documents/ASME_2027
+   git add -A
+   git commit -m "describe the change"
+   git pull
+   git push
+   ```
+2. Overleaf: Menu → Sync → GitHub → *Pull GitHub changes into Overleaf*.
+
+**Nightly sync (`git_sync.sh`, 04:10).** Steps, in order:
+1. Commit local changes.
+2. Pull from GitHub (merge).
+3. Push to GitHub.
+
+The script commits before pulling: git refuses to pull over uncommitted edits to a file that also changed
+on GitHub. On a merge conflict the script aborts the merge, keeps the local commit, skips the push and
+writes `[FAILED] pull` in `git_sync.log`. Resolve the conflict by hand, then push.
+
+**Avoiding conflicts**
+- Push from Overleaf at the end of each writing session.
+- Pull into Overleaf before editing there.
+- Claude commits and pushes its changes at once and says when to pull in Overleaf.
+- Check `git_sync.log` for `[FAILED]` lines.
 
 ## 4. Paper structure and status
 
