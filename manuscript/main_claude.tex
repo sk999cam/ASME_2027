@@ -48,16 +48,37 @@
 
 \versionfootnote{Draft: \today.}% delete before final submission
 
-\keywords{film cooling, laidback fan-shaped hole, 7-7-7 database, direct numerical simulation, large-eddy simulation, RANS, URANS}
+\keywords{film cooling, laidback fan-shaped hole, 7-7-7 database, direct numerical simulation, large-eddy simulation, RANS, turbulent Prandtl number}
 
 %%%%%  ABSTRACT (200 words or less)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Source: 4dns_filmcooled/write_up/framework/abstract.txt (2026-10-15), text unchanged, LaTeX markup only.
-%% Length: 401 words; the ASME limit is 200.
+%% Rewritten 2026-11-25 to match the results plan (planning/writeup_plan.pdf, Sections 4.1, 4.2).
+%% Provisional numbers, to be checked when W1 (e9, 3 Dec) and the classic Pr_t reads land: the Pr_t values
+%% (jet ~0.45, film ~0.75). The 4.3 a posteriori result (P1, P2, gamma = 1) is not yet in the abstract.
+%% The 2026-10-15 abstract (401 words) is kept below, commented out.
+\begin{abstract}
+Shaped-hole film cooling is designed with Reynolds-averaged Navier--Stokes (RANS) simulations, which
+under-predict the lateral spreading of coolant. Where the closure assumptions fail is known; the share of the
+error each failure carries is not. Here, the 7-7-7 laidback fan-shaped hole~\cite{schroeder2014} is
+simulated at density ratio 1.5 and blowing ratio 1.5 with a laminar approach boundary layer ($\Reth\sim180$), a
+condition of small engine cores~\cite{kar2026}. One mesh family carries RANS (SST $k$--$\omega$,
+$\gamma$--$\Reth$) at 5M and 50M cells, a 20M-point large-eddy simulation and high-order simulations at 50M, 100M
+and 193M points. The RANS error in the turbulent stress and heat flux is split exactly into turbulence energy,
+length scale, alignment and turbulent Prandtl number ($\Pr_t$) terms. From 20M points upward, laterally averaged effectiveness agrees with the 193M reference to
+within 0.008. The mesh-independent RANS is 29--33\,\% low beyond $x/D=7$, with a narrow film and a laminar
+mid-pitch layer. The length scale of the mixing motions carries most of the eddy-viscosity error.
+The reference $\Pr_t$ is $\sim$0.45 in the jet and $\sim$0.75 in the film, against the model's 0.9, and gradient
+diffusion fails for the heat flux in the film. Lowering $\Pr_t$ corrects the centreline effectiveness but not the
+lateral spread.
+\end{abstract}
+
+%% Previous abstract (2026-10-15), superseded:
+\iffalse
 \begin{abstract}
 Shaped-hole film cooling is designed largely with steady RANS, which is known to under-predict lateral spreading of the coolant, but it is rarely shown which unsteady physics are responsible or how much spatial resolution is needed to recover them. Most film-cooling studies also assume that the boundary layer downstream of injection is turbulent. As engine cores shrink, high-pressure turbine blades operate at lower Reynolds numbers and under strong acceleration, where the boundary layer can relaminarise. Whether the flow remains turbulent after coolant ejection then depends on the size, spacing and location of the cooling holes~\cite{kar2026}. The interaction of the coolant jet with a laminar approach flow is therefore both relevant to future engines and poorly characterised. We address this with a hierarchy of simulations of the baseline 7-7-7 laidback fan-shaped hole~\cite{schroeder2014} at density ratio 1.5 and time-mean blowing ratio 1.5. The hole geometry and operating conditions match the experiment, with one deliberate difference: the approach boundary layer is laminar at $\Reth \approx 180$ under zero pressure gradient rather than turbulent. Steady RANS (SST $k$--$\omega$ with $\gamma$--$\Reth$ transition) at 5M--100M cells, URANS at 50M and 100M cells, and scale-resolving simulations with a compressible fourth-order solver (3DNS) at 50M (implicit LES), 100M and 193M points (DNS) share one structured mesh family. The experimental data serve to validate the setup, while the principal comparisons are made across the resolution and modelling levels.
 
 RANS is mesh-independent to about 1\% between 5M and 50M, yet it predicts a jet that is too narrow and too cold on the centreline, with laterally averaged effectiveness too low over $x/D = 7$--15. Mesh convergence of a model is therefore not convergence to the physics. The scale-resolving simulations identify what is missing: Kelvin--Helmholtz roll-up of the windward shear layer at the exit lip, vortex pairing that intermittently entrains hot gas beneath the jet, and an unsteady diffuser separation whose state depends on turbulence in the metering section. With a laminar hole flow this separation pulses and the plenum pressure must be increased to maintain the target blowing ratio, so the hole's discharge behaviour is itself a resolution- and model-dependent result. We assess how far URANS and LES recover these mechanisms, use the DNS to locate where eddy-viscosity closures fail to represent turbulent production and inter-scale tke transfer, and establish the minimum resolution and modelling level required to predict laterally averaged effectiveness for a laminar approach flow.
 \end{abstract}
+\fi
 
 %%%%%  NOMENCLATURE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{nomenclature}

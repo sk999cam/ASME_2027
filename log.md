@@ -3,6 +3,63 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-25 (3): figure fixes, Pr_t story set to a film/jet split
+
+- Redrawn at 193M b010: F5, F6 (now hole sections at s/D −2.3, −1.1, −0.5), F13, F14, F17, F18, F19.
+  Threshold masks removed (F14, F17, F18, F19); F17 L_eff on a log scale; F14 has a dashed threshold line.
+- F15, F16: labels placed on their bars, full ±2 SE bars, hollow marker when |total| < 2 SE
+  (`figures/code/split_panels.py`). No SE bug.
+- 193M b010 is the cumulative 10 FT mean (mean_time 0.0359 s = 400 D/U). Near-wall film layer (z/D < 0.3)
+  not converged in α_eff: sign changes at 31 % of points between b006 and b010.
+- Owner decision: heat-flux error = momentum error + Pr_t error (E12); classic Pr_t (E10b) shown in the film
+  against Kohli and Bogard; no Pr_t quoted for the jet, where a scalar Pr_t does not fit; regional values from
+  a gradient-weighted least-squares fit (E15). Plan 4.1 (iv), 4.2 (i), (ii), F14, F16, F20 rewritten.
+- e9: W1 amended (E12 terms, least-squares estimator, R²); asked what the split means for the corrected RANS
+  runs. Pr_t class analysis running (`fig_prt_classes.py`, `fig_prt_classic.py`).
+
+## 2026-11-25 (2): figure feedback round 1
+
+- Comments taken from `planning/feedback/writeup_plan_annotated_2026-11-25.pdf` (7 notes).
+- Reference changed to the 193M at b010 for every figure and number (user). Lower rungs stay at b006. No empty
+  panels and no stand-in rungs (user). Brief updated: `planning/figure_brief_common.md`.
+- Plan changes:
+  - F7 gets a full explanation of panels (a)–(c), including the 95 % coherence level.
+  - The RANS "low-γ sublayer" remark is removed (a viscous sublayer exists in the DNS too).
+  - New F9 (`fig_spots.py`): space-time diagram and snapshot sequence as the evidence for spot growth and merger.
+    Old F9–F19 renumbered to F10–F20.
+  - New bullet on the mid-pitch η gap against the experiment. Hypotheses: the tripped turbulent approach layer of
+    the experiment (H 1.45, Re_θ 670 at x/D −4.7, Schroeder & Thole 2014) against the laminar 3DNS layer; and the
+    distance transition needs. Test: γ_mid overlaid on η_mid (F12 (c)).
+- Calculations dispatched:
+  - Three Sonnet agents:
+    - hole and η-wall at b010: F5, F6 (centre plane replaced by a close-up), F13;
+    - plane maps and budget lines at b010: F14, F17, F18, F19 (unique panel letters);
+    - γ for the 193M and the 20M LES, F8–F12 at b010, and the new F9.
+  - Work spec to e9 (`planning/work_spec_e9_2026-11-25.md`):
+    - W1: regional splits against the 193M b010 for F15 and F16;
+    - W2: directional diffusivities for the 193M and 100M, for F20;
+    - W3: bubble motion on the 193M snapshots, for F7.
+    Due 3 Dec.
+
+## 2026-11-25: plan feedback from the PDF; Results 4.1 and 4.2 planned
+
+- User comments read from the annotated `planning/writeup_plan.pdf` (pypdf); the annotated copy is kept as
+  `planning/feedback/writeup_plan_annotated_2026-11-24.pdf`, since a rebuild overwrites the PDF.
+  - P1: reference for RANS as the design tool: Milani et al. 2018, 2020.
+  - P4: gap rewritten. The reference is taken as resolved (3.3); the missing piece is the split of the RANS error
+    by region and cause and its link to the eta-bar error.
+  - P5: rewritten from the literature. Fawcett (2011): no coherent unsteadiness in the shaped-hole jet at
+    BR 0.8-1.0 (DR 1, VR near 1). The present VR is about 1. The gap is the share of the mixing physics carried
+    by each mechanism, not the resolved unsteadiness.
+  - P6: T1 (prior studies) dropped. Replaced by one paragraph grouping the studies by resolution and modelling.
+    The rungs table is now T1 (`\setcounter{table}{0}`). P8 justification chain updated.
+- Results planned (bullets only): 4.1 Coolant Flow (hole chain, mainstream chain, effectiveness, the
+  mu_eff/alpha_eff/Pr_t,eff frame) and 4.2 Breakdown of Model Differences (three-factor split, log budget,
+  region by region, literature, remedies). 4.3 A Posteriori Tests is a placeholder. New IDs: F5-F19, E9-E16.
+  Numbers from `4dns_filmcooled/analysis/FINDINGS.md` (H, S, LS, SU, V, C, R series) and
+  `write_up/results/02_coolant_flow.tex`, `03_differences.tex`. Rungs: the six of the Methods; no corrected RANS.
+  Reference 193M b006. The plan PDF is 14 pages.
+
 ## 2026-11-24: write-up plan, Part 1 (Methods), revision 2
 
 - `planning/writeup_plan.tex/.pdf`: section-by-section plan of the Methods. Three subsections: 2.1

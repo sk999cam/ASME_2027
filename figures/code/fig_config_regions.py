@@ -53,6 +53,8 @@ def draw_geometry(ax, labels):
     ax.plot([-15, 25], [Z_FS, Z_FS], color='0.45', lw=0.6)
     ax.plot([-1.0, 2.36], [0.5, 0.5], color='0.45', lw=0.6)
     ax.plot([-1.866, 1.182], [-0.5, -0.5], color='0.45', lw=0.6)
+    ax.plot([-1.0, -1.0], [0, 0.5], color='0.45', lw=0.6)
+    ax.plot([2.36, 2.36], [0, 0.5], color='0.45', lw=0.6)
     ax.plot([-3.281, -2.781], [-1.317, -2.183], color='0.3', lw=0.8, ls='--')
     # buffers (3DNS), excluded from all data
     for x0, x1 in ((-15, BUF_IN), (BUF_OUT, 25)):
