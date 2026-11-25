@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  ASME Turbo Expo 2027 paper. Built on asmeconf v1.47 (copied from ../template, kept unchanged there).
+%%  Overleaf: set Menu -> Main document to manuscript/main.tex. Compiler: pdfLaTeX.
+%%  Figures live in ../figures; references in references.bib (this folder).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% [lineno] numbers lines for drafting and review: remove it for the final version.
+%% [colorlinks]: remove before final submission to get black links for print.
+\documentclass[colorlinks,upint,subscriptcorrection,varvw,hyphenate,balance,lineno]{asmeconf}
+
+\hypersetup{%
+	pdfauthor={Soham Kar},
+	pdftitle={Resolution Ladder for the 7-7-7 Laidback Fan-Shaped Film-Cooling Hole},
+	pdfkeywords={film cooling, laidback fan-shaped hole, DNS, LES, RANS, URANS},
+	pdfsubject={ASME Turbo Expo 2027},
+}
+
+\graphicspath{{../figures/}{figures/}}
+
+\allowdisplaybreaks
+
+%%%%%  Notation macros  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\BR}{\mathit{BR}}
+\newcommand*{\DR}{\mathit{DR}}
+\newcommand*{\Reth}{\mathit{Re}_\theta}
+
+\begin{document}
+
+%% TODO: confirm conference date and city from the Turbo Expo 2027 call.
+\ConfName{Proceedings of ASME Turbo Expo 2027\linebreak Turbomachinery Technical Conference and Exposition}
+\ConfAcronym{GT2027}
+\ConfDate{June XX--XX, 2027}
+\ConfCity{City, Country}
+\PaperNo{GT2027-202699}
+
+\title{Resolution Ladder for the 7-7-7 Laidback Fan-Shaped Film-Cooling Hole}% working title
+
+%% TODO: co-authors, affiliations and corresponding e-mail.
+\SetAuthors{%
+	Soham Kar\affil{1}\CorrespondingAuthor{sk999@cam.ac.uk}, 
+    Andrew P.S. Wheeler\affil{1}, 
+    Christopher J. Clark\affil{1}
+	}
+
+\SetAffiliation{1}{Whittle Laboratory, University of Cambridge}
+
+\maketitle
+
+\versionfootnote{Draft: \today.}% delete before final submission
+
+\keywords{film cooling, laidback fan-shaped hole, 7-7-7 database, direct numerical simulation, large-eddy simulation, RANS, URANS}
+
+%%%%%  ABSTRACT (200 words or less)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Source: 4dns_filmcooled/write_up/framework/abstract.txt (2026-10-15), text unchanged, LaTeX markup only.
+%% Length: 401 words; the ASME limit is 200.
+\begin{abstract}
+Shaped-hole film cooling is designed largely with steady RANS, which is known to under-predict lateral spreading of the coolant, but it is rarely shown which unsteady physics are responsible or how much spatial resolution is needed to recover them. Most film-cooling studies also assume that the boundary layer downstream of injection is turbulent. As engine cores shrink, high-pressure turbine blades operate at lower Reynolds numbers and under strong acceleration, where the boundary layer can relaminarise. Whether the flow remains turbulent after coolant ejection then depends on the size, spacing and location of the cooling holes~\cite{kar2026}. The interaction of the coolant jet with a laminar approach flow is therefore both relevant to future engines and poorly characterised. We address this with a hierarchy of simulations of the baseline 7-7-7 laidback fan-shaped hole~\cite{schroeder2014} at density ratio 1.5 and time-mean blowing ratio 1.5. The hole geometry and operating conditions match the experiment, with one deliberate difference: the approach boundary layer is laminar at $\Reth \approx 180$ under zero pressure gradient rather than turbulent. Steady RANS (SST $k$--$\omega$ with $\gamma$--$\Reth$ transition) at 5M--100M cells, URANS at 50M and 100M cells, and scale-resolving simulations with a compressible fourth-order solver (3DNS) at 50M (implicit LES), 100M and 193M points (DNS) share one structured mesh family. The experimental data serve to validate the setup, while the principal comparisons are made across the resolution and modelling levels.
+
+RANS is mesh-independent to about 1\% between 5M and 50M, yet it predicts a jet that is too narrow and too cold on the centreline, with laterally averaged effectiveness too low over $x/D = 7$--15. Mesh convergence of a model is therefore not convergence to the physics. The scale-resolving simulations identify what is missing: Kelvin--Helmholtz roll-up of the windward shear layer at the exit lip, vortex pairing that intermittently entrains hot gas beneath the jet, and an unsteady diffuser separation whose state depends on turbulence in the metering section. With a laminar hole flow this separation pulses and the plenum pressure must be increased to maintain the target blowing ratio, so the hole's discharge behaviour is itself a resolution- and model-dependent result. We assess how far URANS and LES recover these mechanisms, use the DNS to locate where eddy-viscosity closures fail to represent turbulent production and inter-scale tke transfer, and establish the minimum resolution and modelling level required to predict laterally averaged effectiveness for a laminar approach flow.
+\end{abstract}
+
+%%%%%  NOMENCLATURE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{nomenclature}
+\EntryHeading{Roman letters}
+\entry{$D$}{Metering-hole diameter [m]}
+
+\EntryHeading{Greek letters}
+\entry{$\eta$}{Adiabatic film-cooling effectiveness}
+
+\EntryHeading{Dimensionless groups}
+\entry{$\BR$}{Blowing ratio}
+\entry{$\DR$}{Density ratio}
+\entry{$\Reth$}{Momentum-thickness Reynolds number}
+\end{nomenclature}
+
+%%%%%  BODY  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section outline follows 4dns_filmcooled/write_up/framework/paper_structure.tex.
+
+\section{Introduction}\label{sec:intro}
+
+\section{Methods}\label{sec:methods}
+\subsection{Configuration and Operating Point}\label{sec:config}
+\subsection{The Simulation Ladder}\label{sec:ladder}
+\subsection{Validation}\label{sec:validation}
+\subsection{Statistics and Sampling}\label{sec:stats}
+\subsection{Analysis Method}\label{sec:analysis}
+
+\section{Results and Discussion}\label{sec:results}
+\subsection{Film-Cooling Performance Across the Ladder}\label{sec:performance}
+\subsection{Where the Modelled Turbulence Departs from the Resolved Turbulence}\label{sec:departures}
+\subsection{What Sets Each Departure: Energy, Length Scale and Alignment}\label{sec:causes}
+\subsection{Attribution to Flow Structures and Mechanisms}\label{sec:mechanisms}
+\subsection{Which Departures Matter for the Effectiveness}\label{sec:effectiveness}
+\subsection{Resolution Requirements and Cost}\label{sec:cost}
+
+\section{Conclusions}\label{sec:conclusions}
+
+\section*{Acknowledgments}
+
+%%%%%  REFERENCES  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{asmeconf}% ASME conference format, do not change
+\bibliography{references}
+
+\end{document}

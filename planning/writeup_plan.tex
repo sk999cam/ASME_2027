@@ -1,0 +1,537 @@
+% Write-up plan for the whole GT2027 paper: figure, table and equation lists, then one section per paper
+% section (subsection headings, content, figures, tables, equations and their purpose).
+% Build: bash build_plan.sh (pdflatex twice; --figs also redraws the figures).
+% Paper figures are read from ASME_2027/figures/, each drawn by figures/code/<same name>.py.
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[a4paper,margin=18mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,float,graphicx,array,enumitem,tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=MidnightBlue,urlcolor=MidnightBlue]{hyperref}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist{itemsep=1pt,topsep=2pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\um}{\textmu m}
+\graphicspath{{../figures/}}
+\newcommand{\st}[1]{\textsf{\small[#1]}}
+\newcommand{\deta}{\Delta_{\mathrm{mesh}}/\eta_{K,193}}
+
+\title{GT2027 paper: write-up plan}
+\author{24 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-8mm}
+
+The plan for the whole paper, section by section: subsection headings, content, and the figures, tables and
+equations with their purpose. Sections planned so far: 1 Introduction, 2 Research Aims, 3 Methods. Each agreed section is
+written into \texttt{manuscript/main\_claude.tex}. Figures are in \texttt{ASME\_2027/figures/}, each drawn by the
+script of the same name in \texttt{figures/code/}.
+
+\section*{Figures, tables and equations}
+
+Status: \st{exists} usable as it is; \st{rework} content right, data or layout to be updated; \st{new} not yet
+made; \st{draft} made for this plan, to be finalised; \st{interim} drawn from the data available now.
+
+\textbf{Figures}, in the order they appear in the paper.\par
+{\centering\footnotesize
+\begin{tabularx}{\textwidth}{@{}l l X l l@{}}
+\toprule
+ID & section & content & script (\texttt{figures/code/}) & status \\
+\midrule
+F1 & 1 & transition mechanism on the HPT suction surface against $\mathrm{Re}_x$; Fig.~1 of Kar et al.\ (2026), from Clark et al.\ (2024), reused & \texttt{fig\_transition\_map.py} & exists \\
+F2 & 3.1 & (a) domain, boundary conditions, regions above the plate; (b) hole regions & \texttt{fig\_config\_regions.py} & draft \\
+F3 & 3.2 & 13 line classes, plate and centre plane & \texttt{fig\_mesh\_classes.py} & draft \\
+F4 & 3.3 & volume fraction above $\deta$, per region, 5 meshes & \texttt{fig\_resolution.py} & interim \\
+\bottomrule
+\end{tabularx}\par}
+
+\textbf{Tables}, in the order they appear in the paper.\par
+{\centering\footnotesize
+\begin{tabularx}{\textwidth}{@{}l l X l l@{}}
+\toprule
+ID & section & content & source & status \\
+\midrule
+T1 & 1 & previous scale-resolving simulations of film-cooling holes: hole, method, mesh, approach layer, BR, resolution check, closure assessed & papers in \texttt{literature/papers/} & draft \\
+T2 & 3.1 & rungs and meshes: $s$, cells, solver, model, filter, BR, averaging & mesh files, \texttt{hole\_discharge} & draft \\
+\bottomrule
+\end{tabularx}\par}
+
+\textbf{Equations}, in the order they are numbered in the paper.\par
+{\centering\footnotesize
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+ID & section & quantity & in the draft \\
+\midrule
+E1 & 1 & Boussinesq eddy-viscosity relation & new \\
+E2 & 1 & gradient-diffusion hypothesis for the turbulent heat flux, $\Pr_t$ & new \\
+E3 & 3.1 & $\mathrm{Re}_D$, $\theta$ & numbered (\texttt{eq:re}) \\
+E4 & 3.1 & BR, DR, VR, $I$ & numbered (\texttt{eq:br}) \\
+E5 & 3.1 & adiabatic effectiveness $\eta$, pitch average $\bar\eta$ & inline; numbered in the paper \\
+E6 & 3.2 & point count per class, $N(s)$ & numbered (\texttt{eq:N}) \\
+E7 & 3.2 & point placement $\xi_m$ & numbered (\texttt{eq:xi}) \\
+E8 & 3.3 & resolution criterion $\deta\le2$, $\varepsilon$ & numbered (\texttt{eq:eta}), changed to $\eta_{K,193}$ \\
+\bottomrule
+\end{tabular}\par}
+
+\textbf{Terminology.} ``Near film'' and ``far film'' for the regions downstream of the hole, never ``wake''.
+$\eta$ is the adiabatic effectiveness, $\eta_K$ the Kolmogorov length.
+
+%=====================================================================================================
+\section*{1\quad Introduction}
+\textbf{Purpose.} Introduction and literature review in one section, no subsections. It narrows from film
+cooling in general to the 7-7-7 hole, sets out what is known about RANS and scale-resolving predictions, and
+ends on the justification of the configuration of Section 3: the 7-7-7 hole on a flat plate at zero pressure
+gradient, with a laminar approach layer, as a test bed for models and meshes at different resolution. The RANS
+failure leads the argument. Eight paragraphs, about 2 pages including F1 and T1. Prior work in present or past
+tense with the author as subject; each paragraph closes on what is missing. The aims follow in Section 2.
+
+\textbf{P1 Film cooling and shaped holes.}
+\begin{itemize}
+\item HP turbine gas temperatures exceed the material limit; film cooling with compressor bleed air protects the
+  surface, and every unit of coolant costs cycle efficiency (Bogard and Thole, 2006).
+\item Shaped holes: the diffuser lowers the exit momentum, reduces lift-off and widens coverage, so shaped holes
+  give higher $\eta$ than cylindrical holes at high BR (Gritsch et al., 1998a; Thole et al., 1998; Saumweber et
+  al., 2003).
+\item Cooling design relies on steady RANS because of its cost; its accuracy for shaped holes therefore decides
+  the design.
+\end{itemize}
+
+\textbf{P2 The 7-7-7 baseline hole.}
+\begin{itemize}
+\item Few hole geometries are shared between research groups, and comparisons against cylindrical holes are of
+  limited use (Schroeder and Thole, 2014).
+\item Schroeder and Thole (2014) proposed the 7-7-7 as a baseline: $30^\circ$ inclination, $7^\circ$ forward and
+  lateral expansion, $L/D=6$, area ratio 2.5, $P/D=6$; $\bar\eta$ peaks near BR 1.5 at DR 1.2 and 1.5.
+\item The database since: flow field by PIV and FST effects (Schroeder and Thole, 2016a), thermal field (2017a),
+  in-hole roughness (2017b), meter--diffuser offset (Haydt et al., 2017), area ratio (Haydt et al., 2018),
+  compound angle (Haydt and Lynch, 2018).
+\item Outcome: the most documented shaped hole, with $\eta$, velocity and temperature fields, and the common test
+  case for simulations. Justifies the 7-7-7.
+\end{itemize}
+
+\textbf{P3 Flat plate at zero pressure gradient.}
+\begin{itemize}
+\item Generic flat-plate tests leave out acceleration and curvature, so the hole--crossflow interaction is
+  studied on its own (Saumweber et al., 2003).
+\item All 7-7-7 data are on a flat plate at zero pressure gradient; the 7-7-7 simulations use the same
+  configuration (Nunno et al., 2022; Bin and Yang, 2024), as do LES of other shaped holes (Oliver et al., 2017,
+  2019; Zamiri et al., 2020).
+\item With geometry and pressure gradient fixed, differences between simulations come from the model and the
+  resolution alone. Justifies the flat plate at zero pressure gradient.
+\end{itemize}
+
+\textbf{P4 RANS predictions and their known errors.}
+\begin{itemize}
+\item Eddy-viscosity RANS under-predicts the lateral spreading of the coolant and over-predicts the centreline
+  $\eta$ (Acharya et al., 2001; Harrison and Bogard, 2008a; Stratton and Shih, 2019); for the 7-7-7, steady RANS
+  misses the $\eta$ levels and the offset trends (Haydt et al., 2017).
+\item The errors are traced to two closure assumptions, written as E1 and E2.
+\item Corrections: anisotropic eddy viscosity (Azzi and Lakehal, 2002; Lakehal, 2002), variable $\Pr_t$ (Liu et
+  al., 2008, 2011), higher-order scalar-flux models (Ling et al., 2016a), data-driven closures (Milani et al.,
+  2018, 2020; Ellis and Xia, 2024; Laroche et al., 2023).
+\item High-fidelity data used to test the assumptions: eddy viscosity and diffusivity are non-uniform and
+  anisotropic (Kaszeta and Simon, 2000; Kohli and Bogard, 2005; Coletti et al., 2013); the Boussinesq relation
+  fails in the hole, along the wall and on the lee side (Ling et al., 2017; Stratton and Shih, 2019).
+\item Missing: these diagnoses rest on a single high-fidelity data set, mostly for round holes, without a check
+  that the reference itself is resolved.
+\end{itemize}
+
+\textbf{Equations in P4} (new; standard forms, as in Ling et al., 2016a and Milani et al., 2018).
+\begin{equation}
+-\bar\rho\,\widetilde{u_i''u_j''}=\mu_t\Big(\frac{\partial\tilde u_i}{\partial x_j}+\frac{\partial\tilde u_j}{\partial x_i}
+-\frac{2}{3}\delta_{ij}\frac{\partial\tilde u_k}{\partial x_k}\Big)-\frac{2}{3}\bar\rho k\,\delta_{ij}
+\tag{E1}
+\end{equation}
+Purpose: the Boussinesq relation, one scalar $\mu_t$ aligning the turbulent stress with the mean strain. Names
+the assumption that the Results test (isotropy and alignment of the eddy viscosity).
+\begin{equation}
+-\bar\rho\,\widetilde{u_j''T''}=\frac{\mu_t}{\Pr_t}\,\frac{\partial\tilde T}{\partial x_j},\qquad \Pr_t\approx0.85\text{--}0.9
+\tag{E2}
+\end{equation}
+Purpose: the gradient-diffusion hypothesis with a constant turbulent Prandtl number, which sets the lateral
+spreading of the coolant in RANS. The Results test it through the effective diffusivity.
+
+\textbf{P5 Unsteady flow structures and the hole flow.}
+\begin{itemize}
+\item Jets in crossflow carry a counter-rotating vortex pair, shear-layer roll-up, horseshoe and wake vortices
+  (Fric and Roshko, 1994; Mahesh, 2013); wake vortices come from the wall boundary layer, so they depend on the
+  approach-layer state.
+\item In film cooling the attached and detached regimes follow from these structures (Bidan et al., 2013);
+  coherent structures identified by POD (Cavar and Meyer, 2012) and coherent unsteadiness in film cooling
+  (Fawcett, 2011); hairpin packets cause hot spots on the wall (Tyagi and Acharya, 2003).
+\item Shaped holes add an in-hole flow: expanded exits reduce penetration and shear, with peak turbulence at the
+  exit (Thole et al., 1998); expanded holes discharge more coolant at the same pressure ratio (Gritsch et al.,
+  1998b); in-hole separation changes with the meter--diffuser geometry (Haydt et al., 2017).
+\item These coherent, unsteady motions carry the stress and heat flux that E1 and E2 replace by gradient
+  diffusion, which is why a steady eddy-viscosity closure misses them.
+\item Missing: how much of this unsteadiness a simulation resolves at a given mesh, inside the hole and on the
+  plate, is not established.
+\end{itemize}
+
+\textbf{P6 Scale-resolving simulations and their resolution.}
+\begin{itemize}
+\item LES of round holes: hairpin packets and hot spots (Tyagi and Acharya, 2003); plenum and in-hole flow
+  (Iourokina and Lele, 2006; Peet and Lele, 2008); the crossflow turbulence decides the spreading (Ziefle and
+  Kleiser, 2013); grid adequacy judged by the fraction of resolved tke (Johnson and Kapat, 2013).
+\item Shaped holes: implicit LES and Mach-number effects (Oliver et al., 2017, 2019), laidback fan-shaped LES
+  (Zamiri et al., 2020), wall-resolved LES of the 7-7-7 (Nunno et al., 2022), DNS of the 7-7-7 across compound
+  angles (Bin and Yang, 2024).
+\item Hybrid and unsteady RANS: DES mixes more than RANS (Foroutan and Yavuzkurt, 2015); URANS centreline $\eta$
+  is off by $\sim$50\,\% against $\sim$11\,\% for LES (Yu and Yavuzkurt, 2018).
+\item Each study uses its own mesh, method and resolution criterion, so model and resolution change together
+  between studies (T1).
+\item Missing: no study takes one shaped hole through RANS, LES and DNS on one mesh family, so the resolution
+  needed to predict $\bar\eta$ is not known.
+\end{itemize}
+
+\textbf{Table T1: previous scale-resolving simulations of film-cooling holes} \st{draft}. One row per study of
+P6, grouped as round holes, shaped holes, hybrid and unsteady RANS; last row the present study. Values read from
+each paper (PDFs in \texttt{4dns\_filmcooled/write\_up/literature/papers/}).
+\begin{itemize}
+\item Purpose: shows the gap of P6 in one place. Method and mesh change together between studies; no study
+  compares rungs on one mesh family.
+\item Points the text draws from it: the resolution check is in wall units in most studies, and only Bin and
+  Yang (2024) refer to $\eta_K$; three studies use a laminar approach layer (Oliver et al., 2017, 2019; Nunno et
+  al., 2022), all on the 7-7-7 at BR 2; three assess a closure (Peet and Lele, 2008; Oliver et al., 2017;
+  Foroutan and Yavuzkurt, 2015), none against DNS.
+\item Mesh sizes are cells, or grid points where the paper gives points (marked p).
+\end{itemize}
+\begin{table}[H]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{T1: previous scale-resolving simulations of film-cooling holes. SGS: subgrid-scale model; dyn.: dynamic;
+TBL: turbulent boundary layer; FST: freestream turbulence.}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright}p{2.0cm} >{\raggedright}p{1.7cm} >{\raggedright}p{1.9cm} l
+  >{\raggedright}p{2.2cm} l >{\raggedright}X >{\raggedright\arraybackslash}p{1.9cm}@{}}
+\toprule
+Study & hole & method & cells & approach layer & BR & resolution check & closure assessed \\
+\midrule
+Tyagi and Acharya (2003) & round, $35^\circ$ & LES, dyn.\ mixed SGS & $1.1\times10^{6}$ & TBL, $1/7$-law mean profile & 0.5, 1.0 & none reported & no \\
+Iourokina and Lele (2006) & round, $35^\circ$, $L/D$ 3.5 & LES, dyn.\ Smagorinsky & $4.7\times10^{6}$ p & TBL, recycled LES inflow, $\mathrm{Re}_\theta$ 946 & 0.61 & none reported & no \\
+Peet and Lele (2008) & round, $35^\circ$, $L/D$ 3.5 & LES, dyn.\ Smagorinsky & $5.5\times10^{6}$ p & TBL, recycled LES inflow, $\mathrm{Re}_\theta$ 938 & 0.48 & wall units: $\Delta x^+$ 16, $\Delta y^+$ 0.6, $\Delta z^+$ 15 & yes: isotropic $\mu_t$, $\alpha_t$ \\
+Ziefle and Kleiser (2013) & round, $30^\circ$ & LES, ADM & $1.8\times10^{6}$ & laminar, and TBL by synthetic eddies & 0.5 & none; grid called coarse & no \\
+Johnson and Kapat (2013) & round, $30^\circ$, $L/D$ 10 & wall-resolved LES, dyn.\ Smagorinsky & $8.8$, $10\times10^{6}$ & TBL, recycled inflow & 1.0, 1.9 & resolved-tke fraction; wall units & no (SGS $\Pr$ only) \\
+\midrule
+Oliver et al.\ (2017) & 7-7-7 & implicit LES & $15.9\times10^{6}$ p & laminar & 2.0 & wall units: $\Delta x^+$ 29.7, $\Delta y_1^+$ 1.6, $\Delta z^+$ 21.3 & yes: GDH for heat flux \\
+Oliver et al.\ (2019) & 7-7-7 & LES, WALE & $42.5\times10^{6}$ p & laminar & 2.0 & wall units; resolved dissipation $\ge20\,\%$ & no \\
+Zamiri et al.\ (2020) & laidback fan, $35^\circ$, 10-10 & LES, WALE & $6.1\times10^{6}$ p & measured mean profile, Tu 1\,\% & 1, 2 & $y^+$ & no \\
+Nunno et al.\ (2022) & 7-7-7, $30$--$40^\circ$ & implicit wall-resolved LES, spectral element & $53.8\times10^{6}$ p & laminar, Blasius & 0.5--2.0 & none reported & no \\
+Bin and Yang (2024) & 7-7-7, compound $0$--$60^\circ$ & DNS & $78.0\times10^{6}$ & TBL, synthetic inflow, $\mathrm{Re}_\theta$ 670 & 1.0 & wall units; $\Delta<5\eta_K$ outside the wall layer & no \\
+\midrule
+Foroutan and Yavuzkurt (2015) & round, $30^\circ$ & DES, realizable $k$--$\varepsilon$ & $1.4\times10^{6}$ & TBL, FST 10\,\% & 0.5, 1.5 & RANS grid study & yes: turbulent heat flux, DES vs RANS \\
+Yu and Yavuzkurt (2018) & round, $35^\circ$ & URANS, DES, LES & $2.8\times10^{6}$ & not stated & 1.0 & URANS grid study & no \\
+\midrule
+Present study & 7-7-7 & RANS, LES, implicit LES, DNS & $5.8\times10^{6}$--$1.9\times10^{8}$ & laminar, FST & 1.50--1.59 & $\deta$ per region & yes: E1, E2 against DNS \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{P7 The laminar approach boundary layer.}
+\begin{itemize}
+\item Most studies, and the 7-7-7 experiment, use a tripped turbulent approach layer.
+\item On the suction surface of cooled HP rotors the boundary layer is transitional for
+  $3\times10^5<\mathrm{Re}_x<10^6$, and at the lower $\mathrm{Re}_x$ of small cores the layer at a cooling row
+  can be laminar (Clark et al., 2024); whether a jet trips it depends on the size, spacing and position of the
+  perturbation (Kar et al., 2026). F1.
+\item Laminar-approach film-cooling data are rare: Goldstein and Yoshida (1982) found that the holes trip the
+  laminar layer, and that the injectant state matters more than the approach state.
+\item Freestream turbulence drives bypass transition of the approach layer (Jacobs and Durbin, 2001; Brandt et
+  al., 2004); RANS needs a transition model to hold the layer laminar (Langtry and Menter, 2009).
+\item Justifies the laminar approach layer with FST, and the $\gamma$--$\mathrm{Re}_\theta$ model in RANS. It is
+  also the condition furthest from the turbulent flows the closures were calibrated on.
+\end{itemize}
+
+\textbf{Figure F1: transition mechanism on the HPT suction surface} \st{exists}, reused.
+\begin{itemize}
+\item Content: the primary transition mechanism (separation, freestream turbulence, roughness, film cooling)
+  against $\mathrm{Re}_x$ and surface fraction: Fig.~1 of Kar et al.\ (2026), reproduced there from Clark et
+  al.\ (2024). Cut from the published PDF as a vector crop; the caption cites both papers.
+\item Purpose: places the configuration of this paper on the engine map: below $\mathrm{Re}_x\approx10^6$ the
+  layer reaching a cooling row can be laminar, and film cooling decides transition.
+\item The one paper figure not drawn with \texttt{set\_mpl\_params}; its colours are those of the original.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{fig_transition_map.pdf}
+\caption{F1 (\texttt{figures/code/fig\_transition\_map.py}): primary transition mechanism on the HPT suction
+surface against $\mathrm{Re}_x$, from Kar et al.\ (2026), reproduced there from Clark et al.\ (2024).}
+\end{figure}
+
+\textbf{P8 The present study.}
+\begin{itemize}
+\item The justification chain in one place: the RANS errors of P4 come from unsteady structures (P5) that only
+  scale-resolving simulations capture, at a resolution not yet established (P6); the 7-7-7 is the most documented
+  shaped hole (P2); a flat plate at zero pressure gradient fixes geometry and pressure gradient (P3); a laminar
+  approach layer is relevant to small cores and hardest for RANS (P7). Together they make a test bed in which
+  only the model and the mesh change.
+\item The approach: one mesh family from 5M to 193M cells; steady RANS, LES and DNS; the same boundary conditions
+  and plenum pressure on every rung.
+\item Closing sentence leads into Section 2, the research aims.
+\end{itemize}
+
+%=====================================================================================================
+\section*{2\quad Research Aims}
+\textbf{Purpose.} A short section between the Introduction and the Methods, as in the GPPS paper: one framing
+sentence (``This paper aims to \dots''), then the aims as a numbered list, one sentence each. No figures, tables
+or equations.
+\begin{enumerate}[label=\arabic*.]
+\item Quantify the $\bar\eta$ error of each rung, RANS to 100M 3DNS, against the 193M reference.
+\item Establish the resolution each mesh achieves and the resolution needed to predict $\bar\eta$.
+\item Locate where and explain why the modelled turbulence departs from the resolved turbulence, through the
+  assumptions of E1 and E2.
+\item Identify which of these departures matter for $\bar\eta$.
+\end{enumerate}
+Wording of the aims is set with the Results plan; the conclusions mirror them.
+
+%=====================================================================================================
+\setcounter{figure}{1}
+\setcounter{table}{1}
+\section*{3\quad Methods}
+
+%-----------------------------------------------------------------------------------------------------
+\subsection*{3.1\quad Simulation Configuration and Computational Methods}
+\textbf{Purpose.} Define what is simulated, with which codes and models, under which boundary conditions, and
+how the domain is divided for analysis. After this subsection the reader can place any rung name or region name
+used later in the paper.
+
+\textbf{(i) Geometry and operating point.}
+\begin{itemize}
+\item Baseline 7-7-7 laidback fan-shaped hole (Schroeder and Thole, 2014): $D=7.75$\,mm, $30^\circ$
+  inclination, pitch $6D$; single hole, periodic in $y$; coolant fed at the metering inlet face, no plenum.
+\item Flow conditions, justified by the transitional HP turbine (Clark et al., 2024; Kar et al., 2026): Blasius
+  layer, $\mathrm{Re}_\theta=180$ at the hole, $M_\infty=0.25$, Tu 5.5\,\% with $L=0.43D$, $\mathrm{Re}_D=2408$;
+  raised viscosity $\mu_\infty=2.5\times10^{-4}$\,Pa\,s; adiabatic walls.
+\item BR 1.5 at DR 1.5: peak of $\bar\eta$ in the 7-7-7 database. Definitions of BR, DR, VR, $I$, $\eta$,
+  $\bar\eta$, $D/U_\infty$, FT. All rungs share the plenum $p_{0,c}$, so BR is an output of each rung (T2).
+\end{itemize}
+
+\textbf{Equations in (i)} (from \texttt{01\_configuration.tex}; E3, E4 numbered there, E5 inline there).
+\begin{equation}
+\mathrm{Re}_D=\frac{\rho_\infty U_\infty D}{\mu_\infty}=\frac{0.9003\times86.28\times0.00775}{2.5\times10^{-4}}=2408,
+\qquad \theta=0.075D
+\tag{E3}
+\end{equation}
+Purpose: fixes the Reynolds number of the hole and the approach layer, and justifies the raised viscosity
+($\sim$14 times that of air) needed to reach it at the physical hole size and $M_\infty=0.25$.
+\begin{equation}
+\mathrm{BR}=\frac{\dot m_c/A_m}{\rho_\infty U_\infty},\qquad A_m=\frac{\pi D^2}{4},\qquad
+\mathrm{DR}=\frac{\rho_c}{\rho_\infty},\qquad
+\mathrm{VR}=\frac{\mathrm{BR}}{\mathrm{DR}},\qquad I=\frac{\mathrm{BR}^2}{\mathrm{DR}}
+\tag{E4}
+\end{equation}
+Purpose: defines the operating point as the experiment does, so BR 1.5, DR 1.5 compares directly with the
+7-7-7 database; $A_m$ is the metering cross-section.
+\begin{equation}
+\eta=\frac{T_{0,\infty}-T_w}{T_{0,\infty}-T_{0,c}},\qquad
+\bar\eta(x)=\frac{1}{P}\int_{-P/2}^{P/2}\eta\,\mathrm{d}y,\qquad P=6D
+\tag{E5}
+\end{equation}
+Purpose: adiabatic effectiveness and its pitch average, the performance measure used throughout the Results.
+Numbered in the paper, since the Results refer to it. $\eta$ is reserved for the effectiveness; the Kolmogorov
+length is $\eta_K$ (E8).
+
+Not given as equations: $D/U_\infty=89.8$\,\textmu s and $1\,\mathrm{FT}=40D/U_\infty=3.59$\,ms (inline), and
+Sutherland's law in 3DNS (named and cited, no formula).
+
+\textbf{(ii) Computational methods.}
+\begin{itemize}
+\item One mesh family, one set of boundary conditions, one reference (193M 3DNS). RANS against 50M 3DNS on the
+  same mesh isolates modelling; 50M, 100M and 193M 3DNS isolate resolution; the 20M LES differs in both (T2).
+\item STAR-CCM+ RANS: coupled density-based solver, SST $k$--$\omega$ with $\gamma$--$\mathrm{Re}_\theta$, which
+  keeps the approach layer laminar ($\mathrm{Re}_\theta=176$, $H=2.51$--2.64 at $x/D=-4$); max $y^+=1.1$;
+  residuals down 6--8 decades. RANS on the 5M and 50M meshes agree to 0.06\,\% in BR. URANS returns the
+  steady state and is not a rung.
+\item Every rung, including the RANS, runs at the same plenum $p_{0,c}$. BR matching is not mentioned in the
+  Methods: the need for it is introduced in the Results, where the differences in diffuser-bubble behaviour
+  between rungs are described.
+\item 3DNS: high-order compressible finite-difference code (Wheeler et al.); 7-point DRP stencil (1\,\% phase
+  error at $\sim$4 points per wavelength; Tam and Webb, 1993); 8th-order filter, $sf=0.05$ on 50M (implicit
+  LES), 0.03 on 100M and 193M; 20M LES with WALE.
+\item Initialisation, flush (BR drift below 1\,\% over 0.5\,FT) and averaging time.
+\end{itemize}
+
+\textbf{Table T2: rungs and meshes} \st{draft}. One row per mesh of the family, with its scale factor and the
+rungs run on it. Purpose: the single reference for every rung name and every mesh; $s$ links it to the
+coarsening in 3.2. No machine or rank information.
+
+\begin{table}[H]
+\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l c c l l l c c@{}}
+\toprule
+mesh & $s$ & cells & solver & model & filter $sf$ & BR & averaging \\
+\midrule
+5M   & 0.30$^a$ & $5.77\times10^{6}$ & STAR-CCM+ & RANS, SST + $\gamma$--Re$_\theta$ & -- & 1.591 & steady \\
+20M  & 0.453 & $2.31\times10^{7}$ & 3DNS & LES, WALE & 0.03 & 1.498 & 6\,FT \\
+50M  & 0.628 & $5.31\times10^{7}$ & STAR-CCM+ & RANS, SST + $\gamma$--Re$_\theta$ & -- & 1.592 & steady \\
+     &       &                    & 3DNS & none (implicit LES) & 0.05 & 1.516 & 6\,FT \\
+100M & 0.796 & $1.13\times10^{8}$ & 3DNS & none & 0.03 & 1.526 & 6\,FT \\
+193M & 1     & $1.92\times10^{8}$ & 3DNS & none (reference) & 0.03 & 1.521 & 10\,FT \\
+\bottomrule
+\end{tabular}
+\caption{Draft of T2. $s$: scale factor of E6 (3.2). Cells: summed over the 23 blocks of each CGNS file in
+\texttt{/mnt/Elements/DNS/meshes/}. BR: coolant mass flow through the diffuser sections at the common plenum
+$p_{0,c}$, from \texttt{analysis/hole\_discharge/README.md}. Averaging: 193M batch b010.
+$^a$\,The 5M mesh has the blocks of the family, but its counts were not set by E6; 0.30 is the average of
+$(N_{5}-1)/(N_{193}-1)$ over the blocks, weighted by the 193M points in each block (per-line range 0.20--0.46).}
+\end{table}
+
+\textbf{(iii) Boundary conditions.} The same for every rung, so stated once, in text only (no table, no
+separate figure; F2(a) marks where each applies):
+\begin{itemize}
+\item Inlet: Blasius layer, $\mathrm{Re}_\theta$ 135--140, with FST of Tu 5.5\,\%; outlet and top at
+  $p_\infty$; adiabatic no-slip walls; periodic span; coolant inlet at the same $p_{0,c}$ and $T_{0,c}$ for
+  every rung, with coolant turbulence.
+\item How each code imposes them, in one sentence each: FST box and characteristic boundaries with buffers in
+  3DNS, inlet intensity in STAR-CCM+; Sutherland viscosity in 3DNS, constant in STAR-CCM+.
+\end{itemize}
+
+\textbf{(iv) Analysis regions.} Eight regions that fill the domain without overlap (buffers excluded):
+metering, diffuser (split $3.5D$ along the axis from the breakout), exit (breakout face extruded $0.5D$ each
+way), approach layer, jet ($x/D$ $-1.00$ to 2.36), near film (to 10.25), far film (to 25), freestream
+($z/D\ge4$). One sentence per boundary choice. Used in 3.3 and in every regional average of the Results.
+
+\textbf{Figure F2: configuration, boundary conditions and regions} \st{draft}, full page width.
+\begin{itemize}
+\item Purpose: one picture for (i), (iii) and (iv). Panel (a) gives the domain extent, the hole position, the
+  condition on every boundary and the five regions above the plate. Panel (b) enlarges the hole to show the
+  metering, diffuser and exit regions and the coolant inlet face.
+\item Every region is named on the figure; colour is not the only key. Okabe-Ito fills.
+\item The 3DNS buffers are hatched, so ``excluded from all data'' has a visible meaning.
+\item To finalise: hole outline from \texttt{cl\_outline.npy}; label sizes checked at the full page width of the
+  ASME layout.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_config_regions.pdf}
+\caption{Draft of F2 (\texttt{figures/code/fig\_config\_regions.py}). (a) Centre plane of the domain, to scale,
+with the boundary conditions and the regions above the plate. (b) Enlarged view of the hole with the hole
+regions. Hatched: 3DNS buffer zones.}
+\end{figure}
+
+%-----------------------------------------------------------------------------------------------------
+\subsection*{3.2\quad Mesh Family and Coarsening Method}
+\textbf{Purpose.} Show that the meshes differ in resolution only: same blocks, walls and hole geometry,
+obtained by coarsening the 193M mesh line by line.
+
+\textbf{Content} (from \texttt{03\_mesh\_resolution.tex}; the decisions in \texttt{HANDOFF.md} are kept).
+\begin{itemize}
+\item The 193M mesh: 23 blocks; 80--100\,\um\ across the jet; 220--290\,\um\ axially in the hole; 40\,\um\ first
+  cell; 1\,\% growth to $z/D=10$.
+\item Coarsening: 13 classes of connected grid lines, one count per class; E6 with the $s$ of T2;
+  points evenly spaced in 193M point number (E7), so the 193M stretching is kept and each cell grows by
+  $\sim1/s$; wall cell kept; interface jumps below $\sim$1.5; cubic placement on the 193M line.
+\item Departures from E6: classes 1, 9, 11 held at the 100M count; 2, 7, 8, 10 raised for load balance.
+\item The 5M mesh shares the 23 blocks but was not built with E6; its representative $s$ is given in T2 and the
+  range of its per-line ratios in the text.
+\end{itemize}
+
+\textbf{Equations} (from \texttt{03\_mesh\_resolution.tex}, both numbered there).
+\begin{equation}
+N=\operatorname{round}\!\big((N_{193}-1)\,s\big)+1,\qquad \text{cells}\approx s^3\times1.92\times10^{8}
+\tag{E6}
+\end{equation}
+Purpose: the point count of every class on a coarser mesh from its 193M count $N_{193}$ and the one scale
+factor $s$ of that mesh (T2); the second part links $s$ to the mesh size.
+\begin{equation}
+\xi_m=m\,\frac{N_{193}-1}{N-1},\qquad m=0,\dots,N-1
+\tag{E7}
+\end{equation}
+Purpose: where the $N$ points of a coarser line sit, as fractional 193M point numbers $\xi$; even spacing in
+$\xi$ keeps the 193M stretching and cell aspect ratios. The wall-cell and interface exceptions are stated in the
+text, not as equations.
+
+\textbf{Figure F3: the 13 line classes} \st{draft}.
+\begin{itemize}
+\item Purpose: makes ``class'' concrete; E6 and the class numbers quoted in the text refer to it.
+\item Drawn to the figure rules: (a)/(b) labels in place of titles; Okabe-Ito colours with a line style per
+  direction (solid $i$, dashed $j$, dash-dot $k$).
+\item To finalise: class numbers are small at print size.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_mesh_classes.pdf}
+\caption{Draft of F3 (\texttt{figures/code/fig\_mesh\_classes.py}, 20M mesh). (a) Plate plane, all 23 blocks.
+(b) Centre plane through the hole.}
+\end{figure}
+
+\textbf{In text, no table} (replaces the class table of \texttt{03\_mesh\_resolution.tex}):
+\begin{itemize}
+\item the classes that depart from E6 and why, by class number on F3: 1, 9, 11 held at the 100M counts across
+  the hole (88, 215, 48 points); 2, 7, 8, 10 raised for load balance;
+\item the 5M mesh: same blocks, per-line ratios $(N_5-1)/(N_{193}-1)$ of 0.20--0.46;
+\item the cell sizes that stay fixed or bounded: first cell 40\,\um\ at the plate and 22\,\um\ in the hole on
+  every mesh, cell-size jump across block interfaces below $\sim$1.5;
+\item the 193M cell sizes (80--100\,\um\ across the jet, 220--290\,\um\ axially in the hole, 0.59\,mm at the top),
+  which grow by $\sim1/s$ on the coarser meshes.
+\end{itemize}
+
+%-----------------------------------------------------------------------------------------------------
+\subsection*{3.3\quad Achieved Mesh Resolution}
+\textbf{Purpose.} State, for each mesh and region, how the grid size compares with the smallest scale of the
+reference flow.
+
+\textbf{Equation} (from \texttt{03\_mesh\_resolution.tex}, changed to the single reference $\eta_K$).
+\begin{equation}
+\frac{\Delta_{\mathrm{mesh}}}{\eta_{K,193}}\le2,\qquad \Delta_{\mathrm{mesh}}=|J|^{1/3},\qquad
+\eta_{K,193}=\Big(\frac{\nu^3}{\varepsilon/\bar\rho}\Big)^{1/4},\qquad
+\varepsilon=\overline{\tau_{ij}\partial_ju_i}-\bar\tau_{ij}\,\partial_j\bar u_i
+\tag{E8}
+\end{equation}
+with $|J|$ the cell volume of the 5M, 20M, 50M, 100M or 193M mesh, $\nu=\bar\mu/\bar\rho$, and $\varepsilon$ the
+viscous dissipation of the fluctuations, all from the 193M 3DNS, statistics batch b010 (10\,FT).
+Purpose: the resolution criterion and the one quantity reported in F4 and the text. The bound 2 follows from
+$\kappa_{\max}\eta_K\ge1.5$ for spectral DNS (Pope, 2000), i.e.\ $\Delta/\eta_K\le\pi/1.5\approx2.1$; stated
+inline, not numbered.
+\begin{itemize}
+\item One $\eta_K$ field for all meshes. The ratio measures each mesh against the scales of the reference flow,
+  so differences between meshes come from the mesh alone. The 5M and 50M RANS meshes are rated on the same
+  scale as the scale-resolving rungs.
+\item The lower-bound caveat of the draft (filtered or modelled dissipation on the 20M LES and 50M 3DNS) no
+  longer applies, and no LES statistics are needed for the 20M mesh.
+\item To state: $\eta_{K,193}$ is computed on the 193M mesh, so where the 193M is not resolved (diffuser) it is
+  less certain.
+\item Wall units: one sentence giving the maximum $y^+$, $x^+$ and $z^+$ on each mesh.
+\item Convergence of the statistics between 100M and 193M is a separate criterion, referenced here.
+\end{itemize}
+
+\textbf{Method to compute it} (for the analysis agents). $\Delta_{\mathrm{mesh}}$ of each coarser mesh is mapped
+onto the 193M points through the line-by-line correspondence of the family, and volume fractions are taken with
+193M cell volumes, so every mesh uses the same region volumes. \texttt{dns/python/resolution\_regions.py} uses
+each run's own $\varepsilon$ and is to be extended. The 5M mesh is mapped through its own per-line counts.
+
+\textbf{In text, no table} (replaces the resolution table of \texttt{03\_mesh\_resolution.tex}):
+\begin{itemize}
+\item volume fraction with $\deta>2$ over the whole domain, per mesh;
+\item the regions that are not resolved and by how much: diffuser, exit and far film on each mesh; the metering
+  section in one sentence, since it is left out of F4;
+\item $\eta_{K,193}$ in the diffuser ($\sim$47\,\um) against its 220--290\,\um\ axial cells, as the reason the
+  diffuser is the least resolved region.
+\end{itemize}
+All numbers from the new computation (above); the draft values (batches b005/b006, own $\eta_K$, placeholder 20M)
+are not used.
+
+\textbf{Figure F4: volume distribution of $\deta$} \st{interim}. Fraction of each region's volume above a given
+$\deta$, one line per mesh: 5M, 20M, 50M, 100M, 193M.
+\begin{itemize}
+\item Purpose: the main evidence of 3.3. Shows how far each mesh of the family sits from the criterion, region
+  by region, from the RANS mesh to the reference, including the tails behind the values quoted in the text.
+\item One row of panels: diffuser, exit, near film, far film and the whole domain. The metering section is
+  left out of the figure and covered in one sentence of the text. Five meshes: Okabe-Ito colours with solid,
+  dashed, dash-dot, dotted and one marker style.
+\item The interim version below uses each run's own $\eta_K$ and the histogram regions $x/D$ 3--10 and 10--25.
+  The final version uses $\eta_{K,193}$ for every mesh, adds the 5M curve and uses the region bounds of F2.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fig_resolution.pdf}
+\caption{Interim F4 (\texttt{figures/code/fig\_resolution.py}): each run with its own $\eta_K$. Batches: 20M
+LES b006, 50M 3DNS b006, 100M 3DNS b006 (6\,FT each), 193M 3DNS b010 (10\,FT). Dashed vertical line: ratio 2.}
+\end{figure}
+
+\end{document}
