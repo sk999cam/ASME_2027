@@ -8,8 +8,9 @@ means) of the 193M 3DNS (C193b, stat3 batch b010, 10 FT cumulative mean):
   (d) cross-plane x/D = 10, lateral form (u''v'' dT/dy) / (v''T'' dU/dy);
   (e) least-squares Pr_t,R(z) = [sum(-rho u''w'' dU/dz)/sum(dU/dz)^2] / [sum(-rho w''T'' dT/dz)/sum(dT/dz)^2] over
       x/D 3-10 (near film) and 10-20 (far film) of the centre plane at each z, z/D 0-0.5; b010 solid with its 95 %
-      block-bootstrap band (1 D wide x bins), b006 dashed. Lines: RANS 0.9, Kohli and Bogard (2005) about 2 at low
-      freestream turbulence (TL 0.6 %) and about 1 (0.9-1.2) at high (TL 20 %).
+      block-bootstrap band (1 D wide x bins), b006 dashed. Lines: RANS 0.9; Kohli and Bogard (2005): "generally values
+      of Pr_t of about 2" at low freestream turbulence (TL 0.6 %), some regions about 0.5; "relatively constant ...
+      Pr_t of about 1" at high freestream turbulence (TL 20 %).
 Maps: no mask, every point is drawn; white only where the ratio is undefined. Colour bar inferno 0 to 2,
 extend='both': negative values take the lowest colour, values above 2 the highest; 0.9 (RANS) is marked. Dashed line
 (#56B4E9): inside it both gradients exceed 0.05 U_inf/D (velocity) and 0.05 dT0/D (temperature), dT0 = 100.98 K, as in
@@ -166,16 +167,14 @@ for rn, x0, x1, c, ls in (('near film', 3, 10, '#0072B2', '-'), ('far film', 10,
         else:
             axe.plot(np.clip(pr[zz], -0.5, 3), zrow[zz], color=c, ls='--', label=f'{rn}, b006')
 axe.axvline(0.9, color='k', ls=':', label='RANS 0.9')
-axe.axvline(2.0, color='0.5', ls='-.', label='K&B low FST')
-axe.axvspan(0.9, 1.2, color='0.85', zorder=0)
+axe.axvline(2.0, color='0.5', ls='-.', label=r'K&B low FST, $\approx2$')
+axe.axvline(1.0, color='0.5', ls='--', label=r'K&B high FST, $\approx1$')
 axe.set_xlim(-0.5, 3)
 axe.set_ylim(0, 0.5)
 axe.set_xlabel(r'$\mathrm{Pr}_{t,R}$')
 axe.set_ylabel(r'$z/D$')
 axe.text(0.97, 0.97, '(e)', transform=axe.transAxes, ha='right', va='top')
 hh, ll = axe.get_legend_handles_labels()
-hh.append(plt.Rectangle((0, 0), 1, 1, fc='0.85', ec='none'))
-ll.append('K&B high FST')
 fig.legend(hh, ll, loc='lower right', frameon=False, ncol=2, bbox_to_anchor=(1.0, 0.0))
 fig.savefig(OUT, dpi=300)
 print('saved', OUT)

@@ -10,8 +10,8 @@ Classes: (a) wall-distance bands z/D, per region (jet x/D 0-3, near film 3-10, f
 cross-plane x/D = 10; (b) coolant-concentration bands eta (z/D >= 0.3; the wall layer z/D < 0.3 is a class of its
 own); (c) fit quality of a scalar diffusivity per z/D band: R2_flux = 1 - sum|rho q + alpha_C grad T|^2 / sum|rho q|^2
 (filled) and R2_stress = 1 - sum|a + 2 mu_C S*|^2 / sum|a|^2 (hollow), a = rho R minus its trace part.
-Lines: RANS Pr_t = 0.9; Kohli and Bogard (2005, J. Heat Transfer 127:513), DR 1.05, M = 0.4: about 2 at low
-freestream turbulence (TL 0.6 %), 0.9 to 1.2 at high freestream turbulence (TL 20 %).
+Lines: RANS Pr_t = 0.9; Kohli and Bogard (2005, J. Heat Transfer 127:513), DR 1.05, M = 0.4: generally about 2 at
+low freestream turbulence (TL 0.6 %), about 1 at high freestream turbulence (TL 20 %; the body text gives 0.9 to 1.2).
 Bootstrap: points are grouped in 1 D wide x bins (centre plane) or 0.5 D wide y bins (cross-plane), the bins are
 resampled with replacement (1000 draws), the 2.5 and 97.5 percentiles are drawn. Values outside the y range are not
 drawn; the tables printed by the script and written to the cache folder give every value.
@@ -185,10 +185,15 @@ def main():
     rng = np.random.default_rng(1)
     R = {b: dict(np.load(f'{mc.CACHE}/ref193_b{b:03d}.npz')) for b in (6, 10)}
     Y = {b: prep(R[b], load_corr('full', b, R[b]['y0_A'].shape), 'y0') for b in R}
-    X = {b: prep(R[b], load_corr('x10', b, R[b]['x10_A'].shape), 'x10') for b in R}
+    have_x = all(os.path.exists(os.path.join(cc.CORR_DIR, f'corr_x10_b{b:03d}.npz')) for b in (6, 10))
+    X = {b: prep(R[b], load_corr('x10', b, R[b]['x10_A'].shape), 'x10') for b in R} if have_x else {}
+    if not have_x:
+        log('cross-plane x/D=10: b006 or b010 cache missing, cross-plane classes not computed (rerun when prt_corr_common.py has finished)')
     res = {}
 
     def run(fam, name, f, which='y0', lat=False):
+        if which == 'x10' and not have_x:
+            return
         A = Y if which == 'y0' else X
         res[(fam, name)] = cls(A[6], A[10], f(A[6]), f(A[10]), rng)
         log(row(f'{fam} {name}', res[(fam, name)], lat))
@@ -254,8 +259,8 @@ def figure(res):
     fig, axs = plt.subplots(1, 3, figsize=(7.2, 3.1))
     for k, ax in enumerate(axs):
         if k < 2:
-            ax.axhspan(0.9, 1.2, color='0.85', zorder=0)
             ax.axhline(0.9, color='#000000', ls=':', zorder=1)
+            ax.axhline(1.0, color='0.5', ls='--', zorder=1)
             ax.axhline(2.0, color='0.5', ls='-.', zorder=1)
             ax.set_ylim(-0.5, 3.0)
             ax.set_ylabel(r'$\mathrm{Pr}_{t,R}$')
@@ -300,10 +305,10 @@ def figure(res):
          Line2D([], [], color='k', ls='none', marker='o', mfc='none', label='b006 (6 FT)'),
          Line2D([], [], color='0.55', ls='none', marker='o', ms=3, label='tensor form, b010'),
          Line2D([], [], color='k', ls=':', label='RANS 0.9'),
-         Line2D([], [], color='0.5', ls='-.', label='K&B low FST, 2'),
-         Line2D([], [], color='0.85', lw=6, label='K&B high FST, 0.9-1.2'),
-         Line2D([], [], color='k', ls='-', marker='o', label=r'(c) $R^2_{\mathrm{flux}}$'),
-         Line2D([], [], color='k', ls='--', marker='x', label=r'(c) $R^2_{\mathrm{stress}}$')]
+         Line2D([], [], color='0.5', ls='-.', label=r'K&B low FST, $\approx2$'),
+         Line2D([], [], color='0.5', ls='--', label=r'K&B high FST, $\approx1$'),
+         Line2D([], [], color='k', ls='-', marker='o', label=r'$R^2$ of the flux fit (c)'),
+         Line2D([], [], color='k', ls='--', marker='x', label=r'$R^2$ of the stress fit (c)')]
     fig.legend(handles=h, loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.01))
     fig.tight_layout(rect=(0, 0.22, 1, 1))
     fig.savefig(OUT)
