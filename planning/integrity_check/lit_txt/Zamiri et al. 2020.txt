@@ -1,0 +1,1145 @@
+Aerospace Science and Technology 100 (2020) 105793
+
+Contents lists available at ScienceDirect
+
+Aerospace Science and Technology
+www.elsevier.com/locate/aescte
+
+Large eddy simulation of unsteady turbulent ﬂow structures and
+ﬁlm-cooling effectiveness in a laidback fan-shaped hole
+Ali Zamiri, Sung Jin You, Jin Taek Chung ∗
+School of Mechanical Engineering, Korea University, Seoul, Republic of Korea
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 25 December 2019
+Received in revised form 17 February 2020
+Accepted 18 February 2020
+Available online 28 February 2020
+Communicated by Cummings Russell
+Keywords:
+Large eddy simulation
+Film cooling
+Fan-shaped hole
+Compressible ﬂow
+Hairpin vortices
+
+a b s t r a c t
+Large eddy simulation (LES) is used to predict the turbulent ﬂow structures and ﬁlm-cooling characteristics of the unsteady jet/cross-ﬂow interactions in a fan-shaped hole. The coolant hole is located on a
+ﬂat plate surface with a 35 degree angle with respect to the main ﬂow stream at a constant ﬁlm
+density ratio D R = 2 and two different blowing ratios M = 1 and 2. The computational results under
+the different blowing ratios are validated by measurements data for the laterally-averaged and timeaveraged ﬁlm-cooling effectiveness. In addition, two different hybrid RANS/LES turbulence models, SAS
+(scale-adaptive simulation) and DES (detached-eddy simulation), are employed to show the inﬂuence
+of the turbulence model on the ﬁlm-cooling effectiveness. The results reveal that the LES model is the
+only turbulence model that can calculate the ﬁlm-cooling performance with an acceptable accuracy as
+compared to the experimental results. Comprehensive analyses are performed on the time-averaged and
+instantaneous turbulent ﬂows within the cooling hole and mainstream channel, and the results show that
+the cooling jet ﬂow structures and forest of hairpin vortices on the ﬂat plate are signiﬁcantly changed
+due to the blowing ratio. It is also observed that a pulsating behavior exists within the coolant hole,
+which is convected toward the hole exit. The interaction between the cooling hole ﬂow and channel
+mainstream ﬂow leads to unsteadiness at the interface mixing region (Kelvin-Helmholtz instability). In
+addition, velocity disturbances with various convective velocities are observed in the time-series ﬂow
+ﬁelds at different blowing ratios. The evaluation of pressure ﬂuctuation signals in the time and frequency
+domains show that the dominant frequency of the fan-shaped hole is shifted by changing the blowing
+ratio, and increasing the blowing ratio leads to the generation of more periodic vortical structures as well
+as improved ﬁlm-cooling performance.
+© 2020 Elsevier Masson SAS. All rights reserved.
+
+1. Introduction
+Gas turbines are extensively used in various industrial applications particularly in the aero-propulsion of aircraft engines. In
+order to enhance the power output and thermal performance of
+modern gas turbines, a working ﬂuid gas with a higher temperature at the inlet of the gas turbine engine is required [1]. However,
+the temperatures of hot main ﬂow gases, reaching about 1800 K,
+often exceed the melting temperatures of the alloys currently used
+in the turbine blades [2,3]. Therefore, in order to keep the turbine
+components safe from high temperature gases, various effective
+and appropriate cooling methods, both internally and externally,
+are needed.
+
+*
+
+Corresponding author.
+E-mail address: jchung@korea.ac.kr (J.T. Chung).
+
+https://doi.org/10.1016/j.ast.2020.105793
+1270-9638/© 2020 Elsevier Masson SAS. All rights reserved.
+
+Film cooling as an external cooling method is one of the most
+common and useful cooling approaches that is frequently used in
+advanced gas turbine engines [4,5]. In the process of ﬁlm cooling, cooler air from the coolant chamber and within the cooling
+holes located in the surfaces of turbine blades is injected into the
+hot ﬂuid cross-ﬂow stream. The injection of this air into the external boundary layer creates a ﬁlm layer of coolant over the blades,
+which protects the surface from the high temperature mainstream
+ﬂow. In general, the coolant is injected into the mainstream at an
+angle. This reduces both the lift-off of the jet and the mixing of
+the coolant with the mainstream ﬂow at a larger distance from
+the surface. Hence more colder ﬂuid is available to cool a larger
+surface area. However, the interaction between the injected cooling hole ﬂow and the upstream hot ﬂuid ﬂow leads to complicated,
+transient, and irregular vortical structures at the coolant hole exit.
+These vortices are divided in various main groups, such as the
+horseshoe and wake vortices, the jet shear-layer, and the counterrotating vortex pair (CRVP) [6]. It has been found that CRVPs, kidney vortices, have the potential to rotate the ﬂow near the cooling
+
+2
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Nomenclature
+Cw
+D
+DR
+L
+M
+Q cr
+S
+T
+U∞
+e
+p
+q
+t
+x
+y
+
+WALE constant
+Diameter of coolant hole
+Density ratio
+Length
+Blowing ratio
+Second invariant of velocity gradient
+Strain-rate tensor
+Temperature
+Mainstream velocity
+Total energy
+Pressure
+Molecular heat ﬂux
+Time
+Streamwise coordinate
+Wall distance, normal coordinate
+
+hole that enhances the jet lift-off and also divert the cross-stream
+toward the ﬂat plate surface, which can signiﬁcantly reduce the
+ﬁlm-cooling performance [7]. Therefore, in order to promote the
+ﬁlm-cooling effectiveness and optimize the amount of coolant, it is
+essential to investigate in detail the accomplishments of the ﬂow
+physics and thermal behaviors in the ﬁlm-cooling mechanism.
+Recently, a large number of experimental studies have been
+performed to further elucidate the fundamental governing features and complexity of the ﬁlm-cooling ﬂows [8–13]. Sinha et
+al. [14] investigated the inﬂuences of variable density ratios on
+the ﬁlm-cooling performance of a single row of holes located on
+an adiabatic ﬂat plate. They applied different density and blowing
+ratios of the cooling ﬂuid and measured the surface temperature
+at different locations in the lateral and streamwise directions using a thermocouple arrangement. The results indicated that the
+ﬁlm-cooling jet-covered area is dramatically reduced by increasing the momentum ratio and decreasing the density ratio, which
+leads to reduced lateral ﬁlm-cooling performance. The unsteady
+effects of ﬂow patterns on ﬁlm-cooling were experimentally investigated by Fawcett et al. [15] for fan-shaped and cylindrical
+cooling holes. Different unsteadiness and coherent vortices are
+found in the shear layer region between the coolant ﬂow and main
+ﬂow for both types of cooling holes, which have a strong inﬂuence on the ﬁlm-cooling performance. The inﬂuence of upstream
+turbulence intensity on the ﬁlm-cooling effectiveness of antivortex holes was experimentally investigated by Park et al. [8]. They
+found that the coolant-covered area generally increased with increasing blowing ratio. Fraas et al. [16] experimentally investigated
+the inlet geometry effects of the cooling hole on the cooling efﬁciency for a laidback fan-shaped hole. They found that the ﬁlmcooling performance was signiﬁcantly dependent on the hole inlet
+geometry. Despite the development of modern and accurate experimental techniques and devices for measuring the ﬁlm-cooling
+effectiveness, these techniques still have distinct limits, speciﬁcally
+in terms of scale, time, and cost. Consequently, improvements in
+high-performance computers and numerical methods have led to
+computational ﬂuid dynamics (CFD) as a robust appliance for predicting the ﬁlm-cooling effectiveness and ﬂow structures.
+Over the last decade, a variety of numerical methods have been
+applied for ﬁlm-cooling simulations. Direct numerical simulation
+(DNS) [17,18] numerically solves the Navier-Stokes equations and
+resolves the full range of the turbulent length and temporal scales.
+Muldoon and Acharya [18] performed a DNS simulation to determine the effects of cooling jet pulsation on the ﬁlm-cooling performance. They observed that the effectiveness of the overall cooling
+process was enhanced under pulsating jet ﬂow as opposed to con-
+
+z
+
+Lateral coordinate
+
+Greek symbols
+
+
+
+δ
+
+η
+
+Length scale
+Vorticity tensor
+Distance between two consecutive hairpin vortices
+Film-cooling effectiveness
+
+Sub-, superscripts
+
+∞
+c
+f wd
+m
+w
+
+Mainstream
+Coolant
+Forward section
+Metering section
+Wall
+
+stant jet ﬂow at the maximum blowing ratio. However, a very
+small time step and well-resolved ﬁne mesh are needed for the
+DNS numerical model, making it expensive and not suitable for industrial utilization.
+The most common numerical method used to predict ﬁlm-cooling effectiveness is the Reynolds-averaged Navier-Stokes (RANS)
+approach. The RANS approach predicts reliable data regarding the
+mean-ﬂow quantities [19–23]. Fan et al. [21] used the 3D viscous
+steady RANS approach with the standard k − ω turbulence closure
+to predict ﬁlm-cooling performance on the leading edge of the gas
+turbine blade. It was found that, when the diameter ratio of the
+cooling jet holes was increased to 0.1, the intensity of heat transfer reached its maximum value. Walters and Leylek [22] compared
+their numerical simulations to the measurement results for a single row of 3D coolant jets, in which the values of the diameter
+and length of cooling holes were the same as those of the exact
+holes used in real applications. They found that CRVPs at the exit
+of cooling holes are the primary inﬂuence on the ﬁlm-cooling effectiveness. The basic vortical structures are generated from the
+coolant hole, and ﬁlm-cooling effectiveness could be greatly enhanced by controlling these vortices. A three-dimensional RANS
+simulation based on k −  turbulence model was conducted in
+order to show that the ﬁlm-cooling effectiveness of a diffusion
+cooling hole was affected by changing the inclination/orientation
+angle and the length of cooling hole [23]. It was found that the
+k −  turbulence approach could provide precise information on
+the overall ﬁlm-cooling performance; however, the lateral data exhibited differences as compared to the experimental results. While
+the RANS approaches can mostly reproduce the ﬁlm-cooling effectiveness, the certainty of the cooling effectiveness predicted by
+the RANS approach is dependent on the selection of turbulence
+closure. Moreover, due to the transient and complex phenomenon
+during the mixing process of jet and mainstream as well as secondary ﬂows and vortex interactions, the RANS approach cannot
+resolve and capture the details of these kinds of ﬂows.
+In recent years, the transient ﬂow characteristics of ﬁlm-cooling
+have been employed using hybrid RANS/LES methods such as DES
+or SAS. For example, Voigt et al. [24] conducted ﬁve different
+steady and unsteady turbulence closures in order to simulate the
+ﬁlm-cooling process within a cylinder-shaped hole located on a ﬂat
+plate including conjugate heat transfer. They found that the unsteady numerical simulations generally predicted the ﬁlm-cooling
+performance better than steady simulations, but that the SAS
+model could resolve more turbulent structures than the URANSSST calculations. Lin et al. [25] applied DES and SAS approaches to
+calculate the ﬁlm-cooling eﬃciency and aerodynamic performance
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+in a cylindrical cooling hole. They observed various conﬁgurations
+in the cross-ﬂow jet region during the formation vortical structures. First, small vortices were generated from the cooling hole
+exit, which then merged into each other to create a larger vortex.
+These large vortices were then dissipated into heat and velocity
+changes in the downstream of the main channel. The SAS approach
+showed consistent ﬁlm-cooling performance as compared to that
+of the experimental data only near the coolant hole exit. Although
+hybrid methods can predict the ﬂow ﬁeld with reasonable accuracy, the ﬁlm-cooling performance and heat transfer characteristics
+are still not consistent with the experimental data. Therefore, since
+the jet/cross-ﬂow is inherently unsteady and the turbulence structures in the mixing region are highly anisotropic, a high-ﬁdelity
+approach is necessary to simulate the ﬁlm-cooling process.
+Over the last decade, LES has been extensively used for complex
+ﬂow conﬁgurations, as it has been proven to precisely and reliably
+predict highly unsteady vortical and anisotropic turbulence ﬂows
+[26–29]. The high resolution predictions of the resolved length
+and time scales of the ﬂow ﬁeld led to LES as a CFD tool for
+more comprehensive investigations of the appropriate mean-ﬂow
+quantities and instantaneous quantities for ﬁlm-cooling prediction
+[30,31]. Wang et al. [30] performed LES simulation for heat transfer analysis of the ﬂow ﬁeld in the converging slot holes at various
+blowing ratios. They observed that kidney and anti-kidney vortices
+are the main vortical structures in which the kidney vortices deteriorate ﬁlm-cooling performance. Sakai and Takahashi [32] performed various LES simulations of coolant ﬂow through cylindrical
+holes into a cross-ﬂow in order to ﬁgure out the ﬁlm-cooling process on a blade surface. They showed that the jet vortices change
+signiﬁcantly with varying density ratios. At a low density ratio,
+hairpin vortices are generated far from the coolant hole exit, while
+at relatively large density ratios, the generations of these vortices
+are prevented. While there have been various valuable researches
+based on LES application in ﬁlm-cooling prediction, most of them
+have been primarily focused on the cylindrical hole conﬁgurations. There have only been a few LES studies on different hole
+geometries such as fan-shaped hole [29,33]. Since most numerical simulations have been focused on the cylindrical cooling hole,
+studies on the ﬂow ﬁelds of fan-shaped cooling holes have been
+very rare, therefore, comprehensive research elucidating the ﬂow
+structures and their effects on the mixing process in the crossﬂow and ﬁlm-cooling performance of the shaped holes is needed.
+Although, the transient density gradient, transient pressure ﬂuctuations, and velocity propagations in the time/space domains within
+a fan-shape hole geometry are important factors in characterization of unsteady behaviors caused by interactions of jet and main
+stream ﬂows, to the best of authors knowledge, there has been
+almost no research to address them. Moreover, the authors have
+introduced the unsteady ﬂow pulsations along the cooling hole as
+the main source of the unsteadiness in the mixing region, which
+was not found in the literature.
+In this paper, the numerical simulation was conducted in order to predict the ﬁlm-cooling process of a cross-ﬂow through
+a fan-shaped hole. Therefore, the three-dimensional compressible
+LES approach in a fan-shape hole for a ﬂat plate was conducted
+using commercial software ANSYS CFX V18.0. Additionally, to the
+best of our knowledge, SAS and DES numerical simulations for a
+fan-shaped hole were also carried out for the ﬁrst time in order to
+evaluate the abilities of the SAS and DES methods to predict the
+ﬁlm-cooling effectiveness and compared the results with the data
+predicted by the LES. The computational results were validated by
+the measurements in terms of the ﬁlm-cooling effectiveness on the
+ﬂat plate, as well as the time-averaged ﬁlm-cooling performance
+in the lateral direction for two different blowing ratios. Furthermore, the shape and conﬁguration of the CRVP and hairpin vortices
+formed by the interaction of the jet and cross-ﬂow were predicted
+
+3
+
+Fig. 1. Details of laidback fan-shaped hole used in the present study.
+Table 1
+Speciﬁcations of fan-shaped cooling hole.
+Film cooling hole diameter (D)
+Injection angle
+Lm / D = 3
+L f wd / D = 6
+Lateral expansion angle (βlat )
+Forward expansion angle (β f wd )
+
+1.5 mm
+35 deg
+3
+6
+10 deg
+10 deg
+
+by the LES turbulence model. In this paper, we have concentrated
+on assessing the transient ﬂow ﬁeld behaviors to determine the
+physical unsteady vortical structures in the ﬁlm-cooling region.
+Therefore, the transient velocity disturbances along the fan-shaped
+hole and streamwise direction on the ﬂat plate were evaluated in
+the temporal and spatial domains to show the existence of velocity
+waves and their convective velocity. Additionally, time-series data
+of instantaneous velocity and vortical structures were investigated
+to conﬁrm the generation mechanism of hairpin vortices in the
+jet and cross-ﬂow interaction regions, which are key factors for
+improving the ﬁlm-cooling effectiveness. The results of time/frequency analysis of the pressure oscillation signals at various monitoring points in the computational domain showed the dominant
+source of unsteadiness and disturbances in the ﬁlm-cooling region
+and jet pipe ﬂow. It was shown that the presented LES method is
+a powerful CFD approach for not only predicting accurate and consistent solutions as compared to the experimental data but also
+capturing the turbulence structures. The LES results also present
+helpful and detailed knowledge about the three-dimensional vortical ﬂow structures within the main channel, which can be used to
+optimize the cooling hole geometry.
+2. Numerical method
+2.1. Test setup
+The test case is a 35-10-10 fan-shaped hole which is designed and tested by the Heat and Flow Control Laboratory, Korea
+Aerospace University, Republic of Korea. Fig. 1 shows the details of
+the laidback fan-shaped cooling holes used in the current study.
+The cooling hole is inclined at an angle of 35 degrees with respect to the mainstream ﬂow, and the diameter of coolant hole, D,
+is 1.5 mm. Table 1 summarizes the speciﬁcations and dimensions
+of the fan-shaped hole. The forward expansion angle in each direction is 10 degrees, as is the lateral expansion angle. This expansion
+reduces the momentum of the cooling jet, and the jet ﬂow is attached to the ﬂat plate surface, which leads to lower aerodynamic
+losses and greater lateral coverage of the surface. The metering
+section length is set at L m / D = 3 and the length of the forward
+section is L f wd / D = 6. The ﬁlm-cooling effectiveness at the plate
+surface is measured using the pressure-sensitive paint technique.
+2.2. Computational domain and grid
+Fig. 2(a) shows the numerical domain consisting of the cooling gas plenum, the coolant fan-shaped hole, and the mainstream
+
+4
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 2. (a) Total view of computational domain, (b) schematic of fan-shaped hole and ﬂuid domain conﬁgurations.
+
+Fig. 3. Computational grid: (a) overall view on the midspan plane, (b) cutting plane at the hole exit, (c) cutting plane at the hole inlet; (d) y + contour at the ﬂat plate
+surface. (For interpretation of the colors in the ﬁgure(s), the reader is referred to the web version of this article.)
+
+channel. The plenum chamber is a rectangular box, and the dimensions of the box are 42D × 20D × 10D in the x, y, and z
+directions, respectively. The x, y, and z axes are respectively considered to be streamwise, vertical, and spanwise with respect to
+the ﬂat plate of the main ﬂow channel. The streamwise length of
+the mainstream channel is 95D, the height is 30D, and the length
+is 10D in the lateral direction. The center of the cooling hole exit
+is placed 35D away from the mainstream channel inlet in order
+to minimize the effect of the inlet boundary condition on the ﬂow
+ﬁeld in the mixing zone as well as to have suﬃcient distance to
+develop the main stream boundary layer. Fig. 2(b) shows details
+of the computational domain dimensions. Fig. 3 depicts a threedimensional view of the numerical grid. The total mesh elements
+used for the computational calculations was 61 multi-block structured hexahedral meshes which consisted of 6,115,000 grid points.
+Fine mesh is used near the ﬁlm-cooling hole exit in the streamwise direction so as to ensure that the interactions between the
+ﬁlm-cooling hole and the mainstream ﬂows can be accurately captured.
+
+In order to preserve the effect of the boundary layer, very ﬁne
+grids are applied at all of the wall surfaces. A high quality grid
+is needed near the surfaces because of the very small ﬂow scales.
+Consequently, the value of y + on the ﬂat plate and cooling hole
+surfaces is kept at around 0.3, in which the y + distribution on
+the ﬂat plate surface is shown in Fig. 3(d). The maximum x+ in
+the streamwise direction is about 40, and the maximum  z+ in
+the spanwise direction is about 10 which are both in the required
+range for LES simulation.
+2.3. Governing equations and boundary conditions
+The ANSYS CFX V18.0 solver is used to solve the 3D transient Navier-Stokes equations. The basic governing equations for
+the LES simulations are the spatial domain-ﬁltered full NavierStokes equations. The turbulent vortical structures that are smaller
+than the mesh dimension or speciﬁc length-scale are effectively
+ﬁltered out during the numerical simulations. The spatial-ﬁltered
+Navier-Stokes and energy equations for a compressible ﬂow can be
+expressed as:
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+5
+
+of the mainstream channel. The numerical simulations are carried
+out at a constant density ratio D R = 2 and two different blowing
+ratios, M = 1 and 2, which are calculated using Eqs. (7) and (8),
+respectively.
+
+Fig. 4. Proﬁles of mainstream velocity and turbulence intensity.
+
+∂ ρ ∂(ρ ui )
++
+=0
+∂t
+∂ xi
+
+(1)
+
+∂ τiLj E S
+∂ σi j
+∂
+∂p
+∂(ρ ui )
++
+(ρ ui uj ) = −
++
++
+∂t
+∂xj
+∂ xi
+∂xj
+∂xj
+∂H j
+∂
+∂(ρ
+e)
++
+(ρ
+e + p )uj =
+∂t
+∂xj
+∂xj
+
+(2)
+(3)
+
+where ρ is density and u, p, and e are velocity, pressure, and total
+energy, respectively. The subgrid scale stress and molecular viscous
+stress tensors are denoted by τi j and σi j , respectively.
+
+i uj )
+τi j = −ρ (u
+i ui − u
+
+(4)
+
+H j includes the ﬂux of energy generated by the thermal energy
+and work done by total stress:
+
+H j = Q Lj E S + q j + (τiLj E S + σi j )
+ui
+
+(5)
+
+where Q j is the subgrid-scale heat ﬂux and q j is the molecular heat ﬂux. For the LES simulation, the large-scale turbulent
+structure is directly calculated, while the small-scale turbulent
+structures are predicted by the suitable subgrid-scale (SGS) model.
+In this paper, the WALE model [34] (wall-adapted local eddyviscosity) is applied, and the subgrid-scale eddy-viscosity is modeled as:
+
+μsgs = ρ (C w )2
+
+( S dij S dij )3/2
+( S¯i j S¯i j )5/2 + ( S dij S dij )5/4
+
+(6)
+
+where the WALE constant and length scale are denoted by C w and
+, respectively and S dij denotes the traceless symmetric part of the
+square of the velocity gradient tensor.
+The non-slip adiabatic wall condition is selected on all of the
+solid wall surfaces. The translational periodic interface models are
+set on both sides of the channel and plenum chamber ﬂows so
+as to have a condition similar to that of the multi-passages in the
+experimental apparatus. Fig. 4 shows the velocity and turbulent
+intensity proﬁles used in the experimental setting, which are used
+as the inlet conditions at the main ﬂow channel inlet. The velocity,
+turbulent intensity and temperature of mainstream are 20 m/s, 1%,
+and 300 K, respectively. The mass ﬂow rate boundary condition is
+applied on the inlet of the coolant chamber, and turbulent intensity at the inlet of plenum chamber is set at 1%, respectively. Air
+as an ideal gas is applied for both coolant and main stream ﬂows.
+The static pressure at atmospheric condition is used at the exit
+
+D R = ρc /ρ∞
+
+(7)
+
+M = ρc u c /ρ∞ U ∞
+
+(8)
+
+A high-resolution scheme is applied for discretization of the
+convection terms [35] due to the reduction of the numerical diffusion error. For time discretization, the second-order backward
+Euler scheme is adopted. A converged RANS solution is applied as
+an initial data for the unsteady LES simulations in order to reduce the calculation cost. The k −  turbulence closure is chosen
+to conduct steady simulation based on its performance and good
+agreement with previously published measurement results of cooling holes [20,36]. A steady simulation is considered as a converged
+solution when the residual of the primary variables is less than
+10−5 and the temperature ﬂuctuations at the monitoring points located in the main ﬂow after the coolant hole remain unchanged for
+1000 iterations. For unsteady simulations, the proper time-step is
+an essential factor for resolving an accurate solution of the turbulent scales, as well as considering the limitations of computational
+resources. A time step of 1.5 × 10−6 (t = 0.02D /U ∞ ) is selected
+for LES simulations so as to keep the CFL number under 1. Ten
+sub-iterations are conducted for each time step, and the unsteady
+calculation is performed to achieve the time-dependent and periodic oscillations of the ﬂow-ﬁeld quantities at various monitoring
+points in the computational domain. The computational simulations are carried out in parallel on 140 processors, and the time of
+numerical simulation for each LES simulation is about 550 h.
+2.4. Turbulence model validation
+The appropriate turbulence closure is a crucial factor in numerical simulations of the ﬁlm-cooling process, particularly for
+the fan-shaped cooling holes. In order to obtain accurate and reasonable data from the computational simulations, various typical
+turbulence models, speciﬁcally the SAS, DES, and LES models, are
+used for blowing ratio M = 1. The signiﬁcance of the SAS approach
+is found on the inclusion of the extra term in the turbulence model
+equations, and this extra term is a function of the von Karman
+length-scale [37,38]. Hence, the URANS SAS approach can be used
+to resolve the turbulent structures in unsteady zones in the same
+way as the LES model, and simultaneously behaves like the common RANS model in the steady zones.
+DES is another modiﬁed hybrid RANS/LES turbulence model
+which has recently been used in a wide range of industrial and
+scientiﬁc applications [39]. In the DES approach, a RANS model is
+activated within the stable and moderate separated ﬂows, and the
+LES equations are applied wherever the turbulent length-scale is
+larger than the grid spacing. Although the DES turbulence model
+has in numerous merits, there are some issues regarding the identiﬁcation of various RANS and LES zones during the numerical
+simulation. Fig. 5 compares the time-averaged ﬁlm-cooling effectiveness contour on the surface of the ﬂat plate for the computational solutions of three various turbulence closures and the
+corresponding experimental results at M = 1. The adiabatic ﬁlmcooling effectiveness, an indicator of temperature reduction by the
+ﬁlm-cooling, is expressed as:
+
+η=
+
+T∞ − T w
+T − Tc
+
+(9)
+
+where T ∞ , T w , and T c are the upstream, wall, and cooling gas
+temperatures, respectively. In order to ensure a reasonable comparison between the measurement and computational data, the ﬂow
+
+6
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 5. Comparison of ﬁlm-cooling effectiveness on the ﬂat plate at M = 1 between
+the experimental measurements [34] and computational results for various turbulence models.
+
+The DES results predict higher ﬁlm-cooling performance than the
+SAS results. Moreover, the ﬁlm-cooling coverage toward the downstream obtained by the DES is wider than that of the SAS model.
+Regarding the DES model, two regions with higher ﬁlm-cooling
+performance magnitude are found near the coolant hole. However,
+among the turbulence models examined, the LES approach obtains
+the most accurate ﬁlm-cooling performance as compared to the
+measurement results. In addition, in the case of the LES model,
+the cooling eﬃciency is reduced toward downstream (x/ D > 10),
+which is consistent with the measurement results.
+Furthermore, the experimentally-obtained lateral-averaged surface ﬁlm-cooling performance is compared with the simulated
+ﬁlm-cooling performance for the different turbulence closures.
+Fig. 6 depicts the ﬁlm-cooling performance distribution, which is
+averaged in the spanwise direction with a width of 10D for both
+the experimental and numerical data at M = 1. From the hole exit
+up to x/ D = 5, the cooling performance of the SAS solution is relatively consistent with the experimental results; however, in the
+x/ D > 5 region, it is totally diverged from the experimental data.
+A similar trend is also observed in the case of the DES result. This
+over prediction could be induced by the restrictions of the SAS and
+DES models in predicting the complex and intense turbulent ﬂows
+in the interaction area of the main and coolant ﬂows, particularly
+in the face of fan-shaped holes due to the separation bubbles and
+non-uniform velocity proﬁles of the jet ﬂows near the coolant hole
+exit [40]. Fig. 6 conﬁrms that the LES model predicted the cooling
+performance proﬁle in the lateral direction well as compared with
+the experimental data.
+3. Results and discussions
+3.1. Time-averaged ﬂow ﬁeld
+
+Fig. 6. Lateral-averaged ﬁlm-cooling effectiveness at M = 1 for various turbulence
+models; experiment and computational data.
+
+quantities should be taken as averages with respect to time so
+as to obtain time-independent and periodic solutions. Hence, the
+ﬂow ﬁeld statistical data is monitored in the whole domain and
+the ﬂow ﬁeld is taken as an average of time during the last 6T
+(T = L /U ∞ , where L and U ∞ are the mainstream channel length
+and mainstream velocity, respectively).
+As shown in Fig. 5, the SAS and DES turbulence models both
+over predict the ﬁlm-cooling performance, particularly near the
+exit of the cooling hole, as compared to the experimental data.
+
+In order to observe the inﬂuences of the blowing ratio the
+ﬁlm-cooling performance characteristics and the consistency of
+the computational results, LES simulation for blowing ratio M = 2
+was also conducted. Figs. 7 and 8 compare the time-averaged and
+lateral-averaged ﬁlm-cooling effectiveness, respectively of the measurement data and LES solutions at the two blowing ratios. Fig. 7
+shows that, for both numerical and experimental data, increasing
+the blowing ratio leads to a wider and longer ﬁlm-cooling coverage. This phenomenon was also observed in Fig. 8 for laterallyaveraged data along the mainstream ﬂow direction. In addition,
+as shown in Figs. 7 and 8, the ﬁlm-cooling effectiveness distribution and averaged data in the spanwise direction achieved by the
+present LES model were well matched with those of the experiments. It could thus be concluded that the present computational
+method can properly predict the heat transfer characteristics of the
+complicated unsteady mixing ﬂow in a fan-shaped hole geometry
+for various blowing ratios.
+
+Fig. 7. Film-cooling effectiveness on the ﬂat plate for various blowing ratios; experimental measurements and LES results.
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 8. Lateral-averaged ﬁlm-cooling effectiveness for various blowing ratios; experiment and LES results.
+
+Fig. 9(a) depicts the time-averaged temperature distribution on
+the midspan cutting plane (z/ D = 0) for two different blowing ratios. When M = 2, the thermal boundary layer thickness is thicker
+than that of the blowing ratio 1, indicating better cooling. In addition, it is observed that, for M = 2, the inﬂuence of the hole ﬂow
+jet on the boundary layer is enhanced and the thermal boundary
+layer thickness is increased, mostly in the downstream far from
+the hole exit. Fig. 9(b) shows the time-averaged velocity contour
+on midspan plane at different blowing ratios. As shown in the ﬁgure, a separation bubble (recirculation zone) is generated on the
+leeward side of the hole wall, attributed to the contraction effects of the cooling hole inlet between the plenum and fan-shaped
+hole [11]. In the case of fan-shaped cooling holes, this generated
+separation bubble is signiﬁcantly dependent on both, the forward
+expansion angle of the cooling hole and the local velocity (blowing ratio). At a constant blowing ratio, it could be expected as the
+forward expansion angle is increased, the separation bubble on the
+leeward side of the cooling hole becomes larger. A larger separation bubble pushed the jet toward the windward side of the hole
+which results in the coolant jet interacting with the hot ﬂow near
+the leading edge of the cooling hole exit. However, it should be
+noticed that a very large expansion angle can reduce the momen-
+
+7
+
+tum of the coolant jet. On the other hand, at a constant expansion
+angle, since the blowing ratio is increased from 1 to 2, the low
+momentum ﬂow regions adjacent to the inlet of the coolant hole
+is decreased and coolant jet becomes stronger at the cooling hole
+exit. A stronger jet at M = 2 compared to M = 1 leads to the improvement of the momentum exchange between the coolant jet
+and the mainstream boundary layer, as well as the attachment of
+more coolant on the ﬂat plate surface, which results in a longer
+and wider ﬁlm-coverage toward downstream.
+The development of ﬁlm-cooling performance distribution at
+different cutting planes along the streamwise direction (x/ D = 1, 2,
+5, and 10) for two blowing ratios is shown in Fig. 10. From an x/ D
+of 1 to 10, it is observed that the cooling performance is reduced
+in both cases, due to the mixing of the mainstream hot gas with
+coolant and diffusion process. In the case of M = 2, the magnitude
+of ﬁlm-cooling effectiveness is higher than that when M = 1, and
+coolant covers a larger area in the normal direction ( y / D ∼ 2 for
+blowing ratio 2 and y / D ∼ 1 for blowing ratio 1). Moreover, when
+the blowing ratio increases, the ﬁlm-coverage in the spanwise direction is wider, and the coolant gas is distributed more uniformly
+in the spanwise direction.
+Fig. 11 shows the time-averaged vorticity distribution at different planes in the cooling hole along the streamwise direction for
+the two blowing ratios. The locations of the cross-section cutting
+planes are shown in Fig. 11. The vorticity contour on the crosssection plane (1) shows the formation of contra-rotating vortices
+on the leeward side of the hole wall generated by the interaction
+of the plenum ﬂow and inlet hole shape (hole entrance contraction
+effect). These vortices are developed along the streamwise direction within the metering section of the coolant hole, as shown
+in the cross-section plane (2). In the forward section of the hole,
+plane (3), these developed vortices become larger due to the expansion of the hole side walls. Meanwhile, due to the separation
+bubbles near the leeward side, these vortices are pushed toward
+the windward wall of the coolant hole. Further downstream in
+cross-section planes (4) and (5), these vortices are stretched, expanded, and fully mixed due to the induced rotational ﬂows and
+separation ﬂow within the cooling hole. The strengths of these vortices gradually decay from the inlet to outlet of the cooling hole.
+Comparing of vorticity contours at different cross-section planes
+for blowing ratios 1 and 2 yields that, as the blowing ratio in-
+
+Fig. 9. Time-averaged distributions on the midspan plane (z/ D = 0) for M = 1 and M = 2: (a) temperature, (b) velocity.
+
+8
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 10. Time-averaged ﬁlm-cooling distributions at different locations in the streamwise direction: (a) M = 1, (b) M = 2.
+
+Fig. 11. Time-averaged vorticity distributions at different cross-sections of cooling hole; top: M = 1, bottom: M = 2.
+
+creases, the sizes and magnitudes of the contra-rotating vortices
+are increased, which serve as an important source of CRVPs in the
+mainstream channel [6].
+3.2. Time-series ﬂow ﬁeld
+Figs. 12(a) and (b) illustrate the instantaneous ﬁlm-cooling
+performance distributions and vorticity at the ﬂat plate surface ( y / D = 0), respectively, for the two different blowing ratios.
+Fig. 12(a) shows that a higher blowing ratio leads to the formation
+of a higher local cooling performance region near the hole leading
+edge at the ﬂat plate surface. Moreover, the higher blowing ratio showed larger ﬁlm-cooling performance along the mainstream
+up to x/ D ∼ 20 as compared to the low blowing ratio. Fig. 12(b)
+shows that there are various contra-rotating vortices and vortex
+
+streaks at the ﬂat plate surface toward the downstream, which are
+related to the hairpin vortices and vortices generated in the wake
+region of the cooling hole. These vortex streaks are extended in the
+same direction as the mainstream, which are generated by the entrainment and reorientation of the mainstream boundary layer. For
+blowing ratio M = 2, the magnitude of vorticity contour is larger,
+especially at the cooling hole exit, than that when M = 1, due to
+the increased interaction between the jet and channel ﬂows. In addition, it can clearly be observed that, when the blowing ratio is
+increased, the ﬁlm-coverage area becomes wider in the spanwise
+direction, resulting in better cooling performance.
+Fig. 13(a) shows the instantaneous temperature distributions on
+the midspan plane for M = 1 and 2. As shown in the ﬁgure, on
+the windward side of the coolant hole, interactions can be clearly
+observed between the main channel and coolant jet ﬂows. This
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+9
+
+Fig. 12. Instantaneous distributions on the ﬂat plate surface ( y / D = 0) at M = 1 and M = 2: (a) ﬁlm-cooling effectiveness, (b) vorticity.
+
+Fig. 13. Instantaneous distributions on the midspan cutting plane (z/ D = 0) for different blowing ratios M = 1 and M = 2: (a) temperature, (b) vorticity.
+
+interaction, called shear layer, generates unsteadiness, which becomes continuously unstable along the mainstream ﬂow because
+of Kelvin-Helmholtz instability. Far from the cooling hole exit, the
+temperature distribution shows a wavy pattern, and the peaks of
+these waves are caused by the heads of hairpin vortices. By increasing the blowing ratio, these vortices generated by the jet
+boundary layer become stronger and more unsteady, and the thermal boundary layer thickness on the ﬂat plate surface, particularly
+far from the coolant leading edge, is increased. Fig. 13(b) shows
+that the instantaneous spanwise component of vorticity contours
+on the midspan plane for M = 1 and 2. It can clearly be seen
+that the separation regions are generated on the leeward of the
+cooling hole near the hole entrance. At blowing ratio 1, these separation bubbles are larger than the high blowing ratio. The upstream
+boundary layer vortices, clockwise vorticity, are indicated in the
+ﬁgure, and are mixed with counter-clockwise vortices generated
+on the windward side. This interaction results in unsteady ﬂow
+behavior near the hole exit. In addition, the vortical structures
+in the main stream near the ﬂat plate after the exit of the hole
+correspond to the head of hairpin vortices. Fig. 13(b) shows that,
+by increasing the blowing ratio, there are a lot of rotational ﬂow
+structures within the cooling hole, and the hairpin vortices generated in the far-ﬁeld from the hole exit are larger.
+Kidney vortices (CRVPs) are the downstream demonstration of
+the vortices, which are initially generated within the side wall
+
+boundary layer of the coolant hole passage. They consisted of a
+pair of vortices formed after the interactions between the coolant
+and the mainstream ﬂows. These vortical structures rotate in a direction that brings the hot gas (mainstream) under the jet, which
+results in reduced cooling effectiveness. Moreover, due to the rotational motion of these vortices, the induced velocity makes the
+jet lift-off the ﬂat plate surface further. However, with fan-shaped
+holes, these paired vortices seem to move away from each other,
+and their induced velocity is suppressed. Fig. 14 shows the instantaneous vorticity (x-component) contours at various streamwise cutting planes (x/ D = 1, 2, 5, and 10) for the two blowing
+ratios. These kidney vortices are clearly indicated in Fig. 14 at cutting plane x/ D = 1 for both blowing ratios M = 1 and 2, which
+conﬁrm that the large lateral distance has separated the kidney
+vortices. Additionally, at cutting plane x/ D = 1, upper-deck antikidney vortices are generated, due to the induced ﬂow of kidney
+vortices. However, toward downstream, their coherent structures
+break down due to various vortical structures generated by the jet
+and mainstream interaction, and the ﬂow becomes more complex
+and unsteady. As x/ D increases, the vortical structures become
+larger and stretched in the vertical direction, and hairpin vortices
+are formed. In the case of M = 2, as compared to M = 1, not only
+are the magnitudes and sizes of the vortical structures bigger, but
+the anti-kidney vortices are also spread more in the lateral direction, which results in a better cooling performance. Fig. 14 shows
+
+10
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 14. Instantaneous vorticity distributions at different locations in the streamwise direction: (a) M = 1, (b) M = 2.
+
+Fig. 16. Instantaneous density gradient contours on the midspan plane (z/ D = 0):
+(a) M = 1, (b) M = 2 (δ is the distance between the two consecutive hairpin vortices).
+Fig. 15. Forests of Hairpin vortices visualized by the instantaneous iso-surface of
+Q cr contoured by velocity magnitude: (a) M = 1, (b) M = 2.
+
+that the instantaneous vortical structures consisting of kidney and
+anti-kidney vortices are naturally asymmetric [7,41].
+Fig. 15 illustrates the Q cr [42] iso-surfaces of coherent vortices
+and the three-dimensional ﬂow structures inside the cooling hole
+and passages which are colored by the velocity magnitude for the
+two blowing ratios. Fig. 15 shows the presence of hairpin-shaped
+vortical structures on the ﬂat plate surfaces, called a hairpin forest.
+This clearly shows that, when the blowing ratio is increased, the jet
+velocity magnitude at the hole entrance is increased as well. Moreover, in the case of a higher blowing ratio, the number of hairpin
+vortices in the spanwise direction was increased as compared to
+the case with the low blowing ratio, and due to the higher jet velocity, the hairpin vortices also become tighter.
+In CFD research ﬁeld, in order to observe the expansion waves
+and unsteady vortices in the ﬂow ﬁeld, a density gradient is typ-
+
+ically used. Fig. 16 shows the instantaneous density gradient contour on the midspan plane (z/ D = 0) for the two blowing ratios.
+The jet shear layer vortices are clearly shown in Fig. 16 for both
+M = 1 and 2, which formed at the cooling hole exit near the windward side. This phenomenon is caused by the separation of ringshaped shear layers from the edges of the exit hole and leads to
+the Kelvin-Helmholtz instability. It can be seen that the sizes and
+shapes of hairpin vortices are well established in the main channel
+and are disorderly distributed along the streamwise direction. As
+the blowing ratio is increased, the hairpin vortices on the ﬂat plate
+become larger in the vertical direction, and the distance between
+the two consecutive hairpin vortices, as indicated by δ in Fig. 16,
+is decreased (δ1 > δ2 ). In addition, increasing the blowing ratio results in the formation of small-scale vortical structures near the
+exit of the coolant hole [29]. This conﬁrms that, with increasing
+blowing ratio, the coolant covered a larger region on the surface
+of the ﬂat plate, due to the increasing shedding frequency of de-
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+11
+
+Fig. 17. Instantaneous iso-surfaces of Q cr colored by velocity magnitude during period of T for blowing ratio M = 1: (a) T /6, (b) 2T /6, (c) 3T /6, (d) 4T /6, (e) 5T /6, (f) T (T
+is based on blowing ratio M = 1; vertical lines show the original positions of the hairpin vortices).
+
+parted vortical structures through the coolant hole outlet, which
+leads to improved cooling performance. Moreover, there are some
+vortical structures, high density gradient regions, in the forward
+section of the cooling hole, which may be the source of unsteadiness and instabilities near the hole exit (as indicated by red circles
+in Fig. 16).
+Another important observation regarding the ﬂow instabilities
+can be presented in Figs. 17 and 18 for blowing ratios 1 and 2, respectively, whereas the time-series of the instantaneous iso-surface
+of Q cr contoured by velocity magnitude from the side view for period T (T = 1.5 × D /U c , D is the coolant hole diameter, and U c
+is the jet velocity). It should be noted that, since T is different
+for each blowing ratio, in order to compare the results of different blowing ratios, T is calculated based on the jet velocity at
+M = 1, which means that M = 2 period is half of the period of
+blowing ratio 1. Fig. 17(a) (t = T /6) shows the formation of the
+jet vortical ﬂow structure, as shown in the blue color region in
+1.
+the ﬁgure, at the forward section inlet of the hole indicated by 
+It can also be observed that the shear layer vorticity is generated
+and formed near the hole exit at the windward side (indicated
+1 ). The formation of a coolant jet structure and shear layer
+by 
+vorticity near the hole exit are developed and can be followed in
+2 . Figs. 17(c)-(e)
+Fig. 17(b) (t = 2T /6) by tracking the locations of 
+show that these vortical ﬂow structures are repeatedly developed
+
+3,
+4 and
+and convected in the streamwise direction (indicated by 
+5 ). Fig. 17(f) shows that new vortical ﬂow structures, as indicated
+
+1 , are generated near the inlet of the forward section and
+by 
+the windward side of the exit hole, respectively. Therefore, these
+ﬂow structures are repeatedly generated and propagated downstream, which verify the existence of a ﬂow pulsation behavior
+inside the cooling hole, which signiﬁcantly affects the unsteadiness
+and instabilities of the mainstream ﬂow and jet ﬂow interactions.
+In addition, the generation, formation, development, and convection of hairpin vortices are clearly observed in Fig. 17. The exit jet
+from the coolant hole is turned outward in the spanwise direction
+due to the mainstream ﬂow in the channel at the top of the jet,
+which operates as a wall and pushes the boundary layer of the jet.
+Meanwhile, the high momentum mainstream surrounding the jet
+again drives the jet to roll. Hairpin vortices are clearly observed
+A to 
+D . Figs. 17(b)-(e) show
+in Fig. 17(a) and are labeled as 
+how the hairpin vortices are developed and simultaneously convected downstream in the wake region of the cooling hole. These
+A, 
+B, 
+C , and 
+D
+can be tracked by following the positions of 
+presented by vertical dashed lines. The hairpin vortical structures
+are stretched in the mainstream direction as the hairpin vortices’
+heads travel faster than their legs. Far from the coolant hole exit,
+these hairpin vortices are broken into small vortices and spread
+out in the streamwise direction by the mainstream momentum.
+
+12
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 18. Instantaneous iso-surfaces of Q cr colored by velocity magnitude during period of T for blowing ratio M = 2: (a) T /6, (b) 2T /6, (c) 3T /6, (d) 4T /6, (e) 5T /6, (f) T (T
+is based on blowing ratio M = 1; the initial positions of the hairpin vortices are indicated by the vertical lines).
+
+For the higher blowing ratio, as shown in Fig. 18, the characteristics of ﬂow ﬁeld within the coolant hole and formation procedure
+of hairpin vortices are similar to those of the lower blowing ratio;
+however, the magnitude of jet velocity inside the hole is higher
+and the separation bubbles near the leeward side of the hole are
+1, 
+2 , and 
+3 in Figs. 18(a)smaller. Moreover, as indicated by 
+(c), the formation period of vortical structures at the inlet of the
+forward section of the hole is half of the period of blowing ratio
+M = 1 which means that the vortical structures are periodically
+generated faster because of the higher jet velocity. A new vortical
+1 in Fig. 18(d), and
+ﬂow is generated at t = 4T /6, as indicated by 
+
+
+2 and 
+3 in Figs. 18(e) and (f). Since
+can be followed by tracking 
+the blowing ratio is increased, it can also be observed that the
+hairpin vortices are larger and extended further in the vertical direction. They are stable and convected toward downstream by the
+mainstream ﬂow, and their spacing seems to be closer, resulting
+in more ﬁlm-coverage on the ﬂat plate surface. A truly irregular
+ﬂow structure is observed in the far downstream due to the mainstream ﬂow unsteadiness, and the hairpin vortices are broken into
+small structures and dissipated during the mixing process with the
+mainstream, phenomena that have also been observed by other researchers [27,43].
+Figs. 19(a) and (b) show the evolution of the pressure gradient
+distributions with time on the midspan plane for blowing ratios 1
+
+and 2, respectively, in order to see the effects of pulsating behavior
+of the cooling hole ﬂow on the ﬂow structure in the mainstream
+channel. Lower (blue color) and higher (red color) pressure gradient zones are repeatedly caused by the pulsating ﬂow at the inlet
+of the cooling hole. These non-uniform vortical structures developed within the cooling hole generate the transient ﬂow in the interaction region with the mainstream ﬂow. As shown in Fig. 19(a),
+for blowing ratio 1 at time t 0 , the higher pressure gradient area
+1 ) is visible near the windward side, which propagates down(
+stream by the coolant ﬂow. This can be tracked at t 0 + T to t 0 + 4T
+1 . These periodic vortical structures
+by following the positions of 
+are subsequently generated and convected toward downstream, as
+2, 
+3, 
+4 , and 
+5 during the 4T time period. In the
+indicated by 
+case of higher blowing ratio, these periodic lower and higher pressure gradients are also observed; however, their formation periods
+1 -
+9 ) are half of those of the low blowing ratio. Fig. 19 shows
+(
+the generation of periodic pulsating ﬂow within the hole which is
+convected to the mainstream channel and mixed with mainstream
+ﬂow, and conﬁrms the signiﬁcant inﬂuences of the jet on the channel ﬂow pattern downstream of the hole.
+The distributions of velocity magnitude on the monitoring line
+located at y / D = 0.1 and z/ D = 0 (near ﬂat plate surface) along
+the streamwise direction in the main channel with respect to the
+period of jet, T (1.5 × D /U c ), for various blowing ratio 1 and 2
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+13
+
+Fig. 19. Instantaneous pressure gradients at midspan plane during period of 4T : (a) M = 1, (b) M = 2 (T is based on blowing ratio M = 1).
+
+Fig. 20. Time/space distributions of unsteady velocity on the midspan monitoring line near the ﬂat plat surface along the streamwise direction: (a) M = 1, (b) M = 2 (T is
+the jet period based on blowing ratio 1).
+
+are shown in Fig. 20. Note that T is the jet period for blowing
+ratio 1, and the vertical axis shows the normalized streamwise
+coordinate normalized by the diameter of the cooling hole. The
+magnitude of velocity is continuously decreased along the streamwise direction, which certainly conﬁrms the diffusion process. For
+both blowing ratios, the velocity magnitude is higher in the hole
+exit region −4.5 < x/ D < 0, as indicated by L in Fig. 20(a), which
+is caused by the coolant ﬂow; meanwhile, in the case of M = 2, as
+shown in Fig. 20(b), the velocity magnitude is signiﬁcantly higher
+
+than that of the blowing ratio 1. Moreover, this high-velocity region at the hole exit has more ﬂuctuations, due to the interaction
+of the coolant and channel ﬂows, and higherturbulence level. These
+velocity ﬂuctuations are caused by the unstable ﬂow and will propagate in the main channel toward downstream, due to the hyperbolic features of the velocity waves. These velocity waves are called
+jet velocity waves and are evident along the downstream toward
+the main channel outlet. The slope of jet velocity waves presents
+the convective velocity and vortical structures traveled to down-
+
+14
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+Fig. 21. Time-pressure signals at various monitoring points: (a) M = 1, (b) M = 2.
+
+2 near the exit hole: (a) M = 1, (b) M = 2.
+Fig. 22. Power spectral density spectra of pressure ﬂuctuations at point 
+
+stream by the convective velocity. Further downstream, jet waves
+degrade very fast as the main ﬂow is convected downstream, and
+the ﬂow becomes almost steady in the far ﬁeld downstream. Moreover, as indicated by the yellow arrows in Figs. 20(a) and (b), these
+jet velocity waves are periodically generated with respect to time;
+however, in the case of blowing ratio 2, the periodicity is half of
+that of blowing ratio 1, which is well matched with the results
+shown in Figs. 17–19. In the region of −4.5 < x/ D < 0, when
+the blowing ratio is increased, the slope of velocity waves is also
+increased, which shows faster ﬂow within the cooling pipe as compared to that in the lower blowing ratio. However, in x/ D > 0, the
+slopes of mainstream velocity waves, as indicated by black arrows
+in Fig. 20(a) and (b), are almost same for both blowing ratios, because after the hole exit, the cooling ﬂow is mixed and convected
+toward downstream with the mainstream ﬂow.
+3.3. Spectral analysis
+The nature of the ﬂow structure in cross-ﬂow is intensely unsteady due to the complicated and transient turbulent structures
+caused by the interaction between the cooling jet and the channel ﬂows. Fig. 21 shows the oscillations of pressure signals with
+respect to time at four different monitoring points (the locations
+of these points are shown in Fig. 21(a)). A monitoring point is
+located at the cooling hole, one at the hole exit, and two more
+monitoring points are placed at x/ D = 5 and x/ D = 10 far down-
+
+stream from the cooling hole, respectively. Well-established and
+fully time-periodic pressure ﬂuctuations can clearly be observed in
+the signals, which conﬁrm that the unsteady solutions are perfectly
+converged. Fig. 21(a) shows that the magnitude of the unsteady
+1 inside the cooling hole
+pressure signal at the monitoring point 
+2 ),
+is in the range of the pressure signal at the cooling hole exit (
+which clearly conﬁrms that the pressure pulsations within the
+2, 
+3 , and 
+4 ) are mainly genmainstream (monitoring points 
+erated by the ﬂow pulsations of cooling hole. However, as shown
+in Fig. 21(a), the magnitude of the pressure signal at monitoring
+2 is larger than two other points in the downstream, which
+point 
+is caused by the cooling jet and channel ﬂows interactions at the
+mixing region. As the ﬂow is convected toward the downstream
+direction, the pressure ﬂuctuation magnitude is decreased. For the
+blowing ratio M = 2 (see Fig. 21(b)), the trend of ﬂow ﬁeld behavior was similar to that of blowing ratio M = 1; however, due to the
+larger jet velocity and shedding frequency, more ﬂuctuations with
+higher amplitudes are captured in pressure proﬁles with respect to
+time.
+Fast Fourier transform was applied in order to transform the
+time-dependent pressure signals to the frequency domains. Spectrum analysis is used to investigate contributions of the pressure
+ﬂuctuations in the instantaneous frequency components. The spectra of power spectral density corresponding to the pressure ﬂuc2 are shown
+tuations for blowing ratios 1 and 2 at the point 
+in Fig. 22. For blowing ratio 1, the dominant frequency is about
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+4.4 kHz, which is indicated by the blue circle line in Fig. 22(a)
+and corresponded to the coolant hole ﬂow and channel ﬂow interactions in the mixing zone near the exit of the coolant hole
+and the vortex shedding frequency. There are two other peaks in
+the pressure spectrum at 3.4 and 5.1 kHz which may be caused
+by the evolutions of the kidney and hairpin vortices. For blowing
+ratio M = 2, the dominant frequency is about 8.8 kHz, which is
+two times bigger than the dominant frequency at the lower blowing ratio, which is consistent with Figs. 17–20 regarding the period
+of coolant jet. In addition, the amplitude of spectrum baseline for
+higher blowing ratio is increased, which is caused by the higher
+turbulent kinetic energy in the case of M = 2. In addition, the -7/3
+slope blue line shown in the spectrum indicates the distribution of
+turbulence energy in the inertial subrange based on the hypothesis
+of the Kolmogorov [44]. It can be seen that the -7/3 Kolmogorov
+law and the slope of the pressure spectrum baseline predicted by
+the LES method are well matched, and show that the current LES
+model investigates the kinetic energy of the turbulence well.
+4. Conclusions
+The current study reveals detailed information on the ﬂow
+structures and thermal characteristics of a fan-shaped laid-back
+hole located on a ﬂat plate. Three-dimensional large eddy simulations using the WALE subgrid model were numerically conducted
+in order to predict the unsteady ﬂow behaviors within the cooling
+hole and main channel, as well as to analyze the ﬁlm-cooling effectiveness at a constant density ratio of 2, and two different blowing
+ratios M = 1 and 2.
+The LES model predicts the ﬁlm-cooling performance distributions on the surface of the ﬂat plate well as compared to
+those of the experimental data measured by the pressure-sensitive
+paint technique. Moreover, the results of the lateral-averaged ﬁlmcooling effectiveness investigated by the LES approach are consistent with the measurement results for two different blowing ratios,
+which conﬁrmed the accuracy of the numerical model. However,
+the ﬁlm-cooling effectiveness was over predicted by the other hybrid RANS/LES models, such as the SAS and DES approaches.
+The time-averaged ﬁlm-cooling distributions showed that the
+spread of cool air in the lateral directions was highly dependent
+on the blowing ratio, and by increasing the blowing ratio, the lateral ﬁlm-coverage was wider in the spanwise direction and the
+coolant was distributed more uniformly. The vorticity contour at
+various cross-sectional planes along the cooling hole showed the
+formation of contra-rotating vortices on the leeward side of the
+coolant hole, and were developed and convected toward the exit
+hole. These vortical structures are important, especially as a source
+of CRVPs in the mixing region.
+The instantaneous transient data conﬁrmed the ﬂow unsteadiness within the cooling hole and mainstream channel. The unsteady vorticity distribution in the streamwise direction showed
+the formation of separated kidney and anti-kidney vortices near
+the hole exit. The anti-kidney vortices are also observed at downstream in the main passage which are generated by the induced
+ﬂow. As the blowing ratio increases, the sizes and magnitudes of
+these vortical structures are changed and generate a highly complex and unsteady ﬂow behaviors. In addition, by increasing the
+blowing ratio, the number of hairpin vortices in the spanwise direction was also increased, and they became tighter than those of
+the lower blowing ratio.
+The time sequence of the instantaneous iso-surface of Q cr
+clearly displayed the formation, evolution, convection, and dissipation of vortical structures from the inlet of the cooling hole toward
+the outlet of the mainstream channel. The time sequence of the
+pressure gradient contour in the mid-span plane conﬁrmed the
+ﬂow unsteadiness, which is periodically generated at the cooling
+
+15
+
+hole inlet and convected toward the cooling hole. These instances
+of ﬂow unsteadiness at the hole exit are mixed with mainstream
+ﬂow, and this interaction leads to a pulsating behavior due to
+the Kelvin-Helmholtz instabilities in the shear layer. Moreover, for
+higher blowing ratios, the period of this periodic ﬂow instability
+was decreased due to the higher jet velocity.
+The time/space distribution of transient velocity in the streamwise direction in the main channel near the ﬂat plate indicated
+that the jet velocity waves mainly developed near the exit hole.
+The slope of the jet velocity waves shows the convective velocity,
+and these waves continuously travel to the downstream, and the
+magnitude is reduced due to the diffusion process and the breakage of the hairpin vortices. Higher magnitudes of jet velocity waves
+with smaller periods were observed for blowing ratio M = 2.
+The pressure ﬂuctuation captured at various monitoring points
+indicated periodic transient behavior. The spectrum of pressure
+ﬂuctuation predicted dominant frequencies at 4.4 kHz and 8.8 kHz
+for blowing ratios 1 and 2, respectively. In addition, comparing the
+-7/3 Kolmogorov law and the computed pressure spectra yielded
+that the present LES model can well predict the turbulence structures.
+Declaration of competing interest
+We would like to mention that there is no conﬂict of interest
+and no funding was received for this work.
+Acknowledgement
+The authors would like to thank the staff of Heat and Flow Control Laboratory, Korea Aerospace University, Republic of Korea for
+the provision of experimental data and the permission to publish.
+References
+[1] J.C. Han, Turbine blade cooling studies at Texas A&M University: 1980-2004,
+J. Thermophys. Heat Transf. 20 (2006) 161–187.
+[2] D.G. Bogard, K.A. Thole, Gas turbine ﬁlm cooling, J. Propuls. Power 22 (2006)
+249–270.
+[3] C. Kim, C. Son, Rapid design approach for U-bend of a turbine serpentine cooling passage, Aerosp. Sci. Technol. 92 (2019) 417–428.
+[4] C. Wang, J. Zhang, J. Zhou, Optimization of a fan-shaped hole to improve ﬁlm
+cooling performance by RBF neural network and genetic algorithm, Aerosp. Sci.
+Technol. 58 (2016) 18–25.
+[5] R. Krewinkel, A review of gas turbine effusion cooling studies, Int. J. Heat Mass
+Transf. 66 (2013) 706–722.
+[6] T.F. Fric, A. Roshko, Vortical structure in the wake of a transverse jet, J. Fluid
+Mech. 279 (1994) 1–47.
+[7] B.A. Haven, M. Kurosaka, Kidney and anti-kidney vortices in crossﬂow jets,
+J. Fluid Mech. 352 (1997) 27–64.
+[8] Zhengang Liu, Zhenxia Liu, Fei Zhang, Yanan Liu, An experimental study of the
+effects of different transverse trenches on depositing and temperature on a
+plate with ﬁlm cooling holes, Aerosp. Sci. Technol. 88 (2019) 40–50.
+[9] M.G. Ghorab, I.G. Hassan, An experimental investigation of a new hybrid ﬁlm
+cooling scheme, Int. J. Heat Mass Transf. 53 (2010) 4994–5007.
+[10] M. Gritsch, A. Schulz, S. Wittig, Effect of Cross-Flows on the Discharge Coeﬃcient of Film Cooling Holes with Varying Angles of Inclination and Orientation,
+2001, ASME paper, GT2001-0134.
+[11] J.R. Pietrzyk, D.G. Bogard, M.E. Crawford, Hydrodynamic measurements of jets
+in crossﬂow for gas turbine ﬁlm cooling applications, J. Turbomach. 111 (1989)
+139–145.
+[12] W. Zhou, M. Qenawy, Y. Liu, X. Wen, D. Peng, Inﬂuence of mainstream ﬂow
+oscillations on spatio-temporal variation of adiabatic ﬁlm cooling effectiveness,
+Int. J. Heat Mass Transf. 129 (2019) 569–579.
+[13] X. Sun, G. Zhao, P. Jiang, W. Peng, J. Wang, Inﬂuence of hole geometry on
+ﬁlm cooling effectiveness for a constant exit ﬂow area, Appl. Therm. Eng. 130
+(2019) 1404–1415.
+[14] A.K. Sinha, D.G. Bogard, M.E. Crawford, Film-cooling effectiveness downstream
+of a single row of holes with variable density ratio, J. Turbomach. 113 (1991)
+442–449.
+[15] R.J. Fawcett, A.P.S. Wheeler, H. Li, R. Taylor, Experimental investigation into unsteady effects on ﬁlm cooling, J. Turbomach. 134 (2012), 9 pages.
+
+16
+
+A. Zamiri et al. / Aerospace Science and Technology 100 (2020) 105793
+
+[16] M. Fraas, T. Glasenapp, A. Schulz, H.J. Bauer, Optimized inlet geometry of a
+laidback fan-shaped ﬁlm cooling hole - experimental study of ﬁlm cooling performance, Int. J. Heat Mass Transf. 128 (2019) 980–990.
+[17] W.S. Fu, W.S. Chao, M. Tsubokura, C.G. Li, W.H. Wang, Direct numerical simulation of ﬁlm cooling with a fan-shaped hole under low Reynolds number
+conditions, Int. J. Heat Mass Transf. 123 (2018) 544–560.
+[18] F. Muldoon, S. Acharya, DNS study of pulsed ﬁlm cooling for enhanced cooling
+effectiveness, Int. J. Heat Mass Transf. 52 (2009) 3118–3127.
+[19] K. He, J. Li, X. Yan, Numerical investigations into heat transfer and ﬁlm cooling
+effect on a transonic blade endwall, Appl. Therm. Eng. 129 (2018) 934–952.
+[20] S. Khajehhasani, B.A. Jubran, A numerical investigation of ﬁlm cooling performance through variations in the location of discrete sister holes, Appl. Therm.
+Eng. 107 (2016) 345–364.
+[21] X. Fan, C. Du, L. Li, S. Li, Numerical simulation on effects of ﬁlm hole geometry
+and mass ﬂow on vortex cooling behavior for gas turbine blade leading edge,
+Appl. Therm. Eng. 112 (2017) 472–483.
+[22] D.K. Walters, J.H. Leylek, A detailed analysis of ﬁlm-cooling physics: Part Istreamwise injection with cylindrical holes, J. Turbomach. 122 (1997) 102–112.
+[23] B.T. An, J.J. Liu, S.J. Zhou, Effects of inclination angle, orientation angle, and
+hole length on ﬁlm cooling effectiveness of rectangular diffusion holes, J. Turbomach. 140 (2018), 13 pages.
+[24] S. Voigt, B. Noll, M. Aigner, Aerodynamic Comparison and Validation of RANS,
+URANS, and SAS Simulations of Flat Plate Film-Cooling, 2010, ASME paper,
+GT2010-22475.
+[25] X.C. Lin, J.J. Liu, B.T. An, Calculation of Film-Cooling Effectiveness and Aerodynamic Losses Using DES/SAS and RANS Methods and Compared with Experimental Results, 2016, ASME paper, GT2016-57084.
+[26] X. Bian, Q. Wang, Z. Chen, X. Su, X. Yuan, Hybrid RANS/LES study of complex
+turbulence characteristics and ﬂow mechanisms on the highly-loaded turbine
+endwall, Aerosp. Sci. Technol. 94 (2019).
+[27] A. Shinn, S.P. Vanka, Large eddy simulations of ﬁlm-cooling ﬂows with a microramp vortex generator, J. Turbomach. 135 (2013), 13 pages.
+[28] X. Guo, W. Schroder, M. Meinke, Large eddy simulations of ﬁlm cooling ﬂows,
+Comput. Fluids 35 (2013) 587–606.
+[29] C. Wang, J. Zhang, H. Feng, Y. Huang, Large eddy simulation of ﬁlm cooling
+ﬂow from a fan shaped hole, Appl. Therm. Eng. 129 (2018) 855–870.
+
+[30] C. Wang, F. Fan, J. Zhang, Y. Huang, H. Feng, Large eddy simulation of ﬁlm
+cooling ﬂow from converging slot-holes, Int. J. Therm. Sci. 126 (2018) 238–251.
+[31] W. Li, X. Li, J. Ren, H. Jiang, Large eddy simulation of compound angle hole ﬁlm
+cooling with hole length-to-diameter ratio and internal crossﬂow orientation
+effects, Int. J. Therm. Sci. 121 (2017) 410–423.
+[32] E. Sakai, T. Takahashi, Numerical Study on Effects of Density Ratio on Film Cooling Flow Structure and Film Cooling Effectiveness, 2017, ASME paper, GT201763168.
+[33] T.A. Oliver, J.B. Anderson, D.G. Bogard, R.D. Moser, G. Laskowski, Implicit LES
+for Shaped-Hole Film Cooling Flow, 2017, ASME paper, GT2017-63314.
+[34] F. Nicoud, F. Ducros, Subgrid-scale stress modelling based on the square of the
+velocity gradient tensor, Flow Turbul. Combust. 62 (1999) 183–200.
+[35] T.J. Barth, D.C. Jesperson, The Design and Application of Upwind Schemes on
+Unstructured Meshes, 1989, AIAA Paper, 89-0366.
+[36] X.Z. Zhang, I. Hassan, Film cooling effectiveness for an advanced-louver cooling
+scheme for gas turbines, J. Thermophys. Heat Transf. 20 (2006) 754–762.
+[37] F.R. Menter, Y. Egorov, The scale-adaptive simulation method for unsteady turbulent ﬂow predictions. Part 1: theory and model description, Flow Turbul.
+Combust. 85 (2010) 113–138.
+[38] F.R. Menter, Y. Egorov, R. Lencher, D. Cokljat, The scale-adaptive simulation
+method for unsteady turbulent ﬂow predictions. Part 2: application to complex ﬂows, Flow Turbul. Combust. 85 (2010) 113–138.
+[39] F.R. Menter, M. Kuntz, Development and Application of a Zonal DES Turbulence Model for CFX-5, ANSYS CFX Validation Report, CFX-VAL17/0703, 2001,
+pp. 1–34.
+[40] C. Saumweber, A. Schulz, Free-stream effects on the cooling performance of
+cylindrical and fan-shaped cooling holes, J. Turbomach. 134 (2012) 061007.
+[41] M. Tyagi, S. Acharya, Large eddy simulation of ﬁlm cooling ﬂow from an inclined cylindrical jet, J. Turbomach. 125 (2003) 734–742.
+[42] C.B. Da Silva, J.C.F. Pereira, Invariants of the velocity-gradient, rate-of-strain,
+and rate-of-rotation tensors across the turbulent/nonturbulent interface in jets,
+Phys. Fluids 20 (2008) 55101.
+[43] J. Zieﬂe, L. Kleiser, Numerical investigation of a ﬁlm-cooling ﬂow structure: effect of crossﬂow turbulence, J. Turbomach. 135 (2013) 041001.
+[44] S.B. Pope, Turbulent Flows, Cambridge University Press, 2000.
+
+

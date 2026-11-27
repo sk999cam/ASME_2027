@@ -1,0 +1,1761 @@
+Proceedings of ASME Turbo Expo 2008: Power for Land, Sea and Air
+GT2008
+June 9-13, 2008, Berlin, Germany
+
+GT2008-51424
+USE OF THE ADIABATIC WALL TEMPERATURE IN FILM COOLING TO PREDICT
+WALL HEAT FLUX AND TEMPERATURE
+Katharine L. Harrison and David G. Bogard
+Department of Mechanical Engineering
+University of Texas at Austin, Austin, Texas 78712, USA
+ABSTRACT
+The adiabatic wall temperature is generally assumed to be the
+driving temperature for heat transfer into conducting gas turbine
+airfoils. This assumption was analyzed through a series of FLUENT
+simulations using the standard k-ω turbulence model. Adiabatic
+effectiveness and heat transfer experiments commonly documented in
+literature were mimicked computationally. The results were then used
+to predict both the heat flux and temperature distributions on a
+conducting flat plate wall and the predictions were compared to the
+heat flux and temperature distributions found through a flat plate
+conjugate heat transfer simulation. The heat flux analysis was
+compared to previously published work using the realizable k-ε
+turbulence model. The same conclusions could be drawn for both
+turbulence models despite differences in simulated adiabatic
+effectiveness and heat transfer coefficient distributions. Agreement
+between heat flux predictions and the heat flux from the conjugate
+simulations correlated well with how closely the adiabatic wall
+temperature approximated the over-riding gas driving temperature for
+heat transfer into the wall. In general, the driving temperature for heat
+transfer was represented well by the adiabatic wall temperature and the
+heat flux was well predicted. However, in some locations, the heat flux
+was over-predicted by up to 300%. Since wall temperature is
+ultimately the parameter of interest for industrial gas turbine design,
+the conducting flat plate temperature distribution was also predicted.
+This was done by using the adiabatic effectiveness and heat transfer
+coefficients found with the standard k-ω turbulence model as boundary
+conditions in a three dimensional solid conduction simulation. Then
+metal temperatures predicted in the solid conduction simulation were
+compared to those found through conjugate analysis. Despite
+deviations in predicted heat flux and the conjugate model heat flux of
+up to 300%, deviations in the predicted and the conjugate model nondimensional metal temperatures were less than 10%. Thus, use of the
+adiabatic wall temperature as the driving temperature for heat transfer
+to predict temperature on the surface of a conducting wall results in
+relatively small errors.
+INTRODUCTION
+Film cooling performance for gas turbine airfoils is typically
+evaluated through measurements of the adiabatic effectiveness, η, and
+heat transfer coefficient augmentation, hf /h0, in which hf is the heat
+transfer coefficient with film cooling and h0 is the heat transfer
+coefficient without film cooling. Near adiabatic models are typically
+used in film cooling experiments to determine the temperature
+distribution measured on an adiabatic wall, Taw. The adiabatic wall
+
+temperature is generally presented in its normalized form, η, as
+defined in the nomenclature. These parameters, η and hf/h0, are
+important because it is commonly assumed that they can be used to
+predict the heat flux into a film cooled airfoil wall, as expressed in the
+following equation:
+
+q′′ = h f (Taw − Tw )
+
+(1)
+
+where T w is the surface temperature for a conducting airfoil wall and
+q” is heat flux. It is presumed in using Equation (1) that Taw is the
+over-riding gas temperature that drives heat transfer into the surface.
+The effects of this presumption on predicting the temperature and heat
+flux for a conducting flat plate is analyzed in the current study through
+a series of computational simulations.
+Goldstein [1] proposed that Taw in Equation (1) is the appropriate
+driving temperature potential for heat transfer, rather than the
+mainstream temperature, T∞, which is used traditionally in convective
+heat transfer. The rationale behind using Taw as the driving temperature
+for heat transfer is that the heat transfer coefficient is then independent
+of the coolant temperature, Tc. Consequently, hf is defined by Equation
+(1). The heat flux could always be predicted correctly using Taw if hf
+values were determined using measurements of the q˝, Taw, and Tw, for
+a film cooled metal airfoil. However, hf values are generally measured
+experimentally at unity density ratio, DR = 1, so that Tc is equal to T∞.
+In this case, determination of hf is simplified because Taw is equal to T∞
+or the recovery temperature, Tr, in the case of compressible flows. By
+measuring hf at DR = 1, it is presumed that Equation (1) is insensitive
+to Tc. In experiments to determine hf, the wall is generally heated with
+a constant heat flux source and the surface temperature distribution is
+measured. Then hf is calculated as indicated by Equation (1). At DR =
+1 for which Taw = Tr, there are no variations in the thermal field due to
+temperature difference between the coolant jet and T∞; variations in
+the thermal field in the gas flow are due only to the heat transfer from
+the wall. This situation is quite different from actual turbine conditions
+in which the coolant jet is at a much lower temperature than T∞ which
+leads to a highly non-uniform temperature field in the gas flow above
+the wall.
+It is important to recognize that a thermal boundary layer exists
+over the wall in an actual turbine airfoil due to the conduction of heat
+into the wall. The thickness of the thermal boundary layer may be thin
+or thick relative to the coolant jet thickness depending on the
+development length of the boundary layer. How this is relevant to the
+use of Taw as the driving temperature potential for a film cooling flow
+is demonstrated by three hypothetical temperature distributions for an
+
+1
+
+Copyright © 2008 by ASME
+
+attached film cooling jet presented in Fig. 1. These temperature
+profiles are presented in terms of the non-dimensional static fluid
+temperature, θ, defined as follows.
+
+θ = (Tr -Tfluid) / (Tr -Tc)
+
+(2)
+
+The three profiles depicted are: the thermal profile for a coolant jet
+over-riding an adiabatic wall, the thermal profile for a coolant jet overriding a conducting wall with a thin thermal boundary layer relative to
+the coolant jet thickness, and the thermal profile for a coolant jet overriding a conducting wall with a thermal boundary layer similar in
+thickness to the coolant jet. When the thermal boundary layer is thin,
+the outer edge of the boundary layer lies within the core of the coolant
+jet, as shown by the dotted line in Fig. 1. The gas temperature at the
+outer edge of the thin boundary layer would then be approximately
+equal to Taw. In this case, Taw is a reasonable approximation for the
+driving temperature for heat transfer into the conducting wall.
+Conversely, if the edge of the thermal boundary layer is on the same
+order or larger than the core of the attached coolant jet, as depicted by
+the solid line for the conducting wall in Fig. 1, the edge of the thermal
+boundary layer would be subjected to a gas temperature closer to T∞
+than Taw. It is unlikely that Taw is an appropriate approximation of the
+driving temperature for heat transfer when the thermal boundary layer
+thickness is close to that of the coolant jet.
+2.0
+Adiabatic Wall
+Conducting Wall Tdrive = Taw
+Conducting Wall Tdrive = Taw
+
+1.5
+y/d
+
+Edge of coolant film
+1.0
+
+0.5
+
+η = 0.5
+
+0.0
+0.0
+
+0.2
+
+0.4
+
+φ = 0.8
+θ
+
+0.6
+
+0.8
+
+1.0
+
+Fig. 1 Theoretical thermal profiles demonstrating when Taw is the
+driving temperature for heat transfer
+An analytical evaluation of different methods for determining the
+heat flux into the wall was done by Choe et al. [2] using superposition
+and hypothetical constant temperature test surfaces. They showed that
+the normalized adiabatic wall temperature, η, determined using an
+adiabatic wall would not be expected to be the same as that determined
+using a constant temperature conducting test surface.
+Harrison and Bogard [3] analyzed the assumption that Taw is the
+driving temperature for heat transfer in film cooling experiments
+through a series of simulations in FLUENT. The realizable k-ε (RKE)
+turbulent model was used to simulate film cooling on a flat plate. The
+RKE model was employed for its relative ease of use and its
+prevalence in literature as a first step in analyzing whether Taw was the
+correct driving temperature. Then a detailed turbulence model
+comparison was conducted by Harrison and Bogard [4] to determine
+which model could best predict experimental η and hf /h0. The RKE,
+standard k-ω (SKW), and Reynold’s stress (RSM) turbulence models
+were considered. The SKW model best simulated experimentally
+measured laterally averaged adiabatic effectiveness, η , but resulted
+in the worst centerline predictions. Conversely, the RKE model
+provided the worst η predictions but the best predicted centerline η
+and also matched correlations for h0 better than the RSM or SKW. Use
+
+of the RSM model resulted in the best agreement with measured
+centerline hf /h0. All three turbulence models predicted laterally
+averaged hf / h0 with similar accuracy.
+From the results in Harrison and Bogard [4], it is difficult to
+choose the most appropriate model for studying film cooling. In the
+current study, the SKW model was chosen because it showed the best
+η agreement and equally as good agreement with experimental
+measurements of laterally averaged hf /h0 values as the other turbulent
+models. The current study aims to analyze whether Taw is the correct
+driving temperature for heat transfer through simulations to find the η,
+hf / h0, and the overall effectiveness, φ. When Taw and heat transfer
+coefficient augmentation found through experiments are used as a
+boundary condition for models of turbines, laterally averaged values
+are most likely applied. Thus, it was deemed most important to
+accurately simulate laterally averaged values and the SKW model was
+selected for this reason to use in the current study.
+In Harrison and Bogard [3], the validity of using Taw as the
+driving temperature for heat transfer was analyzed by predicting the
+heat flux into a film cooled wall using computed values for Taw and hf
+/h0. The predicted heat fluxes were compared to heat fluxes found
+from a conjugate heat transfer conducting model. Then thermal
+profiles above the adiabatic and conducting walls were analyzed to
+determine how closely the driving temperature for heat transfer was
+approximated by Taw. Harrison and Bogard [3] determined that using
+Taw as the driving temperature for heat transfer generally resulted in
+good predictions of the heat flux into the conducting flat plate wall.
+However, there were regions where the heat flux predictions were poor
+and in these regions Taw was found to poorly approximate the driving
+temperature for heat transfer. In the current study, the heat flux
+analysis is repeated using the SKW turbulence model and the results
+are compared to the results using the RKE model. As will be shown,
+similar conclusions can be drawn using either turbulence model
+despite the differences in predicted values of η and hf /h0 using the two
+models, as shown in Harrison and Bogard [4]. It should be noted that
+Harrison and Bogard [3] used a slightly different mesh and the effects
+of viscous heating were not included in the study.
+Harrison and Bogard [3] evaluated only the effect of using Taw as
+the driving temperature for heat transfer on predicted heat flux
+distributions on the flat plate. This is useful to an extent, but the
+parameter of interest for turbine engineers is the wall temperature
+distribution rather than the heat flux. Also, poor predictions of local
+wall temperature do not necessarily follow from poor predictions of
+heat flux. When analyzing conducting walls, large differences between
+predicted and conducting wall heat flux are likely to be smeared out
+when examining the predicted temperature distributions. Thus, even
+where heat flux predictions are poor, temperature predictions may not
+be poor. The main focus of the current study was to extend the heat
+flux analysis to determine how using Taw as the driving temperature for
+prediction of heat transfer affects the temperature distribution
+predictions on a conducting flat plate. This was achieved through
+simulations using a solid conducting model with Taw and hf /h0 as
+boundary conditions to predict the overall effectiveness, φ (defined in
+the nomenclature).
+NOMENCLATURE
+Bi = Biot number = ht/k
+c = Specific heat
+d = Hole diameter
+DR = Density ratio of coolant to mainstream = ρc /ρ∞
+hf = Heat transfer coefficient with film cooling = q”/(Taw-Tsurface)
+h0 = Heat transfer coefficient without film cooling = q”/(Tr -Tsurface)
+
+2
+
+Copyright © 2008 by ASME
+
+h0,cond = Conducting wall heat transfer coefficient without film
+cooling = q”0,cond /(Tr -Tsurface)
+k = conductivity
+l = Hole length
+M = Blowing ratio of coolant to mainstream = ρcUc/ρ∞U∞
+Nu = Nusselt number = hx/k
+p = Hole spacing
+Pr = Prandtl number = ν/κ
+Re = Reynold’s number = ρU/ν
+t = Thickness of airfoil
+Tu = Turbulence intensity
+Taw = Adiabatic wall temperature
+Tc = Coolant temperature
+Tcond = Conducting wall temperature
+Tfluid = Static fluid temperature
+Tpredicted = Predicted temperature of conducting wall
+Tr = Recovery temperature = T∞ + Pr1/3U2 / 2c
+Tsurface = Surface temperature
+T∞ = Static mainstream temperature
+U = Velocity
+q” = heat flux into exterior flat plate wall
+q”cond = Conducting wall heat flux with film cooling
+q”0,cond = Conducting wall heat flux with no film cooling
+q”internal = Heat flux into interior flat plate wall
+q”predicted = Predicted heat flux into conducting wall
+Λ = Turbulence integral length scale
+α = Hole angle
+δ = Boundary layer thickness
+δ1 = Displacement thickness
+φ = Overall effectiveness = (Tr -Tcond) / (Tr -Tc,internal)
+φ = Predicted overall effectiveness = (Tr –Tpredicted) / (Tr -Tc,internal)
+η = Adiabatic effectiveness = (Tr -Taw) / (Tr -Tc,exit)
+θ = Normalized static fluid temperature = (Tr -Tfluid) / (Tr -Tc)
+
+walls. All simulations were run at both M = 0.5 and M = 1, and the
+mesh of the injection region is shown in Fig. 3.
+A conjugate heat transfer simulation of a conducting film cooled
+flat plate, denoted the “CW” simulation, was run to determine the heat
+flux into the conducting wall, q”cond, and the surface temperature of
+the conducting wall, Tcond. The conductivity of the flat plate was set
+such that the Biot number, Bi, was matched to that of a real airfoil. In
+order to match the Bi = 0.36 of a real superalloy airfoil, the
+conductivity of the plate was set to k = 6.3 W/mK. Since the Re and Pr
+numbers in the study were in the range of operational turbine Re and
+Pr numbers and Nu number is a function of Re and Pr numbers,
+matching the Re and Pr numbers is equivalent to matching the Nu
+number. The approximate average h for an engine was found by
+equating the Nu number of a real engine to that for the model and
+assuming the geometry in Baldauf et al. [5] was scaled up ten times
+from real turbines. The appropriate k for the conducting model wall
+was calculated by equating the Bi numbers of the model and engine
+and solving for the conductivity of the model.
+
+x/d = 0
+
+Fig. 2 Geometry and Dimensions
+COMPUTATIONAL SIMULATIONS AND METHODS
+A series of simulations were run to predict the heat flux and
+temperature into a conducting, film cooled wall using Taw as the
+driving temperature for heat transfer. The simulations were based on
+the flat plate film cooling geometry in Baldauf et al. [5] and was
+meshed using GAMBIT (part of the FLUENT package). The
+dimensions and a schematic of the geometry are given in Fig. 2.
+Pertinent flow variables are summarized in Table 1. In all simulations,
+incompressible flow was simulated but the properties of air were set to
+vary as either quadratic or linear functions of temperature since there
+was considerable density variation in the simulations. At the inlet to
+the tunnel, a velocity profile with a mainstream velocity of U = 60 m/s
+was applied to match the displacement thickness of δ1/d = 0.1 at the
+hole reported in Baldauf et al. [5]. At the tunnel inlet, the turbulence
+intensity was matched to that measured in Baldauf et al. [5], but since
+the integral length scale was not indicated, Λ was set to one hole
+diameter. At the plenum inlet, the turbulence intensity was set to an
+arbitrary value of 2%, and the length scale was again set to Λ = 1d.
+A hexahedral mesh was created in which half of one hole was
+meshed, and symmetry boundary conditions were placed on all
+surfaces at planes defined by the centerline and half pitch distance
+from the hole. To prevent a boundary layer from forming at the top of
+the tunnel, a symmetry boundary condition was applied. In all
+simulations, adiabatic wall boundary conditions were applied at the
+upstream and downstream ends of the flat plate walls and the plenum
+
+Table 1 Operating parameters
+Name
+
+Simulation Description
+
+α = 30 degrees
+Geometry
+
+p/d = 3
+d = 0.005 m
+
+δ1/δ = 0.1 (at x/d = -2)
+Tu =1.5%
+Tunnel Inlet
+
+Λ/d = 1
+U = 60 m/s (nominally)
+T∞ = 450 K
+
+Plenum Inlet
+
+Tu = 2%
+
+Λ/d = 1
+
+At the interfaces between the plate and tunnel as well as the plate
+and hole in the CW simulation, convection and conduction were
+coupled to allow conjugate heat transfer calculations. To simulate
+internal cooling, a constant internal heat flux, q”internal, was applied to
+the bottom of the flat plate. The q”internal value was varied until the
+average φ downstream of the holes was approximately φ = 0.6 since
+this a typical non-dimensional surface temperature of real airfoils. The
+
+3
+
+Copyright © 2008 by ASME
+
+values of q”internal were set to q”internal = -8.47 kW/m2 for M = 0.5 and
+q”internal = -10.11 kW/m2 for M = 1.
+
+Fig. 3 Mesh of Injection Region
+To mimic experiments to find η, another simulation was run with
+all wall boundary conditions set to be adiabatic. This simulation was
+used to determine the temperature on the film cooled adiabatic flat
+plate wall, Taw, and will be referred to as the “AW” simulation.
+Experiments to determine heat transfer coefficients were also
+mimicked computationally by setting the boundary condition on the
+surface of the flat plate to a constant heat flux of q” = 15 kW/m2. This
+value was chosen because it was approximately equal to the average
+q” found upstream of the holes into the flat plate wall in the CW
+simulation. The heat transfer simulations were run with and without
+film cooling to determine hf and h0 respectively, and these simulations
+will be referred to as the “HF” and “HF0” simulations. Both hf and h0
+simulations were run so that the hf /h0 augmentation factor could be
+determined since hf /h0 is the parameter generally reported in film
+cooling experiments. The heat transfer coefficients were calculated as
+shown in the nomenclature.
+The AW, HF, HF0, and CW simulations were run to determine
+how well Taw and hf /h0, found by mimicking common experiments,
+could be used to predict q”cond, the heat flux into the conducting wall.
+In order to predict q” using Equation (1), an hf value must be
+determined. However, heat transfer coefficient augmentation, hf /h0, is
+the parameter available in literature rather than hf alone. Because of
+this, to determine hf, hf /h0 must be multiplied by the heat transfer
+coefficient that would exist on the actual airfoil without film cooling,
+designated as h0,airfoil. The h0,airfoil distribution used in this study was
+the heat transfer coefficient for the simulated conducting flat plate
+without film cooling and will be designated h0,cond. The conducting
+wall surface condition is neither a constant temperature nor a constant
+heat flux. An additional conjugate analysis simulation without film
+cooling, referred to as CW0, was therefore necessary to obtain these
+h0,cond values. The boundary conditions applied for the CW0 simulation
+were similar to those for the CW simulation except no film cooling
+was simulated. The calculation to determine h0,cond is shown in the
+nomenclature to be similar to that for h0, but the q” is found through
+conjugate analysis in the CW0 simulation and is a constant applied
+heat flux boundary condition in the HF0 simulation.
+From the AW, HF, HF0, CW, and CW0 simulations, the heat flux
+was then predicted based on simulated experimental data using the
+following equation:
+
+′
+q ′predicted
+=
+
+hf
+h0
+
+h0 ,cond (Taw − Tcond )
+
+(3)
+
+The predicted heat flux, q”predicted, was compared to q”cond, which was
+the “actual” heat flux found directly from the simulation of heat
+transfer into the conducting flat plate wall.
+The validity of using Taw and hf /h0 to predict film cooling
+performance was also evaluated by determining φ, sometimes referred
+to as the “metal temperature.” A solid conduction simulation, denoted
+“SC,” was run such that only the solid plate was modeled with the
+fluid regions deleted from the model shown in Fig. 2. In the SC
+simulation, Taw and (hf /h0)*h0,cond were used directly as boundary
+conditions on the exterior surface of the solid flat plate. The internal
+heat fluxes applied to the bottom of the flat plate and the heat fluxes
+inside the hole were set equal to those in the CW simulation. The
+boundary conditions for the SC simulation on the top of the plate were
+applied in two ways. First, Taw and (hf /h0)*h0,cond were calculated at
+each cell along the flat plate and these local Taw and (hf /h0)*h0,cond
+values were applied as boundary conditions to each cell. Then laterally
+averaged Taw and (hf/h0)*h0,cond values were calculated and the laterally
+averaged values were applied as boundary conditions as a function of
+position along the plate. This was done because laterally averaged
+values are more commonly used by industrial designers to predict
+metal temperature.
+The temperature distribution on the flat plate, Tpredicted, was found
+through the SC simulation and compared to the temperature
+distribution, Tcond, found from the CW simulation. The solid
+conducting model simulation evaluates the accuracy of using Taw and
+hf /h0 data available in literature to predict φ, a normalized Tcond as
+defined in the nomenclature. This is a more useful tool for determining
+how well Taw can be used to predict the driving temperature for heat
+transfer into a conducting wall because temperature is ultimately the
+parameter of interest for industrial turbine designers.
+A summary of the simulations run for this analysis, boundary and
+density ratio conditions, and the variables output from each simulation
+are presented in Table 2.
+Table 2 Summary of simulations
+Name Simulation Description and Boundary Conditions Results
+Description: Simulates adiabatic wall experiments
+AW
+Taw, η
+Conditions: q” = 0, DR = 1.5
+Description: Simulates constant q” experiment
+HF
+with film cooling
+hf
+Conditions: q” = 15 kW/m2, DR = 1.5
+Description: Simulates constant q” experiments
+HF0
+with no film cooling
+h0
+Conditions: q” = 15 kW/m2
+Description: Simulates a conducting wall with film
+cooling
+Tcond, φ,
+CW Conditions: q”internal = -8.47 kW/m2 for M = 0.5,
+q”cond
+2
+q”internal = -10.11 kW/m for M = 1,
+DR = 1.5
+Description: Simulates a conducting wall with no
+film cooling
+CW0
+h0,cond
+Conditions: q”internal = -8.47 kW/m2 for M = 0.5,
+2
+q”internal = -10.11 kW/m for M = 1
+Description: Simulates how Taw and hf/h0*h0,cond
+can be used as boundary conditions in
+a solid conduction model
+Tpredicted,
+SC
+Conditions: Taw and hf/h0*h0,cond varied with
+φpredicted
+position along the wall
+q”internal = -8.47 kW/m2 for M = 0.5,
+q”internal = -10.11 kW/m2 for M = 1
+
+4
+
+Copyright © 2008 by ASME
+
+COMPUTATIONAL VALIDATION AND ASSUMPTIONS
+As shown in Harrison and Bogard [4], none of the turbulence
+models considered for this study quantitatively predict experimental
+results accurately. However, for this study, the solutions for η and hf
+/h0 only need to provide reasonable results. The solutions simply act as
+a representative flow and thermal field to approximate film cooling
+conditions. To illustrate that the solutions can reasonably predict film
+cooling parameters, η found from the AW simulation is compared to
+several different experimental data sets with similar parameters in Fig.
+4 for M = 0.5. Agreement between the current computational study and
+the various experimental data sets is good and the solution reasonably
+approximates experimental results. Comparisons of SKW turbulence
+model simulation results for laterally averaged, centerline, and lateral
+distributions of η and hf/h0 to experiments and other turbulence models
+can be found in Harrison and Bogard [4].
+
+200
+h0
+h0,cond
+150
+
+100
+
+50
+
+0.5
+
+Current Study
+Baldauf et al. (2002) DR=1.5
+Sinha et al. (1991) DR=2
+Sinha et al. (1991) DR=1.6
+Kohli and Bogard (1997) DR=1.6
+
+0.4
+
+η
+
+transfer coefficients of a constant heat flux surface and an
+approximately constant temperature surface.
+The effects on hf /h0 of heating the region upstream of the hole are
+also important to consider and have been examined experimentally.
+Mayhew et al. [6] measured hf /h0 values with upstream heating that
+were 5-10% higher than other values in literature and attributed this
+effect to upstream heating. Coulthard et al. [7] compared flat plate hf
+/h0 values with and without upstream heating and found upstream
+heated hf /h0 values to be up to 25% higher than those without
+upstream heating. The largest effects were seen at low M near the hole.
+By x/d = 6, the hf /h0 distributions with and without upstream heating
+differed by less than 10%. The effects of upstream heating have also
+been studied on a model turbine vane by Harrison et al. [8]. For a
+turbulent approach flow, hf /h0 was up to 15% higher with upstream
+heating than without near the hole for all M. By x/d = 5, the hf /h0
+results were less than 10% higher with upstream heating than without.
+Because upstream heating can significantly affect hf /h0 and real
+turbines have an established thermal boundary layer upstream of the
+film cooling holes, only simulations with upstream heating are
+discussed in this paper.
+
+h 0 [W/m2K]
+
+Solutions were found for blowing ratios of M = 0.5 and M = 1.
+The initial grids were carefully generated to ensure y+ values
+approximately equal to unity on the flat plate and in the hole.
+Convergence was judged based on the criteria that several parameters
+did not change more than 0.005% for at least 100 iterations. These
+parameters included η on the surface of the flat plate as well as the
+velocity and turbulence intensity at the center of the hole exit. After
+the initial solution was found, several files were adapted based on
+gradients in temperature as was discussed further in Harrison and
+Bogard [4] which used the same mesh. The initial grid with 1.36
+million cells (1.43 million nodes) was deemed grid independent based
+on negligible changes with further adaption (see Harrison and Bogard
+[4] for more information).
+
+0.3
+
+0
+0
+
+5
+
+10
+
+x/d
+
+15
+
+20
+
+25
+
+30
+
+Fig. 5 Simulations of h0 from HF0 and CW0 simulations
+
+0.2
+0.1
+0
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 4 Simulations of η compared to experiments
+In film cooling literature, Taw is assumed to be the driving
+temperature for heat transfer into a conducting wall, but other
+assumptions are made as well that should be addressed. Specifically, hf
+values are typically found using a constant heat flux, DR = 1, and no
+upstream heating. This is not realistic because real airfoils are more
+likely to be closer to constant temperature surfaces than constant heat
+flux, operate at much higher DR, and a thermal boundary layer is
+established upstream of the coolant holes. The error in determining hf
+/h0 using a constant heat flux surface is most likely small, since
+turbulent flow correlations for h0 on a flat plate with constant
+temperature and constant heat flux boundary conditions are only about
+5% different. This is reiterated by Fig. 5, in which h0 with upstream
+heating is compared to h0,cond found through conjugate analysis, for
+which the surface is closer to constant temperature than constant heat
+flux. It is clear that there is very little difference between the heat
+
+Density ratio effects on hf/h0 have also been examined
+experimentally in literature. Ammari et al. [9] found that changing the
+density ratio from DR = 1.0 to 1.5 had a very small effect on hf/h0 for
+M = 0.5. For M = 1, hf /h0 was up to 10% lower for DR = 1.5 than DR
+= 1. By x/d = 25, hf /h0 for DR = 1.5 was within 5% of hf /h0 for DR =
+1. The higher density ratio generally resulted in lower hf /h0 values and
+the density ratio had a larger effect at higher M.
+Harrison and Bogard [4] compared hf /h0 to experiments but data
+was not presented at DR = 1.5 with upstream heating because there is
+not experimental data to compare to with both upstream heating and
+DR > 1. In the current work, constant q” simulations to determine hf
+were run at DR = 1.5 with upstream heating since this is a more
+realistic condition. The simulation at DR = 1.5 with upstream heating
+should more accurately predict the heat transfer coefficient for the
+conducting wall simulation than a simulation at DR = 1 since the CW
+simulation is run at DR = 1.5. Regardless, the choice of heat transfer
+simulation is not critical, as demonstrated in Fig. 6, since the results
+for the heat transfer simulations are fairly similar. The figure shows a
+small increase in laterally averaged hf /h0 with density ratio.
+It is important to note that most hf /h0 values in literature are
+generally found without upstream heating and at DR = 1. These other
+assumptions impact how well commonly measured augmentation
+values can be used to predict the surface heat flux and surface
+temperature of a real conducting airfoil. Harrison and Bogard [3]
+
+5
+
+Copyright © 2008 by ASME
+
+briefly discussed how assumptions made in heat transfer experiments
+affect the predicted heat flux.
+2
+
+model is due to viscous heating, which heats the wall slightly.
+Harrison and Bogard [3] did not include viscous heating, so the RKE
+model does not show any offset. Note that the non-dimensional
+temperatures for the SKW model are all defined in terms of the
+recovery temperature (see nomenclature) and that the non-dimensional
+fluid static temperature is plotted rather than the total temperature.
+
+1.5
+hf/h0
+
+1
+(a)
+
+y/d
+
+1
+
+0.5
+0.5
+
+DR=1.5
+DR=1
+
+0
+
+0
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+1
+
+Fig. 6 h f / h0 with upstream heating for M = 0.5
+
+y/d
+
+HEAT FLUX AND TEMPERATURE PREDICTIONS USING Taw
+The focus of this paper is to determine how well employing Taw
+as the driving temperature for heat transfer into a conducting wall can
+be used to predict the heat flux into and temperature of a conducting
+wall. The assumption that Taw is the correct driving temperature is
+dependent on the size of the thermal boundary layer in relation to that
+of the coolant jet. Thus, it is useful to examine thermal profiles of the
+static fluid temperature above the wall to analyze thermal boundary
+layer development. Fig. 7 shows thermal profiles of non-dimensional
+static temperature, θ, above the adiabatic and conducting walls at x/d =
+5 for M = 0.5. The shapes of the thermal profiles above the adiabatic
+and conducting walls are very similar. The conducting wall increases
+the temperature of the core of the jet slightly (decreased θ). This is
+because along the centerline and close to the holes, the conducting
+wall is warmer than the coolant jet. Heat is being driven out of the wall
+because the temperature of the conducting wall, Tcond, is warmer than
+Taw. It is worth noting that a thermal boundary layer is evident from
+the cooled fluid in the region between the coolant jets (z/d > 0.75).
+Other than the thermal boundary layer development in between
+coolant jets, the contour shape for the coolant jet in the AW simulation
+is not changed substantially by the conducting wall.
+The surface temperature distributions for the CW and AW
+simulations, given by φ and η, respectively, are shown in Fig. 8 for M
+= 0.5. The φ profile is much more uniform than the η profile due to
+conduction of heat. Taw, assumed to also be the over-riding gas
+temperature, is higher than the conducting wall temperature (η < φ) in
+general except immediately downstream of the holes. Also shown in
+Fig. 9 is the surface heat flux distribution for the conducting wall. The
+heat flux, q”cond, varies greatly due to the variation in gas temperature
+above the wall.
+Fig. 10 gives an indication of the thickness of the thermal
+boundary layer interacting with the coolant jet for M = 0.5. Thermal
+profiles above both the adiabatic and conducting walls are shown at
+x/d = 5 and z/d = 1.5 (the midline between jets). Results are shown for
+the SKW turbulence model and compared to those found for the RKE
+turbulence model from Harrison and Bogard [3]. In both cases, the
+thermal boundary layer thickness is approximately y/d = 0.7, which is
+a significant propagation from the wall. At z/d = 1.5, the jet has not
+had sufficient distance to laterally spread to the midline between holes,
+so the surface temperature is the same as it would have been if there
+was no film cooling; at the midline between jets, θ ≈ η ≈ 0 for the
+adiabatic wall, and the temperature profile is uniform since there is no
+coolant at this location. The small offset in θ from 0 for the SKW
+
+0.5
+
+-1.5
+
+-0.75
+
+0
+
+z/d
+
+0.75
+
+1.5
+(b)
+
+0
+-1.5
+
+-0.75
+
+0
+
+z/d
+
+0.75
+
+1.5
+
+θ
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1.0
+
+Fig. 7 Thermal profiles above the (a) adiabatic wall and (b) conducting
+wall at x/d = 5 for M = 0.5
+-1.5
+z/d
+
+(a)
+
+0
+1.5
+-1.5
+z/d
+
+-2
+
+0
+
+5
+
+x/d
+
+10
+(b)
+
+0
+1.5
+-2
+
+0
+
+5
+
+x/d
+
+10
+
+η,φ
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+Fig. 8 Surface contours of (a) φ and (b) η for M = 0.5
+-1.5
+z/d
+0
+1.5
+
+-2
+q”cond
+-20
+
+0
+-16
+
+5
+
+x/d
+-12
+
+-8
+
+-4
+
+0
+
+10
+4
+
+8
+
+12
+
+16
+
+20
+
+Fig. 9 Surface contours of q”cond (kW/m2) for M = 0.5
+For the purpose of analyzing whether Taw is the appropriate
+driving temperature for heat transfer, the heat flux into the conducting
+wall was predicted using Equation (3) and compared to the heat flux
+
+6
+
+Copyright © 2008 by ASME
+
+above the adiabatic and conducting walls at z/d = 0 are shown in Fig.
+12 for the purpose of analyzing whether the disagreement between
+q”cond and q”predicted can be attributed to inappropriate use of Taw as the
+driving temperature for heat transfer. Taw is less than Tcond (η > φ) for
+both turbulence models so the heat flux is negative (out of the wall).
+The temperature gradient above the adiabatic wall should be zero by
+definition, but the thermal field above the adiabatic wall varies as
+shown in Fig. 7 and Fig. 12. This is because the temperature of the jet
+varies, so the temperature above the wall is forced to differ from Taw.
+However, there is small region above the wall, which is not visible at
+this scale, where the gradient is zero.
+2.5
+Conducting Wall SKW
+Adiabatic Wall SKW
+Conducting Wall RKE
+Adiabatic Wall RKE
+
+2.0
+1.5
+
+y/d
+
+found through conjugate analysis, q”cond, in the CW simulation. For M
+= 0.5, q"predicted is compared to q"cond at x/d = 5 in Fig. 11. For both the
+SKW and RKE turbulence models, q”predicted in general agrees well
+with q”cond. The heat flux distributions are noticeably different
+between the two turbulence models. This difference can be attributed
+to differences in the internal heat flux boundary condition. The internal
+heat flux was varied for each model until the average φ on the surface
+of the conducting wall was φ = 0.6, as discussed previously. It was
+shown in Harrison and Bogard [4] that using these two turbulence
+models resulted in different η and hf /h0 distributions. Consequently,
+setting the average temperature to φ = 0.6 for the different CW
+simulations resulted in different internal heat flux boundary
+conditions, and in different external heat flux distributions for the two
+turbulence models. Despite different heat flux distributions, both
+turbulence models show that for z/d ≥ 0.9, agreement between
+q”predicted and q”cond is very good. This can be explained by examining
+thermal profiles at x/d = 5. These contours are shown in Fig. 8 (a) for
+the SKW turbulence model and are shown to be similar in Harrison
+and Bogard [2] for the RKE turbulence model. In both cases, the
+coolant jet has not spread to z/d > 0.9 by the streamwise position of x/d
+= 5 so q”cond and q”predicted should agree well for z/d ≥ 0.9 because Taw
+= Tr (or T∞).
+
+φ SKW = 0.66
+
+1.0
+
+ηRKE = 0.77
+ηSKW = 0.90
+
+0.5
+
+φRKE = 0.64
+
+2.5
+Conducting Wall SKW
+Adiabatic Wall SKW
+Adiabatic Wall RKE
+Conducting Wall RKE
+
+2.0
+
+y/d
+
+1.5
+1.0
+0.5
+
+ηRKE = ηSKW = 0
+
+φ RKE = 0.58
+
+φ SKW = 0.62
+
+0.0
+0.0
+
+0.2
+
+0.4
+
+θ
+
+0.6
+
+0.8
+
+1.0
+
+Fig. 10 Thermal profiles at x/d = 5 and z/d = 1.5 for M = 0.5
+20000
+
+q" [W/m2]
+
+15000
+10000
+5000
+q"cond SKW
+q"predicted SKW
+q"cond RKE
+q"predicted RKE
+
+0
+-5000
+0
+
+0.5
+
+z/d
+
+1
+
+1.5
+
+Fig. 11 Spanwise q"predicted and q"cond at x/d = 5 for M = 0.5
+At x/d = 5 and z/d = 0 for M = 0.5, agreement between the
+predicted and conducting wall heat flux is reasonable, but not as good
+as for z/d > 0.9, as shown in Fig. 11. It is possible to asses why Taw is
+an effective approximation of the driving temperature for heat transfer
+at some locations and not as effective at other locations. As was shown
+in Harrison and Bogard [3], this can be done by examining thermal
+profiles above the adiabatic and conducting walls. Thermal profiles
+
+0.0
+0.0
+
+0.2
+
+0.4
+
+θ
+
+0.6
+
+0.8
+
+1.0
+
+Fig. 12 Thermal profiles at x/d = 5 and z/d = 0 for M = 0.5
+As shown in Fig. 12, the normalized adiabatic wall temperature
+using the SKW model is η = 0.90, but the largest normalized
+temperature in the conducting wall profile is θ = 0.80. The static fluid
+temperature above the conducting wall is significantly higher than Taw,
+(lower θ) so the heat flux is not well predicted. Because q”predicted is
+calculated using Taw and Taw is lower than the actual static temperature
+above the conducting wall, the predicted heat flux should have overpredicted the magnitude of the actual heat flux. This is consistent with
+the heat flux results shown in Fig. 11. Note that the heat flux
+predictions for the SKW model are about 33% higher than q”cond. As
+was discussed in Harrison and Bogard [3], the thermal field above the
+adiabatic wall for the RKE model also varies significantly and the heat
+flux predictions are about 26% higher than q”cond at z/d = 0. In contrast
+to the results at z/d = 0, for both turbulence models, Taw is a very good
+approximation of the over-riding gas driving temperature at z/d = 1.5.
+Consequently, good agreement between q”predicted and q”cond is
+expected at z/d = 1.5, which is consistent with Fig. 11.
+Harrison and Bogard [3] found that agreement between q”predicted
+and q”cond is particularly poor for M = 1 at z/d = 0 and x/d = 5. Thus, it
+is useful to examine how well Taw approximates the driving
+temperature at this location with the SKW model. The predicted heat
+flux at x/d = 5 and z/d = 0 is approximately 200% higher than q”cond
+for the RKE model as demonstrated by Fig. 13. Similarly for the SKW
+model, q”predicted is about 300% higher than q”cond at z/d = 0. The
+thermal profiles above the adiabatic and conducting walls for both
+turbulence models are shown in Fig. 14. As was discussed further in
+Harrison and Bogard [3], it is clear that Taw is a poor approximation of
+the driving temperature for heat transfer at this location since the nondimensional over-riding gas temperature deviates significantly from η.
+A more detailed discussion correlating predicted heat flux to how
+well Taw represents the driving temperature for heat transfer can be
+found in Harrison and Bogard [3]. Comparisons of q”predicted to q”cond
+with analysis of thermal profiles above the adiabatic and conducting
+walls shows that agreement between q”predicted and q”cond can be
+
+7
+
+Copyright © 2008 by ASME
+
+related to how reasonably the driving temperature for heat transfer into
+the conducting wall can be approximated by Taw. The heat flux
+analysis from Harrison and Bogard [3] was repeated briefly in the
+current work to illustrate that regardless of the turbulence model, when
+Taw approximates the over-riding gas temperature well, the heat flux is
+well predicted by using Taw. Conversely, when Taw poorly
+approximates the driving temperature for heat transfer, the heat flux is
+poorly predicted. Furthermore, the fact that both the RKE and SKW
+turbulence models can be used to reach the same conclusion shows
+that the results of this study do not depend on the turbulence model.
+Thus, it should be irrelevant that neither of these turbulence models
+quantitatively predict η and hf /h0 distributions because the turbulent
+models simply provide examples of different thermal fields that could
+exist above the wall. What this analysis illustrates is that in regions
+where the gas temperature varies strongly above the wall, Taw cannot
+be used effectively as the driving temperature for heat transfer in
+predictions of heat flux to a conducting wall. It is clear from Fig. 14
+that the core of the jet is separated from the wall and the thermal field
+above the wall varies significantly from Taw for M = 1 at this location.
+Regardless of whether the turbulence models can predict the exact η
+and hf/h0 values for M = 1, jet separation is a physical situation that
+exists on real airfoils. This study suggests that in regions affected by
+jet separation, Taw is not the driving temperature for heat transfer. The
+same conclusion applies to any situation that leads to strong variation
+in the thermal field above the wall.
+It should be noted, however, that although the heat flux is not
+well predicted at certain locations examined in this study, in general
+Taw is found to be a very good approximation of the driving
+temperature for heat transfer.
+
+Analysis of the predicted heat flux is important for understanding
+when Taw is a good approximation of the driving temperature for heat
+transfer into a gas turbine airfoil. However, the heat flux analysis does
+not give an indication of how assuming Taw to be the driving
+temperature for heat transfer affects the temperature distribution on the
+surface. For gas turbine airfoils, the surface temperature is really the
+parameter of interest. Despite that the heat flux is not well predicted at
+certain locations when using Taw as the driving temperature for heat
+transfer, large over/under-predictions in heat flux do not necessarily
+extend to large over/under-predictions in the temperature distribution.
+This can be demonstrated through comparing φcond from the CW
+simulation to φpredicted from the SC simulation. This comparison is
+shown for M = 0.5 in Fig. 15 and M = 1 in Fig. 16 at x/d = 5 where the
+CW simulation is based on the SKW turbulence model. Recall that for
+the SC simulations, the Taw and (hf/h0)*h0,cond boundary conditions are
+applied locally at each cell on the surface of the flat plate as well as by
+averaging Taw and (hf/h0)*h0,cond in the spanwise direction and applying
+the average values at each streamwise location. Despite heat flux overpredictions of around 30%, φcond and φpredicted are almost identical when
+boundary conditions are applied locally in the SC simulation. It is not
+surprising that temperature predictions are closer to those for the CW
+simulation than heat flux predictions because the flat plate conducts
+heat well which reduces thermal gradients.
+0.7
+CW Simulation
+SC Simulation Local Boundary Conditions
+SC Simulation Average Boundary Conditions
+
+0.68
+0.66
+
+φ
+
+18000
+
+0.64
+
+q" [W/m2]
+
+15000
+12000
+
+0.62
+
+9000
+0.6
+
+q"cond SKW
+q"predicted SKW
+q"cond RKE
+q"predicted RKE
+
+6000
+3000
+
+0.0
+
+0.5
+
+z/d
+
+1.0
+
+1.5
+
+Fig. 15 φcond from CW simulation and φpredicted from SC simulation at
+x/d = 5 for M = 0.5
+
+0
+
+0.64
+
+-3000
+0.0
+
+0.5
+
+1.0
+
+z/d
+
+CW Simulation
+SC Simulation Local Boundary Conditions
+SC Simulation Average Boundary Conditions
+
+1.5
+0.62
+
+Fig. 13 Spanwise q"predicted and q"cond at x/d = 5 for M = 1
+2.5
+
+0.6
+
+2.0
+
+φ
+
+Conducting Wall SKW
+Adiabatic Wall SKW
+Conducting Wall RKE
+Adiabatic Wall RKE
+
+0.58
+
+1.5
+
+y/d
+
+0.56
+
+φ SKW = 0.62
+
+1.0
+
+0.54
+
+ηSKW = 0.59
+φ RKE = 0.59
+
+0.5
+
+0.0
+
+0.0
+0.2
+
+0.4
+
+z/d
+
+1.0
+
+1.5
+
+Fig. 16 φcond from CW simulation and φpredicted from SC simulation at
+x/d = 5 for M = 1
+
+η RKE = 0.46
+0.0
+
+0.5
+
+θ
+
+0.6
+
+0.8
+
+Fig. 14 Thermal profiles at x/d = 5 and z/d = 0 for M = 1
+
+1.0
+
+For M = 1, as is shown in Fig. 13, heat flux over-predictions are
+as high as 300%, much higher than under-predictions for M = 0.5.
+
+8
+
+Copyright © 2008 by ASME
+
+-1.5
+z/d
+1.5
+-1.5
+z/d
+1.5
+-1.5
+z/d
+1.5
+
+To explain the differences between φpredicted and φcond, it is
+necessary to examine the laterally averaged predicted and conducting
+wall heat flux distributions, shown in Fig. 19 for M = 0.5 and Fig. 20
+for M = 1. The laterally averaged q”predicted is calculated in two ways
+for presentation in Fig. 19 and Fig. 20. First, η and (hf/h0)*h0,cond
+values for each cell are input to Equation (3) and then these values are
+averaged laterally. Second, the η and (hf/h0)*h0,cond values are laterally
+averaged and then entered into Equation (3). For M = 0.5, it is clear
+that q”predicted < q”cond from x/d = 0 to x/d ≈ 5 and q”predicted > q”cond
+elsewhere when q”predicted is calculated with local values of η and
+(hf/h0)*h0,cond and then laterally averaged. Recall that the same η and
+(hf/h0)*h0,cond values are applied as boundary conditions to obtain Fig.
+17 and Fig. 18. Fig. 17 (a) and (b) indicate φpredicted > φcond for x/d = 0
+to x/d ≈ 5 and φpredicted < φcond elsewhere. The predicted temperature
+and predicted heat flux distributions are consistent because when
+q”predicted < q”cond, one would expect φpredicted > φcond, and conversely
+for q”predicted > q”cond. For M = 1, q”predicted > q”cond for all x/d, so one
+would expect φpredicted < φcond for all x/d. This is consistent with Fig 18.
+10000
+8000
+q" [W/m2]
+
+Thus, one would expect larger deviations between φcond and φpredicted
+for M = 1 than is shown for M = 0.5. Fig. 16 shows about a 6%
+deviation for M = 1 between φcond and φpredicted compared to a
+negligible deviation for M = 0.5. Although this deviation is larger than
+for M = 0.5, it is important to note that despite heat flux overpredictions of 300%, the deviation between φcond and φpredicted is much
+smaller. Also, the deviation is distributed rather than localized to a
+specific region as is shown for M = 0.5 as well.
+For both blowing ratios, the φpredicted using laterally averaged Taw
+and (hf/h0)*h0,cond boundary conditions are nearly constant values in
+the spanwise direction since all of the boundary conditions are input as
+lateral averages. The predictions results in reasonable values for φ, but
+do not capture any variation in the spanwise direction. Thus, using the
+laterally averaged boundary conditions would most likely not result in
+large problems for design as long as spanwise gradients are small and
+it is not necessary to capture small temperature gradients in the design.
+To further analyze the effects of using Taw as the driving
+temperature for heat transfer into a conducting wall, thermal profiles
+of φ are shown in Fig. 17 and Fig. 18. It is clear that the general shape
+of the φcond and φpredicted contours are very similar when Taw and
+(hf/h0)*h0,cond boundary conditions are applied locally to each cell. It is
+interesting that on average the φpredicted contours found by applying Taw
+and (hf/h0)*h0,cond boundary conditions locally are higher (lower
+temperature) than the φcond contours for M = 0.5 from x/d = 0 to x/d ≈ 5
+and then lower than φcond (higher temperature) from x/d ≈ 5 to x/d =
+30. For M = 1, however, the φpredicted contours are always lower than
+φcond.
+
+6000
+4000
+q"conducting
+
+2000
+
+(a)
+
+q"predicted: laterally averaged after q" calculation
+q"predicted: laterally averaged before q" calculation
+
+0
+
+10
+
+x/d
+
+20
+
+30
+
+0
+0
+
+(b)
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+x/d
+
+0
+
+10
+
+x/d
+
+20
+
+30
+
+Fig. 19 Laterally averaged q”predicted and q”cond for M = 0.5
+
+(c)
+0
+
+10
+
+x/d
+
+20
+
+20000
+
+30
+16000
+
+0.5
+
+0.53 0.56
+
+0.59 0.62
+
+0.65
+
+0.68 0.71 0.74
+
+0.77
+
+0.8
+
+Fig. 17 Surface contours for M = 0.5 of (a) φcond, (b) φpredicted with local
+boundary conditions, and (c) φpredicted with laterally averaged boundary
+conditions
+-1.5
+z/d
+1.5
+-1.5
+z/d
+1.5
+-1.5
+z/d
+1.5
+
+12000
+8000
+q"conducting
+
+(a)
+0
+
+10
+
+x/d
+
+20
+
+4000
+0
+
+(b)
+0
+
+10
+
+x/d
+
+20
+
+30
+
+q"predicted: laterally averaged after q" calculation
+q"predicted: laterally averaged before q" calculation
+
+30
+
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 20 Laterally averaged q”predicted and q”cond for M = 1
+
+(c)
+0
+
+10
+
+x/d
+
+20
+
+30
+
+φ
+0.5
+
+q" [W/m2]
+
+φ
+
+0.53 0.56
+
+0.59 0.62
+
+0.65
+
+0.68 0.71 0.74
+
+0.77
+
+0.8
+
+Fig. 18 Surface contours for M = 1 of (a) φcond, (b) φpredicted with local
+boundary conditions, and (c) φpredicted with laterally averaged boundary
+conditions
+
+When laterally averaged values of η and (hf/h0)*h0,cond are entered
+into Equation (3), Fig. 19 shows that q”predicted > q”cond for all x/d.
+This is consistent with Fig. 17 (a) and (c) in which φpredicted using
+laterally averaged η and (hf/h0)*h0,cond boundary conditions is always
+higher than φcond. Consistency between predicted φ levels and
+predicted q” can also be shown for M = 1. Fig. 20 shows that q”predicted
+> q”cond for all x/d and Fig. 18 (a) and (c) show that φpredicted using
+
+9
+
+Copyright © 2008 by ASME
+
+laterally averaged Taw and (hf/h0)*h0,cond boundary conditions may lead
+to strong gradients being smeared out.
+From the thermal contours shown in Fig. 17 and Fig 18, it is clear
+that the largest thermal gradients occur very close to the point of
+injection. To examine these gradients in more detail, it is useful to look
+at temperature distributions in the spanwise direction near the hole.
+Fig. 22 and Fig. 23 show spanwise thermal distributions at x/d = 1 for
+M = 0.5 and M = 1, respectively. The φ profiles are presented along
+with the normalized gas temperature, η, for comparison. Note that
+while several contours are shown in Fig. 17 and Fig. 18, the entire
+color bar is shown over a narrow range of φ to illustrate small changes
+in temperature. On the larger scale shown in Figures 22 and 23, it is
+clear that the thermal gradients are very small. Thus, using laterally
+averaged Taw and (hf/h0)*h0,cond boundary conditions in the SC
+simulation does not result in much more significant deviations
+between φcond and φpredicted than locally applied boundary conditions.
+1
+
+CW Simulation
+SC Simulation Local Boundary Conditions
+SC Simulation Average Boundary Conditions
+AW Simulation
+
+0.8
+
+φ and η
+
+laterally averaged η and (hf/h0)*h0,cond boundary conditions is
+generally lower than φcond.
+Fig. 17 and Fig. 18 also illustrate that in general, the laterally
+averaged heat flux predictions are very good, despite some local
+regions where predictions differ from q”cond by up to 300%. For M =
+0.5, the laterally averaged q”predicted is generally about 5% higher than
+q”cond after x/d ≈ 5. The laterally averaged q”predicted values for M = 1
+are also higher than the q”cond values by 5-10%.
+It is also important to observe that the point in which φpredicted
+changes from being higher to being lower than φcond happens to be at
+x/d ≈ 5. This is the position depicted by Fig. 15, in which the
+differences between φpredicted and φcond are negligible for M = 0.5.
+Consequently, this location is not representative of typical deviations
+between φpredicted and φcond as shown in Fig. 17 (a) for temperature and
+Fig. 19 for heat flux. Thus, it is useful to examine the thermal profiles
+at one more position that is more representative of the differences
+between φpredicted and φcond. Fig. 21 shows φ profiles on the surface of
+the flat plate for M = 0.5 at x/d = 15. It is clear that the temperature
+predictions are not as good at this location as they were at x/d = 5. Still
+φpredicted is within 3% of φcond, which is very reasonable agreement.
+Note that the agreement between φpredicted and φcond shown in Fig. 16
+for M = 1 is likely to be a fairly representative value because the
+deviation between laterally averaged q”predicted and q”cond values is
+fairly constant, as shown in Fig. 20, and the deviation between φpredicted
+and φcond is consistently about 5% at most positions, as shown in Fig.
+18. In general, the deviation between φpredicted and φcond is less for M =
+0.5 than for M = 1, which is not surprising since the deviation between
+q”predicted and q”cond is also generally larger for M = 1.
+
+0.6
+0.4
+0.2
+0
+
+0.65
+
+0.0
+
+CW Simulation
+SC Simulation Local Boundary Conditions
+SC Simulation Average Boundary Conditions
+
+0.63
+
+0.5
+
+z/d
+
+1.0
+
+1.5
+
+Fig. 22 φcond from CW simulation and φpredicted from SC simulation at
+x/d = 1 for M = 0.5
+
+0.61
+
+φ
+
+1
+CW Simulation
+
+0.59
+
+SC Simulation Local Boundary Conditions
+
+0.8
+
+SC Simulation Average Boundary Conditions
+AW Simulation
+
+φ and η
+
+0.57
+0.55
+0.0
+
+0.5
+
+z/d
+
+1.0
+
+1.5
+
+Fig. 21 φcond from CW simulation and φpredicted from SC simulation at
+x/d = 15 for M = 0.5
+Note that the poorer prediction for the M = 1 case can be traced
+back to Taw being too large. This is due to the coolant jet being slightly
+separated from the surface for the M = 1 case (see Fig. 14) resulting in
+lower temperature gas over-riding a slight distance from the surface.
+This cooler gas influences heat transfer causing lower heat transfer to
+the surface than is predicted with Taw.
+As shown in Figures 15, 16, 17 (c), 18 (c), and 21, the
+temperature predictions resulting from applying laterally averaged
+boundary conditions are laterally uniform and do not capture thermal
+gradients in the spanwise direction. Large thermal gradients can be
+important to turbine designers because gradients can lead to fatigue
+and failure of airfoils. Therefore, it is useful to determine where
+regions exist with large thermal gradients in the spanwise direction and
+analyze these regions to determine if there are locations in which
+
+0.6
+0.4
+0.2
+0
+0.0
+
+0.5
+
+z/d
+
+1.0
+
+1.5
+
+Fig. 23 φcond from CW simulation and φpredicted from SC simulation at
+x/d = 1 for M = 1
+CONCLUSIONS
+In engines, even small differences in surface temperature can
+significantly affect the life of airfoils, so even small differences in the
+predicted surface temperature may be important. The adiabatic wall
+temperature is generally assumed to be the driving temperature for
+heat transfer into a conducting wall in film cooling literature. This
+assumption has not been studied in open literature except in Harrison
+and Bogard [3]. In contrast to the earlier study, which evaluated
+
+10
+
+Copyright © 2008 by ASME
+
+performance in terms of the actual and predicted heat flux to the
+surface, the focus of this study was to determine the accuracy of the
+solid body temperature predicted with the standard process of using
+adiabatic wall temperature and heat transfer coefficient as boundary
+conditions for a solid body conduction analysis. This work also
+complements the earlier study by showing that the use of the SKW
+turbulence model in the current study leads to similar conclusions as
+were found previously using the RKE model.
+The assumption that the adiabatic wall temperature is the driving
+temperature for heat transfer into a conducting flat plate was analyzed
+through a series of simulations. These simulations computationally
+mimicked standard experiments to find the adiabatic wall temperature
+and heat transfer coefficient augmentation on a flat plate. The results
+of the simulations were then used to predict the heat flux and wall
+temperature of a conducting wall with the same geometry.
+The predicted and actual heat fluxes were compared and
+reasonable agreement was found. However, in some regions, generally
+along the centerline, there was as much as a 300% difference between
+the predicted and actual heat fluxes. In these regions of poor heat flux
+predictions, the over-riding gas temperatures were invariably found to
+be not well represented by the adiabatic wall temperature. When
+agreement between the predicted and actual heat fluxes was found to
+be good, the thermal profiles indicated that the adiabatic wall
+temperature was a good approximation of the driving temperature for
+heat transfer.
+The temperature on the flat plate was also predicted by using the
+adiabatic wall temperature and heat transfer coefficients as boundary
+conditions for the top surface of the plate in a simulation of the
+thermal conduction within a solid model. This was a simulation of
+common design practice to estimate “metal temperature” using the
+film cooling adiabatic effectiveness and heat transfer coefficients as
+boundary conditions for finite element analysis of thermal conduction
+within the solid body of a turbine airfoil. This simulation was done
+with local and laterally averaged values of adiabatic effectiveness and
+heat transfer coefficients. Results showed less than 10% error in the
+predicted surface temperature even in regions where the heat flux
+predictions were in error by as much as 300%. Not surprisingly, use of
+laterally averaged adiabatic film effectiveness and heat transfer
+coefficients resulted in laterally uniform temperature distributions, and
+therefore did not reveal the actual lateral variations of wall
+temperature. However, the actual lateral variations in wall temperature
+were not large, so this did not result in large errors. Overall, use of the
+adiabatic wall temperature as the driving temperature for heat transfer
+resulted in reasonably accurate predictions of the surface heat flux and
+surface temperature distributions on a conducting wall.
+
+[5] Baldauf, S., Scheurlen, M., Schultz, A., and Wittig, S., 2002,
+“Correlation of Film Cooling Effectiveness from Thermographic
+Measurements at Engine Like Conditions,” ASME Paper GT2002-30180.
+[6] Mayhew, J., Baughn, J., and Byerley, A., 2002, “The Effect of
+Freestream Turbulence on Film Cooling Heat Transfer
+Coefficient,” ASME Paper No. GT-2002-30173.
+[7] Coulthard, S., Volino, R., and Flack, K., 2006, “Effect of
+Unheated Starting Lengths on Film Cooling Effectiveness,”
+ASME Journal of Turbomachinery, 128, pp. 579-588.
+[8] Harrison, K., Dorrington, J., Dees, J., Bogard, D., and Bunker,
+R., 2007, “Turbine Airfoil Net Heat Flux Reduction with
+Cylindrical Holes Embedded in a Transverse Trench,” ASME
+Paper GT2007-27996.
+[9] Ammari H., Hay, N., and Lampard, D., 1990. “The Effect of
+Density Ratio on the Heat Transfer Coefficient from a FilmCooled Flat Plate,” Journal of Turbomachinery, 112, pp. 444450.
+
+ACKNOWLEDGEMENTS
+The authors would like to thank to Office of Naval Research for
+funding this research through the Electric Ship Consortium.
+REFERENCES
+[1] Goldstein, R.J., 1971, “Film Cooling,” Advances in Heat
+Transfer, v 7, p 321-379.
+[2] Choe, H., Kays, W.M., and Moffat, R.J., 1974, “The
+Superposition Approach to Film-Cooling,” ASME Paper 74WA/GT-27.
+[3] Harrison, K. and Bogard, D., 2008, “Evaluation of the Use of
+the Adiabatic Wall Temperature to Predict Heat Fluxes for Film
+Cooled Airfoils,” ISROMAC Paper 12-2008-20187.
+[4] Harrison, K. and Bogard, D., 2007, “Comparison of RANS
+Turbulence Models for Prediction of Film Cooling
+Performance,” ASME Paper GT2008-51423.
+
+11
+
+Copyright © 2008 by ASME
+
+

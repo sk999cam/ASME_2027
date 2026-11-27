@@ -1,0 +1,756 @@
+AIAA Propulsion and Energy Forum
+July 9-11, 2018, Cincinnati, Ohio
+2018 Joint Propulsion Conference
+
+10.2514/6.2018-4734
+
+Identifying Weaknesses in Eddy-Viscosity Models for Predicting
+Film Cooling via Large-Eddy Simulations
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Zachary T. Stratton∗ and Tom I-P. Shih†
+Purdue University, West Lafayette, IN, 47906
+Large eddy (LES) and Reynolds-Averaged Navier-Stokes (RANS) simulations were performed to investigate modeling weaknesses in two popular RANS models, realizable k- and
+shear-stress transport (SST), in predicting film cooling of a flat plate. The cooling jets issue
+from a plenum through one row of circular holes of diameter D and length 4.7D that are
+inclined at 35o relative to the plate. The following parameters were studied: blowing ratio (BR
+= 0.5 and 1.0) and density ratio (DR = 1.1 and 1.6). The LES and RANS solutions generated
+were validated by comparing with data from PIV and thermal measurements. The LES results
+agreed well, while RANS results showed large errors. Results obtained show the turbulent and
+thermal structure of the jets predited by the two RANS models to differ cconsiderably. However,
+both models are consistent in under predicting the spread of the film-cooling jet. The counterrotating vortex pair (CRVP) dominates the interaction of the jet and crossflow in the near-wall
+region, and neither RANS model could predict the strength and structure of the interactions.
+The gradient-diffusion and Boussinesq hypotheses in the two RANS models were evaluated by
+using the LES data; regions of counter-gradient diffusion and stress-strain misalignment were
+identified. Comparing LES and RANS results show regions near the film-cooling hole where
+the realizable k- and SST models predict eddy-viscosities that lead to incorrect Reynold’s
+stresses.
+
+I. Nomenclature
+BR
+D
+DR
+E
+I
+k
+L/D
+p/D
+Reδmo m
+Taw
+Tc
+T∞
+uc
+u∞
+00 00
+u
+i uj
+00 00
+u
+i θ
+VR
+x
+y
+y+
+z
+∗ PhD
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+Blowing ratio, ρc Uc /ρ∞U∞
+Film-cooling hole diameter
+Density ratio, ρc /ρ∞
+Energy-spectrum function
+2
+Momentum-flux ratio, ρc Uc2 /ρ∞U∞
+Turbulent kinetic energy
+Length-to-diameter ratio of the film-cooling hole
+Pitch-to-diamter ratio between film-cooling holes
+Reynolds number based on momentum thickness
+Adiabatic wall temperature
+Coolant temperature
+Mainstream temperature
+Coolant jet velocity
+Crossflow velocity
+Favre-averaged Reynolds stresses
+Favre-averaged turbulent heat flux
+Velocity ratio, Uc /U∞
+Streamwise coordinate measured from film-cooling hole trailing edge
+Distance normal from film-cooled flat plate
+Non-dimensional wall distance, uτ y/ν
+Spanwise coordinate measured from center of film-cooling hole
+
+Student, School of Aeronautics and Astronautics
+and Head, School of Aeronautics and Astronautics, Fellow AIAA
+
+† Professor
+
+1
+Copyright © 2018 by Zachary Stratton. Published by the American Institute of Aeronautics and Astronautics, Inc., with permission.
+
+Greek
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+δ
+δmom
+∆t
+η
+θ
+κ
+ν
+ρ
+ωi
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+Boundary-layer thickness
+Momentum thickness
+time-step size
+Adiabatic effectiveness, (Taw − T∞ )/(Tc − T∞ )
+Non-dimensional temperature, (T − T∞ )/(Tc − T∞ )
+Wavenumber
+Kinematic viscosity
+Density
+Vorticity components
+
+II. Introduction
+as turbine engines can achieve greater thermal efficiency by increasing the temperature of the gas that enter its
+turbine component. The temperatures sought far exceed the melting point of the turbine’s material. Therefore, the
+turbine must be cooled to keep the thermal loads on the material at acceptable levels for structural integrity and service
+life. One widely used technique to cool the turbine material is film cooling, where some of the cooler air that has been
+bled from the compressor is passed through small holes to form an insulating layer or film between the hot gas and the
+turbine material. These holes are often angled or shaped in a way that maximizes the coverage of the insulating film.
+Film-cooling is one class of jet-in-crossflow (JICF) where the jet is angled, typically around 35◦ with respect to the
+crossflow, such that the wall has a strong influence on the resulting flow physics. JICF has been a difficult and intriguing
+problem in fluid dynamics due to the large diversity of different flow structures present in the flow at any one time, with
+the most significant structure being the counter-rotating vortex pair (CRVP) [1–3]. An extensive amount of research has
+been done to better understand film-cooling flows [4, 5] . Of particular interest is how film-cooling efficiency can be
+increased by changing parameters such as geometry, blowing ratio, density ratio, and upstream boundary layer.
+Computational fluid dynamics (CFD) has been useful in providing understanding of film-cooling flows and how
+design and operating parameters affect the film cooling. However, many early studies have shown RANS to be ineffective
+in predicting trends in film cooling. This is because RANS based on eddy viscosity models are unable to predict the
+high degree of anisotropy in film-cooling flows. In particular, they are unable to capture the correct lateral spreading of
+the cooling jet [6–8]. Nevertheless, RANS continues to be used because of its efficient and fast turn-around time in
+generating solutions. Thus, there is considerable interest to improve turbulence models used in RANS for film cooling,
+models that could account for anisotropy in some way. Bergeles et al. [9] was one of the first to apply an anisotropic
+turbulence model to a jet-in-crossflow by multiplying the eddy-viscosity in the lateral direction by a correction factor
+that varied based on wall-normal distance. This correction was based on pipe-flow data and was only applicable in the
+log-law region and above; nevertheless, the model predicted higher lateral spreading. Lakehal et al. [10] extended
+Bergeles’ model to the viscous sublayer by increasing the correction factor. While this improved the lateral spreading,
+the peak values of adiabatic effectiveness were underestimated. Azzi and Lakehal [11] used an explicit algebraic stress
+model to calculate each Reynolds stress in combination with a two-layer model to account for near-wall anisotropy.
+While this model showed some improvement over isotropic turbulence models, it was still unable to capture the lateral
+spreading. Lakehal [12] further extended the anisotropic model of [9, 10] by basing the near-wall velocity scale (v 0 v 0)
+and dissipation () on channel-flow DNS data; additionally turbulent Prandtl number (Prt ) is based on channel-flow
+DNS data and varies with Rey . The anisotropic model in combination with the variable Prt significantly improved
+cooling predictions for film-cooling of a flat plate, but underestimated cooling over a turbine blade. Jones et al. [13]
+employs the v 2 f − kω model for film-cooling flows, but little improvement is seen over isotropic models; however,
+when combined with a variable Prt formulation, better lateral spreading of the coolant is observed. Liu et al. [14, 15]
+studies the effect of Prt using isotropic eddy-viscosity models and finds that allowing the Prt to vary laterally or as a
+function of non-dimensional temperature can improve cooling predictions for round holes at both low and high BRs.
+However, it was found that solely varying Prt has little affect on the cooling predictions for a slot jet, where the wall has
+significant influence on the flow field. Li et al. [16, 17] devised an algebraic anisotropic eddy-viscosity model and
+scalar flux model where they multiply µt by correction factors derived from an algebraic Reynolds stress model to get
+µt,i j . This model improves cooling predictions by better capturing lateral spreading and cooling magnitude; however
+the separation and reattachment near the hole does not match experimental data.
+Magnetic Resonance Imaging (MRI) experiments and LES of film cooling can be used to study the fundamental
+
+G
+
+2
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+assumptions of RANS models and provide insight toward model development. Coletti et al. [18] used MRI data to
+show that eddy-viscosity is strongly non-uniform and anisotropic. Additionally, it is shown that eddy-diffusivity should
+increase downstream to capture entrainment, but eddy-viscosity should decrease downstream to capture the persistence
+of the CRVP, suggesting that models should account for variable Prt . Ling et al. [19] examines various scalar flux
+models and found that all the models showed large errors in the near wall region, it was also shown that Prt varies
+significantly with lower values near the wall. Ling et al. [20] finds negative eddy-viscosities and strongly anisotropic
+flow in a JICF using LES data, then investigates the use of machine learning to better capture anisotropy.
+High resolution LES data can provide insight for turbulence-model development. A limitation of some of the
+previous studies [18–20] is that the analysis is limited to one set of parameters (e.g. BR = 1, DR = 1). Film cooling
+performance is very sensitive to the flow parameters, so it is desirable to analyze the RANS assumptions over a range of
+parameters. The objective of the current study is to compare the film-cooling LES results of Stratton and Shih [21] to
+two RANS models (k- and SST k-ω) for a range of parameters (BR = 0.5 and 1.0 and DR = 1.1 and 1.6) in order to
+find regions where the RANS assumptions are weak and can be improved.
+
+III. Numerical Method
+IV. Problem Description and Numerical Setup
+The problem studied is shown in Fig. 1. It consists of a flat plate to be film cooled with cooling jets issuing from a
+plenum through a row of cylindrical holes of diameter, D. The cooling holes are spaced 3D apart, have an aspect ratio
+of L/D = 4.7, and an injection angle of 35◦ . The domain extends 20D downstream of the hole.
+The operating conditions are chosen to yield a Mach number of M = 0.1, DR = 1.1 and 1.6, and BR = 0.5 and 1.0.
+These parameters give rise to four different velocity ratios ranging from 0.313 to 0.909. The Reynolds numbers for DR
+= 1.1 and 1.6, based on hole diameter and freestream velocity, are Re = 5135 and Re = 6160, respectively.
+The turbulent boundary layer, measured 5D upstream of the hole, has a boundary layer thickness of δ = 1.2D and
+momentum thickness of δmom = 0.13D, which corresponds to a Reδmo m = 670. A summary of cases is presented in
+Table 1. The chosen flow conditions correspond to those studied in the experiment by Eberly and Thole [22]; the current
+results while be validated with these measurements.
+
+Fig. 1
+
+Computational model
+
+3
+
+Table 1
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Case
+1
+2
+3
+4
+
+Summary of Cases.
+
+DR
+1.6
+1.1
+1.6
+1.1
+
+BR
+0.5
+0.5
+1.0
+1.0
+
+VR
+0.313
+0.455
+0.625
+0.909
+
+I
+0.156
+0.227
+0.625
+0.909
+
+A. LES Setup
+The LES simulations were performed with the Navier-Stokes solver, FDL3DI [23, 24]. It solves the unfiltered,
+compressible, three-dimensional Navier-Stokes equations using a finite-difference approach utilizing sixth-order
+compact operators. To eliminate spurious modes, an eighth-order low-pass filter is applied to filter high-frequency and
+high-wavenumber components of the solution.
+The computational domain consists of 16 overset structured blocks. The mesh consists of grid spacings of ∆x + = 9,
+0.4 < ∆y + < 8, ∆z+ = 5 upstream of the hole and similar values downstream of the hole; the total mesh size consists of
+35 × 106 grid points.
+In the LES simulations the inflow boundary condition is a laminar boundary layer profile with δ = 0.4D. Transition
+to turbulence is controlled via a body-force trip placed 1.5D downstream of the inlet, and it is positioned such that
+Reδmo m = 670 5D upstream of the hole. Additional details regarding LES setup can be found in Stratton and Shih [21].
+B. RANS Setup
+The RANS simulations were performed by using the commercial software FLUENT Version 17.0. In this study, the
+flow is modeled by the ensemble-averaged continuity, momentum (compressible Navier-Stokes), and energy equations
+with Sutherland’s model for viscosity. Two turbulence models for closing the ensemble-averaged equations were studied.
+The first is the shear-stress transport (SST) version of k-ω. With this model, all equations can be integrated to the wall,
+through the viscous sub-layer. The second model is realizable k- with the two-layer model of Chen and Patel [25] used
+in the near-wall region. The curvature correction of Spalart and Shur [26] was applied to both models.
+A pressure-based segregated solver, SIMPLE, was used to generate solutions. The fluxes for all equations at the cell
+faces were interpolated using the second-order upwind scheme. Pressure was computed using second-order accuracy.
+For all computations, iterations were continued until all residuals plateaued below 10−5 for continuity and 10−6 for
+momentum, energy, and turbulence quantities, ensuring convergence to a steady-state. An unstructured mesh consisting
+of 2.5 × 106 hexahedral cells.
+In the RANS simulations a turbulent boundary layer profile with Reδmo m = 670 is directly specified at the inlet
+along with k and  (or ω) profiles. Only half of the domain is simulated with a symmetry boundary condition specified
+through the hole and at the lateral boundary. An atmospheric back pressure is enforced on the hot-gas outlet. At the
+plenum inlet a mass-flow rate yielding the desired blowing ratio and density ratio is specified.
+
+V. Results
+A. Verification and Validation
+To ensure the LES resolution is sufficient for this study, boundary layer simulations were computed and analyzed for
+different grid resolutions. The coarse mesh consists of 8 × 106 grid points and grid spacings of ∆x + = 17, 0.4 < ∆y + <
+10, ∆z+ = 8. The fine mesh consists of 24 × 106 grid points and grid spacings of ∆x + = 9, 0.4 < ∆y + < 8, ∆z+ = 5.
+In order to test the spatial convergence of turbulent flow, the velocity spectra on different grids can be compared.
+The boundary layer data is plotted along with the Pope’s semi-empirical model of the velocity spectrum of isotropic
+turbulence [27]. This model has the form:
+
+4
+
+E(κ) = C 2/3 κ −5/3 fL (κL) fη (κη)
+# 5/3+p0
+"
+κL
+fL (κL) = p
+(κL)2 + cL
+
+(1)
+(2)
+(3)
+
+where C = 1.5, p0 = 2, and β = 5.2; with κL = κηRe3/4
+L . Note that in these equations η is the Kolmogorov length scale.
+The constants cL and cη are solved for by satisfying the following relations for turbulent kinetic energy and dissipation:
+∫ ∞
+k=
+E(κ)dκ
+(4)
+0
+∫ ∞
+ = 2ν
+κ 2 E(κ)dκ.
+(5)
+0
+
+The non-dimensional model spectrum can be uniquely determined by a specified turbulent Reynolds number (Re L ) or
+Taylor microscale Reynolds number (Reλ ). These Reynolds numbers are related as Re L = k 2 /( ν) = 3Re2λ /20. Finally,
+to compare the model spectrum to the LES data, a one-dimensional, longitudinal spectrum is computed as:
+!
+∫ ∞
+κ12
+E(κ)
+E11 (κ1 ) =
+(6)
+1 − 2 dκ
+κ
+κ
+κ1
+The LES longitudinal spectrum calculation utilizes Taylor’s hypothesis to convert frequency to streamwise
+wavenumber: κ1 = 2π f /Uc , where Uc is the local velocity. The data are probed at y + = 275 at around Reδmo m = 670,
+to ensure relatively isotropic flow; at this point Re L ≈ 210. The longitudinal spectrum are compared in Fig. 2. Note that
+Pope’s model represents a theoretical DNS result, where all length scales are resolved. As expected the LES matches
+Pope’s model for the small wavenumbers (large scales) and deviates as the dissipation range is approached, representing
+the unresolved scales. One could calculate the energy resolved by the coarse and fine LES simulations by integrating
+under the curves and taking the difference between the LES and model results; this shows that the coarse mesh resolves
+99.0% of the energy containing eddies, while the fine mesh resolves 99.95%. This suggests that the LES is very well
+resolved.
+104
+102
+
+E11 /(ǫν 5 )1/4
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+fη (κη) = exp(−β[(κη)4 + cη4 ]1/4 − cη )
+
+100
+10-2
+10-4
+-6
+
+10
+
+10-8
+10-3
+
+Pope's Model (2000)
+LES, Fine
+LES, Coarse
+-5/3 Slope
+
+10-2
+
+10-1
+
+100
+
+101
+
+κ1 η
+Fig. 2
+
+Longitudinal Spectrum
+
+The LES results are additionally validated against the boundary layer DNS simulations of Schlatter and Orlu [28], to
+ensure the near-wall resolution is sufficient. The results are shown in Fig. 3. The fine mesh is able to match the near
+5
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 3
+
+Velocity fluctuations at Reδmo m = 670
+
+wall peaks for all velocity components, while the coarse mesh shows minor deviation. Based on these results the fine
+mesh resolution is used for all film-cooling LES simulations.
+The validation with experimental adiabatic effectiveness data is seen in Fig. 4. While the resolved boundary layer
+cases matches well with the experimental data, RANS is generally unable to capture the correct spreading of the jet,
+especially at low BR. The SST model in particular overestimates the separation of the jet with the flat plate.
+Centerline velocity profiles at 3D and 6D downstream of the hole are compared in Fig. 5. LES can match the
+experimental data well, whereas k- is unable to capture the curvature of the profile and SST tends to overestimate the
+velocity.
+
+Fig. 4
+
+Adiabatic effectiveness measurements
+
+B. Thermal and Turbulent Field
+The non-dimensional temperature superimposed with contour lines of ωx is shown in Figs. 6 and 7. In general,
+neither model can correctly capture the spreading of the jet, especially at BR = 0.5 and DR = 1.6. Realizable k-
+generally captures the gradient better than SST. The CRVP is a critical part of the jet-and-crossflow interaction and
+neither model can capture the strength; SST overestimates the strength, while k- tends to underestimate the strength.
+6
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 5
+
+Velocity measurements along centerline
+
+Interestingly, the lower CRVP strength does not translate to higher spreading. RANS does show that the CRVP scales
+with V R, but the magnitude is incorrect.
+
+Fig. 6
+
+Non-dimensional temperature with ωx contour lines at x/D = 2 for BR = 0.5 and DR = 1.1 and 1.6
+
+The turbulent kinetic energy is plotted in Figs. 8 and 9. Realizable k- can predict the magnitude of k, but cannot
+capture the curvature induced by the CRVP. SST fails to capture the magnitude, and tends to predict very low k in the
+middle of the jet near the wall. RANS can capture the scaling of k with VR, but underpredicts k near the wall.
+C. Boussinesq Hypothesis
+The compressible Boussinesq hypothesis is given by
+
+
+uk
+2
+1 ∂e
+00
+00
+
+δi j + kδi j
+(7)
+ui u j = −2νt Si j −
+3 ∂ xk
+3
+
+
+∂e
+uj
+∂e
+ui
+where Si j = 21 ∂x
++
+∂xi is the strain rate tensor and δi j is the Kronecker delta. The Boussinesq hypothesis is a linear
+j
+relationship between the stress and strain and is the main assumption that two-equation turbulence models utilize. The
+validity of this assumption can be evaluated by plotting contours of stress and strain by using the LES data and visually
+inspecting if a scalar eddy viscosity is appropriate. Figure 10 plots stress and strain contours for for the shear-stress
+components of Eq. 7 for BR = 1.0. The counter-rotating vortex pair causes flow to rotate in the stream-wise direction.
+Along these rotating streamlines there is a point of maximum strain, and Eq. 7 assumes this is also the point of maximum
+stress. However, the S23 component makes it clear that the point of maximum stress occurs later along the streamline.
+This lag is not uncommon in turbulent swirling flows, and indicates that curvature-correction must be applied to the
+RANS equations for this flow. This misalignment is most notable at the highest V R where the CRVP is strongest.
+7
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 7
+
+Non-dimensional temperature with ωx contour lines at x/D = 2 for BR = 1.0 and DR = 1.1 and 1.6
+
+Fig. 8
+
+Turbulent Kinetic Energy (k) at x/D = 2 for BR = 0.5 and DR = 1.1 and 1.6
+
+By using the least-squares approach, it is possible to solve for a scalar eddy-viscosity based on the Boussinesq
+hypothesis. This allows for the calculation of eddy-viscosity from LES data as follows:
+
+
+
+
+uk
+uk
+1 ∂e
+2
+1 ∂e
+00 00
+−u
+i u j Si j − 3 ∂x k δi j + 3 kδi j Si j − 3 ∂x k δi j
+
+
+
+νtL E S =
+.
+(8)
+uk
+uk
+1 ∂e
+2 Slm − 31 ∂e
+δ
+δ
+S
+−
+lm
+lm
+lm
+∂x k
+3 ∂x k
+This can be used to evaluate the RANS results, as seen in Figs. 11 and 12. Note that the the contours are clipped, as
+Eq. 8 is not applicable in the freestream where gradients are very low. In general, k- tends to overpredict νt , whereas
+SST tends to underpredict νt . It was seen earlier that k- tends to underpredict the strength of the counter-rotating
+vortex pair, whereas SST tends to overpredict the strength of the counter-rotating vortex pair, thus these parameters are
+directly correlated.
+A particularly severe weakness of a scalar eddy-viscosity is that a single eddy-viscosity must apply equally to each
+Reynolds stress component. However, in Fig. 10 the near-wall region suggests that a single eddy-viscosity is incapable of
+00 w 00 component,
+manipulating each strain component to yield the corresponding Reynolds stress. Take for instance the u
+8
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 9
+
+Turbulent Kinetic Energy (k) at x/D = 2 for BR = 1.0 and DR = 1.1 and 1.6
+
+Fig. 10
+
+Stress and strain alignment for BR = 1.0 and DR = 1.1 and 1.6
+
+the Boussinesq approximation simplifies to:
+00 w 00 = −2ν S .
+u
+t 13
+
+(9)
+
+00 w 00 is shown in Fig. 13. The LES results show that u
+00 w 00 acts much closer to the wall than is suggested
+The plot of u
+by RANS. This is due to eddy-viscosity approaching zero further away from the wall as seen in Figs. 11 and 12. Indeed,
+solving RANS equations with an “optimal” scalar eddy-viscosity as suggested by LES, would still yield unsatisfactory
+results. However, above the wall, the general scalar eddy-viscosity assumption is more applicable. This means that a
+two-layer model that can accurately capture the near-wall anisotropy could yield much improved results (such as by
+using a tensor eddy viscosity); and is certainly the reason the model developed by Lakehal [12] showed much improved
+results over standard models.
+
+9
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 11
+
+Eddy-viscosity for BR = 0.5 and DR = 1.1 and 1.6
+
+Fig. 12
+
+Eddy-viscosity for BR = 1.0 and DR = 1.1 and 1.6
+
+D. Gradient-Diffusion Hypothesis and Turbulent Prandtl Number
+Two-equation RANS models use the gradient-diffusion hypothesis (GDH) to model the turbulent heat flux, and it is
+given by
+νt ∂ e
+θ
+00 00
+u
+i θ = − Pr ∂ x .
+t
+i
+
+(10)
+
+The turbulent diffusivity (αt ) is defined as the quantity νt /Prt . Like the Boussinesq hypothesis, both sides of the
+equation can be plotted using LES and inspected visually to evaluate the integrity of the assumption. The turbulent heat
+flux and temperature gradient are plotted in Figs. 14 and 15. According to Eq. 10 the turbulence is assumed to transport
+10
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 13
+
+00 w 00
+LES and RANS Contours of u
+
+heat in the direction of the temperature gradient. However, as indicated in the figures, there are regions of the flow where
+this is not true (where heat flux and temperature gradient are the same color), especially near the wall. This phenomena
+is counter-gradient diffusion and cannot be captured with this simple model. This phenomena can occur in the presence
+of large-scale mixing, in this case, between the shear-layer vortices and counter-rotating vortex pair. This is especially
+evident at the highest V R where the counter-gradient diffusion even occurs in the shear layer near the top of the jet.
+RANS simulations typically assume Prt to be a constant with a value around 0.85. The LES data can be used to
+approximate the Prandtl number by first using a least-squares method to solve for the turbulent diffusion as follows:
+00 00 ∂θ
+−u
+i θ ∂xi
+
+e
+
+αtL E S =
+
+∂θe ∂θe
+∂x j ∂x j
+
+11
+
+(11)
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+Fig. 14 Turbulent heat flux and non-dimensional temperature gradient at x/D = 0 for BR = 0.5 and DR = 1.1
+and 1.6
+
+Fig. 15 Turbulent heat flux and non-dimensional temperature gradient at x/D = 0 for BR = 1.0 and DR = 1.1
+and 1.6
+
+Then the turbulent Prandtl number is:
+PrtL E S =
+
+νtL E S
+.
+αtL E S
+
+(12)
+
+Contours of PrtL E S in the jet region are plotted in Fig. 16. Note that PrtL E S is not well defined where the gradients
+12
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+are near zero. Here it can be seen that Prt approaches values ∼ 0.1 near the wall. At low V R the region of low Prt is
+confined to the region just above the wall (y/D < 0.1). As V R increases this region of low Prt increases. In the body of
+the jet, Prt increases to ∼ 0.5, but only approaches the RANS value of 0.85 in the shear layer above the jet.
+
+Fig. 16
+
+Turbulent Prandtl Number at x/D = 2
+
+These results suggest that the GDH model may be too simple for this flow. The misalignment between the turbulent
+heat flux and the temperature gradient could be improved by accounting for the anisotropy of the turbulent diffusivity. If
+a turbulent Prandtl number is used, it should at least vary in space.
+
+VI. Conclusion
+A computational study based on LES and RANS were performed to examine the limitations of two RANS turbulence
+models, realizable k −  and SST, for predicting film-cooling flows. In general, RANS under predicted adiabatic
+effectiveness by failing to predict the correct lateral spreading. Realizable k −  tended to under predict the CRVP
+strength, while SST over predicted the strength. Realizable k −  is better able to capture the trend and magnitude of the
+turbulent kinetic energy, but k near the wall is under predicted, where as SST under predicts k throughout the entire jet
+region.
+LES data was also used to examine the Boussinesq hypothesis. There is some evidence of misalignment of the stress
+and strain at higher V R, suggesting that a curvature correction should be utilized. However, in general, the assumed
+linear relationship between stress and strain fields is satisfactory. Using the method of least-squares an “ideal” scalar
+eddy-viscosity can be solved for using the LES data. This eddy-viscosity showed that realizable k −  over predicted the
+eddy-viscosity while SST under predicted it. This result correlates with the relative strengths of the CRVP predicted by
+each model. However, the eddy viscosity from LES approaches zero too far from the wall. Further analysis reveals that
+
+13
+
+00 w 00 , which influences spreading of the
+this leads to incorrect predictions of Reynolds stresses near the wall, notably u
+flow laterally over the wall. Thus anisotropy must be accounted for in the near-wall region, and a scalar eddy-viscosity
+is inappropriate.
+
+Acknowledgments
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+This work was supported by the Ames Laboratory and the National Energy Technology Laboratory with funding
+from the Department of Energy under Contract No. DE-AC02-07CH11358 / Agreement No. 26110-AMES-CMI. The
+computations were done at the Extreme Science and Engineering Discovery Environment (XSEDE) at The University
+of Texas at Austin, supported by National Science Foundation grant number ACI-1548562. The authors are grateful to
+Robin Ames, Mark Bryden, and Rich Dennis for the discussions on the research and results. The authors would also
+like to thank Dr. Visbal and Dr. Garmann and the Air Force Research Laboratory (AFRL) for allowing the use of their
+LES code, FDL3DI, and Dr. Thole at Penn State University for providing the experimental data.
+
+References
+[1] Kelso, R., Lim, T., and Perry, A., “An experimental study of round jets in cross-flow,” Journal of Fluid Mechanics, Vol. 306,
+1996, pp. 111–144. URL http://journals.cambridge.org/abstract{_}S0022112096001255.
+[2] Fric, T. F., and Roshko, A., “Vortical structure in the wake of a transverse jet,” Journal of Fluid Mechanics, Vol. 279, No. 1994,
+1994, pp. 1–47. doi:10.1017/S0022112094003800.
+[3] Mahesh, K., “The Interaction of Jets with Crossflow,” Annual Review of Fluid Mechanics, Vol. 45, 2012, pp. 379–407.
+doi:10.1146/annurev-fluid-120710-101115.
+[4] Bogard, D. G., and Thole, K. A., “Gas Turbine Film Cooling,” Journal of Propulsion and Power, Vol. 22, No. 2, 2006, pp.
+249–270. doi:10.2514/1.18034, URL http://arc.aiaa.org/doi/10.2514/1.18034.
+[5] Acharya, S., “Film Cooling Simulation and Control,” Heat Transfer Research, Vol. 41, No. 6, 2010, pp. 601–626. doi:
+10.1615/HeatTransRes.v41.i6.30.
+[6] Walters, D. K., and Leylek, J. H., “A Systematic Computational Methodology Applied to a Three-Dimensional
+Film-Cooling Flowfield,” Journal of Turbomachinery, Vol. 119, No. October 1997, 1997, pp. 777–785. doi:10.
+1115/96-GT-351, URL http://turbomachinery.asmedigitalcollection.asme.org/article.aspx?articleid=
+1465358$\delimiter"026E30F$nhttp://dx.doi.org/10.1115/1.2841188.
+[7] Ferguson, J. D. J., Walters, D. K. D., and Leylek, J. J. H., “Performance of turbulence models and near-wall treatments in discrete jet film cooling simulations,” ASME, International Gas Turbine & Aeroengine Congress & Exhibition, 43rd, Stockholm, Sweden, 1998, pp. 1–12.
+doi:10.1115/
+98-GT-438, URL http://scholar.google.com/scholar?hl=en{&}btnG=Search{&}q=intitle:Performance+of+
+turbulence+models+and+near-wall+treatments+in+discrete+jet+film+cooling+simulations{#}0.
+[8] Hoda, A., and Acharya, S., “Predictions of a Film Coolant Jet in Crossflow With Different Turbulence
+Models,” Journal of Turbomachinery, Vol. 122, No. 3, 2000, p. 558.
+doi:10.1115/1.1302322, URL
+http://turbomachinery.asmedigitalcollection.asme.org.libaccess.lib.mcmaster.ca/article.aspx?
+articleid=1465916{&}resultClick=1.
+[9] Bergeles, G., Gosman, A. D., and Launder, B. E., “the Turbulent Jet in a Cross Stream At Low Injection Rates: a
+Three-Dimensional Numerical Treatment,” Numerical Heat Transfer, Vol. 1, No. 2, 1978, pp. 217–242. doi:10.1080/
+10407787808913373, URL http://www.tandfonline.com/doi/abs/10.1080/10407787808913373.
+[10] Lakehal, D., Theodoridis, G. S., and Rodi, W., “Three-dimensional flow and heat transfer calculations of film cooling at the
+leading edge of a symmetrical turbine blade model,” International Journal of Heat and Fluid Flow, Vol. 22, No. 2, 2001, pp.
+113–122. doi:10.1016/S0142-727X(00)00084-9.
+[11] Azzi, a., and Lakehal, D., “Perspectives in Modeling Film Cooling of Turbine Blades by Transcending Conventional
+Two-Equation Turbulence Models,” Journal of Turbomachinery, Vol. 124, No. July 2002, 2002, p. 472. doi:10.1115/1.1485294.
+[12] Lakehal, D., “Near-Wall Modeling of Turbulent Convective Heat Transport in Film Cooling of Turbine Blades With the Aid of
+Direct Numerical Simulation Data,” Journal of Turbomachinery, Vol. 124, No. July 2002, 2002, p. 485. doi:10.1115/1.1482408.
+
+14
+
+[13] Jones, R., Acharya, S., and Harvey, A., Improved turbulence modeling of film cooling flow and heat transfer, Vol. 15, 2005.
+doi:10.2495/978-1-85312-956-8/04, URL http://library.witpress.com/viewpaper.asp?pcode=9781853129568004-1.
+[14] Liu, C. L., Zhu, H. R., and Bai, J. T., “Effect of turbulent Prandtl number on the computation of film-cooling effectiveness,”
+International Journal of Heat and Mass Transfer, Vol. 51, No. 25-26, 2008, pp. 6208–6218. doi:10.1016/j.ijheatmasstransfer.
+2008.04.039, URL http://dx.doi.org/10.1016/j.ijheatmasstransfer.2008.04.039.
+
+Downloaded by UNIVERSITY OF VIRGINIA on August 14, 2018 | http://arc.aiaa.org | DOI: 10.2514/6.2018-4734
+
+[15] Liu, C.-l., Zhu, H.-r., and Bai, J.-t., “New development of the turbulent Prandtl number models for the computation of
+film cooling effectiveness,” International Journal of Heat and Mass Transfer, Vol. 54, No. 4, 2011, pp. 874–886. doi:
+10.1016/j.ijheatmasstransfer.2010.10.015, URL http://dx.doi.org/10.1016/j.ijheatmasstransfer.2010.10.015.
+[16] Li, X., Qin, Y., Ren, J., and Jiang, H., “Algebraic Anisotropic Turbulence Modeling of Compound Angled Film Cooling
+Validated by Particle Image Velocimetry and Pressure Sensitive Paint Measurements,” Journal of Heat Transfer, Vol. 136,
+No. March 2014, 2013, p. 032201. doi:10.1115/1.4025411, URL http://heattransfer.asmedigitalcollection.asme.
+org/article.aspx?doi=10.1115/1.4025411.
+[17] Li, X., Ren, J., and Jiang, H., “Film Cooling Modeling of Turbine Blades Using Algebraic Anisotropic Turbulence
+Models,” Journal of Turbomachinery, Vol. 136, No. November 2014, 2014, p. 111006. doi:10.1115/1.4028174, URL
+http://turbomachinery.asmedigitalcollection.asme.org/article.aspx?doi=10.1115/1.4028174.
+[18] Coletti, F., Benson, M. J., Ling, J., Elkins, C. J., and Eaton, J. K., “Turbulent transport in an inclined jet in crossflow,”
+International Journal of Heat and Fluid Flow, Vol. 43, 2013, pp. 149–160. doi:10.1016/j.ijheatfluidflow.2013.06.001, URL
+http://dx.doi.org/10.1016/j.ijheatfluidflow.2013.06.001.
+[19] Ling, J., Ryan, K., Bodart, J., and Eaton, J., “Analysis of Turbulent Scalar Flux Models for a Discrete Hole Film Cooling
+Flow,” Journal of Turbomachinery, Vol. 138, No. 011006, 2016. doi:10.1115/1.4031698, URL http://turbomachinery.
+asmedigitalcollection.asme.org/article.aspx?doi=10.1115/1.4031698.
+[20] Ling, J., Ruiz, A., Lacaze, G., and Oefelein, J., “Uncertainty Analysis and Data-Driven Model Advances for a Jet-in-Crossflow,”
+Journal of Turbomachinery, Vol. 139, No. February, 2016, pp. 1–11. doi:10.1115/GT2016-56191.
+[21] Stratton, Z. T., and Shih, T. I.-P., “Effects of Density and Blowing Ratios on the Turbulent Structure and Effectiveness of
+Film-Cooling,” Proceedings of ASME Turbo Expo 2018: Turbine Technical Conference and Exposition, 2018, pp. 1–13.
+[22] Eberly, M. K., and Thole, K. a., “Time-Resolved Film-Cooling Flows at High and Low Density Ratios,” Journal
+of Turbomachinery, Vol. 136, No. June, 2014, p. 061003. doi:10.1115/1.4025574, URL http://turbomachinery.
+asmedigitalcollection.asme.org/article.aspx?doi=10.1115/1.4025574.
+[23] Gaitonde, D., and Visbal, M., “High-Order Schemes for Navier-Stokes Equations: Algorithm and Implementation into FDL3DI,”
+AFRL, Vol. 1, No. 98, 1998.
+[24] Visbal, M. R., and Gaitonde, D. V., “High-order-accurate methods for complex unsteady subsonic flows,” AIAA Journal, Vol. 37,
+No. 10, 1999, pp. 1231–1239. doi:10.2514/3.14313.
+[25] Chen, H. C., and Patel, V. C., “Near-wall turbulence models for complex flows including separation,” AIAA Journal, Vol. 26,
+No. 6, 1988, pp. 641–648. doi:10.2514/3.9948.
+[26] Spalart, P., and Shur, M., “On the sensitization of turbulence models to rotation and curvature,” Aerospace Science and
+Technology, Vol. 1, No. 5, 1997, pp. 297–302. doi:10.1016/S1270-9638(97)90051-1.
+[27] Pope, S. B., Turbulent Flows, Cambridge University Press, Cambridge, UK, 2000.
+[28] Schlatter, P., and Örlü, R., “Assessment of direct numerical simulation data of turbulent boundary layers,” Journal of Fluid
+Mechanics, Vol. 659, 2010, pp. 116–126. doi:10.1017/S0022112010003113, URL http://journals.cambridge.org/
+abstract{_}S0022112010003113.
+
+15
+
+

@@ -1,0 +1,1234 @@
+R.J. Goldstein
+Department of Mechanical Engineering,
+University of Minnesota,
+Minneapolis, Minn. 55455
+Fellow ASME
+
+T. Yoshida
+National Aerospace Laboratory,
+Tokyo, Japan
+Assoc. Mem. ASME
+
+The Influence of a Laminar
+Boundary Layer and Laminar
+Injection on Film Cooling
+Performance
+Measurements are reported of the film cooling effectiveness and heat transfer
+following injection of air into a mainstream of air. A single row of circular injection
+holes inclined at an angle of 35 deg is used with a lateral spacing between the holes
+of 3 dia. Low Reynolds number mainstream and injection flow permit studying the
+influence of a laminar approaching boundary layer and laminar film coolant flow.
+Measurements of the surface heat transfer taken with no injection indicate that the
+hole openings can effectively trip the laminar boundary layer into a turbulent flow.
+The type of the approaching boundary layer has relatively little influence on either
+the adiabatic effectiveness or the heat transfer with film cooling. The importance of
+the nature of the injected flow on film cooling performance can at least be
+qualitatively explained by the differences in the transport mechanisms and in the
+penetration of the injected air into the mainstream.
+
+Introduction
+Film cooling has been used in many systems to protect solid
+surfaces exposed to high-temperature gas streams. The
+coolant injected into the boundary layer acts as a heat sink,
+reducing the gas temperature near the surface. Applications
+have been widespread, particularly in gas turbine systems
+where combustion chamber liners, turbine blades, and other
+hot parts of the engine have used air, usually taken from the
+exit of the engine compressor, for the film coolant.
+In the leading edge region of turbine blades there is often a
+very high surface heat transfer. In this region, film cooling
+and the associated convection cooling in the coolant-injection
+holes have found widespread use in maintaining suitable skin
+temperatures. In most experiments done on film cooling, both
+the wall boundary layer and the flow through the injection
+holes have been turbulent. However, in the leading edge
+region and for some distance downstream, the boundary layer
+flow along the blade may be laminar. In addition, at low
+injection rates, the flow in the injection holes may be laminar.
+Several investigators have considered film cooling with a
+laminar boundary layer along a flat surface [1-4]. In addition, experimental studies on leading edge injection have
+been reported using a cylindrical model [5, 6] and a flat-plate
+model with a circular nose [7]. There are also data on the
+characteristics of film-cooled turbine blades with injection
+holes in the leading edge region [8-13] and on full-coverage
+film cooling [14-17]. There has been little attention paid to a
+direct comparison between the film cooling results with a
+laminar boundary layer and with a turbulent boundary layer
+on the surface as well as for laminar versus turbulent flow in
+the injection holes. In the present work, local measurements
+of the adiabatic wall effectiveness and heat transfer with film
+cooling on a flat plate are described. By inserting or removing
+trips along the wall and/or in the injection tubes, laminar or
+turbulent flow can be obtained at approximately the same
+wall or tube Reynolds numbers.
+Experimental Apparatus and Test Conditions
+The present study has been conducted in a low-speed, opencircuit, induced-flow wind tunnel at the University of Minnesota. A sketch of the wind tunnel is shown in Fig. 1. A
+Contributed by the Heat Transfer Division for publication in the JOURNAL OT
+HEAT TRANSFER. Manuscript received by the Heat Transfer Division March 16,
+1981.
+
+Journal of Heat Transfer
+
+detailed description of the wind tunnel is given elsewhere [18,
+19]. The test section has been changed from previous studies
+by decreasing its length and by removing trips when a laminar
+approaching boundary layer is desired.
+The test section floor is of low thermal conductivity
+material with stainless steel heater foils stretched across it.
+Five circular injection tubes are located at three-diameter
+spacing in the lateral direction and inclined at 35 deg to the
+mainstream flow. When a turbulent boundary layer is desired,
+a trip is placed on the wall as shown in Fig. 1. A thin tape may
+be placed across the injection holes to reduce their influence
+on the mainstream flow when studying the boundary layer in
+the absence of injection. The cross-sectional area of the test
+section is essentially constant and the streamwise pressure
+gradient is close to zero.
+The freestream velocity is kept constant at 4.5 m/s. With
+this velocity the Reynolds number, Re£,, is of the order of
+magnitude of that which exists in the leading edge region of a
+gas turbine blade (3000 to 10,000).
+The flow through the injection tubes can be changed to
+obtain different blowing rates. At the lowest blowing rates,
+the flow in the absence of any trip in the tubes is laminar. To
+obtain a turbulent boundary condition at low Reynolds
+numbers, trips 10 dia upstream of the tube exits are used. No
+trips are used at the high Reynolds number for which turbulent tube flow occurs naturally. In both the boundary layer
+and the injection tubes, velocity and turbulence measurements
+are obtained with a hot-film anemometer having a 0.051 mm
+dia by 1.0 mm long sensor.
+The experiments are conducted under steady-state conditions. When measuring adiabatic wall temperature, heated
+air is injected to simplify the flow and measurement system.
+Assuming constant properties, the dimensionless adiabatic
+wall temperature should be the same with film "heating" as
+with film cooling. For the heat-transfer experiments, an
+approximately constant heat flux boundary condition is
+obtained from the foil heaters and the injected air is not
+heated so that it is essentially at the same temperature as the
+free stream (and Taw = T„).
+Wall temperatures are measured by thermocouples embedded in the tunnel floor beneath the foil heaters. A
+correction is made for radiation from the heater and for
+conduction through the tunnel floor. However, no correction
+is made for conduction in the lateral, Z, direction; such
+MAY 1982, Vol. 1 0 4 / 3 5 5
+
+Copyright © 1982 by ASME
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+D =1.18 CM
+NUMERALS IN CM
+
+Fig. 1 Schematic drawing of test section
+
+conduction would tend to smooth out the measurements of
+effectiveness and heat transfer from their true distribution.
+Thus the lateral distribution should only be used for
+qualitative discussion. The laterally averaged values should
+not be significantly changed by this conduction.
+The adiabatic-wall film cooling effectiveness and heat-
+
+transfer coefficients are defined by the following equations:
+L
+
+aw
+
+l
+
+r
+
+* aw
+
+-* <x>
+
+Tr
+h=-
+
+(1)
+(2)
+
+Nomenclature
+D = inner diameter of injection tube
+h = heat-transfer coefficient with injection (see
+equation 2)
+h0 = heat-transfer coefficient without injection
+1
+/ = momentum flux ratio (p2 Ul/p^U^ )
+k = thermal conductivity
+2
+(dU„x/dX)
+K = acceleration parameter (>„,/p x U^ )
+L = abbreviation for "laminar flow"
+M = blowing rate (p2 U2/p„ t / „ )
+Ma = fictitious^ blowing rate when U„ = 0, calculated
+from p2 U2 and the normal value of p„ U„
+Pr = Prandtl number
+g = wall heat flux
+Re = Reynolds_number(Re 0 =/? <x ,t/ 00 D/^„,
+Rej=p2U2D/fi2<
+Re
+=pcoUx,X0/fi„)
+T = abbreviation for "turbulent flow"
+T = temperature
+T — adiabatic wall temperature with film cooling
+aw
+freestream recovery temperature
+T
+T = wall temperature
+w
+turbulence intensity
+Tu
+fluid velocity
+U
+rms turbulence fluctuation from mean velocity
+U'
+mean velocity of injected flow
+U2
+maximum velocity in injection tube
+x distance downstream of downstream edge of
+injection hole; see Fig. 1
+x„ distance from origin of boundary layer to first
+foil heater
+distance downstream of effective origin of
+boundary layer
+1
+
+1
+
+356/Vol. 104, MAY 1982
+
+[/„ = freestream velocity immediately upstream of
+injection holes
+t/„ v = freestream velocity
+Y = height above test surface
+Z = lateral distance from centerline of injection hole
+13 = angle of injection tube from stream wise direction
+5 = boundary layer thickness (Y where u/u„ —0.95)
+5* = boundary layer displacement thickness
+50* = boundary layer displacement thickness near
+injection location (2mm upstream of injection
+hole leading edge in present experiment)
+•q = adiabatic film cooling effectiveness (see equation
+1)
+IJCL = effectiveness directly downstream of center line of
+injection hole (i.e., Z = 0 )
+d = boundary layer momentum thickness
+fn = viscosity
+p = density
+Subscripts
+L =
+max =
+o =
+T =
+2 =
+oo =
+
+laminar
+maximum value
+without injection
+turbulent
+injected flow at tube exit
+freestream condition immediately upstream of
+injection holes
+
+Superscripts
+— = average in spanwise (Z) direction or across injection tube exit
+Transactions of the ASME
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+4.0
+a With boundary layer trips
+and tape on the holes
+b With tape on the holes
+Otherwise no trips and tape
+
+U/Ua,X
+
+In the present study, local wall temperature measurements are
+made and then average values calculated.
+Table 1 shows the range of test conditions in the present
+study.
+Boundary Layer Flow Without Injection
+Figure 2 shows dimensionless velocity and turbulence intensity profiles above the wall at different positions along the
+flow. The Blasius profile for a laminar boundary layer is
+indicated as a reference. The location, XID =—1.9 and Z/D
+= 0, corresponds to a position 2mm upstream of the central
+injection hole upstream edge. At this location, in the absence
+of a trip, the measured profile is very close to the Blasius
+curve. This is true whether or not tape is used on the injection
+holes. The slight deviation from the theoretical curve may be
+due to the near-constant, cross-sectional area of the test
+section which produces a slight acceleration of the mainstream (see Table 1). When a trip (wire plus sandpaper
+roughness) is attached to the wall, the boundary layer
+becomes turbulent. The trips have been placed at a location to
+obtain approximately the same displacement thicknesses at
+the injection holes for the turbulent boundary layer as for the
+laminar boundary layer.
+Somewhat downstream of injection (X/D = 2.84), the
+boundary layer is still apparently laminar with open holes in
+the absence of trips, although some distortion in the velocity
+profile is evident. Further downstream, at X/D=20.\, the
+boundary layer appears to be turbulent with the open holes
+even in the absence of a trip. Although not shown in this
+figure, the boundary layer at this location is still laminar in
+the absence of a trip when tape is placed over the holes.
+Injection Flow in the Absence of Mainstream
+Figure 3 shows dimensionless velocity and turbulence intensity profiles of the flow exiting from the central injection
+hole (Z/£» = 0 and Y/D=0.02) in the absence of the mainstream. The flow is not heated. M0 indicates a fictitious
+blowing rate for a density ratio of unity if the mainstream had
+a velocity of 4.5m/s.
+Journal of Heat Transfer
+
+15
+
+U'/UooX (%)
+Fig. 2 Boundary layer profiles without injection
+
+Table 1 Experimental range in the present study
+Freestream mean velocity, (/„
+Frcestream turbulence intensity, TUco
+Blowing rate, M
+Momentum flux ratio, /
+Density ratio, p2/p„
+Reynolds number, ReD( = p„ U„D/jix)
+Reynolds number, Re/ ( =p2 U2D/n2)
+Normalized displacement thickness 2mm
+upstream of leading edge injection
+hole, &0/D
+Acceleration parameter, K
+
+4.5 m/s
+= 1%
+0.2,0.35,0.5
+1.0, 1 50,2.0
+O.060 - 5.1
+0.85,
+3.4 x 103
+6.0 x 102 - 6.7 x 10
+0 . 1 6 - -laminar
+0.14—-turbulent
+1.2 x i o - 7
+
+At low Reynolds number (Re,—1.5 x 103), the velocity
+profile, in the absence of a trip, is close to that of a fully
+developed laminar pipe flow. The turbulence intensity is less
+than 0.4 percent everywhere across the flow. At the same
+Reynolds number, when the trip ring is attached on the inner
+surface of the tube, 10 dia upstream of the tube exit, the
+profile is similar to that for fully developed turbulent tube
+flow [20]. At larger Reynolds numbers no trip ring is used,
+and the velocity profile is close to that of a fully developed
+turbulent flow.
+Film Cooling Effectiveness
+The variation of the laterally averaged, film-cooling effectiveness with downstream position is shown in Fig. 4 for
+two different blowing rates. Curves representing results of
+some previous studies are shown for comparison. The key to
+the upper case letters, indicating the source of the earlier data
+for this and later figures, is contained in Table 2.
+The most notable variation among the results from the
+present experiment occurs for a blowing rate of 0.5. The
+average effectiveness with laminar injection is considerably
+lower than with turbulent injection. This is true for either the
+laminar or turbulent boundary layer along the wall. It is
+known [18] that the film cooling effectiveness with ,8 = 35 deg
+reaches a maximum with variation in blowing rate near
+MAY 1982, Vol. 1 0 4 / 3 5 7
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Symbol
+O
+
+Mo
+Ftej
+U2mo*(m/s)
+3
+0 8 6 0 287 xlO 5 4 2
+
+A
+
+0463
+
+154
+
+383
+
+D
+
+0450
+
+1-50
+
+2.30 With trip ring
+
+Fig. 3
+
+i
+
+Injection flow without mainstream
+
+i
+
+Both for {a) and (b)
+U» = 4 . 5 m / s , ReD = 3.4x10-
+
+P2/R* = 0.85
+do*/D = O.I6(Main : L ) , O.I4(Main:T)
+Symbol Main Jet
+A
+A
+
+m—•
+a —
+
+L
+L
+T
+T
+
+L
+T
+T
+L
+
+1
+.375
+.321
+.321
+.383
+
+Fig. 4 Laterally averaged film-cooling effectiveness (see Table 2 for
+key to letters designating results from other studies)
+
+M = 0 . 5 for a density ratio close to unity. It is at this blowing
+rate that there is the greatest sensitivity to potential lift-off of
+a jet flowing from a film-cooling hole. When the jet
+penetrates into the mainstream its "cooling" influence on the
+wall is reduced; the enthalpy deficit it provides is no longer
+near the surface but rather is dissipated in the core of the
+primary flow.
+In many of the earlier studies, done with turbulent injection
+or with a very short injection tube, the coolant entering the
+358/Vol. 104, MAY 1982
+
+mainstream has a relatively blunt profile so that the maximum
+velocity is close to the mean velocity. With developed laminar
+tube flow, the peak velocity is considerably greater than the
+average velocity. Thus, the mean momentum flux at the exit
+plane for laminar tube flow would be greater than the mean
+momentum flux at the same blowing rate, M, for a turbulent
+or plug-type flow.
+At the same mean velocity, or M, the value of the mean
+square velocity for fully developed laminar tube flow is about
+30 percent greater than the mean square velocity for 1/7
+power law turbulent flow. Actually, the measured values of
+the momentum flux ratio, /, for the laminar jet were only
+about 18 percent greater than for the turbulent jet. A greater
+value of / at a given value of M could lead to greater
+penetration of the jet into the mainstream. The film-cooling
+effectiveness would be particularly sensitive to this effect at
+injection rates close to those yielding the maximum effectiveness.
+With turbulent injection, the influence of the nature of the
+boundary layer approaching the injection holes is most
+pronounced close to the injection holes. The effectiveness is
+higher with a laminar boundary layer at M = 0 . 5 . The flow in
+the turbulent boundary layer with its greater fluctuations
+tends to dilute the influence of the injected fluid. Further
+downstream the curves cross and a slightly higher effectiveness occurs with a turbulent boundary layer, particularly with the laminar jets. This may be due to the turbulence causing the jet to mix more and diffuse back towards
+the wall.
+The trends of most of the other investigations are close to
+the present ones for turbulent jets entering a turbulent
+boundary layer. The differences that occur may be due to
+uncertainty in experimental measurements and differences in
+the Reynolds number. Other influences may be the very blunt
+injection profile in reference [1] and the slightly smaller inclined angle and closer spacing in reference [2].
+At a blowing rate close to unity there is a relatively good
+agreement with earlier studies that were performed in this
+laboratory, though not always with the same apparatus. The
+results of [21] indicate somewhat higher effectiveness, but in
+those tests the density ratio (P2/1O00) was somewhat higher
+than in the other studies.
+Lateral distributions of the film cooling effectiveness at
+different downstream locations are presented in Fig. 5. When
+the approaching mainstream boundary layer is turbulent, a
+relative maximum appears near the region Z/D= 1. This may
+be due to a pair of vortex flows and the resulting high turbulence which have been observed there. The adjacent
+minimum has been described [2] as due to the pumping effect
+Transactions of the ASME
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Table 2 Earlier works for film cooling effectiveness used for comparison
+Worker
+(B) Bergeles
+[2]
+(E)Eriksen, V . L .
+[19]
+
+M
+
+ReD x 104
+
+<VP»
+
+3.3
+
+1.0
+
+0.493 .
+
+(K) Kadotani and
+Goldstein
+[23]
+(L) Liess, C.
+[1]
+
+0.842
+
+For heat transfer
+M = .496
+
+0.149
+0.848
+
+Pi = P o o
+
+0.5
+2.2
+
+0.124
+
+0.85
+
+1.0
+1.1
+
+0.245
+
+0.5
+
+(Kl)
+
+0.85
+4.4
+
+0.175
+
+(K2)
+
+0.57
+
+Main: L
+1.5
+
+0.79
+
+0.087
+
+(P) Pedersen,
+Eckert and
+Goldstein [21]
+
+0.513
+
+1.1
+
+0.960
+
+0.162
+
+(S) Sasaki,
+Takahara, Kumagai
+and Hamano [24]
+
+0.537
+
+1.5
+
+0.94
+
+0.10
+
++
+
+Research
+Spacing = 2.67.D
+0 = 30 deg
+mass transfer
+
+0.095
+
+4.4
+0.976
+
+(G) Goldstein,
+Eckert, Eriksen,
+and Ramsey.
+[22]
+
+SQ/D
+
+0.5
+
+Jet:E +
+Mass transfer
+
+13 = 45 deg
+Jet:E
+
+Jet: E means not fully developed turbulent but entrance region at the exit of injection holes.
+
+Unless specified:
+spacing = 3D
+/3 = 35 deg
+main: Tand Jet: T
+smooth surface, free stream turbulence intensity < 1.5%
+•q from wall temperature measurements
+
+1
+
+Re D = 3 . 4 x l 0 3
+^s
+
+Pz/Peo = 0.85
+
+Jet
+
+-
+
+\
+
+\
+
+\
+
+A**' \
+
+"
+
+V
+
+~-N V
+
+X/D
+
+L
+
+T
+
+o
+
+a
+
+"A
+
+*>*^"NA
+(E)
+V^s^k
+v
+
+1
+
+«• Main . T , Jet : T
+
+A
+
+V
+
+T
+
+o
+
+a
+
+o
+
+•
+
+^ ^ Q s
+
+6.68
+1584
+3739
+71.87
+
+--="
+_>—;:-'
+
+--=*
+
+1
+-1
+
+O"'
+1
+
+O
+
+0.2
+
+0.35 0 5
+
+M
+
+1.0
+
+15
+
+20
+
+Fig. 6 Laterally averaged effectiveness versus blowing rate (see Table
+2 for key to letters designating results from other studies)
+
+Fig. 5 Lateral distributions of effectiveness at M = 0.5 (see Table 2 for
+key to letters designating results for other studies; symbols for flow
+conditions are the same as in Fig. 4)
+
+of the pair of rotating vortices. There is considerable difference in the lateral variation in the present study compared
+to the earlier ones shown in the figure. The present results
+indicate more uniform effectiveness in the Z direction. This
+may be partially due to the smoothing out of the results by
+conduction in the wall in the present work, but perhaps of
+more importance is the large difference in Reynolds number.
+The present results were taken at Reynolds number
+Journal of Heat Transfer
+
+P„ £/„£>/>„,, about one-tenth of those used in the earlier
+studies for the turbulent boundary layer and turbulent jet
+flow. This is also borne out by comparison of curve Kl to K2.
+These results are obtained on the same apparatus but the data
+for curve Kl are at lower Re than for K2.
+Figure 6 shows the variation of the average effectiveness
+with blowing parameter at different downstream locations. At
+blowing rates greater than 0.5, the injected flow is turbulent
+and the curves show the familiar decline of effectiveness with
+increasing M. As M is increased still further, above 1.0 or
+1.5, the jets merge together and their influence is felt down on
+the wall, especially at large X.
+At low blowing rates (M<0.5), the flow in the injection
+holes is laminar. The maximum of T) occurs at considerably
+lower values of M with laminar injection than with turbulent
+injection. It is also noteworthy that f) for the laminar jet at
+low values of M can be higher than the peak r\ for turbulent
+injection. This is probably due to the relatively small amount
+of mixing (with the mainstream) of the laminar jet; at low M,
+when the jet does not leave the wall, this can result in high
+effectiveness. It should be noted, too, that the present results
+MAY 1982, Vol. 104/359
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+for turbulent boundary layer and turbulent injection indicate
+a higher mean effectiveness than was found in [19] and [23] at
+M = 0 . 5 . This may be due to the higher ( - t h r e e times)
+mainstream and jet Reynolds numbers in those earlier works.
+The variation of centerline effectiveness, rjr , with M is
+shown in Fig. 7. As observed in the previous figures, the
+effectiveness at a given M is considerably lower with the
+laminar injection. At moderate values of M, the centerline
+effectiveness for turbulent injection is somewhat higher with
+•the laminar mainstream. The centerline effectiveness
+measured in the present study is less than that observed in
+[19], [22], and [23] for similar conditions of turbulent injection and turbulent boundary layer. This difference is
+apparently due to the lower Reynolds numbers during the
+present tests.
+Heat-Transfer Coefficient
+Figure 8 shows the spanwise-average, heat-transfer coefficient at various downstream locations in the absence of
+injection. A linear average of the local values measured at
+Z/D = 0, 0.75, and 1.5 is used. Two sets of data were obtained
+with the holes covered by a thin layer of tape to prevent them
+from introducing a cavity-type roughness which could disturb
+the flow. In the other two runs the holes were open, as would
+occur when injection takes place, although there is no net
+throughflow of gas. For both the open- and closed-hole
+conditions there is a set of data when the boundary layer trips
+were placed on the wall and another set when there were no
+trips.
+When the holes are closed, there is little variation (approximately 3 percent) of the heat-transfer coefficient in the
+lateral direction. With open holes in the presence of trips this
+variation is approximately 5 percent. With no trip, the open
+holes can initiate transition and this leads to a significant
+variation of h0 across the span; the maximum value of h0
+occurs at Z/D=0, except very close to the downstream edge
+of the holes. The variation of the heat-transfer coefficient
+from the mid-point of the holes to the region half-way between the holes (Z/D= 1.5) averages about 10 percent for
+these open holes without trips and has a maximum of 17
+percent.
+Note in Fig. 8, with taped-over holes in the absence of trips
+the heat transfer closely follows the equation (1) which
+represents heat transfer along a flat plate with a laminar
+boundary layer. Far downstream, the measured points rise
+somewhat above the predicted curve, perhaps due to transition. The other three sets of data appear to be represented,
+at least some distance downstream, by the heat-transfer
+correlation (equation (2)) for a turbulent boundary layer on a
+flat plate. When the trips are present there is virtually no
+difference between the measured results for the closed and
+open holes. In the absence of trips with the holes open, there is
+a transition region downstream from the start of heating. This
+is indicated by the somewhat lower heat transfer results for
+this flow condition till approximately 20 dia downstream of
+the injection hole location. Further downstream there appears
+to be little difference between this and the data obtained with
+a boundary layer trip.
+Figure 9 shows the variation of the average heat-transfer
+coefficient with downstream position for a blowing rate of 0.5
+and different conditions of mainstream and injected flow. At
+this blowing rate with the turbulent boundary layer there is
+very good agreement with an earlier study [19]. The average
+heat-transfer coefficient is increased little over that without
+injection.
+When the boundary layer is initially laminar, the injection
+has a bigger effect on the heat transfer. With the laminar
+boundary layer, for both laminar injection and turbulent
+injection, two curves are plotted on Fig. 9. In one, the
+reference heat-transfer coefficient is the same as for the
+360/Vol. 104, MAY 1982
+
+0.2
+
+X
+
+Fig. 7 Centerline effectiveness versus blowing rate (see Table 2 for
+key to letters designating results from other studies)
+
+50
+Equation I (24)
+U ~ = 4.5m/s
+40
+
+30
+
+hxo=0.445|-Pr' / 3 Re xo
+*[l-(XH/XoiV/3_
+
+Symbol Holes Trips Notation
+
+•
+
+ft
+
+Equation n (24)
+
+A
+
+Closed No
+
+D
+A
+
+Closed Yes
+Open No
+Open Yes
+
+a
+
+»Ti-(xH/x0) V 9
+
+h0L
+ho
+
+X u = 58D , C = 0.0286~
+
+fa
+20j
+
+N^f
+*r*fi-8.
+
+h
+Watjx
+
+~~B"~B—a—B—ffl-rai-™
+a
+
+.
+
+y ^S a | •
+
+10
+
+0
+x
+0
+Fig. 8
+
+V"
+__» Heater
+J
+L
+I0v/n20
+
+Equation n
+
+^
+
+30
+
+40
+
+50
+
+60
+
+70
+
+80
+
+Laterally averaged heat-transfer coefficient without injection
+
+turbulent boundary layer studied and is taken from the data in
+the present experiment with the trip, as was true for the plots
+with the turbulent boundary layer in the top portion of Fig. 9.
+It should be noted that this is a somewhat arbitrary reference
+state—used only for comparison with the other data—as the
+boundary layer flow for these runs was laminar upstream of
+injection. With this reference value (in the denominator of the
+ratio), we see that there is not a great variation from the heattransfer coefficient for a turbulent boundary layer without
+injection other than close to the holes. There, laminar flow
+injection results in lower heat-transfer coefficients (smaller
+transport coefficients); with turbulent injection, the eddies
+along the wall give an increase in the heat-transfer coefficient.
+The other two curves for the initially laminar boundary
+layer case refer to the data (hQL) from Fig. 8 for open holes in
+the absence of a trip. Compared to this case, which had a
+somewhat lower heat-transfer coefficient than when the trip
+was present, the injection increases the heat transfer to a
+maximum of 20-30 percent over that without injection. In the
+absence of injection there are still essentially laminar patches
+along the wall with relatively small heat transport. Injection
+results in eddies which make the heat-transport coefficient
+greater than that with the laminar patches. Far downstream at
+this blowing rate, the heat-transfer coefficient is little altered
+by the injection and, of course, is little different from the heat
+transfer with the turbulent boundary layer in the absence of
+injection.
+Transactions of the ASME
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.0
+
+'-cn^mD-D-OTrtTcra ~n
+
+n
+
+•—B—n
+
+09
+
+•—n—a—B—n—n—o
+
+Q Main : T , Jet : L
+
+1.0
+0.9
+
+Eriksen (19) [See Table 2 )
+
+kho i.3
+
+.s**..
+
+Main : T , Jet : T
+A a
+
+Main : L , Jet : L
+
+A M Main : L , Jet '. T
+
+1.2
+
+4 f JX*
+
+I.I
+
+(A*
+
+Stand f o r h / h O L )
+
+*#•*«
+
+1.0
+
+^^•AA^:-:g-.rr.-^-. : : ^ : ,...-^ : : ; : g, : .- ; g: ; ; :g..; ; : g-.;-. : ^-.: : -^--.::^;::r#.
+
+0.9
+0.8
+
+M = O50,
+
+J
+
+0
+
+C
+
+-—*. Heaters
+J10
+L.
+20
+X/D
+Fig. 9
+
+30
+
+40
+
+1
+
+X/D = I0.45 _
+_A'
+
+-A- _
+
+~ - ^
+
+1
+
+~
+
+1.2
+
+.--A-
+
+I.M
+
+gS=5S^5=
+
+I0i
+0.9
+0.8
+
+X / D = 37.39
+
+X / D = 15.84
+
+I
+
+0.7,
+
+°Z/D ° 5
+
+1.5
+
+0
+
+0.5
+
+Fig. 10 Lateral distributions of heat-transfer coefficient (symbols and
+experimental conditions are the same as those described in Fig. 9)
+
+Re D - 3 4 xlO 3 , P z = P „
+
+I.0
+
+:~t:
+0.9
+
+_--""
+
+Moin: L
+Jei:l_ Jet:T
+
+0.8
+
+0
+
+Fig. 11
+rate
+
+0.2
+
+0.35
+
+05
+
+O
+
+®
+
+v
+a
+
+r
+
+10
+
+B
+
+Main'. T
+Jet :T
+©
+
+P Erikson (19)
+
+x/o
+668
+15.84
+37.89
+I.5
+
+£0
+
+Laterally averaged heat-transfer coefficients versus blowing
+
+Figure 10 shows the spanwise variation of the heat-transfer
+coefficient—in all cases compared to the heat-transfer
+coefficient for the turbulent boundary layer with the trip in
+the absence of injected flow. There is little variation with Z
+Journal of Heat Transfer
+
+60
+
+ReD = 3.4xl0 3
+70
+
+80
+
+Laterally averaged heat-transfer coefficient
+
+X / D = 6.68
+
+1.2
+
+50
+
+P2=Pco,
+
+other than close to injection. With an initially laminar
+boundary layer, h is relatively small between the holes at
+X/D = 6.68, where one might expect incomplete transition to
+turbulence. Relatively low h also occurs in a laminar
+boundary layer in this region when there is no injection yet
+open holes.
+Figure 11 shows the variation of the average heat-transfer
+coefficient with blowing rate at three different downstream
+locations. Some results from [19] are included for comparison. The results for laminar injection_ and a laminar
+boundary layer should be noted. The ratio, h/h0, is less than
+unity at small X/D over the range of M for which experiments
+could be run. If the denominator of this ratio were the heat
+transfer with a laminar boundary layer and no injection (even
+with the holes open), the three points would be close to or
+above unity. Further downstream, the ratio is near or above
+unity. With laminar injection the heat-transfer coefficient
+decreases with increasing M in the range studied. The turbulent jets are still attached to the wall at Af=0.5 and lead to
+a somewhat higher heat transfer than do the laminar jets.
+There is a decrease in h /h as M increases for the case of the
+turbulent jet in an initially laminar boundary layer due to jet
+penetration. At higher blowing rates the heat transfer
+coefficient increases with M, as had been shown in an earlier
+study [19] for the turbulent boundary layer and turbulent jet
+combination. Under those conditions, the turbulent jet flow
+tends to dominate the transport characteristics in the
+mainstream.
+Conclusions
+The major influence of the character of the boundary layer
+and of the injection jets for film cooling in the geometry
+studied is in the differing results for laminar jet flow versus
+turbulent jet flow. With laminar jets the maximum in film
+cooling effectiveness occurs at relatively small values of the
+blowing parameter M. This is due to the greater penetration
+of the laminar jets at a given value of M as compared to
+turbulent jets. The fuller the velocity profile of the jet, the
+greater is the blowing rate before the jet tends to lift off the
+surface. In this regard, it should be noted that flow through a
+short entrance section occurs in many applications and will
+often result in a blunt velocity profile.
+The nature of the boundary layer seems to play a bigger role
+when the jet is turbulent, at least in terms of the film-cooling
+effectiveness. Thus, there is a higher effectiveness with the
+laminar boundary layer and turbulent jets, at least close to
+injection, as compared to the turbulent boundary layer with
+MAY 1982, Vol. 104/361
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+the turbulent jet. With the laminar jet, the nature of the
+boundary layer does not greatly influence the effectiveness.
+In terms of heat transfer with the turbulent boundary layer,
+both the turbulent and laminar jets appear to have similar
+influences. For the initially laminar boundary layer the most
+important effect of injection is its influence on transition to
+turbulence.
+. Acknowledgment
+The support of the U.S Army Office of Research under
+Grant DAA29-79-C-0117 is gratefully acknowledged. Early
+portions of the study were supported by the Power Branch of
+the Office of Naval Research.
+References
+1 Liess, C , "Experimental Investigation of Film Cooling with Ejection
+From a Row of Holes for the Application to Gas Turbine Blade," ASME
+Journal of Engineering for Power, Vol. 97, 1975, pp. 21-27.
+2 Bergeles, G., "Three-Dimensional Discrete-Hole Cooling Processes, An
+Experimental and Theoretical Study," Ph.D. thesis, Imperial College,
+University of London, 1976.
+3 Pavri, R. and Tabakoff, W., "An Analytical Solution of WallTemperature Distribution for Transpiration and Local Mass Injection Over a
+Flat Plate," ASME Paper No. 72-HT-57, 1972.
+4 Nilson, R. H. and Tsuei, Y. G., "Film Cooling by Oblique Slot Injection
+in High-Speed Laminar Flow," AIAA Journal, Vol. 13,1975, pp. 1199-1202.
+5 Luckey, D. W., Winstanley, D. K., Hanus, G. J., and L'Ecuyer, M. R.,
+"Stagnation Region Gas Film Cooling for Turbine Blade Leading-Edge Applications," J. Aircraft, Vol. 14, 1977, pp. 494-501.
+6 Russell, L. M., "Flow Visualization of Discrete-Hole Film Cooling with
+Spanwise Injection Over a Cylinder," NASA TP 1491,1979.
+7 Sasaki, M., Takahara, K., Sakata, K., and Kumagai, T., "Study on Film
+Cooling of Turbine Blades," Bulletin of the JSME, Vol. 19, 1976, pp.
+1344-1352.
+8 Hiroki, T. and Katsumata, I., "Design and Experimental Studies of
+Turbine Cooling," ASME Paper No. 74-GT-30, 1974.
+9 Muska, J. F., Fish, R. W., and Suo, M., "The Additive Nature of Film
+Cooling from Rows of Holes," ASME Journal of Engineering for Power, Vol.
+98, 1976, pp. 457-464.
+10 Yoshida, T., Minoda, M., Sakata, K., Nouse, H., Takahara, K., and
+
+362/Vol. 104, MAY 1982
+
+Matsuki, M., "Low- and High-Speed Cascade Tests of Air-Cooled Turbine
+Blades," ASME Paper No. 76-GT-40, 1976.
+11 Hanus, G. J. and L'Ecuyer, M. R,, "Leading-Edge Injection for Film
+Cooling of Turbine Vanes,'' Journal of Energy, Vol. 1,1977, pp. 44-49.
+12 Nouse, H., Takahara, K., Yoshida, T., Yamamoto, A., Sakata, K.,
+Inoue, S., Mimura, F., and Usui, H., "Aerodynamic and Cooling Performances of a Film-Cooled Turbine," Proceedings of the 1977 Tokyo Joint
+Gas Turbine Congress, 1977, pp. 206-214.
+13 Sakata, K., Usui, H., and Takahara, K., "Cooling Characteristics of
+Film Cooled Turbine Vane Having Multi-Row of Ejection Holes," ASME
+Paper No. 78-GT-21, 1978.
+14 Metzger, D. E., Takeuchi, D. I., and Kuenstler, P. A., "Effectiveness
+and Heat Transfer with Full-Coverage Film Cooling," ASME Journal of
+Engineering for Power, Vol. 95,1973, pp. 180-184.
+15 Mayle, R. E. and Camarata, F. J., "Multi-Hole Cooling Film Effectiveness and Heat Transfer," ASME Paper No. 74-HT-9, 1974.
+16 Crawford, M. E., Kays, W. M., and Moffat, R. J., "Full Coverage Film
+Cooling on Flat, Isothermal Surfaces: A Summary Report on Data and
+Predictions,'' NASA CR-3219, 1980.
+17 Launder, B. E. and York, J., "Discrete-Hole Cooling in the Presence of
+Free Stream Turbulence and Strong Favourable Pressure Gradient," International Journal of Heat and Mass Transfer, Vol. 17, 1974, pp. 1403-1409.
+18 Goldstein, R. J., Eckert, E. R. G., and Ramsey, J. W., "Film Cooling
+with Injection Through a Circular Hole," NASA CR-54604, University of
+Minnesota HTL TR No. 82, 1968.
+19 Eriksen, V. L., "Film Cooling Effectiveness and Heat Transfer with
+Injection Through Holes," NASA CR-72991, University of Minnesota HTL
+TRNo. 102, 1971.
+20 Laufer, J., "The Structure of Turbulence in Fully-Developed Pipe
+Flow,"NACATR-1174, 1954.
+21 Pedersen, D. R., Eckert, E. R. G., and Goldstein, R. J., "Film Cooling
+with Large Density Differences Between the Mainstream and the Secondary
+Fluid Measured by the Heat-Mass Transfer Analogy," ASME JOURNAL OF
+HEAT TRANSFER, Vol. 99,1977, pp. 620-627.
+22 Goldstein, R. J., Eckert, E. R. G., Eriksen, V. L., and Ramsey, J. W.,
+"Film Cooling Following Injection Through Inclined Circular Tubes," Israel
+Journal of Technology, Vol. 8, 1970, pp. 145-154.
+23 Kadotani, K. and Goldstein, R. J., "On the Nature of Jets Entering a
+Turbulent Flow, Part B: Film Cooling Performance," ASME Journal of
+Engineering for Power, Vol. 101, 1979, pp. 466-470.
+24 Sasaki, M., Takahara, K., Kumagai, T., and Hamano, M., "Film
+Cooling Effectiveness for Injection from Multirow Holes," ASME Journal of
+Engineering for Power, Vol. 101, 1979, pp. 101-108.
+25 Hartnett, J. P., Eckert, E. R. G., Birkebak, R., and Sampson, R. L.,
+"Simplifed Procedures for the Calculation of Heat Transfer to Surfaces with
+Non-Uniform Temperatures," University of Minnesota HTL TR No. 10,1956.
+
+Transactions of the ASME
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

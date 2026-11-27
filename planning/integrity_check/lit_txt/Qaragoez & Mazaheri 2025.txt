@@ -1,0 +1,1699 @@
+Applied Thermal Engineering 279 (2025) 127412
+
+Contents lists available at ScienceDirect
+
+Applied Thermal Engineering
+journal homepage: www.elsevier.com/locate/ate
+
+Research Paper
+
+Enhancing thermal accuracy in film cooling applications: Integrating
+data-driven heat flux with 𝑘-𝜔 SST model
+Ali M. Qaragoez , Karim Mazaheri
+
+∗
+
+Department of Aerospace Engineering, Sharif University of Technology, Tehran, Iran
+
+ARTICLE
+Keywords:
+Turbulence modeling
+Data-driven models
+Machine learning
+Large Eddy Simulation
+
+INFO
+
+ABSTRACT
+This study presents an integration of machine learning (ML) into Reynolds-Averaged Navier–Stokes (RANS)
+simulations to enhance thermal and hydrodynamic predictions in film cooling applications. Recognizing the
+limitations of traditional turbulence models — particularly their inability to accurately model Reynolds stresses
+and turbulent heat flux — this work introduces a data-driven correction framework that improves both velocity
+and temperature fields. A critical aspect of the study is the a posteriori estimation of turbulent viscosity and
+turbulent Prandtl number, two key parameters influencing thermal and flow accuracy. These quantities are
+predicted using neural networks trained on high-fidelity Large Eddy Simulation (LES) data. From a dataset of
+2.6 million entries, correlation analysis was conducted to identify six of the most influential features, enabling
+a compact and interpretable model. The trained model was integrated into the RANS solver via user-defined
+functions (UDFs), allowing for in-solver correction of turbulence parameters. The ML model, trained solely on a
+flat plate film cooling case with blowing ratio (BR) = 1, was applied without retraining to four additional cases,
+including a leading-edge geometry and a turbine blade with suction-side cooling. The framework showed strong
+generalization and stability, achieving up to 80% improvement in flat plate cooling cases and approximately
+62% improvement for the gas turbine leading-edge case. This dual-field, a posteriori correction approach offers
+a practical and computationally efficient enhancement to RANS modeling, advancing predictive capabilities
+for complex industrial cooling flows.
+
+1. Introduction
+Due to global warming and efforts to reduce CO2 emissions, there
+is a need to increase the inlet temperature of gas turbines to enhance
+efficiency, as well as to use hydrogen — a fuel with a high adiabatic
+flame temperature — as a fuel source. Given the limitations in the
+manufacturing and materials of turbine blades, the use of cooling
+techniques for turbine blades is essential. Among these, film cooling
+is one of the most important and effective methods. Therefore, the
+accurate simulation of film cooling becomes crucial [1,2].
+On the other hand, in today’s fast-paced world, the ability to simulate and design with minimal computational costs, high accuracy, and
+within a short timeframe is considered a competitive advantage. While
+the Reynolds-Averaged Navier–Stokes (RANS) method often provides
+satisfactory results for simple and industrial flows at a reasonable
+cost [3], it faces challenges when dealing with flows containing large
+eddies and anisotropic vortex structures, often leading to inaccurate
+results. In contrast, high-fidelity methods such as Large Eddy Simulation (LES) and Direct Numerical Simulation (DNS) perform better
+due to their ability to resolve smaller vortex structures and reduce
+
+uncertainties in turbulence modeling. However, these methods come
+with significantly higher computational costs, often ranging from 10 to
+100 times greater than RANS, presenting computational challenges [4,
+5]. The complex nature of applied and industrial turbulent flows,
+characterized by a wide range of time and length scales and high
+Reynolds numbers, renders DNS impractical. Consequently, LES and
+RANS emerge as the primary approaches for simulating such flows.
+Recognizing the high computational cost of LES and the lower accuracy
+of RANS, there is a growing interest in enhancing RANS models by
+leveraging insights from LES and employing machine learning techniques. This integration aims to achieve higher accuracy in RANS
+predictions while maintaining computational efficiency, thus offering
+a promising avenue for improving turbulence modeling in practical
+engineering applications. Considering the above, there is a critical
+need to enhance the accuracy of the low-cost RANS methods using
+high-fidelity data.
+The inaccuracy and uncertainty in the RANS method primarily
+stem from turbulence modeling, specifically the modeling of Reynolds
+stresses and turbulent heat flux [6–8]. An effective and affordable
+
+∗ Corresponding author.
+E-mail addresses: ali.mohammadi@ae.sharif.edu (A.M. Qaragoez), mazaheri@sharif.ir (K. Mazaheri).
+
+https://doi.org/10.1016/j.applthermaleng.2025.127412
+Received 25 February 2025; Received in revised form 26 June 2025; Accepted 30 June 2025
+Available online 22 July 2025
+1359-4311/© 2025 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+that varying 𝑃 𝑟𝑡 significantly impacted cooling effectiveness, particularly at high blowing ratios. A reduction in 𝑃 𝑟𝑡 increased effectiveness
+across the span for high blowing ratios, while for low blowing ratios, it
+decreased centerline effectiveness but improved lateral cooling. Their
+proposed variable 𝑃 𝑟𝑡 model enhanced agreement between computational and experimental results [11]. Similarly, Li (2016) examined
+the subgrid turbulent Prandtl number in LES and found its variation
+to be flow-dependent, challenging the conventional assumption of a
+constant value [12]. Haghiri and Sandberg (2020) reinforced this by
+demonstrating substantial variability in 𝑃 𝑟𝑡 across different regions of
+the flow, diverging from the commonly assumed constant value of
+0.9 [13]. Milani et al. (2018, 2019) used machine learning to refine
+turbulent diffusivity and Prandtl number models, improving temperature field predictions, particularly at the wall. However, difficulties
+remained in ensuring the approach’s effectiveness across different blowing ratios [14,15]. Mazaheri and Abtahi (2025) enhance thermal field
+prediction in film cooling applications using LES to optimize turbulent
+heat flux models. By refining the turbulent Prandtl number through a
+gradient descent algorithm and high-fidelity LES data, they significantly
+improve the accuracy of RANS simulations. The optimized models
+demonstrate up to a 68% error reduction in predicting film cooling
+effectiveness across various geometries, contributing to improved gas
+turbine cooling strategies [16].
+The inaccuracy of RANS in hydrodynamic predictions often stems
+from Reynolds stress modeling. The following section discusses studies
+that have addressed this issue.
+Tracey et al. (2015) introduced a data-driven framework for turbulence modeling, investigating whether RANS solutions could be reconstructed without prior knowledge of model structures. While promising,
+their approach faced challenges in generalization, complexity, and
+computational costs [17].
+Deep learning techniques have also been explored to improve turbulence modeling. Ling et al. (2016) developed a Tensor Basis Neural
+Network (TBNN) to predict Reynolds stress anisotropy while embedding Galilean invariance, ensuring observer-independent predictions.
+Their model, trained on LES data, outperformed traditional RANS
+models in predicting anisotropy and velocity fields in canonical flows
+but required further validation in complex turbulent systems [18].
+More recently, Ellis and Xia (2023) applied TBNN to Reynolds
+stress closure in two-equation RANS models, improving predictions
+of anisotropic states and adiabatic cooling effectiveness. While GDH
+and HOGGDH models enhanced cooling effectiveness distributions,
+challenges in predicting lateral coolant spread persisted, indicating the
+need for further refinements in turbulent heat flux modeling [1].
+Beyond turbulence modeling, numerous studies have investigated
+film cooling flows using experimental and numerical approaches. Below, we review some key contributions.
+Experimental and numerical studies have played a critical role in
+understanding film cooling effectiveness. Pietrzyk et al. (1990) [19]
+and Sinha et al. (1991) [20] examined the effects of density and
+momentum flux ratios on lateral cooling effectiveness. They found that
+lower density ratios and higher momentum flux ratios reduced lateral
+coolant spreading, significantly impacting cooling performance. Subsequent LES studies, including Leedom and Acharya (2008), validated
+these experimental findings and emphasized the influence of plenum
+conditions on cooling effectiveness [21].
+Cruse et al. (1997) extended film cooling research to turbine leading
+edges, showing that high free-stream turbulence reduced effectiveness
+at low blowing ratios but had minimal impact at higher ratios [22].
+LES studies, such as those by Kalghatgi and Acharya (2014) [23] and
+Fan et al. (2019) [24], further confirmed the significant influence of
+coherent structures — such as counter-rotating vortex pairs (CVP) and
+hairpin vortices — on cooling effectiveness.
+Innovative cooling configurations have also been explored. Wang
+et al. (2020) combined LES with infrared thermography to study
+trenched film cooling, demonstrating improved effectiveness compared
+
+Nomenclature
+𝐵𝑅
+𝐶𝑝
+𝐷
+ℎ
+𝑘
+𝑝
+𝑃𝑟
+𝑃 𝑟𝑡
+𝑞 ′′
+𝑅𝑒
+𝑆𝑖𝑗
+𝑆𝑡
+𝑇
+𝑇𝑤
+𝑇∞
+𝑢𝑖
+𝑈∞
+𝑥𝑖
+𝑦+
+𝛼
+𝛼𝑡
+𝜈
+𝜈𝑡
+𝜔
+𝜌
+𝜏𝑖𝑗
+𝑟𝑘
+𝑀𝑆𝐸
+𝑅𝑀𝑆𝐸
+
+Blowing ratio
+Specific heat at constant pressure (J/kg K)
+Hole diameter (m)
+Enthalpy (J/kg)
+Turbulent kinetic energy (m2 /s2 )
+Pressure (Pa)
+Prandtl number
+Turbulent Prandtl number
+Heat flux (W/m2 )
+Reynolds number
+Strain rate tensor (1/s)
+Stanton number
+Temperature (K)
+Wall temperature (K)
+Freestream temperature (K)
+Velocity component in 𝑖-direction (m/s)
+Freestream velocity (m/s)
+Cartesian coordinate in 𝑖-direction (m)
+Non-dimensional wall distance
+Thermal diffusivity (m2 /s)
+Turbulent thermal diffusivity (m2 /s)
+Kinematic viscosity (m2 /s)
+Turbulent kinematic viscosity (m2 /s)
+Specific dissipation rate (1/s)
+Density (kg/m3 )
+Reynolds stress tensor (Pa)
+Resolved-to-total TKE ratio
+Mean squared error
+Root mean squared error
+
+approach to improving the accuracy of the RANS method is to predict
+turbulent viscosity and the turbulent Prandtl number using machine
+learning techniques. In the following paragraphs, we will discuss studies that highlight the significance of the turbulent Prandtl number and
+explore attempts to enhance RANS through machine learning.
+One of the key parameters influencing film cooling effectiveness is
+the turbulent Prandtl number (𝑃 𝑟𝑡 ), which governs heat transport in
+turbulent flows. Accurate modeling of 𝑃 𝑟𝑡 is essential for predicting
+temperature distributions in film cooling, yet conventional approaches
+often assume a constant value, leading to inaccuracies in complex flow
+conditions. Ling et al. (2015) evaluated three algebraic closures for
+turbulent scalar fluxes in film cooling using LES data. Their study
+identified a breakdown in the Reynolds analogy, emphasizing the need
+for lower turbulent Prandtl numbers. Among the tested models, the
+Generalized Gradient Diffusion Hypothesis (GGDH) and High-Order
+Generalized Gradient Diffusion Hypothesis (HOGGDH) provided better
+scalar flux anisotropy predictions at the jet’s top but struggled near
+the bottom wall. They also found that tuning coefficients in RANS
+models had a more significant impact on improving predictions than
+transitioning to higher-order models [9].
+Building on this, Ling et al. (2016) highlighted the failure of RANS
+models to capture Reynolds stress anisotropy, particularly in jet-incrossflow and film cooling applications. To address this, they proposed machine learning-based turbulence models trained on diverse
+flow datasets, demonstrating substantial improvements over traditional
+RANS predictions. Future research aims to integrate these models into
+RANS simulations to improve convergence and better predict wall
+stresses and heat fluxes [10].
+Liu et al. (2008) further investigated the influence of turbulent
+Prandtl numbers on film cooling effectiveness using a 𝑘 − 𝜖 model
+coupled with a one-equation near-wall model. Their findings showed
+2
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+(
+)
+𝜕𝜌𝑢̃𝑖 𝜕𝜌𝑢̃𝑖 𝑢̃𝑗
+𝜕𝑝
+𝜕
+sgs
++
+=−
++
+2𝜇𝑆̃𝑖𝑗∗ − 𝜌𝜏𝑖𝑗 ,
+𝜕𝑡
+𝜕𝑥𝑗
+𝜕𝑥𝑖 𝜕𝑥𝑗
+(
+)
+̃
+̃
+𝜕𝜌
+𝑢
+̃
+ℎ
+𝜕𝜌ℎ
+𝑗
+𝜕
+𝜕 ℎ̃
+sgs
++
+=
+𝛼
+− 𝜌𝑞𝑗
+,
+𝜕𝑡
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+
+to cylindrical holes, particularly at high blowing ratios [25]. Meanwhile, Ellis and Xia (2022) analyzed the impact of inlet turbulence
+on cooling performance, highlighting the importance of accurately
+representing turbulence in simulations [26].
+While machine learning has shown promise, two limitations persist:
+(1) many models are trained and validated only on simplified flat-plate
+film cooling configurations, limiting generalization; and (2) existing ML
+models often rely on large and complex input feature spaces (17–19+
+variables), reducing interpretability and increasing computational burden [1,14,15]. Our study addresses these limitations by training a
+compact, physically interpretable ML model on one flat-plate case (BR
+= 1.0), and testing it across four unseen configurations — including a
+leading-edge film cooling case and C3X turbine blade geometry — without retraining. This study leverages LES to compute flow-dependent
+𝜈𝑡 and 𝑃 𝑟𝑡 , and uses correlation analysis to identify the most relevant
+features. After training a compact neural network model using six input
+features, we integrate it into the 𝑘 − 𝜔 SST model via user-defined
+functions, enabling a posteriori dual-field correction inside the RANS
+solver. The novelty of this study lies in the a posteriori integration of the
+ML model into the CFD solver, enabling simultaneous correction of both
+turbulent viscosity and turbulent Prandtl number. Additionally, the
+model demonstrates strong generalization across diverse geometries —
+including leading-edge and turbine blade cooling — without retraining,
+highlighting its practical value for industrial applications. The novel
+contributions of this study are summarized as follows: (i) performing
+simultaneous a posteriori correction of both thermal and velocity fields,
+(ii) improving generalization across geometries, (iii) enhancing RANS
+performance with a compact and computationally efficient ML model,
+(iv) testing the model on cases with realistic operating conditions, such
+as leading-edge and turbine blade film cooling, in contrast to most
+previous studies that relied on idealized flat-plate configurations with
+unity blowing and density ratios. These contributions demonstrate a
+practically viable path toward enhancing the predictive accuracy of
+RANS models in real-world, high-Reynolds-number cooling applications. The remainder of the paper is structured as follows: Section 2
+outlines the numerical setup and governing equations. Section 3 details
+data preprocessing and ML model development. Section 4 presents
+the validation and performance of the integrated model across cases.
+Section 5 concludes with key findings, implications, and future research
+directions.
+
+(3)
+
+In which:
+sgs
+𝜏𝑖𝑗 = −2𝜈sgs 𝑆̃𝑖𝑗∗ ,
+
+1
+𝑆̃𝑖𝑗∗ =
+2
+
+(
+
+𝜕 𝑢̃ 𝑗
+𝜕 𝑢̃ 𝑖
++
+𝜕𝑥𝑗
+𝜕𝑥𝑖
+
+(4)
+)
+−
+
+1 𝜕 𝑢̃ 𝑘
+,
+3 𝜕𝑥𝑘
+
+(5)
+
+The WALE (Wall-Adapting Local Eddy-viscosity) model was chosen
+for subgrid-scale stress modeling, as it has demonstrated high accuracy in predicting near-wall turbulence in cooled turbine blades and
+complex thermal flows. Its formulation effectively accounts for sheardominated turbulence while maintaining low dissipation in isotropic
+turbulence regions, making it well-suited for film cooling simulations [26]. The subgrid-scale viscosity is calculated using the following
+relation:
+(
+)3∕2
+𝜁𝑖𝑗 𝜁𝑖𝑗
+(
+)2
+𝜈sgs = 𝐶𝑤 𝛥 (
+(6)
+)5∕2 (
+)5∕4 ,
+𝑆̃𝑖𝑗 𝑆̃𝑖𝑗
++ 𝜁𝑖𝑗 𝜁𝑖𝑗
+where 𝛥 is the cube root of the cell volume, 𝐶𝑤 is the model coefficient
+set to 0.325, and 𝜁𝑖𝑗 is defined as follows:
+(
+)
+1 2
+1
+2
+2
+𝜁𝑖𝑗 =
+𝑔 + 𝑔𝑗𝑖
+− 𝛿𝑖𝑗 𝑔𝑘𝑘
+,
+(7)
+2 𝑖𝑗
+3
+𝑔𝑖𝑗 =
+
+𝜕 𝑢̃ 𝑖
+,
+𝜕𝑥𝑗
+
+(8)
+
+The subgrid-scale modeling effect for the temperature field is
+achieved using the subgrid-scale Prandtl number. The turbulent heat
+flux in this approach is expressed in the energy equation as:
+sgs
+
+𝑞𝑗
+
+= −𝛼sgs
+
+𝜕 ℎ̃
+,
+𝜕𝑥𝑗
+
+where the subgrid-scale turbulent diffusivity is given by:
+𝜈sgs
+𝛼sgs =
+,
+𝑃 𝑟sgs
+
+(9)
+
+(10)
+
+In this study, flow variables were discretized using the methods
+listed in Table 1, where the relaxation coefficients are also provided.
+Regarding time discretization, very small time steps were used to
+achieve high temporal resolution. Two time steps were tested in the
+LES simulations, where the dimensionless characteristic time divided
+by the time step (𝑡∗ ∕𝛥𝑡) was 63.5 and 6.35, respectively. Consequently,
+the first time step was 10−6 s and the second time step was 10−5 s. The
+characteristic time was calculated as 𝑡∗ = 𝐷∕𝑈∞ . Investigations showed
+that time-averaged results exhibited negligible differences between the
+two time steps. Therefore, the larger time step was chosen for further
+simulations. It is noteworthy that the differences in time-averaged
+results were minor and did not affect the instantaneous flow field.
+Since the focus was on average quantities, the larger time step was
+deemed preferable. The maximum CFL number in the simulations was
+1. Additionally, the time interval for time averaging was set to 630𝑡∗
+(0.4 s).
+
+2. Numerical setup
+2.1. Governing equations and numerical method
+The accuracy of turbulence simulations relies heavily on robust
+numerical methodologies and properly defined governing equations.
+This section presents the governing equations, numerical methods, and
+solution strategies used in this study, including the LES and RANS
+methodologies, subgrid-scale modeling, and grid independence studies.
+2.1.1. LES method
+The LES simulations were performed using ANSYS Fluent 2024 R1
+with its GPU-based solver, which employs the finite volume method
+and executes on graphical processors. Given that the simulated flows
+have Mach numbers less than 0.3 and are considered incompressible
+from a hydrodynamic perspective, a pressure-based solver was used
+to couple the continuity and momentum equations. Since film cooling
+involves significant temperature variations, leading to density changes
+in the cooling layer, the energy equation was included in the numerical formulation. The variable density in the discretized domain was
+computed using the ideal gas law, ensuring a consistent representation
+of temperature-dependent density effects. The governing equations for
+continuity, momentum, and energy are as follows:
+𝜕𝜌 𝜕𝜌𝑢̃ 𝑖
++
+= 0,
+𝜕𝑡
+𝜕𝑥𝑖
+
+(2)
+
+2.1.2. RANS method
+Similar to the previous section, the hydrodynamic and energy equations for the RANS method are presented expressed as:
+𝜕(𝜌𝑢𝑖 )
+=0
+𝜕𝑥𝑖
+𝜕(𝜌𝑢𝑖 𝑢𝑗 )
+
+𝜕𝜏𝑖𝑗
+𝜕𝑝
++
++ 𝜌𝑔𝑖
+𝜕𝑥𝑖
+𝜕𝑥𝑗
+(
+)
+𝜕𝜌𝑢̄ 𝑗 ℎ̄
+𝜕
+𝜕 ℎ̄
+=
+𝛼
+− 𝜌𝑞𝑗RANS ,
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+
+(1)
+3
+
+=−
+
+(11)
+(12)
+(13)
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+Table 1
+Summary of numerical methods and discretization techniques used in the present study.
+
+Numerical Solver
+Numerical Solution Method
+Time Step Discretization
+Gradient Calculation Method
+
+RANS simulation
+
+Large eddy simulation
+
+Fluent 24.1 CPU
+Coupled Pressure-based
+Steady State
+Least-squares Cell Based
+
+Fluent 24.1 GPU
+Simple Pressure-based
+Bounded Second Order Implicit
+Least-squares Cell Based
+
+Second-order
+Second-order
+Second-order
+Second-order
+Second-order
+
+Bounded Central Differencing
+Second-order upwind
+Second-order upwind
+Second-order
+–
+
+Spatial Discretization
+Momentum Equation
+Energy Equation
+Density Variable
+Pressure Variable
+Turbulence Equations
+
+upwind
+upwind
+upwind
+upwind
+
+Relaxation Coefficients
+Pressure
+Density
+Momentum
+Energy
+Turbulence
+CFL Number
+
+0.5
+1
+0.5
+0.75
+0.75
+–
+
+0.3
+1
+0.7
+1
+–
+𝐶𝐹 𝐿 ≤ 1
+
+Table 2
+Summary of model test cases and usage.
+
+𝑞𝑗RANS = −𝛼RANS
+𝛼RANS =
+
+Case
+
+Description
+
+LES simulation
+
+Training
+
+Testing the NN model
+
+1
+2
+3
+4
+5
+
+Flat plate, BR = 1.0
+Flat plate, BR = 0.8
+Flat plate, BR = 0.6
+Cruse leading-edge
+C3X turbine blade
+
+3
+3
+3
+7
+3
+
+3
+7
+7
+7
+7
+
+3
+3
+3
+3
+3
+
+𝜕 ℎ̄
+,
+𝜕𝑥𝑗
+
+𝜈𝑡
+,
+𝑃 𝑟𝑡
+
+(14)
+(15)
+
+Also, Reynolds stresses are computed using 𝑘 − 𝜔 𝑆𝑆𝑇 equations. A
+summary of the methodology and numerical discretization techniques
+for the RANS simulations is provided in Table 1.
+It is noteworthy that in this study, for enhanced data-driven RANS
+model, turbulence equations were closed using machine learning models for turbulent viscosity and turbulent Prandtl number.
+In this study, the following cases were investigated:
+•
+•
+•
+•
+•
+
+Case
+Case
+Case
+Case
+Case
+
+1:
+2:
+3:
+4:
+5:
+
+Flat plate film cooling with a blowing ratio (BR) of 1.0
+Flat plate film cooling with a blowing ratio (BR) of 0.8
+Flat plate film cooling with a blowing ratio (BR) of 0.6
+Cruse leading-edge film cooling
+C3X turbine blade film cooling
+Fig. 1. Schematic, computational domain, and boundary conditions for the flat plate
+film cooling problem by Sinha et al. [20].
+
+Table 2 provides a summary of each test case, including its configuration, role in training and testing, and key observations.
+2.2. Geometry and boundary conditions
+
+ensure a maximum y+ of 1 across the cooled plate. Additionally, the
+streamwise and spanwise cell sizes were adjusted to achieve 𝑥+ < 32
+and 𝑧+ < 14 in the boundary layer flow. Ultimately, a high-quality
+mesh with 20.5 million cells was generated. A grid independence study
+was performed by comparing a coarser mesh (20.5 million cells) with
+a finer mesh (25.2 million cells). Results showed minimal differences
+in film cooling effectiveness, confirming the 20.5 million cell mesh as
+sufficient for accurate simulations.
+The resolved-to-total turbulent kinetic energy ratio, 𝑟𝑘 (Eq. (16)),
+also known as the Pope criterion, is shown in the mid-plane and
+transverse planes in Fig. 3. For most parts of the simulated domain, the
+high resolution of the mesh results in 𝑟𝑘 values exceeding 0.96, with
+the minimum value being 0.94 at the edge of the cooling hole.
+
+Flat plate with film cooling configuration
+The studied configuration for single-row film cooling consists of a
+cylindrical hole with a diameter of 12.7 mm and an inclination angle 𝛼
+of 35◦ . In this configuration, the cooling holes are relatively short, with
+a length-to-diameter ratio (𝑙∕𝐷) of 1.75, and are laterally spaced with
+a pitch-to-diameter ratio (𝑝∕𝐷) of 3. These parameters are illustrated in
+Fig. 1. LES and RANS simulations were conducted with blowing ratios
+of 1, 0.8, 0.6 and density ratios of 2, 1.6, 1.2 respectively, based on the
+study by Sinha et al. [20]. Under these conditions, the momentum of
+the cooling jet is sufficient to cause jet lift-off, making the interaction
+between the main flow and the coolant a significant factor affecting the
+surface temperature.
+For the computational mesh, a hexahedral mesh (Fig. 2) was generated throughout the domain. The cell sizes near the wall were set to
+
+𝑟𝑘 =
+4
+
+𝑘𝑟𝑒𝑠
+𝑘𝑠𝑔𝑠 + 𝑘𝑟𝑒𝑠
+
+(16)
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 2. Mesh quality for the flat plate film cooling problem by Sinha et al. [20]; (a) Mid-plane, (b) cooling plate near the hole, and (c) close-up view.
+
+Fig. 3. Contours of the 𝑟𝑘 criterion in the mid-plane and on the cooled surface.
+
+Fig. 4. Contours of 𝜈𝑠𝑔𝑠 ∕𝜈 in the mid-plane and on the cooled surface.
+
+Another criterion for evaluating mesh quality and LES simulation
+accuracy is the ratio of subgrid-scale turbulent viscosity to molecular
+viscosity. For a valid simulation, this value should range between 20
+and 30 [27,28]. In the present simulation, this value is approximately
+2, indicating a very high-quality mesh and LES simulation. Contours of
+the turbulent viscosity ratio in the mid-plane and on the cooled surface
+are shown in Fig. 4.
+Another validation method to ensure the quality of the LES simulation is the analysis of the turbulent energy cascade and the −5∕3
+slope for inertial vortices. Fig. 5 shows the energy cascade, and the
+mentioned slope aligns well with theoretical results in the mid-layer.
+The computational domain was designed with a single film cooling
+hole, utilizing periodic boundaries on transverse planes to replicate an
+infinite row of cooling holes (Fig. 1). The outlet was defined as a fixedpressure boundary, while a symmetry boundary condition was applied
+at the top of the domain. The cooling hole walls and plenum top were
+modeled as no-slip and adiabatic surfaces. The coolant was introduced
+through the plenum with a fixed mass flow rate consistent with the
+
+Fig. 5. Instantaneous velocity diagram and turbulent energy cascade.
+
+5
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Table 3
+Flow parameters and geometry for the Cruse leading-edge cooling simulation.
+
+blowing ratio. Upstream of the cooling hole, a turbulent and hot main
+flow boundary condition was set.
+The freestream velocity and temperature at the inlet were 20 m/s
+and 300 K, respectively, while the coolant temperature was 150 K.
+Turbulent conditions were generated by extending the computational
+domain. Various methods exist for applying turbulent inlet conditions
+in LES, but in this study instead of using synthetic methods for inflow
+turbulence generation, following [29,30], the domain upstream of the
+hole was extended to achieve realistic turbulent conditions consistent
+with experimental setups.
+C3X blade with film cooling configuration
+In this study, the same computational domain and blade as those
+in [24] are used. The geometry and blade profile used are scaled-down
+versions, 3.88 times smaller than the C3X blade geometry studied by
+Hilton et al. (1983). The actual chord length of the blade is 𝐶 = 531 mm,
+with a pitch length of 457 mm between the blades and an angle of 34◦ .
+The film cooling hole is located 0.512𝐶 downstream of the stagnation
+line. The hole diameter is 6.35 mm, the pitch-to-diameter ratio is 4, and
+the injection angle is 25◦ . Periodic boundary conditions are applied
+in the transverse planes, and the computational domain extends from
+𝑧∕𝐷 = −2 to 2.
+The freestream inlet velocity is 5.8 m∕s, and its temperature is 305
+K with a turbulence intensity (𝑇 𝑢) of 20%. The coolant temperature is
+254 K, and the turbulence parameters at the coolant inlet are the same
+as those at the freestream inlet. The density ratio in this study is 1.2.
+𝜌 𝑢
+The simulation was performed at a nominal blowing ratio 𝑀 = 𝜌 𝑐 𝑢𝑐
+∞ ∞
+of 0.5. The turbine blade surface was treated as an adiabatic wall with
+2
+a heat flux of 0 W∕m .
+The computational cell sizes were adjusted to ensure 𝑦+ < 1.
+Additionally, the 𝑥+ and 𝑧+ values are set to 45 and 30, respectively.
+A grid independence study was conducted to determine the optimal
+mesh size, showing that when the mesh size exceeds 10.9 million cells,
+the mean flow variables do not change. Therefore, the optimal mesh
+size for this case is 10.9 million cells.
+Mesh quality was evaluated using the 𝑟𝑘 and 𝜈𝑠𝑔𝑠 ∕𝜈 criteria. The 𝑟𝑘
+values were consistently above 0.85 throughout the domain, indicating
+well-resolved turbulence scales. Detailed contour plots of these metrics
+are provided in the Supplementary Material (Section S1).
+
+Flow parameters and geometry
+
+Numerical values
+
+Hot flow velocity (𝑈∞ )
+Hot flow temperature (𝑇∞ )
+Main flow Mach number
+Hot flow turbulence intensity (𝑇 𝑢∞ )
+Hot flow Reynolds number (𝑅𝑒𝐷 )
+𝐿
+Cavity length ( 𝐷
+)
+𝑃
+Transverse spacing between cavities ( 𝐷
+)
+Cavity diameter (D)
+Injection angle (𝛼)
+Compound angle (𝛽)
+Cold flow temperature (𝑇𝑗 )
+Cold flow turbulence intensity (𝑇 𝑢𝑗 )
+𝜌
+Density ratio ( 𝜌 𝑗 )
+
+10 m/s
+300 K
+0.03
+0.2%
+4160
+11.75
+7.64
+6.32 mm
+20◦
+90◦
+166.5 K
+2%
+1.8
+
+Blowing ratio (BR)
+
+1.0 and 2.0
+
+∞
+
+3. Machine learning model
+3.1. High-fidelity data and preprocessing
+The high-resolution data extracted from the LES simulation of flat
+plate film cooling of sinha [20] for the jet in crossflow problem in this
+study provides time-averaged flow variables such as velocity, pressure,
+temperature, Reynolds stresses, and turbulent heat fluxes. However,
+this dataset lacks information about turbulent Prandtl number, turbulent viscosity, and turbulent kinetic energy dissipation rate, as these
+variables are specific to RANS simulations, not LES. Therefore, this
+section focuses on computing the necessary variables based on the
+available data.
+Initially, several preprocessing operations are performed on the data
+to prepare it for model training.
+The Boussinesq hypothesis is applied to compute turbulent viscosity:
+2
+𝛿 𝑘 − 2𝜈𝑡 𝑆𝑖𝑗
+(17)
+3 𝑖𝑗
+The anisotropy tensor is expressed using LES data as follows:
+
+𝑢′𝑖 𝑢′𝑗 =
+
+2
+𝛿 𝑘
+(18)
+3 𝑖𝑗
+By substituting Eq. (18) into Eq. (17) and multiplying both sides by
+𝑆𝑖𝑗 , the turbulent viscosity is computed as:
+𝑎𝑖𝑗 = (𝑢′𝑖 𝑢′𝑗 ) −
+
+Cruse leading-edge cooling problem
+The geometry and Cruse problem are one of the studied cases in
+cooling flow and leading-edge configurations. The geometric information and flow conditions for this case are provided in Table 3 and
+illustrated in [31]. A high-quality mesh consisting of 3.3 million cells
+was generated for this problem.
+
+𝜈𝑡,𝐿𝐸𝑆 = −
+
+𝑎𝑖𝑗 𝑆𝑖𝑗
+2𝑆𝑚𝑛 𝑆𝑚𝑛
+
+(19)
+
+where 𝑆𝑖𝑗 is defined as:
+(
+)
+1 𝜕𝑈𝑖 𝜕𝑈𝑗
+𝑆𝑖𝑗 =
++
+(20)
+2 𝜕𝑥𝑗
+𝜕𝑥𝑖
+Note that 𝑆𝑚𝑛 𝑆𝑚𝑛 denotes the second invariant (norm) of the strain
+rate tensor. The indices ‘‘𝑚’’ and ‘‘𝑛’’ are dummy indices used to
+avoid repeating free indices, as required by the Einstein summation
+convention. This formulation is equivalent to using 𝑆𝑖𝑗 𝑆𝑖𝑗 , consistent
+with standard turbulence modeling practice [32–34].
+Based on the computed turbulent viscosity, 𝜖, and 𝜔, can be determined as:
+
+2.3. Grid independence of simulations
+As stated, grid independence studies were conducted for both LES
+and RANS simulations.
+For the LES method, various criteria were used to assess the quality
+of the grid and simulation, including the 𝑟𝑘 criterion, the subgrid turbulent viscosity ratio, and the −5∕3 slope of the turbulent energy cascade.
+Additionally, two meshes were tested: a base mesh with 20.5 million
+cells and a refined mesh with 25.2 million cells (a 23% increase), with
+refinements applied specifically to near-wall regions, coolant injection
+zones, and areas with high turbulent activity. Comparative analysis
+of time-averaged velocity and temperature fields showed negligible
+differences between the two meshes, indicating mesh convergence. Grid
+quality metrics including 𝑥+ , 𝑦+ , and 𝑧+ were within recommended limits, and no significant variation was observed in the subgrid turbulent
+viscosity ratio or resolved-to-total TKE ratio (𝑟𝑘 ).
+For the RANS simulations, grid independence was also ensured, and
+a computationally efficient mesh was selected for the simulations to
+minimize computational cost while preserving accuracy in capturing
+thermal and velocity fields.
+
+𝜖=
+𝜔=
+
+𝐶𝜇 𝑘 2
+𝜈𝑡,𝐿𝐸𝑆
+𝜖
+𝐶𝜇 𝑘
+
+(21)
+(22)
+
+The turbulent diffusivity for turbulent heat flux is computed using the GDH hypothesis. To calculate the turbulent Prandtl number,
+the GDH equation is multiplied by the temperature gradient to derive a relation for turbulent diffusivity. By definition, the turbulent
+6
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 6. Distribution and frequency of turbulent Prandtl number extracted from LES data of Case 1 (flat plate, BR = 1.0).
+
+Prandtl number is computed by dividing the turbulent viscosity by the
+turbulent diffusivity:
+̄
+
+𝜕𝜃
+(𝑢′𝑖 𝜃 ′ ) 𝜕𝑥
+𝛼𝑡,𝐿𝐸𝑆 = − ( ) 𝑖
+𝜕 𝜃̄
+𝜕𝑥𝑗
+
+𝑃 𝑟𝑡,𝐿𝐸𝑆 =
+
+2
+
+𝜈𝑡
+𝛼𝑡
+
+(23)
+
+(24)
+
+Milani et al. (2019) [14,15] used Eqs. (23) and (24) to calculate turbulent diffusivity and turbulent Prandtl number. Using these equations,
+the turbulent Prandtl number is extracted, and its histogram is shown
+in Fig. 6. Additionally, the turbulent viscosity extracted from the LES
+data is shown in Fig. 7. As mentioned in various Refs. [14,15,34,35],
+the Boussinesq hypothesis and Gradient Diffusion Hypothesis are inefficient for modeling turbulent flows, leading to unphysical values. For
+example, very large or even negative values for turbulent viscosity and
+turbulent Prandtl number may be obtained. Therefore, it is essential
+to filter unphysical values and avoid using them for model training.
+To ensure physical consistency and filter out outliers, the turbulent
+Prandtl number was restricted to the range [0.2, 2], based on prior studies [14,15,36] and the average baseline value (0.9). Also, the turbulent
+viscosity is restricted to values greater than zero. Values outside this
+range were considered unphysical and excluded from model training.
+After applying this filter, 2.6 million data points remain, with an
+average turbulent Prandtl number of 0.715.
+
+Fig. 7. Distribution and frequency of turbulent viscosity extracted from LES data of
+Case 1 (flat plate, BR = 1.0).
+
+Table 4
+Input features used for training machine learning models.
+
+3.2. Feature selection
+The performance and generalizability of a machine learning model
+strongly depend on feature selection. A large number of input features
+can increase model complexity, lead to overfitting, and significantly
+raise computational costs. By selecting only the most relevant features,
+we ensure a simpler yet accurate neural network model, improving both
+prediction accuracy and computational efficiency.
+The concept of correlation, which measures the relationship between input features and the target variable, is used to identify and
+select the most relevant features for model training. This approach
+focuses on features that have a greater impact on predictions, reducing redundancy and overfitting while improving model performance,
+interpretability, and efficiency.
+In this study, 30 candidate features were extracted from the LES
+flow field for use in machine learning model training. Feature selection
+was based on correlation analysis and physical relevance. The complete
+list of extracted features is provided in the Supplementary Material
+(Section S2).
+
+(a) Turbulent viscosity model
+
+(b) Turbulent Prandtl number model
+
+Index
+
+Feature
+
+Index
+
+Feature
+
+1
+2
+3
+4
+5
+6
+
+‖𝐔‖
+‖∇𝑈 ‖
+𝑘
+𝜔
+𝜈
+𝑑 (Wall Distance)
+
+1
+2
+3
+4
+5
+6
+
+‖𝐔‖
+‖∇𝑇 ‖
+𝑘
+𝜔
+𝜈𝑡
+𝑑 (Wall Distance)
+
+3.3. Development of deep neural network
+Following the explanations in the previous section, correlation analysis was performed on the 30 extracted features, and 6 features were
+selected for training the neural network models. The heatmap showing the correlation between the 6 selected features and the turbulent
+Prandtl number and viscosity is presented in Fig. 8. The 6 selected
+features used as model inputs are listed in Table 4.
+Trained models has Galilean invariance, and their input features are
+listed in Table 4.
+In every machine learning model, there are parameters and hyperparameters. Parameters are learned from training data through optimization, while hyperparameters must be pre-tuned. To ensure proper
+7
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 8. Heatmap showing the correlation of input features with the (a) turbulent Prandtl number (b) turbulent viscosity.
+
+Fig. 9. Algorithm for integrating data-driven models with the 𝑘 − 𝜔 SST RANS model.
+
+training of the machine learning model, training was also performed
+using the cross-validation method.
+Cross-validation is a model evaluation method in machine learning
+that splits the data into multiple subsets. In this method, the data is
+divided into several subsets, and the model is trained on one subset
+and validated on the others. This process is repeated multiple times
+to ensure the model’s generalizability. Cross-validation helps reduce
+overfitting and select the best model.
+For implementing the cross-validation method, the number of folds
+was set to 5, and the number of neurons and hidden layers were varied
+from 4 to 16 and from 3 to 19, respectively.
+The optimal neural network architecture was found to be a 4-layer
+network with 16 neurons per layer, selected after extensive crossvalidation experiments. Increasing model complexity initially improved
+performance, but beyond this configuration, gains were marginal,
+
+and computational costs increased significantly. The error for the
+Hyperbolic Tangent activation function is significantly lower than for
+ReLU and Sigmoid under similar conditions. Therefore, the Hyperbolic
+Tangent activation function is chosen for further analysis. Regarding
+dataset size, as observed, MSE decreases as the dataset size increases.
+The data was split into training and testing sets in an 80–20 ratio.
+A neural network with 4 hidden layers, each with 16 neurons, was
+trained using the Hyperbolic Tangent activation function. With these
+specifications, the neural network model was trained, and the training
+and test errors were as follows:
+3.4. Integration of data-driven models with 𝑘 − 𝜔 SST
+After developing and training Models, these data-driven models
+were integrated with the 𝑘 − 𝜔 SST RANS model and tested on Cases
+8
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+Table 5
+RMSE & MSE errors.
+
+4. Results
+
+(a) Turbulent viscosity model
+
+(b) Turbulent Prandtl number model
+
+RMSE
+
+MSE
+
+RMSE
+
+MSE
+
+0.03
+
+0.00087
+
+0.15
+
+0.023
+
+4.1. Large eddy simulations
+LES simulation of sinha film cooling with blowing ratio 1 and inlet turbulence
+This section presents the LES simulation results for various film cooling configurations, including different blowing ratios and the presence
+or absence of inlet turbulence. The results are validated against experimental measurements and previous numerical studies, evaluating both
+velocity field characteristics and cooling effectiveness distributions.
+Fig. 10 shows the velocity profile upstream of the cooling hole. The
+results of the present LES simulation are compared with experimental
+data [19] and the LES results of Ellis and Xia (2023) [26]. Regarding
+the velocity profile, all three results align well. Reynolds stresses are
+presented and discussed in Supplementary Material (Section S3).
+Fig. 11 shows the velocity profiles along the centerline and at
+various sections. Based on the velocity profile plots, it can be seen that
+there is good agreement between the experimental results, the present
+simulation, and the results of Ellis and Xia (2023). Both simulations
+slightly overpredict the velocity profiles at sections 𝑋∕𝐷 = 3 and 5.
+This small discrepancy in the LES results is also observed in the study
+by Kalghatgi and Acharya (2014) [23]. The reason for this discrepancy
+is a minor difference in the experimental and numerical configurations.
+The experimental 𝐿∕𝐷 is 3, while the numerical simulations use 𝐿∕𝐷 =
+1.75.
+
+Fig. 10. Velocity profile upstream of the cooling hole at 𝑋∕𝐷 = −1. The present
+simulation [ ], Ellis and Xia simulation [26] [⋄], and Pietrzyk et al. [19] [𝑜].
+
+1 to 5. It is important to note that due to the solver’s stability and
+convergence, the data-driven models only predicted turbulent Prandtl
+2 >
+numbers or turbulent viscosity for cells meeting the condition 𝑘∕𝑈∞
+0.0025.
+As mentioned earlier, one model was trained to estimate turbulent
+Prandtl numbers based on high-accuracy LES data.
+Fig. 9 illustrates the integration process of the data-driven models
+with the 𝑘 − 𝜔 SST RANS model. The training phase (upper section)
+involves feature selection, model training, and hyperparameter tuning.
+In contrast, the implementation phase (lower section) integrates the
+trained ML model into Fluent via User-Defined Functions (UDFs), where
+it predicts turbulent Prandtl numbers or turbulent viscosity to refine
+temperature and velocity predictions in RANS simulations.
+In the training phase, the model is trained using input and output
+features (either turbulent Prandtl number or turbulent viscosity) derived from the data. In the integration phase, the machine learning
+model is incorporated into the commercial software Fluent using UDFs.
+The model enhances the base RANS model by estimating the turbulent
+Prandtl number and turbulent viscosity to improve the prediction of
+temperature or velocity fields.
+
+As can be seen, the present simulation predicts and reproduces both
+the velocity profile accurately.
+Fig. 12 shows the longitudinal and transverse distributions of the
+dimensionless temperature at various sections on the cooled surface.
+The numerical simulations and experimental data are consistent and
+show good agreement.
+The investigation of turbulent vortical structures is not the primary
+focus of this study. However, some structures are illustrated in Fig. 13.
+
+LES simulation without inlet turbulence
+To assess the influence of inlet turbulence, a LES simulation was
+also performed on the same case (BR = 1.0) without inlet turbulence.
+The detailed comparison of flow field, Reynolds stress development,
+and cooling effectiveness between the turbulent and non-turbulent inlet
+conditions is presented in the Supplementary Material (Section S3). The
+results highlight the critical role of prescribed inlet turbulence on jet
+development and lateral coolant dispersion.
+
+Fig. 11. Velocity profiles upstream of the cooling hole at various sections. Present simulation [
+
+9
+
+], Ellis and Xia simulation [26] [⋄], and Pietrzyk et al. [19] [o].
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 12. (a) Longitudinal distribution of dimensionless temperature along the centerline, (b) and (c) transverse distribution of dimensionless temperature at 𝑋∕𝐷 = 1 and 𝑋∕𝐷 = 15.
+Present simulation [ ], Ellis and Xia simulation [26] [⋄], Sinha et al. [20] [o], and Kalghatgi and Acharya [23] [▵].
+
+Fig. 13. Vortical structures simulated using the LES method and visualized using Q-criterion isosurfaces.
+
+present LES simulation exhibits greater accuracy than the referenced
+simulation.
+
+LES simulations with blowing ratios 0.8 and 0.6
+Additional LES simulations were conducted at lower blowing ratios
+(BR = 0.8 and 0.6) to evaluate the model’s performance under reduced
+jet momentum conditions. Like previous simulations, there is a good
+agreement between our results and experimental data. Detailed comparisons of velocity fields, Reynolds stresses, and centerline cooling
+effectiveness are provided in the Supplementary Material (Sections S4
+and S5).
+
+The LES simulations of film cooling cases with different blowing
+ratios and turbulence conditions demonstrate strong agreement with
+experimental data and previous numerical studies. The results confirm
+that:
+• Velocity and Reynolds stress profiles align well with experimental
+data, with minor deviations explained by differences in hole
+geometry and turbulence conditions.
+• Inlet turbulence significantly influences Reynolds stresses and
+coolant distribution, improving agreement with experiments.
+
+LES simulation of turbine blade C3X film cooling
+LES Simulation of the turbine blade C3X with a single cooling hole
+was conducted, and the results are presented in Fig. 24. As shown, the
+10
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Table 6
+𝐿1 Error of baseline simulations for Case 1.
+𝐿1 Error
+
+Ellis & Xia (2023)
+
+Present study (base)
+
+0.133
+
+0.129
+
+Table 6 quantifies the deviation from experimental results using 𝐿1
+error analysis. This validation serves as the benchmark for assessing
+the improvements introduced by the ML-enhanced models.
+Two ML models are trained to predict the turbulent Prandtl number and viscosity and integrated with the RANS method. The developed ML models incorporate Galilean invariance, ensuring that predictions remain consistent regardless of reference frame transformations
+(e.g., translations or rotations). This property is crucial for generalizing
+the models beyond the current dataset, enabling their application to
+more complex cooling configurations such as turbine blade cooling and
+curved geometries without additional retraining.
+Fig. 14. Comparison and validation of the baseline RANS model for Case 1.
+
+Model test on Case 1
+Fig. 15 shows the temperature distribution on the cooled surface
+for Case 1. ML accurately predicts the temperature distribution on the
+cooled surface.
+Given the complexity of turbulent flows, evaluating model performance based only on surface temperature distributions is insufficient.
+Therefore, we analyze the entire three-dimensional temperature field
+to assess the full extent of improvements introduced by the ML models.
+Fig. 16 presents the dimensionless temperature distributions at various
+cross-sections, showing that the ML-enhanced model better captures
+cooling effectiveness and jet behavior compared to the baseline RANS
+model. The improved accuracy is particularly evident in regions where
+the baseline model underpredicts jet penetration and overestimates
+mixing.
+Fig. 17 provides a detailed view of the temperature field. As observed, the baseline method predicts significant flow separation at
+𝑋∕𝐷 = 1, which is inconsistent with the LES results. The new model,
+however, aligns with the correct predictions. In other sections, the
+baseline model fails to adequately represent the cold jet distribution,
+while the new model shows excellent agreement with LES results.
+Additionally, Fig. 18 illustrates the surface temperature distribution
+on the cooled surface. Given the significance of surface temperature
+
+• LES accuracy makes it a reliable tool for generating high-fidelity
+data to improve RANS turbulence modeling using machine learning.
+
+4.2. Machine learning models
+In this section, we present the results of integrating machine learning models with the 𝑘 − 𝜔 SST turbulence model, aiming to enhance
+hydrodynamic and thermal predictions by improving the estimation of
+turbulent Prandtl number and turbulent viscosity. The effectiveness of
+these ML-enhanced models is assessed by comparing their performance
+against the baseline RANS model, LES simulations, and experimental
+data. The enhanced 𝑘-𝜔 SST model demonstrated significantly improved performance compared to the base model and other existing
+models, particularly in predicting separation points, maximum temperature, and overall flow behavior. Before integrating machine learning
+enhancements, it is essential to validate the baseline RANS model to
+establish a reference for comparison. Fig. 14 presents the validation
+of the baseline RANS model against previous numerical studies, while
+
+Fig. 15. (a) Longitudinal distribution of dimensionless temperature along the centerline, (b) and (c) transverse distributions at 𝑋∕𝐷 = 1, 15 for Case 1.
+11
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 16. Profiles of dimensionless temperature along the centerline and at various sections. LES results [
+data-driven model [ ] for Case 1.
+
+], Baseline RANS model [
+
+], and RANS model integrated with the
+
+Fig. 17. Contours and temperature field of dimensionless temperature at various sections for Case 1.
+
+in gas turbine blades, the model’s performance in this area is critical.
+As seen, the baseline model fails to predict the surface temperature
+accurately due to over-predicted separation. However, the improved
+model provides highly accurate temperature predictions.
+
+Model test on Case 3
+Fig. 20 shows the longitudinal and transverse temperature distributions for Case 3 on the cooled surface. Additionally, the profiles
+and distributions of the dimensionless temperature field at various
+sections are presented in Figs. 21 and 22. Finally, the dimensionless
+temperature distribution on the cooled surface is shown in Fig. 23.
+Similar to Cases 1 and 2, the improved model demonstrates excellent
+performance and efficiency for Case 3, whereas the baseline model
+proves highly inaccurate and error-prone.
+
+Model test on Case 2
+Fig. 19 shows the centerline and transverse distributions of film
+cooling effectiveness for Case 2 (BR = 0.8). The ML-enhanced RANS
+model demonstrates excellent agreement with LES results, significantly
+outperforming the baseline model. Additional validation figures —
+including full field profiles, temperature contours, and surface distributions — are provided in the Supplementary Material (Section
+S6).
+
+Model test on Case 4
+As mentioned earlier, cooling and simulation of the gas turbine
+leading edge are of particular importance. To this end, the accuracy of
+12
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 18. Surface distribution of dimensionless temperature for Case 1.
+
+Fig. 19. (a) Longitudinal distribution of dimensionless temperature along the centerline, (b) and (c) transverse distributions at 𝑋∕𝐷 = 1, 15 for Case 2.
+
+models were tested in Case 4, the Cruse leading edge film cooling. The
+result is presented in Fig. 24(a). The effectiveness of the data-driven
+model is clearly demonstrated. The baseline model overpredicts the
+film cooling effectiveness, whereas the improved model shows significantly lower error compared to the baseline, improving the results by
+approximately 60%.
+
+ever, discrepancies remain in transverse coolant distribution, highlighting the limitations of linear eddy viscosity models (LEVM) in capturing
+anisotropic turbulence effects. Since the ML model is trained within the
+LEVM framework, it inherits some of its limitations in modeling lateral
+coolant dispersion. Addressing this issue requires future improvements
+using Reynolds stress transport models (RSTM) or physics-informed
+neural networks (PINNs) to better represent anisotropic heat transfer
+mechanisms.
+
+Model test on Case 5
+Model 2 was tested in Case 5, and the results are shown in Fig.
+24(b). In Case 5 (C3X turbine blade cooling), the ML-enhanced model
+accurately predicts film cooling effectiveness along the centerline, significantly reducing errors compared to the baseline RANS model. How-
+
+Comparison of present ML with data-driven models from other studies
+In this section, our model is compared with models from other
+studies.
+13
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 20. (a) Longitudinal distribution of dimensionless temperature along the centerline, (b) and (c) transverse distributions at 𝑋∕𝐷 = 1, 15 for Case 3.
+
+Fig. 21. Profiles of dimensionless temperature along the centerline and at various sections. LES results [
+data-driven model [ ] for Case 3.
+
+In Fig. 25, the results of the improved model are compared with the
+improved GDH model by Ellis and Xia (2023). According to the figure,
+both the current machine learning model and the improved GDH model
+by Ellis and Xia (2023) show good agreement for 𝑋∕𝐷 > 1. However,
+for 𝑋∕𝐷 < 1, the current model significantly outperforms the improved
+GDH model. Additionally, it is evident that the improved GDH model
+by Ellis and Xia fails to accurately predict separation and the location
+of the maximum temperature, whereas the current model successfully
+simulates the behavior and correctly estimates the separation point and
+maximum temperature. Furthermore, the present model demonstrates
+greater accuracy than the model by Mazaheri and Abtahi (2024) for
+Case 1.
+Moreover, in Fig. 25(a), the results of the current improved model
+are compared with the baseline HOGGDH model and the improved
+HOGGDH model by Ellis and Xia (2023). As observed, the current improved model performs significantly better than both baseline models,
+showing substantial improvements. According to the figure, both the
+current machine learning model and the high-order HOGGDH model
+show good agreement for 𝑋∕𝐷 > 1. However, it should be noted
+that the high-order HOGGDH model fails to accurately simulate the
+behavior and temperature distribution, particularly for 𝑋∕𝐷 < 1, where
+
+], Baseline RANS model [
+
+], and RANS model integrated with the
+
+the current model performs much better. The HOGGDH model by Ellis
+and Xia performs well for the range 𝑋∕𝐷 > 6, although the current
+model’s results for this range are acceptable. However, for 𝑋∕𝐷 < 6,
+the HOGGDH model by Ellis and Xia fails to predict the separation point
+and the maximum surface temperature correctly, showing weaknesses
+and errors in its performance. In contrast, the current model performs
+exceptionally well in this range, demonstrating far superior results.
+Additionally, the results of the present model are compared with the
+improved 𝑘 − 𝜖 model by Mazaheri and Abtahi (2024) for Cases 2 and 3
+in Figs. 25 (b) and (c), respectively. Overall, the results of the present
+model are better than those of the aforementioned model.
+To sum up, in this section, the results of LES Simulations for five
+cases were presented. As demonstrated, the simulations exhibited high
+quality, with detailed validation and comparison of numerical results
+against experimental data and similar numerical studies.
+Regarding the machine learning models, significant improvements
+over the baseline models were observed. Specifically, the errors of the
+present ML model, including baseline models and those from related
+studies, are provided in Tables 7, 8, and 9. These results highlight the
+efficiency and superior performance of the present model.
+Model performance was evaluated at two distinct stages. First, the
+predictive accuracy of the neural networks was assessed during training
+14
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 22. Contours and temperature field of dimensionless temperature at various sections for Case 3.
+
+Fig. 23. Surface distribution of dimensionless temperature for Case 3.
+
+15
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Fig. 24. Distribution of dimensionless temperature: (a) longitudinal profile along the centerline for case 4, and (b) transverse profile at a cross-section for case 5.
+
+Fig. 25. Comparison of model results for (a) Case 1, (b) Case 2, and (c) Case (3).
+
+16
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+Table 7
+Comparison of errors for the developed model, baseline model, and models from other
+studies for Case 1.
+Index
+
+Model
+
+𝐿1 error
+
+Percentage
+improvement
+
+1
+2
+3
+4
+5
+6
+
+𝑘 − 𝜔 SST - GDH Base
+Ellis & Xia (2023) - SST GDH NN
+Ellis & Xia (2023) - SST HOGGDH Base
+Ellis & Xia (2023) - HOGGDH NN
+Mazaheri & Abtahi (2024) - 𝑘 − 𝜖 NN
+Present Study (NN - 2)
+
+0.18
+0.019
+0.04
+0.03
+0.1
+0.03
+
+–
+89%
+76%
+80%
+33.5%
+80%
+
+LES results were rigorously validated against experimental and numerical data, confirming their credibility for model training and data
+extraction. These LES-based corrections address a critical limitation
+of traditional turbulence models, which assume constant transport
+parameters and lack generalization across flow geometries.
+A dataset consisting of 2.6 million samples with 30 features and two
+target variables was derived from the LES data. Correlation analysis
+identified the most relevant input features, optimizing accuracy while
+maintaining computational efficiency. Neural network models were developed with hyperparameter tuning, using a compact neural network
+architecture optimized for accuracy and efficiency.
+The trained models were integrated into the RANS method and
+tested across five different cases. The enhanced RANS model demonstrated substantial improvements over baseline simulations, particularly in predicting turbulent heat fluxes, temperature fields, and overall
+hydrodynamic behavior. The improvements were most pronounced in
+the three flat plate cooling cases, with enhancements of 80%, 67%, and
+51%, respectively, while for the gas turbine leading edge case, the improvement was approximately 60%. Comparative analysis with existing
+data-driven models further demonstrated the superior performance of
+the present approach. Despite these advancements, challenges remain
+in achieving broader generalization. The performance of the models
+declined for cases that significantly deviated from the training dataset,
+as observed in the turbine blade cooling case (C3X), which showed
+the largest deviation from the training data. Expanding the dataset to
+include a wider range of flow conditions is necessary to enhance model
+robustness.
+Key achievements of this study include the development of machine
+learning models to predict the turbulent Prandtl number and turbulent viscosity, significantly improving RANS accuracy for film cooling
+simulations. The models were successfully integrated into the 𝑘 − 𝜔
+SST turbulence model, demonstrating their effectiveness in real-world
+applications such as turbine blade cooling. The study also achieved
+a balance between model complexity and computational efficiency,
+ensuring that high accuracy was maintained while keeping resource
+demands reasonable.
+For future research, the generalization of the developed models
+should be improved by expanding the training dataset to encompass
+a more diverse range of flow conditions. Instead of relying on turbulent Prandtl number estimation, direct heat flux estimation using
+data-driven models should be explored. Additionally, machine learning
+models can be extended to predict all six Reynolds stress components,
+replacing the need for turbulent viscosity models. The use of PhysicsInformed Neural Networks (PINNs) and Tensor-Basis Neural Networks
+(TBNNs) could enhance turbulence modeling accuracy. Dimensionality
+reduction techniques such as Principal Component Analysis (PCA) and
+reduced-order models like Proper Orthogonal Decomposition (POD)
+could further optimize computational efficiency. Future work may also
+involve classifying and segmenting different flow regimes to develop
+specialized models for distinct categories.
+Overall, this study demonstrates the potential of integrating machine learning with RANS models to significantly enhance turbulence
+modeling and film cooling predictions. The findings highlight the advantages of leveraging high-fidelity data, advanced neural networks,
+and GPU computing to develop more accurate and efficient turbulence
+models. Further advancements in data-driven turbulence modeling will
+continue to refine predictive capabilities and expand the applicability
+of these approaches to complex engineering challenges. This integrated approach paves the way for developing reliable, generalizable,
+and interpretable ML-enhanced turbulence models for industrial-scale
+applications.
+
+Table 8
+Comparison of errors for the developed model, baseline model, and models from other
+studies for Case 2.
+Index
+
+Model
+
+𝐿1 error
+
+Percentage
+improvement
+
+1
+5
+6
+
+𝑘 − 𝜔 SST - GDH Base
+Mazaheri & Abtahi (2024) - 𝑘 − 𝜖 NN
+Present Study (NN - 2)
+
+0.17
+0.07
+0.05
+
+–
+57%
+67.5%
+
+Table 9
+Comparison of errors for the developed model, baseline model, and models from other
+studies for Case 3.
+Index
+
+Model
+
+𝐿1 error
+
+Percentage
+improvement
+
+1
+5
+6
+
+𝑘 − 𝜔 SST - GDH Base
+Mazaheri & Abtahi (2024) - 𝑘 − 𝜖 NN
+Present Study (NN - 2)
+
+0.2
+0.1
+0.1
+
+–
+51%
+51%
+
+and testing using standard error metrics, as reported in Table 5. Second,
+a posteriori evaluation was performed by integrating the trained ML
+models into the RANS solver and comparing the resulting velocity
+and temperature fields to LES and baseline RANS solutions. These
+comparisons—presented in Tables 7, 8, and 9 demonstrate the practical
+impact of the models when deployed in actual flow simulations.
+The results demonstrate that ML-enhanced RANS models significantly outperform baseline turbulence models by:
+• Improving turbulent Prandtl number and viscosity predictions,
+leading to more accurate temperature distributions.
+• Reducing 𝐿1 errors by up to 80%, particularly in regions where
+baseline models overpredict separation.
+• Enhancing film cooling effectiveness predictions, especially in
+practical configurations such as turbine blade cooling.
+• Identifying the limitations of LEVM-based ML models, suggesting
+the need for future work on anisotropic turbulence modeling.
+5. Conclusion
+This study investigated the integration of data-driven and machine
+learning models with RANS simulations, focusing on film cooling applications. The primary goal was to enhance the predictive capability of
+the 𝑘−𝜔 SST turbulence model by estimating turbulent Prandtl number
+and turbulent viscosity. These estimates were achieved using machine
+learning models trained on high-fidelity data obtained from Large Eddy
+Simulations.
+A key novelty of this study lies in the a posteriori correction of
+both turbulent viscosity and turbulent Prandtl number using a compact,
+interpretable neural network trained on LES data and integrated into
+the RANS solver.
+Five LES cases were conducted to generate high-fidelity data for
+training (one case) and validation purposes, including four flat plate
+film cooling simulations and one turbine blade cooling case (C3X).
+These simulations leveraged advanced computational resources, utilizing A100 GPUs and high-resolution grids to ensure accuracy. The
+
+Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to
+influence the work reported in this paper.
+17
+
+Applied Thermal Engineering 279 (2025) 127412
+
+A.M. Qaragoez and K. Mazaheri
+
+Acknowledgment
+
+[15] Pedro M. Milani, Julia Ling, John K. Eaton, Generalization of machine-learned
+turbulent heat flux models applied to film cooling flows, J. Turbomach. 142 (1)
+(2020) 011007.
+[16] Karim Mazaheri, Seyed Ali Abtahi Mehrjardi, Enhancing thermal field prediction
+in a jet in cross flow through turbulent heat flux model optimization by using
+large eddy simulation, Int. J. Therm. Sci. 207 (2025) 109363.
+[17] Brendan Tracey, Karthik Duraisamy, Juan J. Alonso, A machine learning strategy
+to assist turbulence model development, 53rd AIAA Aerosp. Sci. Meet. (2015).
+[18] Julia Ling, Andrew Kurzawski, Jeremy Templeton, Reynolds averaged turbulence
+modelling using deep neural networks with embedded invariance, J. Fluid Mech.
+807 (2016) 155–166.
+[19] J.R. Pietrzyk, D.G. Bogard, M.E. Crawford, Effects of density ratio on the
+hydrodynamics of film cooling, J. Turbomach. 112 (3) (1990) 437–443.
+[20] A.K. Sinha, D.G. Bogard, M.E. Crawford, Film-cooling effectiveness downstream
+of a single row of holes with variable density ratio, J. Turbomach. 113 (3) (1991)
+442–449.
+[21] D.H. Leedom, S. Acharya, Large eddy simulations of film cooling flow fields
+from cylindrical and shaped holes, in: Proceedings of ASME Turbo Expo 2008:
+Power for Land, Sea and Air, American Society of Mechanical Engineers, 2008,
+pp. GT2008–51009.
+[22] Michael W. Cruse, Ushio M. Yuki, David G. Bogard, Investigation of various
+parametric influences on leading edge film cooling, J. Turbomach. 119 (4) (1997)
+699–706.
+[23] Prasad Kalghatgi, Sumanta Acharya, Modal analysis of inclined film cooling jet
+flow, J. Turbomach. 136 (8) (2014) 081007–081007–11.
+[24] Fangsu Fan, Chunhua Wang, Jingzhou Zhang, Large eddy simulation of film
+cooling on turbine vane, J. Therm. Sci. Technol. 14 (2) (2019) 18–00550.
+[25] Chunhua Wang, Xiaokai Sun, Fangsu Fan, Jingzhou Zhang, Study on trench film
+cooling on turbine vane by large-eddy simulation, Numer. Heat Transf. Part A:
+Appl. 78 (3) (2020) 165–182.
+[26] C.D. Ellis, H. Xia, Impact of inflow turbulence on large-eddy simulation of film
+cooling flows, Int. J. Heat Mass Transfer 195 (2022) 123172.
+[27] I.B. Celik, Z.N. Cehreli, I. Yavuz, Index of resolution quality for large eddy
+simulations, J. Fluids Eng. 127 (5) (2005) 949–958.
+[28] Simon E. Gant, Reliability issues of LES-related approaches in an industrial
+context, Flow, Turbul. Combust. 84 (2) (2010) 325–335.
+[29] J. Bodart, F. Coletti, I. Bermejo-Moreno, J.K. Eaton, High-fidelity simulation of
+a turbulent inclined jet in a crossflow, Cent. Turbul. Res. Annu. Res. Briefs 2013
+(2013) 263–275.
+[30] Mikko Folkersma, Large eddy simulation of an asymmetric jet in crossflow, 2015.
+[31] William D. York, James H. Leylek, Leading-edge film-cooling physics: Part
+I-Adiabatic effectiveness, Proc. ASME Turbo Expo GT (2002) 30166.
+[32] Frank Muldoon, Sumanta Acharya, Analysis of k and epsilon budgets for film
+cooling using direct numerical simulation, AIAA J. 44 (12) (2006) 3010–3021.
+[33] R. Pichler, R.D. Sandberg, V. Michelassi, R. Bhaskaran, Investigation of the
+accuracy of RANS models to predict the flow through a low-pressure turbine, in:
+ASME Turbo Expo 2015: Turbomachinery Technical Conference and Exposition,
+in: Turbo Expo, 2B: Turbomachinery, 2015.
+[34] Jack Weatheritt, Yaomin Zhao, Richard D. Sandberg, Satoshi Mizukami, Koichi
+Tanimoto, Data-driven scalar-flux model development with application to jet in
+crossflow, Int. J. Heat Mass Transfer 141 (2019) 118931.
+[35] P.R. Spalart, M.L. Shur, M.K. Strelets, et al., Direct simulation and RANS
+modelling of a vortex generator flow, Flow Turbul. Combust 95 (2–3) (2015)
+335–350.
+[36] K. Mazaheri, K. Chaharlang Kiani, M. Karimi, A modified turbulent heat-flux
+model for predicting heat transfer in separating-reattaching flows and film
+cooling applications, Appl. Therm. Eng. 110 (2017) 1609–1623.
+
+This work was partially supported by the research deputy of Sharif
+University of Technology, Iran.
+Appendix A. Supplementary data
+Supplementary material related to this article can be found online
+at https://doi.org/10.1016/j.applthermaleng.2025.127412.
+Data availability
+The data/code that support the findings of this study may be
+available from the corresponding author upon reasonable request.
+
+References
+[1] Christopher D. Ellis, Hao Xia, Data-driven turbulence anisotropy in film and
+effusion cooling flows, Phys. Fluids 35 (10) (2023) 105114.
+[2] Sandip Dutta, Inderjot Kaur, Prashant Singh, Review of film cooling in gas
+turbines with an emphasis on additive manufacturing-based design evolutions,
+Energies 15 (19) (2022).
+[3] Charles G. Speziale, Turbulence modeling for time-dependent RANS and VLES:
+A review, AIAA J. 36 (2) (1998) 173–184.
+[4] M. Breuer, D. Lakehal, W. Rodi, Flow around a surface mounted cubical obstacle:
+Comparison of LES and RANS-results, J. Name (1996) 22–30.
+[5] Dean R. Chapman, Computational aerodynamics development and outlook, AIAA
+J. 17 (12) (1979) 1293–1313.
+[6] M. Engineering, A more general effective-viscosity hypothesis, J. Fluid Mech. 72
+(2) (1975) 331–340.
+[7] T.J. Craft, B.E. Launder, K. Suga, Development and application of a cubic
+eddy-viscosity model of turbulence, Int. J. Heat Fluid Flow 17 (2) (1996)
+108–115.
+[8] B. Tracey, K. Duraisamy, J.J. Alonso, Application of supervised learning to
+quantify uncertainties in turbulence and combustion modeling, AIAA Aerosp.
+Sci. Meet. 2013–0259 (2013) 1–18.
+[9] Julia Ling, Kevin J. Ryan, Julien Bodart, John K. Eaton, Analysis of turbulent
+scalar flux models for a discrete hole film cooling flow, J. Turbomach. 138 (1)
+(2015) 011006.
+[10] J. Ling, A. Ruiz, G. Lacaze, J. Oefelein, Uncertainty analysis and data-driven
+model advances for a jet-in-crossflow, J. Turbomach. 139 (2) (2016).
+[11] Cun-Liang Liu, Hui-Ren Zhu, Jiang-Tao Bai, Effect of turbulent Prandtl number
+on the computation of film-cooling effectiveness, Int. J. Heat Mass Transfer 51
+(27–28) (2008) 6208–6218.
+[12] Dan Li, Revisiting the subgrid-scale Prandtl number for large-eddy simulation,
+J. Fluid Mech. 802 (2016) R2.
+[13] Ali Haghiri, Richard D. Sandberg, Large eddy simulations of wall jets with coflow
+for the study of turbulent Prandtl number variations and data-driven modeling,
+Phys. Rev. Fluids 5 (6) (2020) 064501.
+[14] Pedro M. Milani, Julia Ling, Gonzalo Saez-Mischlich, Julien Bodart, John K.
+Eaton, A machine learning approach for determining the turbulent diffusivity in
+film cooling flows, J. Turbomach. 140 (2) (2018) 021006.
+
+18
+
+

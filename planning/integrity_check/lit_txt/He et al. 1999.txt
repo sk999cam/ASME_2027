@@ -1,0 +1,832 @@
+International Journal of Heat and Mass Transfer 42 (1999) 3727±3738
+
+www.elsevier.com/locate/ijhmt
+
+The eect of Schmidt number on turbulent scalar mixing
+in a jet-in-cross¯ow
+Guangbin He*, Yanhu Guo, Andrew T. Hsu
+University of Miami, Department of Mechanical Engineering, Coral Gables, FL 33124, USA
+Received 13 October 1998; received in revised form 5 February 1999
+
+Abstract
+The adequacy and accuracy of the constant Schmidt number assumption in predicting turbulent scalar ®elds in
+jet-in-cross¯ows are assessed in the present work. A round jet injected into a con®ned cross¯ow in a rectangular
+tunnel has been simulated using the Reynolds-averaged Navier±Stokes equations with the standard k±e turbulence
+model. The principal observation is that the turbulent Schmidt number has a signi®cant eect on the prediction of
+the species spreading rate in jet-in-cross¯ows, especially for the cases where the jet-to-cross¯ow momentum ¯ux
+ratios are relatively small. A turbulent Schmidt number of 0.2 is recommended for best agreement with experimental
+data. # 1999 Elsevier Science Ltd. All rights reserved.
+
+1. Introduction
+Jet-in-cross¯ows are extensively used in gas turbine
+combustors, where jets are arranged around the circumference of combustion chambers to enhance combustion performance in the primary zone and to dilute
+the hot combustion product exiting the combustor.
+For modern low-emission gas turbine combustors, the
+distributions of temperature and species concentration
+at the combustor exit are important design parameters.
+Therefore, quantitative predictions of both species and
+temperature distributions downstream of the jet are
+required for advanced combustor design.
+Many researchers have experimentally studied a
+single round jet normally into a con®ned rectangular
+cross¯ow. The majority of past experimental work
+concentrates on trying to understand the ¯ow structures and velocity ®eld of jet-in-cross¯ows [1±4].
+
+* Corresponding author. Tel.: +1-305-284-4806; fax: +1305-284-2580.
+E-mail address: ghe@coeds.eng.miami.edu (G. He)
+
+Compared to velocity measurements and ¯ow structure
+studies, the experimental work on scalar diusion in
+jet-in-cross¯ows are relatively few. Kamotani and
+Greber [5] studied the scalar diusion problem using a
+heated air jet injected into cross¯ow, where temperature distribution downstream of the jet was measured
+using hot wire. Sherif and Pletcher [6] measured the
+temperature ®eld of a heated water jet normally
+injected into a water tunnel. Vranos and Liscinsky [7]
+used marker nephelometry to measure the mean concentration in the center plane of a single jet in cross¯ow; the results were in good agreement with the
+single-point measurements of Kamotani and Greber
+[8]. More recently, laser-induced ¯uorescence has been
+used to measure the whole ¯ow®eld using dye as a
+scalar tracer. Smith and Mungal [9] used acetone
+vapor seeded into the jet to acquire quantitative twodimensional images of the scalar concentration ®eld
+for a wide range of velocity ratios.
+Numerical simulations of the jet-in-cross¯ow problem include mainly two groups of approaches: the ®rst
+employs Direct Numerical Simulation (DNS) or LargeEddy Simulation (LES), and the second uses the
+
+0017-9310/99/$ - see front matter # 1999 Elsevier Science Ltd. All rights reserved.
+PII: S 0 0 1 7 - 9 3 1 0 ( 9 9 ) 0 0 0 5 0 - 2
+
+3728
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+Nomenclature
+Aj
+D
+Df
+G
+
+jet exit area
+jet diameter
+turbulent diusion coecient
+production rate of turbulence kinetic energy,
+G  mt
+
+H
+J
+
+tunnel height
+jet-to-cross¯ow momentum ¯ux ratio,
+
+J
+P
+Pe
+Re
+Sc
+T
+U, V, W
+Uo
+Vj
+X, Y, Z
+k
+y+
+
+
+
+@ Ui @ Ui @ Uj
+
+@xj @xj
+@xi
+
+Aj
+
+rj V 2j dA
+
+ro U 2o Aj
+
+eective pressure
+Peclet number
+Reynolds number, Re=(rUoD/m )
+turbulent Schmidt number
+temperature
+mean velocity components in Cartesian coordinates
+cross¯ow inlet velocity
+jet exit velocity
+Cartesian coordinates
+turbulence kinetic energy
+0.5
+dimensionless value of y, y +=rC 0.25
+y/m
+m k
+
+Greek symbols
+e
+dissipation rate of the turbulence kinetic energy
+f
+general dependent variable
+m
+molecular viscosity
+mt
+eddy viscosity
+y
+non-dimensional temperature
+r
+density
+
+Reynolds-averaged approach. Hahn and Choi [10]
+used DNS to study the ¯ow structure and velocity ®eld
+of the jet-in-cross¯ow at very low Reynolds numbers
+and low jet-to-cross¯ow momentum ¯ux ratios. Yuan
+[11] used the LES method to simulate both the velocity
+®eld and scalar transport of the Sherif and Pletcher [6]
+case at reduced Reynolds numbers. Although DNS
+and LES has shown promising results, they are not at
+this point employed by the aircraft engine industry in
+their routine design simulations because of the relatively large computer memory and CPU requirement.
+In current design practices, Reynolds-Averaged
+Navier±Stokes (RANS) computations are most often
+used for investigation of the velocity and combustion
+®eld of gas turbine combustors. Therefore, there is a
+need for accurate RANS simulations of the jet-incross¯ow problem; both the prediction of velocity ®eld
+
+and the scalar ®eld are desired. RANS simulation of
+the velocity ®eld has been performed by many
+researchers in the past decades [12±14]. By contrast,
+numerical simulations of scalar diusion in jet-in-cross¯ows are relatively few, and no systematic study of the
+turbulent Schmidt number eects is available. Chao
+and Ho [15] used RANS and the standard k±e model
+to calculate the temperature ®eld that was experimentally measured by Kamotani and Greber [5], and
+found no signi®cant changes in the temperature contour patterns when turbulent Schmidt numbers ranging
+from 0.5 to 0.9 were used. Catalano et al. [16] predicted the scalar ®eld of a ¯ow where the jet impinged
+on the ceiling wall but did not mention the value or
+the eect of the turbulent Schmidt number.
+Traditionally, a constant turbulent Schmidt number
+of approximately 0.8 has been used to predict the
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+3729
+
+Fig. 1. Flow con®guration and coordinate system (symmetric plane z=0).
+
+scalar ®elds of turbulent ¯ows. The objective of the
+present work is to evaluate the accuracy and limitations of the constant Schmidt number assumption,
+and to give recommendations on the values of the turbulent Schmidt number that are most suitable for jetin-cross¯ow simulations. A semi-empirical analysis on
+the turbulent Schmidt number is ®rst carried out to
+suggest a variable turbulent Schmidt number throughout the ¯ow ®eld. A series of RANS simulations, using
+turbulent Schmidt numbers varying from 0.2 to 1.5, of
+a con®ned jet-in-cross¯ow is performed, wherein turbulence closure is provided by the standard k-e model
+[17]. The ¯ow con®guration studied in the present
+work (see Fig. 1) is a round turbulent jet discharging
+normally into a uniform cross¯ow in a rectangular
+tunnel, which was experimentally investigated by
+Kamotani and Greber [5] and Crabb et al. [1]. The experimental data of Ref. [5] are used to calibrate the
+selections of turbulent Schmidt numbers, and the experimental data of Ref. [1] is used to validate the numerical observations.
+
+2. Computational approach
+2.1. Governing equations
+For a variable density incompressible steady ¯ow
+with constant viscosity, the Reynolds-averaged governing equations for mass, momentum, species concentration, turbulent kinetic energy and its dissipation
+rate (the standard k±e model [17]), can be written in
+the following general form:
+
+
+
+@
+@
+@f
+Df
+ Sf :
+rUj f 
+@xj
+@xj
+@xj
+
+1
+
+The detailed equations are speci®ed in Table 1.
+In Eq. (1) and Table 1, f is the dependent variable
+such as velocity, turbulent kinetic energy and its dissipation rate, and species concentration. Df is the diffusion coecient.
+mt  Cm rk2 =e
+
+2
+
+Cm=0.09, c1=1.44, c2=1.92, sk=1.0, se=1.3. S represents a scalar such as temperature or species concentration. Sc represents the turbulent Prandtl or Schmidt
+number.
+Since the governing equation for species concentration is identical to the equation for enthalpy if there
+are no chemical reactions and no external heat source
+in the physical domain considered, the equation for
+enthalpy was used throughout the present study, and
+turbulent Schmidt number and turbulent Prandtl number were not distinguished in the present paper.
+
+Table 1
+The detailed governing equations
+f
+
+Df
+
+Sf
+
+1
+Ui, i=1, 2, 3
+S
+k
+e
+
+0
+mt
+mt/Sc
+mt/sk
+mt/se
+
+0
+ÿ@ P=@ x i  @ mt @ Uj =@ x i =@ x j
+0
+G ÿ re
+(e/k )(c1G ÿ c2re )
+
+3730
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+2.3. Boundary conditions
+A uniform velocity pro®le at the cross¯ow inlet was
+assumed. The velocity pro®le of a fully-developed turbulent pipe ¯ow was used at the jet inlet boundary. At
+the inlets of the jet and the cross¯ow, the turbulence
+kinetic energy k and its dissipation rate e are calculated
+as
+
+Fig. 2. Computational nodes.
+
+2.2. Numerical schemes
+
+k  a U 2  V 2  W 2
+
+A hybrid dierencing scheme and a second-order
+upwind dierencing scheme [18] are used in the discretization of the governing Eq. (1). The computational
+node locations are shown in Fig. 2. The governing
+equations are discretized using the ®nite volume
+scheme on a given cell, P. In evaluating the ¯uxes on
+the cell surfaces, the primitive variable f at a surface
+(e.g. west surface) of a control volume is calculated
+using the following scheme
+fw  fW  gw fP ÿ fW 
+
+fW ÿ fWW
+fP ÿ fWW
+
+3
+
+where
+(
+gw 
+
+1 if j f^ W ÿ 0:5 j <0:5
+0 otherwise
+
+4
+
+and
+
+Cm rk2
+bm
+
+5
+
+Because the above second-order dierencing scheme
+requires two upstream nodes for each cell-face, which
+will involve a value outside the solution domain for a
+near-boundary control volume, the following hybrid
+scheme was used for all the control volumes adjacent
+to boundaries
+
+
+0:5 fP  fW 
+fW
+
+if PeR2
+otherwise
+
+6
+
+where Pe is the Peclet number, de®ned as
+Pe j Cw =Dw j
+
+7
+
+with Cw representing the mass ¯ux across the west surface and Dw representing the conductance coecient at
+the west surface.
+The Semi-Implicit Method for Pressure-Linked
+Equations (SIMPLE) [19] algorithm was used to
+handle the pressure-velocity coupling. In order to
+stabilize the solution, under-relaxation factors were
+used for primitive variables.
+
+9
+
+where a is a constant, b is the ratio of mt/m. In our calculations, a=0.005 and b=100.
+No-slip condition was imposed on the walls, and the
+standard wall function [17] was used with the standard
+k±e model. In this approach, the wall shear stress is related to the ¯ow velocity vector by
+~tw  ÿlw V~p
+where
+8
+< m=yp
+if y
+p <11:6
+lw 
+0:5
+
+: rC 0:25
+m kp k= ln Eyp  otherwise
+0:25 0:5
+y
+p  rC m kp yp =m:
+
+f^ W  fW ÿ fWW = fP ÿ fWW :
+
+fw 
+
+e
+
+8
+
+10
+
+11
+
+12
+
+In Eqs. (11) and (12), the constants k and E are 0.41
+and 8.432, respectively. The subscript p refers to the
+®rst control volume from the wall, and yp is the normal distance from the wall.
+The diusive ¯ux of turbulence kinetic energy k is
+zero at the wall, and the near wall values of the production rate Gp and the dissipation rate ep are determined from
+Gp  t2w =kmy
+p
+
+13
+
+1:5
+ep  C 0:75
+m kp =kyp :
+
+14
+
+A zero gradient condition on all ¯ow variables was
+imposed at the out¯ow boundary.
+2.4. Flow con®guration and grid
+The ¯ow con®guration used in this work is that of a
+round turbulent jet normally discharging into a uniform cross¯ow. In the case of Ref. [1], a turbulent jet
+was injected normally into a uniform mainstream in a
+rectangular wind tunnel from a 25.4 mm inside diameter and 0.75 m long pipe. The jet-to-cross¯ow velocity
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+3731
+
+Fig. 3. Structured grid used in the current study.
+
+ratio is 2.3, the cross¯ow velocity is 12.0 m/s. The
+Reynolds number based on the cross¯ow inlet velocity
+and the jet diameter is about 20,000. The jet and the
+cross¯ow have the same temperature. A laser Doppler
+anemometer (LDA) was used to measure the velocity
+®eld. Helium tracer was seeded in the ¯ow ®eld for the
+measurement of species concentration distribution.
+In the case of Ref. [5], a heated round jet was issued
+normally into a uniform cross¯ow in a rectangular
+tunnel. The temperature dierence between the jet and
+the cross¯ow is 167 K, with the jet temperature at
+465 K. Iron-constantan thermocouples were used to
+measure the temperature distribution. The distance
+from the jet exit to the ceiling wall is H=12D for
+momentum ¯ux ratios of J=8 and 32, and H=24D
+for J=72. The jet-to-cross¯ow momentum ¯ux ratio is
+de®ned as
+
+J
+
+Aj
+
+rj V 2j dA
+
+ro U 2o Aj
+
+15
+
+where Uo is cross¯ow inlet velocity, Vj is jet exit velocity, Aj is the jet area, r is density, subscripts o and j
+denote cross¯ow and jet, respectively. The Reynolds
+number based on the cross¯ow inlet velocity and the
+jet diameter is about 3300.
+
+Based on the symmetry about the jet center plane, the
+computational domain was established on half the ¯ow®eld. The ¯ow geometry and the coordinate system are
+described in Fig. 1. The jet center is located at 6D downstream of the cross¯ow inlet, which guarantees that the
+inlet boundary of the cross¯ow has little eect on the
+computed ¯ow®eld. In order to eliminate any unwanted
+feedback from the downstream boundary, the tunnel
+exit is put at 29D downstream of the jet. The domain
+size in the spanwise and the vertical direction are 8D
+and 12D, respectively. In this computation domain, a
+nonorthogonal boundary-®tted grid of 90  45  40 was
+generated in the streamwise, vertical, and spanwise
+directions, respectively. This selection is the result of a
+grid independence study, where grid sizes of 50  40 
+30, 70  45  40, 90  45  40, and 90  50  45 have
+been tested, together with various stretching factors.
+The peak velocity in the ¯ow ®eld was compared to
+check grid independence. As shown in Fig. 3, stretched
+grids were used along the streamwise and spanwise
+directions, while uniform grids were used along the
+vertical direction. Ten uniform grids were selected
+inside the jet in the streamwise direction as a result of
+grid independence study. With the selected grid of 90 
+45  40, the smallest y + is about 30, which indicates
+that the ®rst grid node above the wall is in the logarithmic region of turbulence boundary layer.
+
+3732
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+Fig. 4. Error residuals reducing history in the numerical solution.
+
+3. A qualitative analysis for selection of turbulent
+Schmidt number
+Kamotani and Greber [8] established correlations of
+the velocity and temperature trajectories based on their
+experimental data:
+ bv
+Yv
+X
+ av
+D
+D
+
+16
+
+ bT
+YT
+X
+ aT
+D
+D
+
+17
+
+where yv and yT denote vertical coordinates of velocity
+trajectory and temperature trajectory, respectively; av,
+bv, bT are functions of the jet-to-cross¯ow momentum
+¯ux ratio and aT depends mainly on the momentum
+¯ux ratio and weakly on the density ratio. With the
+momentum ¯ux ratio in the range of 15±60, and the
+temperature dierence in the range of 0±177 K, the
+above two formulas become
+ 0:36
+Yv
+X
+ 0:89J 0:47
+D
+D
+
+18
+
+ 0:11  0:29
+rj
+YT
+X
+ 0:73J 0:52
+D
+ro
+D
+
+19
+
+where J is the jet-to-cross¯ow momentum ¯ux ratio, rj
+and ro are densities of the jet and the cross¯ow. One
+may assume a relation between the turbulent Schmidt
+number and the trajectories of the velocity and the
+temperature by using Eqs. (18) and (19):
+
+Fig. 5. Streamwise velocities at the jet center plane.
+
+Sc 
+
+ 0:11  ÿ0:07
+rj
+nt
+YT
+X
+A
+ 0:82J 0:05
+:
+Df Y v
+ro
+D
+
+20
+
+The above empirical relationship indicates that the turbulent Schmidt number increases slightly with increas-
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+3733
+
+Fig. 6. Turbulence intensity at y/D=1.35 and Z/D=0.
+
+ing momentum ¯ux ratio and density ratio, and
+decreases with increasing x/D. This argument suggests
+that the turbulent Schmidt number be a variable
+instead of a constant in jet-in-cross¯ow simulations.
+
+4. Computational results and discussion
+In this section, the computed results of mean velocity, turbulence intensity, jet trajectories, and temperature contours are presented. These calculated
+results are compared with experimental measurements
+of Refs. [1] and [5]. The recommended turbulent
+Schmidt number is calibrated against the experimental
+data of Ref. [5] and then validated by the data of Ref.
+[1]. The limitations of the constant Schmidt assumption and k±e model in scalar predictions are discussed.
+In all the computations reported in the following, a
+grid of 90  45  40 was used and a grid independence
+study found that further re®nement of the grid did not
+aect the solution. Convergence was determined by
+monitoring the L2-norm of the ¯ux residuals. To get
+converged solutions, the residuals dropped at least
+three orders of magnitude for velocity components and
+at least two orders for scalar variables. Fig. 4 shows a
+
+Fig. 7. Eect of turbulent Schmidt number on the prediction
+of the jet temperature trajectory.
+
+Fig. 8. Jet temperature trajectories between measurements and
+calculations.
+
+typical convergence history. Three hundred and ®fty
+iterations were generally required for the cases where
+turbulent Schmidt numbers are relatively high (greater
+than 0.5), and 450 or more iterations were required for
+the low turbulent Schmidt number cases (Sc=0.2 and
+0.3). A converged solution required approximately 200
+ms/iteration/grid-point CPU time on an SGI-OCTANE
+workstation, and required approximately 350 ms/iteration/grid-point CPU time on an SGI-INDY workstation.
+
+4.1. Mean velocity and turbulence intensity calculations
+Comparisons of the calculated velocities with experimental data of Refs. [1] and [5] shown in Fig. 5. Fig.
+5(a) presents the streamwise velocity distribution at the
+jet center plane and Y=1.35D, and Fig. 5(b) presents
+the comparison at the jet center plane and X=8D for
+the case of Ref. [1]. Fig. 5(c) shows the predicted
+streamwise velocity at the jet center plane and X=12D
+for the case of J=32, compared to the measured velocity by Ref. [5]. Fig. 6 compares the computed turbulence intensity with experimental data at the jet center
+plane and Y=1.35D for the case of Crabb et al. The
+calculated results of Ref. [13], using 2.4 million computational nodes, are also presented in the same ®gure.
+Figs. 5 and 6 show that the velocity ®elds were
+reasonably well predicted, but the turbulence intensity
+was somewhat under-predicted. The discrepancies
+between numerical predictions and experimental data
+are believed to be caused by the de®ciencies of the
+standard k-e model. The standard k±e model is strictly
+based on a gradient hypothesis for the turbulent ¯uxes.
+Andreopoulos and Rodi [2] had shown experimentally
+that there is a signi®cant adverse gradient transport in
+the jet-in-cross¯ow con®guration, which points to the
+
+3734
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+Fig. 9. Fig. 9 Non-dimensional temperature distribution in the symmetric plane (J=8, H/D=12).
+
+inadequacy of the standard k±e model in jet-in-cross¯ow simulations.
+4.2. Jet temperature trajectories
+Jet trajectory is one of the most important characteristics of jet-in-cross¯ow problems. The jet temperature trajectory is de®ned as the locus of the local
+maximum temperature. The numerically predicted jet
+trajectories are compared with experimental data of
+
+Kamotani and Greber [5] in Figs. 7 and 8. Fig. 7 displays the solutions obtained using various turbulent
+Schmidt numbers compared with experimental data for
+the case of J=32. The trajectories obtained using turbulent Schmidt numbers ranging from 0.2 to 1.5 all
+have fairly good agreement with experimental data.
+Fig. 7 also indicates that while the turbulent Schmidt
+number has some eects on the prediction of the jet
+trajectory when it is in the range of 0.2±0.8, the eect
+is very small for Sc>0.8. Fig. 8 shows the predicted
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+3735
+
+Fig. 10. Non-dimensional temperature distribution in the symmetric plane (J=32, H/D=12).
+
+jet trajectories using a turbulent Schmidt number of
+0.5 for the cases of J=8, 32 and 72 compared with the
+experimental results. General agreement is observed.
+4.3. Non-dimensional temperature contours
+The temperature was non-dimensionalized by
+y
+
+T ÿ To
+Tj ÿ To
+
+21
+
+where Tj is temperature of the jet and To is temperature of the cross¯ow.
+The temperature contours at the jet center plane for
+various momentum ¯ux ratios are compared with experimental data in Figs. 9±11.
+
+4.3.1. Momentum ¯ux ratio J=8
+Turbulent Schmidt numbers 0.2, 0.3, 0.5, 0.8, and
+1.2 were tested to study the eects of the Schmidt
+number on the jet mixing in the cross¯ow for the case
+of J=8.
+Fig. 9 exhibits a quantitative comparison of the predicted temperature contours with experimental
+measurements. Fig. 9(a) presents the experimental
+measurements of the temperature distribution in the jet
+center plane, and Figs. 9(b)±10(f) are numerical results
+from various turbulent Schmidt numbers. These results
+indicate that the temperature pro®les become slenderer
+with increasing the turbulent Schmidt number. For
+example, the contour line of y=0.1 was predicted to
+be X=10D downstream of the jet exit when a turbu-
+
+3736
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+Fig. 11. Non-dimensional temperature distribution in the symmetric plane (J=72, H/D=24).
+
+lent Schmidt number of 0.2 was used (Fig. 9(b)), while
+as shown in Fig. 9(d), the location of the contour line
+of y=0.1 extended to X=20D when a turbulent
+Schmidt number of 0.5 was used. The jet mixing rate
+was found to be quite sensitive to the change in turbulent Schmidt number for this low momentum ¯ux
+ratio; the predicted temperature ®eld changes substantially with the turbulent Schmidt number. In fact,
+when the turbulent Schmidt number is greater than
+0.3, the agreement between predicted and measured
+temperature ®elds become poor.
+It should be noted that although the best agreement
+with experimental data is obtained with Sc=0.2, the
+agreement with experimental data is far from perfect.
+
+For instance, the lower part of the contour line of
+y=0.025, observed in the experimental data as shown
+in Fig. 9(a), was not resolved in the prediction using
+Sc=0.2 (Fig. 9(b)). An increase or decrease in the turbulent Schmidt number from the 0.2 value will
+improve the temperature prediction in some regions
+but worsen it in others. This indicates that, for low jetto-cross¯ow momentum ¯ux ratios, the assumption of
+a constant Schmidt number may not be the best choice
+for the jet-in-cross¯ow problem, and more sophisticated approaches may be required.
+4.3.2. Momentum ¯ux ratio J=32
+Turbulent Schmidt numbers tested for the case of
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+3737
+
+Fig. 12. Species concentration distribution at the jet center plane.
+
+J=32 were Sc=0.2, 0.3, 0.5, and 0.7. Fig. 10(a) presents the experimental measurements, and Fig. 10(b)±
+(e) exhibit numerical results from various turbulent
+Schmidt numbers. In this case, the jet impinged upon
+the ceiling wall at the downstream of the jet.
+Generally, a turbulent Schmidt number of 0.2 still
+gives the best agreement with experimental data. The
+jet scalar spreading rate is under-predicted with turbulent Schmidt numbers greater than 0.3, but the change
+is less signi®cant than in the case of J=8. Compared
+to the case of J=8, the present results at Sc=0.2 show
+much better agreement with experimental data.
+4.3.3. Momentum ¯ux ratio J=72
+Turbulent Schmidt numbers 0.2, 0.3, 0.5, and 0.8
+were used in the case of J=72. Results are presented
+in Fig. 11. It can be seen that the temperature ®eld is
+quite accurately predicted at Sc=0.3. A close examination of Fig. 11 shows that the numerical results from
+Sc=0.2 also compare favorably with the experimental
+data of the temperature ®eld, although scalar diusion
+is slightly over-predicted.
+A comparison of Figs. 9±11 shows that the change
+in temperature distribution for J=72 with dierent
+Schmidt numbers is far less drastic compared to the
+cases of J=8 and 32. For the relatively high momentum ¯ux ratio of J=72, the predicted temperature con-
+
+tours compare much better with experimental data
+than the two previous cases. One may conclude from
+this observation that the higher the jet-to-cross¯ow
+momentum ¯ux ratio, the less sensitive is the solution
+to turbulent Schmidt number. One may also conclude
+that the constant Schmidt number assumption is a
+reasonable one for jet-in-cross¯ows of high jet-tocross¯ow momentum ¯ux ratios, but less so for those
+of low momentum ¯ux ratios.
+4.4. Validation
+In the preceding section, it is recognized that the
+scalar (temperature) prediction obtained using a value
+of turbulent Schmidt number of 0.2 best matches the
+experimental data. To further verify the observation,
+another set of experimental data obtained by Crabb et
+al. [1] are used and again used Sc=0.2 to calculate the
+scalar ®eld in a jet-in-cross¯ow. In this case, Crabb et
+al. used Helium trace to identify the species concentration distribution in the ¯ow ®eld. Fig. 12 presents
+the comparison between measured and calculated
+species concentrations using values of turbulent
+Schmidt number of 0.2 and 0.8 at two downstream locations of X/D=6 and 8. It can be seen that the predicted species concentration pro®les using Sc=0.2
+better match the measured data.
+
+3738
+
+G. He et al. / Int. J. Heat Mass Transfer 42 (1999) 3727±3738
+
+5. Concluding remarks
+RANS simulations of the turbulent scalar diusion
+process in jet-in-cross¯ows were performed to evaluate
+the accuracy of constant Schmidt number assumption
+and the eect of the turbulent Schmidt number on the
+mixing of jet species with the cross¯ow within the context of the standard k±e model. Good prediction of the
+jet trajectories and reasonable prediction of the velocity ®eld were obtained. Calculations showed underpredicted turbulence intensity, which indicates that the
+standard k±e model does not capture all the important
+¯ow physics in jet-in-cross¯ows.
+The turbulent Schmidt number in the range of 0.2±
+0.8 has some eects on the prediction of the jet trajectory. The eect is very small when the turbulent
+Schmidt number is larger than 0.8. A signi®cant eect
+of the turbulent Schmidt number on the prediction of
+the jet species spreading rate in the jet-in-cross¯ow was
+observed, especially so for cases where the jet-to-cross¯ow momentum ¯ux ratios are relatively small. The
+most suitable turbulent Schmidt numbers for cases of
+J=8, 32, and 72 were found to be Sc=0.2, 0.2, and
+0.3, which are considerably smaller than the values
+that are conventionally used in turbulent combustion
+simulations. By validation, a turbulent Schmidt number of 0.2 is recommended for jet-in-cross¯ow simulations because, under the constant Schmidt
+assumption, it gives the most satisfactory solutions for
+a wide range of jet-to-cross¯ow momentum ¯ux ratios.
+The constant Schmidt number assumption provides
+fairly accurate solutions of turbulent scalar mixing for
+jet-in-cross¯ow cases where the jet-to-cross¯ow
+momentum ¯ux ratios are relatively high, while for
+low momentum ¯ux ratio jet-in-cross¯ows a constant
+Schmidt number may not necessarily be the best
+choice. The authors' semi-empirical analysis, based on
+the experimental observations of Kamotani and
+Greber, shows that the turbulent Schmidt number is
+dependent on the jet-to-cross¯ow momentum ¯ux
+ratio, density ratio, and geometric location. From
+these observations one may conclude that a variable
+turbulent Schmidt number is needed for low momentum ¯ux ratio jet-in-cross¯ows.
+Acknowledgements
+The authors would like to thank Drs Andreja
+Brankovic and Saadat Syed from Pratt & Whitney,
+and Dr N.-S. Liu from NASA Lewis Research Center
+for their guidance, as well as ®nancial support on this
+research project.
+
+References
+[1] D. Crabb, D.F.G. Durao, J.H. Whitelaw, A round jet
+normal to a cross¯ow, Transactions of the ASME,
+Journal of Fluids Engineering 103 (1981) 142±153.
+[2] J. Andreopoulos, W. Rodi, Experimental investigation
+of jets in a cross¯ow, Journal of Fluid Mechanics 138
+(1984) 93±127.
+[3] T.F. Fric, A. Roshko, Vortical structure in the wake of
+a transverse jet, Journal of Fluid Mechanics 279 (1994)
+1±47.
+[4] R.M. Kelso, T.T. Lim, A.E. Perry, An experimental
+study of round jets in cross¯ow, Journal of Fluid
+Mechanics 306 (1996) 111±114.
+[5] Y. Kamotani, I. Greber Experiments on con®ned turbulent jets in cross¯ow. NASA CR-2392 1974.
+[6] S.A. Sherif, R.H. Pletcher, Measurements of the thermal
+characteristics of heated turbulent jets in cross¯ow,
+Journal of Heat Transfer 111 (1989) 897±903.
+[7] A. Vranos, D.S. Liscinsky, Planar imaging of jet mixing
+in cross¯ow, AIAA Journal 26 (1988) 1297±1298.
+[8] Y. Kamotani, I. Greber, Experiments on a turbulent jet
+in a cross ¯ow, AIAA Journal 10 (1972) 1425±1429.
+[9] S.H. Smith, M.G. Mungal, Mixing, structure and
+scaling of the jet in cross¯ow, Journal of Fluid
+Mechanics 357 (1998) 83±122.
+[10] S. Hahn, H. Choi, Unsteady simulation of jets in a
+cross ¯ow, Journal of Computational Physics 134 (1997)
+342±356.
+[11] L.L. Yuan, Large eddy simulations of a jet in cross¯ow.
+PhD dissertation, Stanford University 1997.
+[12] S.V. Patankar, D.K. Basu, S.A. Alpay, in: Prediction of
+the three-dimensional velocity ®eld of a de¯ected turbulent jet, Transactions of the ASME, Journal of Fluid
+Engineering, 1977, pp. 758±762.
+[13] R.W. Claus, S.P. Vanka, Multigrid calculations of a jet
+in cross¯ow, Journal of Propulsion and Power 8 (1992)
+425±431.
+[14] S-W. Kim, T.J. Benson, Calculation of a circular jet in
+cross¯ow with a multiple-time-scale turbulence model,
+Journal of Heat and Mass Transfer 35 (1992) 2357±
+2365.
+[15] Y-C. Chao, W-C. Ho, Heterogeneous and non-isothermal mixing of a lateral jet with a swirling cross¯ow,
+Journal of Thermophysics 5 (1990) 394±400.
+[16] G.D. Catalano, K.S. Chang, J.A. Mathis, Investigation
+of turbulent jet impingement in a con®ned cross¯ow,
+AIAA Journal 27 (1989) 1530±1535.
+[17] B.E. Launder, D.B. Spalding, The numerical computation of turbulent ¯ows, Computer Methods in Applied
+Mechanics and Engineering 3 (1974) 269±289.
+[18] J. Zhu, A low diusive and oscillation-free convection
+scheme, Communications in Applied Numerical
+Methods 7 (1991) 225±232.
+[19] S.V. Patankar, D.B. Spalding, A calculation procedure
+for heat, mass and momentum transfer in three-dimensional parabolic ¯ows, International Journal of Heat
+and Mass Transfer 15 (1972) 1778±1806.
+
+

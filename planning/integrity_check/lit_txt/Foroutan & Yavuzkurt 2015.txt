@@ -1,0 +1,1084 @@
+Hosein Foroutan1
+Department of Mechanical
+and Nuclear Engineering,
+The Pennsylvania State University,
+University Park, PA 16802
+e-mail: hosein@psu.edu
+
+Savas Yavuzkurt
+Department of Mechanical
+and Nuclear Engineering,
+The Pennsylvania State University,
+University Park, PA 16802
+e-mail: sqy@psu.edu
+
+Numerical Simulations of the
+Near-Field Region of Film
+Cooling Jets Under High Free
+Stream Turbulence: Application
+of RANS and Hybrid URANS/
+Large Eddy Simulation Models
+This paper investigates the flow field and thermal characteristics in the near-field region
+of film cooling jets through numerical simulations using Reynolds-averaged Navier–
+Stokes (RANS) and hybrid unsteady RANS (URANS)/large eddy simulation (LES) models.
+Detailed simulations of flow and thermal fields of a single-row of film cooling cylindrical
+holes with 30 deg inline injection on a flat plate are obtained for low (M ¼ 0.5) and high
+(M ¼ 1.5) blowing ratios under high free stream turbulence (FST) (10%). The realizable
+k-e model is used within the RANS framework and a realizable k-e-based detached eddy
+simulation (DES) is used as a hybrid URANS/LES model. Both models are used together
+with the two-layer zonal model for near-wall simulations. Steady and time-averaged
+unsteady film cooling effectiveness obtained using these models are compared with available experimental data. It is shown that hybrid URANS/LES models (DES in the present
+paper) predict more mixing both in the wall-normal and spanwise directions compared to
+RANS models, while unsteady asymmetric vortical structures of the flow can also be captured. The turbulent heat flux components predicted by the DES model are higher than
+those obtained by the RANS simulations, resulting in enhanced turbulent heat transfer
+between the jet and mainstream, and consequently better predictions of the effectiveness.
+Nevertheless, there still exist some discrepancies between numerical results and
+experimental data. Furthermore, the unsteady physics of jet and crossflow interactions
+and the jet lift-off under high FST is studied using the present DES results.
+[DOI: 10.1115/1.4028646]
+Keywords: film cooling, unsteady simulation, turbulence modeling, high free stream
+turbulence, detached eddy simulation
+
+Introduction
+High turbine inlet temperatures are required to obtain high efficiency in advanced gas turbines. Therefore, it is typical to have
+turbine inlet temperatures as high as 1400  C [1]. However,
+enhancing the thermal performance of gas turbines by increasing
+the turbine inlet temperature may cause irreparable damage to the
+blades. Therefore, a reasonable lifetime of turbine blades can only
+be achieved by an efficient surface cooling mechanism such as
+film cooling. In film cooling, a secondary fluid (coolant) is
+injected through several holes on a surface, which forms an air
+film with lower temperature between the surface and hot mainstream, and protects the surface from overheating. The fullcoverage film cooling [2] incorporates several rows of holes over
+the entire surface, resulting in not only more uniform heat transfer
+rates on the surface but also protection of the whole surface which
+is desirable [3]. This, however, gives rise to the importance of the
+study of the near-field region in the film cooling since in the fullcoverage film cooling, which is more widely used nowadays, the
+whole surface is in the near-field of the cooling jets.
+1
+Corresponding author.
+Contributed by the Heat Transfer Division of ASME for publication in the
+JOURNAL OF HEAT TRANSFER. Manuscript received March 3, 2014; final manuscript
+received September 18, 2014; published online November 5, 2014. Assoc. Editor:
+Danesh K. Tafti.
+
+Journal of Heat Transfer
+
+Making significant advances in the cooling technology requires
+a fundamental understanding of the physical mechanisms
+involved in film cooling flow fields. The low cost and availability
+of a detailed set of data, relative to experimental measurements,
+make computational fluid dynamics (CFD) an important tool for
+film cooling investigations. In addition to the direct application of
+CFD simulations in several stages of the film cooling design, they
+can be used to develop film cooling effectiveness correlations [4]
+which are essential tools for turbine manufacturers. Most previous
+film cooling flow predictions have been carried out employing
+the steady RANS equations with two-equation turbulence
+models [5–9]. Although the RANS simulations were generally
+able to predict the gross flow and heat transfer behavior, they fail
+to correctly describe the anisotropic turbulence associated with
+the jet–crossflow interactions. Therefore, as one of their known
+deficiencies, RANS simulations underpredict the lateral spreading
+and mixing of the coolant jet [10]. Furthermore, steady RANS
+simulations are unable to capture unsteady phenomena associated
+with mixing of the jet and the crossflow in film cooling. Experimental studies [11] show that the film cooling flow field is highly
+unsteady and complex with secondary flows and various types of
+vortical structures which dominate the mixing process in the nearfield region. Therefore, unsteady simulations are necessary in
+order to properly capture inherently unsteady features of the film
+cooling flow.
+
+C 2015 by ASME
+Copyright V
+
+JANUARY 2015, Vol. 137 / 011701-1
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+In the unsteady simulation framework, LES, which directly
+resolves the more influential, energy carrying eddies and models
+only the small (subgrid) scales, has been widely used. Tyagi and
+Acharya [12] performed LES of film cooling flow from inclined
+cylindrical jets. They were able to identify various vortical structures, i.e., counter-rotating vortex pair (CRVP), roller vortices,
+and upright wake vortices, within the film cooling flow field and
+present them in terms of basic hairpin coherent structures. The
+time-averaged results obtained from their LES show good agreement with experimental data, although a few discrepancies were
+seen at stations farther downstream. LES of film cooling flow was
+carried out by Peet and Lele [13] by including the supply plenum
+in the computational domain. Unsteady flow above the test surface, as well as inside the plenum and the film hole was investigated. The laterally averaged film cooling effectiveness was slightly
+overpredicted, while good agreement for the centerline effectiveness
+was obtained for the blowing ratio of 0.5. Johnson and Kapat [14]
+used LES with dynamic Smagorinsky subgrid scale model for simulation of film cooling flow and heat transfer. Their results showed
+that LES predicts the development and mixing of the jet well, except
+in areas close to the injection hole and near the wall. The initial mixing of the coolant and the crossflow was underpredicted by 30–50%
+right after the hole. Furthermore, the coolant coverage was underpredicted near the wall even further downstream. They argued that
+under-resolution of the near-wall and near-field mixing layers or failure of the simplistic Smagorinsky subgrid model result in underestimation of the mixing. In fact, the near-wall difficulty is well known
+in the context of LES, which is mainly due to the anisotropy of all
+scales (even the small ones) near the wall (more details are given in
+the Hybrid URANS/LES Modeling section).
+An alternative solution is to apply hybrid URANS/LES models.
+They are intended to combine the advantages of LES and URANS
+models. However, comparing to LES, there are considerably
+fewer studies attempting on investigating unsteady features of the
+film cooling flow using hybrid URANS/LES models. DES is the
+most commonly used hybrid URANS/LES model. The first
+attempt on simulation of film cooling flow with DES was reported
+by Roy et al. [15] who applied a Spalart–Allmaras based DES
+[16] model to a film-cooled flat plate with blowing ratio of unity.
+It was shown that DES greatly enhances the realistic description
+of the dynamic anisotropic mixing processes comparing to RANS
+simulations. However, DES predictions of the laterally averaged
+film cooling effectiveness showed no more accuracy than that of
+the RANS model, which were partly attributed to forcing a symmetry boundary condition at the hole centerline inhibiting the
+growth of three-dimensional asymmetric instabilities. Kim and
+Hassan [17] performed unsteady simulations of flat plate film
+cooling using URANS, LES, and DES models. They showed that
+results of the URANS simulations become almost the same as
+those of the steady RANS simulations, while no unsteady vortical
+structure can be captured. LES and DES results, on the other
+hand, showed the coherent vortical structures of the film cooling
+flow field. Both LES and DES models, however, underpredicted
+the time-averaged film cooling effectiveness in the near-field
+region, and overpredicted it far downstream.
+This paper investigates the flow field and heat transfer in film
+cooling with a single-row of cylindrical holes (30 deg inline injection) on a flat plate applying RANS and hybrid URANS/LES models. Some of the distinctive features of the present simulations are:
+(1) considering a test case with high FST, closer to actual conditions of gas turbines
+(2) applying time-dependent, perturbed inlet boundary conditions in order to take the effects of inlet turbulent fluctuations into account
+(3) considering both low and high blowing ratios
+
+Hybrid URANS/LES Modeling
+In the LES approach, the large, energy carrying, dynamically
+important, and flow-dependent eddies are solved directly, leaving
+
+only smallest scale of turbulence with very low energy and supposedly universal behavior (assumed isotropic) to be modeled.
+The application of LES has been particularly successful in nonequilibrium flows in free shear layers, and in massively separated
+flows in which the accurate simulation of regions near the wall is
+not of primary importance [18]. However, one of the major
+obstacles to the use of LES in complex industrial flows, such as
+film cooling, is the modeling of the near-wall region [19]. The dynamics of the flow near the wall are strongly anisotropic even at
+small scales and turbulence production in this region is associated
+with an upscale energy cascade (energy transfer from smaller
+eddies near the wall, where turbulence production is maximum, to
+larger eddies away from the wall) that is largely dominant over
+the commonly assumed downscale energy cascade (energy transfer from larger to smaller eddies which eventually results in dissipation of the turbulent kinetic energy (TKE)), presenting
+elsewhere. Also, the large eddies that must be captured on the
+computational grid to perform an accurate LES shrink in size and
+are not isotropic as one approaches the wall, leading to excessive
+computational costs [18]. In fact, the small eddies are not isotropic
+near a wall either. Current LES modeling approaches require that
+either the near-wall region be adequately resolved (using a direct
+numerical simulation (DNS)-like grid near the wall which makes
+it inapplicable for industrial flows), or that an LES wall-model
+(e.g., a two-layer model [20] or a dynamic wall model [21]) be
+used, which to date has not provided accurate results in relatively
+complex flows such as a nonequilibrium high Reynolds number
+boundary layer [22] and an airfoil near stall condition [23]. Contrary to the LES, the weakness in the RANS simulations is that
+the resolved large scale unsteady motions are often damped out by
+the turbulence model. The near-wall modeling, on the other hand,
+is often quite accurate since all these models are developed and
+calibrated for near-wall flows.
+Hybrid URANS/LES methods aim at combining the best of
+RANS and LES turbulence models. In this approach, the URANS
+models are employed in the near-wall region, while LES treatment
+is applied to regions away from the wall. The most common type
+of hybrid URANS/LES models is the DES [16]. The term “DES”
+comes from the fact that this model is meant to resolve the large
+eddies far from any boundary, i.e., “detached eddies,” in an LESlike manner. Implementation of the DES model is very simple. It
+is based on using the same background URANS model with different length scales depending on the local grid resolution. A general definition of the DES length scale, compatible with any
+RANS model can be written as [24]
+lDES ¼ minðlRANS ; lLES Þ
+
+(1)
+
+where lRANS is the RANS length scale explicitly or implicitly
+involved in any RANS model. For example, for the k-e model this
+length scale is defined as lRANS ¼ k3=2 =e, and for the k-x model
+lRANS ¼ k1=2 =ðCl xÞ. lLES ¼ CDES D is the LES length scale, with
+D being the grid length scale defined as D ¼ maxðDx ; Dy ; Dz Þ [25]
+or D ¼ ðDx Dy Dz Þ1=3 [26], and CDES being the empirical model
+constant. As a result of these definitions a wide range of DES versions based on RANS models ranging from one- and two-equation
+linear eddy viscosity models [27] to algebraic Reynolds stress
+models [28] have been developed. In the present study, the realizable k-e-based DES model [29] is used (more details are given in
+the Computational Approach section).
+
+Computational Approach
+Governing Equations and Turbulence Models. In the present
+study, the working fluid is assumed to be incompressible and
+Newtonian with temperature-dependent fluid properties. The governing transport equations are the continuity, momentum, and
+energy equations. Turbulence effects are taken into account using
+the eddy viscosity/diffusivity concept. Then, the constitutive
+
+011701-2 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+closures of turbulent momentum and heat fluxes are obtained
+using the Boussinesq approximation. Based on this, the Reynolds
+stress/turbulent heat flux is related to the local velocity/temperature gradients by an eddy viscosity/diffusivity as follows [30]:
+
+
+@Ui @Uj
+2
+ kdij
+þ
+(2)
+ ui uj ¼ t
+3
+@xj
+@xi
+ ui h ¼
+
+t @T
+Prt @xi
+
+(3)
+
+In this study, the turbulence scalar quantities (TKE k, and its
+dissipation rate e) used to calculate t are determined by the realizable k-e model [31] in the RANS framework. The realizable k-ebased DES [29] is used within the hybrid URANS/LES framework. Therefore, the terms “hybrid URANS/LES” and DES are
+used interchangeably in this paper. The used DES model is similar
+to the realizable k-e model, with the exception of the dissipation
+term in the k transport equation
+
+ 
+
+
+@k
+@k
+@
+t @k
+@Ui @Uj @Ui
+þ t
+þ Ui
+¼
+þ
+þ
+ eDES
+@t
+@xi @xi
+rk @xi
+@xj
+@xi @xj
+(4)
+The dissipation term in Eq. (4), eDES , originally being e in the realizable k-e RANS model, is calculated as [29]
+eDES ¼
+
+k3=2
+lDES
+
+(5)
+
+where lDES is given by Eq. (1) with lRANS ¼ k3=2 =e and
+lLES ¼ CDES D. In this version CDES has the value of 0.61 and D is
+defined as D ¼ maxðDx ; Dy ; Dz Þ [29]. In the original DES model
+[16], the constant CDES is calibrated to 0.65 by means of isotropic
+turbulence. Later, lower values have been used presumably to
+compensate for numerical diffusion [32]. Nevertheless, the DES
+results are found to be not very sensitive to it [32].
+In the DES formulation, a reduced length scale, resulting from
+Eq. (1), increases the dissipation of the TKE (based on Eq. (5))
+and hence yields a reduced eddy viscosity and consequently a
+reduced “modeled” Reynolds stress. It can be seen that for the
+case of lDES ¼ lRANS (lLES > lRANS ), the original dissipation term
+(e) is retrieved.
+All models are used with the two-layer zonal model [33] for
+near-wall treatments. In this model, the flow field is completely
+calculated all the way to the viscous sublayer (similar to the low
+Reynolds number models). In the viscosity-affected near-wall
+region (the “layer” close to the wall), the momentum and TKE
+transport equations are solved, however, the turbulent viscosity t
+is obtained by an algebraic equation [33]. The demarcation of the
+two layers
+pﬃﬃﬃ is determined by the turbulent Reynolds number
+Rey ¼ y k=, where y is the wall-normal distance and k is the
+TKE. The viscosity-affected inner layer is defined as the region
+where Rey < 200 [33].
+Test Case Description. The majority of the previous experimental [34,35] and numerical [5–7,12–15,17] studies on the film
+cooling flow have been performed under low (1%) FST. However, the flow in a gas turbine engine typically has FST on the
+order of 10–20% in the regions where film cooling is employed,
+and turbulence in the free stream is highly anisotropic. FST introduces additional length scales, compounding an already complex
+problem. It is shown that correctly predicting flows under high
+FST is a challenge even in relatively simple geometries [36].
+Therefore, a test case with more realistic level of FST, namely a
+turbulence intensity of 10% at cooling holes, is chosen for this
+study. It is worthy to mention here that there are very few studies
+in the literature where enough information is supplied for a good
+simulation, especially under high FST.
+Journal of Heat Transfer
+
+The three-dimensional test case for the present study is chosen
+according to the experiments of Mayhew et al. [37], which has
+been numerically investigated by Yavuzkurt and Hassan [8] and
+Yavuzkurt and Habte [9]. A schematic view of the test setup is
+shown in Fig. 1. It consists of a single-row of three jet holes on a
+flat surface, which forms the top surface of the test section, with a
+30 deg inline injection angle. The diameter of the film cooling
+hole is D ¼ 12.5 mm, and holes have a length-to-diameter ratio of
+4.6 and a pitch-to-diameter ratio of 3. Experiments were performed in a wind tunnel with a free stream flow velocity and temperature of 25 m/s and 298 K, respectively. The FST intensity was
+10% at the upstream edge of the film cooling holes. The “coolant”
+fluid which is actually heated air in these experiments was
+injected from a supply plenum as shown in Fig. 1. Experimental
+measurements of the film cooling adiabatic effectiveness g were
+documented by Mayhew et al. [37] for three blowing ratios of 0.5,
+1.0, and 1.5 with injection jet temperatures of 323 K (typical) and
+307 K (only for the case of M ¼ 0.5).
+Geometry and Computational Grid. The computational domain, shown in Figs. 1 and 2, includes the main test section, the
+jet hole, and the plenum. The main test section is extended as
+32D  10D  3D in the x, y, and z directions, respectively. In the
+streamwise direction, the domain extends from the inflow plane
+located one diameter upstream of the leading edge of the hole to
+outflow plane located 29 diameters downstream of the trailing
+edge of the hole. In the spanwise direction, the domain extends
+from one midpitch plane to another, containing a full injection
+hole. It is important to include one full hole within the computational domain (rather than considering the half hole only with
+symmetric assumption at the hole centerline) in order to remove
+the symmetric assumption and accurately predicting lateral
+
+Fig. 1 Schematic view of the test setup in experimental study
+of Mayhew et al. [37], also showing the computational domain
+in this study
+
+JANUARY 2015, Vol. 137 / 011701-3
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Boundary Conditions and Numerical Methodology. The velocity distributions were reported by Mayhew et al. [37] 12D
+
+upstream of the test section. In order to save computational time,
+a separate test case of turbulent boundary layer starting from that
+section (with known inlet conditions from Ref. [37]) is simulated
+first. Then, the profiles of the mean velocity components and turbulence quantities are extracted on a section 11D downstream (the
+location associated with the main domain inlet), and implemented
+as inlet boundary conditions for the main simulations. This reduction in upstream length which significantly decreases the required
+time and computational resources is investigated by Johnson et al.
+[38], and is shown to have minimal effect on the results.
+In practice, the cooling process is strongly influenced by turbulent fluctuations in the mainstream which become more important
+under high FST. Ziefle and Kleiser [39] compared two cases of
+film cooling flow simulations, with and without including the
+effect of crossflow turbulence, and concluded that unsteady inflow
+fluctuations yield a more realistic reproduction of the flow structure and mixing behavior. Considering the higher level of FST in
+the present case compared to the case investigated in Ref. [39], it
+is important to include the effect of unsteady turbulent fluctuations in the mainstream. In this study, the influence of inflow turbulent fluctuations is taken into account by applying a perturbed
+inlet boundary condition in unsteady simulations. A practical
+approach to obtain perturbed inlet condition is to superimpose random noise perturbations on the mean velocity profiles. Imposing
+fluctuations as close as possible to those present in the real flow is
+crucial. Unphysical randomness will be damped rapidly, hence inhibiting the purpose of the method. To generate a time-dependent,
+perturbed inlet condition, a random 2D vortex method developed
+by Mathey et al. [40] is used in this study. In this method, a perturbation is added to the mean velocity profiles via a fluctuating vorticity field. This vorticity field is 2D in the plane normal to the
+mean flow direction. In each time step, the vortex positions are
+given randomly at the inlet plane. The vortices are then given a
+random rotation sense such that the total TKE of vortices becomes
+the same as the mean value specified by the inlet TKE profile.
+These vortices then induce a fluctuating velocity based on the
+Biot–Savart law. The use of this method requires the specification
+of the mean TKE and dissipation rate profiles at the inlet of the
+computational domain, which are available in the present case.
+The accuracy of this method has been investigated using several
+test cases [40,41].
+Figure 4 shows the wall-normal distributions of the turbulence
+intensity just upstream of the cooling hole, i.e., at the streamwise
+location x/D ¼ 2. The turbulence intensity is calculated as
+rﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+
+1 2
+u þ v2 þ w 2
+3
+(6)
+Tu ¼
+U
+
+Fig. 3 Close-up of the midplane view of the grid near the injection region
+
+Fig. 4 Wall-normal distributions of the turbulence intensity
+just upstream of the cooling hole (x/D 5 22)
+
+Fig. 2 Schematic lateral and top view of the computational
+domain
+
+spreading of the jet, as well as unsteady three-dimensional flow
+structures [15,17].
+A detailed grid sensitivity analysis is carried out using several
+grid configurations and the optimized configuration is chosen for
+the numerical simulations. In steady simulations, increasing number of cells from the optimized grid by about 50% results in less
+than 3% change in predictions of film cooling effectiveness. Furthermore, attention is paid to make sure that this grid is also
+within the range of the guidelines for DES grids [32]. In general,
+in hybrid URANS/LES simulations, more cells expectedly may
+lead to a better solution; however, the required computing
+resource and time significantly increases. The final computational
+grid is fully structured and consists of 1,427,640 hexahedral cells.
+The cells are arranged in such a way that they are aligned with the
+anticipated flow direction to reduce numerical diffusion. This will
+greatly reduce computation time and prevent solution instabilities.
+A close-up of the midplane view of the grid in the near-field
+region is depicted in Fig. 3. The grid is refined in areas of large
+gradients. Since turbulence models utilized in this study are used
+with two-layer zonal model for near-wall treatments, it is important that the yþ values of the grid points closest to the wall be of
+the order of unity (similar to the low Reynolds number models).
+Here, the grid generated is fine enough to reach yþ  0.1 in the
+wall adjacent cells.
+
+011701-4 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+where u, v, and w are the resolved root-mean-square (rms) velocities obtained from the DES simulations and U is the mean velocity magnitude. As expected, turbulence intensity has a peak near
+the wall due to high velocity gradients and hence turbulence production, and then decreases to the free stream value away from
+the wall. It can be seen that the turbulence intensity of 10% is
+recovered in the free stream, which confirms the adequacy of the
+vortex method in generating a perturbed inlet condition.
+The plenum inlet velocity is varied so as to impose the required
+blowing ratio M, and main free stream and plenum inlet temperatures are set according to Mayhew et al. [37]. The no-slip and adiabatic conditions are imposed on the walls (i.e., film-cooled
+surface, jet hole, and plenum walls) and zero gradient conditions
+are used at the outflow boundary. The computational extent in the
+y direction is far enough (10D) from the near-field region such
+that a slip condition with zero normal gradients could be applied
+on the upper boundary with confidence. A periodic boundary condition is applied on the midpitch planes located at z/D ¼ 61.5,
+since it is stated in the experimental study [37] that the flow has
+an equal distribution through all holes.
+Simulations are performed for low (M ¼ 0.5) and high
+(M ¼ 1.5) blowing ratios using both RANS and hybrid URANS/
+LES models in ANSYS-FLUENT 14.0 [29]. The steady RANS
+simulations are terminated when two criteria are met simultaneously. First, the solution residuals should drop at least four orders
+of magnitude. As the second criterion, the mass-weighted average
+temperature (the mass-weighted average of a quantity on a surface
+is computed by dividing the surface integral of that quantity multiplied by the surface mass flux by the integral of the surface mass
+flux) is monitored in the y–z plane at the streamwise position
+x/D ¼ 10. When this average temperature remains constant (less
+than 0.1% change) by increasing iterations, the steady solution is
+considered to be converged. In the URANS/LES simulations, the
+physical time step size is taken as 105 s. This time step is used to
+ensure that the courant number (CFL number) is below unity in
+all simulations. The maximum CFL number is found to be approximately 0.75 in the present unsteady simulations. The convergence
+criterion of the residuals for each time step is set to three orders of
+magnitude drop or maximum 30 subiterations. Unsteady simulations are carried out for about 15 through-flow time (the time
+requires by the mean flow to pass through the domain once), corresponding to 25,000 time-steps. Each time-step takes about 48 s
+on an eight-processor LINUX cluster.
+
+Results and Discussion
+Low Blowing Ratio, M 5 0.5. The contours of steady, timeaveraged, and instantaneous dimensionless temperature, defined
+as
+H¼
+
+T  T1
+Tj  T1
+
+(7)
+
+are shown at the midplane (z/D ¼ 0) in Fig. 5. In Eq. (7), T is the
+local static temperature, and Tj and T1 are the jet and the mainstream temperatures, respectively. At the wall, with adiabatic
+boundary condition, the dimensionless temperature, defined in Eq.
+(7), becomes the film cooling adiabatic effectiveness which is [37]
+g¼
+
+Taw  T1
+Tj  T1
+
+(8)
+
+In Fig. 5, steady results are obtained using the realizable k-e
+model and instantaneous and time-averaged results are obtained
+from DES simulations. In this study, all time-averaged results are
+computed by temporal averaging of the results of 20,000 timesteps (with time-step size of 105 s) after setting the simulations
+to run for an initial 5000 time-steps (initial transient). A comparison of the steady (Fig. 5(a)) and time-averaged (Fig. 5(b))
+Journal of Heat Transfer
+
+Fig. 5 Contours of (a) steady, (b) time-averaged, and (c) instantaneous dimensionless temperature at the mid-plane for
+M 5 0.5. Steady results are obtained using RANS and timeaveraged and instantaneous results are obtained using DES
+simulations.
+
+contours reveals the differences in the RANS and hybrid URANS/
+LES (DES) results in the center plane. The prominent deviation
+concerns the vertical jet spreading, which is larger for the case
+with DES model. In the RANS simulations (Fig. 5(a)), the jet is in
+contact with the surface resulting in higher effectiveness downstream. The DES results, however, show a jet lift-off from the surface, and, therefore, lower effectiveness in the near-field. For
+example, at x/D ¼ 3 the steady simulations predict an effectiveness of about 0.6 (see Fig. 5(a)), while the time-averaged results
+show a value of about 0.3 (Fig. 5(b)). The hybrid URANS/LES
+simulations with fluctuating inlet conditions predict more mixing
+between the jet and crossflow in vertical direction, which is particularly important in the case of high FST as observed by Mayhew
+et al. [37]. The instantaneous contours (Fig. 5(c)) show highly
+unsteady features resulting from the jet and crossflow interactions,
+captured by the DES simulations. It can be seen that, even for this
+low blowing ratio, the jet may instantly be detached from the surface causing low effectiveness locally and temporarily. This is
+mainly due to high turbulence intensity both near the wall and in
+the free stream (shown in Fig. 4), which mixes the jet with the
+mainstream, as also observed in experiments by Mayhew et al.
+[37] and Bons et al. [42].
+Figure 6 depicts the contours of steady, time-averaged, and instantaneous dimensionless temperature at a spanwise plane
+located at x/D ¼ 1. Also, the distributions of the instantaneous velocity vectors are shown in Fig. 6(c) to help understanding the
+connection between the flow and the thermal field. Results
+JANUARY 2015, Vol. 137 / 011701-5
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+obtained from DES simulations (Fig. 6(c)) clearly show the asymmetry of the jet about the hole centerline (z/D ¼ 0), while, as
+expected, steady simulations give symmetric contours. Comparing
+Figs. 6(a) and 6(b), it is seen that the center of the jet is predicted
+closer to the surface and associated with higher dimensionless
+temperature in steady RANS simulations, while DES simulations
+predict larger spreading of the jet both in vertical and spanwise
+directions. This can also be observed comparing the lateral film
+cooling effectiveness in Fig. 7. Spanwise distributions of the lateral effectiveness is shown in this figure for three streamwise sections, i.e., x/D ¼ 0.1, 1, and 5. It is clearly seen that the DES
+model predicts more lateral mixing of the jet and the crossflow,
+which results in lower values of effectiveness at the center and
+higher values away from the centerline compared to the RANS
+simulations.
+Jet spread is better compared in Fig. 8 where contours of steady
+and time-averaged adiabatic effectiveness are compared with experimental data of Mayhew et al. [37]. The streamwise distance
+that the “cooling air” covers the surface is predicted shorter by
+time-averaged DES results, which is in closer agreement with the
+experimental data. The streamwise extent of g ¼ 0.15, for example,
+is predicted to be at around x/D ¼ 12 (Fig. 8(c)) which is in very
+good agreement with experimental data (Fig. 8(a)), while RANS
+results show an extent of up to x/D ¼ 14 (Fig. 8(b)). This is attributed to the increased level of mixing in DES simulations comparing to RANS models. In order to compare simulation results and
+experimental data more quantitatively, the approximate maximum
+x/D location where contours of a specific value of g (0.25, 0.2,
+0.15, and 0.1) crosses the centerline (z/D ¼ 0) is compared in Table
+1. It can be seen that for all four g values, time-averaged DES
+results predict shorter distance, which is in better agreement with
+experimental data of Mayhew et al. [37]. For example, DES simulations predict the location where contours of g ¼ 0.2 crosses the
+centerline at about nine diameters downstream of the hole, which is
+in very good agreement with data. RANS simulations overpredict
+this distance by two diameters, giving a value of x/D ¼ 11. The
+deviations between RANS and DES simulations decrease, as
+expected, as one moves downstream (see Table 1). It should be
+noted, however, that the lateral spreading of the coolant is overpredicted by DES which requires more investigations. Considering all
+three holes within the computational domain and removing the periodic boundary condition on the midpitch planes is the first step,
+currently being under study by authors.
+Figure 9 illustrates the streamwise variations of centerline film
+cooling effectiveness. Time-averaged DES results are compared
+to steady RANS results as well as experimental data [37]. The
+RANS simulations overpredict the centerline effectiveness in the
+near-field region, which is directly related to the underprediction
+of mixing between the jet and crossflow in this region. The similar
+observation has been made by several previous researchers who
+used RANS models [5,7]; however, the discrepancy level between
+RANS simulations and data is larger here comparing to the previous studies under low FST [5,7,38]. The inadequacy of RANS
+
+models is more obvious in this case with high FST. Applying a
+hybrid URANS/LES model and perturbed crossflow velocity, the
+enhanced level of mixing between the jet and freestream is better
+predicted both in the vertical and spanwise directions and results
+of the centerline effectiveness are improved considerably (40% on
+average) as shown in Fig. 9. Far downstream of the injection hole
+(x/D > 15), where FST is dissipated and the jet is well mixed with
+the crossflow, RANS and DES simulations give similar results
+which are in very close agreement with the experimental data.
+This implies the relative importance of the turbulence closure
+model in simulations of the near-field region. The distributions of
+the spanwise-averaged film cooling effectiveness are shown in
+Fig. 10, where the RANS and the DES results are compared. No
+experimental data are available for the spanwise-averaged effectiveness in Mayhew et al. [37]; however, this figure is included to
+compare simulation results of the two turbulence closure
+approaches. Both models predict a peak value for the spanwiseaveraged effectiveness in the near-field region (around x/D ¼ 5)
+which is associated with maximum overall coverage of the surface. Very near the hole, the DES predicts higher effectiveness
+which is attributed to predicting higher spanwise mixing just
+downstream of the hole. The coolant is predicted to be spread
+more in the spanwise and vertical directions by the DES model,
+resulting in lower effectives values, which is consistent with the
+previous numerical studies in Refs. [15] and [17].
+High Blowing Ratio, M 5 1.5. Figure 11 shows the contours of
+steady, time-averaged, and instantaneous dimensionless temperature at the center plane for high blowing ratio. The hot spot downstream of the jet exit, caused by the jet lift-off and mainstream
+entrainment can be seen in both the instantaneous and the timeaveraged effectiveness distributions (Figs. 11(b) and 11(c)), in contrast to the steady result (Fig. 11(a)) where no clear hot spot is
+seen. Furthermore, highly unsteady, vortical shear layer between
+the jet and mainstream near the leading edge of the hole (located at
+x/D ¼ 2), shown in Fig. 11(c), reveals that the higher-momentum
+coolant fluid tends to exit from the upstream part of the jet hole
+exit. This is due to the separation of the flow from the downstream
+wall of the film-hole and “jetting” effect, as described in Refs. [5]
+and [13], which increases in the case of high blowing ratio.
+To illustrate the jet mixing and lift-off, dimensionless temperature contours at the spanwise plane (x/D ¼ 1) are presented in
+Fig. 12 (together with velocity vectors in Fig. 12(c)). Both
+instantaneous flow field and dimensionless temperature contours
+(Fig. 12(c)) clearly show the asymmetric nature of the jet–crossflow
+interactions. Comparing to the case of low blowing ratio
+(Fig. 6(c)), considerably stronger CRVP are seen in this case
+(Fig. 12(c)). CRVP form due to the roll-up of the shear layers at
+the lateral sides of the jet, and grow in size in the downstream
+direction. These vortices bring the mainstream flow underneath
+the jet by strong recirculating motion which decreases the film
+cooling effectiveness on the wall. The time-averaged contours
+obtained using DES model (Fig. 12(b)) show clearly the
+
+Fig. 6 (a) Steady, (b) time-averaged, and (c) instantaneous dimensionless temperature at a spanwise plane (x/
+D 5 1) for M 5 0.5
+
+011701-6 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 7 Spanwise distributions of the film cooling effectiveness at three streamwise locations (x/D 5 0.1, 1, and 5)
+) and the RANS (- - - -) turbulence closure approaches (M 5 0.5)
+obtained using the DES (
+
+Fig. 9 Film cooling centerline effectiveness for M 5 0.5, comparison of RANS and DES
+
+
+1
+Sij Sij  Xij Xij
+(9)
+2
+Q represents the local balance between shear strain rate and vorticity magnitude and its positive values correspond to regions of the
+flow where rotation dominates the strain. The shear layer or roller
+vortices are clearly seen in Fig. 14. These structures originating from
+the vorticity of the boundary layer exiting the coolant hole represent
+the heads of the various hairpin coherent structures [12]. As shown
+by Tyagi and Acharya [12], hairpin vortical structures are the primary large-scale structure associated with the jet in a crossflow. As
+the roller vortices are convected downstream, they start to break
+down into smaller structures, as shown in Fig. 14.
+Q¼
+
+Fig. 8 Contours of film cooling effectiveness, (a) experimental
+data [37], (b) steady RANS results, and (c) time-averaged DES
+results, M 5 0.5
+
+detachment of the jet from the surface with mainstream flow
+touching the wall. Comparing the lateral distributions of the film
+cooling effectiveness for this case, shown in Fig. 13, with the case of
+low blowing ratio, i.e., Fig. 7, it is seen that the cooling effect is predicted to be in a much narrower range near the centerline by both
+models in the case of high blowing ratio. The dominant phenomenon
+in this case is the jet lift-off, which seems to be not predicted by the
+RANS model, resulting in higher effectiveness near the centerline.
+The instantaneous vortical structures in the film cooling flow are
+displayed in Fig. 14 using the isosurfaces of Q, defined by [43]
+Table 1 Comparison of contour properties for M 5 0.5
+Maximum x/D location
+Contours
+
+Exp. [37]
+
+RANS
+
+DES
+
+g ¼ 0.25
+g ¼ 0.20
+g ¼ 0.15
+g ¼ 0.10
+
+7.5
+9
+12
+17
+
+9
+11
+14
+19.5
+
+6
+9
+12
+18.5
+
+Journal of Heat Transfer
+
+Fig. 10 Film cooling spanwise-averaged effectiveness for
+M 5 0.5, comparison of RANS and DES
+
+JANUARY 2015, Vol. 137 / 011701-7
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Fig. 11 Contours of (a) steady, (b) time-averaged, and (c) instantaneous dimensionless temperature at the midplane for
+M 5 1.5. Steady results are obtained using RANS and timeaveraged and instantaneous results are obtained using DES
+simulations.
+
+In order to compare the ability of RANS and hybrid URAN/
+LES models in turbulent heat transport (velocity–temperature correlations) predictions, turbulent heat flux vector ui h is investigated. Figures 15–17 show the predictions of the streamwise,
+wall-normal, and spanwise distributions of nondimensional turbulent heat flux vector at the hole centerline plane and for different
+streamwise locations, i.e., x/D. RANS results are based on the
+reconstruction of ui h components using Eq. (3), while DES results
+are the combinations of resolved and unresolved parts. As x/D
+increases, the temperature fluctuations and gradients reduce due to
+
+the mixing between the coolant air and the mainstream, thus, the
+turbulent heat flux components decrease.
+Figure 15 displays the distributions of the dimensionless
+streamwise component of turbulent heat flux uh. It has a positive
+sign near the wall and a negative sign in the outer region. This is
+due to the fact that the temperature gradient inside the boundary
+layer in the streamwise direction is negative while it is positive
+outside. (Note the negative sign in Eq. (3) and the fact that in the
+case of Mayhew et al. [37], the jet has a higher temperature than
+the mainstream). The RANS and DES models show relatively
+similar trends for this component. However, the DES model predicts considerably higher values. The wall-normal component of
+the turbulent heat flux vh, as represented in Fig. 16, has a negative
+sign near the wall where the jet is (partially) detached and a positive sign farther away (between the jet core and far-field away
+from the wall). The discrepancy between the RANS and DES predictions is relatively small for this component, confirming the fact
+that RANS simulations are known to be adequate in predicting the
+mixing in the wall-normal direction. The distributions of the spanwise component of the turbulent heat flux wh are illustrated in
+Fig. 17. Again, DES predicts higher levels for this component
+compared to RANS. It can be concluded, in general, that applying
+the hybrid URANS/LES model causes an increase in the predicted
+components of turbulent heat flux, resulting in enhancing the heat
+transfer between the coolant air and mainstream.
+The centerline effectiveness obtained using time-averaged DES
+and steady RANS simulations are plotted in Fig. 18 in comparison
+with experimental data [37]. Obviously, the centerline effectiveness is reduced in comparison with low blowing ratio (Fig. 9) due
+to the jet lift-off and stronger CRVP. The RANS simulations not
+only cannot predict enough mixing between the jet and crossflow
+in spanwise direction, they also fail to capture the jet lift-off phenomenon in this case. This results in overprediction of the centerline effectiveness. Nevertheless, this overprediction remains even
+farther downstream due to the higher momentum within the jet
+core and RANS simulations being unable to model the correct
+momentum transport of a jet in cross flow. The results obtained
+using DES model show improvements in the near-field region due
+to enhanced jet penetration simulations both in spanwise and
+wall-normal directions. However, it seems that the extent of the
+jet lift-off is overpredicted by DES, resulting in an underprediction of g between x/D ¼ 2 and x/D ¼ 6. Farther downstream where
+the jet is predicted to be reattaching to the surface, the centerline
+effectiveness is overpredicted, although the results are improved
+compared to the steady RANS case. The distributions of the
+spanwise-averaged effectiveness for the case of M ¼ 1.5 are illustrated in Fig. 19, showing a distinctly different behavior in comparison to the case of M ¼ 0.5. Here, the effectiveness is low
+immediately behind the hole and increases toward downstream of
+the hole. Again, no experimental data is available for this parameter in Ref. [37]; however, the overall trend of the predictions is
+consistent with observations in experimental studies with high
+blowing ratio [34].
+
+Fig. 12 (a) Steady, (b) time-averaged, and (c) instantaneous dimensionless temperature at a spanwise plane (x/
+D 5 1) for M 5 1.5
+
+011701-8 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 13 Spanwise distributions of the film cooling effectiveness at three streamwise locations (x/D 5 0.1, 1, and 5)
+) and the RANS (- - - -) turbulence closure approaches (M 5 1.5)
+obtained using the DES (
+
+Fig. 14 Details of the vortical structures in the film cooling
+flow for M 5 1.5, (a) side view and (b) top view
+
+Considering the results shown in this paper, it is concluded that
+predictions can be improved by using hybrid URANS/LES models
+in comparison to the RANS simulations. However, there still exist
+discrepancies with the experimental data, which need to be thoroughly investigated. Using the DES model introduces various
+sources of error. One issue to be aware of is the one associated
+with the interfacing the RANS and the LES regions in DES
+model. In the interface region, also called the “gray area” [44], the
+disparity between the scales imposed by the RANS and the
+smaller eddies required by the LES to support the momentum
+transport may result in errors. This error becomes severe in cases
+including both attached and separated boundary layers. In the
+regions immediately after the separation, the LES should be carried out and the majority of the TKE should be resolved. However, this resolved turbulence is not convected from the solution
+of the RANS region. Therefore, when the DES switches to the
+
+Fig. 15 Distributions of the nondimensional streamwise turbulent heat flux at three streamwise locations for
+) simulations
+M 5 1.5, comparison of the RANS (- - - -) and the DES (
+
+Fig. 16 Distributions of the nondimensional wall-normal turbulent heat flux at three streamwise locations for
+) simulations
+M 5 1.5, comparison of the RANS (- - - -) and the DES (
+
+Journal of Heat Transfer
+
+JANUARY 2015, Vol. 137 / 011701-9
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Fig. 17 Distributions of the nondimensional spanwise turbulent heat flux at three streamwise locations for
+) simulations
+M 5 1.5, comparison of the RANS (- - - -) and the DES (
+
+Fig. 20 Distributions of LES and RANS regions in DES computations for (a) M 5 0.5 and (b) M 5 1.5 together with instantaneous dimensionless temperature contours at a spanwise plane
+(x/D 5 5)
+
+Fig. 18 Film cooling centerline effectiveness for M 5 1.5, comparison of RANS and DES
+
+LES mode, the lack of initial resolved turbulence may result in a
+solution in the gray area that is neither RANS nor LES. The extent
+and severity of this problem is highly case-specific. In massively
+separated flows such as bluff body wakes and airfoils at high angle
+of attack, this problem is negligible. However, in film cooling
+applications, where the boundary layer separates from and reattaches to the surface this becomes an important source of error in
+predictions. Figure 20 shows the distributions of LES and RANS
+regions in DES simulations on a spanwise plane located at
+x/D ¼ 5. Contours of the instantaneous dimensionless temperature
+(defined in Eq. (7)) are also shown in this figure. The boundary
+
+between the RANS and the LES solutions is clearly seen.
+As expected, RANS is applied near the wall and LES is carried out
+in the outer region. The region around the switching boundary is
+the gray area which may affect the DES results. The net effect is
+known to be the overestimation of the gradients in the interface
+region [45], which may explain the overprediction of the mixing
+seen in the DES simulations. Another issue associated with the
+DES model is that it does not include a clearly defined subgrid
+scale model when it switches to the LES mode [46]. The model
+returns a Smagorinsky-like model only if a local equilibrium is
+assumed in both the k and e equations, which is unlikely to happen
+in a complex flow such as film cooling which is far from the equilibrium conditions. It has been argued [46] that the basic idea of
+DES (Eq. (1)) should be applied to all turbulence variables and not
+only to the turbulent length scale in the dissipation term of k (as in
+Eq. (4)). Kok et al. [47] proposed a model named Extra LES where
+the length scale modification is applied to both dissipation term of
+k as well as the eddy viscosity expression. Finally, it should be
+noted that the physics of the jet–crossflow interactions is quite
+complex under high blowing ratio and high FST. In this case, the
+high FST entrains some of the coolant that penetrates into the main
+flow and mixes it again with the air near the surface [37]. Part of
+these phenomena occurs near the wall where the hybrid URANS/
+LES model acts as a URANS model. Besides, it has been shown
+that large scale turbulent eddies of the free stream can penetrate to
+within yþ ¼ 15 of the wall [48]. Therefore, the role of the RANS/
+URANS part in the hybrid URANS/LES modeling is quite important in the film cooling predictions, specifically under high FST.
+Hence, also modifications/improvements of RANS models for better prediction of the near-wall region within the hybrid URANS/
+LES framework have future prospects. Studies in all these directions to improve hybrid URANS/LES predictions are continuing.
+
+Conclusions
+Fig. 19 Film cooling spanwise-averaged effectiveness for
+M 5 1.5, comparison of RANS and DES
+
+Numerical simulations and investigations of a film cooling flow
+from 30 deg inclined single-row of cylindrical holes issued on to a
+
+011701-10 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+flat surface are performed using RANS and hybrid URANS/LES
+models. The emphasis is on the evaluations of turbulence closure
+models in predicting the near-field region where the injected jet
+interacts with the main stream. Three main distinctive traits of the
+present simulations are the inclusion of (1) high FST (10% turbulence intensity at cooling holes), (2) fluctuating inlet boundary
+conditions, and (3) low (M ¼ 0.5) and high (M ¼ 1.5) blowing
+ratios. It is shown that under high FST and low blowing ratio,
+RANS simulations underpredict jet and crossflow mixing both in
+vertical and spanwise directions. This results in overprediction of
+centerline effectiveness in the near-field region. Applying hybrid
+URANS/LES models (DES in the present paper), enhances the
+level of mixing, as well as unsteady nonsymmetric features of the
+flow can be captured properly. The contours of adiabatic effectiveness obtained from DES simulations show better agreement
+with those given by experimental measurements, while RANS
+simulations overpredict the length of the jet “footprint” on the
+film-cooled surface by as much as two film-hole diameters. Furthermore, predictions of the centerline effectiveness are improved
+by on average 40% using DES model. The difference between experimental data, time-averaged DES, and steady RANS simulations decreases toward downstream of the plate. The case with
+high blowing ratio exhibits jet lift-off and detachment, and strong
+CRVP, captured by the DES model. The CRVP decrease the film
+cooling effectiveness by bringing the mainstream underneath the
+jet near the wall (entrainment). Utilizing the hybrid URANS/LES
+model causes an increase in the predicted turbulent heat flux. This
+results in enhanced turbulent heat transfer between the coolant
+and mainstream and consequently lowers (corrects) the values of
+centerline film cooling effectiveness. Nevertheless, correct prediction of the near-filed region with high blowing ratio and high FST
+is quite challenging even using hybrid URANS/LES models. Various sources of error associated with the DES model is discussed
+in this paper. Therefore, further investigations of these models in
+film cooling applications are still required and should be considered as future steps for simulations of this type of flows.
+
+Nomenclature
+D¼
+k¼
+l¼
+M¼
+Prt ¼
+Q¼
+T¼
+u, v, w ¼
+ui uj ¼
+ui h, uh, vh, wh ¼
+U¼
+x¼
+y¼
+yþ ¼
+z¼
+
+film cooling hole diameter (12.5 mm)
+turbulent kinetic energy
+length scale
+blowing ratio, qj Uj =q1 U1
+turbulent Prandtl number
+vortex identification criterion, Eq. (9)
+temperature
+RMS velocities
+Reynolds stress
+turbulent heat flux
+mean velocity
+streamwise coordinate
+wall-normal coordinate
+dimensionless wall distance
+spanwise coordinate
+
+Greek Symbols
+dij ¼
+e¼
+g¼
+H¼
+t ¼
+
+Kronecker delta
+dissipation rate of turbulent kinetic energy
+film cooling effectiveness, Eq. (8)
+dimensionless temperature, Eq. (7)
+turbulent viscosity
+
+Subscripts
+1 ¼ free stream
+j ¼ jet
+
+Abbreviations
+CRVP ¼ counter-rotating vortex pair
+DES ¼ detached eddy simulation
+Journal of Heat Transfer
+
+FST ¼
+LES ¼
+RANS ¼
+TKE ¼
+URANS ¼
+
+free stream turbulence
+large eddy simulation
+Reynolds-averaged Navier–Stokes
+turbulent kinetic energy
+unsteady RANS
+
+References
+[1] Logan, E., ed., 2003, Handbook of Turbomachinery, CRC Press, Boca Raton,
+FL, Chap. 4.
+[2] Yavuzkurt, S., Moffat, R. J., and Kays, M. J., 1980, “Full-Coverage FilmCooling, Part 1: Three-Dimensional Measurements of Turbulence Structure,”
+J. Fluid Mech., 101(1), pp. 129–158.
+[3] Cho, H. H., and Goldstein, R. J., 1995, “Heat (Mass) Transfer and Film Cooling
+Effectiveness With Injection Through Discrete Holes – Part I: Within Holes
+and on the Back Surface,” ASME J. Turbomach., 117(3), pp. 440–450.
+[4] Ingram, P., and Yavuzkurt, S., 2013, “Derivation of 2-D Empirical Correlations
+for Film-Cooling Effectiveness and Heat Transfer Augmentation From Spanwise Averaged Data and Correlations,” ASME Paper No. GT2013-95149.
+[5] Walters, D. K., and Leylek, J. H., 2000, “A Detailed Analysis of Film Cooling
+Physics – Part I: Streamwise Injection With Cylindrical Holes,” ASME J.
+Turbomach., 122(1), pp. 102–112.
+[6] Hyams, D. G., and Leylek, J. H., 2000, “A Detailed Analysis of Film Cooling
+Physics – Part III: Streamwise Injection With Shaped Holes,” ASME J.
+Turbomach., 122(1), pp. 122–132.
+[7] Lakehal, D., 2002, “Near-Wall Modeling of Turbulent Convective Heat Transport in Film Cooling of Turbine Blades With the Aid of Direct Numerical Simulation Data,” ASME J. Turbomach., 124(3), pp. 485–498.
+[8] Yavuzkurt, S., and Hassan, J. S., 2007, “Evaluation of Two-Equation Models of
+Turbulence in Predicting Film Cooling Performance Under High Free Stream
+Turbulence,” ASME Paper No. GT2007-27184.
+[9] Yavuzkurt, S., and Habte, M., 2008, “Effect of Computational Grid on Performance of Two-Equation Models of Turbulence for Film Cooling Applications,”
+ASME Paper No. GT2008-50153.
+[10] Hoda, A., and Acharya, S., 2000, “Predictions of a Film Cooling Jet in Crossflow With Different Turbulence Models,” ASME J. Turbomach., 122(3),
+pp. 558–569.
+[11] Fric, T. F., and Roshko, A., 1994, “Vortical Structure in the Wake of a Transverse Jet,” J. Fluid Mech., 279, pp. 1–47.
+[12] Tyagi, M., and Acharya, S., 2003, “Large Eddy Simulation of Film Cooling Flow
+From an Inclined Cylindrical Jet,” ASME J. Turbomach., 125(4), pp. 734–742.
+[13] Peet, Y. V., and Lele, S. K., 2008, “Near Field of Film Cooling Jet Issued Into a
+Flat Plate Boundary Layer: LES Study,” ASME Paper No. GT2008-50420.
+[14] Johnson, P. L., and Kapat, J. S., 2013, “Large-Eddy Simulations of a Cylindrical Film Cooling Hole,” AIAA J. Thermophys. Heat Transfer, 27(2),
+pp. 255–273.
+[15] Roy, S., Kapadia, S., and Heidmann, J. D., 2003, “Film Cooling Analysis Using
+DES Turbulence Model,” ASME Paper No. GT2003-38140.
+[16] Spalart, P., Jou, W. H., Strelets, M., and Allmaras, S., 1997, “Comments on the
+Feasibility of LES for Wings and on the Hybrid RANS/LES Approach,” Advances in DNS/LES, C. Liu, Z. Liu, and L. Sakell, eds., Greyden Press, Columbus,
+OH, pp. 137–148.
+[17] Kim, S. I., and Hassan, I., 2010, “Unsteady Simulations of a Film Cooling Flow
+From an Inclined Cylindrical Jet,” AIAA J. Thermophys. Heat Transfer, 24(1),
+pp. 145–156.
+[18] Menter, F. R., 2012, Best Practice: Scale-Resolving Simulations in ANSYS
+CFD, ANSYS Germany GmbH, pp. 1–70.
+[19] Fr€
+ohlich, J., and von Terzi, D. A., 2008, “Hybrid LES/RANS Methods for the
+Simulation of Turbulent Flows,” Prog. Aerosp. Sci., 44(5), pp. 349–377.
+[20] Balaras, E., Benocci, C., and Piomelli, U., 1996, “Two-Layer Approximate
+Boundary Conditions for Large-Eddy Simulations,” AIAA J., 34(6),
+pp. 1111–1119.
+[21] Wang, M., and Moin, P., 2002, “Dynamic Wall Modeling for Large-Eddy Simulation of Complex Turbulent Flows,” Phys. Fluids, 14(7), pp. 2043–2051.
+[22] Kawai, S., and Larsson, J., 2013, “Dynamic Non-Equilibrium Wall-Modeling
+for Large Eddy Simulation at High Reynolds Numbers,” Phys. Fluids, 25(1), p.
+015105.
+[23] Kawai, S., and Asada, K., 2013, “Wall-Modeled Large-Eddy Simulation of
+High Reynolds Number Flow Around an Airfoil Near Stall Condition,” Comput. Fluids, 85, pp. 105–113.
+[24] Travin, A., Shur, M., Strelets, M., and Spalart, P., 2002, “Physical and Numerical Upgrades in the Detached-Eddy Simulation of Complex Turbulent Flows,”
+Fluid Mech. Appl., 65, pp. 239–254.
+[25] Schmidt, S., and Thiele, F., 2002, “Comparison of Numerical Methods Applied
+to the Flow Over Wall-Mounted Cubes,” Int. J. Heat Fluid Flow, 23(3),
+pp. 330–339.
+[26] Rodi, W., 1997, “Comparison of LES and RANS Calculation of the Flow
+Around Bluff Bodies,” J. Wind Eng. Ind. Aerodyn., 69–71, pp. 55–75.
+[27] Menter, F. R., Kuntz, M., and Langtry, R., 2003, “Ten Years of Experience
+With the SST Turbulence Model,” Turbulence, Heat and Mass Transfer 4, K.
+Hanjalic, Y. Nagano, and M. Tummers, eds., Begell House, Inc., New York,
+pp. 625–632.
+[28] L€
+ubcke, H., Rung, T., and Thiele, F., 2002, “Prediction of the Spreading Mechanisms of 3D Turbulent Wall Jets With Explicit Reynolds-Stress Closures,”
+
+JANUARY 2015, Vol. 137 / 011701-11
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+[29]
+[30]
+[31]
+
+[32]
+[33]
+[34]
+
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+Engineering Turbulence Modeling and Experiments 5, W. Rodi and N. Fueyo,
+eds., Elsevier, Amsterdam, pp. 127–145.
+ANSYS FLUENT 14.0 Theory Guide, 2011.
+Hanjalić, K., 2004, “Closure Models for Incompressible Turbulent Flows,”
+(Lecture Notes at von Karman Institute), p. 75.
+Shih, T. H., Liou, W. W., Shabbir, A., Yang, Z., and Zhu, J., 1995, “A New k-e
+Eddy-Viscosity Model for High Reynolds Number Turbulent Flows-Model Development and Validation,” Comput. Fluids, 24(3), pp. 227–238.
+Spalart, P. R., 2001, “Young-Person’s Guide to Detached-Eddy Simulation
+Grids,” NASA Report No. CR-2001-211032.
+Chen, H. C., and Patel, V. C., 1988, “Near-Wall Turbulence Models for
+Complex Flows Including Separation,” AIAA J., 26(6), pp. 641–648.
+Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991, “Film-Cooling Effectiveness Downstream of a Single Row of Holes With Variable Density Ratio,”
+ASME J. Turbomach., 113(3), pp. 442–449.
+Schmidt, D. L., Sen, B., and Bogard, D. G., 1996, “Film Cooling With Compound Angle Holes: Adiabatic Effectiveness,” ASME J. Turbomach., 118(4),
+pp. 807–813.
+Foroutan, H., and Yavuzkurt, S., 2013, “A Model for Simulation of Turbulent
+Flow With High Free Stream Turbulence Implemented in OpenFOAM,” ASME
+J. Turbomach., 135(3), p. 031022.
+Mayhew, J. E., Baughn, J. W., and Byerley, A. R., 2003, “The Effect of Freestream Turbulence on Film Cooling Adiabatic Effectiveness,” Int. J. Heat Fluid
+Flow, 24(5), pp. 669–679.
+Johnson, P. L., Shyam, V., and Hah, C., 2011, “Reynolds-Averaged NavierStokes Solutions to Flat Plate Film Cooling Scenarios,” NASA Report No.
+2011-217025.
+
+[39] Ziefle, J., and Kleiser, L., 2013, “Numerical Investigation of a Film-Cooling
+Flow Structure: Effect of Crossflow Turbulence,” ASME J. Turbomach.,
+135(4), p. 041001.
+[40] Mathey, F., Cokljat, D., Bertoglio, J. P., and Sergent, E., 2006, “Assessment of
+the Vortex Method for Large Eddy Simulation Inlet Conditions,” Prog. Comput.
+Fluid Dyn., 6(1–3), pp. 58–67.
+[41] Foroutan, H., and Yavuzkurt, S., 2012, “Simulation of Flow in a Simplified
+Draft Tube: Turbulence Closure Considerations,” IOP Conference Series: Earth
+Environ. Sci., Vol. 15, p. 022020.
+[42] Bons, J. P., MacArthur, C. D., and Rivir, R. B., 1994, “The Effect of High Freestream Turbulence on Film Cooling Effectiveness,” ASME J. Turbomach.,
+118(4), pp. 814–825.
+[43] Jeong, J., and Hussain, F., 1995, “On the Identification of a Vortex,” J. Fluid
+Mech., 285, pp. 69–94.
+[44] Shur, M., Spalart, P. R., Strelets, M., and Travin, A., 1999, “Detached-Eddy
+Simulation of an Airfoil at High Angle of Attack,” Engineering Turbulence
+Modeling and Experiments 4, W. Rodi and D. Laurence, eds., Elsevier, Amsterdam, pp. 669–678.
+[45] Piomelli, U., 2010, “Wall-Modeled Large-Eddy Simulations: Present Status and
+Prospects,” Direct and Large-Eddy Simulation VII, Springer, Amsterdam, pp.
+1–10.
+[46] Sagaut, P., Deck, S., and Terracol, M., 2006, “Multiscale and Multiresolution
+Approaches in Turbulence,” Imperial College Press, London.
+[47] Kok, J. C., Dol, H. S., Oskam, B., and van der Ven, H., 2004, “Extra-Large
+Eddy Simulation of Massively Separated Flows,” AIAA Paper No. 2004-264.
+[48] Thole, K., and Bogard, D., 1996, “High Freestream Turbulence Effects on Turbulent Boundary Layers,” ASME J. Fluids Eng., 118(2), pp. 276–284.
+
+011701-12 / Vol. 137, JANUARY 2015
+
+Downloaded From: http://heattransfer.asmedigitalcollection.asme.org/ on 05/17/2015 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+

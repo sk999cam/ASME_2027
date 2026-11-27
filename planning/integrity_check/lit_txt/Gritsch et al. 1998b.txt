@@ -1,0 +1,954 @@
+M. Gritsch
+A. Schuiz
+S. Wittig
+Lehrstuht und Institut fur Thermische
+Stromungsmaschinen,
+Universitat Karlsruhe (T.H.),
+Kaiserstr, 12,
+76128 Karlsruhe, Germany
+
+Discharge Coefficient
+Measurements of Film-Cooling
+Holes With Expanded Exits
+This paper presents the discharge coefficients of three film-cooling hole geometries
+tested over a wide range of flow conditions. The hole geometries include a cylindrical
+hole and two holes with a diffuser-shaped exit portion (i.e., a fan-shaped and a
+laidback fan-shaped hole). The flow conditions considered were the crossflow Mach
+number at the hole entrance side (up to 0.6), the crossflow Mach number at the hole
+exit side (up to 1.2), and the pressure ratio across the hole (up to 2). The results
+show that the discharge coefficient for all geometries tested strongly depends on the
+flow conditions (crossflows at hole inlet and exit, and pressure ratio). The discharge
+coefficient of both expanded holes was found to be higher than of the cylindrical
+hole, particularly at low pressure ratios and with a hole entrance side crossflow
+applied. The effect of the additional layback on the discharge coefficient is negligible.
+
+Introduction
+Correctly sizing film-cooling holes is critical in achieving the
+necessary cooling for gas turbine nozzle guide vanes and rotor
+blades. High blowing rates can result in inefficient use of turbine
+working fluid, as well as reduced cooling effectiveness because
+of jet detachment. Low blowing rates also result in reduced
+cooling effectiveness and blade areas with high thermal loads.
+Discharge coefficients, needed to determine actual film-cooling
+blowing ratios and momentum flux ratios, are dependent on
+hole geometry as well as inlet and exit flow conditions.
+Most of the data that have been presented in the literature
+with regard to discharge coefficients of film-cooling holes have
+been reported by researchers at the University of Nottingham,
+i.e., studies by Hay et al. (1983, 1994a, b), and Hay and Lampard (1995). Based on their results, the discharge coefficient
+scaled best with the total coolant-to-static mainstream pressure
+ratio. They found discharge coefficients to be strongly dependent on internal crossflow conditions with only weak dependence on external crossflow conditions within the range considered. A review of published data on discharge coefficients for
+film-cooling applications was given recently by Hay and Lampard(1998).
+The geometry of the film-cooling holes has received recent
+attention in attempts to optimize the film-cooling parameters
+(e.g., Goldstein et al, 1974; Makki and Jakubowski, 1986;
+Schmidt et al, 1996; Sen et al., 1996). Haller and Camus
+(1984) performed aerodynamic loss measurements on a twodimensional transonic cascade. Holes with a spanwise flare
+angle of 25 deg were found to offer significant improvements in
+film-cooling effectiveness without any additional loss penalty.
+Film-cooling holes with a diffuser-shaped expansion at the exit
+portion of the hole are believed to improve the film-cooling
+performance on a gas turbine blade. The increased cross-sectional area at the hole exit compared to a standard cylindrical
+hole leads to a reduction of the mean velocity and, thus, of
+the momentum flux of the jet exiting the hole. Therefore, the
+penetration of the jet into the mainflow is reduced, resulting in
+an increased cooling efficiency. Furthermore, lateral expansion
+of the hole provides an improved lateral spreading of the jet,
+
+Contributed by the International Gas Turbine Institute and presented at the
+42nd International Gas Turbine and Aeroengine Congress and Exhibition, Orlando, Florida, June 2 - 5 , 1997. Manuscript received at ASME Headquarters
+February 1997. Paper No. 97-GT-165. Associate Technical Editor: H. A. Kidd.
+
+Journal of Turbomachinery
+
+leading to a better coverage of the airfoil in the spanwise direction and a higher spanwise averaged film-cooling efficiency.
+Flowfield measurements performed by Thole et al. (1998)
+showed that jet penetration as well as velocity gradients in
+the mixing region were significantly reduced for holes with
+expanded exits as compared to cylindrical holes at the same
+blowing rate. Peak turbulence levels were found downstream
+of the hole exit for the cylindrical hole and in the hole exit
+plane for the expanded holes. In a companion paper (Gritsch
+et al., 1998), film-cooling effectiveness measurements are presented for the same hole geometries as investigated in the present paper. Both expanded holes show significantly improved
+thermal protection as compared to the cylindrical hole. The
+laidback fan-shaped hole provides a better lateral spreading of
+the film ejected from the hole than the fan-shaped hole, which
+leads to higher laterally averaged film-cooling effectiveness.
+So far, only Hay and Lampard (1995) have reported on discharge coefficients for shaped cooling holes. They investigated
+cylindrical holes with a lateral expansion angle of 12.5 deg
+(flared holes) and holes with an additional layback of 7.5 deg.
+It was found that the discharge coefficient of flared holes is
+higher than for cylindrical holes. The layback did not further
+increase the discharge coefficient. However, they concentrated
+on very moderate mainflow Mach numbers up to 0.3 and did
+not report on any discharge coefficients for a film-cooling hole
+exposed to crossflows at both the hole entrance and exit side.
+This study presents discharge coefficients for three hole geometries tested over a wide range of enginelike flow conditions.
+These comprise external Mach numbers up to 1.2, internal Mach
+numbers up to 0.6, and pressure ratios across the film-cooling
+hole up to 2. The hole geometries chosen for the present study
+are two holes with a cylindrical inlet portion and a diffusershaped exit portion and, for reasons of comparison, a cylindrical
+hole. One of the holes with the diffuser-shaped exit portion is
+additionally expanded in the mainflow direction by a layback.
+Since a wide range of flow conditions is covered by the present
+study, the data can be used either to derive correlations (Gritsch
+et al, 1997) or to validate CFD codes (Giebert et al, 1997).
+
+Experimental Apparatus
+The present investigation was carried out in a continuous flow
+wind tunnel at the Institut filr Thermische Stromungsmaschinen
+(ITS), Karlsruhe. Details of the experimental facility can be
+found in Wittig et al. (1996). The air supply was furnished by a
+high-pressure, high-temperature (HPHT) test facility. The film-
+
+Copyright © 1998 by ASME
+
+JULY 1998, Vol. 120 / 557
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Windows
+
+Coolant supply channel
+(20mm x 60mm)
+
+„,/,,„„.
+»w8
+
+Wlnil
+
+Film-cooling hole
+(D= lOram)
+
+Fig. 1 Film-cooling test section
+
+cooling test rig consists of a primary loop representing the
+external flow and a secondary loop representing the internal
+flow of an airfoil (see Fig. 1).
+Primary Loop. The air supplied by the HPHT test facility
+passes a metering orifice and flow straighteners before it enters
+the test section through a LAVAL nozzle. The test section is
+90 mm in width and 41 mm in height. For supersonic flow
+conditions the height is reduced to 32 mm. Using an adjustable
+upper wall, a zero pressure gradient in streamwise direction is
+set in the test section.
+Preliminary tests were performed to evaluate the effect of
+the coolant-to-mainflow temperature ratio on the discharge coefficient. No measurable effect of temperature ratio on discharge
+coefficient was found in the range of 0.54 < T,cIT,m < 1 as
+long as the external Mach number is matched. Therefore, the
+reported measurements were conducted with a mainflow temperature being equal to the coolant flow temperature of about
+290 K.
+Secondary Loop. Flow for the secondary loop is also provided by the HPHT test facility. However, the total pressure in
+the secondary loop can be set independently from the primary
+loop. The flow in the secondary loop is driven by an additional
+blower. Thus, the Mach number can be set by adjusting the
+volume flow rate circulating in the secondary loop. The crosssectional area at the film-cooling hole is 60 mm in width and
+20 mm in height. Due to a "closed loop" design of the second-
+
+Fig. 2
+
+ary loop, the flow rate through the film-cooling hole is obtained
+directly, independently of the crossflow rate as presented by
+Wittig et al. (1996). Therefore, very accurate measurements of
+the flow rate through the film-cooling hole, which are imperative
+for an exact determination of the discharge coefficient, were
+achieved.
+For all tests presented in the present paper, primary and secondary loop were parallel to each other, representing a flow
+condition usually found in the midportion of nozzle guide vanes.
+Film-Cooling Hole Geometries Tested. All tests were carried out using single scaled-up film-cooling holes with an inclination angle of a = 30 deg. In total, three hole geometries (one
+cylindrical hole and two expanded holes) were tested (see Fig.
+2). All holes were sharp edged and the internal surfaces were
+aerodynamically smooth. The diameter of the cylindrical hole
+and the diameter of the cylindrical inlet section of the expanded
+holes was 10 mm. The length-to-diameter ratio L/D was 6 for
+all hole geometries. The lateral expansion angle of both expanded holes was 14 deg, resulting in a hole width of 30 mm
+at the hole exit. The forward expansion angle of the laidback
+fan-shaped hole was 15 deg, resulting in a hole length of 40
+mm at the hole exit. The exit-to-entry area ratio of the fanshaped and laidback fan-shaped hole were 3.0 and 3.1, respectively (areas perpendicular to hole axis).
+The hole geometries were decided in cooperation with the
+industrial partners involved in the present research program.
+The chosen geometry of the expanded holes is in agreement
+with the suggestion of Hay and Lampard (1995) that the length
+of the cylindrical section at the hole entrance of the expanded
+holes should be at least two hole diameters. This is to allow
+the flow to reattach before entering the expanded section and,
+therefore, to improve the diffusion of the flow. A large expansion angle would lead to an improved lateral coverage of the
+ejected film, but flow separation in the diffuser section of the
+hole could occur. Therefore, the chosen expansion angle must
+be seen as a compromise.
+Each hole geometry was tested for a matrix of three internal
+Mach numbers (Ma c = 0.0, 0.3, 0.6) and four external Mach
+numbers (Mam = 0.0, 0.3, 0.6, 1.2) over a range of pressure
+ratios 1 < p,clpm < 2. Moreover, each hole geometry was tested
+
+Cylindrical, fan-shaped, and laidback fan-shaped film-cooling hole geometries
+
+Nomenclature
+CD — discharge coefficient
+D = film-cooling hole diameter
+L = film-cooling hole length measured
+along the centerline axis
+Ma =Mach number
+m = mass flow rate through the filmcooling hole
+558 / Vol. 120, JULY 1998
+
+p = static pressure
+p, = total pressure
+R = gas constant
+ReD = Reynolds number based on filmcooling hole diameter
+T, = total temperature
+Tu = turbulence intensity
+
+a = angle of hole inclination
+K - ratio of specific heats
+Subscripts
+c = internal flow conditions
+m = external flow conditions
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Table 1
+
+Operating conditions of the film-cooling test rig
+
+Internal pressure
+Internal Temperature
+Pressure ratio
+Temperature ratio
+Internal Mach number
+External Mach number
+Internal Reynolds number
+External Reynolds number
+Internal turbulence intensity
+External turbulence intensity
+
+Pic
+
+T«c
+P«c/Pm
+Ttc/Tjm
+
+Ma c
+Ma m
+Rerjc
+Ren™
+Tu c
+Tu m
+
+i
+
+cyllndr cat hqle
+0.B Ma^sO 0
+
+up to 2 Bars
+290 K
+1 ...2
+1
+0 ...0.6
+0 ...1.2
+up to 2.5-105
+up to 2.1-105
+1%
+<1.5 %
+
+l
+
+. . . . .
+
+Z* F = # — " j ^ - - ^ ^ ^
+
+0.7
+
+/
+ff
+
+0.6
+
+CO
+
+u
+^
+8
+
+ry
+
+0.5
+
+0)
+J3>
+
+| °- 4
+T3
+
+... ,
+
+Mam=0.0 —a—
+Ma„=0.3 —e—
+Mam=0.6 -*—
+Ma =1.2 —•—
+
+0.3
+
+at four pressure ratios: p,c/pm = 1.1, 1.25, 1.4, 1.6 over a range
+of internal Mach number Mac = 0.0 to 0.6 with no external
+crossflow applied (Mam = 0.0). The operating conditions considered for the present investigation are shown in Table 1.
+
+0.2
+
+1
+
+Fig. 3
+
+i
+
+'
+
+1.2
+
+1.4
+
+1.6
+1.8
+Pressure ratio, ple/pm
+
+2
+
+2.2
+
+Discharge coefficient C D of the cylindrical hole at M a c = 0.0
+
+Definition of the Discharge Coefficient
+The discharge coefficient CD is the ratio of actual mass flow
+rate to ideal mass flow rate through the film-cooling hole. The
+ideal mass flow rate is calculated assuming an isentropic onedimensional expansion from the total pressure in the secondary
+loop ptc to the static pressure in the primary loop pm. This leads
+to
+CD = 2K
+
+Ptc
+Ptc
+
+(K - l)RT,c
+
+•D2
+
+4
+
+For the fan-shaped and the laidback fan-shaped holes, the discharge coefficient was based on the ideal mass flow rate through
+a cylindrical hole having the same diameter as the inlet section
+of the shaped holes. Thus, the discharge coefficient of the expanded holes can be directly compared to those of the cylindrical holes. This makes it more convenient to evaluate the effect
+of contouring the hole, but is a deviation from the classic definition of the discharge coefficient.
+The total pressure and temperature in the coolant channel
+were measured 1D upstream of the cooling hole inlet with a
+probe located 2D off channel centerline. The static pressure in
+the mainstream was measured at the side wall 10D upstream
+of the hole exit for the subsonic flow case and at the top wall
+opposite the hole exit for the supersonic flow case.
+
+1.4
+1.6
+pressure ratio, plc/pm
+Fig. 4
+
+0.9
+
+Discharge coefficient C 0 of the cylindrical hole at M a c = 0.3
+
+cylindrical hole
+Ma„=0.6
+
+0.8
+
+" *
+
+:
+
+0.7
+
+ff
+
+Estimates of Accuracy
+Uncertainties were estimated following the procedure given
+by Kline and McClintock (1953). The uncertainty in the values
+of CD primarily resulted from the uncertainty in measuring the
+actual flow rate through the film-cooling hole and the uncertainty in determing the ideal flow rate. Due to the fact that the
+secondary loop was designed as a closed loop, the actual flow
+rate could be measured for all flow cases directly using a standard orifice leading to an uncertainty of 2.5 percent except for
+very low mass flow rates. The uncertainty in determining the
+ideal flow rate was calculated to be much less than 2 percent,
+except for very low pressure ratios. Overall, the uncertainty in
+the values of CD was found to be less than 2 percent in most
+of the cases considered, increasing for low pressure ratios and
+mass flow rates up to 4.5 percent.
+
+Results and Discussion
+Cylindrical Hole. Although discharge coefficients of a 30
+deg inclined cylindrical hole have been reported before by others, they will be presented here for two reasons. First, the studies
+conducted before only document a limited range of operational
+Journal of Turbomachinery
+
+•
+
+! / _
+
+i
+
+Ma_=0.3 Ma_=0.6 Mam=L2 •
+
+L,
+
+1
+
+Fig. 5
+
+1.2
+
+1.4
+1.6
+pressure ratio, p)0/pm
+
+1.8
+
+2
+
+Discharge coefficient C D of the cylindrical hole at Ma„ = 0.6
+
+conditions, particularly when the crossflow Mach numbers were
+quite moderate. Therefore, in the present study discharge coefficients of a 30 deg inclined cylindrical hole were measured
+over a wide range of crossflow Mach numbers. Second, it will
+serve as a baseline case to compare the discharge coefficients
+of the expanded holes to.
+For zero external and internal crossflow only a weak dependence of the discharge coefficient CD on the pressure ratio
+JULY 1998, Vol. 120 / 559
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+fanshaped hole
+Mac=0.0
+
+"r~
+
+-i
+
+j
+
+0)
+
+-
+
+0.75 •;
+
+is'
+
+/
+
+°- 4 "
+
+•
+
+f
+
+Mam=0.3 —e—
+Mam=0.6 —*—
+Ma:=1.2-«--
+
+••
+
+0.2
+0.3
+0.4
+internal crossflow Mach number, Ma-
+
+Fig. 6 Discharge coefficient C D of the cylindrical hole: effect of internal
+crossflow Mach number Ma„
+
+PtJPm was found (Fig. 3). There is a slight increase of the
+discharge coefficient CD of about 10 percent when the pressure
+ratio p,Jpm is raised from 1 to 2. This effect, which doesn't
+occur for incompressible flows (Lichtarowicz et al., 1965) is
+believed to be due to a pressure ratio effect on the cross-sectional area of the vena contracta formed at the hole inlet and
+was reported by others before (e.g., Jackson, 1963; Hay et al.,
+1994b).
+Figures 3-5 show the effect of external crossflow Mach number. While the internal crossflow Mach number was kept constant four different external Mach numbers (Mara = 0, 0.3, 0.6,
+and 1.2) were tested over a range of pressure ratios 1 < p,clpm
+< 2. The effect of external crossflow is to decrease the discharge
+coefficient CD. This effect is more pronounced at low pressure
+ratios and high external crossflow Mach numbers Mam. At high
+pressure ratios and low external crossflow Mach numbers, however, the discharge coefficient is almost not affected by the
+external crossflow. This effect is independent of the internal
+crossflow Mach number. Previous studies have reported only a
+negligible effect of the external crossflow Mach number since
+they investigated only a very limited range of external crossflow
+Mach numbers. Note that higher pressure ratios are required
+to have positive coolant flow through the hole as the internal
+crossflow Mach number Mafc is increased.
+Figure 6 presents the effect of internal crossflow Mach number on the discharge coefficient for the case of no external
+crossflow. For each pressure ratio an internal crossflow Mach
+number exists for which the discharge coefficient CD is at an
+optimum. This internal crossflow Mach number Ma copl is lower,
+the lower the pressure ratio. However, the level of optimum
+discharge coefficient is almost not affected by the pressure ratio.
+As clearly indicated by flowfield measurements inside the
+cooling hole, reported by Thole et al. (1997), the size and
+location of the separation region at the entrance of the cooling
+hole strongly depend on the crossflow Mach number at the hole
+entrance side. For the case of no crossflow at the hole entrance
+side, a separation region was found at the downstream edge of
+the cooling hole. This separation region moves to the upstream
+edge of the hole for an elevated crossflow Mach number Mac
+= 0.5. For a medium Mach number Mac = 0.3, most of the jet
+was found in the center of the hole, indicating that the effect
+of the separation region is very small, if there is a separation
+region at all. This is proved by the drastically decreased turbulence levels inside the hole of the Mac = 0.3 flow case as
+compared to the Mac = 0 and Mac = 0.5 flow cases. Those
+findings were confirmed by the present discharge coefficient
+measurements. The peak value discharge coefficient occurs at
+a crossflow Mach number Mac,op, for which the flow enters the
+hole without jet separation taking place. If a crossflow Mach
+560 / Vol. 120, JULY 1998
+
+1.4
+1.6
+pressure ratio, pt0/pm
+Fj
+
+7
+
+Disch
+
+coe fficient
+
+C D of the fan-shaped hole at Ma, = 0.0
+
+1.4
+1.6
+pressure ratio, pt0/pm
+
+Fig. 8
+
+Discharge coefficient C D of the fan-shaped hole at Mac = 0.3
+
+Fig. 9
+
+Discharge coefficient CD of the fan-shaped hole at Mac = 0.6
+
+number applied is lower than Mac,opt jet separation occurs at
+the downstream edge of the hole inlet; if it is higher than Mac,opt
+jet separation occurs at the upstream edge of the hole inlet,
+both producing additional losses and, therefore, resulting in
+decreased discharge coefficients.
+Fan-Shaped Hole. Figures 7-10 present the discharge coefficient measurements for the fan-shaped hole. For the zero
+external and internal crossflow case the discharge coefficient
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+fanshaped hi>!e
+
+Pt^m-j-g? - f i Ptc/Pm=1'62
+
+A
+
+——
+
+\ :
+1
+
+T^
+
+0.95 •
+
+*
+
+0.9
+
+\
+
+~~*~—-
+
+V
+0
+
+0.1
+
+\
+
+1
+
+J
+
+:
+
+0.2
+0.3
+0.4
+Internal crossflow Mach number, Mac
+
+0.5
+
+a
+
+o.4
+
+0.5
+
+0.6
+
+Fig. 10 Discharge coefficient C D of the fan-shaped hole: effect of internal crossflow Mach number Ma„
+
+was found to be almost independent of the pressure ratio, indicating that the flow through the hole is choked even at low
+pressure ratios. With an external crossflow applied, two flow
+regimes can be identified. For high pressure ratios the external
+crossflow doesn't affect the discharge coefficient at all. For low
+pressure ratios, however, external crossflow leads to decreased
+discharge coefficients. The reduction of the discharge coefficient is more pronounced at elevated crossflow Mach numbers.
+This extends the findings of Hay and Lampard (1995), who
+reported that external crossflow has no effect on the discharge
+coefficient since they only investigated crossflow Mach numbers up to 0.3.
+With internal crossflow applied the behavior of the fanshaped hole differs significantly from the cylindrical hole. For
+low pressure ratios, the discharge coefficient was found to be
+increased as compared to high pressure ratios. Discharge coefficients exceeding unity were measured indicating that the actual
+flow rate through the hole is even higher than the ideal flow
+rate through a cylindrical hole with the same inlet cross-sectional area due to pressure recovery in the diffuser section of
+the hole. The peak discharge coefficient of the Mac = 0.3 case
+occurring at a pressure ratio of 1.07 is 40 percent increased
+compared to the case of zero internal crossflow. Further increasing of the pressure ratio leads to a decrease of the discharge
+coefficient, reaching a plateau value for high pressure ratios,
+being about 10 percent increased compared to the zero internal
+crossflow case.
+This clearly demonstrated that the diffuser section of the hole
+operates best in the low pressure ratio range resulting in a high
+pressure recovery and, thus, high discharge coefficients. For
+elevated pressure ratios the flow entering the diffuser section
+separates from the diffuser walls reducing the pressure recovery
+and the discharge coefficients. Obviously, for the zero crossflow
+case a separation region at the downstream edge at the hole inlet
+leads to a highly disturbed flow entering the diffuser section of
+the hole. In this case no pressure recovery can be detected.
+The effect of internal crossflow is much more pronounced
+than reported by Hay and Lampard (1995). They found only
+a very weak increase in discharge coefficient of about 5 percent
+for an internal Mach number of 0.3. A possible explanation is
+that the length of the cylindrical inlet portion of the hole is 2D
+in the present study compared to AD in their study. In the
+present case, the flow expanding behind the inlet vena contracta
+might enter the diffuser-shaped section of the hole as a diverging
+streamtube, which supports the diffusing process and, therefore,
+leads to drastically elevated discharge coefficients.
+For very low pressure ratios and high internal crossflow Mach
+numbers (Ma c = 0.6), an effect was identified occurring due
+to the fact that the flow rate through the hole is extremely
+Journal of Turbomachinery
+
+8
+
+1.4
+1.1
+pressure ratio, plc/pm
+
+Fig. 11 Discharge coefficient C D of the laidback fan-shaped hole at
+Ma 0 = 0.0
+
+Fig. 12 Discharge coefficient CD of the laidback fan-shaped hole at
+Ma„ = 0.3
+
+•
+
+•
+
+I
+
+'
+
+'
+
+f
+
+laidback (anshaf ed hole
+Mac=0.6
+
+f^
+f
+Mam=0.0
+Ma'=0.3
+Ma„=0.6
+Mam=1.2
+
+1
+
+1.2
+
+1.4
+1.6
+pressure ratio, p^p^
+
+1.8
+
+- B —e—
+—*—..
+-^_
+
+2
+
+Fig. 13 Discharge coefficient C D of the laidback fan-shaped hole at
+Ma0 = 0.6
+
+sensitive to the pressure ratio applied, which becomes obvious
+by the steep gradient of the discharge coefficient. Additionally,
+the flow through the hole itself affects the pressure in the coolant
+supply channel, since an incremental increase of the pressure
+ratio results in a drastic increase of the discharge coefficient
+and mass flow rate through the hole. The increase of the mass
+JULY 1998, Vol. 120 / 561
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.15
+1.1
+
+laidback fanshaped hole
+Mam=0.0
+
+P| J Pm = .10 - B Pt<*m= -25
+—
+
+\
+
+tym- •$ - " * - .
+
+JV
+
+1.05
+
+cylindrical, Mac=0.0
+fanshaped, Mac=0.0
+laidback, Mac=0.0
+cylindrical, Ma0=0.3
+fanshaped, Mao=0.3
+laidback, Mac=0.3
+cylindrical, Mac=0.6
+fanshaped, Ma0=0.6
+laidback, Mao=0.6
+
+- f~-
+
+—e—
+—e—
+—*—
+—o-—o— »•--a
+o
+*
+
+i
+0.2
+0,3
+0.4
+Internal crossllow Mach number, MaD
+
+0.5
+
+1.2
+
+Fig. 14 Discharge coefficient C D of the laidback fan-shaped hole: effect
+of internal crossflow M a c h number Ma„
+
+cylindrical, Mac=0.0
+fanshaped, Mac=0.0
+laidback, Mac=0.0
+cylindrical, Ma0=0.3
+fanshaped, Ma,j=0.3
+laidback, Ma0=0.3
+cylindrical, Mac=0.6
+fanshaped, Ma^O.6
+laidback. Mae=0.6
+
+1.4
+1.6
+pressure ratio, ptc/pm
+
+1.8
+
+Fig. 16
+
+Effect of hole shape a t Ma„, = 0.3
+
+Fig. 17
+
+Effect of hole shape at M a m = 0.6
+
+•
+•
+•
+•
+
+1.4
+1.6
+pressure ratio, p„/p„,
+Fig. 15
+
+Effect of hole shape at M a m = 0.0
+
+flow rate, however, reduces the pressure in the coolant supply
+channel causing a double bend of the curves. This leads to an
+unstable flow regime in this pressure ratio range. Since this
+unstable flow regime occurs in a pressure range close to that
+of optimum diffuser performance, caution must be noted to
+designers in this area. A design may perform well at one point,
+but may be disastrous at another.
+Figure 10 illustrates that the discharge coefficient is strongly
+affected by both pressure ratio and internal crossflow Mach
+number. The peak value of the discharge coefficient is higher,
+the lower the pressure ratio. For each pressure ratio an optimum
+internal crossflow Mach number can be identified to reduce
+losses at the hole entrance, thus leading to high discharge coefficients.
+Laidback Fan-Shaped Hole. Figures 11-14 present the
+discharge coefficient measurements for the laidback fan-shaped
+hole. It was found that adding an additional forward expansion
+to the hole only slightly affects the behavior of the hole geometry in terms of discharge coefficient. Of course, the layback
+doesn't play an important role for the jet-crossflow interaction
+at the hole inlet and for the jet diffusion in the laterally expanded
+portion of the hole. The results of the present study show, that
+the altered jet-crossflow regime at the exit of the laidback fanshaped hole doesn't affect the discharge coefficient, as compared to the fan-shaped hole.
+Effect of Hole Geometry on the Discharge Coefficient.
+Figures 15-18 present a comparison of the discharge coefficients for all hole geometries considered in the present study.
+562 / Vol. 120, JULY 1998
+
+• Effect 0lhpj9..9flap9....
+Mam=1.Z
+
+Fig. 18
+
+Effect of hole shape a t Ma„, = 1.2
+
+For zero external and internal crossflow, the discharge coefficient was up to 10 percent increased for the expanded holes
+compared to the cylindrical hole. With an internal crossflow
+applied, a profound increase of the discharge coefficient for
+both expanded holes as compared to the cylindrical hole was
+found. In this case, at low pressure ratios the discharge coefficient CD is more than 50 percent increased compared to the
+cylindrical hole and more than 40 percent increased compared
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+to the expanded holes without internal crossflow. This is due
+to the pressure recovery taking place in the diffuser section of
+the hole. It can be seen very clearly that this flow regime only
+exists for low pressure ratios. At elevated pressure ratios, the
+pressure recovery is reduced, leading to a moderate decrease of
+the discharge coefficient with pressure ratio. These findings hold
+true for all external crossflow Mach numbers considered.
+The discharge coefficient CD for the laidback fan-shaped hole
+was found to be very close to the fan-shaped hole for all cases
+investigated. This was already indicated by the flowfield measurement reported by Thole et al. (1998) who showed that the
+flowfields of both expanded holes were very similar. However,
+as presented in a companion paper (Gritsch et al., 1998), the
+laidback fan-shaped hole offers improved thermal protection as
+compared to the fan-shaped hole due to the better lateral spreading of the film being ejected from the hole.
+Conclusions
+A study was performed to acquire discharge coefficients of
+holes with expanded exits over a wide range of hole inlet crossflow Mach numbers, hole exit crossflow Mach numbers, and
+pressure ratios across the hole. Additionally, a cylindrical hole
+was tested as a basis of comparison. It can be concluded from
+this study that
+1
+
+Discharge coefficients of all hole geometries investigated
+strongly depend on the flow configuration (i.e., combination
+of internal crossflow Mach number, external crossflow
+Mach number, and pressure ratio).
+Discharge coefficients of both expanded holes are higher
+than of the cylindrical hole with the same flow conditions
+applied. This effect is more pronounced at low pressure
+ratios and with an internal crossflow applied.
+Minimum pressure losses and, thus, optimum discharge coefficients for both expanded holes will be achieved by
+applying:
+
+2
+
+3
+
+•
+•
+
+low pressure ratios to avoid jet separation in the diffuser
+section of the hole, and
+an internal crossflow Mach number adjusted to the pressure ratio to avoid jet separation at the hole entrance
+(Figs. 10 and 14).
+But caution must be noted to designers for the case of offdesign operation at even lower pressure ratios due to the
+steep gradients in this area.
+
+4
+5
+
+The performance of the fan-shaped and the laidback fanshaped hole in terms of discharge coefficient is very similar.
+High external crossflow Mach numbers at the hole exit lead
+to significantly reduced discharge coefficients, particularly
+at low pressure ratios for all geometries.
+
+Journal of Turbomachinery
+
+6
+
+For the cylindrical hole optimum discharge coefficients are
+(almost) independent of the pressure ratio (Fig. 6).
+
+Acknowledgments
+This study was partly funded by the European Union through
+a grant by the Brite Euram program "Investigation of the Aerodynamics and Cooling of Advanced Engine Turbine Components" under Contract No. AER2-CT92-0044.
+References
+Giebert, D., M. Gritsch, A. Schulz, and S. Wittig, 1997, "Film-Cooling From
+Holes With Expanded Exits: A Comparison of Computational Results With Experiment," ASME Paper No. 97-GT-163.
+Goldstein, R., E. Eckert, and F. Burggraf, 1974, "Effects of Hole Geometry
+and Density on Three-Dimensional Film Cooling," Int. J. Heat Mass Transfer,
+Vol. 17, pp. 595-607.
+Gritsch, M., A. Schulz, and S. Wittig, 1997, "A Method of Correlating the
+Discharge Coefficient of Film-Cooling Holes With Crossflows at Hole Entry
+and Exit," presented at the Thirteenth International Symposium on Airbreathing
+Engines, Sept. 8-12, Chattanooga, TN.
+Gritsch, M., A. Schulz, and S. Wittig, 1998, "Adiabatic Wall Effectiveness
+Measurements of Film-Cooling Holes With Expanded Exits," ASME JOURNAL
+OP TURBOMACHINERY, Vol. 120, this issue, pp. 549-556.
+Haller, B., and J. Camus, 1984, "Aerodynamic Loss Penalty Produced by Film
+Cooling Transonic Turbine Blades," ASME Journal of Engineering for Gas
+Turbines and Power, Vol. 106, pp. 198-205.
+Hay, N., S. Henshall, and A. Manning, 1994a, "Discharge Coefficients of
+Holes Angled to the Flow Direction," ASME JOURNAL OF TURBOMACHINERY,
+Vol. 116, pp. 92-96.
+Hay, N., and D. Lampard, 1995, "The Discharge Coefficient of Flared Film
+Cooling Holes," ASME Paper No. 95-GT-15.
+Hay, N., and D. Lampard, 1998, "Discharge Coefficient of Turbine Cooling
+Holes: A Review," ASME JOURNAL OF TURBOMACHINERY, Vol. 120, pp. 314—
+319.
+Hay, N., D. Lampard, and S. Benmansour, 1983, "Effect of Crossflows on the
+Discharge Coefficient of Film Cooling Holes," ASME Journal of Engineering
+for Power, Vol. 105, pp. 243-248.
+Hay, N„ D. Lampard, and A. Khaldi, 1994b, "The Coefficient of Discharge
+of 30° Inclined Film Cooling Holes With Rounded Entries or Exits," ASME
+Paper No. 94-GT-180.
+Jackson, R., 1963, "The Compressible Discharge of Air Through Small Thick
+Plate Orifices," Applied Scientific Research, Vol. A13, pp. 241-248.
+Kline, S., and F. McClintock, 1953, "Describing Uncertainties in Single-Sample Experiments," Mechanical Engineering, Vol. 75, Jan., pp. 3 - 8 .
+Lichtarowicz, A., R. Duggins, and E. Markland, 1965, "Discharge Coefficients
+for Incompressible Noncavitating Flow Through Long Orifices," Journal of Mechanical Engineering Science, Vol. 7, pp. 210-219.
+Makki, Y., and G. Jakubowski, 1986, "An Experimental Study of Film Cooling
+From Diffused Trapezoidal Shaped Holes," AIAA Paper No. 86-1326.
+Schmidt, D., B. Sen, and D. Bogard, 1996, "Film Cooling With Compound
+Angle Holes: Adiabatic Effectiveness," ASME JOURNAL OF TURBOMACHINERY,
+Vol. 118, pp. 807-813.
+Sen, B„ D. Schmidt, and D. Bogard, 1996, "Film Cooling With Compound
+Angle Holes: Heat Transfer," ASME JOURNAL OF TURBOMACHINERY, Vol. 118,
+pp. 800-806.
+Thole, K., M. Gritsch, A. Schulz, and S. Wittig, 1998, "Flowfield Measurements for Film-Cooling Holes With Expanded Exits,'' ASME JOURNAL OF TURBOMACHINERY, Vol. 120, pp. 327-336.
+Thole, K„ M. Gritsch, A. Schulz, and S. Wittig, 1997, "Effect of a Crossflow
+at the Entrance to a Film-Cooling Hole," ASME Journal of Fluids Engineering,
+Vol. 119, pp. 327-336.
+Wittig, S„ A. Schulz, M. Gritsch, and K. Thole, 1996, "Transonic Film-Cooling
+Investigations: Effects of Hole Shapes and Orientations," ASME Paper No. 96GT-222.
+
+JULY 1998, Vol. 120 / 563
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/28/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

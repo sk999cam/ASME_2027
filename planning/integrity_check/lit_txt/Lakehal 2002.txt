@@ -1,0 +1,1257 @@
+Near-Wall Modeling of Turbulent
+Convective Heat Transport in Film
+Cooling of Turbine Blades With
+the Aid of Direct Numerical
+Simulation Data
+Institute of Energy Technology,
+Swiss Federal Institute of Technology Zurich,
+ETH-Zentrum/CLT,
+CH-8092 Zurich, Switzerland
+e-mail: lakehal@iet.mavt.ethz.ch
+
+The paper presents novel developments in the DNS-based, turbulence modeling strategy
+of Lakehal et al. developed for calculating jets in crossflow. The particular features of the
+model include: 1) dynamic coupling of the high-Re k ⫺ ␧ with a one-equation model
+resolving the near-wall viscosity-affected layer; 2) inclusion of the anisotropy of turbulent
+transport coefficients for all transport equations; 3) near-wall variation of the turbulent
+Prandtl number as a function of the local Reynolds number. Most of the important aspects
+of the proposed model are based on known DNS statistics of channel and boundary layer
+flows. The model is validated against experiments for the case of film cooling of a flat
+plate, where coolant air is injected from a row of streamwise inclined jets. Excellent
+results were obtained for this configuration as compared to earlier numerical investigations reported in the open literature. The model is then extended to calculate film cooling
+of a symmetrical turbine blade by a row of laterally injected jets for various blowing
+rates. Comparison of the calculated and measured wall-temperature distributions show
+that only with this anisotropy eddy-viscosity/diffusivity model can the spanwise spreading
+of the temperature field be well predicted and the strength of the secondary vortices
+reduced. Furthermore, results of additional calculations show that combining the anisotropy eddy viscosity model with the DNS-based relation for turbulent Prandtl number
+promotes the eddy diffusivity of heat vis-à-vis that of momentum further, leading to an
+enhanced spanwise spreading of the jet. The performance of this new approach improves
+with increasing blowing rate. 关DOI: 10.1115/1.1482408兴
+
+Introduction
+Enhancing the thermal performance of gas turbines by an increase of their inlet temperature may cause irreparable damage to
+the blades. Despite the noticeable progress made in blade metallurgy, a reasonable lifetime of turbine blades can be ensured only
+by an efficient surface cooling mechanism such as film cooling.
+This technique indeed offers an excellent compromise between
+the protection of endwalls and aerodynamic efficiency, since in
+contrast to convective blade cooling, it minimizes the thermal
+loads on other components of the turbine. This technique may,
+however, constitute a source of overall power output loss since the
+cooling air has to be extracted from the compressors. Thus, optimum film cooling utilizing a minimum amount of cooling air is a
+major economical requirement.
+Film cooling at the leading edge gives rise to very complex
+flow and heat transfer processes. Its efficiency can be influenced
+by the following parameters: the blade and discharge geometry
+共blade curvature, the shape of the injection hole, etc.兲, the injection angle 共perpendicular, streamwise inclined, spanwise inclined兲, the blowing rate M, also known as the mass-flux ratio, the
+density and temperature ratio, the freestream turbulence, and the
+compressibility effects. The flow in the vicinity of the discharge
+holes is particularly complex due to the interaction of the coolant
+jet with the flow around the blade. The individual jets are bent
+over by the mainstream, leading to the formation of longitudinal
+vortices and a reverse-flow region below the jet. The flow be1
+Formerly at the Institute for Hydromechanics, University of Karlsruhe, Germany.
+Contributed by the International Gas Turbine Institute for publication in the JOURNAL OF TURBOMACHINERY. Manuscript received by the IGTI, April 24, 2001; revised manuscript received April 2, 2002. Associate Editor: R. S. Bunker.
+
+Journal of Turbomachinery
+
+comes even more complicated when the injection is lateral, which
+is often the case in practice, since then the cooling film better
+covers the area to be cooled. The formation and location of the
+longitudinal vortices depend strongly on inclination and blowing
+rate. More precisely, the strength and elevation of these vortices
+depend on the penetration of the injected coolant into the cross
+flow. In the case of streamwise injection two counter-rotating vortices form, while in the lateral injection configuration there is only
+one large-scale vortex. The vortices entrain ambient hot gas and
+move it to the vicinity of the wall and hence influence adversely
+the cooling effectiveness. This phenomenon is more pronounced
+at higher blowing rates for which the jets penetrate more deeply
+into the oncoming flow and the vortices are lifted further from the
+surface. The foregoing description is in fact an idealization of the
+flow as if it were perfectly stable and steady, and that is exactly
+what turbulence models of all types are supposed to predict. The
+reality of jets in cross flow is more complex than that 关1,2兴: the
+flow features a broad band of vortical, large-scale structures,
+dominated by the well-known kidney vortex, but also includes
+other unsteady structures such as the horse-shoe vortex, the wake
+vortices, and the shear layer vortices; these can in fact be reproduced only by means of nontime-averaged-based concepts such as
+direct and large eddy simulation 关1兴, 共DNS兲 and 共LES兲.
+The mass-flux ratio can strongly influence the penetration of the
+jet momentum into the crossflow around the blade’s leading edge.
+An extended penetration of the jet into the mainstream occurs at
+high mass-flux ratios only 共say for M ⬎0.5兲; it deflects towards
+the blade surface otherwise. Increasing the mass-flux ratio, the
+deflection of the injected jet by the oncoming flow becomes more
+pronounced, and the reverse flow region extends further downstream of the hole. Furthermore, the jet penetrates further into the
+
+Copyright © 2002 by ASME
+
+JULY 2002, Vol. 124 Õ 485
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Djamel Lakehal1
+
+Review of Some Previous Numerical Investigations
+Three-dimensional calculations of film cooling of real turbine
+blade models are less abundant than calculations of jets in crossflow over flat plates, e.g., 关9–12兴. There exists even fewer calculations of surface heat transfer of fully film-cooled rotating turbine
+blades 关13兴. Various other investigations exploring the effect of
+several parameters on the flow and temperature fields over different blade prototypes revealed the importance of extending the
+calculations into the cooling channel, at least for low blowing
+rates. Turbulence models that have so far been employed in film
+cooling calculations do not go beyond the two-equation type. An
+exception is the work of Ferguson et al. 关14兴, who compared the
+predictive performance of various two-equation turbulence models to the sophisticated Reynolds stress model 共RSM兲. Surprisingly, their RSM calculations were not better than those with eddy
+viscosity models. Garg and Ameri 关15兴 reported on calculations
+for the C3X vane and the VKI rotor where they used the BaldwinLomax model and various two-equation turbulence models. No
+clear picture emerged from the calculations indicating which of
+the employed models is superior. The same Baldwin-Lomax
+model was also employed by Bohn et al. 关16兴 in their computations of the film cooling of the two-dimensional AGTB cascade
+关8兴. For this particular configuration, which has been widely
+adopted as a benchmark for code validation, Irmisch 关17兴 and
+Theodoridis and Rodi 关18兴 used the standard k⫺␧ model with
+wall functions while Vogel 关19兴 adopted a low-Reynolds variant.
+In reference 关20兴, the authors report on the simulation of the flow
+around the three-dimensional version of the AGTB test-case 关6兴.
+Owing to the difficulties in calculating these flows using a full
+three-dimensional RSM under low-Re conditions, Lakehal et al.
+关11兴, Theodoridis et al. 关20兴, and Lakehal et al. 关21兴 opted for
+another strategy. This consists in retaining the basic architecture
+of the k⫺␧ model, while an anisotropic eddy-viscosity/diffusivity
+correction for secondary stresses is introduced. The extension of
+the model to low-Re number conditions was in all cases achieved
+via a dynamic, zonal, two-layer approach 关22兴. This practice was
+486 Õ Vol. 124, JULY 2002
+
+first applied to jet injection over a flat plate in 关11兴, then to real
+blade models in 关20兴 and 关21兴. It was recently compared by Azzi
+and Lakehal 关12兴 to algebraic stress models employed in connection with a DNS-based two-layer model resolving the viscous sublayer and was found to perform better for the case of streamwise
+injection over a flat plate, at least for medium blowing rates M
+⫽0.5 and 1.0.
+
+Scope of the Paper
+The flow in turbine-blade passages is highly three-dimensional
+and is characterized by a multitude of complex phenomena. In
+addition, these flows are turbulent to an appreciable extent with a
+significant inhomogeneity in length and time scales. Coolant jetting increases further the complexity of the flow field, in particular
+the rate of turbulence anisotropy around the injection location
+grows appreciably 关23,6兴. Previous calculations have shown that
+isotropic turbulence models are not adequate for this class of flow
+since the lateral spreading of the heat flux is systematically underpredicted. This led many authors to resort to the Bergeles et al.
+关24兴 model promoting the turbulent cross fluxes, and their results
+indeed met with some success. Theodoridis et al. 关20兴, who analyzed the flow in the vicinity of the leading edge of the AGTB
+turbine blade, concluded that promoting the turbulent fluxes is
+particularly necessary over the pressure side of the blade, where
+there is evidence from measurements 关6兴 that the rate of anisotropy is appreciable. Lakehal et al. 关21兴 have then tried to infer
+information from Ardey’s 关6兴 experimental data in view of generalizing Bergeles’ correction, but they have faced the same difficulties as Kaszeta and Simon 关23兴 did, in that the turbulent transport has been found too complex than any statistical approach
+would predict. However, it appeared necessary to further extend
+the existing model 关24兴 for application very near the wall, and this
+has been successfully accomplished by use of channel-flow DNS
+data 关21,12兴, i.e. the so-called TLVA model.
+The present contribution introduces a novel development in the
+modeling practice briefly evoked in the foregoing. The new development in question is in fact an attempt to stimulate the debate on
+the relationship between eddy diffusivities of momentum and heat
+across the sublayer. It is proposed to complement the TLVA approach by an additional model in which the variation of the turbulent Prandtl number across the viscosity-affected layer is approximated by a DNS-based empirical relation. This particular
+attempt constitutes more of an appeal to stimulate reflection on
+this issue rather than a proposal for a universal model to be applied to all sorts of applications. Further investigations in this
+direction are obviously needed. It is understandable that these and
+previous DNS-based models calibrated for attached flows are not
+systematically valid for separated flows, but in the absence of
+direct simulation data of jets in crossflow—and before being capable of exploiting them in the statistical sense—the idea remains
+for the present time the sole reliable alternative. The first test case
+studied here represents film cooling of a flat plate by a row of
+streamwise injected jets studied experimentally by Sinha et al.
+关25兴. The test case has widely been adopted as a benchmark for
+code validation 关9,10,12兴. The main case study investigated in this
+paper represents film cooling of a three-dimensional symmetrical
+blade studied experimentally by Haslinger and Hennecke 关3兴. The
+difference between this and the former case is that the plenum was
+not considered.
+
+Governing Equations and Turbulence Modeling
+The conservative form of the averaged transport equations governing steady-state, three-dimensional, incompressible turbulent
+flows featuring heat convection can be written as
+
+⳵
+共 ␳ u k 兲 ⫽0
+⳵xk
+
+(1)
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+mainstream resulting in a degradation of the cooling in the region
+near the hole 关3兴. The way the penetration of the jet into the cross
+flow occurs was also found to depend on s/D, the jet spacing-todiameter ratio 关4兴: jet penetration increases with increasing s/D.
+The experimental studies of Haven and Kurosaka 关2兴 brought in
+valuable information about the structure of jets in cross flow in
+general, and about the effects of injection hole geometry 共round
+holes versus square or rectangular holes兲 on the cooling efficiency
+in particular. Mehendale and Han 关5兴 studied the influence of high
+mainstream turbulence on leading edge film effectiveness and heat
+transfer coefficient with a blunt body having a semicylindrical
+leading edge. Their results indicate that film-cooling effectiveness
+decreases with increasing blowing ratio. They have also shown
+that high mainstream turbulence 共T u ⬎9.5%兲 affects the leading
+edge film-cooling effectiveness for low blowing ratios only (M
+⫽0.4). Detailed information on the behavior of flow and temperature fields around inclined jets for real turbine blades were made
+available only recently 关3,6兴. Beeck 关7兴 studied the aerodynamic
+effect of slot injection near the leading edge of a high pressure
+turbine blade, the so-called AGTB cascade model. Beeck’s work
+revealed that significant pressure losses may be introduced by the
+injection system. Expanding on earlier investigations of Beeck
+关7兴, Ardey 关6兴 conducted experiments on the three-dimensional
+variant of the AGTB cascade and provided a detailed data base of
+velocity and turbulence quantities. This data base has revealed, in
+particular, the significant anisotropy of turbulence near the wall
+caused by the strong interaction between the jet and the cross
+flow; a phenomenon that has recently been confirmed by Findlay
+et al. 关8兴 for jet injection over a flat plate. Unfortunately, very
+little information is given on the rate of turbulence anisotropy
+very near the wall that could be further exploited in developing
+prediction models.
+
+冉
+
+⳵ p̄
+⳵
+⳵ui
+⳵
+⫹
+␮
+⫺ ␳ u i⬘ u ⬘j
+共 ␳ u i u j 兲 ⫽⫺
+⳵x j
+⳵xi ⳵x j
+⳵x j
+
+冉
+
+⳵
+⳵ ␮ ⳵ T̄
+⫺ ␳ u ⬘j ␪
+共 ␳u jT 兲⫽
+⳵x j
+⳵ x j Pr ⳵ x j
+
+冊
+
+冊
+
+(2)
+
+(3)
+
+where ␳ represents the density, ␮ the molecular viscosity, p̄ the
+pressure, u j ⫽(ū, v̄ ,w̄) the velocity vector, T̄ the temperature, Pr
+the molecular Prandtl number, u i⬘ u ⬘j the Reynolds-stress tensor,
+and u ⬘j ␪ the turbulent heat flux. Note also that in order to account
+for weak compressibility effects, the fluid density can be computed as a function of both the system pressure and absolute temperature with the aid of the equation of state.
+The next subsections will briefly introduce the channel flow
+DNS-based isotropic TLV model, its anisotropic version, under
+the TLVA variant 关12兴, then the novel modification relating the
+near-wall eddy diffusivities of momentum and heat.
+The Two-Layer kÀ ␧ Turbulence Model „TLV…. The twolayer approach employed here represents an intermediate modeling strategy between the wall-function and the low-Re model approaches. The method consists in resolving the viscosity-affected
+regions close to walls with a one-equation model, while the outer
+core flow is resolved with the standard k⫺␧ model. Such models
+require considerably fewer grid points in the viscous sublayer than
+any pure low-Re scheme 共about 10–15 rather than 25–30兲, and
+hence are more suitable for complex situations involving more
+than one wall. Also, because of the fixed length-scale distribution
+near the wall, these models have been found to give better predictions for adverse pressure gradient boundary layers than pure k
+⫺␧ models. In the one-equation model, the eddy viscosity is
+made proportional to a velocity scale and a length scale ᐉ ␮ . The
+distribution of ᐉ ␮ is prescribed algebraically, while the velocity
+scale is determined by solving the k-equation. The dissipation rate
+␧ appearing as the sink term in the k-equation is related to k and a
+dissipation length scale ᐉ ␧ , which is also prescribed algebraically.
+The two-layer versions available in the literature differ in the way
+ᐉ ␮ and ᐉ ␧ are prescribed. In terms of implementation, the twolayer approach can easily be used in general-purpose CFD codes
+and does not necessarily require special considerations such as
+freezing grid portions. As in other low-Re number models, it requires a versatile algorithm for the determination of local distance
+to the wall.
+Journal of Turbomachinery
+
+In the outercore flow, the usual eddy-viscosity hypothesis is
+applied employing a linear relation of the Reynolds-stress tensor
+and the corresponding heat flux to the velocity and temperature
+gradients
+
+␳ u i⬘ u ⬘j ⫽
+
+2
+␦ ␳ k⫺2⌫ j S i j ;
+3 ij
+
+␳ u ⬘j ␪ ⫽⫺
+
+⌫ j ⳵ T̄
+Prt ⳵ x j
+
+(4)
+
+where ␦ i j is the Kronecker delta and S i j the rate of strain tensor.
+The distribution of the transport coefficient ⌫ j is made isotropic
+using the conventional relationship, i.e., ⌫ j ⬅ ␮ t ⫽C ␮ ␳ k 2 /␧. The
+distributions of k and ␧ are determined from the conventional
+model transport equations, and standard values are assigned to the
+constants, namely C ␮ ⫽0.09; C ␧1 ⫽1.44; C ␧2 ⫽1.92; ␴ k ⫽1.0 and
+␴ ␧ ⫽1.3. It is customary in this type of flow to set the turbulent
+Prandtl number Prt to the value 0.9.
+In previous two-layer models the near-wall one-equation models always employed k 1/2 as a velocity scale2 rather than the friction velocity u ␶ . The so-called ( v ⬘ 2 ) 1/2 velocity-scale-based
+model 共TLV兲 was proposed by Rodi et al. 关28兴, motivated by the
+fact that the normal fluctuations are a more relevant velocity scale
+for the turbulent momentum transfer near the wall than k 1/2, i.e.,
+⌫ j ⬅ ␮ t ⬅( v ⬘ 2 ) 1/2ᐉ ␮ and ␧⬅( v ⬘ 2 ) 1/2k/ᐉ ␧ . Prior to further applications, the model was employed for calculating the fully turbulent channel flow at the shear-based Reynolds number Re␶
+(⫽u␶yn /␯) equal to 211. The computational method is outlined in
+the corresponding section. The DNS database of this flow was
+provided by Gilbert and Kleiser 关29兴. Figure 1 compares the normalized 共by u ␶ and ␮兲 profiles of shear stress u ⬘ v ⬘ ⫹ , turbulent
+kinetic energy k ⫹ , and dissipation rate ␧ ⫹ with the DNS data. The
+figure shows that up to y ⫹ ⫽200 the shear stress predictions with
+both the TLK and the present one 共also referred to as TLV兲 are
+almost identical and agree fairly well with the DNS data. However, as can be seen from Fig. 1共b兲, the profile of k ⫹ predicted by
+the TLV model compares very well with the data, while the TLK
+calculations underpredict the peak level. This is a consequence of
+an overpredicted value of ␧ ⫹ in the region where k ⫹ reaches its
+peak value 共c.f. Fig. 1共c兲兲. The most evident deviations between
+the TLK and TLV predictions are displayed in Fig. 1共c兲. It seems
+that the TLK model totally fails in predicting the maximum of ␧ ⫹ ,
+2
+This is the reason why this type of model is commonly referred to as TLK.
+Rodi’s 关22兴 TLK variant 共compared to TLV in Fig. 1兲 employs the one-equation
+model of Norris and Reynolds 关27兴 to resolve the near-wall region.
+
+JULY 2002, Vol. 124 Õ 487
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 1 Normalized profiles in developed channel flow at Re␶Ä211 †29‡: „a… shear stress u ⬘ v ⬘ ¿ ; „b… turbulent kinetic
+energy k ¿ ; „b… dissipation rate ␧ ¿
+
+as has been the experience with most other low-Re schemes. This
+being smaller than ᐉ nr
+is the direct consequence of ᐉ dns
+␧
+␧ 共due to
+Norris and Reynolds 关27兴兲 as the wall is approached.
+
+⌫ 1 ⫽⌫ 2 ⫽ 共v ⬘ 2 兲 1/2ᐉ ␮ ;
+
+⌫ 3 ⫽ 共 w ⬘ 2 兲 1/2ᐉ ␮
+
+(5)
+
+where the variations of the length scale ᐉ ␮ (⫽0.33y n ) and the
+velocity scales v i⬘ 2 across the viscous region are based on boundary layer and channel-flow DNS data of Kim 关31兴
+v ⬘ 2 /k⫽10⫺5 共 4.65R 2y ⫹40.0R y 兲 ;
+
+R y ⫽y n 冑k/ ␯
+
+w ⬘ 2 /k⫽ v ⬘ 2 /k⫻ f
+with
+
+冋
+
+␥ ⫽Max
+
+103 共 y ⫹ 兲 0.42
+, 4.25
+2.682共 y ⫹ 兲 2 ⫺5.463
+
+(6)
+(7)
+
+册
+
+(8)
+
+being the turbulence anisotropy factor. The model is valid in the
+near-wall region where 1.5⬍y ⫹ ⬍50 only. However, beyond the
+location where y ⫹ ⬇50 共or R y ⫽80兲—where the two layers are
+matched dynamically without fixing grids—and up to the edge of
+the boundary layer, the anisotropy factor f takes the average value
+of 4.25, instead of the original distribution by Bergles et al. 关24兴.
+The details of the model are provided in 关21兴 and 关12兴. However,
+the expression for the rate of dissipation was kept isotropic, as in
+the original TLV model, by re-incorporating k 1/2 as a velocity
+scale rather the normal fluctuating velocities,3 i.e., ␧
+. The dissipation length scale ᐉ DNS
+was also calibrated
+⫽k3/2/ᐉ DNS
+␧
+␧
+with the same DNS data 关12兴. To complete the model an additional transport equation for k needs to be solved; it takes the
+commonly used form
+
+冉 冊
+
+⳵
+⳵
+⳵k
+⌫ kj
+⫹ ␮ ⵜ 2k
+共 ␳ u j k 兲 ⫽ ␳ 共 P⫺␧ 兲 ⫹
+⳵x j
+⳵x j
+⳵x j
+
+(9)
+
+but with the transport coefficient ⌫ kj ⫽⌫ j / ␴ k and the production
+term P⫽⫺u i⬘ u ⬘j ū i, j having the effect of f included, too. To summarize, the one-equation TLVA model consists of the following
+steps: 共i兲 the flow and temperature field is solved with the turbulent fluxes being determined from Eq. 共4兲; 共ii兲 the transport equation for k, Eq. 共9兲, is solved in parallel; 共iii兲 the transport coeffiAzzi and Lakehal 关12兴 re-formulated the TLV model by re-incorporating k 1/2 in
+both the transport coefficient ⌫ j and the dissipation rate ␧. They could have in fact
+called it a variant of the TLK model 共as suggested by one of the reviewers兲.
+3
+
+488 Õ Vol. 124, JULY 2002
+
+The DNS-Based Model for the Turbulent Prandtl Number.
+The turbulent Prandtl number Prt is defined as the ratio of eddy
+diffusivity of momentum to eddy diffusivity of heat. Considering
+the two-dimensional boundary layer over a flat plate with constant
+properties, negligible body force and negligible viscous dissipation, the definition of the turbulent Prandtl number is
+Prt ⫽
+
+⫺u ⬘ v ⬘ 共 ⳵ T̄/ ⳵ y 兲
+⫺ v ⬘ ␪ 共 ⳵ ū/ ⳵ y 兲
+
+(10)
+
+The Reynolds analogy which implies that Prt converges to a constant value, e.g. Prt ⬃0.7– 0.9 for Pr⫽0.73, has been widely
+adopted as a consensual solution for turbulent heat convection
+problems. However, a multitude of experimental investigations
+dealing with the dependence and behavior of Prt have confirmed
+that a perfect analogy between eddy diffusivities of momentum
+and heat exists only within the log-layer 共say for 30⬍y ⫹ ⬍300兲.
+Within the viscosity-affected layer, however, most of these studies
+have revealed that Prt shows a marked increase to values well
+above unity. Guided by these indications, Kays and Crawford 关32兴
+and many others have developed analytical relationships for Prt
+with various degrees of sophistication. But serious doubts have
+been prevailing about the way in which this parameter varies
+across the viscous sublayer, i.e., the turbulent eddies while moving in a direction transverse to the mainstream might lose heat and
+momentum at different rates.
+Recent DNS data for similar wall-air-flows, with slight or moderate wall heating, have recently provided new insight into this
+issue. They indicate that for air flows Prt varies somewhat differently in the viscosity-affected layer than has been assumed hitherto. In particular, some of these studies reveal that Prt can be
+smaller than unity within the viscosity-affected layer, being about
+0.2 very near the wall, whereas it stabilizes in the outer range
+where y ⫹ ⬍100. Among these numerical experiments the one due
+to Lu and Hetsroni 关33兴 simulated an open channel flow at Re⬁
+⫽3000 with passive heat transfer, while that of Madavan and Rai
+关34兴 simulated transition and turbulence in a spatially evolving
+boundary layer on a heated plate for 200,000⬍Rex⬍725,000. Lu
+and Hetsroni’s data are shown in Fig. 2; they clearly indicate that
+Prt increases from 0.2 very near the wall and reaches unity only at
+the edge of the viscous sublayer. A very similar behavior is perceptible from Madavan and Rai’s data, which also show values of
+Prt decreasing sharply as the wall is approached.4 Yet their data
+reveal that Prt does not follow a monotonous trend in the range
+0.2⬍y/ ␦ ⬍1.0. It is clear that although a lack of universality5 is
+noticeable in the DNS data shown in Fig. 2, there is a common
+trend to the effect that as the wall is approached the eddy diffusivity of heat increases more rapidly than that of momentum, implying a high eddy conductivity 关32兴. It appears to be important
+that this behavior be accounted for in a model resolving the viscous sublayer. Furthermore, this is particularly true for filmcooling calculations, since the spreading of the hot film on the
+blade wall is synonymous to a heated surface, causing a strong
+temperature gradient in the direction transverse to the mean flow.
+The following empirical relation for the near-wall behavior of Prt
+was therefore derived in this study from the channel flow DNS
+data of Lu and Hetsroni in particular:
+Prt ⫽A 1 共 y ⫹ 兲 4 ⫹A 2 共 y ⫹ 兲 3 ⫺A 3 共 y ⫹ 兲 2 ⫹A 4 共 y ⫹ 兲 ⫹A 5
+
+(11)
+
+where the coefficients A’s are given in Table 1. Proper usage of
+Eq. 共11兲 consists in alleviating its dependence on the dimension4
+These data were originally scaled with y/ ␦ ; they have been re-scaled here with
+y/y ⫹ on the basis of the information available in the original paper.
+5
+This has already been observed in other situations, e.g., the DNS-based near-wall
+damping of ␮ t or of v ⬘ 2 /k depends somewhat on the Reynolds number.
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+The DNS-Based Anisotropic Extension „TLVA…. As alluded
+to previously, with simple eddy viscosity models the turbulent
+transport in the cross direction is not accounted for sufficiently,
+whereas in reality it should be larger than that normal to the wall,
+as has been supported by various measurements, e.g. 关30,6,23兴. To
+account for the anisotropy of the turbulent exchange processes in
+these flows, Bergeles et al. 关24兴 proposed multiplying the eddy
+viscosity appearing in the cross Reynolds stresses and heat fluxes
+by a factor varying linearly from f ⫽4.5 at the log layer to 1.0 at
+the outer edge of the boundary layer. The near-wall value of
+f ⫽4.5 was inferred from the experimental pipe-flow data of
+Quarmby and Quirk 关30兴. More recently, Lakehal et al. 关21兴 have
+shown that this correction has to be extended to the viscous sublayer, since the normal fluctuations v ⬘ 2 approach zero near the
+wall much faster than the lateral ones w ⬘ 2 . By investigating various sets of boundary layer and channel flow DNS data, they concluded that the ratio f ⫽w ⬘ 2 / v ⬘ 2 reaches much larger values in the
+viscous sublayer than the value of 4.5 adopted in the original
+model. This idea was first incorporated within the TLK model in
+关21兴 then within the TLV variant in 关12兴 where is was referred to
+as TLVA. Briefly, in the TLVA the transport coefficient ⌫ j appearing in Eqs. 共4兲 is rewritten under the following form:
+
+cients ⌫ j are determined by use of Eq. 共5兲; 共iv兲 the rate of
+dissipation ␧ in Eq. 共9兲 is determined by the DNS-based prescription 关21,12兴.
+
+the well-known SIMPLEC algorithm. The present computations
+were performed employing the QUICK scheme for all variables
+applied in a scalar form by means of a deferred-correction procedure and bounded by the Van-Leer Harmonic function as limiter.
+The diffusive fluxes are approximated using second-order central
+differences. The resulting system of difference equations was
+solved using the strongly implicit procedure 共SIP兲 algorithm. Convergence was in all cases determined based on a drop in normalized mass and momentum residuals by four orders of magnitude at
+least. A global mass and energy balance algorithm was employed
+after each iteration, consisting of a systematic readjustment of the
+mass fluxes at the outflow.
+
+Grids and Boundary Conditions
+
+less wall distance y ⫹ , which can be replaced by the near-wall
+Reynolds number R y . An approximate relation between y ⫹ and
+R y based on the data of Kim has already been derived 关12兴
+y ⫹ ⫽0.00442R 2y ⫹0.294R y ⫹0.545
+
+(12)
+
+Making Eq. 共11兲 dependent on the local Reynolds number R y
+rather on y ⫹ avoids having to deal with singularities in separated
+flow regions, where y ⫹ can go to zero. Note, too, that at the
+matching location, where y ⫹ ⫽11.6, the turbulent Prandtl number
+reaches the value of 0.99. Also, relation 共11兲 is valid up to y ⫹
+⫽94 only, a location where Prt ⫽0.76; this latter value is then
+used everywhere in the outercore flow. Note also that since the
+sharp drop in Prt cannot be expected in separated flows, the foregoing empirical relationship may occasionally produce countereffects. When employed in connection with the isotropic TLV
+model, the foregoing approach using Eq. 共11兲 will be referred to
+as TLV-Pr, whereas its combination with the the anisotropic variant TLVA will be called TLVA-Pr.
+
+The Computational Method
+The governing equations are solved using a three-dimensional
+finite-volume method for arbitrary nonorthogonal grids, employing a cell-centered grid arrangement. A description of the basic
+method and its recent developments are reported in 关11兴. The
+momentum-interpolation technique is used to prevent pressurefield oscillations tending to appear in the cell-centered grid arrangement. The pressure-velocity coupling is achieved by using
+Table 1 Coefficients in Eq. „11…
+Wall region
+⫹
+
+if y ⭐11.6
+if y ⫹ ⬎11.6
+
+A1
+0.0
+⫺1.43•10⫺7
+
+A2
+⫺4
+
+8.8•10
+3.02•10⫺5
+
+Journal of Turbomachinery
+
+A3
+
+A4
+
+A5
+
+0.0239
+0.00223
+
+0.238
+0.0645
+
+0.0836
+0.5
+
+The AGTB Symmetrical Blade. This AGTB blade prototype
+as known in the literature was studied experimentally by
+Haslinger and Hennecke 关3兴. The blade model is symmetrical with
+a length of 515 mm and a maximum width of 72 mm. The leading
+JULY 2002, Vol. 124 Õ 489
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 2 Correlation for near-wall turbulent Prandtl number Prt
+Ä g „ y ¿ … fitted against DNS data of Lu and Hetsroni †33‡ and
+Madavan and Rai †34‡
+
+The Flat Plate. This test case was experimentally investigated by Sinha et al. 关25兴. The jets were inclined at an angle of 35
+deg with a lateral spacing of 3D. The injection hole diameter was
+12.7 mm and the discharge pipe length-to-diameter ratio was 1.75.
+The domain extends 19D upstream of the leading edge and 30D
+downstream of the injection location. The topology of the grid is
+shown in Fig. 3共a兲. The approaching boundary layer was fully
+turbulent. The simulations performed in the experiment dealt with
+two density ratios ␳ h / ␳ ⬁ 共⫽1.2 and 2.0兲 and various mass-flux
+ratios ranging from M ⫽0.25 to 1.0. In the present work calculations were carried out for ␳ h / ␳ ⬁ ⫽2 and M ⫽0.5 only. Results of
+the simulation with the higher mass-flux ratio can be found in a
+companion paper by Azzi and Lakehal 关12兴. In the streamwise
+direction the calculation domain extends from the inflow plane
+located at x/D⫽⫺8 to x/D⫽25 and from the channel bottom to
+y/D⫽6 in the vertical direction. The downstream exit of the hole
+is located at x⫽0. In the spanwise direction the domain extends
+from a plane through the middle of the holes (z⫽0) to a plane at
+z/D⫽1.5 in the middle between two injection holes, and symmetry conditions are imposed on these planes. A multiblock grid is
+used to cover the three blocks. The grid adopted for calculations
+was obtained after a series of tests; it consists of 180⫻76⫻24
+points in the x, y, and z directions, respectively. The jet and the
+plenum are meshed with grids composed of 16⫻40⫻9 and 53
+⫻75⫻23 nodes, respectively. The wall neighboring-cells were located so as to always maintain the values of y ⫹ smaller than 2.0.
+The number of grid points placed in the viscous sublayer and the
+buffer layer was typically 15 to 20, but less within the discharge
+pipe.
+The no-slip boundary conditions and k⫽0 were used on the
+plate surface, and on the plenum internal walls since there the
+flow has a very low momentum 共and thereby very small y ⫹ at the
+wall兲, which invalidates the use of wall functions. Because the
+upper surface of the domain was set relatively far from the flat
+plate, symmetry conditions were employed there. In accord with
+the experiment, a 1/7th power-law turbulent boundary layer velocity profile was imposed at x/D⫽⫺8 in order to match the boundary layer thickness of 0.7D at the injection location. The mainstream velocity was set to U ⬁ ⫽20 m/s, conforming to the
+experiment, and uniform distributions were specified for k and ␧
+corresponding to a free-stream turbulence intensity of T u
+⫽0.5 percent, and a dimensionless eddy viscosity of ␮ t / ␮ ⫽50.
+Since the experiment does not provide exact information on the
+flow at the inlet of the discharge pipe, uniform distributions of k
+and ␧ were specified, based on a turbulence intensity of T u
+⫽2 percent and ␮ t / ␮ ⫽30. Adiabatic wall conditions were employed when solving the enthalpy equation and zero gradient conditions were used at the outflow boundary. The exact inlet profiles
+of the temperature and corresponding densities were employed,
+i.e., T ⬁ ⫽302 K, T h ⫽T pln ⫽153 K.
+
+Results and Discussion
+
+Fig. 3 „a… Grid and topology of the first test case; „b… the computational domain; and „c… the grid in the midplane of the symmetrical blade prototype
+
+edge of the model contains on each side one row of holes (D
+⫽4 mm) with a lateral spacing of 5D. Two configurations with
+different inclinations of the injection channels were investigated
+in the experiment: one with a streamwise inclination 共␥⫽0 deg兲
+and one with a lateral inclination of ␥⫽45 deg between the axis of
+the pipe and the symmetry axis of the blade, when projected over
+the horizontal plane x-z, as shown in Fig. 3共b兲. The projection
+over the vertical plane x-y shows the pipe and the symmetry axis
+to form an angle of 22 deg. The approach-flow velocities were in
+the range U ⬁ ⫽15– 30 m/s so that the flow can be considered incompressible. The free-stream turbulence level was below 0.5%,
+which is understandably much lower than in the practice. Seven
+mass-flux ratios (M ⫽0.3– 1.5) were investigated in the experiment. In the present work, calculations were carried out for the
+case of lateral inclination 共␥⫽45 deg兲, an approach velocity of 30
+m/s and various mass-flux ratios, i.e., M ⫽0.3– 0.9. Details on the
+employed grid as shown in Fig. 3共c兲, including the sensitivity tests
+for this case can be found in 关26兴 and 关21兴. It is perhaps useful to
+note though that the grid stretching ratio was limited to 1.1, and
+490 Õ Vol. 124, JULY 2002
+
+Streamwise Injection over the Flat Plate. For this test case,
+calculations were carried out only for ␳ h / ␳ ⬁ ⫽2 and M ⫽0.5.
+Weak compressibility effects were accounted for through use of
+the equation of state. Contours of film-cooling effectiveness ␩ on
+the plate surface predicted with the TLV model are compared in
+Fig. 4 with the results obtained with the anisotropic variant TLVA
+共upper panel兲, and the near-wall model for turbulent Prandtl number TLVA-Pr 共lower panel兲, respectively. Calculations with the
+TLVA model seem to considerably enhance the lateral spreading
+of the scalar field, albeit smaller values of ␩ are obtained in the
+centerline of the plate. This indicates that compared to the other
+models TLVA shortens the reverse-flow region, as will be demonstrated later. The combination TLVA-Pr affects the overall predictions, in that the lateral spreading is further increased and the
+values of ␩ in the centerline of the plate are now higher. The other
+model combination TLV-Pr has led to minor improvements only;
+the results 共not shown here兲 were virtually comparable to those
+obtained from TLV calculations displayed in Fig. 4. From this
+analysis it clearly appears that allowing the eddy diffusivity of
+heat to evolve faster than that of momentum as the wall is approached may have a considerable impact on the results when
+employed in connection with a model accounting for near-wall
+turbulence anisotropy.
+Contours of local film-cooling effectiveness ␩ L predicted with
+the standard two-layer model TLV and the anisotropic version
+TLVA in the midplane of the hole are displayed in Fig. 5. They
+suggest that the jet is bent over strongly right after injection, and
+only a small zone with low or reverse-flow velocities is formed
+due to the weak acceleration of the fluid. This reverse-flow region
+has an extent of about one hole diameter or a little more downstream of the injection hole, depending on the model employed.
+Calculations with the TLVA model suggest indeed that this zone is
+shorter than with the TLV model, confirming the previous observation in connection with Fig. 4, but more importantly, the decay
+of the peak temperature becomes somewhat too fast in the downstream region. This result is a consequence of enhancing the turbulent stresses in the lateral direction, as was noticed in 关11兴 and
+关20兴. This behavior can be further explained in the context of Fig.
+6, in which the secondary-flow velocity vectors and the corresponding ␩-contours are plotted at two different locations; right
+after injection, x/D⫽3, and far downstream of the hole, x/D
+⫽15. Each panel represents one-half of the computational domain, since symmetry conditions were applied at the midplane.
+Results obtained with the standard TLV model are shown on the
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+the size of the grid was fixed so as to conform to y ⫹ ranging in the
+interval 0.3–3.
+On the blade surface and the pipe and plenum internal walls,
+the employed boundary conditions were the no-slip conditions and
+k⫽0. On the lower wind-tunnel wall, the viscous-sublayer was
+bridged and wall functions were used. A uniform streamwise velocity profile was applied (U ⬁ ⫽30 m/s) at the inflow boundary;
+the Reynolds number based on D and U ⬁ was Re⫽7950. Uniform
+distributions were also specified for k and ␧ corresponding to T u
+⫽0.5 percent and ␮ t / ␮ ⫽30 corresponding to a length scale of
+about 0.5D. Note that as in many other experiments, no information about the inlet length scales are available in this one either.
+Sensitivity tests have shown little effect of varying the oncoming
+length scale, at least in the interval 20⬍ ␮ t / ␮ ⬍50. Similarly, a
+uniform velocity profile was set at the inlet of the discharge pipe.
+Here also, uniform distributions of k and ␧ were specified, based
+on a turbulence intensity of T u ⫽3% and a length scale of k 3/2/␧
+⫽0.3D. It is important to note that the pipe was long enough
+(6D) for the flow to fully develop. In both case studies adiabatic
+wall conditions were employed when solving the enthalpy equation; zero gradient conditions were used at the outflow boundary,
+and T ⬁ was specified to a small value whereas the normalized
+value of T h was set equal to 0.01.
+
+left side of each figure, those with the TLVA variant on the right
+side of Figs. 6共a兲 and 共b兲, and those resulting from the combination TLVA-Pr on the right side of Figs. 6共c兲 and 共d兲. The system of
+a pair of counter-rotating longitudinal vortices 共kidney vortices兲,
+typical for jets in crossflow, can be seen to establish itself in all
+calculations. The two vortices cause the typical, symmetrical kidney shape of the temperature contours. Near the wall the velocity
+is directed towards the middle of the jet (z⫽0). Note, too, that
+near the wall, immediately after injection (x/D⫽3), the velocity
+gradients dw̄/dy 共i.e., the vorticity兲 are very strong, and the outer
+flow is directed away from the blade surface. Far downstream of
+the hole, however, the velocity gradients loose in strength and the
+outer flow is now directed towards the plate, reflecting the decay
+of the longitudinal vortex flow. In Fig. 6共a兲 where the TLVA correction is applied, the strength of the longitudinal vortex is reduced due to the enhanced stresses in the lateral direction, and so
+is the local film-cooling effectiveness ␩ L . This trend becomes
+more pronounced in the far downstream region 共see Fig. 6共b兲兲,
+
+where the peak temperature decays significantly. This confirms the
+previous result in connection with the wall and local midplane
+film-cooling effectiveness shown in Figs. 4 and 5 共␩ and ␩ L 兲.
+Further, the TLVA variant seems to considerably enhance the nearwall lateral spreading of the jet, but it also leads to a reduction of
+the strength of the secondary vortices as compared to the prediction of the TLV model alone; the secondary vortex now tends to
+flatten further against the surface. In similar circumstances, Theodoridis et al. 关20兴 found that the enhanced stresses in the lateral
+direction return results that compare reasonably well with the
+data. Switching on the TLVA-Pr model combining Eq. 共11兲 together with the anisotropic correction TLVA reveals a pronounced
+spanwise spreading of the jet as the wall is approached 共Fig. 6共c兲兲.
+Judging from contours of ␩ L it seems that the thermal field in the
+outer flow region is also affected by introducing the correction for
+turbulent Prandtl number since there Prt is smaller than the usual
+value of 0.9, according to Eq. 共11兲. It is perhaps important to note
+
+Fig. 5 Contours of local film-cooling effectiveness ␩ L on the symmetry plane for
+M Ä0.5: calculations with the TLV model and its anisotropic extension TLVA
+
+Journal of Turbomachinery
+
+JULY 2002, Vol. 124 Õ 491
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 4 Contours of wall film-cooling effectiveness ␩ on the channel surface for M
+Ä0.5: calculations with various model variants „TLV, TLVA, and TLVA-Pr…
+
+that the enhanced cross spreading is more perceptible for the
+smallest contour-values of ␩ L 共⬇0.1兲. This indeed gives the impression that the TLVA-Pr approach exaggerates the rate of turbulent transport in that direction.
+In Fig. 7, the film-cooling effectiveness ␩ c in the centerline of
+the channel 共left兲 and the laterally averaged film-cooling effectiveness, 具␩典, 共right兲, are displayed as functions of downstream dis-
+
+tance; results as obtained with different versions of turbulence
+models are compared to the measurements of Sinha et al. 关25兴.
+Using the standard TLV model without correction, ␩ c in the centerline is predicted too high. However, close to the injection the
+agreement is much better, which in itself is a major improvement
+as compared to previous calculations with wall functions reported
+by Leylek and Zerkle 关9兴 and many others. In fact, in all other
+
+Fig. 7 Comparison of ␩ c , the centerline film-cooling effectiveness „a…, and Š␩‹, the laterally averaged film-cooling
+effectiveness „b… for M Ä0.5: calculations with various model variants „TLV, TLVA and TLVA-Pr…
+
+492 Õ Vol. 124, JULY 2002
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 6 Formation of the secondary vortices at different locations x Õ D ’s for M Ä0.5: calculations with various model
+variants „TLV, TLVA and TLVA-Pr…—„a… x Õ D Ä3, „b… x Õ D Ä15, „c… x Õ D Ä3, „d… x Õ D Ä15
+
+calculations of this test case, including the aforementioned ones,
+the flow separation accompanying the injection was not reproduced because the viscous sublayer was not resolved. When the
+anisotropic correction TLVA is employed, the ␩ c -level moves
+closer to measurements near injection and further downstream of
+the hole. This is in line with the surface contours of ␩ plotted in
+Fig. 4, where the TLVA model has led the peak temperature to
+evolve somewhat faster. As was to be expected, the best agreement with measurements is achieved via the combination TLVAPr. Looking now at the neighboring figure confirms the earlier
+result: the laterally averaged film-cooling effectiveness 具␩典 is best
+predicted by a combination of the anisotropy correction for ␮ t
+with the model for Prt . Another major performance of this model
+combination is the correct prediction of the peak temperature 共either via ␩ c or 具␩典兲 right after the discharge hole; this clearly
+indicates that the prediction of the reverse-flow region heavily
+relies on the way the turbulent Prandtl number varies across the
+sublayer. This is somewhat intriguing, since the DNS-based relation 共Eq. 共11兲兲 was developed for attached flows only. The grossly
+overpredicted ␩ c -level on the axis by the TLV model, together
+with the underpredicted 具␩典 field clearly indicates that the model
+fails to predict the spreading in the lateral direction. This leads to
+the following remark: frequently, when studying this class of flow
+comparison with experiment is restricted to the distribution of the
+laterally averaged cooling effectiveness 具␩典; the results may then
+Journal of Turbomachinery
+
+be misleading and must therefore be seen as the consequence of a
+compensation effect of ␩ being predicted too high near the axis,
+but not spreading sufficiently in the lateral direction.
+The spanwise distributions of ␩ on the blade surface are plotted
+in Fig. 8 at x/D⫽1, 3, 6, and 10. TLV calculations show significant deviations from the measurements already in the range z/D
+⫽0.5– 0.7. Close to the discharge hole (z/D⫽0), the peak temperature is also severely overpredicted, except at the first plane
+x/D⫽1. The correction applied to the turbulent cross heat-flux
+tends to considerably increase the lateral spreading of the scalar
+field, bringing it closer to the data. But once again the combination TLVA-Pr results in the best prediction for ␩ L , both near the
+axis and towards the outer plane z/D⫽1.5. Note that for this
+blowing rate and for higher ones, calculations with wall functions
+have already shown significant deviations from the measurements
+关9兴. As was to be expected, applying Eq. 共11兲 together with the
+isotropic TLV model resulted only in minor changes in the heat
+transport as compared to the significant improvements obtained by
+use of TLVA-Pr. The explanation derives from promoting 共twice兲
+the lateral heat flux via the thermal diffusivity coefficient ⌫ ␪3 by
+the conjugate effects of the anisotropy factor ␥ and Eq. 共11兲.
+Lateral Injection Over the Turbine Blade Model. Lateral
+injection takes place at an angle of ␥⫽45 deg to the x-axis. Figure
+9 displays the velocity vectors in the midplane through the hole
+JULY 2002, Vol. 124 Õ 493
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 8 Comparison of the spanwise distributions of local film-cooling effectiveness ␩ L for M Ä0.5: calculations with various model variants
+
+for the blowing rates M ⫽0.5 and 0.9 as calculated with the twolayer model with extended anisotropic modification TLVA. At the
+medium blowing rate of M ⫽0.5, the jet bends over quickly and
+there is only a small reverse-flow region adjacent to the wall extending to about 0.7D downstream of the injection hole. At the
+higher blowing rate of M ⫽0.9 the picture is quite different and
+also differs from the flow established in the streamwise injection
+case reported in 关21兴. Now the reverse flow underneath the bentover jet develops further away from the wall; reverse flow near
+the wall occurs only down to about 0.2D from the trailing edge of
+the hole. Beyond this point the near-wall flow has wall-jet behavior 共comprised of mainstream gas兲, which then develops into a
+boundary layer further downstream. For both blowing rates, the
+high near-wall resolution leads to the development of a local recirculation region inside the discharge channel near the leading
+edge of the injection hole. In reality, the flow inside the discharge
+pipe is subjected to a turning effect starting from the plenum,
+which is known to cause the jetting effect at the delivery; the flow
+separation following the injection is, however, not systematically
+induced by the this turning effect. In the present study the plenum
+was not included 共Haslinger and Hennecke did not provide any
+information on the flow in the discharge pipe nor a detailed description of the geometry of the plenum-pipe injection system兲,
+and this may have led to a misrepresentation of the exact jetting
+conditions. But since the pipe was long enough, the flow could
+have recovered the developed flow conditions before ejection.
+For blowing rates M ⫽0.5 and 0.7, Fig. 10 compares contours
+of the adiabatic film-cooling effectiveness ␩ calculated with the
+standard TLV model, its anisotropic version TLVA, and the combinations TLV-Pr and TLVA-Pr to the measurements. This comparison is aimed at separating the effect introduced by the anisotropic correction 共via ␥兲 from that induced by Eq. 共11兲. In this and
+the following figures on film-cooling effectiveness, the curvilinear
+abscissa s is the length measured along the blade surface from the
+stagnation point. In this case of lateral injection, the contours are
+no longer symmetrical with respect to the z⫽0-axis, but are
+shifted in the direction of injection. The trajectory of the jet, running along the peaks of each contour, is first inclined with respect
+to the z⫽0 axis, but further downstream it runs approximately
+parallel to this axis. This behavior is in general well reproduced
+by the calculations. Lakehal et al. 关21兴 report that when employing the k- ⑀ model with wall functions for this configuration and
+494 Õ Vol. 124, JULY 2002
+
+for the one with streamwise injection, the spreading of the temperature and the decay of the effectiveness in the core region were
+predicted significantly too small. They have also shown that using
+the two-layer model variant of Rodi 关22兴 leads systematically to
+some improvement vis-à-vis the results obtained with wall functions, but not sufficiently to match the data.
+For the lowest blowing rate of M ⫽0.3 the TLV model 共results
+not included here兲 was found to fail to capture the lateral extension of the scalar and to overpredict the peak values along the jet
+axis. With the extended anisotropic correction TLVA the calculation yielded realistic lateral spreading, but a somewhat too rapid
+decay of ␩ so that 具␩典 was again a little low, as can be seen from
+Fig. 11. This confirms possible misleading conclusions for 具␩典 as
+remarked previously: the fast decay of ␩ in the jet axis can be
+compensated by the enhanced lateral spreading. Results for medium blowing rate M ⫽0.5 displayed in Fig. 10共a兲 show the TLV
+calculations to severely underpredict the spreading in the spanwise direction and to overpredict the peak values along the jet
+axis, worse than for blowing rate of M ⫽0.3. Calculations with the
+TLVA model not only remedy the lack of spanwise spreading, but
+also predict reasonably well the decay of ␩ far downstream of the
+injection location (s⬎60 mm). However, the decay of heat transfer is still somewhat overpredicted in the centerline between the
+hole and location s⫽60 mm. The rate of lateral spreading is only
+slightly affected by use of the TLV-Pr model, which also misrepresents the decay of heat in the centerline as was the case with the
+standard TLV variant. Combining now the TLVA approach with
+Eq. 共11兲 共TLVA-Pr兲 yields the best agreement with the data, including the peak levels along the jet axis. The case with the higher
+blowing rate of M ⫽0.7 is displayed in the neighboring panel.
+Both the lateral spreading of the temperature field and the decay
+of ␩ in the core region are much better predicted with TLVA than
+with TLV shown on the upper panel. TLV-Pr performance is again
+similar to TLV, but for this blowing rate a slight improvement in
+the spreading can be perceptible at the lateral boundary. In fact,
+the implications of Eq. 共11兲 on the results become more evident
+with increasing blowing rate, be it employed within the isotropic
+or the anisotropic eddy-viscosity model. The reason for this is that
+with increasing mass-flow rate the jet penetrates deeper into the
+core flow, in which case hot streams are pumped towards the wall
+enhancing near-wall temperature gradients. In this circumstance
+the transport of heat by turbulent motion further enhances in the
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 9 Velocity vectors in mid-plane through injection hole for M Ä0.5 and 0.9: calculations with the TLV model
+
+crossflow direction via the flux w ⬘ ␪ ⫽⫺⌫ ␪3 ⳵ T/ ⳵ z. Calculations
+with TLVA-Pr yield significant spreading 共judging in particular
+from ␩-contours around the lateral boundaries兲 in the cross direction at the expense of a shorter heat decay along the jet axis. This
+can be interpreted as a compensation effect between the streamwise and lateral turbulent heat transport.
+Finally, Fig. 11 compares predicted distributions of the laterally
+averaged film-cooling effectiveness 具␩典 to the measurements for
+blowing rates of M ⫽0.3, 0.5, 0.7 and 0.9. Results of TLV-Pr
+combination are not included for comparison. In Fig. 11共a兲 results
+obtained for the lowest blowing rate of M ⫽0.3 are compared
+against experiments. Calculations with both the TLV model alone
+and its anisotropic variant TLVA deliver virtually the same results,
+except in the region behind the injection where the anisotropic
+correction seems to play a countereffect. In all cases 具␩典 is predicted too low, especially in the intermediate region where s/D
+⬍35. A semblance of agreement between calculations and measurements starts to emerge only at that location and above. The
+performance of the TLVA model for this low blowing rate is now
+confirmed: the enhanced lateral spreading is hidden by the fact ␩
+decays prematurely near the axis. Introducing now the near-wall
+model for Prt together with TLVA leads to only a slight improvement in the downstream region, but near the discharge hole the
+performance of the model is rather excellent, judging from the
+peak temperature which is correctly predicted. For the blowing
+rate of M ⫽0.5, Fig. 11共b兲 shows that when resorting to TLVA, 具␩典
+is calculated much too small near the discharge hole as compared
+to the standard model, but the tendency is inverted in the intermediate and downstream regions where the level of 具␩典 is now approaching the measured one. With the combination TLVA-Pr the
+correct shape of the distribution is predicted and altogether the
+Journal of Turbomachinery
+
+results are the most realistic ones, except that the level is still
+underpredicted. Note, again, that the model predicts the correct
+peak temperature right behind the injection which has so far been
+out of reach of other sophisticated turbulence models. The third
+and fourth panels 11共c兲 and 共d兲 show predictions for higher blowing rates M ⫽0.7, 0.9. It can be seen that with the standard TLV
+model, the agreement with the measurements improves with decreasing M: 具␩典 is significantly underpredicted in the intermediate
+region behind the injection hole, but reaches levels close to the
+measurements further downstream, as was explained above in
+connection with the contours. Using the TLVA variant leads to
+significant improvements in the intermediate region, but there the
+level remains somewhat underpredicted as compared to the data.
+Calculations with the TLVA-Pr model yield fairly good accord
+with the measurements over the whole range, including the peak
+level of 具␩典 in the reverse-flow region.
+The final conclusion to be drawn from the foregoing discussion
+is that in the isotropic two-layer model, agreement with measurements deteriorates with increasing M; with the anisotropic version
+the predictions are better for the higher blowing rates (M ⬎0.5),
+and the same is true of the combination TLVA-Pr. Indeed, judging
+from the secondary velocities shown in Fig. 6 共for the first test
+case兲, the jet-induced secondary vortices lift off the blade surface
+further with increasing M, pushing the ambient gas underneath
+them, which in turn deteriorates the film-cooling effectiveness.
+Applying the anisotropic eddy-viscosity model tends to reduce the
+strength of these symmetrical vortices by flattening them towards
+the surface which improves the prediction of 具␩典; but the utility of
+this measure is positive only in the attached-flow regions. An
+objective conclusion regarding the performance of the DNS-based
+model for the turbulent Prandtl number is that either the heat
+JULY 2002, Vol. 124 Õ 495
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 10 Contours of film-cooling effectiveness for M Ä0.5 and 0.7: calculations with various model variants
+
+diffusivity is really faster than that of momentum as the wall is
+approached, in which case the obtained results are justifiable, or
+the measure is heuristic and constitutes nothing but a compensation effect. Judging from the results obtained for the flat plate in
+particular, the author believes that there is a bit of truth in Eq.
+共11兲, but there is an obvious need to clarify this issue. Further
+DNS data need to be provided.
+
+Conclusions
+The aim of the work presented in this paper is to contribute to
+the development of a robust and accurate predictive strategy for
+calculating the flow and heat transfer in film-cooling situations on
+turbine blades. Emphasis was primarily placed on the development of a physical model capable of dealing with the strong anisotropy of turbulence across the boundary layer. Furthermore,
+owing to prevailing doubts about the way the eddy diffusivities of
+heat and momentum evolve within the sublayer, use was made of
+DNS data in order to derive information for the development of a
+model for the turbulent Prandtl number. In summary, the models
+used to simulate the turbulent momentum and heat exchange processes included a two-layer version resolving the viscous sublayer
+with a DNS-based one-equation model known as TLV, a second
+model variant accounting for the anisotropy of turbulent exchange, also based on the same DNS data, referred to as TLVA,
+and a final model inferring the near-wall evolution of the turbulent
+Prandtl number from other DNS data. This latter approach was
+employed together with TLV and TLVA. The incorporation of the
+496 Õ Vol. 124, JULY 2002
+
+model into a general-purpose CFD code is possible but would
+require some efforts. For instance, in some commercial packages
+such as CFX-Tascflow, the two-layer approach 共e.g., the TLK
+variant of Rodi兲 is now offered as an alternative modeling route to
+pure low-Re number models.
+Film cooling was calculated for a flat plate with streamwise
+cooling-air injection and a symmetrical turbine blade with lateral
+injection; in the latter configuration, coolant air was injected from
+one row of holes placed on each side of the leading edge. For
+injection over the flat plate, calculations were extended to the
+injection pipe and the plenum. For the blade prototype, the flow
+and temperature fields were simulated around the blade and inside
+the injection channels. A flexible three-dimensional finite-volume
+method on multiblock curvilinear grids was employed, and highorder discretization schemes were used to reduce numerical errors. This class of flow is quite complex, and accurate predictions
+of the flow and heat transfer are difficult to achieve, particularly in
+the near field of the injected jet, i.e., the growth and separation of
+the boundary layer developing on the surface and the jet-induced
+vortices. An extremely high level of accuracy is thereby required,
+otherwise models of higher complexity may be of little advantage,
+as was recently revealed by Azzi and Lakehal 关12兴, who tested
+various explicit algebraic stress models.
+The flow field and its dependence on the blowing rate and injection angle were overall reasonably well predicted; finer details
+were already well resolved by the isotropic two-layer model. With
+this model, most of the pertinent physical mechanisms associated
+with jets in crossflow were also well predicted, including the
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 11 Laterally averaged film-cooling effectiveness for various M ’s: calculations with various model variants
+
+Acknowledgments
+This work is in part a continuation of an earlier project 共TURBOTHERM兲 started while the author was affiliated with the University of Karlsruhe 共Institute for Hydromechanics兲. The calculations were carried out on the Cray SV1-B/16-8 computer of the
+ETH Zurich. The author is grateful to Dr. A. Azzi for having made
+his channel flow data available, and to Dr. Haslinger 共University
+of Darmstadt, Germany兲 for the experimental data.
+
+Nomenclature
+
+␩
+␩L
+␩c
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+具␩典
+␥
+⌫ j /⌫ ␾j
+␬
+ᐉ ␮ /ᐉ ␧
+␮
+␮t
+␳
+␴’s
+␪
+␶w
+␾
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+D
+k
+L
+M
+Prt
+Ry
+Sij
+T
+Tu
+ui
+u i⬘
+u␶
+x,y,z
+yn
+y⫹
+
+␦
+
+␧
+
+diameter of discharge pipe
+turbulent kinetic energy
+length scale of turbulence
+mass-flux ratio⫽( ␳ h U h )/( ␳ ⬁ U ⬁ )
+turbulent Prandtl no.
+near-wall or turbulent Reynolds no.⫽y n 冑k/ ␯
+strain tensor⫽(ū i, j ⫹ū j,i )/2
+temperature
+freestream turbulence level
+averaged velocity components
+fluctuating velocity components
+friction velocity⫽冑␶ w / ␳
+Cartesian coordinates
+normal wall distance
+dimensionless wall distance⫽␳ y 冑␶ w / ␳ / ␮ l
+boundary layer thickness
+dissipation rate of turbulent kinetic energy
+wall film-cooling effectiveness⫽(T w ⫺T ⬁ )/(T h ⫺T ⬁ )
+local film-cooling effectiveness⫽(T⫺T ⬁ )/(T h ⫺T ⬁ )
+film-cooling effectiveness in centerline of cooled surface
+laterally averaged wall film-cooling effectiveness
+compound angle pipe axis/blade symmetry axis
+turbulent transport coefficients
+von Karman constant
+length scales in one-equation model
+molecular viscosity
+turbulent viscosity
+density
+Prandtl nos.
+fluctuating temperature
+wall friction
+general dependent variable
+
+Journal of Turbomachinery
+
+Subscripts
+⬁
+c
+h
+pln
+w
+
+⫽
+⫽
+⫽
+⫽
+⫽
+
+freestream
+centerline
+jet
+plenum
+wall
+
+References
+关1兴 Acharya, S., Tyagi, M., and Hoda, A., 2001, ‘‘Flow and Heat Transfer Predictions for Film Cooling,’’ Ann. N.Y. Acad. Sci., 934, pp. 110–125.
+关2兴 Haven, B. A., and Kurosaka, M., 1997, ‘‘Kidney and Anti-Kidney Vortices in
+Crossflow Jets,’’ J. Fluid Mech., 352, pp. 27– 64.
+关3兴 Haslinger, W., and Hennecke, D. K., 1997, ‘‘High Resolved Distribution of
+Adiabatic Film Cooling Effectiveness for Turbine Leading Edge Film Cooling,’’ ISABE Paper No. 97-7113.
+关4兴 Ligrani, P. M., Wigle, J. M., and Jackson, S. W., 1994, ‘‘Film-Cooling from
+Holes with Compound Angle Orientations: Part 2—Results Downstream a
+Single Row of Holes with 6d Spanwise Spacing,’’ ASME J. Heat Transfer, 116,
+pp. 353–362.
+关5兴 Mehendale, A. B., and Han, J. C., 1992, ‘‘Influence of Mainstream Turbulence
+on Leading Edge Film Cooling Heat Transfer.’’ ASME J. Turbomach., 114, pp.
+707–715.
+关6兴 Ardey, S., 1998, ‘‘3D-Messung des Stroemungsfeldes um die filmgekuehlte
+Vorderkante einer Referenzschaufe,’’ Abschlussbericht zum TURBOTHERM
+II-Verbundvorhaben 2.1.8.4 der Arbeitsgemeinschaft Hochtemperatur Gasturbine, Report LRT-Inst. 12-98/02, Universität der Bundeswehr Münich, Germany.
+关7兴 Beeck, A, 1992, ‘‘Stroemungsfelduntersuchungen zum aerodynamischen Verhalten eines hochbelasteten Turbinengitters mit Kuehlluftausblasung an der
+Vorderkante,’’ Ph.D thesis, Universität der Bundeswehr Munich, Institut fuer
+Strahlantriebe, Germany.
+关8兴 Findlay, M. J., Salcudean, M., and Gartshore, I. S., 1999, ‘‘Jets in a
+Crossflow—Effects of Geometry and Blowing Ratio,’’ ASME J. Fluids Eng.,
+121, pp. 373–378.
+关9兴 Leylek, J. H., and Zirkle, R. D., 1994, ‘‘Discrete-Jet Film Cooling: A Comparison of Computational Results with Experiments,’’ ASME J. Turbomach.,
+116, pp. 358 –368.
+关10兴 Walters, K. D., and Leylek, J. H., 1997, ‘‘A Detailed Analysis of Film-Cooling
+Physics, Part 1: Streamwise Injection with Cylindrical Holes,’’ ASME Paper
+No. 97-GT-269.
+关11兴 Lakehal, D., Theodoridis, G., and Rodi, W., 1998, ‘‘Computation of Film
+Cooling of a Flat Plate by Lateral Injection from a Row of Holes,’’ Int. J. Heat
+Fluid Flow, 19, pp. 418 – 430.
+关12兴 Azzi, A., and Lakehal, D., 2002, ‘‘Perspectives in Modeling Film Cooling of
+Turbine Blades by Transcending Conventional Two-Equation Turbulence
+Models,’’ ASME J. Turbomach., 124, July, pp. 472– 484.
+关13兴 Garg, V. K., and Abhari, R. S., 1997, ‘‘Comparison of Predicted and Experimental Nusselt Number for a Film Cooled Rotating Blade,’’ Int. J. Heat Fluid
+Flow, 18, pp. 452– 460.
+关14兴 Ferguson, D. J., Walters, K. D., and Leylek, J. H, 1998, ‘‘Performance of
+Turbulence Models and Near-Wall Treatments in Discrete Jet Film Cooling
+Simulations,’’ ASME Paper No. 98-GT-438.
+关15兴 Garg, V. K., and Ameri, A. A., 1997, ‘‘Comparison of Two-Equation Turbulence Models for Prediction of Heat Transfer on Film-Cooled Turbine Blades,’’
+Numer. Heat Transfer, Part A, 31, pp. 347–371.
+关16兴 Bohn, D. E., Becker, V., Kusterer, K., Ardey, S., and Fottner, L., 1997, ‘‘The
+Influence of Slot Injection and Shower-Head Injection on the 3D Flow Field of
+a Film-Cooled Turbine Blade under Consideration of Side-Wall Effects,’’
+AIAA Pap., No. 97/7162.
+关17兴 Irmisch, S, 1995, ‘‘Simulation of Film-Cooling Aerodynamics with a 2-D
+Navier-Stokes Solver using Unstructured Grids,’’ ASME Paper No. 95-GT024.
+关18兴 Theodoridis, G., and Rodi, W., 1999, ‘‘Calculation of the Flow Around a
+High-Pressure Turbine Blade with Cooling-Jet Injection from Slots at the
+Leading Edge,’’ Flow, Turbul. Combust. 62, pp. 89–110.
+关19兴 Vogel, D. T., 1993, ‘‘Numerische Untersuchung des Mischungsverhaltens von
+Filmkühlstrahlen in Turbinenströmungen,’’ Ph.D thesis, Ruhr-Universität Bochum, Germany.
+关20兴 Theodoridis, G., Lakehal, D., and Rodi, W., 2001, ‘‘3D Calculations of the
+Flow Field Around a Turbine Blade with Film Cooling Injection Near the
+Leading Edge,’’ Flow, Turbul. Combust., 66, pp. 57– 83.
+关21兴 Lakehal, D., Theodoridis, G., and Rodi, W., 2001, ‘‘Three Dimensional Flow
+and Heat Transfer Calculations of Film Cooling at the Leading Edge of a
+Symmetrical Turbine Blade Model,’’ Int. J. Heat Fluid Flow, 22, pp. 113–122.
+关22兴 Rodi, W., 1991, ‘‘Experience with Two-Layer Models Combining the k-␧
+Model with a One-Equation Model Near the Wall,’’ AIAA Pap. No. 91-0216.
+关23兴 Kaszeta, R. W., and Simon, T. W., 2000, ‘‘Measurement of Eddy Diffusivity of
+Momentum in Film Cooling Flows with Streamwise Injection,’’ ASME J. Turbomach., 122, pp. 178 –183.
+关24兴 Bergeles, G., Gosman, A. D., and Launder, B. E., 1978, ‘‘The Turbulent Jet in
+a Cross Stream at Low Injection Rates: a Three-Dimensional Numerical Treatment,’’ Numer. Heat Transfer, 1, pp. 217–242.
+关25兴 Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991, ‘‘Film-Cooling Ef-
+
+JULY 2002, Vol. 124 Õ 497
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+injection-induced secondary-flow vortices. A quantitative validation of the flow structure was not possible due to the absence of
+measurements. However, for other situations like film cooling of a
+similar nonsymmetrical blade 关20兴 and of a flat plate 关11兴 reasonable agreement with measurements was obtained for the flow
+field. Calculations of film cooling of the symmetrical blade show
+that the thermal field is more difficult to predict. The basic evolution is, however, simulated correctly and so is the influence of
+the blowing rate. The two-layer k-␧ model was found to severely
+underpredict the lateral spreading of the temperature field, together with an exaggerated size of the kidney vortices. As a consequence, the laterally averaged film-cooling effectiveness is generally too low. The discrepancies with the measurements on the
+blade surface become more evident with increasing blowing rate.
+The DNS-based anisotropy model promoting the turbulent cross
+stresses brings overall significant improvements, but the best results are obtained when this approach is employed in connection
+with the DNS-based near-wall model for turbulent Prandtl number. Since both of the empirical relations for momentum/heat
+transport and turbulent Prandtl number depend on the wall distance, the near-wall grid clustering has to be appreciably refined
+so as to capture scales up to y ⫹ ⬇1.5. This is the reason why
+results of film cooling of the flat plate appear to be generally
+better than those of the real turbine blade.
+
+关26兴
+
+关27兴
+关28兴
+关29兴
+
+fectiveness Downstream of a Single Row of Holes with Variable Density Ratio,’’ ASME J. Turbomach., 113, pp. 442– 449.
+Rodi, W., Theodoridis G., and Lakehal, D., 1997, ‘‘Entwicklung eines
+geeigneten Turbulenz- und Waermeuebergangsmodells fuer ein 3D Berechnungsverfahren der Filmkuehlung an der Schaufelvorderkante,’’ Abschlussbericht Institut fuer Hydromechanik, University of Karlsruhe.
+Norris, L. H., and Reynolds, W. C., 1975, ‘‘Turbulent Channel Flow with a
+Moving Wavy Boundary,’’ Report No. FM-10, Stanford University, Department of Mechanical Engineering.
+Rodi, W., Mansour, N. N., and Michelassi, V., 1993, ‘‘One-Equation Near-Wall
+Turbulence Modeling with the Aid of Direct Simulation Data,’’ ASME J. Fluids Eng., 115, pp. 196 –205.
+Gilbert, N., and Kleiser, L., 1991, ‘‘Turbulence Model Testing with the Aid of
+Direct Numerical Simulation Results,’’ Proc., 8th Symposium on Turbulent
+Shear Flows, Paper No. 26-1, Munich, Germany, September 9–11.
+
+关30兴 Quarmby, A., and Quirk, R., 1974, ‘‘Axisymmetric and Non-Axisymmetric
+Turbulent Diffusion in a Plain Circular Tube at High Schmidt Number,’’ Int. J.
+Heat Mass Transf., 17, p. 143.
+关31兴 Kim, J., Moin, P., and Moser, R., 1987, ‘‘Turbulence Statistics in Fully Developed Channel Flow at Low Reynolds Number,’’ J. Fluid Mech., 177, pp. 133–
+166.
+关32兴 Kays, W. M., and Crawford, M. E., 1993, Convective Heat and Mass Transfer,
+Third Edition, McGraw-Hill, New York, NY.
+关33兴 Lu, D. M., and Hetsroni, G., 1995, ‘‘Direct Numerical-Simulation of a Turbulent Open-Channel Flow with Passive Heat-Transfer,’’ Int. J. Heat Mass
+Transf., 38, pp. 3241–3258.
+关34兴 Madavan, N. K, and Rai, M. M., 1995, ‘‘Direct Numerical-Simulation of
+Boundary Layer Transition on a Heated Flat Plate with Elevated Freestream
+Turbulence,’’ AIAA Pap. No. 95-0771.
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​124/​3/​485/​5605392/​485_1.​pdf by Cambridge University user on 23 November 2026
+
+498 Õ Vol. 124, JULY 2002
+
+Transactions of the ASME
+
+

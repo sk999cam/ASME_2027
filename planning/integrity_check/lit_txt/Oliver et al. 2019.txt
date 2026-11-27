@@ -1,0 +1,1635 @@
+International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Contents lists available at ScienceDirect
+
+International Journal of Heat and Mass Transfer
+journal homepage: www.elsevier.com/locate/ijhmt
+
+Large eddy simulation of compressible, shaped-hole film cooling
+Todd A. Oliver a,⇑, David G. Bogard b, Robert D. Moser a,b
+a
+b
+
+Institute for Computational Engineering and Sciences, The University of Texas at Austin, United States
+Department of Mechanical Engineering, The University of Texas at Austin, United States
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 2 January 2019
+Received in revised form 2 April 2019
+Accepted 22 April 2019
+Available online 13 June 2019
+
+a b s t r a c t
+Shaped-hole film cooling is an essential cooling technology in modern gas turbine engines. The performance of a given film cooling design, and thus the life of the cooled part, is dependent on the scenario
+parameters that define the environment in which it operates, including Reynolds and Mach numbers,
+upstream boundary layer and turbulence characteristics, blowing ratio, density ratio, pressure gradient,
+surface curvature, etc. Of these, one parameter that has received relatively little attention in the open
+literature is Mach number. This work evaluates the role of Mach number in shaped-hole film cooling
+performance by comparing results of two large eddy simulations of a plenum-fed 7-7-7 hole cooling a
+flat plate at freestream Mach numbers of 0.25 and 0.5, with all other relevant scenario parameters fixed.
+This comparison shows important differences between the two cases. To begin, the performance, as measured by laterally-averaged adiabatic effectiveness, is dramatically different, with the high Mach case
+performing up to 50% worse. This decrease in performance at high Mach is due to the coolant jet separating from the surface and a large scale oscillation that leads to significant asymmetry in the timeaveraged flow, features which are absent in the low Mach case. These changes appear to be caused by
+changes to the flow in the cooling hole, which is also asymmetric in the high Mach case. This asymmetry
+leads to entrainment of hot gas into the hole on one side. Further, in the high Mach case, the flow in the
+hole is mildly supersonic and has sequence of weak shocks, which are, of course, absent in the low Mach
+scenario.
+Ó 2019 Published by Elsevier Ltd.
+
+1. Introduction
+Modern gas turbine engines typically operate with combustor
+exit temperatures in excess of 1500 K, with some much higher
+[16,7,19]. These temperatures can exceed the melting temperature
+of metal engine components. Thus, engine components in the hot
+gas path must be thermally protected in order to extend their operating life and avoid engine failure. Protection strategies include
+thermal barrier coatings [28] and a number of cooling strategies,
+including internal cooling methods [16,13] and film cooling
+[10,8,7,13]. In film cooling, relatively cool gas from the compressor
+is removed from the main flow path prior to passing through the
+combustor and injected into the hot gas flow through holes in
+the cooled component. This cool gas then forms a thin ‘‘film” of
+low temperature downstream of the injection hole, thus cooling
+the surface of the part. Since its introduction over forty years
+ago, film cooling has become a ubiquitous strategy for cooling
+turbine blades in modern gas turbine engines. Because of this
+widespread use and potential impacts on engine efficiency, film
+
+⇑ Corresponding author.
+E-mail address: oliver@ices.utexas.edu (T.A. Oliver).
+https://doi.org/10.1016/j.ijheatmasstransfer.2019.04.119
+0017-9310/Ó 2019 Published by Elsevier Ltd.
+
+cooling flows have been the subject of substantial research, both
+to understand the basic flow physics as well as develop improved
+hole designs and cooling strategies. Most of these studies have
+been conducted at relatively low Mach numbers due to limitations
+of test facilities and difficulties in making measurements at higher
+Mach numbers. The goal of this work is to evaluate the importance
+of Mach number in shaped-hole film cooling performance. To
+accomplish this goal, large eddy simulation (LES) was used to provide detailed information about the flow through the film cooling
+hole and the interaction of the coolant jet with the mainstream.
+The effectiveness of film cooling is influenced by a wide array of
+factors, including the hole geometry, conditions in the hot gas flow,
+and conditions in the cooling gas flow. Regarding hole geometry,
+early designs generally used cylindrical holes, and such holes are
+still used because they are cheap to manufacture and often perform well enough. Nonetheless, shaped-hole designs are becoming
+more widely used because they deliver higher cooling efficiency by
+better distributing the coolant gas on the surface of the cooled part
+[9,8,7]. For a fixed geometry, cooling performance is of course governed by the conditions in the hot and coolant gas flows, including
+the Reynolds and Mach numbers, upstream boundary layer and
+turbulence characteristics, blowing ratio, density ratio, pressure
+gradient, surface curvature, and more. Understanding the effects
+
+499
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Nomenclature
+Greek
+X
+
+h
+
+angular velocity vector
+viscous stress tensor
+time step
+grid spacing in the x and z directions
+distance from the first grid point to the wall
+boundary layer displacement thickness
+
+adiabatic effectiveness ( ðT r  T w Þ= T r  T p )
+ratio of specific heats ( cp =cv )
+thermal conductivity
+dynamic viscosity
+angular velocity magnitude
+density
+
+non-dimensional temperature ( ðT r  T Þ= T r  T p )
+
+Latin
+BR
+DR
+HR
+k
+Ma
+q
+u
+Re
+Ro
+a
+Ap
+
+blowing ratio (¼ ðquÞc =ðquÞ1 )
+density ratio (¼ qc =q1 )
+total enthalpy ratio (¼ Hp =H1 )
+bulk viscosity
+Mach number, e.g., Ma1 ¼ u1 =a1
+viscous heat flux vector
+velocity vector
+Reynolds number, e.g. Re1;a ¼ q1 a1 D=l1
+Rossby number, e.g., Ro1;a ¼ a1 =ðXDÞ
+speed of sound
+plenum inflow area
+
+s
+
+Dt
+Dx; Dz
+Dy1
+d
+
+g
+c
+j
+l
+
+X
+
+q
+
+of these parameters is an ongoing effort of the film cooling
+research community, and there is a large database of experimental
+results on film cooling flows in the open literature, which has been
+reviewed by Bunker [8] and Bogard and Thole [7].
+Despite this experimental work, the understanding of the
+effects of many of these parameters on film cooling performance
+remains incomplete. This lack of knowledge stems from a number
+of sources. First, while much of the early work was performed
+using cylindrical holes, current advanced film cooling relies on
+shaped holes, as noted above. Shaped holes generally perform differently than cylindrical holes, tending to operate best at much
+higher blowing ratios and producing greater film effectiveness
+[9,8,7]. Further, shaped holes can also respond differently to
+changes in input parameters than cylindrical holes, as discussed
+below with regard to freestream Mach number. Second, many
+aspects of film cooling flows are difficult to assess experimentally.
+To start, it is difficult to vary the governing parameters independently. For instance, the few experiments that examined Mach
+number effects were not able to vary Mach and Reynolds numbers
+independently. Further, it is difficult to make measurements of all
+potentially important quantities at all potentially important points
+in space. In particular, while it is common to measure adiabatic
+effectiveness downstream of the hole, it is difficult to measure
+velocity and temperature inside the cooling hole itself to directly
+assess the mechanisms responsible for the observed downstream
+performance. This drawback of experiments can be ameliorated
+to some extent using high-fidelity computational simulation. Motivated by this, a number of high-fidelity simulations of film cooling
+flows have appeared in the open literature, including
+[24,30,38,1,18] which provided more physical insight into film
+cooling performance for cylindrical holes, and [20,36] which investigated the performance of shaped holes. Note that, for such studies, direct numerical simulation (DNS) and LES are required, as
+RANS-based models cannot generally be trusted to provide the
+
+Am
+cp
+D
+E
+H
+h
+n
+Nx ; Ny ; Nz
+p
+Pr
+R
+T
+Tr
+u; v
+
+metering hole area (¼ pD2 =4)
+specific heat at constant pressure
+metering hole diameter
+total energy
+total enthalpy
+enthalpy
+exponent in viscosity power law
+number of grid points in the x; y; z direction
+pressure
+Prandtl number (¼ l1 cp =j1 )
+specific gas constant
+temperature
+freestream recovery temperature
+velocity
+
+Superscript
+non-dimensional variables
+ðÞ
+ðÞþ
+non-dimensionalized
+by
+Dxþ ¼ Dxus =m)
+
+viscous
+
+units
+
+(e.g.,
+
+Subscript
+denotes freestream conditions
+ðÞ1
+ðÞp
+denotes plenum conditions
+ðÞc
+denotes coolant conditions
+
+required accuracy [14]. However, DNS and LES are computationally
+expensive, and thus, it is difficult to perform extensive parametric
+studies involving all relevant parameters.
+This work focuses on the effects of Mach number variation on
+shaped-hole film cooling performance using LES computations. A
+more complete understanding of Mach number effects is important because, although many film cooling studies are conducted
+at low Mach (essentially incompressible) conditions, turbine
+blades generally see high Mach number flows (high subsonic to
+low supersonic) flow, at least over a portion of their surface. Thus,
+in order to connect observed performance in low Mach laboratory
+experiments to engine conditions, it is important to understand the
+effects of Mach number. Moreover, studying the effects of higher
+Mach numbers is particularly important when using shaped holes
+for film cooling. This is because the maximum coolant velocities in
+the throat of the shaped hole can be several times higher than the
+mainstream velocity, while the coolant temperature can be a factor
+of two smaller than the mainstream temperature. Consequently,
+the Mach numbers of the coolant flow within the hole may well
+be several times larger than that of mainstream, resulting in strong
+compressibility effects within the coolant hole. Thus, performance
+changes observed as freestream parameters are varied may be due
+to the associated in-hole flow changes, rather than the direct
+effects of the freestream parameters on the mixing above the
+cooled surface.
+For cylindrical holes, the pioneering experiments of Liess [21]
+found essentially no effect of freestream Mach number (Ma1 ) on
+adiabatic effectiveness for 0:3 6 Ma1 6 0:9. Similarly, Baldauf
+and Scheurlen [4] found little effect of Ma1 using Reynoldsaveraged Navier-Stokes (RANS) based simulations. More recently,
+Zhou et al. [37] also found that freestream Mach number had only
+modest effects on adiabatic effectiveness for cylindrical holes operating at 0:07 6 Ma1 6 0:7 for blowing ratios (BR) of 0:4; 0:85, and
+1:25 and density ratio (DR) 1.5. For mildly supersonic flows, Gritsch
+
+500
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+et al. [12] and Ligrani et al. [22] observed improved adiabatic effectiveness, relative to subsonic conditions, for round holes.
+For shaped holes, Anderson et al. [3] found little effect of freestream Mach number for 0:03 6 Ma1 6 0:15. At higher Ma1 ,
+Gritsch et al. [12] investigated the effects of mainstream Mach
+numbers of 0.3, 0.6, and 1.2 on the performance of fan shaped
+and laidback fan shaped holes. They found differing results for
+the different hole shapes. For the highest blowing ratio they tested,
+BR = 1.5, they found that the fan shaped hole operated better at
+Ma1 ¼ 0:3 compared to 0.6, but the laidback fan shaped hole performed better at Ma1 ¼ 0:6 than at 0.3. The study by Lutum et al.
+[23] also investigated Mach number effects on fan shaped and laidback fan shaped holes, but their experiments were done with a test
+facility with convex surface curvature. They found laterallyaveraged adiabatic effectiveness improved when the Mach number
+was increased from Ma1 ¼ 0:4 to 0:78 at BR ¼ 1:0. However, for
+the same Mach number change at BR ¼ 1:5, they observed a significant decrease in laterally-averaged effectiveness for downstream
+distances of less than approximately 40 hole diameters. In a more
+recent study, Saumweber and Schulz [33] investigated a fan
+shaped hole which was similar to the previous studies. At lower
+blowing ratios, BR < 1:5, or lower Mach numbers, Ma1 < 0:3, they
+found a slight improvement of film effectiveness with increasing
+Mach number, which they attributed to a thinner approach boundary layer with increasing Mach number. Changing Ma1 from 0.15
+to 0.3 at BR ¼ 3 also had a very slight positive effect. However,
+there was a significant degradation of film effectiveness when
+Ma1 was increased from 0.3 to 0.45 with a high blowing ratio of
+BR ¼ 2:5. The dramatic decrease in film effectiveness was found
+to be due to the coolant jet becoming biased to one side of the coolant hole exit, and hence having a narrower distribution of coolant.
+This asymmetry was attributed to in-hole separation from the
+sidewall due to increased pressure ratio at high Ma1 .
+Thus, the existing literature on freestream Mach number effects
+on shaped-hole film cooling is sparse and somewhat confusing. The
+effect of increasing Ma1 is observed to be slightly beneficial or
+extremely harmful to adiabatic effectiveness, presumably depending on the hole geometry and other scenario parameters. In addition, as indicated by Saumweber and Schulz [33], the details of
+the in-hole flow and resulting coolant distribution can change significantly as Ma1 changes. Note that none of these experimental
+studies held the Reynolds number constant while varying Mach
+number, which is an additional confounding factor. Further, to
+the best of the authors’ knowledge, there are no detailed flowfield
+measurements (downstream or in-hole) associated with the
+shaped-hole Mach number experiments note previously, and there
+are no LES results examining Mach number dependence for
+shaped-hole film cooling in the open literature.
+In this work, LES of the 7-7-7 shaped hole [34] at two different
+freestream Mach numbers, 0.25 and 0.5, are performed. All relevant scenario parameters other than Mach number are the same
+for both cases. The two cases were chosen to be very similar while
+maintaining purely subsonic flow in the hole in the low Mach case
+and achieving mildly supersonic flow in the hole in the high Mach
+case. In particular, the scenarios were chosen to specifically highlight the compressibility effect inside the film cooling hole, where
+experimental measurements are difficult, without additional complicating effects, for example shock boundary layer interactions,
+that occur at substantially higher freestream Mach numbers.
+Indeed, the in-hole flow is much more complex in the high Mach
+case. Due to the blockage caused by the separation bubble at the
+entrance of the hole, the flow in the hole is mildly supersonic in
+the high Mach case and has a sequence of weak shocks, which
+are, of course, absent in the low Mach scenario. These features lead
+to a dramatic effect on the cooling performance. Thus, the primary
+contributions of this work are to demonstrate the potential for
+
+seemingly minor increases in the freestream Mach number to substantially impact cooling performance and to examine the changes
+in the in-hole flow that lead to this performance degradation. High
+fidelity simulation is well-suited to this task because it enables
+interrogation of any quantity or region of interest. The trade-off,
+of course, is that due to the large computational cost, only a limited
+number of scenarios can be examined.
+As observed previously, there are many conflicting conclusions
+regarding the effect of freestream Mach number in the literature.
+However, the results shown here are qualitatively similar to one
+case from [33], which warrants further discussion. In terms of adiabatic effectiveness, as shown in Section 3, the laterally-averaged
+adiabatic effectiveness drops dramatically, up to 50%, from the
+low to high Mach cases. This drop is similar to that observed by
+Saumweber and Schulz [33], where a decrease of approximately
+38% in laterally averaged effectiveness was observed between
+Ma1 ¼ 0:3 and Ma1 ¼ 0:45 cases at BR ¼ 2:5; DR ¼ 1:75 for a fan
+shaped hole. The present results are also similar to those from
+[33] in that significant biasing of the cooling jet to one side is
+observed. Saumweber and Schulz [33] note that this biasing is evidence of the coolant jet separating from one side of the hole. The
+results shown here confirm that this separation occurs. Indeed,
+the hole in this case essentially functions as an overexpanded
+converging-diverging nozzle, with the coolant flow attaching preferentially to one side while hot mainstream flow is ingested into
+the hole on the other. This asymmetry appears to be only quasistable in that it changes from side to side on a time scale much
+longer than that associated with the turbulent fluctuations in the
+hole.
+The remainder of the paper is organized as follows. Full details
+of the present scenarios and simulations are given in Section 2.
+Results and further detailed comparisons between the high and
+low Mach cases are presented in Section 3. Finally, Section 4 provides conclusions and suggestions for future work.
+
+2. Case scenario and simulation details
+This section describes the configuration of the LES performed in
+this work. Considerable attention is given to defining an appropriate parameterization of the scenario in Section 2.1. After introducing this parameterization, the specific scenarios examined here are
+defined in Section 2.2. Finally, details of the simulation method,
+including numerics, meshes, and boundary conditions, are provided in Section 2.3.
+2.1. Governing equations and scenario parameters
+Film cooling flows can be described by the compressible NavierStokes equations in combination with a description of the flow
+geometry and an appropriate set of boundary conditions. As discussed in Section 1, a primary goal of this work is to begin to examine the effects of Mach number on film cooling flows. To isolate
+Mach number effects, it is necessary to understand how to vary
+Mach number while holding all other relevant parameters fixed,
+which requires that the other relevant parameters be clearly identified. Toward this goal, this section develops a set of nondimensional parameters governing a specific class of film cooling
+problems, allowing the flow scenario to be clearly defined.
+2.1.1. Dimensional analysis
+In order to determine relevant non-dimensional parameters, a
+dimensional analysis of the film cooling problem is performed.
+Based on this analysis, a set of nine non-dimensional parameters
+are identified. As usual, the dimensional analysis begins with an
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+501
+
+assessment of the relevant dimensional parameters. For the purposes of this assessment, the following assumptions are made:
+
+specified as inputs to the CFD code being used in this work. Some
+further clarifying remarks are in order:
+
+A1 The cooling hole shape is fixed, such that variations in geometric scale but not shape are allowed;
+A2 Only a plenum-fed hole cooling a mainstream zeropressure-gradient flow over a flat plate is considered;
+A3 Only a single, calorically-perfect gas that obeys a power-law
+viscosity form and has constant Prandtl number is used for
+both the mainstream and cooling flows;
+A4 The flow upstream of the hole is laminar, both in the freestream (zero freestream turbulence) and boundary layer,
+which is taken to be a canonical zero-pressure-gradient,
+laminar boundary layer;
+A5 The entire flow may be subjected to rotation at a constant
+angular velocity, as in a rotating engine component.
+
+R1 The distinction between fluid and some boundary/scenario
+parameters is somewhat arbitrary. For instance, it would
+be natural to choose cp and the specific gas constant R as
+fluid properties. However, this choice would then imply that
+T 1 and a1 could not be specified independently since
+a21 ¼ cRT 1 . Keeping both a1 and T 1 is useful in generating
+familiar non-dimensional groups.
+R2 Similarly, by specifying l1 ; T 1 , and n, the viscosity powerlaw is completely fixed, so l1 can be thought of as either
+a fluid or scenario parameter. Either way, no additional
+parameters related to the viscosity (e.g., a reference viscosity
+or temperature) are allowed.
+R3 The direction of rotation and the direction of the flow in the
+freestream and at the plenum inflow are assumed known
+and fixed. Thus, no additional velocity vector components
+or angles are included.
+R4 It is tempting to use plenum density (or some coolant density) rather than plenum temperature, as density ratio is a
+common parameter in film cooling. Plenum temperature is
+chosen here because it maps directly to boundary conditions
+used in the LES and has other advantages described below.
+The plenum density and temperature cannot both be specified simultaneously in addition to plenum velocity because
+this leads to an over-determined problem.
+
+Assumption A1 implies that a single parameter characterizing
+the absolute size of the hole is sufficient to entirely characterize
+the geometry. Assumption A2 implies that, since the flow in the plenum is assumed uniform far from the inlet to the hole, a single state
+vector is sufficient to fully characterize the flow at the plenum
+inflow. Assumption A3 implies that only one set of thermodynamic
+and transport properties need to be considered. The combination of
+A2 and A4 implies that the freestream pressure is constant, such that
+no back pressure or pressure gradient parameter is necessary. Further, by A4, in combination with the freestream state, a single
+parameter, for example the displacement thickness d , is sufficient
+to characterize the upstream boundary layer. Finally, A5 introduces
+the possibility of rotational effects but implies that a single parameter is sufficient to characterize the rotation.
+Certainly these assumptions restrict the applicability of the
+resulting analysis, but not in ways that are critical to isolating
+Mach number effects. The impact of relaxing any of the assumptions would be to introduce additional dimensional parameters
+to characterize the additional degrees of freedom—additional
+parameters to describe the geometry or upstream flow for example. These would in turn lead to additional non-dimensional
+parameters that are, by the previous assumptions, held fixed in
+the current analysis.
+Given these assumptions, the following dimensional parameters are taken as relevant to any quantity of interest (QoI) related
+to performance of the cooling configuration—e.g., adiabatic wall
+temperature somewhere downstream of the hole:
+ Geometric parameters: The metering hole diameter, D.
+ Fluid parameters:
+– Specific heat at constant pressure, cp ,
+– The exponent in the viscosity power law, n, where
+ n
+l
+T
+l ¼ T1
+1
+
+– Prandtl number, Pr ¼ l1 cp =j1 .
+ Boundary/scenario parameters:
+– Freestream density, q1 ,
+– Freestream velocity, u1 ,
+– Freestream temperature, T 1 ,
+– Freestream speed of sound, a1 ,
+– Freestream viscosity, l1 ,
+– Inflow boundary layer displacement thickness, d ,
+– Plenum inflow velocity, v p ,
+– Plenum inflow temperature, T p ,
+– Angular velocity magnitude, X.
+As always, this choice of relevant dimensional parameters is not
+unique. The set chosen here was selected because it leads, in a
+straightforward manner, to non-dimensional groups that are
+
+With these choices, the problem is governed by thirteen dimensional parameters that are expressed in terms of four fundamental
+dimensions. Thus, by the Buckingham Pi theorem, there are nine
+non-dimensional groups. Two of the parameters selected above,
+Pr and n, are already non-dimensional, and thus they trivially form
+Pi groups. To determine the remaining seven Pi groups, a1 ; cp ; D,
+and l1 are chosen to non-dimensionalize the remaining quantities. This choice leads to the following Pi groups:
+Freestream Mach number: Ma1 ¼ u1 =a1 ;
+Freestream acoustic Reynolds number: Re1;a ¼ q1 a1 D=l1 ;
+Acoustic Rossby number: Ro1;a ¼ a1 =ðXDÞ;
+Freestream
+non-dimensional
+temperature:
+cp T 1 =a21 ¼ 1=ðc  1Þ;
+5. Non-dimensional displacement thickness: d =D;
+6. Plenum non-dimensional inflow velocity: v p =a1 ;
+7. Plenum non-dimensional inflow temperature: cp T p =a21 .
+
+1.
+2.
+3.
+4.
+
+These quantities map directly to simulation inputs in the code
+being used, which uses the freestream speed of sound to nondimensionalize velocities. However, if the goal is to examine Mach
+number effects, it is not an optimal set since, for example, changing
+Ma1 while holding Re1;a fixed leads to changes in the usual Reynolds number Re1 ¼ q1 u1 D=l1 . Instead, the following set of
+non-dimensional parameters is more appropriate:
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+
+Freestream Mach number: M1 ¼ u1 =a1 ;
+Freestream Reynolds number: Re1 ¼ q1 u1 D=l1 ;
+Rossby number: Ro1 ¼ u1 =ðXDÞ;
+Ratio of specific heats: c ¼ cp =cv ;
+Non-dimensional displacement thickness: d =D;
+Blowing ratio: BR ¼ ðquÞc =ðquÞ1 ;
+Total enthalpy ratio: HR ¼ Hp =H1 ;
+
+where Hp denotes the total enthalpy in the plenum, and ðquÞc is the
+nominal momentum associated with the cooling flow, which is discussed further below.
+
+502
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+The first five of these parameters obviously correspond to the
+first five in the original list, except that u1 replaces a1 in the Reynolds and Rossby numbers. This change means that these parameters directly characterize the relative strengths of the inertial and
+viscous (Reynolds) or Coriolis (Rossby) forces in the usual manner,
+rather than requiring multiplication by the Mach number to do so.
+The final two parameters require further explanation. These
+characterize the relationship between the freestream and the coolant flows. In particular, the blowing ratio, which is commonly used
+in film cooling, quantifies the relationship between the coolant and
+freestream mass flow rates. It is defined as the ratio of the mass
+flow rate of the coolant to the mass flow rate of the mainstream
+flow through an area equal to the metering hole cross-sectional
+area, Am . That is,
+
+qp v p Ap
+ðquÞc Am
+ðquÞc
+BR ¼
+¼
+¼
+;
+q1 u1 Am q1 u1 Am q1 u1
+where Ap is the area of the plenum inflow and ðquÞc is the nominal
+momentum of the coolant flow in the metering hole, which is
+defined by ðquÞc ¼ qp v p Ap =Am . As noted previously, the plenum
+inflow density is not an independent free parameter—i.e., its value
+is determined implicitly by the non-dimensional parameters
+described here through the solution of the governing equations.
+Further, the areas are not independent parameters either. By A1,
+they are determined by D.
+For the final parameter, the ratio of the total enthalpy in the plenum to that in the freestream is chosen. This choice is in contrast to
+the choice of density ratio, which is common in the film cooling literature. However, as freestream Mach number is varied, the pressure drop from the plenum to the freestream required to achieve
+the same blowing ratio varies. Thus, if the coolant temperature is
+fixed, the density ratio varies also. Alternatively, if the ratio of
+the plenum to freestream density is to be fixed, the coolant temperature must be adjusted. Further, as Mach number increases,
+the density of the coolant at the hole exit can be dramatically different from that in the plenum. Thus, it is not clear how to best
+define the density ratio. Ideally, one might like to use the ratio of
+the coolant density at the hole exit to the freestream density, but
+this is difficult to control precisely in a simulation or experiment.
+Instead, the total enthalpy ratio, HR, chosen here suffers from no
+such problems. Further, it is related to the enthalpy flux across
+streamwise-normal planes downstream of the hole. Finally, in
+the limit of Ma1 ! 0; HR is equivalent to the usual density ratio.
+2.1.2. Non-dimensional PDEs
+The analysis of Section 2.1.1 leads to the identification of nine
+non-dimensional parameters. This section shows how these
+parameters enter the governing equations. To begin, the Navier–
+Stokes equations, written in a coordinate system rotating at a constant angular velocity X of magnitude X, take the following dimensional form [35,11]:
+@q
+þ
+@t
+@ qu
+þ
+@t
+@ qE
+þ
+@t
+
+r  ðquÞ ¼ 0;
+r  ðqu  uÞ ¼ rp þ r  s  qX  ðX  xÞ  2qX  u;
+r  ðquHÞ ¼ r  ðu  sÞ  r  q;
+
+where x denotes position in the rotating coordinate system, q is
+density, u is the velocity (relative to the rotating coordinates),
+E ¼ e þ u  u=2  X2 r 2 =2; e is the internal energy, r is the distance
+from the axis of rotation, H ¼ E þ p=q; p is the pressure, s is the viscous stress tensor, and q is the heat flux. Assuming that the working
+fluid is Newtonian, the viscous stress is given by
+
+
+
+
+
+
+
+2
+3
+
+
+
+s ¼ l ru þ ðruÞT þ k  l ðr  uÞI;
+
+where l is the viscosity, k is the bulk viscosity, and I is the identity
+tensor. Using Fourier’s conduction law,
+
+q ¼ jrT;
+where T is the temperature and j is the thermal conductivity. Further assuming that the working fluid is a calorically perfect gas
+gives the following thermodynamic relations:
+
+p ¼ qRT;
+
+e ¼ cv T;
+
+h ¼ cp T;
+
+where h is enthalpy and R; cv , and cp are constants.
+Non-dimensionalizing using the hole diameter D and freestream conditions (q1 ; u1 ; a1 , and l1 ), the governing equations
+may be written in the following form:
+@ q
+þ   ð  u Þ ¼ 0;
+@t 
+@ q u
+þ   ð  u  u Þ ¼  Ma12
+@t
+1
+
+r
+
+q
+
+r
+
+q
+
+r p þ Re11 r  s  Ro12 q X
+1
+
+ðX  x Þ  Ro21 q X  u ;
+@ q E
+@t 
+
+1
+1
+þ r  ðq u H Þ ¼ Ma
+r  ðu  s Þ  ðc1ÞPr
+r  q ;
+Re1
+Re1
+2
+
+where
+
+t ¼ tuD1 ;
+
+r ¼
+
+x ¼ Dx ;
+
+
+
+@
+@x
+
+
+; @y@  ; @z@ ;
+
+q ¼ qq1 ; u ¼ uu1 ;
+  2
+Þ
+
+E ¼ aE2 ¼ ae2 þ Ma21 u 2u  Ma21 Ro21 ðX 2r
+
+
+1
+
+
+
+p ¼
+
+1
+
+p
+q1 a21
+
+s ¼ ll1
+
+p
+
+
+
+
+
+;
+
+X
+
+H ¼ E þ q ; X ¼ X ;
+ 
+
+r u þ ðr u ÞT þ lk  23 ll ðr  u ÞI;
+
+
+
+;
+
+
+
+
+
+1
+
+q ¼  jj1 r T  ¼  ll r T  ;
+1
+
+1
+
+T  ¼ TT1 :
+
+The non-dimensional parameters that appear explicitly are the
+Reynolds, Rossby, Mach, and Prandtl numbers and the ratio of
+specific heats. Further, the power-law exponent n appears through
+the quantity l=l1 . The remaining parameters from Section 2.1.1—
+BR; HR, and d =D—appear through the boundary conditions. A
+significant benefit of numerical simulation is that one can easily
+modify all these parameters, enabling, for example, independent
+variation of Mach, Reynolds number, and upstream boundary layer
+thickness, which is difficult to achieve in the laboratory.
+2.2. Case scenario
+The scenario of interest is a plenum-fed hole cooling a zeropressure-gradient boundary layer developing on a flat plate. The
+geometry is non-rotating such that the Rossby number is infinity.
+The geometry of the hole is the 7–7-7 shaped hole1 developed by
+Schroeder and Thole [34], which is shown in Fig. 1. To represent
+the effects of manufacturing tolerances and avoid problems with
+overlapping meshes at sharp corners, the inlet and outlet edges of
+the 7–7-7 hole are filleted, as shown in Fig. 1. The fillet radius used
+here is 0:03D, which corresponds to the estimated radius of
+curvature observed on a 2 mm diameter 7–7-7 hole constructed
+for testing at the UT-Austin Turbulence and Turbine Cooling
+Research Laboratory.
+As noted in Section 1, there are only a few studies of the effects
+of Mach number on shaped hole film cooling, and these studies
+were not done independent of Reynolds number, i.e. the Reynolds
+numbers varied with varying Mach number. A primary goal of this
+work was to explore Mach number effects independently. Thus,
+results of two LES are compared: a ‘‘high” Mach case where
+Ma1 ¼ 0:5 and a ‘‘low” Mach case where Ma1 ¼ 0:25. The remain1
+All details of the geometry, including CAD are available from www.mne.psu.edu/
+psuturbine/ShapedHole.
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+503
+
+Fig. 1. The 7-7-7 shaped hole, including the original geometry (Source www.mne.psu.edu/psuturbine/ShapedHole) and the filleted geometry.
+
+der of the non-dimensional parameters are shown in Table 1. For
+clarity, note that the value of d =D is that which would be observed
+at the upstream hole breakout in the absence of film cooling,
+assuming standard zero-pressure-gradient laminar boundary layer
+growth.
+
+Table 1
+Scenario parameters defining the simulations.
+Parameter
+
+Ma1 ¼ 0:25 (Low Mach Case)
+
+Ma1 ¼ 0:5 (High Mach Case)
+
+Re1
+BR
+HR
+d =D
+Pr
+
+5500
+2.1
+0.67
+0.11
+0.72
+1.4
+0.667
+
+5500
+2.1
+0.67
+0.11
+0.72
+1.4
+0.667
+
+c
+n
+
+Besides Mach number, the scenario parameters in Table 1 are
+the same between the two cases. Such independent variations
+can be accomplished in the simulation because the Reynolds number, Mach number, and all other scenario parameters are inputs—
+i.e., there are no practical constraints like those encountered in
+experiments such as limitations imposed by the properties (e.g.,
+viscosity) of typical gasses. In the present case, the Reynolds number, Prandtl number, c, and n are global inputs to the simulation
+software. All other parameters listed in Table 1 are imposed
+through the boundary conditions, which are described in
+Section 2.3.2.
+Because only the freestream Mach number changes between
+the two simulations, if one accepts this parameterization as appropriate for defining the scenario, the resulting performance differences are attributable to changes in the flow induced by the
+Mach number change. However, this does not imply that the
+changes are associated with the freestream. In particular, the two
+cases have dramatically different plenum to freestream density
+
+504
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 2. Computational domain colored by mesh block index. The plenum and hole
+are split into two blocks each, while the main flow path is split into five.
+
+and pressure ratios, which induce significant differences in the inhole flow, as demonstrated in Section 3. Thus, one should not necessarily expect similar performance changes for similar freestream
+Mach number changes at other conditions. For instance, at sufficiently lower blowing ratio, the high Mach number case described
+here would not induce supersonic flow in the hole and would likely
+not show the same degradation of performance shown in
+Section 3.1.
+
+2.3. Simulation details
+The simulations reported here were conducted using the software package PlasComCM2, which was originally developed by Bodony and co-workers at The University of Illinois at UrbanaChampagne. PlasComCM uses high-order finite difference methods
+on overset meshes [32,6] to discretize the compressible Navier–
+Stokes equations.
+Both simulations use the Wall-Adapting Local Eddy-viscosity
+(WALE) model [25]. The LES equations are discretized in space
+using a 6th-order Padé finite difference method due to Kim and
+Lee [17] on the interior of the domain. At boundary points and
+points that neighbor boundaries, the stencil of the 6th order
+scheme goes outside the mesh. At these points, the 6th order
+scheme is replaced with a standard, centered 4th order difference
+(boundary neighbor points) or a one-sided, second order difference
+(boundary points). Regarding the overset meshes, for grid points
+that interpolate from other meshes, quadratic interpolation is used,
+with the interpolation data being generated by the Ogen package
+[15]. The temporal scheme is the classical 4th order Runge–Kutta
+method. Finally, for stability, a 10th order Padé filter operator is
+incorporated in the right-hand side of time advance in order to
+maintain stability. Additional details are provided in the following
+sections.
+
+upstream breakout of the film cooling hole and approximately
+22:5D downstream of the downstream breakout of the hole.
+The mesh consists of nine blocks: two for the plenum, two for
+the hole, and five for the main boundary layer. The physical extent
+and numbers of points in each direction for each block are given in
+Table 2. Further, the mesh spacings for the main flow blocks on the
+cooled wall (i.e., 6 through 9), are detailed in Table 3. In particular,
+the table shows the x and z spacings, which are uniform within
+each block, and the distance from the first point to the wall,
+denoted Dy1 , relative to D and the viscous length scale (plus units).
+The spacings in plus units are computed using the minimum viscous length scale observed downstream of hole in the Ma1 ¼ 0:5
+case, which is ‘v =D ¼ 0:002. Since the viscous length tends to
+increase moving downstream, these values are slightly conservative over much of the mesh, particularly in blocks 8 and 9.
+The time step size at each step was computed by requiring
+CFL 6 0:93 everywhere in the domain. For the current configuration, the limiting condition is time step constraint associated with
+convection in cells near the entrance to the hole in Block 2. The
+observed mean time step is Dta1 =D ¼ 9  104 for the Ma1 ¼ 0:5
+case and Dta1 =D ¼ 1:1  103 for the Ma1 ¼ 0:25 case. The statistical results shown in Section 3 were obtained by averaging over
+11:9 and 8:1 domain flow through times (approximately
+356D=u1 and 243D=u1 ) for the Ma1 ¼ 0:5 and Ma1 ¼ 0:25 cases,
+respectively. For both cases, the flow was initialized using a field
+from an LES at similar conditions on a somewhat coarser mesh.
+From this state, the current simulations were run for 3 flow
+throughs prior to beginning to take statistics.
+2.3.2. Boundary conditions
+Fig. 3 shows a cartoon depiction of the film cooling flow LES
+domain annotated with boundary condition information. At the
+inlet to the main boundary layer, a Navier–Stokes characteristic
+boundary condition (NSCBC) [31], where the inflow velocity and
+temperature are specified as Dirichlet conditions, is used. The
+streamwise and wall-normal velocity components and temperature are set based on the compressible Blasius boundary layer profile with d =D ¼ 0:096, which is smaller than the value of 0:11 from
+Table 1 to account for growth between the inlet and the hole.
+The inflow boundary to the plenum is also specified using an
+NSCBC inflow condition where the temperature is set to the coolant temperature and the inflow vertical velocity is set to achieve
+the desired blowing ratio, which was nominally BR ¼ 2. To achieve
+the desired conditions, the inflow temperatures were set to
+T p =T 1 ¼ 0:703 and T p =T 1 ¼ 0:679 for the Ma1 ¼ 0:5 and
+Ma1 ¼ 0:25 cases, respectively, while the inflow vertical velocity
+were set to v p =a1 ¼ 2:98  103 and v p =a1 ¼ 2:46  103 . In practice, to set the inflow velocity, the plenum density was estimated a
+priori. The simulated plenum density is slightly different from the a
+priori estimate, leading to a blowing ratio of 2.1, as quoted in
+Table 1. Adiabatic, no-slip boundary conditions are applied at all
+walls. In the main flow and plenum, the z direction (into the page
+in Fig. 3) is periodic, such that the simulation models an infinite
+array of holes. Finally, at the top and downstream outflow boundaries, sponge regions are used [5].
+3. Results
+
+2.3.1. Computational domain, grid, and time step
+The computational domain for both cases, colored by mesh
+block index, is shown in Fig. 2. It consists of a 16D  15D  6D
+box centered around the hole pierce point for the plenum, the 7–
+7-7 hole, and a 30D  10D  6D box for the mainstream flow. The
+main flow box extends approximately 4:2D upstream of the
+2
+
+https://bitbucket.org/xpacc/plascomcm.
+
+This section shows results of the LES studies, beginning with a
+qualitative overview of some of the major flow features. Subsequently, the adiabatic effectiveness and flow above the plate are
+examined for both cases in Section 3.1. Similarly, Section 3.2 shows
+the in-hole flow for both low and high Mach cases.
+Fig. 4 shows the major features of the flow above the plate, as
+observed in the Ma1 ¼ 0:5 case. To begin, on the wall plane, the
+
+505
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+Table 2
+Mesh block extents, normalized by metering hole diameter, and numbers of points.
+Block Index
+
+Block extent (normalized by D)
+
+Nx  Ny  Nz
+
+Notes
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+Hole
+Hole
+½8; 8  ½15; 0:70  ½3; 3
+½8; 8  ½1:10; 0  ½3; 3
+½0; 30  ½6:90; 13  ½3; 3
+½0; 3:27  ½3; 7:15  ½3; 3
+½2:98; 9:12  ½3; 7:14  ½3; 3
+½8:85; 15:05  ½3; 7:15  ½3; 3
+½14:84; 30  ½3; 7:15  ½3; 3
+
+513  94  95
+513  49  392
+129  33  64
+513  33  256
+128  65  64
+49  161  128
+258  193  256
+130  161  192
+257  161  128
+
+Hole center; x along hole axis
+Hole ring; y radial, z azimuthal
+Plenum inflow
+Plenum outflow
+Main flow path top
+Main flow path inflow
+Main flow path coolant inflow
+Main flow path
+Main flow path outflow
+
+Total
+
+42:5 million
+
+Table 3
+Mesh spacings for the main flow boundary layer. The þ unit spacings reported are
+normalized using the minimum viscous length scale observed downstream of the
+hole.
+Block Index
+
+Dx=D  Dy1 =D  Dz=D
+
+þ
+Dxþ  Dyþ
+1  Dz
+
+6
+7
+8
+9
+
+0:0681  0:003  0:0469
+0:0239  0:0025  0:0234
+0:0480  0:003  0:0313
+0:0592  0:003  0:0469
+
+34:1  1:50  23:5
+12:0  1:25  11:7
+24:0  1:5  15:7
+29:6  1:5  23:5
+
+normalized mean temperature, h, is shown. This temperature is
+normalized using the recovery temperature without film cooling,
+T r , and the coolant temperature in the plenum, T p :
+
+h¼
+
+Tr  T
+;
+Tr  Tp
+
+ð1Þ
+
+
+
+where T r ¼ T 1 1 þ r c1
+Ma21 and r is taken to be 0.9 here. Note
+2
+that, at the wall, h is equivalent to adiabatic effectiveness, g. The
+choice of T p , which is the coolant stagnation temperature, is common in the film cooling literature, e.g., [12,33]. Some authors, e.g.,
+[37], use the coolant stagnation temperature at the exit of the film
+cooling hole. If the flow were inviscid and adiabatic, this temperature would just be the plenum temperature also. Even though this
+is not the case, for adiabatic walls, the only mechanism for changing
+the volume averaged stagnation temperature in the hole is transport of energy across the hole inlet and exit. Thus, when there is
+no ingestion of freestream flow into the hole, the stagnation temperature at the coolant hole exit should be essentially the same as
+the plenum temperature. However, the hole exit stagnation temperature is problematic in the present work precisely because there is
+
+substantial ingestion of freestream fluid into the hole at the high
+Mach condition. Thus, the plenum temperature is preferred for
+defining h and g.
+Adiabatic effectiveness and mean temperature results are considered in more detail in Section 3.1. In addition to the wall plane
+temperature, to give an indication of the extent of the cooling jet,
+Fig. 4 shows the h ¼ 0:2 isosurface. Further, two streamwise cutplanes, at x=D ¼ 5 and x=D ¼ 15 downstream of the end of the hole,
+are shown. In these cutplanes, the colormap shows the Favre~ 1 , while the white lines show the
+averaged streamwise velocity u
+in-plane streamlines obtained from the Favre-averaged velocity
+field. These streamlines indicate the presence of a counterrotating vortex pair (CRVP), as expected, which is responsible for
+substantial wall-normal and spanwise transport of heat [26]. The
+mean velocity and temperature fields as well as the coolant transport mechanisms are discussed further in Section 3.1.
+The flow above the plate is entirely subsonic for both cases and
+thus, the major flow features depicted in Fig. 4 are qualitatively
+similar in the low Mach case. For brevity, the corresponding figure
+for the low Ma1 case is omitted here. However, there are differences in the details, which manifest in significantly different adiabatic effectiveness (see Section 3.1). For instance, as can be clearly
+observed in the CRVP in Fig. 4, the mean flow above the plate is
+asymmetric for the high Mach case, which is unlike the corresponding low Mach flow. This asymmetry results from an asymmetry in the in-hole flow, which is discussed further in both Sections
+3.1 and 3.2.
+3.1. Adiabatic effectiveness and flow above the plate
+Predictions of laterally averaged and lateral maximum film
+effectiveness for Ma1 ¼ 0:5 and Ma1 ¼ 0:25 are compared in
+
+Fig. 3. Schematic showing boundary conditions for the present film cooling LES (not to scale).
+
+506
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 4. Major features of the flow above the plate for the Ma1 ¼ 0:5 case, including the normalized wall temperature, the h ¼ 0:2 isosurface, and cutplanes at x=D ¼ 5 and
+x=D ¼ 15 showing the streamwise Favre-averaged velocity and in-plane mean flow streamlines.
+
+Fig. 5. Temporally-averaged, laterally-averaged (left) and lateral maximum (right) adiabatic effectiveness versus x=D for low and high inflow Mach number conditions.
+
+Fig. 5. Both figures also include results from experiments at
+Ma1 ¼ 0:06; DR ¼ 1:6; BR ¼ 2:0; Re1 ¼ 5500. These experimental
+results first appeared in Oliver et al. [26] and Anderson [2], but
+have been updated here with an improved heat transfer coefficient
+used to correct non-adiabatic effects. In both cases, the Ma1 ¼ 0:25
+LES and experiment agree quite well, generally within or nearly
+within the experimental uncertainty, although the experimental
+results decrease slightly more quickly than the LES.
+This reasonably good agreement for the low Mach LES and
+experiment is expected despite the mismatch in freestream Mach
+number. In particular, as noted in Section 1, previous experimental
+studies [3,33] have found very mild Mach number effects on film
+cooling effectiveness at low Mach numbers. For instance, Anderson
+et al. [3] observed a maximum discrepancy on the order of 0.04 in
+laterally averaged effectiveness between Ma1 ¼ 0:08 and
+Ma1 ¼ 0:15 for DR 1:8 and BR 2 for the 7–7-7 hole, and even
+that difference was attributed to differences in the approach
+
+boundary layer displacement thickness. At slightly high Mach
+number, Saumweber and Schulz [33] observed nearly no change
+in laterally averaged effectiveness between Ma1 ¼ 0:15 and
+Ma1 ¼ 0:3 at DR ¼ 1:75 and BR ¼ 3 for a different fan shaped hole.
+Further, the discrepancy between the low Mach LES and
+experiment is small relative to the dramatic degradation in both
+the laterally averaged and lateral maximum effectiveness when
+the mainstream Mach number is increased. In particular, for the
+ at x=D ¼ 5 is approximately 40% lower than
+Ma1 ¼ 0:5 case, g
+the Ma1 ¼ 0:25 result, and at x=D ¼ 15, the decrease is nearly
+50%. The decrease in maxz g is similar, though not quite as large:
+approximately 38% and 45% at x=D ¼ 5 and 15, respectively.
+Directly corroborating experimental data is not available to
+assess the simulation accuracy in the high Mach case. In that sense,
+this LES is a true prediction. However, there are two reasons to
+expect that the results are reasonable. First, the LES grid detailed
+in Section 2.3.1 is intended to be sufficiently fine that most of
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+the turbulent kinetic energy is resolved. This does appear to be the
+case. In both cases, the subgrid viscosities are relatively low. The
+ratio of the maximum (over the field) of the time-averaged eddy
+ sgs ) to the freestream viscosity is 4.8 in the low Mach
+viscosity (l
+case and 4.7 in the high Mach case, and over the majority of the
+ sgs =l1 6 2. Further, in both cases, the resolved dissipadomain l
+tion is 20% or more of the resolved plus subgrid dissipation over
+the vast majority of the field. The fact that a not insignificant fraction of the dissipation is resolved is consistent with the majority of
+the TKE being resolved. Thus, since WALE-based LES on this grid
+provides results that are consistent with experiment at low Mach,
+it is reasonable to expect similar consistency for the high Mach
+case also.
+Second, qualitatively similar experimental results have been
+reported in the literature previously. Specifically, as noted in Section 1, Saumweber and Schulz [33] report a drop in laterally averaged effectiveness from 0.32 to 0.18 at x=D ¼ 12 for a fan-shaped
+hole when increasing the freestream Mach number from 0.3 to
+0.45 at DR ¼ 1:75; BR ¼ 2:5.
+More insight into the cause of the decrease in film effectiveness
+is evident from the lateral distribution of film effectiveness shown
+in Fig. 6. Again, the experiment and low Mach LES results agree relatively well, with the obvious exception of the region between the
+holes, approximately jzj=D > 1:5, where a cool thermal boundary
+layer present in the experiment causes erroneous increases in g
+[26,2]. However, the high and low Mach results are dramatically
+different. For Ma1 ¼ 0:25, the lateral distribution is symmetric
+about the centerline, z=D ¼ 0, with peak values as high as
+g ¼ 0:78 at x=D ¼ 5. In contrast, for Ma1 ¼ 0:5, the lateral distribution is highly skewed, with a much lower peak value of g ¼ 0:53 at
+x=D ¼ 5. This discrepancy in the skewness can also be observed in
+Fig. 7, which shows contours of g for both LES cases. This skewed
+film effectiveness is qualitatively similar to that observed by
+Saumweber and Schulz [33]. Further, for the high Mach case, in
+addition to the skewness in g, there is a warm (g 0:4) region
+on the inside right (z=D 1) of the hole as one looks downstream. This warm spot indicates that, on average, freestream flow
+is being entrained into the hole at the right edge while the coolant
+is preferentially exiting from the other side. This indicates separation of the coolant flow from one side of the diffuser. Consequently
+the area covered by the coolant exiting the hole is less, resulting in
+degraded performance.
+Recall that the sample time for the averaged film effectiveness
+for the high Mach case was TU 1 =D ¼ 356, which is much longer
+
+507
+
+than the time scale of turbulent fluctuations within the hole. Consequently the preferential flow of the coolant flow from one side of
+the hole suggests a bi-stable operation. To evaluate the time history of the position of the coolant jet emanating from the hole,
+the g values at positions z=D ¼ 1, i.e. either side of the center of
+the coolant hole, at x=D ¼ 5 were plotted as a function of time
+for both freestream Mach numbers, as shown in Fig. 8. Consistent
+with the time-averaged g results, there is no evidence of asymmetry in the low Mach time history. Alternatively, the figure shows
+that there was a distinct difference between the two values, with
+much higher values at z=D ¼ þ1 for 0 < tu1 =D < 260, for the high
+Mach case. However, at tu1 =D ¼ 260 there was a rapid change,
+with a reversal such that g at z=D ¼ 1 is larger that at z=D ¼ 1.
+This indicates that the coolant jet, which had been skewed to the
+positive side of the coolant hole, switched to the negative side.
+The coolant jet remained on the negative side of the hole until
+tu1 =D ¼ 320 and then flipped back to the original position. These
+results are important in showing that for the high Mach number
+case, the coolant flow does not fill the diffuser section of the hole,
+and will tend to stay attached to one side of the diffuser section of
+the hole, but can flip to the other side.
+Of course, the facts that only a single switch event was observed
+and that the time-averaged statistics are not symmetric about
+z ¼ 0 indicate that a longer simulation is required to obtain converged statistics for this switching. However, the current sample
+is large relative to the largest time scales of the turbulence not
+associated with the switching. To evaluate this, the integral time
+scale of the fluctuations in the instantaneous g results shown in
+Fig. 8(b) were computed from an auto-regressive process model
+fit to the signal for 0 6 tu1 =D 6 200, using the method described
+in [27]. For the z=D ¼ 1 side, the resulting integral time scale
+was su1 =D ¼ 12:9, while for the z=D ¼ 1 side, su1 =D ¼ 6:8, both
+of which are small relative to the total averaging time.
+More insight into changes in film effectiveness that occur with
+increasing Mach number is obtained through analysis of the time
+averaged temperature fields downstream of the coolant hole. To
+begin, Fig. 9 shows temperature results at x=D ¼ 5 for both the high
+and low Mach LES as well as the low Mach experiment. These
+results are presented in terms of the normalized temperature, h,
+defined in (1). Note that the use of the recovery temperature in
+(1) leads to freestream values of h which are slightly above zero.
+Comparing the low Mach LES to the experiment, there are
+points of both agreement and disagreement. The overall extent of
+the coolant jet is similar. For example, the height near the center-
+
+Fig. 6. Temporally-averaged adiabatic effectiveness versus z=D at x=D ¼ 5; 10; 15 for low and high inflow Mach number conditions.
+
+508
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 7. Contours of temporally-averaged adiabatic effectiveness from LES for low and high inflow Mach number conditions.
+
+z/D = −1
+
+0.6
+
+0.6
+
+0.5
+
+0.5
+
+0.4
+
+0.4
+
+0.3
+
+0.3
+
+0.2
+
+0.2
+
+0.1
+
+0.1
+
+0.0
+
+0
+
+50
+
+z/D = −1
+
+0.7
+
+z/D = +1
+
+η
+
+η
+
+0.7
+
+100
+
+tu∞/D
+
+150
+
+200
+
+250
+
+(a) Ma∞ = 0.25.
+
+0.0
+
+z/D = +1
+
+0
+
+50
+
+100
+
+150
+
+200
+
+tu∞/D
+
+250
+
+300
+
+350
+
+(b) Ma∞ = 0.5.
+
+Fig. 8. Time history of instantaneous g at x=D ¼ 5 for z=D ¼ 1 and 1 for the Ma1 ¼ 0:25 and Ma1 ¼ 0:5 cases.
+
+line is slightly over 1:5D, and the width at y=D ¼ 0:5 is approximately 3:5D. The near wall features, however, are noticeably different, with the LES being substantially cooler in the jet core. This
+difference is primarily due to the non-adiabatic wall in the experiment, the effects of which have not been corrected in the measured h, unlike the g results shown previously. There are other
+minor differences as well, usually with the LES providing cooler
+temperatures. For example, the LES predicts h 0:25 at
+
+y=D ¼ 1; z=D ¼ 1, while the measured value is approximately 0.2.
+This discrepancy is larger than the experimental uncertainty of
+0:02 and could be caused by a number of factors including the
+effects of the non-adiabatic wall, the Mach number discrepancy
+between the simulation and experiment, roughness effects in the
+hole, LES modeling errors, etc.
+Nonetheless, the differences between the low Mach LES and
+experiment are minor relative to the differences between either
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+509
+
+T
+Fig. 9. Mean temperature (h ¼ TTrrT
+) at x=D ¼ 5 for high and low Mach LES as well as experimental results.
+p
+
+the low Mach LES or experiment and the high Mach LES. In particular, in the high Mach LES, the core of the jet—i.e., the coldest
+region—is lifted significantly off the plate, with the largest h occurring near y=D ¼ 0:7. Alternatively, in the low Mach LES, the coldest
+temperature occurs at the wall. In the experiment, the coldest
+measured temperature is slightly off the wall. However, this feature of the h field is due to non-adiabatic wall effects, as demonstrated by the corrected g shown in Fig. 6, which is larger at the
+centerline than the maximum h observed in Fig. 9(c).
+This difference persists downstream, as shown in the LES results
+compared in Fig. 10. Again, the core of the coolant jet for the
+Ma1 ¼ 0:5 case is located at y=D ¼ 0:7 from the wall at x=D ¼ 5,
+and propagates farther from the wall with greater distance downstream. In contrast, for the Ma1 ¼ 0:25 case the core of the coolant
+jet is on the wall and remains there farther downstream. Thus,
+these thermal fields show that the dramatic decrease in film effectiveness that occurred when increasing the Mach number from
+0.25 to 0.5 was due largely to the significant separation of the coolant jet for the Ma1 ¼ 0:5 case.
+
+Note also that the center of the core of the coolant jet for the
+Ma1 ¼ 0:5 case is shifted to a lateral position of z=D 0:4, whereas
+the center of the jet for the Ma1 ¼ 0:25 case is on the centerline at
+z=D ¼ 0. This is consistent with the skewness of the jet position
+that was apparent in the lateral distribution of g shown in Fig. 6
+and discussed previously. However, despite the skewed position
+of the coolant jet for the Ma1 ¼ 0:5 case, the maximum width of
+the coolant jet for this case is similar to the Ma1 ¼ 0:25 case. This
+is unexpected since the coolant jet for the Ma1 ¼ 0:5 case appears
+to be exiting from one side of the coolant hole and therefore would
+be expected to be narrower.
+Another important observation from the temperature contours
+presented in Fig. 10 is the similarity of the magnitude of the core
+temperatures for the Ma1 ¼ 0:25 and Ma1 ¼ 0:5 cases. Tracking
+the decay of the core jet temperature as the jet moves downstream,
+at each position x=D ¼ 5, 10, and 15, the h value at the center of the
+coolant jet is similar, but consistently approximately 0.1 lower for
+the Ma1 ¼ 0:5 case. While the high Mach case jet core is warmer,
+the difference in the coolest temperatures in the two fields is much
+
+510
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+T
+Fig. 10. Mean temperature (h ¼ TTrrT
+) on constant x=D planes at x=D ¼ 5; 10; 15.
+p
+
+smaller than the differences in the lateral maximum g values
+observed in Fig. 5. These results indicate that, despite the greater
+separation of the coolant jet for the Ma1 ¼ 0:5 case, the dispersion
+of the coolant for the two cases was similar, and further supports
+the claim that the drop in adiabatic effectiveness is largely due
+to the jet separating. Furthermore, these results reaffirm that the
+primary reason for the significantly lower film effectiveness for
+the Ma1 ¼ 0:5 case is the separation of the coolant jet from the
+surface, rather than enhanced dispersion the coolant jet, which is
+examined below.
+The strength of the counter rotating vortex pair (CRVP) for each
+Mach number case is evident in the cross-section of the velocity
+vectors presented in Fig. 11 for x=D ¼ 1 and 5. These mean velocity
+vector plots show very strong CRVP structures centered on the
+mean location of the coolant jets, i.e. at the centerline for
+the Ma1 ¼ 0:25 case and skewed to the positive z side for the
+Ma1 ¼ 0:5 case. Note that at both positions the magnitudes of
+the velocity vectors, normalized by u1 , for the Ma1 ¼ 0:25 case
+are almost double that for the Ma1 ¼ 0:5 case. Comparisons of
+the dispersion of the coolant jets by turbulent heat flux for low
+and high Mach numbers are shown in Fig. 12. As expected the turbulent heat flux normal to the surface was primarily at the top of
+the coolant jet and lateral turbulent heat flux was at the sides of
+
+the coolant jet. For these figures the turbulent heat flux values
+were normalized with the mainstream heat flux, i.e. q1 u1 h1 ,
+and hence appropriately scales the results for the varying mainstream Mach number. As shown in Fig. 12, the normalized turbulent heat flux was very similar for both Mach numbers.
+Consequently, the turbulent mixing was not substantially
+enhanced by the increase in Ma1 , and the core temperature of
+the coolant jets were similar as discussed previously.
+3.2. Details of flow inside coolant hole
+The time averaged Mach number distribution within the coolant hole are shown in Fig. 13. The low and high Mach number flow
+fields have many similarities, with the maximum Mach number
+occurring slightly downstream of the inlet of the hole where there
+is a large separation bubble. For both cases there is a large separation bubble on the downstream side of the diffuser section, with
+the separation region being slightly smaller for the Ma1 ¼ 0:5 case.
+However, the Ma1 ¼ 0:5 case also has a separation region on the
+upstream side of the diffuser that does not occur for the
+Ma1 ¼ 0:25 case. This might be due the weak shocks that occur
+for the Ma1 ¼ 0:5 case due to the Mach number reaching as high
+as Ma ¼ 1:3 downstream of the throat. Clearly, the supersonic flow
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+511
+
+Fig. 11. Mean streamwise velocity (color) and in-plane mean velocity vectors on cutplanes at x=D ¼ 1 and 5 for high and low Mach cases.
+
+Fig. 12. Vertical (top) and horizontal (bottom) components of the Reynolds heat flux for the high (left) and low (right) Mach cases at x=D ¼ 5.
+
+with associated weak shock waves significantly changes the flow
+pattern through the shaped coolant hole.
+Also of interest is the turbulent kinetic energy that is generated
+within the coolant hole since turbulence generation within the
+hole will result in greater dispersion of the coolant when it inter-
+
+acts with the mainstream at the exit of the hole. Contour plots of
+k=u21 are shown in Fig. 14 for the low and high Mach number cases.
+In both cases maximum levels of greater than k=u21 ¼ 0:4 occur in
+the separation region near the hole inlet. These are very high turbulence levels, which diminish to levels near k=u21 ¼ 0:2 at the exit
+
+512
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 13. Time averaged Mach number distribution within the coolant holes for varying mainstream Mach numbers.
+
+Fig. 14. Time averaged turbulent kinetic energy distribution within the coolant holes for varying mainstream Mach numbers.
+
+of the hole. The main difference between the k=u21 distributions for
+the differing Mach numbers is a large level of k=u21 along the
+upstream part of the hole for the Ma1 ¼ 0:5 case, which is probably generated by the shock-boundary-layer interaction and separation region here which does not occur at Ma1 ¼ 0:25.
+More insights into the differences due to increased mainstream
+Mach number are found by examining instantaneous snapshots of
+the Mach number, temperature, and density distributions within
+the coolant holes. Contours of instantaneous Mach number are
+
+shown in Fig. 15 for the low and high mainstream Mach number
+cases. These images show key flow characteristics including an
+inviscid flow that enters the hole and flows along the upstream
+side of the hole, separation regions at the hole inlet and in the diffuser section, and turbulent flows that develop in the separation
+regions and downstream. For both cases the separation region at
+the inlet of the hole is seen to have a dominating effect resulting
+in a strong acceleration around the separation bubble and
+ultimately a poor performance for the diffuser section. There are
+
+Fig. 15. Snapshots of Mach number distribution within the coolant holes for varying mainstream Mach numbers.
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+513
+
+Fig. 16. Instantaneous Ma in the z=D ¼ 0 plane for the Ma1 ¼ 0:5 case with annotation of major flow features.
+
+several unique features for the Ma1 ¼ 0:5 case. In the instantaneous snapshot, shock and expansion waves are evident in the
+Ma contour plot. To give a better view of these structures, Fig. 15
+(b) is reproduced with labels of the flow structures in Fig. 16.
+The interaction of the shocks with the boundary layer on the upper
+surface of the hole causes the flow on the upper surface to become
+turbulent. In contrast, the flow on the upper surface in the low
+Mach case is laminar.
+Distinct differences in the coolant temperature, density, and
+pressure within the hole occurred for the low and high Mach number cases. These quantities are shown for both Mach numbers in
+Fig. 17. For the Ma1 ¼ 0:25 case, the coolant temperature and
+density are close to constant along the length of the coolant hole.
+However, for the Ma1 ¼ 0:5 case, there are substantial changes
+in coolant density and temperature as it flows through the hole.
+Most notably is the very high density of the coolant in the plenum
+feeding the coolant hole, with a density ratio of DR ¼ 2:7, which is
+much larger than average density ratio at the exit of the hole of
+DR 1:5 or the plenum to freestream density ratio in the low Mach
+case (DR ¼ 1:7). As described in Section 2, the plenum conditions
+were set to match the blowing and total enthalpy ratios between
+the two cases. Further, these conditions lead to similar conditions
+at the exit of the hole, with the coolant at the hole exit to freestream density ratio being approximately 1.5 in both cases,
+although the distribution is far from uniform for the high Mach
+case. However, in matching these conditions, the plenum pressure
+for the Ma1 ¼ 0:5 case must be significantly larger than mainstream pressure, as shown in Fig. 17. Hence coolant density in
+the plenum is significantly larger. The coolant density decreases
+significantly along the length of the coolant hole, which can be
+attributed to the decrease in static pressure as the flow accelerates
+through the inlet of the hole. Fig. 17 shows that, for the Ma1 ¼ 0:5
+case, there was also a significant decrease in static temperature
+due to the acceleration of the flow at the inlet of the hole. Turbulent fluctuations in the separation regions and the downstream
+part of the hole also resulted in fluctuations in local coolant
+temperature and density. Consequently at the exit of the hole there
+
+were very non-uniform distributions of coolant temperature and
+density.
+As noted previously, for the Ma1 ¼ 0:5 case the coolant exited
+the hole skewed to one side of the hole. To examine this feature,
+results are shown on cutplanes aligned with and normal to the axis
+of the hole, as indicated in Fig. 18. The skewing of the coolant jet as
+it passes through the hole is evident in the instantaneous snapshots of Mach number and temperature distributions shown in
+Fig. 19. It is clear that when the coolant enters the diffusing section
+of the coolant hole, the flow favors the right side of the hole. Note,
+as discussed earlier, in the time history of this simulation the coolant jet did switch to the other side of the hole, but just for short
+time before switching back to the right side of the hole. Hence,
+the time averaging provides results with average jet position
+biased to the right side. This biasing is reminiscent of that observed
+in an over-expanded convergent-divergent nozzle flow [29],
+although a detailed evaluation of this similarity is beyond the
+scope of the current work.
+Also evident in Fig. 19 are regions of mainstream temperature
+fluid within the coolant hole. This is due to ingestion of mainstream fluid on the left side of the hole. This ingestion is more
+clearly seen in the in-hole temperature cross sections presented
+in Fig. 20. This figure shows ingestion over a significant portion
+of one side of the hole, but the ingestion does not extend a significant distance into the hole.
+
+4. Conclusions
+LES of shaped-hole film cooling of a flat plate at two different
+freestream Mach numbers has been performed. Unlike the existing
+cylindrical hole data, the results reveal that Mach number effects
+can have a substantial effect on the adiabatic effectiveness for
+shaped holes, dropping the laterally averaged effectiveness by
+more than 40% in the present case. This finding is consistent with
+some previous results for shaped holes, but contradicts others,
+indicating that the Mach number effect is sensitive to the particu-
+
+514
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 17. Snapshots of density (a, b), temperature (c, d), and pressure (e, f) within the coolant holes for Ma1 ¼ 0:25 (a, c, e) and Ma1 ¼ 0:5 (b, d, f).
+
+Fig. 18. Cutplanes aligned with and normal to the hole axis.
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+515
+
+Fig. 19. Snapshots of Mach number and temperature distributions within the coolant holes for the Ma1 ¼ 0:5 case.
+
+lar details of the scenarios examined, including the hole shape,
+Reynolds number, blowing ratio, and enthalpy ratio. This sensitivity is caused by changes to the in-hole flow in the high Mach case
+examined here. The large separation bubble near the hole inlet,
+which is present in both the low and high Mach cases, causes the
+maximum in-hole Mach numbers to be significantly higher than
+one would expect based upon the blowing and density ratios without considering the blockage due to the separation bubble. In the
+high Mach case examined here, this leads to in-hole Mach numbers
+substantially above one, and the hole functions effectively as an
+over-expanded converging–diverging nozzle. The result is a
+sequence of weak shocks in the hole and a coolant flow that is
+biased to one side of the hole. However, the conditions under
+which such features are observed necessarily depend on the details
+of the flow—e.g., the size of the hole inlet separation bubble—
+which are of course sensitive to the precise geometry and flow
+scenario. For example, one would expect that, at these same conditions but at sufficiently lower blowing ratio, the in-hole flow would
+remain subsonic for Ma1 ¼ 0:5, and the degradation in performance between Ma1 ¼ 0:25 and 0:5 would be largely eliminated.
+
+However, in the present state of knowledge, given only low
+freestream Mach number adiabatic effectiveness results, it would
+be difficult to predict the effects of freestream Mach number
+changes. That is, it is difficult to tell a priori whether one is in a
+regime where a Mach number increase will lead to a minor
+improvement in performance, as observed by Gritsch [12], and,
+in some cases, Lutum [23] and Saumweber [33], or a potentially
+catastrophic degradation in performance, as observed here. Further
+research to understand the physical mechanisms responsible for
+the performance observed here is necessary to enable such
+predictions.
+This research effort will necessarily be a joint experimentalcomputational effort. First, additional experiments that examine
+Mach number effects for shaped-holes at fixed Reynolds number
+are required. These experiments would be valuable both to assess
+simulation results like those shown here and to broaden the range
+of scenarios that can be efficiently examined. Second, additional
+high fidelity simulations are necessary to examine features that
+are difficult to interrogate experimentally, such as the in-hole flow.
+Together this data will enable better understanding of Mach
+
+516
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+
+Fig. 20. Snapshots of temperature distributions for the Ma1 ¼ 0:5 case at different cross-sections within the coolant hole, and at the hole exit.
+
+number effects and their dependence on other parameters. This
+fundamental understanding could lead to improvements in both
+models of film cooling as well as film cooling designs.
+Conflict of Interest
+The authors declared that there is no conflict of interest.
+Acknowledgments
+The authors acknowledge the Texas Advanced Computing Center (TACC) at The University of Texas at Austin for providing HPC
+resources that have contributed to the research results reported
+within this paper.
+References
+[1] S. Acharya, Film cooling simulation and control, Heat Transf. Res. 41 (6) (2010)
+601–626.
+[2] J.B. Anderson, Investigation of Approach Flow Parameters, Scaling Factors, and
+Measurement Accuracy for Film Cooling Effectiveness and Heat Transfer
+Coefficient Measurements PhD thesis, The University of Texas at Austin, 2017.
+[3] J.B. Anderson, E.K. Wilkes, J.W. McClintic, D.G. Bogard, Effects of freestream
+Mach number, Reynolds number, and boundary layer thickness of film cooling
+effectiveness of shaped holes, in: Proceedings of the ASME Turbo Expo 2016:
+Turbine Technical Conference and Exposition, number GT2016-56152, 2016.
+[4] S. Baldauf, M. Scheurlen, CFD based sensitivity study of flow parameters for
+engine like film cooling conditions, ASME Paper No. 96-GT-310, 1996.
+[5] D.J. Bodony, Analysis of sponge boundary treatments for computational fluid
+mechanics, J. Comput. Phys. 212 (2006) 681–702.
+[6] D.J. Bodony, G. Zagaris, A. Reichert, Q. Zhang, Provably stable overset grid
+methods for computational aeroacoustics, J. Sounds Vib. 330 (2011) 4161–
+4179.
+[7] D.G. Bogard, K.A. Thole, Gas turbine film cooling, J. Propul. Power 22 (2) (2006)
+249–270.
+[8] R. Bunker, A review of shaped hole turbine film-cooling technology. ASME, J.
+Heat Transfer 127 (4) (2005) 441–453.
+[9] R. Goldstein, E. Eckert, F. Burggraf, Effects of hole geometry and density on
+three-dimensional film cooling, Int. J. Heat Mass Transf. 17 (5) (1974) 595–607.
+[10] R.J. Goldstein, Film cooling, Advances in Heat Transfer, vol. 7, Elsevier, 1971,
+pp. 321–379.
+[11] E.M. Greitzer, C.S. Tan, M.B. Graf, Internal Flow: Concepts and Applications.
+Cambridge Engine Technology Series, Cambridge University Press, 2004.
+[12] M. Gritsch, A. Schulz, S. Wittig, Adiabatic wall effectiveness measurements of
+film-cooling holes with expanded exits, ASME J. Turbomach. 120 (3) (1998)
+549–556.
+[13] J. Han, S. Dutta, S. Ekkad, Gas Turbine Heat Transfer and Cooling Technology,
+second ed., Taylor & Francis, 2012.
+
+[14] S. Haydt, S. Lynch, S. Lewis, The effect of meter offset on shaped film cooling
+hole adiabatic effectiveness, in: Proceedings of the ASME Turbo Expo 2016:
+Turbomachinery Technical Conference and Exposition, number GT201656135, 2016.
+[15] W.D. Henshaw. Ogen: An overlapping grid generator for Overture. http://
+overtureframework.org/documentation/ogen.pdf, 2015.
+[16] J.L. Kerrebrock, Aircraft Engines and Gas Turbines, MIT Press, Cambridge,
+Massachusetts, 2001.
+[17] J.W. Kim, D.J. Lee, Optimized compact finite difference schemes with
+maximum resolution, AIAA J. 34 (5) (1996) 887–893.
+[18] M. Konopka, W. Jessen, W. Schröder, Large-eddy simulation of film cooling in
+an adverse pressure gradient flow, J. Turbomach 135 (3) (2013), 031031 1–13.
+[19] L.S. Langston, Riding the surge, Mech. Eng. 135 (5) (2013) 36–41.
+[20] D.H. Leedom, S. Acharya, Large eddy simulation of film cooling flow fields from
+cylindrical and shaped holes, in: Proceedings of ASME Turbo Expo 2008: Power
+for Land, Sea and Air, number GT2008-51009, 2008.
+[21] C. Liess, Experimental investigation of film cooling with ejection from a row of
+holes for the application to gas turbine blades, ASME J. Eng. Power 97 (1)
+(1975) 21–27.
+[22] P. Ligrani, C. Saumweber, A. Schulz, S. Wittig, Shock wave-film cooling
+interactions in transonic flows, J. Turbomach 123 (10) (2001) 788–797.
+[23] E. Lutum, J. von Wolfersdorf, K. Semmler, S. Naik, B. Weigand, Film cooling on a
+convex surface: influence of external pressure gradient and Mach number on
+film cooling performance, Heat Mass Transf. 38 (2001) 7–16.
+[24] F. Muldoon, S. Acharya, Analysis of k- budgets for film cooling using direct
+numerical simulation, AIAA Journal 44 (12) (2006).
+[25] F. Nicoud, F. Ducros, Subgrid-scale modelling based on the square of the
+velocity gradient tensor, Flow, Turbul. Combust. 62 (1999) 183–200.
+[26] T.A. Oliver, J.B. Anderson, D.G. Bogard, R.D. Moser, G. Laskowski. Implicit LES
+for shaped-hole film cooling flow, ASME Turbo Expo 2017 (GT2017-63314),
+2017.
+[27] T.A. Oliver, R. Ulerich, N. Malaya, R.D. Moser, Estimating uncertainties in
+statistics computed from direct numerical simulation, Phys. Fluids 26 (2014),
+035101.
+[28] N.P. Padture, M. Gell, E.H. Jordan, Thermal barrier coatings for gas-turbine
+engine applications, Science 296 (5566) (2002) 280–284.
+[29] D. Papamoschou, A. Zill, A. Johnson, Supersonic flow separation in planar
+nozzles, Shock Waves 19 (3) (2008) 171.
+[30] Y.V. Peet, S.K. Lele, Near field of film cooling jet issued into a flat plate
+boundary layer: LES study, in: Proceedings of ASME Turbo Expo 2008: Power
+for Land, Sea and Air, number GT2008-50420, 2008.
+[31] T.J. Poinsot, S.K. Lele, Boundary conditions for direct simulations of
+compressible viscous flows, J. Comput. Phys. 101 (1992) 104–129.
+[32] A. Reichert, M.T. Heath, D.J. Bodony, Energy stable numerical methods for
+hyperbolic partial differential equations using overlapping domain
+decomposition, J. Comput. Phys. 231 (2012) 5243–5265.
+[33] C. Saumweber, A. Schulz, Free-stream effects on the cooling performance of
+cylindrical and fan-shaped cooling holes, J. Turbomach. 134 (2012), 061007.
+[34] R.P. Schroeder, K.A. Thole, Adiabatic effectiveness measurements for a baseline
+shaped film cooling hole, in: International Gas Turbine and Aeroengine
+Congress and Exposition, number GT2014-25992, 2014.
+[35] F. White, Viscous Fluid Flow. McGraw-Hill Series in Mechanical Engineering,
+McGraw-Hill (1991).
+
+T.A. Oliver et al. / International Journal of Heat and Mass Transfer 140 (2019) 498–517
+[36] L. Zhong, C. Zhou, S. Chen, Large eddy simulation of inclined jet in cross flow
+with cylindrical and fan-shaped holes, in: Proceedings of ASME Turbo Expo
+2016: Turbomachinery Technical Conference and Exposition, number GT201656840, 2016.
+
+517
+
+[37] W. Zhou, B. Johnson, H. Hu, Effects of flow compressibility and density ratio on
+film cooling performance, J. Propul. Power 33 (4) (2017).
+[38] J. Ziefle, L. Kleiser, Assessment of a film-cooling flow structure by large-eddy
+simulation, J. Turbul. 9 (29) (2008) 1–25.
+
+

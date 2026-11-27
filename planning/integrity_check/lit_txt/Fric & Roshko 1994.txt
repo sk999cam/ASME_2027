@@ -1,0 +1,2248 @@
+1
+
+J Fluid Mech (1994). 1‘01 279. p p 1 4 7
+Copyright 0 1994 Cambridge University Press
+
+Vortical structure in the wake of a transverse jet
+By T. F. FRICT
+
+AND
+
+A. ROSHKO
+
+Graduate Aeronautical Laboratories, California lnstitute of Technology,
+Pasadena, CA 91125, USA
+(Received 19 August 1993 and in revised form 10 June 1994)
+
+Structural features resulting from the interaction of a turbulent jet issuing transversely
+into a uniform stream are described with the help of flow visualization and hot-wire
+anemometry. Jet-to-crossflow velocity ratios from 2 to 10 were investigated at
+crossflow Reynolds numbers from 3800 to 11400. In particular, the origin and
+formation of the vortices in the wake are described and shown to be fundamentally
+different from the well-known phenomenon of vortex shedding from solid bluff bodies.
+The flow around a transverse jet does not separate from the jet and does not shed
+vorticity into the wake. Instead, the wake vortices have their origins in the laminar
+boundary layer of the wall from which the jet issues. It is argued that the closed flow
+around the jet imposes an adverse pressure gradient on the wall, on the downstream
+lateral sides of the jet, provoking ‘separation events’ in the wall boundary layer on
+each side. These result in eruptions of boundary-layer fluid and formation of wake
+vortices that are convected downstream. The measured wake Strouhal frequencies,
+which depend on the jet-crossflow velocity ratio, match the measured frequencies of
+the separation events. The wake structure is most orderly and the corresponding wake
+Strouhal number (0.13) is most sharply defined for velocity ratios near the value 4.
+Measured wake profiles show deficits of both momentum and total pressure.
+
+1. Introduction
+The presence of a wake behind a jet in a crossflow, i.e. a ‘transverse jet ’) has been
+observed in a number of previous investigations. An assumption common to many of
+these studies is that there is a strong similarity between the near wake of the jet and that
+of a circular cylinder. This view has been encouraged by observations of periodic
+fluctuations in the wake, reminiscent of those associated with vortices which are shed
+into the wake of a bluff body, and by some flow visualizations. In contrast to that idea,
+the investigation reported here leads to the at first surprising conclusion that there is
+no analogous shedding of vorticity from the jet-crossflow interaction. Tnstead, it is the
+boundary layer on the wall from which the jet issues that is the main source of vorticity
+for the vortical structures in the wake of the jet. This conclusion was reached from the
+evidence of spectral and velocity measurements and, particularly, of flow visualization,
+which was used to characterize the wake of the transverse jet generally and to
+specifically address the question of the formation of the wake structures in this complex
+three-dimensional flow.
+Four types of coherent structure can be discerned in the near field of the jet, where
+the three-dimensional interaction between the jet and crossflow is most intense (Fric
+t Present address: GE Corporate Research and Developmcnt, PO Box 8. Schenectady. NY
+12301, USA.
+
+2
+
+T. F. Fric und A . Roslikn
+Counter-rotating
+vortcx pair
+
+FIGURE
+1 . Cartoon depicting four types of vortical structure associatcd with the transversejet near
+field : jet shear-layer vortices at the perimeter of the bending jet, the developing counter-rotating
+vortex pair, horseshoe vortices on the wall, and wake vortices extending from the wall to the jet.
+
+1990: Fric & Roshko 1988, 1991). We begin by presenting a brief review of these
+structures before addressing the wake in particular. Illustrated by the cartoon in figure
+1, they are the following: (i) the jet shear-layer vortices; (ii) the system of horseshoe
+vortices; (iii) the incipient, counter-rotating vortex pair; and (iv) the wake vortices.
+Two of these, the shear-layer vortices and the wake vortices, are intrinsically unsteady;
+the other two, i.e. the horseshoe vortices and the vortex pair, have mean-flow definition
+although they may a150 have unsteady components.
+The two photographs in figure 2 clearly show the jet shear-layer cortices, which
+dominate the initial portion of the jet and which are a result of the Kelvin-Helmholtz
+instability of the annular shear layer that separates from the edge of the jet orifice.
+Figure 2(a) shows a visualization of a transverse jet as it is typically viewed from the
+side, using smoke seeding of all the entering jet fluid to visualize its trajectory. In figure
+2(b), smoke streaklines in the centreplane of the crossflow are entrained into and
+visualize the leading edge of the deflected jet. In this photograph some smoke is faintly
+seen coming out of the centreplane from axial flow along the cores of the first few
+distorted vortex rings. These structures are of the same type as the vortex ring
+structures of free jets (Freymuth 1966; Becker & Massaro 1968; Gutmark & Ho 1983).
+Two views of horseshoe Gortices wrapping around the base of a jet issuing from a wall
+into a crossflow are shown in figure 3 . In figure 3(a), a plan view of two horseshoe
+vortices is shown: they are distinct structures until just downstream of the jet orifice,
+where the turbulence of the jet's wake is evident. Figure 3(b) shows a cross-sectional
+view of two horseshoe vortices for the same flow, which shows the flow pattern
+produced by the interaction of the horseshoe vortices upstream of the jet and thc
+Kelvin-Helmholtz vortices in the leading-edge shear layer of thc emerging jet. For
+comparison, figure 3 (c) shows a horseshoe-vortex system for the flow around the base
+of a wall-mounted circular cylinder. For both the jet and the cylinder, the approaching
+
+3
+
+1
+6
+
+Jct
+
+-1
+
+-, X
+
+FIGURE2 Transverse-jet shedi-layer structure visualized b j ( a ) a smoke-filled jet and by (h)
+smoke strenklines untrained into the leading edge of the jet V, = 2, Re,, = 3800
+
+wall boundary layer encounters an adverse pressure gradient ahead of the obstacle (the
+jet or cylinder) and separates to form horseshoe vortices.
+The third type of structure we list is the cortex pair, which occurs as a result of the
+impulse of the jet on the crossflow (Scorer 1958, pp. 193 -195; Broadwell & Brcidenthal
+1984). It begins to take form in the near field. as indicated in figure 1, and becomes
+dominant in the far field, where it is synonymous with the jet'^ A partial list of the
+numerous experimental studies of the vortex-pair structure of the jet includes the
+
+4
+
+T. F. Fric and A . Roshlco
+
+FIGURE
+3 . Horseshoe-vortex system at the wall. ( u ) Plan view at the base of a transverse jet with jetto-crossflow velocity ratio L'R = 10, (h) centreplane section showing two horseshoe vortices (indicated
+by arrows) upstream of a V, = 10 jet and their interaction with shear-layer vortices of the emerging
+jct. and (c) plan view at the base of a wall-mounted circular cylinder. Crossflow Reynolds number
+equals 3800 in each case.
+
+Vortical structure in the wake of u trunscerse jet
+
+5
+
+following: Keffer & Baines (1963), Pratte & Baines (1967), Kamotani & Greber (1972),
+and Fearn & Weston (1974).
+Finally, also sketched in figure 1 are the wake uovtices, which are the main subject
+of this paper. The wake vortices are perhaps the most intriguing structures in the near
+field. They have some characteristics which are similar to wake vortices of solid
+cylinders, but differences between the jet (a fluid) and the cylinder (a solid) as obstacles
+to the crossflow suggest significant differences in how the wake vortices should form.
+Furthermore, if the ‘wake’ is defined as the region downstream of the jet, between the
+jet and the wall, it can immediately be seen that this is fundamentally different from a
+bluff-body wake. Here, the deflecting jet follows the wake downstream. continually
+enlarging its span. Each wake vortex, as a structure, has a termination on the wall, just
+as behind a bluff body, but the other end terminates on the jet itself. This coincidental
+development of the jet and wake presents a further conceptual difficulty for comparison
+with ‘ shedding’ from a two-dimensional cylinder.
+It should be emphasized that the counter-rotating vortex pair and the wake vortices
+are quite distinct, different structures, with differenl generic origins. The vortex pair is
+essentially a manifestation of the mean flow field induced by the impulse of the initial
+(normal) jet, which can be considered simply as providing a transverse force, cf. a
+lifting wing. This point is elucidated by Broadwell & Breidenthal(l984). The trajectory
+of the jet is really composed of two elements - the motion carrying it further from the
+wall in the transverse direction, resulting from the initial impulse or jet direction, and
+the motion carrying the trajectory in the crossflow direction. The latter is a result of the
+entrainment of crossflow fluid by the jet (Coehlo & Hunt 1989). In the near field the
+jet does have a displacement effect on the crossflow, and through that an effect on
+the wall boundary layer, inducing both the horseshoe vortices and wake vortices. The
+connection between the wake vortices and the wall boundary layer is an important
+aspect of our results that will be developed in later sections.
+In many transverse-jet experimental and numerical studies the role of the wake has
+generally not been addressed. Even though the wake has been thought to contain
+vortical structure similar to that in wakes of cylinders, much of the past emphasis has
+been on the counter-rotating vortex pair, and relatively few investigators have
+measured or visualized structure in the wake region. Some of the exceptions are
+McAllister (1968) and Reilly (1 968) who extracted wake Strouhal frequencies from
+flow visualization, and McMahon, Hester & Palfrey (1971) and Moussa, Trischka &
+Eskanazi ( 1977), who detected characteristic wake frequencies from hot-wire
+measurements. McMahon et al. also visualized structure in the wake of the jet by
+placing a mesh of tufts across the wake. Kuzo & Roshko (1984), using dye injected into
+the wake, visualized the wake vortices and found that they exist at least a hundred jet
+diameters downstream of the orifice. In fact, those far-field wake experiments in part
+motivated the present investigation of the near-field wake. More recently, Wu, Vakili
+& Yu (1988) visualized coherent wake vortices behind asymmetric jets in crossflow,
+referring to them as ‘spin-off’ vortices. Those vortices were visualized by placing the
+dye port in the wake just downstream of the jet. Wu et al. (1988) did not report wake
+(or ‘spin-off’) vortices for symmetric jets.
+We reiterate that the usual point of view in observations of transverse jets is that the
+formation of their wake vortices must be analogous to the shedding of vortices from
+solid cylinders. But the fact that the jet boundary is not a solid surface presents a
+difficulty for vortex shedding and suggests that this may lead to a fundamental
+difference between the two kind of wakes. In earlier studies in which the issue was first
+addressed (Fric 1990; Fric & Roshko 1991), we suggested that transverse-jet wake
+
+6
+
+T. F. Fric and A . Roshlto
+
+From blower and
+flow management
+
+t
+
+False
+sidewall
+(crodlow wall)
+
+FIGIJR~
+4. Details of the experimental set-up with the jet injected at 90" to the crossflow.
+
+vorticity originates from the boundary layer on the wall from which the jet issues. To
+obtain better understanding of the differcnces betwccn cylindcr and jet wakes and of
+the formation of transverse-jet wakc vorticcs, we werc lcd to the cxperimental studies
+described here. Throughout, the emphasis of this paper is on describing the near-field
+jet wake and presenting a mechanism of wakc formation which is consistent with our
+observations and with vorticity generation theory. Establishing the source of vorticity
+for the wake structures was considered essential to understanding them.
+The experimental apparatus and techniques used are briefly described in $2. Some
+of the wake results from smokc-wire flow visualization are shown in $ 3 . Wake Strouhal
+frequency measurements, and velocity and total pressure profiles in the transverse jet
+wake are presented in $54 and 5 , respectively. The issue o f sources of vorticity is
+diwussed in $6.1, while its significance to thc present problem is addressed in $6.2. In
+#6.3 and 6.4 a series of specific flow visualizations and measurcrnents are then used to
+show that the source ofthe wake vorticity is the boundary layer on the wall from which
+the jet issues. Comparisons are made betwccn the transversc jet wake and circular
+cylinder wake. Having established the source of vorticity, a wake formation mechanism
+is proposed and discussed in $6.5. Other results not discussed here are available in Fric
+(1990).
+
+2. Experimental set-up
+The experiments were done in an open-return low-speed wind tunnel of cross-section
+0.5 m by 0.5 m. Nominal mean crossflow velocities q,ranged from 1.5 to 4.5 m s-l;
+
+Vorticul ytructure in the wake of a tyansi7erse jet
+
+7
+
+flow uniformity across the span of the test section upstream of the jet installation was
+better than 2 'In Turbulence intensity levels were measured at 0.25 %n. 0.2 %, and 0.2 A!n
+for L$ = 1.5, 3 and 4.5 m s-l, respectively. The wind tunnel test section with the jet
+installation and other elements of the experimental set-up are shown in figure 4.Some
+of the experimental issues are discussed below. More details are given in Fric (1990).
+Since the flow at the surface from which the jet issues was found to be important
+during the early stages of these experiments, a false wall into which the jet nozzle exit
+was flush-mounted was installed in the test section, as shown in figure 4. This provided
+better control of the boundary layer on the wall through which the jet was injected. In
+order to avoid a separation bubble at the contoured leading edge of the false wall, the
+pressure drop through the crossflow portion of the test section had to be nearly
+matched to that through the gap between the false wall and tunnel wall. This was
+accomplished by means of control screens of appropriate solidity at the downstream
+end of the crossflow portion of the test section. (Note that all references to
+'downstream' and ' upstream' in this paper denote the nominal crossflow direction.) In
+the rcmainder of this paper, the false wall is called the 'crossflow wall' and the
+boundary layer on it the ' crossflow boundary layer'. The internal boundary layer on
+the wall of the jet nozzle is called the 'jet boundary layer'.
+Tablc 1 shows measured nominal crossflow boundary-layer displacement thicknesses
+S, at X / D l = 0 for each of three nominal crossflow velocities and for two crossflowwall upstream lengths L J D , . D,is the jet diameter, (Nominal conditions are those
+where the effects of the jet on the crossflow and vice versa are not present.) L , represents
+the distance from the leading edge of the crossflow wall to the centre of the jet orifice;
+L J D , was either 5 or 10 in these experiments. In addition, table 1 shows turbulence
+intensity levels u ~ n z s / l in
+/ c pthe boundary layer at Z where the mean velocity U = &/2.
+It shows that the undisturbed or nominal crossflow boundary layer is laminar in all
+cases. The crossflow Reynolds number Recl is defined as t & D , / v , where v is the
+kinematic viscosity of air.
+The incompressible jet which issues into the crossflow was supplied by a 3.8 cm exitdiameter nozzle. '4matched cubic contour, with its point of inflection at 60 '/" from the
+nozzle inlet, was selected for the nozzle contraction. and the nozzle area contraction
+ratio was nine. The nozzle was designed to prevent boundary-layer separation at its
+inlet, to prevent the formation of Gortler vortices on its concave portion, and to
+produce a nearly top-hat velocity profile at its exit. The jet was powered by a radial
+vane centrifugal blower. Standard techniques were used in the design of the flow
+management section (screens and honeycomb) located between the blower and nozzle.
+Jet velocity y was continuously variable between 3 and 45 ni s-l. Table 2 shows the
+nominal jet-exit boundary-layer displacement thickness 8, and po tential-core turbulence intensity levels M . ~ , ,for
+/ ~the relevant range of jet Reynolds numbers Re?,
+which are defined a5 C.$D J v .
+An important parameter defining the transverse jet is the jet to crossflow velocity
+ratio V,. In these experiments, 2 < Vfi6 10. For V, in this range, and /I
+=
+,3.8 cm, the
+trajectory of the jet is such that any interference effects of the wall opposite to the
+crossflow wall, 12 jet diameters away, should not affect the present results and
+conclusions about the mechanism of wake vortex formation.
+The smoke-wire flow visualization technique, which places closely spaced streaklines
+into the flow, was used extensively in this study. This technique is described by Corke
+er al. (1977). In each of the instantaneous photographs included in this paper the jet
+is issuing toward the viewer or, in the conventional side view. from the bottom of the
+photograph. The crossflow is always from left to right, and the smoke wire IS typically
+
+8
+
+T. F. Fric und A . Roslzko
+
+1.5
+1.5
+3.0
+3.0
+4.5
+4.5
+
+3 800
+3800
+7 600
+7600
+11400
+11400
+
+5
+10
+5
+10
+5
+10
+
+0.056
+0.087
+0.039
+0.055
+0.029
+-
+
+0.0046
+0.0046
+0.0044
+0.0041
+0.0073
+0.0040
+
+TABLE1. Displacement thicknesses and turbulence intensity levels of the nominal crossflow
+boundary layer at X/D,= 0.
+
+0.012
+3
+7 600
+0.045
+0.012
+0.039
+15 200
+6
+0.012
+0.037
+22900
+9
+0.012
+0.035
+30 500
+12
+0.010
+38 100
+15
+0.033
+0.032
+0.0098
+45 700
+18
+6 1 000
+24
+0.031
+0.0079
+0.031
+0.0072
+68 600
+27
+0.0067
+76 200
+0.031
+30
+91 400
+0.030
+0.0062
+36
+0.029
+0.0052
+114000
+45
+TABLE2. Displacement thicknesses of the nozzle boundary layer, and potential core turbulence
+intensities at the exit of the jet nozzle ( Z / D , = 0) in the absence of crossflows, i.e. at nominal
+conditions.
+
+Red
+3800
+
+7600
+
+11400
+
+v,
+
+2
+4
+6
+8
+10
+2
+4
+6
+8
+10
+2
+4
+6
+8
+10
+
+vIac,ua*
+
+2.26
+4.19
+6.17
+8.16
+10.5
+2.07
+3.98
+6.12
+8.30
+10.6
+2.02
+4.08
+6.23
+8.42
+10.7
+
+TABLE3. Comparison of nominal (V,) and actual
+
+velocity ratios.
+
+Vortical Jtructure in (he wuke of a trunsvrrsr jet
+
+9
+
+FIGURE
+5. Cross-sectional views of the flow around jets and their wakes for velocity ratio V, = 2 .
+Re, = 7600. Smoke streaklines originate at different distances from the crossflow wall for each
+photograph: (a) Z J D j = 0 + ; (b) ZJDj = 0.5; (c) Zhll,/D3
+= 1.0 Figures 6 9 show corrcsponding
+photographs for jets at higher velocity ratios.
+
+T. F. Frir and A . Roslko
+
+FIGURE
+6 Cross-sectional \iews for V,
+
+=
+
+4 Rr,
+
+=
+
+1 1 400. (a) Z>,,/D,= 0 + ; (h) L A u / D=
+2 0 5;
+
+(c) L,,/D, = 1.0
+
+11
+
+FIGURE
+7. Cross-sectional views for P;i
+
+=
+
+6. Rec, = 3800. (u) Z , , / D , = O+ , (b) Z % t L / D=, 0.5;
+
+(c) .Z+,c/Dj= 2.0.
+
+12
+
+I,.F. Fric and A . Roshko
+
+upstream of the viewing area. Two common smoke-wire orientations are depicted in
+figure 4. In some cases the smoke streaklines begin in a Y = constant plane while in
+other cases they begin in a Z = constant plane. We shall refer to the corresponding
+pictures as ‘cross-sectional’ or simply ‘sectional’ views, but in fact the smoke can
+migrate out of the plane of injection as the flow dictates and, since general lighting was
+used and not ‘sheets‘ of light. this three-dimensionality is photographed. It should be
+noted that for the cases where the jet issues toward the viewer the camera is not
+necessarily coincident with the Z-axis. Therefore using the crossflow wall in the
+background of the photographs to visually gauge the X-position of flow features
+relative to the jet orifice can be slightly inaccurate. The photographs, obtained with the
+smoke-wire technique, show that the transverse jet wake has a rich and complex
+structure. When the smoke is injected directly into vorticity-carrying fluid, such as the
+crossflow boundary layer or jet boundary layer, it marks the progress of that vortical
+fluid and the formation of vortices, if that occurs. (The smoke, however, diffuses at a
+rate slower than that of the vorticity.) When the smoke is injected into irrotational
+flow, it may still reveal the formation of vortices when it is caught up in circulating
+flows.
+TSI single hot-wire probes, traversed by a computer-controlled XYZ traversing
+system, were used for velocity and spectral measurements. Power spectra were
+obtained using an HP3582A real time spectrum analyser, and the characteristic
+dominant flow frequencies were obtained from the r.m.s. average of 32 individual
+spectra. Wake total pressures were also measured, using a United Sensor Venturi Kiel
+probe in conjunction with a Datametrics pressure sensor and electronic manometer.
+Values of crossflow velocity U,, and jet velocity q used here are nominal values. That
+is, they are the crossflow conditions with no jet flow and jet conditions with no
+crossflow, respectively. Turning on either the crossflow or the jet changes the velocity
+of the other and therefore the nominal and actual velocities are not in general the same.
+Table 3 lists nominal velocity ratios V, and the corresponding actual values, VRactuaI.
+Contributing factors to the difference between the two include pressure changes in the
+wind tunnel test section and blockage effects of the deflecting jet. The actual velocity
+ratios generally prove to be slightly greater than the nominal ones.
+
+3. Visualization of wake structure
+It is appropriate to begin our presentation of results with flow visualization, for it
+was visualization of the wake structure which gave important insight into the flow and
+guided us in subsequent measurements. In this section we present photographs which
+are examples of cross-sectional and side views of the jet-wake structure for the range
+of velocity ratios from 2 to 10. For both views, comparisons are made with the wake
+of a solid cylinder which is attached at one end to the crossflow wall and is free at the
+other. Immediately important differences between jet and cylinder wakes will be
+evident, and it was differences such as these which led us to investigate jet-wake
+vorticity origins more carefully. The side views of the jet-wake structure are the first
+results shown which suggest that the source of vorticity for the jet wake is the crossflow
+boundary layer.
+In discussing the flow visualizations, terms such as ‘ vortical structure’ and ‘vortex’
+will be used equivalently to refer to a flow feature if it is relatively well organized and
+appears rotational in nature. Although this is subjective and leaves the determination
+open to some interpretation, what can be considered a vortical structure is quite clear
+in most cases.
+
+13
+
+Vurticat structure in the wake of a transverse jet
+
+FIGURE
+8. Cross-sectlonal views for V,
+
+= 8. Re(, = 3800.
+( c ) Z , v / D J= 2.0.
+
+( 0 ) Z,,,/DJ=
+
+0 + ; ( h ) z,,,/D,
+
+=
+
+0.5;
+
+T. F. Fric and A . Roshko
+
+14
+
+(4
+
+FIGURE
+9. Cross-sectional views for V,
+
+=
+(L)
+
+10. Re,, = 3800. ( a ) Z,,/D,
+Z J D , = 2.0.
+
+=
+
+0+ ; ( h ) Z,,,/D,
+
+=0
+
+5;
+
+Vorticni ,ctructurc in thc n-akr of
+
+N
+
+transrwse jet
+
+15
+
+Figures 5-9 show sectional views of transverse jet wakes for five different velocity
+ratios V,, ranging from 2 to 10. The photographs also show the path of the crossflow
+around the jet and itc entrainment into the wake. In each photograph the jet, near the
+left side of the photograph, issues toward the viewer, and the crossflow is from left to
+right. The three photographs which comprise each figure represent three different
+initial smoke-wire positions relative to the crossflow wall. Z,, / D 3 indicates the plane
+into which the smoke-wire injects smoke streaklines.
+The wake structure near the crossflow wall is visualized in parts (u) of figure 5-9, in
+which ZJ 0, = 0 + ( Z , , / D , = 0 + indicates that the smoke streaklines have been
+injected into the croscflow boundary layer approaching the jet). In each case, at least
+one horseshoe vortex is seen to wrap around the jet near the orifice. Downstream from
+the orifice, further structure is seen in the near-wall wake. The wakes for velocity ratios
+of 4, 6 and 8 show structures staggered from side to side, while the wall patterns for
+V, = 2 and 10 are significantly different. The portion of the near-wall wake within a
+couple of jet diameters of the orifice is most ‘open’ for V, = 2. At higher velocity
+ratios, this portion of the flow becomes more closed as the smoke wraps more tightly
+around the jet. For V, = 10. it is difficult to discern the larger-scale features that are
+prominent at lower velocity ratios.
+Wake visualizations for two off-wall smoke-wire positions are also shown for each
+of the five velocity ratios in parts ( h ) and (c) of each figure. These cross-sectional views
+clearly show wake structure, again with a qualitative dependence on velocity ratio. For
+= 2 and 4 (figures 5 b, c and 6 h, c, respectively) the visual widths of the wakes are
+similar for each of the two off-wall smoke-wire locations. However for VR= 8 and 10
+(figures 8h, c and 9b, c, respectively), the visual wake widths appear narrower for
+Z,,,/D, = 2 than for Z,,/D, = 0.5. The significance of this V, effect will become clear
+later.
+It is instructive to compare the transverse-jet wakes with analogous views of a
+circular cylinder wake. Figure lO(n) shows the near-wall wake of a wall-mounted
+circular cylinder, and figure lO(b) shows the cylinder wake further from the wall. The
+cylinder used here had an aspect ratio A , of 6, chosen to roughly mimic an equivalent
+penetration distance of a V, = 4 jet. Comparing these two photographs with the
+transverse-jet wake photographs reveals telling differences between the wakes. Figure
+10(u) shows that the near-wall wake of the cylinder is more open than that of the jet,
+particularly for velocity ratios greater than 2. The view in figure lO(b),at some distance
+from the wall, is the well-known one, showing the early separation on the cylinder, a
+wide open near wake and the development of alternating vortex structure, the so-called
+‘shedding’ of vortices. This is in contrast with the jet-wake images, which show the
+external flow closing around the jet much more completely, little or no open wake
+(away from the wall), and early formation of vortical structure.
+Additional sectional views of jet wakes are shown in figures 11 and 12. Figure 11
+shows, again, some remarkable wake structure typically seen at velocity ratios near 4
+and 6. Note that even though vortices of alternating signs are observed, the vortices do
+not necessarily lie in a well-ordered array as in the K i r m i n vortex street. Figure 12
+shows wakes at the highest velocity ratio (V, = 10) and crosdlow Reynolds number
+(Recj= 11400) investigated. The near-wall wake structure of figure 12(n) is quite
+disordered in appearance, as is the case in figure 9 ( a ) . Clearly evident in this
+photograph is the fine-scale structure at the edge of the wake along the wall. This
+structure is common to wakes at this velocity ratio. Above the boundary-layer region,
+figure 12(b) shows a relatively narrow wake with vortices clearly present.
+Figures 5-9, 11 and 12 exhibit the presence of vortex structure, in some cases
+
+rR
+
+T. F. Fsic and A . Roshko
+
+FIGURE
+10. Cross-sectional views of a wall-mounted circular cylinder with aspect ratio A , , = 6. In (a)
+smokc strcaklincs originate in the crossflow boundary layer, and in (h) they originate half a cylinder
+diameter away from the wall.
+
+alternating, in the jet wake. reminiscent of but different in some respects from that of
+a cylinder wake. What is remarkable, however, is that those vortices do not show up
+in side views in which the jet was visualized by placing smoke into the body of the jet
+(figure 2 4 or by placing it into the circumferential layer of the jet (figure 2b). If
+
+17
+
+Vorticnl structurr in the wuke qf n trniiwerse jet
+
+FIGURE
+11. Cross-cectional views of jet wakes R e ,
+Z,,/D,
+
+=
+
+0.25; ( c ) V,
+
+&
+
+= 7600. (a)
+= 4,
+= 6, ZF,L/D
+=) 0.5.
+
+ZJD,
+
+=
+
+1 ; (6) V, = 6 ,
+
+T. F. Frir and A . Roshka
+
+FIGURE
+12. Cross-sectional views of jet wakes for V;;, = 10 and Re,,
+(b) Z S " / D =
+, 1.
+
+=
+
+11400. (a) Z 5 , / D ,= O + ;
+
+vorticity were being shed from the jet Circumferential layer then it ought to be
+accompanied by smoke which should mark the wake vortices that are seen i n the crosssectional views. Correspondingly, Kuzo & Roshko (19x4) had visualized the jet-wake
+vortices in side view by injecting dye not into the circumferential layer but just outside
+it, from where it was entrained into the wake.
+With these various indications that the jet-wake vortex structurc docs not havc its
+origins in the jet vorticity we speculated that, the only other source of vorticity being
+the wall boundary layer, the latter must be the source of the wake vortex structures.
+Thus we wcre led to the experiment illustrated in figure 13, in which smoke was injected
+only into the wall boundary layer, upstream of the jet, by a smoke wire placed normal
+lo the plane of the photograph and located just above the wall ( Z J D , = O + ) . (This
+is the same arrangement as for parts (u) of figures 5-9.) Note also that this technique
+
+Vortical structure in the wuke of a transverse jet
+
+19
+
+seeds only a thin sheet of the crossflow boundary layer, and thus only a portion of
+vorticity in the layer is marked. With this arrangement we see in figure 13 that the wake
+uortices are cisualizrd but the jet is not marked, indicating again that the vorticity in
+the wake vortices originates in the wall boundary layer, not the jet. As expected, this
+is in contrast with the wake of a solid cylinder (figure 14): with the same placement of
+the smoke wire in the wall boundary layer, the wake vortices are not visualized.
+The dots drawn on these photographs indicate the outer boundary of the deflected
+jet, as deduced from the envelopes of visible smoke on photographs like the one shown
+in figure 2(a). Within the portion visualized the wake vortices are generally tilted
+somewhat with respect to the initial jet direction, and they extend from the crossflow
+wall to the deflecting jet, lengthening as the jet trajectory takes them further from the
+crossflow wall. especially at higher velocity ratios. The inferred interaction between the
+wake vortices and the jet is discussed further in 56.
+These side-view wake visualizations also suggest a qualitative dependence on
+velocity ratio. Figure 13( a ) indicates that the wake structures are not well defined for
+V, = 2. As the velocity ratio is increased to 4 and 6 (figures 13b and 13c, respectively),
+the vortices are seen more clearly. Particularly at V, = 4, the structures are well
+organized and evenly spaced. Above VR.= 6 there is a change. from wakes whose
+structures are hirly uniform along their spans to wakes in which dense clumpy
+structures near the crossflow wall are joined to very thin strand-like structures
+extending to the deflected jet. At these higher velocity ratios of 8 and 10 most of the
+smoke, which originates in the crossflow boundary layer, stays within one or two jet
+diameters of the wall. This dependence on velocity ratio is addressed again, in 56.5, in
+the discussion of a formation mechanism.
+At the higher velocity ratios of 8 and 10 it appears that the wake vortices are so
+ctretched that smoke only faintly visualizes the thin segments away from the wall.
+These vortices, or more precisely their induced flow. are more vividly seen if smokc is
+injected directly in the wake region. This is the case in figure 15, where the smoke wire
+was placed in the wake and aligned in the Z-direction (the smoke wire can be ‘seen’
+in the photographs since the smoke streaklines begin at itc location). In figure 15(a),
+the smoke wire is placed two diameters into the wake ( X J D , = 2), and in figure 15(b),
+it is six diameters from the orifice ( X 5 J D 1= 6). These show the thin vortices more
+clearly at the higher velocity ratios as the smoke is entrained by them.
+4. Wake Strouhal frequencies
+To characterize the jet wakes further it is of interest to examine whether the vortical
+structures convect past a fixed point at characteristic Strouhal frequencies. It is well
+known that there is a characteristic Strouhal number for the Karman-vortex wake of
+flow past a circular cylinder, and that over Reynolds numbers in the range of the
+present experiments it is nearly constant. Thus, frequency measurements in the jet
+wake can provide a further comparison with solid cylinder wakes. We present these
+results in terms of a wake Strouhal number St,, based on the crossflow velocity, jet
+diamcter and wake frequency.
+The degree of repeatability of S t , for fixed parameters is shown in figure 16(a),
+which suggests that, at least for Recf = 3800 and L,/Dj = 5, there is a well-defined range
+of St,, for velocity ratios near the value 4. There is a distinct change of St,,, at V, % 5.5
+and another more variable one near V, = 3. Figure 16(b) shows St, us. VR for five
+combinations of crossflow Reynolds number Re, and crossflow wall length L,/D,.
+Evidently St,, depends on both of these parameters as well as velocity ratio V,, and
+
+T. F. Fric and A. Roshko
+
+20
+
++Jet+\
+
+’X
+
+FIGURE
+13(u-c). For caption see facing page.
+
+Vortical structurr in lhe kvake of a transtwse jet
+
+21
+
+(4
+
+FIGURE
+13. Side vicws of wake vorticcs. Wake structure is visualized by smokc-sccding the crossflow
+boundary layer with a smoke wire ( Z b u / U=
+3 0+). Recf = 3800. (a) V,, = 2 ; (b) V , = 4; (c) y l = 6 ;
+( d ) V,, = 8: (e) V,, = 10.
+
+changes are sometimes rather abrupt. Again, in the range of V, near 4 there is less
+variability and less dependence on the parameters. The values in this range are near
+St, = 0.13, quite different from the well-known value of about 0.21 for circular
+cylinders in the same range of Reynolds number. We also noted a range of small
+variability near V, = 2, with St,, % 0.16.
+A striking dependence of power spectra on velocity ratio was also observed, with the
+sharpest spectra measured near V, = 4 for all crossflow Reynolds numbers and wall
+lengths. An example is shown in figure 17(a). The spectra are least sharp (e.g figure
+17b) near VK = 3 and 6, where there is also greater variability and dependence of St,
+on Recf.From our limited data, there are no clear trends with variations in L,/D, and
+Scf/D,. However, the variations of the wall boundary layer were not large in this
+
+22
+
+T. F. Fric and A . Roshko
+
+FIGURE
+14. Side view of a wake of a wall-mounted circular cylinder when the crossflow boundary
+/D,= 0 + ). Contrary to the case of the transverse jet (figure 13), the
+layer is tagged with smoke (Z??,
+smoke remains near the wall.
+
+investigation; it is possible that large changes in the crossflow boundary-layer thickness
+or a turbulent crossflow boundary layer would have different effects.
+For comparison there are wake frequency data measured by McAllister (1969),
+Reilly (1968), McMahon et al. (1971), and Moussa et a/. (1977). Those values of 3,.
+are in the same range as the present results. The closest direct comparison is between
+the data of Moussa et al. for Recf = 8000, L J D , = 2.7 and the present data for Recf =
+7600, L J D , = 5. In particular, their results agree quite well near V, = 4, and they
+comment that a change in ‘regime’ occurs near V, = 3. Since no elaboration is given,
+it is not clear whether their observation corresponds to the poorly defined spectral peak
+and the discontinuity observed near Vn = 3 in the present results (see, again, figure 16).
+5. Wake profiles
+For a further comparison of transverse-jet wakes with wakes of solid cylinders. we
+measured a few profiles of velocity and total pressure. The results show velocity and
+total pressure deficits for the jet wakes. Ordinarily a momentum deficit in the wake of
+a solid body is a measure of the drag force on the body; in a wind tunnel this force is
+transmitted to its wall. There is no corresponding ‘drag’ on the transverse jet from its
+wake. Furthemiore, a total pressure deficit in a wake can be a measure of dissipation
+and, in the case of the solid cylinder. is also connected with its drag. Again, the
+connection with a transverse jet is not so clear. Since flow visualization indicatcs that
+there is transport of boundary-layer fluid into the jet wake, it is possiblc that the lower
+momentum and total pressure of that fluid contribute to the corresponding wake
+deficits. In the light of such issues, it should be of interest to measure these quantities
+for the transversc jet and try to understand their significance.
+Velocity data were obtained with a single-wire hot-wire probe traversed from the
+centreline Y / D , = 0 to Y / D j = 3 , where the data asymptote to a free-strearn value close
+to V,. We measured profiles at three downstream distances X / D , = 3.5. 5.5 and 7.5,
+
+Vorticnl structure in the wake of n trunsuerw jet
+
+23
+
+FIGURF15 Side vieus of wake vortices with smoke injected directly into the wake (61) V, = 8,
+RecT= 3800, ,%‘\,/Dl = 2, qu/’DJ= -0.5; (6) c/, = 10, Re,, == 11400, X,,/D, = 6. Iqu/’D?
+= 0.
+
+T. F. Fric and A . Roshko
+
+24
+0.30 -,
+
+: (4
+
+0.25
+0.20
+
+---
+
+run 1
+
+A
+
+run 2
+
++
+
+run 3
+
+run 4
+
+3
+
+6
+
+o
+
+~o~=2-oo
+$00
+
+o+
+
+A>$+
+
+0.15 -+OPCpm&
+
+A
+
+0.10 _ -
+
+A *o
+
+A
+
+0
+
+O
+
+A
+
++
+
+n
+
+t
+
+0
+
+0.05 i
+
+0.30
+
+0.25
+
+0.20
+
+I
+
+---
+
+Red
+
+L,'D,
+
+0
+
+3800
+
+5
+
+A
+
+7600
+
+5
+
++
+
+11400
+
+5
+
+3800
+
+10
+
+7600
+
+10
+
+X
+
+2 0.15 --
+
+0.10 --
+
+I
+
+I
+
+2
+
+I
+f
+
+I
+I
+
+4
+
+I
+
+I
+
+I
+
+6
+
+I
+1
+
+I
+I
+
+8
+
+I
+
+I
+
+I
+
+10
+
+VR
+
+FIGURE
+16. Wake Strouhal number St,. (a) Degree of repeatability of the measurement; ( b ) data
+for several combinations of Re, and LJD,. measured at X / D , = 3.5, Y / D , = 1.5, and Z I D , = 0.5.
+
+and at three distances from the crossflow wall, Z / D j = 0.5,2.5, and 4.5. The maximum
+r.m.s. velocity fluctuations for the data were generally about 20% of the crossflow
+velocity. Such turbulence levels introduce some error to the measured mean velocities.
+Also, it was observed that there was flow in the Z-direction along the axes of the
+
+-
+
+20
+
+I
+
+'
+
+I
+
+I
+
+f,,
+
+-
+
+(4
+
+20
+
+I
+
+I
+
+I
+
+I
+
+(b)
+
+J,
+
+-
+
+1
+
+bD
+
+-
+
+s0
+
+:
+
+60
+
+:
+
+0
+
+4
+
+-80 .
+
+I
+
+I
+
+I
+
+I
+
+~
+
+- 60
+
+-
+
+-80
+
+I
+
+I
+
+I
+
+I
+
+vortices. We assume that this does not introduce significant error in the U-values since
+the hot-wire was positioned such that it was least sensitive to flow in that direction. Jetwake velocity profiles for two different wall boundary-layer thicknesses, with L J D j =
+5 and 10, were obtained for two jet-velocity ratios, V, = 4 and 8. Profiles for the wallmounted cylinder were also measured for comparison. Cylinder wake data at Z / D , =
+5.5 are not shown since that position is significantly affected by flow around the end
+of thc cylinder, whose aspect ratio A , = 6.
+Figure 18 shows some of the velocity profiles that were measured. The mean
+streamwise component of velocity is non-dimensionalized by qf.
+This figure shows jetwake profiles for a relatively thin crossflow boundary layer ( L J / D j= 5) and a relatively
+thick crossflow boundary layer ( L J D , = lo), and cylinder wake profiles. These profiles
+were measured at X / D , = 5.5. The velocity deficits are typically greater for the solid
+cylinder wake than for the transverse jet wake, and this is seen in figures 18(h) and
+18(c). Although the differences between the two sets of transverse-jet wake data are
+small and in some cases negligible, most of the profiles for L,/D, = 10 show larger
+deficits than those for L J D , = 5. For instance figures 18(u) and 18(c) show a slightly
+larger velocity deficit for the thicker crossflow boundary layer. In figure I8(b), the
+difference is negligible. In figure 19 we show estimates for wake displacement thickness
+6,. It is estimated from
+
+We recognize that this equation is only an estimate; since only the X-velocity
+component, U , is used, any transfer of mass in the Y- and 2-directions is not taken into
+account. However, for the purposes of an estimate and in particular for comparing the
+wakes for the two crossflow boundary-layer thicknesses. equation (1) should be useful.
+We assume that the mass-transfer contribution from the other two directions is similar
+in the two cases and would therefore not hurt the comparison.
+Figures 19(a) and 19(h) show (S,,/Dj data for wakes of velocity ratios 4 and 8,
+respectively. Dependence on distance from the crossflow wall, downstream distance,
+and boundary-layer thickness is suggested. In particular, both figures show that wake
+displacement thicknesses are larger for thicker boundary layers, in most cases. This
+result indicates that the wake may be sensitive to changes in the crossflow boundary
+layer. If the wake vortices were formed by some shedding-like mechanism only at the
+
+26
+
+T. F. Fric ~ i n dA . Roshko
+
+0
+
+0.5
+
+10
+
+15
+
+2.0
+
+2.5
+
+3.0
+
+0.5
+
+I .0
+
+1.5
+
+2.0
+
+2.5
+
+3.0
+
+0.5
+
+1.o
+
+I .5
+
+2.0
+
+2.5
+
+3.0
+
+1.5
+
+1.0
+
+u
+Ucf
+
+0.5
+
+0
+
+1.0
+
+0.5
+
+0
+
+Y/Dj
+FIGURE
+18. Illustrative set of wake velocity profiles for jet of V,: = 4 for two boundary-layer thicknesses
+. . A.. ' , L,/D, = 10) and for a wall-mounted cylinder (- + -, LJD; = 5).
+Downstreani location is X / D , = 5.5. (uj Z I D , = 4.5; (b) Z I D , = 2.5: (cj Z / D j = 0.5.
+
+(e,
+L,/D, = 5 ;
+
+jet-crossflow interface, we would not expect this sensitivity. However, if the wake
+forms from vorticity originally in the boundary layer, a dependence on S,, may be
+expected. Furthermore, a comparison of figures 19(a) and 19(b) shows that S,/D,
+dependence on distance from the crossflow wall is different at V, = 4 and 8. Other
+differences between wakes a t lower and highcr velocity ratios have been noted
+previously.
+Wake total pressure measurements on the Y = 0 plane were also obtained, using a
+
+1.0
+
+Vortiral structure in the wakc
+
+1
+
+of
+
+n transcerse .jet
+
+x
+
+1.2
+
+t
+
+X/D,
+
+L/D,
+
+0
+
+3.5
+
+5
+
+1.o
+
+A
+
+5.5
+
+5
+
+0.8
+
++
+
+7.5
+
+5
+
+0
+
+3.5
+
+10
+
+m
+
+5.5
+
+10
+
+7.5
+
+10
+
+1
+
+2
+
+3
+
+4
+
+-
+
+X
+~.
+44.
+
+DJ
+
+2
+0
+
+A
+
+-
+
+0
+X
+
++
+
+A
+
++
+
+0.2
+
+5
+
+0
+
+ZIDj
+FIGUKF
+19 Estimates for wake displacement thicknesses Re,,
+
+0.6
+
+X
+
+0.4
+
+t
+0
+
+27
+
+1
+
+2
+
+3
+
+4
+
+5
+
+ZIDj
+=
+
+3800 (a) V , = 4, (b) V,
+
+= 8.
+
+Venturi Kiel probe. Since the total pressures measured with the probe depended (weakly
+for a Kiel probe) on the alignment with the flow direction, the probe was rotated in the
+Y = 0 plane until a maximum value was measured. Results at Recf = 3800 are shown
+in figure 20 for V, = 4 and 8 jets, and for the wall-mounted circular cylinder. The total
+pressure coefficient Cptot,defined a s
+
+is plotted against the downstream distance from the no.zzle or cylinder. 47rroke
+is the
+local wake total pressure and p f c f is the crossflow total pressure. The negative values
+represent total pressure dejicit.
+Figure 20 shows differences in total pressure trends for the V, = 4 and 8 wakes and
+the cylinder wake along the wake centreline. For V, = 4 (figure 20a) the total pressure
+deficit increases with distance from the wall. Conversely, at the higher velocity ratio of
+8 (figure 20h) it decreases and then levels off with distance from the wall. The reason
+for this difference between the two wakes is not clear, but it may be related to
+differences in wake structure at lower and higher velocity ratios. When seeding the
+crossflow boundary layer with smoke our flow visualization revealed that the vortical
+wake structure at VR= 4 is uniform along its span while at L$ = 8 most of the smoke
+remains closer to the wall. These observations may explain why the largest total
+pressure deficit for VR = 8 is near the wall, assuming the wake structure visualized
+contains (lower total pressure) boundary-layer fluid. On the other hand, we cannot
+explain why the total pressure deficit would actually increase with distance from the
+wall, as it apparently does at Vn = 4, but these relative differences in Z / D , dependence
+are consistent with the differences shown for wake displacement thickness in figure 19.
+In particular, note that a, increases with Z / D j for I/n = 4.
+Total pressure deficit for our cylinder wake lies roughly in the same range and, as
+should be expected, decreases with distance from the wall. The end effects for the
+relatively short cylinder are evident.
+
+T. F. Fric and A. Roshko
+
+28
+2.0
+
+-0-
+
+1.5
+
+A
+
++
+--€I---
+
+1.0
+
+0.5
+1.5
+2.5
+3.5
+
+0.5
+
+2.0
+
+1.5
+
+: (h)
+.*
+
+Cptot 1.0 --
+
+0.5 --
+
+7
+
+0
+
+2
+
+6
+
+4
+
+8
+
+10
+
+X/Dj
+FICURF
+20. Wake total pressure deficits at the wake centreplane (Y/D, = 0). Re,
+L,/D, = 5. (a) V, = 4; (h) VR = 8; (c) A , = 6 cylinder.
+
+= 3800
+
+and
+
+6 . Wake vorticity source and wake formation
+The preceding results, particularly the flow visualizations of figure 13, suggest that
+the wake vortex structures contain vorticity which has its origin in the wall boundary
+layer. This raises questions as to why jet vorticity is not shed into the wake and how
+wall vorticity gets into it. To illuminate such issues, it is useful to review basic concepts
+of vorticity generation and transport in this section. This will also make clearer why jet
+wakes cannot form in an analogous manner to cylinder wakes. In particular, we
+emphasize that there are two aspects that distinguish jet-wake formation from cylinder-
+
+Vortical structure
+
+iiz
+
+the wake of a transcerse jet
+
+29
+
+wake formation. The first concerns the generation of new vorticity or circulation. From
+kinematic considerations. the transverse jet and solid cylinder each must have a
+component of Z-vorticity as the cross-stream flows around them. For the case of the
+cylinder that vorticity is generated at its surface but for the transverse jet we argue that
+vorticity cannot be generated at the interface of the jet and crossflow. Instead, that
+vorticity must convect, stretch, turn and diffube from its source at a solid surface. The
+second aspect which distinguishes the formation of jet and cylinder wakes is the
+transport of vorticity into the wake. This aspect is distinct from the first in that it
+addresses the transport of vorticity, conceivably that of 2-vorticity at the jet-crossflow
+interface, into the wake even though it was not initially generated at that interface. Our
+results show, however, that the transport of vorticity for the wake is from the crossflow
+boundary layer and not from the jet-crossflow interface. In this section we also
+introduce the ‘separation cvents’ which are a result of crossflow boundary-layer
+separation and which lead to the jet’s wake formation.
+6.1. Vorticity generation
+To understand the origin of the vortical wake structures and to determine their source
+of vorticity requires an understanding of vorticity gcneration. In what follows, the
+appropriate vorticity transport equation for the present flow is introduced and the
+ways in which vorticity can be generated are discussed.
+For a flow such as this one, namely Newtonian, barotropic, isothermal,
+incompressible and with no body forces, the vorticity transport equation is given by
+
+As emphasized by Morton (1984), this equation does not explicitly contain any
+vorticity source or generation terms; it shows only that existing vorticity is convected,
+stretched, turned, and diffused. The second term, the vortex stretching and turning
+term, is non-zero only in three-dimensional flows and is necessarily zero at all
+stationary solid boundaries. The third term allows for the inter-diffusion of vorticity
+of opposite sign and for the transport of vorticity across streamlines.
+Since equation (3) does not have an explicit source term. new circulation can only
+enter a flow through imposed initial conditions and/or wall boundary conditions; in
+the terminology of Morton, there are no sources of ‘new’ vorticity within the flow. This
+is a fundamental point when considering the formation of the transverse-jet wake
+vortices. A distinction between new vorticity and vorticity which results from internal
+processing (stretching, turning and diffusing) of vorticity which is already in the flow
+is implied. For instance, the second term in equation (3) can produce a new component
+of vorticity by turning pre-existing vorticity. This is not new vorticity; it is rather the
+processing of vorticity which already is present. New vorticity effects a local change in
+flow circulation, in contrast to pure turning or stretching of vorticity which conserves
+circulation in the sense of Kelvin’s theorem. New vorticity, as the term is used here, is
+synonymous with adding local positive or negative circulation to the flow.
+Since vorticity can only enter the flow through imposed initial conditions and/or wall
+boundary conditions. one can define a vorticity flux out of a wall as ii-J,, where J, =
+- v ( V o ) , is the vorticity flux tensor at the wall, and i z is the wall-normal unit vector.
+It can be shown (Wu & Wu 1993) that for non-accelerating and non-rotating surfaces
+ph.4
+
+=-h x
+
+(vp)o-ii(h.(v x T0jj+(h x T”j.Vh.
+
+(41
+(Incompressible flow and the absence of viscosity gradients are assumed in the
+2
+
+FLM279
+
+30
+
+T. F. Fric and A . Roshko
+
+derivation of this equation.) ii.J,, the vorticity flux out of the wall, essentially
+represents the rate of inflow of vorticity per unit wall area.
+The first term on the right-hand side of (4) is thc vorticity source term due to a wall
+pressure gradient; the vorticity produced is tangent to the wall. The role of this term
+is well known, but it is often incorrectly considered to be the sole source of vorticity
+at solid boundaries. This would be generally true only in two-dimensional planar flows,
+when the second- and third-term contributions are identically zero. ’Therefore, vorticity
+generation analysis in two dimensions cannot be generalized to three dimensions ; the
+contributions from the second and third terms of (4) would be lost.
+As vorticity tangent to a surface is produced. it diffuses away from the solid surface
+to enter the flow. Wu & Wu call this the ‘ascending mechanism’ of introducing
+vorticity and state that for two-dimensional, attached, and steady flows this pressure
+gradient term is the main contribution to the vorticity flux out of a wall.
+In three-dimensional flows, the second and third terms on the right-hand side of (4)
+are, in general, non-zero. The second term accounts for the gradient of wall-normal
+vorticity from a wall shear stress z, with a non-zero V x T~ wall-normal component.
+Since vorticity at a wall must be tangential to the surface, the wall-normal component
+of vorticity is zero at a wall. Immediately above the wall, however, a wall-normal
+component of vorticity can exist.
+With spiral flows oriented normally to and above a wall, such as is the case near the
+intersection of the crossflow wall and the wake vortices. (ii.(V x 2,)) is non-zero and
+subsequently this term can be significant. In fact, the analyses of Wu, Gu & Wu (1987)
+and Wu & Wu show that the normal-vorticity production term can be significant near
+separation lines. (As will be discussed in 556.4 and 6.5, scparation of the crossflow
+boundary layer is important for the wake.) Thcy conclude that this process is
+responsible for the large wall-normal vorticity associated with a ‘horn vortcx’ or a
+‘tornado-like vortex’. Wu & Wu refer to this phenomena as a ‘ turning-up mechanism’
+since it involves the turning-up of vortex lines from the solid boundary.
+The third term on the right-hand side of (4) accounts for the effects of wall curvature
+that has a component transverse to the wall shear stress direction. As with the pressure
+gradient term, this term produces vorticity tangent to surfaces. The vorticity diffuses
+away from the wall to enter the flow. In a sense, this is a correction to the pressure
+gradient term to account for the surface curvature transverse to the flow direction.
+
+6.2. Solid-c-vlinder wake uorticity and implications for transrerse-jet wakes
+Since it is often assumed that the wake of the transverse jet forms in a manner similar
+to that of the solid cylinder, it is timely to recall what is known about the generation
+of vorticity and wake structure for a cylinder wake. The Cavourable prcssurc gradicnt
+on the upwind side of a circular cylinder generates vorticity for its own wake, of one
+sign on one side and of opposite sign on the other side. The first term on the right-hand
+side of (4) is the pertinent one. The unfavourable (positive) pressure gradient on the
+downwind side causes the boundary layer to separate. The separation and shedding
+process ultimately transports the vorticity, which was generated at the cylinder wall
+and which initially diffused away from the wall, into the wake. Figure 10(h) shows that
+the crossflow separates from the cylinder in this way. The separating streaklines are
+seen corning off the top and bottom sides of the cylinder. But, for the transverse jet
+flow, visualization shows no analogous separation of the crossflow fluid as it passes
+over the jet body. Compare, for example, figure 10th) with figures 5-9, parts ( b ) and
+(c). There is a striking difference between the wakes, particularly just downstream of
+the jet and cylinder. The separating streaklines are seen coming off the sides of the
+
+Vortical structirre in the wake of a transverse jet
+
+31
+
+cylinder, a situation quite different from the case of the jet where the streaklines are
+nearly closed all the way around.
+For the incompressible and barotropic flow here, the sources of circulation are at
+solid boundaries or walls. In the transverse jet there are, therefore, two possible sources
+of vorticity for the vortical wake structures which have been observed, namely the
+boundary layer within the jet nozzle and the boundary layer on the crossflow wall.
+In the often-held view that formation of jet-wake vortices is by ‘shedding’, similar
+to that from circular cylinders or other solid objects, there is the implication that the
+source of vorticity for the wake structures is new vorticity generated at the interface
+between the jet and the crossflow. But there is no such mechanism for the generation
+of new vorticity in the case of homogeneous flow around a jet. This does not necessarily
+imply that 2-vorticity is absent at the jet-crossflow interface but only that its origin is
+different from that at a solid cylinder. That is, the jet’s own shear-layer vorticity,
+originating at the jet nozzle wall, may be processed so that components of 2-vorticity
+are convected into the interface.
+The interaction of the jet and crossflow is an interaction between homogeneous
+fluids, differing only in total pressure. The cylinder wake results from interaction
+between a solid body and a fluid. Another possibility is interaction between dissimilar
+fluids, such as gases of different densities or a liquid and a gas, where there exists a
+mechanism for new vorticity generation. For instance, Jacobs (1992) studied the
+interaction between shock-wave-generated airflow and a transverse jet of lighter gas
+(helium). The interaction is such that vorticity is created at the interface between the
+air and helium by baroclinic torque. The vorticity transport equation ( 3 ) would in this
+case contain the baroclinic source term.
+The source of vorticity for the wake of a jet in hornogcneous crossflow and the
+formation of the wake structure are discussed in detail in $96.3-6.5.
+6.3. Tracking the flmv iwrticity
+Smoke can be used to track vorticity carried by the boundary layer from within the
+noLzle and by the boundary layer on the crossflow wall. Smoke is considered to be a
+suitable marker of vorticity for the present purpose. Owing to the relatively large
+particle mass of smoke (compared to the mass of air molecules), the diffusivity of
+smoke is much lower than the molecular diffusivity of air. Cimbala (1984) estimates the
+ratio of smoke diffusivity to molecular diffusivity to bc of order lo-”. Since the Schmidt
+number represents the ratio of viscous to molecular diffusivity and is of order unity for
+air, the ratio of the viscous diffusivity to smoke diffusivity for air (the effective Schmidt
+number) is of order lo5. Therefore vorticity diffuses much faster than smoke does;
+hence we assume that once the vorticity is tagged, the smoke mainly marks the cores
+of vortices. Diffusion acts to spread vorticity away from the cores faster than smoke.
+The suitability of using smoke as a vorticity marker is helped by the high Reynolds
+numbers of the flows. The diffusion timescales for both smoke and air are long
+compared to the convective timescales. On the timescale for convection of the structures
+through the photographs’ fields of view, diffusion of both smoke and vorticity should
+be visually insignificant.
+Figure 21 shows two side views of the flow field at V, = 4 and Recf = 3800. In both
+photographs, the jet issues from the bottom left-hand side of the photograph. Compare
+figure 2 1 (a),where thc jet fluid (part of which is the boundary layer within the nozzle)
+is tagged by seeding the jet supply with smoke, with figure 21 (b) where the crossflow
+boundary layer is tagged with smoke. In figure 21 (a), a well-defined deflected jet is seen
+with no presence of smoke nor, apparently, of jet fluid in the wake. Conversely, in
+2-2
+
+T. F. Fvic and A . Roshko
+
+kJet4
+
+-1
+
+FIGURE
+21. Smoke tags the two possible sources of vorticity. In (a) thc jet (and therefore the nozzle
+boundary layer) vorticity is tagged, and in (b) smoke tags the crossflow boundary-layer vorticity
+( Z , J D j = a+). V, = 4 and Re, = 3800. Note that wake vortices are visualized only when the
+crossflow boundary layer is tagged.
+
+Vortical structure in the wake of a transverse jet
+
+33
+
+FIGURE
+22. Flow visualization by soap film. (u) A water jet injected through the soap film shows
+no structure in the wake; (b) the jet nozzle inserted thruugh the soap film sheds vortices.
+
+T. F. Fric and A . Roshko
+
+34
+
+(4
+
+(.f1
+
+FICURF
+23 ((2-j). For caption see facing page
+
+Vortical structurr in the w a k e
+
+of
+
+a transverse jet
+
+35
+
+figure 21 (h),much of the smoke finds its way into the wake vortices. Herc the wake is
+strongly illuminated by smoke which could have come only from the crossflow
+boundary layer. Analogous comparisons can be made for the whole range of VRfrom
+2 to 10 (Fric 1990), and figure 13 shows side views like that of figure 21 (h) for several
+velocity ratios. These results suggest that nozzle vorticity does not contribute to wake
+vorticity. Not only does the jet not act like a solid cylinder, not generating any new
+vorticity, it also does not appear to ‘shed’ any of its vorticity into the wake. The wake
+does not contain visible jet fluid. That smoke originating in the crossflow boundary
+layer, and therefore marking its vorticity, leaves the wall and visuitlizes the wake
+vortices indicates that the source of wake vorticity is the boundary layer on the
+crossflow wall.
+For a comparison of figure 21 (b) to a circular cylinder wake, refer again to the side
+view of the wake of a wall-mounted cylinder in figure 14. Here, as in figure 21 (b) lor
+the transverse jet, the smoke wire is situated such that the crossflow boundary layer is
+tagged with smoke. The smoke stays relatively close to the crossflow wall and the wake
+vortices are not viwalized, as one may expect, since the source of the cylinder wake
+vorticity is not the crossflow boundary layer.
+These results suggest that eliminating the crassflow boundary would also eliminate
+the wake vortices since their source of vorticity is no longer present. This was recently
+accomplished (Fric & Gharib 1990) by using a soap film ‘wind tunnel’, where a jet of
+water was injectcd transversely through a thin flowing soap film. Since the soap film
+esscntially creates a two-dimensional crossflow (Gharib & Derango 1989), the
+crossflow wall and its cffects were eliminated from the problem and the twodimensional interaction of a jet and crossflow was visualized (figure 22a). The results
+showed that the soap-film flow closes around the jet and no wake vortices nor structure
+of any kind are observed downstream of the jet. In contrast. when a solid cylinder is
+placed transversely through the soap-film flow, the familiar separation and vortex
+shedding are observed (figure 226). The vortex-shedding case was also demonstrated
+by Couder & Basdevant (1986), who towed cylinders through stationary soap films.
+To see jet vorticity entering the wake region would not contradict the vorticity
+generation theory: transport of the jet’s own vorticity (not newly generated as on a
+cylinder surface) by diffusion or some ‘peeling-off’ process is possible but our
+observations do not show this to be the case. Similarly, the papers of Keffer & Baines
+( 1 9 6 3 Kamotani & Greber 1974) and Chassaing el nl. (1972) show photographs of
+transverse jets seeded with smoke. In each case, only the deflected jet is observed, and
+no smoke is seen in the wake region. Furthermore in Kamotani & Greber’s (1972)
+study of a heated transverse jet, temperature contours showed that the excess heat
+downstream of the orifice was confined to the deflected jet and did not, apparently,
+contaminate the wake with heat. Recently Lomno et al. (1994) have reported results
+which show a small amount of jet fluid entering a portion of the wake region. In their
+study ‘fingers’ of acetone, which was seeded into the jet. were detected in the portion
+of the wake close to the jet. We do not believe that their results contradict our results
+or conclusions. Firstly, jet fluid in their wakes was ‘visible’ only after exponcntial
+enhancement of the fluoresceiice data from the acetone seeding; only a very small
+amount of the jet fluid made its way into the ‘fingers’. Secondly, their photographs
+show this behaviour only at velocity ratios greater than 10 and not at those studied
+FIGURE
+23. Near-wall flow structure just downstream of the jet. ‘Separation events’ and their
+accompanying roll-ups are idcntificd by thc arrows. Z,,,./Dj = O + . ( a ) V, = 2 ; (B) Vn = 3 ; (c) y3=
+4; (d) V, = 5 ; ( e ) If, - 4 ; ( f ) V, = 6 ; (g) C;, = 8 ; ( / I ) V, = 8 ; (i) f<, = 9: ( j )
+= 10. Re,,. = 3800 in
+(a-e). (g), (i), ( j ) ; Re(, = 11 400 in cf) and 7600 in (h).
+
+v,
+
+36
+
+T. F. Fric arid A. Rashko
+
+here. Most importantly, the wake vortices we have described here clearly extend from
+the crossflow wall to the jet, while the fingers observed by Lozano et al., extend only
+a small distance from the jet.
+
+6.4. .Sepuration events’ in the cross$o~,boundary fayer
+To this point we have shown evidence leading to the conclusion that the crossflow
+boundary layer supplies the wake with its vorticity. Wc now discuss a possible
+mechanism by which vorticity leaves the wall to enter the wake region. From the wake
+visualizations and vorticity gencration discussion it is clear that the process is threedimensional, involving separation and turning of vortex lines, The laminar boundary
+layer initially carries primarily spanwise ( Y )vorticity while the wake vorticity is seen
+to be predominantly in the Z-direction.
+Upon closer inspection of the near-wall flow, two predominant structures resulting
+from separations near the jet orifice are evident. Consider the close-up photographs
+shown in figure 23, where smoke is within the crossflow boundary layer (Z,,/D, =
+O+). Upstream of the jet, a portion of the boundary layer separates and forms at least
+one horseshoe vortex. The boundary-layer streaklines. outside those which get rolled
+into the horseshoe vortices, i s . those further away from the centreline, flow around the
+sides of the jet and then appear to separate on the orifice’s lee side. The photographs
+of figure 23 each indicate, with arrows, a vortical structure which has rolled up after
+separation. We postulate that such ‘separation events’, as we shall refer to them, are
+the genesis of wake formation.
+As is the case with the wake structure, the near-wall flow visualizations show a
+qualitative dependence on velocity ratio. In fact at V, =. 2 separation events are
+difficult to identify, relative to higher velocity ratios. This is consistent with our
+previous observations of poorly defined wake structure for V, = 2 (see figure 13a).
+Also consistent with the previom results is the clarity of the separation events for
+V, = 4. Recall that the wake structures are relatively well-organiLed, evcnly spaced, and
+have sharper spectra at V, = 4. In figure 23(r.). for example, two separation events are
+in fact visible-one marked with an arrow and one further downstream and on the
+other side of the centreline. Particularly at V, = 4, and at some other velocity ratios
+albeit with less regularity, these separation events appear to form on one side of the jet
+and then on the other in an alternating manner. This unsteadiness is reminiscent of
+vortex shedding from a solid cylinder but in this case vorticity is ‘shedding’ from the
+crossflow wall. Separation events are still clearly identifiable at VR= 6 , while at velocity
+ratios greater than eight they are often somewhat less distinct.
+Characteristic (Strouhal) frequencies associated with the separation events were
+compared with those of the wake vortices in order to make a quantitative connection
+between them. Photographs such as those shown in figure 23 were used to locate
+separation events. A hot-wire probe was then positioned near them to obtain the power
+spectrum of the velocity fluctuation there. The spectral peak frequencies A,, are thus
+associated with the event. Separation-event Strouhal numbers Stscpat various velocity
+ratios and at three crossflow Reynolds numbers are compared in figure 24. (St,, data
+shown in this figure were previously included in figure 16.) The agreement between St,,
+and Stnppis very good at each Re,f. This correspondence between the characteristic
+frequencies of the crossflow boundary-layer separation events and those of the wake
+structures indicates an intimate connection between them. Together with the near-wall
+flow visualization, it supports the conclusion that these separation events are an
+important element in the formation of wake structure.
+To illustrate the mechanism by which the separation events occur, a comparison
+
+Vortical structure in the
+
+M
+
+~
+
+of Pa transverse jet
+
+37
+
+0.25 .I
+
+0.10 ..
+
+0.20
+
+0
+
+T
+
+V
+
+0.05
+
+1
+
+2
+
+0.15
+
+f
+
+'
+
+0.05
+
+1
+
+4
+
+0.20
+
+1
+
+2
+
+0
+
+6
+
+8
+
+10
+
+6
+
+8
+
+10
+
+0
+
+4
+
+VR
+FIGURE
+24. Characteristic wake Strouhal numbers St, (O),
+and those measured near the crossflow
+boundary-layer separations events St,,,, (A).
+(a) ReLi= 3800; (b) Recf= 7600; (c) Re,, = 11400.
+
+between the transverse-jet and cylinder flows will again be useful. Figure 25 shows
+visualizations in the immediate vicinity of a cylinder and a jet with V, = 4.Figures
+25(a) and 25(b) show flow patterns just outside the crossflow boundary layer for the
+cylinder and jet, respectively. The smoke streaklines are predominantly in a plane
+about half a jet diameter from the wall. We re-emphasize the primary distinction
+between the two flow : the very near-wake region of the cylinder is open and bounded
+by the separating streaklines from the lateral surfaces of the cylinder while that of the
+jet is closed. Although the flow is unsteady and the precise flow patterns vary somewhat
+from image to image and from one velocity ratio to another, streaklines characteristically wrap closely around the lateral and downstream sides of the jet core.
+Closure of the streakline pattern (figure 25b), approximately as in potential flow
+around a circular cylinder, has important implications for the boundary layer on the
+crossflow wall. That is, the positive pressure gradient from the diverging streamlines on
+the downstream sides of the jet is imposed on the wall. We believe it is this adverse
+pressure gradient which leads to separation of the boundary layer at the observed
+separation events. Although those events are unsteady, the basic effect of the pressure
+gradient can be illustrated qualitatively by assuming the imposed pressure field to be
+that of the classic steady potential flow and using Thwaites' (1949) method to calculate
+the response of the crossflow wall boundary layer.
+
+T. F. Fric and A . Roshko
+
+38
+
+(4
+
+(4
+
+FIGURE
+25 Near-wall flows around a cylinder and jet just above the boundary layer are compared
+in (a) and (b), respectively ( Z 5 p d / D=I0 5 ) Each flow‘s crossflow boundary-layer behaviour is shown
+in (c) and (d), respectively Re,, = 3800 In (h) and (d) V, = 4
+
+A Thwaites calculation is made along cach potential-flow streamline (neglecting
+possible interactions between them) up to the singularity which terminates the
+calculation, namely zero shear stress at the wall. The loci of those singularities are
+shown in figure 26. These are often called ‘separation‘ lines but they are really only
+indicators of separation, which usually occurs at a somewhat different location in
+accord with the altered pressure distribution which accompanies separation. It is in this
+sense that the solid lines in figure 26 represent ‘ predicted ’ lines of separation ’, The line
+upstream of the jet corresponds qualitatively to the steady separation leading to the
+horseshoe vortices. The line to thc side and just aft of the jet corresponds to the
+unsteady separation event observed. (The apparent discontinuity between the two
+calculated separation lines is an artifact of the discrete streamlines we chose to
+calculate; finer spacing among them would show that the horseshoe and separation
+event lines join.) Compare, for instance, figures 26 and 25(d). The location and even the
+shape of the separation event of figure 25 ( d ) is depicted well by this simple calculation.
+In figure 2 5 ( d ) , note that only the position of the roll-up of vorticity after separation
+is clear; the corresponding separation line must be somewhat upstream of the roll-up.
+An analogous comment is relevant also for the position of horseshoe vortices relative
+to the predicted upstream separation line.
+The purpose o f this calculation was not to predict the precise location of the
+separation events. Their locations vary with VR,and this analysis does not take any V,
+
+Vortical structure in the bt>akeoj' a trnnsi?ersejet
+
+39
+
+_____________________-------------------------_--------_
+.............................
+..............................
+
+_________--_--------------..............................
+___
+___________---------------..............................
+____________________------------------_______----- ..............................
+
+___________________-------____________________-----------
+
+--.... ................
+
+.............
+
+---_.............
+-4
+
+-3
+
+-2
+
+-I
+
+0
+
+1
+
+2
+
+X/Dj
+FIGURE
+26. Predicted loci of singularities of the crossflow boundary layer near the jet orifice. A
+Thwaites method calculation of the crossflow boundary layer is used, and the potential flow pressure
+distribution of the flow about a circular section is imposed on the boundary layer. L j / D , = 5 .
+
+dependence into account. Furthermore, two-dimensional laminar and steady flow is
+assumed while the boundary layer and outer flows here are three-dimensional and
+unsteady. What the analysis does is to confirm that, given the observed outer flow
+which closes around the jet, a separation of the crossflow boundary layer (in the area
+of the separation events) is expected. In the case of the solid cylinder, early separation
+from the surface of the cylinder itself relieves the adverse pressure gradient on both the
+cylinder and the crossflow wall (figures 25 a and 25 c). The role of the initial jet diameter
+in setting the pressure field for the boundary-layer separation suggests its relevance for
+defining the wake 'Strouhal number' which was introduced in $4. In the following
+subsection we consider how the separation events may be related to the formation of
+wake vortices.
+6.5. WakP forniution mechaiiisni
+Figure 27(a) shows most clearly a newly formed separation event and the
+accompanying near-wall structure within approximately the first 10jet diameters of the
+wake. In addition to the separation event, which is marked by the arrow, several
+additional features are noteworthy. and the cartoon of figure 27(b) highlights some of
+these. We interpret the four relatively dense patches of smoke near the wake centreline
+as 'footprints' of wake vortices. Their directions of rotation are indicated by the
+dashed lines. Remnants of two earlier separation events, connected to the second and
+third wake vortices, clearly show their alternating nature. This alternating behaviour
+is consistently clear for wakes near V - 4 but is not so consistent at other velocity
+":
+ratios, as is evident from considering again parts (a) of figures 5-9. That the wake's wall
+structure appears most orderly at V' = 4 is consistent with the uniqueness of I% = 4
+wakes in other views of the wake and with the relatively sharp and well-defined
+Strouhal frequency data near V, = 4, both discussed previously.
+For additional insight, a mirror was placed in the flow at 45" to show, simultaneously,
+cross-sectional and side views of the wake. Figure 28 is an example of such a
+
+40
+
+T. F. Fric und A. Rvshko
+
+(4
+
+FIGURF,
+27. Near-wall wake flow shows a newly formed separation-event roll-up and ‘footprints’ of
+several wake vortices. (a) ZSflL,/1l3
+:
+0 + , V, = 4, Re, = 3800. (b) Cartoon highlighting structural
+features.
+
+photograph and we shall refer to it to discuss the dynamics of a separation-event rollup. After separation, the vorticity from the crossflow boundary layer is ‘free’ to
+convect, stretch, turn, and diffuse, as the vorticity transport equation ( 3 ) shows. That
+portion of vorticity closest to the jet is entrained and convected by the jet, thus
+establishing a connection between the wake vortices and the jet. The vertical ( 2 )
+extensions of the separation-event roll-ups into the jet are the wake vortices which are
+observed. The birth of a wake vortex is seen in figure 28 with the now familiar
+
+Vortical structure in the wake of a tranmerse j e t
+
+41
+
+FGURE28. Simultaneous cross-sectional and side vicws of the wakc. The arrows point to the
+same roll-up of boundary-layer vorticity. K3 = 4 and Re,, = 3800.
+
+separation-event roll-up on the + Y side of the jet. The two arrows on the photograph
+indicate the separation-event roll-up and point to the same location for each view.
+Note, particularly on the side view, how the portion of the separation-event roll-up
+closest to the centreline is seen to be lifted from the wall, forming a vortical wake
+structure. The rotation of wake vortices whose separation events are on the + Y side
+of the jet is clockwise, and, for those on the - Y side, counterclockwise. The other
+‘end’ of each separation event remains attached to the wall, as it must: the vortex
+‘sheet’ of the boundary layer cannot be cut. This process of turning vorticity initially
+parallel to the wall is reminiscent of the ‘turning-up mechanism’ of Wu & Wu (1993)
+discussed in 36.1. Figure 28 also shows that the previously referred to ‘footprints’ of
+the vortices correspond well to their positions in the wake.
+The significance of the separation events became apparent to us only after viewing
+videos of smoke-wire flow visualization. Viewing the flow from the side showed
+
+42
+
+T. F. Fric und A . Roshko
+
+periodic vortical-like roll-ups just downstream of the jet and near the crossflow wall.
+A connection between the separation-event roll-ups and wake vortices was noticed as
+smoke followed a path away from the wall at the lee side of the jet and along a wake
+structure. The newly formed structure, extending from the crossflow wall to the jet,
+then was observed to convect downstream. We emphasize that axial flow along the
+wake vortices’ cores, from the wall toward the jet, was clearly observed in the
+experiments.
+The separation of the crossflow boundary layer and subsequent turning of vorticity
+into the wake structures allows the vorticity at the wall to remain tangential to the
+surface, as it must. As was mentioned in 36.1, however, a wall-normal component of
+vorticity can exist just above the crossflow wall. In this region of the wake, i i . (V x 7,)
+is likely to be non-zero in the spiral flow, oriented normally to and above the crossflow
+wall, which is induced by each wake structure as it passes above the wall. Therefore the
+second vorticity source term or (4)may contribute to the vorticity in these structures.
+Wu & Wu state that this source term is responsible for the large wall-normal vorticity
+associated with a ‘horn vortex’ or a ‘tornado-like vortex’, descriptions applicable to
+the transverse-jet wake vortices. Not only do the wake structures contain vorticity
+already in the crossflow boundary layer, which has separated and turned, it is also
+possible therefore that new vorticity is continually generated at the wall as thc wallnormal wake vorticity convects downstream.
+Although the precise way in which the wake vortices connect with the jet is not
+understood, it appears that the portion of the separated boundary-layer vorticity close
+to the jet is entrained by it and pulled away from the wall. Relevant to this are the
+results of Kiya, Ohyama & Hunt (1986). They studied the interaction of (isolated)
+vortex pairs and rings with a plane shear layer. For the case of strong vortex rings
+injected into a plane shear layer at some relative angle, they found that the vortex rings
+entrained and carried with them the shear-layer vortices which were in thcir path. The
+relevant analogy here is to consider the succession of (distorted) vortex rings of the
+bending jet as entraining and carrying portions of the separation-event roll-ups with
+them. Figure 29 shows a situation where this appears to be the case. In this photograph
+three wake vortices appear to be attached to the structure of the trailing edge of the
+bending jet. In the experiments of Kiya ct al. the entrainment property of the vortex
+rings is instrumental in pulling planar shear-layer vorticity along with thein.
+Analogously, in our experiments, it is the jet entrainment which pulls away separated
+vorticity from the crossflow wall.
+With this understanding, we can comment on wakes which form when jets issue from
+pipes protruding into the crossflow. This problem was investigated by Moussa et al.
+(1977) who described such wakes; their experiments show that wake Strouhal numbers
+of protruding transverse jets more closely match Strouhal numbers of solid cylinder
+wakes than do those of flush-mounted jets. It may be that the natural vortex shedding
+from the circular cylinder (the pipe protruding into the crossflow) controls and
+dominates the structure in the wake. It is in fact consistent with the present results to
+speculate that vortices in protruding jet wakes are extensions of wake vortices from the
+pipe, just as the vortices in the wake of a flush-mounted jet are extensions of vorticity
+from the crossflow boundary layer. The entrainment by the deflecting jet stretches the
+pipe-cylinder’s shed vortices into the wake of the jet.
+We believe that the proximity of the deflecting jet to the crossflow wall is an
+important factor in the wake dynamics. The wake formation model described above
+requires the jet to entrain the closest portion of the separation-event structure away
+from the wall. As the vorticity from the crossflow wall is entrained by and convected
+
+Vortical structure in the wake of a truiisverse jet
+
+I+
+
+Jet -+I
+~~
+
+__
+
+-
+
+~
+
+~
+
+~~~
+
+43
+
+-s
+
+FIGURE
+29. Attachment of two wake vortices to the trailing cdgc of the jet. Z , , / D ,
+
+V,, = 5.8. and Re,, = 3800.
+
+=O+.
+
+with the jet a connection between the wake vortices and the jet is established. The other
+end of the wake structurc blends with the vorticity attached in the crossflow boundary
+layer. As the structures convect downstream, the wake’s span increases because the jet
+moves further into the stream and away from the wall. We conjecture that, at some
+relatively large velocity ratio, the ability of the jet to entrain and affect the crossflow
+fluid which has separated diminishes as the jet is further removed from the crossflow
+wall.
+Consider the sketches in figure 30, which show outlines of jet trajectories at three
+values of velocity ratio as determined from the smoke visualizations. These three
+velocity ratios are meant to represent three different regimes of the wake. The arrows
+in the sketches indicate an idealized (and unconfirmed) entrainment flow pattern at or
+near the Y = 0 plane. At velocity ratios near 2, the jet remains very close to the
+crossflow wall (figure 30a). Even though its entrainment at the wall is felt very strongly,
+the close proximity of tile jet to the wall makes it difficult to distinguish between jet,
+boundary-layer, and wake fluid. In a sense, the jet is too close to produce well-defined
+
+T. I;. Fric and A . Roshko
+
+44
+
+(4
+
+FIGURE
+30. Trajectories of jets and their entrainment patterns at different velocity ratios may explain
+the observed dependence of wake structure on velocity ratio. (u) near V, = 2; (b) near V, = 4; (c) near
+q*= 8.
+
+wake structures, and it is not cleanly separated from the wall. Some stretching of the
+wake structures is required to define them well. Near V, = 4 (figure 30b) the jet is now
+far enough from the wall to induce significant turning of the separated boundary-layer
+vorticity, but it is close enough to still strongly and ef-fciently pull the separated fluid
+away from the crossflow wall. This moderate distance between the deflected jet and the
+wall allows some stretching of the wake vortices as they form, thus defining them even
+better. At higher velocity ratios, close to 8 (figure ~OC),the crossflow boundary layer,
+although separated, is not easily nor efficiently entrained by the jet, for the distance of
+the jet from the near-wake wall region quickly becomes largc. This is quite evident in
+the flow visualizations of the wakes at large jet velocity ratios. The side views of figure
+13 (d, e) show that the majority of smoke (initially marking the boundary-layer fluid)
+remains relatively close to the wall, and only thin strands extend to the jet. Also
+contributing to the thinness of these structures is the higher degree of stretching as the
+jet moves further away from the wall.
+The three regimes suggested in figure 30 may also help explain the wake Strouhalnumber data shown in figure 16. To summarize those data, the main characteristics are
+as follows: (i) near velocity ratios of 2 and especially 4 the St, data are nearly
+independent of Recf and L J D j ; (ii) spectral peaks are relatively sharper near V7 = 4;
+(iii) spectra are least sharp near VR = 3 and 6; and (iv) there is significant scatter in the
+values above V, = 6. We conjecture that the poorly defined spectra near V, = 3 mark
+the transition between the regimes shown in figures 30(a) and 30(b), i.e. the V' = 2
+regime where the jet is not pulling much boundary-layer fluid from the wall and the
+VR= 4 regime where the jet is efficiently entraining portions of the boundary-layer fluid.
+Furthermore, the poor spectra near V, = 6 may mark a transltion to velocity ratios at
+
+Vortical stsuctiire in the wrrkr of‘ a trarisrcrse jet
+
+45
+
+which the jet becomes too removed from the crossflow wall to efficiently form wake
+structures (V, = 8 regime).
+Complementary to these entrainment eflects of jet proximity to the crossflow wall is
+the effect of the trajectory on that portion of the boundary layer entrained by the jet.
+At the higher velocity ratios, where the jet is more nearly vertical, the entrained fluid
+from a scparation event follows a trajectory which first takes it ricarly vertical,
+relatively far from the crossflow wall. In such a situalion, it is more likely that
+boundary-layer/wake structure is entangled with the jet. Convcrscly, for velocity ratios
+near 4, the entrained portion is quickly turned in the crossflow direction. The effect of
+this on the coherence of the wake is two-fold. First. the geometry of the situation allows
+the wake structures to remain more independent of the jet structure near V, = 4.
+Second, the closer proximity of the jet allows continual entrainment of boundary-layer
+fluid along the developing wake vortices.
+The separation events provide a mechanism for vortical fluid to enter the wake but
+probably represent only the inception of the wake structures. Vorticity near the wall
+can be continuously fed into the wake structures as they convect downstream. This is
+generally what is observed. Videos show that even after the formation of a wake vortex,
+some spanwise or axial flow along it from the crossflow wall to the jet is seen, at least
+within the near field. Additionally, photographs where Z J D 7 = O + show that the
+width of the disturbed flow at the crossflow wall grows with downstream distance. This
+is evident in figures 5-9 (parts a), and such growth suggests that crossflow boundarylayer fluid is continually entrained into the wake.
+The evolution of the transverse-jet wake beyond the near field and its far-field
+stability is still very much an open question. Whether wake frequencies remain the
+same, i.e. whether vortex merging occurs, and whether these near-field structures
+persist over several hundred diameters and are the same ones that Kuzo & Roshko
+(1984) observcd, arc open questions. If the vortices observed by Kuzo & Roshko in the
+far field have convected from the near field, their lifespan is significantly longer than
+that of Karman vortices. Possibly the continuous stretching of the jet wake and feeding
+by the crossflow boundary layer is instrumental.
+
+7. Concluding summary and discussion
+The principal finding is that the vortical structures in the wake of a jet in crossflow
+are not shed from the jet but are formed from vorticity which originates in the
+boundary layer of the crossflow wall. The mechanism by which the transverse-jet wake
+forms is different and distinct from the shedding of vorticity from solid cylinders. The
+formation process begins just downstream and to either side of the jet, with separation
+of the crossflow-wall boundary layer in the adverse pressure gradient which is imposed
+on it by the external flow, because the latter does not separate from the jet but closes
+around it. The ‘separation event’ on the crossflow wall occurs alternately on each side
+of the jet and results in eruptions (more or less periodically) of boundary-layer fluid
+and vorticity. The tornado-like vortex which is formed has its base in the boundary
+layer while its other end is entrained by the jet. As the vortical structure convects
+downstream it stretches in the widening gap between the jet and the wall; boundarylayer fluid and vorticity continue to be swept into its base.
+This finding, that the wake vorticity comes from the crossflow boundary layer,
+emphasizes other differences between flows past transverse jets and flows past solid
+bluff bodies. An important difference is the absence of vorticity production at the
+jet-crossflow interface (when the jei and crossflow have the same density, as they do
+
+46
+
+T. F. Fric and A. Roslzko
+
+in our experiments). An interesting question is how this may be related to the absence
+of separation and vortex shedding from the jet. Another difference is that there is no
+‘drag’ force like that which acts on a bluff body and is transmitted to the supporting
+wall. Instead, there is exchange of momentum between the Jet and thc crossflow
+(Coehlo & Hunt 1989). The downstream momentum which the jet acquires must be at
+the expense of the crossflow and may account for some of the momentum deficit in the
+wake, but some of the deficit may also be introduced by the wall boundary-layer fluid
+that is carried into the wake in the Tortical eruptions. The momentum exchange is
+accomplished by jet-crossflow mixing, which is dissipative. Some of this dissipation
+may account for part of the total pressure loss in the wake but there will also be a
+contribution from the dissipated wall boundary-layer fluid which enters the wake. Thus
+the correspondence between wake profiles of momentum deficit and of total pressure
+loss is not as clear as it is for solid-body wakes, and we have not sorted it out with our
+limited wake measurements in this complex three-dimensional flow.
+The wake structure is most orderly and the Strouhal frequency scatter is smallest for
+jet velocity ratios near the value 4. For those velocity ratios the eruption frequency and
+the corresponding Strouhal frequency of vortex passage in the wake has the value 0.13.
+We have argued that for this velocity ratio the jet trajectory is most favourable for
+formation of orderly wake structure but other factors may also have an effect. In
+particular, there may be effects on the wake from the other jet structures. For example,
+the horseshoe vortices may interact with the separation events, where the vortices
+originate. Tnteraction between the ring vortices in the jet shear layer and the wake
+vortices is a possibility which seems even more important and IS suggested in some of
+the photographs. The relation between the jet shear-layer frequencies and the
+separation-event frequencies may determine whether wake frequencies are well defined
+(e.g. at velocity ratios near 4) or irregular. Finally, the evohing vortex pair, to which
+the wake vortices are attached, also may have a role, especially in the far field. where
+the mean vortex-pair structure itself contains large unsteady components that may
+affect or be affected by the wake vortices. The jet and its wake form an interactive
+system which may affect the jet itself in ways not previously considered, and the
+transverse jet is perhaps not as ‘free’ as other free shear flows.
+This work benefited from earlier, exploratory experiments by D. Kuzo ; from
+discussions with him, J. E. Broadwell and H. Hornung; and from the collaborative
+experiment in soap-film flow with M. Gharib. It was supported by the Office of Naval
+Research under contract NOOO14-85-K-0646 and grant N00014-89-5-1991.
+REFERENCES
+BHCKHR,
+H. A. & MASSARO,
+T. A. 1968 Vortex evolution in a round jet. J . FluidMech. 31,435-448.
+BROADWELL,
+J. E. & BREIDENTHAL,
+R. E. 1984 Structure and mixing of a transverse jet in
+incompressible flow. J . Fluid Mech. 148, 405412.
+CHAISSANG,
+P., GEORGE,
+J., CLARIA,
+A. & SANAN~:S,
+F. 1974 Physical characteristics of subsonic jets
+in a cross stream. J. Fluid Mech. 62, 41-64.
+CIMBALA,
+J. M. 1984 Large structure in the far wakes of two-dimensional bluff bodics. PhD thesis,
+California Institute of Technology.
+S. L. V. & HUNT,J. C. R. 1989 The dynamics of the near field of strong jets in crossflows.
+COEHLO,
+J . Fluid Mech. 200, 95-120.
+CORKE,T., KOGA,D., D R U ~ KR.
+A&
+, NAGIB,H. 1977 A new tcchniquc lor introducing controlled
+sheets of streaklines in wind tunnels. IEEE Publication 77-CH1251-8 AES.
+
+Vortical ,structure in the wake of a transziersse j t J f
+
+47
+
+COUDER,V. & BASDEVANT,
+C. 1986 Experimental and numerical study of vortex couples in twodimensional flows. J . Fluid Mec-h. 173, 225-251.
+FEARN.
+R. & WESTON,R. P. 1974 Vorticity associated with a jet in a cross flow. A I A A J. 12,
+1666-167 1.
+FREYMUTH,
+P. 1986 On transition in a separated laminar boundary layer. J. Fhid Mrch. 25,
+683-704.
+FRIC,T. F. 1990 Structure in the near field of the transverse jet. PhD thesis. California Institute of
+Technology.
+FRIC,T. F. & GHARIB:M. 1990 Wake formation of the transverse jet. Bull. A m . Phys. Snc. 35,2338.
+FRIC;
+T. F. & ROSHKO,
+A. 1988 Views of the transverse jet near field. Pkj8.s. Fluids 31, 2390.
+FRIC.T. F. & ROSHKO,A. 1991 Structure in the near field of the transverse jet. In Turbulent Shear
+Floivs 7 (cd. F. Durst ct a/.). Springer.
+GHARIB,
+M. & DERANGO.
+P. 1989 A liquid film (soap film) tunnel to study two-dimensional laminar
+and turbulent shear flows. Physics D37, 406-416.
+E. & Ho, C . M. 1983 Preferred modes and the spreading rates of jets. Plzys. Fluid7 26,
+GUTMARK,
+29 32-2938.
+JACOBS.J. W. 1992 Shock-induced mixing of a light-gas cylinder. J . Fluid Mech. 234, 629 649.
+KAMOTANI,
+Y. & GREBER,
+I. 1972 Experiments on a turbulent jet in a crossflow. A I A A J . 10,
+1425-1429.
+KAMOTANI.
+Y . & GRERRR,
+1. 1974 Experiments on confined turbulent jets in crossflow. NASA CR
+2392.
+KEFF~K
+J. ,F. & BAINES,W. D. 1963 The round turbulent jet in a cross-wind. J . Fluid Mech. 15,
+48 1---496.
+KIYA.M., OHYAMA,
+M. & H u m , J. C. R. 1986 Vortex pairs and rings interacting with shcar layer
+vortices. J . Fluid Mech. 172. 1-15.
+Kuzo, D. M . & ROSHKO,A. 1984 Observations on the wake region of the transverse jet. Bull. ilm.
+Phys. Soc. 29, 1536.
+LUZANO,
+A.. ShfITH.S. H.: MUNGAL,
+M. G. & HANSON,R. K. 1994 Concentration measurements in
+a transverse jet by planar laser-induced fluorescence of acetone. A I A A J . 32, 218-221.
+MCALLISTER,
+J. I). 1968 A momentum theory for the effects of cross flow on incompressible jets.
+PhD thesis, University of Tennessee.
+MC'MAHON,
+H. M., HMTEK.D. D. & PALFREY,
+J . G. 1971 Vortex shedding from a turbulent jet in
+a cross-wind. J . Fluid Mech. 48, 73-80.
+MOR~ON
+R., R . 1984 The generation and decay of vorticity. Geuphys. Aslruphj,s. Flirrd Dyn. 28,
+177-308.
+MOIJSSA,Z. M., TRISCIIKA,
+J. W. & ESKANAZI,
+S . 1977 The near field in the mixing of a round jet
+with a cross-stream. J . Fluid Mech. 80. 49-80.
+PRATTE,B. D. & BAINES,M. 1967 Profiles of the round turbulent jet in a crossflow. J . Hydrpotzaut.
+Div. ASCE 92, 53-64.
+RPILLY,R. S. 1968 Investigation of the deformation and penetration of a turbulent, subsonic jet
+issuing transversely into a uniform. subsonic main stream. PhD thesis, [Jniversity of Maryland.
+SCORER, R . s. 1958 Nuturd Aero~~):~innzics.
+Pcrgarnon Press.
+THWAITRS,
+B. 1949 Approximate calculation of thc laminar boundary layer. Aem. Q . 1. 245-180.
+Wu, J. M., VAKILI,A. D. & Yu, F. M . 1988 Investigation of the interacting flow of nonsymmetric
+jets in crossllow. AIAA .I. 26. 940-947.
+WU, J . Z., Gu. J. W. & WU: J. M. 1987 Steady three-dimensional fluid particle separation from
+arbilrary smooth surface and formation of free vortex layers. 5th A M A Appl. A e r o g ~ Conj;
+~.
+Morzterey .
+WU, J. 2. & WU, J. M. 1993 lntcraction between a solid surface and a viscous compressible llow
+field. J . Fluid Mech. 254> 183-21 1.
+
+

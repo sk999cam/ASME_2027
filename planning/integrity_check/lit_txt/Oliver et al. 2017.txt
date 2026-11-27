@@ -1,0 +1,2090 @@
+Proceedings of ASME Turbo Expo 2017: Turbomachinery Technical Conference and Exposition
+GT2017
+June 26-30, 2017, Charlotte, NC, USA
+
+GT2017-63314
+
+IMPLICIT LES FOR SHAPED-HOLE FILM COOLING FLOW
+
+Todd A. Oliver∗
+The University of Texas at Austin
+Austin, Texas 78712
+Email: oliver@ices.utexas.edu
+
+Joshua B. Anderson
+The University of Texas at Austin
+Austin, Texas 78712
+
+Robert D. Moser
+The University of Texas at Austin
+Austin, Texas 78712
+
+Gregory Laskowski
+GE Aviation
+Lynn, Massachusetts 01905
+
+NOMENCLATURE
+ρ Density
+T Temperature
+η Adiabatic effectiveness
+θ Normalized temperature
+ui Velocity in the ith direction
+p Pressure
+a∞ Freestream speed of sound
+k Turbulent kinetic energy
+DR Density ratio, ρc /ρ∞
+BR blowing ratio, (ρc uc )/(ρ∞ u∞ )
+Ma Mach number
+Red Reynolds number, ρ∞ u∞ d/µ∞
+δ ∗ Displacement thickness
+h Enthalpy
+τi j Viscous stress tensor
+(·) Reynolds averaged quantity
+(·)0 Fluctuation with respect to Reynolds average
+f Favre averaged quantity
+(·)
+(·)00 Fluctuation with respect to Favre average
+d Cooling hole metering section diameter
+
+ABSTRACT
+Results of a recent joint experimental and computational investigation of the flow through a plenum-fed 7-7-7 shaped film
+cooling hole are presented. In particular, we compare the measured adiabatic effectiveness and mean temperature against implicit large eddy simulation (iLES) for blowing ratio approximately 2, density ratio 1.6, and Reynolds number 6000. The
+results overall show reasonable agreement between the iLES and
+the experimental results for the adiabatic effectiveness and gross
+features of the mean temperature field. Notable discrepancies include the centerline adiabatic effectiveness near the hole, where
+the iLES under-predicts the measurements by ∆η ≈ 0.05, and
+the near-wall temperature, where the simulation results show features not present in the measurements. After showing this comparison, the iLES results are used to examine features that were
+not measured in the experiments, including the in-hole flow and
+the dominant fluxes in the mean internal energy equation downstream of the hole. Key findings include that the flow near the
+entrance to the hole is highly turbulent and that there is a large
+region of backflow near the exit of the hole. Further, the wellknown counter-rotating vortex pair downstream of the hole is
+observed. Finally, the typical gradient diffusion hypothesis for
+the Reynolds heat flux is evaluated and found to be incorrect.
+
+∗ Address
+
+David G. Bogard
+The University of Texas at Austin
+Austin, Texas 78712
+
+INTRODUCTION
+To achieve high thermal efficiency in modern gas turbine
+engines, it is desirable to have high combustor exit temperatures.
+
+all correspondence to this author.
+
+1
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Thus, the temperatures encountered at the combustor exit in such
+engines are often in excess of 1500K [1, 2, 3]. Because of this,
+effective cooling strategies to protect engine parts are required.
+In practice, multiple strategies are used, including film cooling,
+where relatively cool air from the compressor is diverted around
+the combustor and injected into the hot flow through the turbine through discrete holes in the parts to be cooled. While film
+cooling technology has existed for over 40 years, improvements
+in understanding of the fundamental governing features of film
+cooling flows could lead to both better modeling capabilities and
+better cooling performance, which would enable higher combustor exit temperatures and improved thermal efficiency. The goal
+of this work is to use high fidelity simulation in combination with
+experiments to gain insight into the critical features of industryrelevant film cooling flows.
+Film cooling technology was originally developed in the
+1970s and has been an active area of research since that time.
+As such, there is a large database of experimental results on film
+cooling flows in the open literature. See [2] for a review of this
+literature. In addition, there have been a number of high fidelity
+simulations of film cooling flows reported in the open literature.
+See, for example, [4, 5, 6, 7, 8, 9, 10]. Despite this body of research, there are still gaps in the community’s knowledge regarding film cooling flows. The effect of these gaps is that it is difficult to make accurate predictions of film cooling performance for
+industry-relevant designs using models that are computationally
+tractable for use during design. For example, common engineering RANS turbulence models, like the k-ε model, often dramatically overpredict the film cooling adiabatic effectiveness on the
+hole centerline [11].
+In the context of experiments, these knowledge gaps result
+from two facts. First, much of the early experimental work was
+performed on cylindrical holes, while shaped holes are now being used in some applications to improve cooling performance.
+Second, and more fundamentally, it is difficult to make measurements of all potentially important quantities at all potentially important points in space. For instance, it is common to assess film
+cooling performance by measuring the adiabatic effectiveness,
+which can be accessed by measuring the wall temperature in an
+approximately adiabatic wall experiment. Further, by performing a number of experiments, one can learn how the adiabatic
+effectiveness depends on basic input parameters such as the density ratio, blowing ratio, etc. However, since, for instance, it
+is difficult to make flow measurements inside the film cooling
+hole itself or difficult to measure all the terms in the governing
+transport equations, these measurements leave one with an incomplete understanding of the physics governing the observed
+performance.
+Thus, while the experimental literature has provided significant insight into the features of film cooling, there is an important role for high-fidelity simulations. Specifically, the difficulty
+of measuring some quantities or in some regions in space can be
+
+overcome using high fidelity simulation, and indeed, a number
+of large eddy simulation (LES) and direct numerical simulation
+(DNS) studies of film cooling flows have been reported in the
+open literature, [4, 5, 6, 7, 8, 9, 10]. While these results are clearly
+valuable, they are primarily focused on cylindrical hole configurations. We are aware of only a few LES results for shaped-hole
+configurations in the open literature [6, 8, 9, 10] and no DNS results despite the growing importance of shaped hole geometries
+in turbine cooling. Each of these studies noted issues with RANS
+predictions evident in the LES studies. Leedom and Acharya [6]
+found that the turbulence field was highly anisotropic for cylindrical and fan shaped holes. Koponka et al. [9] evaluated the
+turbulent Schmidt number downstream of injection, and found
+values varying from 0.1 to 2, whereas a RANS simulation would
+generally assume a single value. Zhong et al. [10] concluded that
+the diffusion of coolant jets is primarily due to various discrete
+vortices developed within the coolant holes, and not predictable
+by a RANS simulation.
+This paper reports progress on high fidelity simulations
+of shaped-hole geometries at industry-relevant operating conditions. The long-term objective of this work is to develop DNS
+databases that can serve to both improve understanding of the
+physics of film cooling and to guide the development of improved RANS and LES models. As a first step on this path, this
+paper reports results of an implicit LES—i.e., a simulation where
+no explicit subgrid model is used but on a grid too coarse to be a
+true DNS—for the 7-7-7 shaped hole at DR = 1.6, BR = 2.0,
+ReD = 6000, and Ma∞ = 0.15. Results of this implicit LES
+(iLES) are compared to new experimental measurements conducted in concert with the computational simulation. These results show reasonable agreement between the iLES results and
+measured adiabatic effectiveness and mean thermal fields. For
+example, the maximum error in the centerline adiabatic effectiveness is ∆η ≈ 0.05, and the error over much of the comparison
+is less than 0.02. Further, we examine the features of both the inhole and downstream velocity fields, which were not measured
+in the experiment. Finally, we use the simulation results to examine the mean internal energy equation fluxes downstream of the
+hole. It is found that mean convection is the dominant flux but
+that the Reynolds heat flux is significant also. Further, the gradient diffusion hypothesis for the Reynolds heat flux is examined
+and found to be incorrect.
+
+PROBLEM SETUP
+This section documents the parameters defining the case under investigation as well as the experimental and numerical configurations.
+
+2
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Geometry and Flow Scenario
+The geometry of the case of interest here is the 7-7-7 shaped
+hole [12] fed by a plenum and cooling a flat plate. Drawings
+of the 7-7-7 hole are shown in Figure 1, and all details of the
+geometry, including CAD are available from www.mne.psu.
+edu/psuturbine/ShapedHole.
+
+FIGURE 2. Arrangement of the leading edge and test coupon within
+the wind tunnel [15].
+
+machinable polyurethane foam which had a thermal conductivity of k = 0.044W/(m K). The diameter of the inlet metering
+section for the holes was d = 4mm, and all other hole geometry was scaled based on this diameter. The length-to-diameter
+ratio was `/d = 6, with a metering hole length of `m /d = 2.5.
+The pitch spacing of the holes was p/d = 6 and injection angle was α = 30◦ . The holes were machined in a 610 mm-wide
+coupon, which was bolted and sealed to a well-insulated quiescent plenum.
+To feed the coolant holes, air was extracted from the mainstream flow and cooled with liquid nitrogen in a heat exchanger.
+To achieve a density ratio of DR = 1.60 at the coolant holes, a
+temperature of Tc = 184K was used while maintaining the mainstream temperature at T∞ = 295K. The coolant flow measurement system, as well as the frost control methods utilized in this
+facility, have been thoroughly described by Anderson et al. [15].
+Mainstream temperatures were measured by an array of thermocouples located upstream of the holes. Coolant temperature was
+measured by an average of four thermocouples located at the entrance of the coolant holes.
+Surface temperature measurements were made using a FLIR
+model A655sc infrared (IR) camera with optical access through
+a zinc-selenide window. Four cooling holes were visible, and the
+effectiveness from all four was averaged into a single hole data
+set. Four successive IR images were averaged to obtain the measurements. The lower limit for temperature measurements with
+the IR camera was 215K. Consequently, wall regions colder than
+this temperature could not be resolved. This excludes the region
+
+FIGURE 1. The 7-7-7 shaped hole. (Source: www.mne.psu.edu/
+psuturbine/ShapedHole)
+
+The target flow scenario has DR = 1.6, BR = 2.0, Red =
+6000, and very low freestream Mach number. The freestream
+Mach number in the experiment is 0.06, while in the simulation
+it is 0.15. As a fully compressible, explicit in time method is
+used for the simulations, the Mach number in the simulation is
+increased to reduce the computational cost. However, this increase, from 0.06 to 0.15, has been shown to have a negligible effect on the primary quantity of interest, namely the adiabatic effectiveness, in previous experimental work [13]. Finally,
+the approach boundary layer is a zero-pressure-gradient, laminar
+boundary layer with δ ∗ = 0.11 at the hole breakout location.
+Experimental Details
+The experiments described in this study were carried out in
+the 152 × 610 mm (6”× 24”) recirculating wind tunnel at UTAustin. The facility and measurement techniques are described
+in detail in [14] and [15] A short description of this facility and
+experimental procedures follows.
+The wind tunnel test section, shown in Figure 2, had an
+upstream boundary layer bleed to allow development of a new
+boundary layer a short distance upstream of the coolant holes.
+Coolant was fed through a plenum to a row of 18 coolant
+holes described previously. Cooling holes were fabricated from
+
+3
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+extending to x/d ≤ 5 downstream of the holes from the measurements. The IR camera was calibrated in-situ, as described by
+McClintic et al. [16]. Although the foam test surface had very
+low thermal conductivity, conduction through this test surface
+had noticeable effects on the surface temperature. Corrections
+for these conduction effects were determined using a FEA analysis of the 3D conduction within the test wall (using COMSOL
+Multiphysics). This conduction correction technique is described
+in more detail in McClintic et al [17]. Correction were also done
+to account for heating by radiation incident from the wind tunnel
+walls. The heat flux due to radiation was estimated via
+
+uncertainty of orifice meter calibration. Uncertainty in density
+ratio was δ DR = ±0.03, due variation of coolant temperature
+during the experiment and to thermocouple calibration uncertainties. The uncertainty of the adiabatic effectiveness measurements
+were estimated to be δ η = 0.017, with the primary source of uncertainty from the bias uncertainties of the IR camera calibration
+and conduction corrections. The uncertainty for the above wall
+thermal field measurements was δ θ = 0.022, primarily due to
+the calibration uncertainty for the thermocouple probe.
+Numerical Details
+The simulation reported here was conducted using the software package PlasComCM1 , which was originally developed
+by Bodony and co-workers at The University of Illinois at
+Urbana-Champagne. PlasComCM uses high-order finite difference methods on overset meshes [20, 21] to discretize the compressible Navier–Stokes equations. In this work, the 4th-order
+explicit finite difference method of [22] with 4th order interpolation between overset meshes and classical 4th order Runge-Kutta
+time integration was used. Further, since the grid is too coarse to
+fully resolve all features of the turbulence, as this is an implicit
+LES, this choice of numerics is unstable. To stabilize the simulation, a 10th order Padé filter is applied to the conserved state
+variables every 10 time steps.
+
+qrad = σSB ε(T∞4 − Tw4 ).
+The film cooling model was painted with matte black spray paint,
+and an emissivity value of ε = 0.95 was assumed for the painted
+surface and for the acrylic tunnel walls. The heat flux from the
+radiation correction was added to the surface heat flux calculated
+from COMSOL.
+This correction method requires a value for the heat transfer coefficient with film cooling, which was obtained for these
+coolant flow conditions using the direct measurement method
+described by Boyd et al. [18]. The total correction varied from
+about 2% of the maximum lateral value between the holes to
+about 10% at the hole centerline, with the in-wall conduction
+contributing approximately 70% of the correction and radiation
+contributing the balance. Cooling of the test coupon above the
+plenum (see Fig. 2) created a cold thermal boundary layer which
+propagated downstream. To minimize this effect, a foil heat flux
+plate was adhered to the foam surface upstream of the cooling
+hole breakout. The electrical power to the heat flux plate was increased until the temperature of the foil surface upstream of the
+holes was exactly the same as the freestream temperature. However, this did not eliminate the entire thermal boundary layer,
+since the foil did not extend between the cooling holes, which
+was the coldest part of the coupon. Consequently, the region between the holes had a slightly increased effectiveness. This error
+in effectiveness measurements is discussed further in the presentation of experimental results.
+Thermal fields above the wall were measured by traversing
+a thermocouple made from 2 mil (0.0254 mm) diameter wire,
+which was manufactured by Omega Engineering and mounted to
+a probe holder immediately prior to use. A Zaber Technologies
+T-LSR traverse with 2 µm movement accuracy was used to control the probe location. Thermal field measurements were made
+over a 2D array of positions with a resolution of ∆y = 0.125d and
+∆z = 0.25d. A span of two holes were measured and averaged to
+produce the plots shown in this work.
+Uncertainty in all measured quantities was estimated via the
+sequential perturbation method of Moffat [19]. Blowing ratio
+had an uncertainty of δ BR = ±0.1, primarily due to the bias
+
+Computational Domain, Grid, and Time Step The
+computational domain is shown in Figure 3. It consists of a
+16d × 15d × 6d box centered around the hole pierce point for
+the plenum, the 7-7-7 hole, and a 25d × 5d × 6d box for the
+mainstream flow. The main flow box extends approximately 5.2d
+upstream of the upstream breakout of the film cooling hole and
+approximately 17.5d downstream of the downstream breakout of
+the hole.
+The mesh consists of four blocks: one each for the plenum
+and main boundary layer and two for the hole. The hole mesh
+consists of an “O” mesh for the outer portion of the hole with
+a second block for the center of the hole. The numbers of
+points in each block is given in Table 1. These mesh sizes
+were intended to be a factor of two coarser in each direction
+than would be required in a DNS. However, the observed viscous length, `v , on the centerline just downstream of the hole,
+which is approximately 2.2 × 10−3 d is somewhat smaller than
+originally estimated, and thus the mesh is slightly coarser than
+intended. In the main boundary layer, the mesh spacings in
+the x and z directions are uniform. Normalized by the viscous
+length scale (`v /d = 2.2 × 10−3 ) the spacings are ∆x+ = 29.7
+and ∆z+ = 21.3, respectively. The spacing in the wall normal direction is stretched to give better resolution at the wall. The first
+point off the wall is located at ∆y+
+1 = 1.6.
+
+1 https://bitbucket.org/xpacc/plascomcm
+
+4
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+FIGURE 4. Schematic showing boundary conditions for proposed
+film cooling DNS (not to scale).
+
+layer, we use a Navier–Stokes characteristic boundary condition
+(NSCBC) [23] where the inflow velocity and temperature are
+specified. In particular, we set the streamwise and wall-normal
+velocity components based on the incompressible Blasius boundary layer with δ ∗ = 0.098, which is smaller than the value of
+0.11 noted earlier to account for growth between the inlet and
+the hole. The inflow temperature profile is taken to be uniform at
+the freestream temperature.
+The inflow boundary to the plenum is also specified using
+an NSCBC inflow condition where the temperature is set to the
+coolant temperature (Tc /T∞ = 1/DR) and the inflow vertical velocity is set to achieve the desired blowing ratio. In particular, the
+inflow vertical velocity is set to v/a∞ = 1.53 × 10−3 , which gives
+BR = 2.0 if the plenum inflow density is ρ/ρ∞ = 1.6. In practice
+of course, there is a pressure drop across the hole, which leads to
+a slightly higher plenum inflow density and thus a slightly higher
+blowing ratio. In this case, the computed blowing ratio for the
+simulation is BR = 2.1.
+At the top and downstream outflow boundaries, sponge regions are used [24]. In these sponges zones the solution is forced
+to a specified state by adding source terms to the governing equations. The specified state here was determined from results of
+an even coarser LES simulation. All walls are adiabatic, no-slip
+walls. Finally, in the main boundary layer and plenum, the z (into
+the page in Figure 4) direction is periodic, such that the simulation models an infinite array of holes.
+
+FIGURE 3. Computational domain with mesh blocks. The plenum
+and main flow path each consist of a single mesh block. The hole is split
+into two blocks.
+TABLE 1.
+
+Details of the iLES mesh.
+
+Block Name
+
+Number of Points
+
+Plenum
+
+256 × 128 × 96
+
+Main BL
+
+384 × 224 × 128
+
+Hole (center)
+
+132 × 100 × 69
+
+Hole (outer)
+
+132 × 50 × 128
+
+Total
+
+15.9 million
+
+The time step size is computed at each step by requiring
+CFL ≤ 0.5 everywhere in the domain. For the current configuration, the limiting condition is the CFL number associated with
+the speed of sound in cells at bottom domain of the main boundary layer. The observed mean time step is ∆ta∞ /d = 1.3 × 10−3 .
+The statistical results shown below were obtained by averaging
+over 15.6 domain flow through times. The flow was initialized
+using a field from an even coarser mesh simulation (coarsened
+by a factor of two in each direction) and was run for 5.4 domain
+flow through times on the current mesh prior to taking statistics.
+
+COMPARISON WITH EXPERIMENT
+To gain confidence in the implicit LES results, detailed
+comparisons with experimental measurements were performed.
+These comparisons were done using adiabatic effectiveness and
+mean temperature fields above the wall. As mentioned previously, the operating conditions for these comparisons was
+a coolant density ratio of DR = 1.6 and a blowing ratio of
+BR = 2.0, with a laminar approach boundary layer thickness of
+
+Boundary Conditions Figure 4 shows a cartoon depiction of the film cooling flow DNS domain annotated with boundary condition information. At the inlet to the main boundary
+
+5
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.0
+
+δ ∗ /d = 0.11, and Reynolds number based on hole diameter of
+Red = 6000. The freestream Mach number for the experiment
+was Ma∞ = 0.06, while it was Ma∞ = 0.15 for the computational
+predictions. The study by Anderson et al. [13] showed that this
+difference in Mach number has negligible effect on film cooling
+adiabatic effectiveness.
+
+iLES
+Exp
+
+0.8
+
+η
+
+0.6
+
+0.4
+
+Film Cooling Effectiveness
+Contours of adiabatic effectiveness for the implicit LES and
+experimental measurements are shown in Fig. 5. The black re-
+
+3
+
+0.2
+
+0.0
+
+1.0
+
+0
+
+0.9
+2
+0.4
+
+z/d
+
+1
+
+2
+
+4
+
+6
+
+8
+
+x/d
+
+10
+
+12
+
+14
+
+0.7
+
+0.2
+
+0.3
+
+0.6
+0.5
+
+0
+0.5
+
+0.6
+
+−1
+
+0.5
+0.4
+
+0.7
+
+0
+
+.4
+
+0.8
+
+0.1
+
+0.4
+
+0.2
+
+η
+
+FIGURE 6. Adiabatic effectiveness from implicit LES and experiment as a function of streamwise location on the centerline.
+
+0.3
+0.3
+
+0.2
+0.1
+
+−2
+
+0.0
+−3
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+x/d
+
+12
+
+14
+
+−0.1
+
+(a) Implicit LES
+3
+
+1.0
+0.9
+
+2
+
+0.8
+
+0.1
+
+0.7
+
+z/d
+
+1
+
+0.5
+
+0
+
+0.4
+
+0.6
+
+0.4
+
+−1
+
+0.2
+
+0.6
+
+0.5
+
+0.7
+
+η
+
+0.3
+
+0.3
+
+0.2
+
+0.2
+0.1
+
+−2
+
+0.1
+0.0
+
+−3
+
+0
+
+2
+
+4
+
+6
+
+8
+
+x/d
+
+10
+
+12
+
+14
+
+simulation and experiment is approximately 0.05. These discrepancies are larger than the estimated experimental uncertainty
+(∆η ≈ 0.02) and the estimated statistical uncertainty in the simulation (∆η = 0.012). While there are slight mismatches in the
+experimental and simulated conditions, particularly the blowing ratio, existing experimental data [12, 13] suggests that these
+differences should not cause a significant change in η near the
+centerline. Thus, it is likely that the mismatch is due to inadequate grid resolution in the simulation, particularly in and near
+the hole. A highly resolved simulation campaign is planned to
+further investigate these differences. Regardless, moving downstream, the discrepancy decreases until, at x/d = 10.5, it is approximately equal to the experimental uncertainty, and the error
+remains within the experimental uncertainty over the remainder
+of the computational domain.
+The spanwise results in Fig. 7 tell a similar story. First, note
+that the cool regions observed in the experiment outside the jet is
+due to the presence of a cool thermal boundary layer that forms
+over the test coupon (as discussed previously). This feature is not
+modeled in the simulation and thus is not expected to match the
+experiment. Examining the core of the jet, the profiles are most
+different at x/d = 5, where the centerline is under-predicted and
+the iLES appears to overpredict the width of the jet. In this region, the total experimental uncertainty in η is approximately
+0.02 and thus can only explain approximately 40% of the discrepancy at the centerline at x/d = 5. The remaining the discrepancy is likely due to inadequate grid resolution in the iLES, particularly in and around the hole where the turbulence is most intense. At x/d = 10 the discrepancies are smaller than at x/d = 5,
+but there is still evidence of inadequate resolution. At x/d = 15,
+the agreement between the simulation and experiment is within
+experiment uncertainty for |z|/d ≤ 2.
+
+−0.1
+
+(b) Experiment
+
+FIGURE 5. Adiabatic effectiveness from implicit LES (top) and experiment (bottom).
+
+gion in Fig. 5 correspond to areas where experimental data is
+unavailable. There is broad agreement between the iLES result
+and the experiment. For example, the tip of the η = 0.5 contour
+extends to approximately x/d = 15 in both the experiment and
+simulation.
+To make detailed comparisons between the experiment and
+simulation easier, Fig. 6 shows the adiabatic effectiveness as a
+function of streamwise location on the centerline, and Fig. 7
+shows the adiabatic effectiveness as a function of spanwise location at three streamwise locations.
+Examining the centerline adiabatic effectiveness, the mismatch between the experiment and simulation is largest near the
+hole at x/d = 5. At this point, the discrepancy between the
+
+6
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.0
+
+Mean Temperature Field
+While it is important to match adiabatic effectiveness, much
+more information about the level of agreement can be obtained
+by comparing the mean temperature fields above the plate. Fig. 8
+shows this comparison at x/d = 5. In particular, the figure shows
+
+iLES
+Exp
+
+0.8
+
+η
+
+0.6
+0.4
+
+1.0
+0.8
+0.7
+
+1.5
+
+0.6
+0.5
+
+1.0
+
+θ
+
+y/d
+
+0.2
+0.0
+−3
+
+0.9
+
+2.0
+
+0.4
+0.3
+
+−2
+
+−1
+
+0
+
+z/d
+
+1
+
+2
+
+0.5
+
+3
+
+0.2
+0.1
+
+0.0
+−3
+
+−2
+
+−1
+
+0
+
+1
+
+0.0
+
+2
+
+z/d
+
+(a) x/d = 5
+
+1.0
+
+(a) Implicit LES
+iLES
+Exp
+
+0.8
+
+2.5
+
+1.0
+0.9
+
+2.0
+
+0.8
+0.7
+0.6
+0.5
+
+1.0
+
+0.4
+
+η
+
+0.3
+
+0.4
+
+0.1
+0.0
+−3
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+3
+
+0.0
+
+z/d
+(b) Experiment
+
+−2
+
+−1
+
+0
+
+z/d
+
+1
+
+2
+
+3
+FIGURE 8. Normalized mean temperature field θ = (T∞ − T̄ )/(T∞ −
+Tc ) from implicit LES and experiment at x/d ≈ 5.
+
+(b) x/d = 10
+
+1.0
+
+iLES
+Exp
+
+0.8
+
+θ = (T∞ − T̄ )/(T∞ − Tc ), which is the mean temperature in the
+fluid non-dimensionalized in the same way as the mean wall temperature is non-dimensionalized to compute the adiabatic effectiveness η.
+Mean temperature profiles at z/d = 0, ±1/2, and ±1 are
+shown in Fig. 9. Examining the figures, there are many points
+of agreement. To start, the horizontal extent of the jet in reasonable agreement. At y/d = 0.5, the θ = 0.2 contour extends to
+approximately z/d = ±1.2, and the θ = 0.4 contour extends to
+approximately z/d = ±1. These features are also reflected in the
+profile plots shown in Fig. 9, where there is generally reasonable
+agreement between the simulation and experiment for y/d > 0.5,
+although the centerline profile is somewhat over-diffused in the
+simulation relative to the experiment.
+Near the wall, the situation is more complex. The measured centerline temperature just off the wall was approximately
+θ = 0.7, which was consistent with the directly measured surface temperature. However once corrected for conduction and
+
+η
+
+0.6
+0.4
+0.2
+0.0
+−3
+
+0.2
+
+0.5
+
+0.2
+0.0
+−3
+
+θ
+
+y/d
+
+0.6
+
+1.5
+
+−2
+
+−1
+
+0
+
+z/d
+
+1
+
+2
+
+3
+
+(c) x/d = 15
+
+FIGURE 7. Adiabatic effectiveness from implicit LES and experiment as a function of spanwise location at three streamwise stations.
+
+7
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+3.0
+
+radiation effects, the adiabatic effectiveness at the centerline was
+η = 0.78. Because of the warming of the centerline surface temperature by conduction and radiation effects, at the centerline the
+air is expected to have a negative temperature gradient above the
+wall, i.e. a minimum air temperature at some distance away from
+the wall. As shown in Figure 9(a), the measured θ profile was
+consistent with this expectation. Furthermore this accounts for
+the qualitative difference between the computational simulation,
+which predicted the minimum temperature to be at the wall, and
+the experimental measurements, which found the minimum temperature off the wall, since the computational simulation had no
+conduction nor radiation heating effects. Finally, note that there
+is substantial asymmetry in both the measured and simulated profiles. In an ideal experiment or in a simulation with infinite averaging period, the results would be perfectly symmetric and thus
+the left and right profiles would agree. Both sides are shown here
+to give an indication of the magnitude of possible errors.
+
+iLES
+Exp
+
+2.5
+
+y/d
+
+2.0
+1.5
+1.0
+0.5
+0.0
+−0.1
+
+0.0
+
+0.1
+
+0.2
+
+0.3
+
+θ
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+(a) z/d = 0
+3.0
+
+iLES (left)
+iLES (right)
+Exp (left)
+Exp (right)
+
+2.5
+
+FLOW IN AND NEAR THE HOLE
+Figure 10 shows the magnitude of the Favre-averaged velocity in the center plane (z/d = 0) with mean in-plane streamlines
+superimposed. There are two regions of recirculating flow, one
+
+y/d
+
+2.0
+1.5
+1.0
+0.5
+0.0
+−0.1
+
+0.0
+
+0.1
+
+0.2
+
+0.3
+
+θ
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+(b) z/d = ±1/2
+3.0
+
+iLES (left)
+iLES (right)
+Exp (left)
+Exp (right)
+
+2.5
+
+y/d
+
+2.0
+
+FIGURE 10. Magnitude of the Favre-averaged velocity normalized
+by u∞ (color) in the center plane with lines showing in-plane mean
+streamlines.
+
+1.5
+1.0
+
+near the entrance to the hole after the flow separates entering the
+hole and another downstream near the exit of the hole. Because
+of this, the largest in-hole velocity magnitude in the center plane
+is slightly greater than 2, which is much larger than the velocity
+ratio for this case (V R = BR/DR = 1.25). Further, the flow exits
+into the mainstream with significantly higher velocity than if it
+remained attached and filled the hole uniformly. The jet velocity exiting the hole can be more clearly seen in Fig. 11, which
+shows the mean streamwise velocity in the center plane in the
+mainstream region only. Note that just upstream of the jet there
+
+0.5
+0.0
+−0.1
+
+0.0
+
+0.1
+
+0.2
+
+θ
+
+0.3
+
+0.4
+
+0.5
+
+(c) z/d = ±1
+
+FIGURE 9. Normalized mean temperature profiles θ = (T∞ −
+T̄ )/(T∞ − Tc ) from implicit LES and experiment at x/d ≈ 5 for z/d =
+0, ±1/2, ±1.
+
+8
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+is highly asymmetric. This is due to the presence of a “bathtub” vortex that forms near the entrance to the hole. Since the
+problem is completely symmetric about the z = 0 plane, we expect that this vortex will occasionally flip direction such that flow
+statistics obtained from an infinite averaging time would be perfectly symmetric, but it is unclear what dictates the time scale of
+this flipping. Apparently, the time simulated here were not sufficient to achieve symmetric statistics, indicating that the flipping
+may happen infrequently. However, shortly downstream, at the
+cut approximately in the middle of the hole, the flow is already
+much more symmetric, indicating that the asymmetry does not
+persist very far downstream.
+Fig. 13 shows the turbulent kinetic energy (TKE) in the center plane, and Fig. 14 shows the TKE in planes approximately
+orthogonal to the hole. The separated, recirculating flow near
+
+FIGURE 11. Streamwise mean velocity field ũ1 /u∞ from implicit
+LES x-y plane at the hole center. The thin black lines on the plot interior show the wall geometry.
+
+is a small region of reverse flow, and the boundary layer is much
+thicker than one would expect based on the development of a
+zero pressure gradient laminar boundary layer. These effects are
+caused by the blockage effects of the jet, which imposes non-zero
+vertical and horizontal velocity even in the potential flow region
+upstream of the jet and outside the boundary layer. This causes
+the oncoming boundary layer to thicken much more quickly than
+would otherwise be the case.
+Fig. 12 shows the magnitude of the Favre-averaged velocity
+on planes cutting through the hole. The plane normal vector is
+(cos(30◦ ), sin(30◦ ), 0) such that the cut planes are approximately
+normal to the primary flow direction in the hole, since the hole
+angle is 30◦ . The black lines indicate the mesh block boundaries. The velocity magnitude field near the entrance to the hole
+
+FIGURE 13. Turbulent kinetic energy (k = 21 ρu00i u00i /ρ̄) normalized
+by u2∞ in the center plane.
+
+the entrance to the hole develops a very intense region of turbulence, where the maximum TKE is approximately 0.7u2∞ . This
+maximum point occurs slightly downstream of the entrance of
+the hole and off the center plane and is not shown in the figures.
+Downstream of this localized region of large TKE, the TKE dissipates, but it is still substantial near the middle (k/u2∞ ≈ 0.2) and
+exit (k/u2∞ ≈ 0.1) of the hole. This value at the exit of the hole
+is as large as the TKE in the shear layer that forms between the
+mainstream and the jet flow on the upstream side of the hole, as
+can be more clearly seen in Fig. 15, which shows the TKE in the
+z/d = 0 plane in the mainstream flow only.
+
+DOWNSTREAM MEAN ENERGY EQUATION FLUXES
+To gain insight into the features of the flow responsible for
+the observed adiabatic effectiveness, in particular what a RANS
+model must correctly predict in order to accurately compute the
+adiabatic effectiveness, we examine the fluxes in the mean internal energy equation. The mean internal energy equation can be
+
+FIGURE 12. Magnitude of the Favre-averaged velocity normalized
+by u∞ (color) in the center plane with lines showing in-plane mean
+streamlines. Note that the slit in the hole is a plotting artifact resulting from the periodic boundary condition. There is not actually a slit in
+the geometry.
+
+9
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+itly represented and cannot be directly estimated without a better
+resolved simulation. To get a handle on the possible impact of
+these terms, we evaluated the eddy viscosity that would be obtained with the WALE LES model [25] using the instantaneous
+fields from the iLES simulation. Downstream of the hole, the
+maximum of the the mean eddy viscosity evaluated in this way
+was approximately 4µ∞ . Given that, in the jet and sufficiently
+far from the wall where the Reynolds heat flux is significant, the
+viscous fluxes are less than 1% of the Reynolds heat fluxes, the
+WALE eddy viscosity suggests that the subgrid contribution to
+the Reynolds heat fluxes is not substantial for the current purposes. Further, errors of a few or even ten percent would not
+change any conclusions made here. A more complete assessment of the errors requires a more refined simulation, which is
+beyond the scope of this paper.
+The wall-normal and spanwise mean convective fluxes,
+ρ̄ ũ2 h̃ and ρ̄ ũ3 h̃, normalized by ρ∞ u3∞ are shown in Fig. 16 and 17,
+respectively. The black lines in the figure are mean temperature
+isolines. Note that the color scales change moving downstream
+because the magnitude of the fluxes changes significantly. In
+the wall-normal direction, the mean velocity carries heat upward
+near the center of the jet and downward outside of approximately
+±1d. In the spanwise direction, convection carries heat toward
+the center of the jet near the wall below approximately d/2, and
+toward the outside above this point.
+This pattern is due to the presence of a counter-rotating
+vortex pair (CVRP), as can be observed in the mean velocity
+shown in Fig. 18. The figure shows the Favre-averaged streamwise velocity component in the x/d = 1, 3, and 5 planes with
+the in-plane Favre-averaged velocity vectors represented by arrows. While the in-plane velocity components are weak relative
+to the freestream velocity—e.g., at x/d = 5, the in-plane velocity magnitude is everywhere less than 0.05u∞ —they carry large
+enthalpy, leading to large fluxes. Thus, for a RANS simulation
+to accurately capture the mean temperature field, it is necessary
+to get the strength of this CRVP correct.
+The wall-normal and spanwise components of the Reynolds
+heat flux, ρu002 h00 and ρu003 h00 , normalized by ρ∞ u3∞ are shown in
+Fig. 19 and 20, respectively. As with the convective fluxes, the
+color scales change moving downstream because the magnitude
+of the fluxes changes significantly. The scales are also different
+from those for the convective fluxes because the magnitudes of
+the Reynolds heat flux components are substantially smaller.
+Examining the figures, it is clear that, as expected, the role of
+the Reynolds heat flux is to transport heat from the outside of the
+jet into the core. The magnitude of this flux is significantly less
+than the mean convective flux, but still substantial, with the maximum Reynolds heat flux generally being approximately 15% of
+the maximum mean convective flux in the wall-normal direction and approximately 10% in the spanwise direction. Thus,
+as with the CRVP, it is crucial that a RANS simulation give a
+good approximation of these fluxes in order to accurately predict
+
+FIGURE 14. Turbulent kinetic energy (k = 12 ρu00i u00i /ρ̄) normalized
+by u2∞ in planes orthogonal to the hole. Note that the slit in the hole is a
+plotting artifact resulting from the periodic boundary condition. There
+is not actually a slit in the geometry.
+
+FIGURE 15. Turbulent kinetic energy, k = 12 ρu00i u00i /ρ̄ normalized by
+u2∞ in the z/d = 0 plane. The thin black lines on the plot interior show
+the wall geometry.
+
+written as follows:
+∂
+∂ xi
+
+∂T
+ρ̄ ũi h̃ + ρu00i h00 − p0 u00i − κ
+∂ xi
+ũi
+
+!
+=
+
+∂ u00
+∂ u00
+∂ p̄
+∂ p̄
+∂ ũi
++ u00i
+− p0 i + τ¯i j
++ τi j i .
+∂ xi
+∂ xi
+∂ xi
+∂xj
+∂xj
+
+Since typical RANS models have been observed to predict the
+spreading of coolant incorrectly, we examine both the wallnormal and spanwise fluxes in three y-z planes downstream of
+the hole. In the current case, the pressure diffusion (p0 u00j ) is negligible everywhere, and molecular diffusion (κ∂ T /∂ x j ) is negligible away from the wall. Thus, we compare only the mean
+convective and Reynolds heat fluxes.
+As the simulation is an implicit LES, the Reynolds heat
+fluxes are affected by a subgrid component that is not explic-
+
+10
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+9.000
+
+0.000
+1.0
+
+-3.000
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-9.000
+
+0.0
+−3
+
+-6.000
+
+−2
+
+−1
+
+0
+
+1
+
+z/d
+
+z/d
+
+(a) x/d = 1
+
+(a) x/d = 1
+
+2
+
+7.000
+
+y/d
+
+1.0
+
+2.333
+
+1.5
+
+ρ̄ũ 2 h̃
+
+0.000
+
+4.667
+
+2.0
+
+2.333
+
+1.5
+
+y/d
+
+7.000
+
+4.667
+
+2.0
+
+0.000
+1.0
+
+-2.333
+0.5
+
+0.0
+−3
+
+-2.333
+0.5
+
+-4.667
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-7.000
+
+0.0
+−3
+
+-4.667
+
+−2
+
+−1
+
+0
+
+1
+
+z/d
+
+z/d
+
+(b) x/d = 3
+
+(b) x/d = 3
+
+2
+
+5.000
+2.0
+2.500
+
+y/d
+
+0.000
+1.0
+
+2.500
+1.5
+
+ρ̄ũ 2 h̃
+
+1.5
+
+y/d
+
+-7.000
+
+5.000
+
+2.0
+
+-2.500
+
+0.5
+
+0.0
+−3
+
+-9.000
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+0.000
+1.0
+-2.500
+
+0.5
+
+-5.000
+
+0.0
+−3
+
+ρ̄ũ 3 h̃
+
+0.0
+−3
+
+-3.000
+0.5
+
+-6.000
+
+ρ̄ũ 3 h̃
+
+0.5
+
+ρ̄ũ 3 h̃
+
+y/d
+
+1.0
+
+3.000
+
+1.5
+
+ρ̄ũ 2 h̃
+
+0.000
+
+6.000
+
+2.0
+
+3.000
+
+1.5
+
+y/d
+
+9.000
+
+6.000
+
+2.0
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-5.000
+
+z/d
+
+z/d
+
+(c) x/d = 5
+
+(c) x/d = 5
+
+FIGURE 16. Wall normal component of the mean convective heat
+flux normalized by ρ∞ u3∞ with isolines of the mean temperature at three
+streamwise stations downstream of the hole.
+
+FIGURE 17. Spanwise component of the mean convective heat flux
+normalized by ρ∞ u3∞ with isolines of the mean temperature at three
+streamwise stations downstream of the hole. Red indicates transport
+from left to right while blue indicates transport from right to left.
+
+the mean temperature field.
+Typical RANS simulations close the Reynolds heat flux using the gradient diffusion hypothesis—i.e., it is assumed that
+there exists a scalar field κt such that
+−ρu00i h00 = κt
+
+between these two vectors as follows:
+α = cos−1
+
+∂ T̃
+.
+∂ xi
+
+
+
+
+r·g
+,
+|r| |g|
+
+where ri = ρu00i h00 denotes the Reynolds heat flux vector and gi =
+∂ T̃ /∂ xi is the mean temperature gradient. This angle is shown in
+Fig. 21. To avoid irrelevant large angles in the freestream where
+both the temperature gradient and Reynolds heat flux are essentially zero, only the region where both the temperature gradient
+and Reynolds heat flux magnitudes are at least 1% of their maximum values in the plane are shown. It is clear that, over a large
+portion of the domain near the core of the jet—e.g., from the
+wall to y/d ≈ 1 and −1 ≤ z/d ≤ 1 at x/d = 5—this angle is
+
+Independent of how κt is computed, this model breaks down
+whenever the Reynolds heat flux vector is not aligned with the
+mean temperature gradient. While the the gradient diffusion hypothesis is known to be invalid in general, it is important to establish whether it is reasonable in a given flow as part of a determination of the causes of observed RANS model failure. Thus,
+to test the gradient diffusion hypothesis, we compute the angle
+
+11
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.500
+
+1.1
+1.0
+
+1.000
+
+2.0
+
+0.9
+0.8
+
+y/d
+
+0.5
+
+1.0
+
+ũ 1
+
+y/d
+
+0.6
+
+0.000
+1.0
+-0.500
+
+0.4
+0.3
+
+0.5
+
+0.5
+
+-1.000
+
+0.2
+0.1
+
+0.0
+−3
+
+0.500
+
+1.5
+
+0.7
+
+1.5
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+ρu2′′ h ′′
+
+0. 1u∞
+
+2.0
+
+0.0
+−3
+
+0.0
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-1.500
+
+z/d
+
+z/d
+
+(a) x/d = 1
+
+(a) x/d = 1
+
+0.800
+1.1
+
+2.0
+
+1.0
+
+2.0
+0.400
+
+0.9
+0.8
+
+0.5
+
+1.0
+
+ũ 1
+
+0.6
+
+y/d
+
+0.7
+
+1.5
+
+y/d
+
+1.5
+
+0.4
+
+0.2
+
+0.0
+−3
+
+0.1
+0.0
+−3
+
+-0.400
+
+0.5
+
+0.3
+0.5
+
+0.000
+1.0
+
+ρu2′′ h ′′
+
+0. 1u∞
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+−2
+
+−1
+
+0.0
+
+0
+
+1
+
+2
+
+-0.800
+
+z/d
+
+z/d
+
+(b) x/d = 3
+
+(b) x/d = 3
+0.550
+1.1
+1.0
+
+0.275
+
+0.9
+
+1.5
+
+0.6
+0.5
+
+1.0
+
+ũ 1
+
+0.7
+
+1.5
+
+y/d
+
+y/d
+
+0.8
+
+0.000
+1.0
+-0.275
+
+0.5
+
+0.4
+
+ρu2′′ h ′′
+
+0. 1u∞
+
+2.0
+
+2.0
+
+0.3
+0.5
+
+0.2
+
+0.0
+−3
+
+0.1
+0.0
+−3
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-0.550
+
+z/d
+
+0.0
+
+z/d
+
+(c) x/d = 5
+
+(c) x/d = 5
+
+FIGURE 19. Wall normal component of the Reynolds heat flux normalized by ρ∞ u3∞ (color) with isolines of the mean temperature at three
+streamwise stations downstream of the hole.
+
+FIGURE 18. Favre-averaged streamwise velocity normalized by u∞
+(color) with vectors representing the in-plane Favre-averaged velocity
+at three streamwise stations
+
+shows that the iLES jet width and height match the experimentally observed thermal field fairly well, although there are some
+discrepancies near the wall.
+The simulation shows that the flow in the hole is highly turbulent near the entrance. This turbulence dissipates downstream,
+but the flow leaving the hole still has significant TKE. Further, a
+large region of reversed flow near the exit of the hole is observed.
+The dominant fluxes in the mean internal energy equation
+were examined. The mean convective heat fluxes in both the
+wall-normal and spanwise directions are large, which results
+from the presence of a CRVP downstream of the hole. The
+Reynolds heat flux is also significant. However, the standard
+gradient diffusion hypothesis that is commonly used in RANS
+modeling is found to be incorrect.
+Ongoing work is focused on continued analysis of the mean
+
+large, meaning that the vectors are not well-aligned and the gradient diffusion hypothesis is invalid. Thus, to predict film cooling flows, it is necessary to move beyond this hypothesis to more
+complex closure models for the Reynolds heat flux.
+
+SUMMARY AND CONCLUSIONS
+An implicit LES of the flow from a plenum through the 7-77 shaped film cooling hole into the mainstream flow over a flat
+plate has been conducted and compared to corresponding experimental measurements. The comparison shows that the iLES is
+able to reasonably predict the experimentally observed adiabatic
+effectiveness. Comparison of the mean temperature field at five
+hole diameters downstream of the downstream edge of the hole
+
+12
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1.500
+
+-0.500
+0.5
+
+0.5
+
+-1.000
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+1.0
+
+-1.500
+
+0.0
+−3
+
+z/d
+
+−2
+
+−1
+
+(a) x/d = 1
+
+0
+z/d
+
+1
+
+2
+
+(a) x/d = 1
+0.800
+
+2.0
+
+1.5
+y/d
+
+0.000
+1.0
+
+ρu3′′ h ′′
+
+y/d
+
+1.5
+
+-0.400
+
+0.5
+
+1.0
+0.5
+
+0.0
+−3
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+-0.800
+
+0.0
+−3
+
+z/d
+
+90
+80
+70
+60
+50
+40
+30
+20
+10
+0
+
+[degrees]
+
+2.0
+
+0.400
+
+−2
+
+−1
+
+(b) x/d = 3
+
+0
+z/d
+
+1
+
+2
+
+α
+
+0.0
+−3
+
+[degrees]
+
+y/d
+
+1.0
+
+1.5
+
+ρu3′′ h ′′
+
+0.000
+
+90
+80
+70
+60
+50
+40
+30
+20
+10
+0
+
+α
+
+0.500
+
+1.5
+
+y/d
+
+2.0
+
+1.000
+
+2.0
+
+(b) x/d = 3
+0.550
+2.0
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+1.0
+0.5
+
+-0.550
+
+z/d
+
+0.0
+−3
+
+(c) x/d = 5
+
+90
+80
+70
+60
+50
+40
+30
+20
+10
+0
+
+[degrees]
+
+-0.275
+
+0.5
+
+0.0
+−3
+
+1.5
+y/d
+
+0.000
+1.0
+
+ρu3′′ h ′′
+
+y/d
+
+1.5
+
+2.0
+
+−2
+
+−1
+
+0
+z/d
+
+1
+
+2
+
+α
+
+0.275
+
+(c) x/d = 5
+
+FIGURE 20. Spanwise component of the Reynolds heat flux normalized by ρ∞ u3∞ (color) with isolines of the mean temperature at three
+streamwise stations downstream of the hole. Red indicates transport
+from right to left, while blue indicates transport from left to right.
+
+FIGURE 21. Angle between the Reynolds heat flux vector and mean
+temperature gradient.
+
+[4] Muldoon, F., and Acharya, S., 2006. “Analysis of k-ε budgets for film cooling using direct numerical simulation”.
+AIAA Journal, 44(12).
+[5] Peet, Y. V., and Lele, S. K., 2008. “Near field of film cooling jet issued into a flat plate boundary layer: LES study”.
+In Proceedings of ASME Turbo Expo 2008: Power for
+Land, Sea and Air, no. GT2008-50420.
+[6] Leedom, D. H., and Acharya, S., 2008. “Large eddy simulation of film cooling flow fields from cylindrical and
+shaped holes”. In Proceedings of ASME Turbo Expo 2008:
+Power for Land, Sea and Air, no. GT2008-51009.
+[7] Ziefle, J., and Kleiser, L., 2008. “Assessment of a filmcooling flow structure by large-eddy simulation”. Journal
+of Turbulence, 9(29), pp. 1–25.
+[8] Acharya, S., 2010. “Film cooling simulation and control”.
+
+internal energy balance, as understanding this balance is key to
+understanding the cooling performance and improving existing
+turbulence models. Further, the results of the iLES are being
+used to help plan a fully resolved DNS.
+
+REFERENCES
+[1] Kerrebrock, J. L., 2001. Aircraft Engines and Gas Turbines.
+MIT Press, Cambridge, Massachusetts.
+[2] Bogard, D. G., and Thole, K. A., 2006. “Gas turbine film
+cooling”. Journal of Propulsion and Power, 22(2), pp. 249–
+270.
+[3] Langston, L. S., 2013. “Riding the surge”. Mechanical
+Engineering, 135(5), pp. 36–41.
+
+13
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Heat Transfer Research, 41(6), pp. 601–626.
+[9] Konopka, M., Jessen, W., and Schröder, W., 2013. “Largeeddy simulation of film cooling in an adverse pressure gradient flow”. J. Turbomach, 135(3), pp. 031031 1–13.
+[10] Zhong, L., Zhou, C., and Chen, S., 2016. “Large eddy simulation of inclined jet in cross flow with cylindrical and
+fan-shaped holes”. In Proceedings of ASME Turbo Expo
+2016: Turbomachinery Technical Conference and Exposition, no. GT2008-56840.
+[11] Haydt, S., Lynch, S., and Lewis, S., 2016. “The effect
+of meter offset on shaped film cooling hole adiabatic effectiveness”. In Proceedings of the ASME Turbo Expo
+2016: Turbomachinery Technical Conference and Exposition, no. GT2016-56135.
+[12] Schroeder, R. P., and Thole, K. A., 2014. “Adiabatic effectiveness measurements for a baseline shaped film cooling hole”. In International Gas Turbine and Aeroengine
+Congress and Exposition, no. GT2014-25992.
+[13] Anderson, J. B., Wilkes, E. K., McClintic, J. W., and Bogard, D. G., 2016. “Effects of freestream Mach number,
+Reynolds number, and boundary layer thickness of film
+cooling effectiveness of shaped holes”. In Proceedings of
+the ASME Turbo Expo 2016: Turbine Technical Conference and Exposition, no. GT2016-56152.
+[14] Boyd, E. J., McClintic, J. W., Chavez, K. L., and Bogard,
+D. G., 2016. “Direct measurement of heat transfer coefficient augmentation at multiple density ratios”. ASME J.
+Turbomachinery.
+[15] Anderson, J. B., Boyd, E. J., and Bogard, D. G., 2015. “Experimental investigation of coolant-to-mainstream scaling
+parameters with cylindrical and shaped film cooling holes”.
+In Proceedings of the ASME Turbo Expo 2015: Turbine
+Technical Conference and Exposition, no. GT2015-43072.
+[16] McClintic, J. W., Klavetter, S. R., Anderson, J. B., Winka,
+J. R., Bogard, D. G., Dees, J. E., Laskowski, G. M., and
+Briggs, R., 2014. “The effect of internal cross-flow on
+the adiabatic effectiveness of compound angle film cooling holes”. In Proceedings of the ASME Turbo Expo 2014,
+no. GT2014-25975.
+[17] McClintic, J. W., Klavetter, S. R., Anderson, J. B., Winka,
+J. R., Bogard, D. G., Dees, J. E., Laskowski, G. M., and
+Briggs, R., 2015. “The effect of internal cross-flow on
+the adiabatic effectiveness of compound angle film cooling
+holes”. J. Turbomach, 137(7), pp. 071006 1–10.
+[18] Boyd, E., McClintic, J., Chavez, K., and Bogard, D., 2017.
+“Direct measurement of heat transfer coefficient augmentation at multiple density ratios”. J. Turbomach, 139(1),
+pp. 011005 1–11.
+[19] Moffat, R. J., 1985. “Using uncertainty analysis in the planning of an experiment”. J. Fluids Eng., 107(2), pp. 173–
+178.
+[20] Reichert, A., Heath, M. T., and Bodony, D. J., 2012. “En-
+
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+14
+
+ergy stable numerical methods for hyperbolic partial differential equations using overlapping domain decomposition”.
+Journal of Computational Physics, 231, pp. 5243–5265.
+Bodony, D. J., Zagaris, G., Reichert, A., and Zhang, Q.,
+2011. “Provably stable overset grid methods for computational aeroacoustics”. Journal of Sounds and Vibration,
+330, pp. 4161–4179.
+Bogey, C., and Bailly, C., 2004. “A family of low dispersive and low dissipative explicit schemes for flow and noise
+computations”. Journal of Computational Physics, 194,
+pp. 194–214.
+Poinsot, T. J., and Lele, S. K., 1992. “Boundary conditions for direct simulations of compressible viscous flows”.
+Journal of Computaional Physics, 101, pp. 104–129.
+Bodony, D. J., 2006. “Analysis of sponge boundary treatments for computational fluid mechanics”. Journal of Computational Physics, 212, pp. 681–702.
+Nicoud, F., and Ducros, F., 1999. “Subgrid-scale modelling
+based on the square of the velocity gradient tensor”. Flow,
+Turbulence and Combustion, 62, pp. 183–200.
+
+Copyright © 2017 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 08/23/2017 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

@@ -1,0 +1,924 @@
+M. Gritsch
+A. Schulz
+S. Wittig
+Lehrstuhl und Institut fUr Thermische
+Stromungsmaschinen,
+Universitat Karlsruhe (T.H.),
+Kaiserstr. 12,
+76128 Karlsruhe, Germany
+
+Adiabatic Wall Effectiveness
+Measurements of Film-Cooling
+Holes With Expanded Exits
+This paper presents detailed measurements of the film-cooling effectiveness for three
+single, scaled-up film-cooling hole geometries. The hole geometries investigated include a cylindrical hole and two holes with a diffuser-shaped exit portion (i.e., a
+fan-shaped and a laid-back fan-shaped hole). The flow conditions considered are
+the crossflow Mach number at the hole entrance side (up to 0.6), the crossflow Mach
+number at the hole exit side (up to 1.2), and the blowing ratio (up to 2). The
+coolant-to-mainflow temperature ratio is kept constant at 0.54. The measurements are
+performed by means of an infrared camera system, which provides a two-dimensional
+distribution of the film-cooling effectiveness in the near field of the cooling hole
+down to x/D = 10. As compared to the cylindrical hole, both expanded holes show
+significantly improved thermal protection of the surface downstream of the ejection
+location, particularly at high blowing ratios. The laidback fan-shaped hole provides
+a better lateral spreading of the ejected coolant than the fan-shaped hole, which
+leads to higher laterally averaged film-cooling effectiveness. Coolant passage crossflow Mach number and orientation strongly affect theflowfield of the jet being ejected
+from the hole and, therefore, have an important impact on film-cooling performance.
+
+Introduction
+Increasing the lifetime of gas turbine blades can be achieved
+by cooling the blades effectively. Typically, this cooling process
+involves film-cooling of the blade surface. In an attempt to improve
+the cooling process, recent attention has been given to contouring
+the hole geometry. Film-cooling holes with a diffuser-shaped
+expansion at the exit portion of the hole are believed to improve
+the film-cooling performance on a gas turbine blade. The increased
+cross-sectional area at the hole exit compared to a standard cylindrical hole leads to a reduction of the mean velocity and, thus, of
+the momentum flux of the jet exiting the hole. Therefore, the
+penetration of the jet into the mainflow is reduced, resulting in an
+increased cooling efficiency. Furthermore, lateral expansion of the
+hole provides an improved lateral spreading of the jet, leading to
+a better coverage of the airfoil in lateral direction and a higher
+laterally averaged film-cooling efficiency.
+Recent studies have shown that expanding the exit of the
+cooling hole improves film-cooling performance relative to a
+cylindrical hole. Overall improvements in adiabatic effectiveness were found for laterally expanded holes (Goldstein et al.,
+1974) as well as for forward-expanded holes (Makki and Jakubowski, 1986). Schmidt et al. (1996a) and Sen et al. (1996)
+compared a cylindrical hole to a forward-expanded hole, both
+with compound angle injection. Although the spatially averaged
+effectivenesses for the cylindrical and forward-expanded holes
+were the same, a larger lateral spreading of the forward expanded jet was found. Haller and Camus (1984) performed
+aerodynamic loss measurements on a two-dimensional transonic
+cascade. Holes with a spanwise flare angle of 25 deg were found
+to offer significant improvements in film-cooling effectiveness
+without any additional loss penalty. Liess (1975) studied the
+effect of the external crossflow Mach number on the film-cooling parameters. Mach numbers up to 0.9 were employed. Using
+the mainflow recovery temperature as reference temperature,
+no measurable effect on film-cooling effectiveness was found.
+Contributed by the International Gas Turbine Institute and presented at the
+42nd International Gas Turbine and Aeroengine Congress and Exhibition, Orlando, Florida, June 2 - 5 , 1997. Manuscript received at ASME Headquarters
+February 1997. Paper No. 97-GT-164. Associate Technical Editor: H. A. Kidd.
+
+Journal of Turbomachinery
+
+However, no studies are present in the open literature examining the effect of transonic external crossflow Mach numbers for
+discrete hole film-cooling in the near-hole region. Despite the
+fact that film-cooling holes are fed from supply passages in
+most gas turbine applications, there aren't any studies discussing
+the effect of coolant supply passage Mach number and orientation on film-cooling performance.
+Flowfield measurements performed by Thole et al. (1998)
+showed that jet penetration as well as velocity gradients in
+the mixing region were significantly reduced for holes with
+expanded exits as compared to a cylindrical hole at the same
+blowing rate. Peak turbulence levels were found downstream
+of the hole exit for the cylindrical hole and in the hole exit
+plane for the expanded holes. Numerical studies performed by
+Giebert et al. (1997) were able to predict the general flow
+features of coolant ejection through diffuser-shaped holes. Discharge coefficient measurements presented by Gritsch et al.
+(1998) for the same hole geometries tested in the present paper
+showed that the discharge coefficient for all geometries strongly
+depends on the flow conditions (crossflows at hole inlet and
+exit, and pressure ratio). The discharge coefficient of both expanded holes was found to be higher than that of the cylindrical
+hole, particularly at low pressure ratios and with a hole entrance
+crossflow applied. The effect of the additional layback on the
+discharge coefficient was negligible.
+This paper presents the film-cooling effectiveness results of
+a comprehensive film-cooling study conducted at the University
+of Karlsruhe. Two-dimensional distributions of the film-cooling
+effectiveness in the near-field of a single, scaled-up film-cooling
+hole with and without exit expansions were measured by means
+of an infrared camera system. The flow parameters investigated
+are typical for real film-cooling applications. Mach numbers
+both in the main channel and in the coolant supply passage,
+and the blowing ratio were varied in a wide range. Moreover,
+the effect of the orientation of the coolant supply passage with
+respect to the mainflow direction was investigated.
+Experimental Apparatus and Measuring Technique
+The present investigation was carried out in a continuous
+flow wind tunnel. The air supply was furnished by a high-
+
+Copyright © 1998 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+JULY 1998, Vol. 120 / 549
+
+Table 1 Operating conditions of the film-cooling test rig
+
+Internal Temperature
+Blowing ratio
+Temperature ratio
+Pressure ratio
+Internal Mach number
+External Mach number
+Internal Reynolds number
+External Reynolds number
+Boundary layer thickness
+External turbulence level
+Internal turbulence level
+
+Tu
+M
+Ttc/Ttm
+P(c/Pm
+
+Mac
+Ma m
+Re.Dc
+Reflm
+
+WD
+
+Tu m
+Tuc
+
+290 K
+0.25 ...2
+0.54
+1 ...2
+0, 0.3, 0.6
+0.3,0.6, 1.2
+up to 2.5-105
+up to 1.310s
+0.5
+<2%
+1%
+
+pressure, high-temperature (HPHT) test facility. The coolantto-mainflow temperature ratio was 0.54 and kept constant for
+all test cases, which can be assumed to be representative for
+typical gas turbine applications. The operating conditions are
+shown in Table 1. Further details of the test rig design, the flow
+conditions, and on preliminary testing were given by Wittig et
+al. (1996).
+The film-cooling test rig consists of a primary loop representing the external flow and a secondary loop representing the
+internal flow (see Fig. 1).
+Primary Loop. The air supplied by the HPHT test facility
+passes a metering orifice and flow straighteners before entering
+the test section through a LAVAL nozzle. The test section is
+90 mm in width and 41 mm in height. For the supersonic flow
+case, the height of the test section was reduced to 32 mm. The
+top wall opposite to the film-cooling hole exit had a sapphire
+window required for surface temperature measurements using
+an infrared (IR) camera system.
+A zero streamwise pressure gradient was set in the test section
+by adjusting the position of the upper test section wall. For the
+subsonic flow cases, the position of the top wall was adjusted
+for each blowing ratio considered. Contrary to the subsonic flow
+cases, this procedure was performed for the supersonic flow
+cases (Mam = 1.2) at zero coolant ejection (M = 0) and the
+position of the top wall was kept for all blowing ratios investigated. With coolant ejected, the pressure distribution was of
+course strongly altered by the formation of shock waves in the
+test section.
+Secondary Loop. Flow for the secondary loop is provided
+by the HPHT test facility, too. However, the total pressure in
+the secondary loop can be set independently from the primary
+loop. The flow in the secondary loop is driven by an additional
+blower. Thus, the Mach number can be set by adjusting the
+volume flow rate circulating in the secondary loop. The crosssectional area at the film-cooling hole is 60 mm in width and
+20 mm in height. Due to a ' 'closed-loop'' design of the secondary loop, the flow rate through the film-cooling hole is obtained
+
+Coolant .supply channel
+(20mm x 60mm)
+
+Fig. 1
+
+Windows
+
+ram-cooliijghole
+(D= iOmm)
+
+Film-cooling test section
+
+directly, independently of the crossflow rate. Very accurate
+measurements of the flow rate through the film-cooling hole
+were achieved.
+The orientation of the coolant supply passage with respect to
+the mainflow direction could be set within /? = 0 deg (parallel
+flow) to 90 deg (perpendicular flow) to account for the various
+flow configurations in cooled airfoils in relation to film-cooling
+holes as discussed by Hay et al. (1983).
+Film-Cooling Hole Geometries Tested. All tests were carried out using single, scaled-up film-cooling holes with an inclination angle of a = 30 deg. All holes were sharp edged and
+the interior surfaces were aerodynamically smooth. In total,
+three hole geometries (a cylindrical hole and two holes with an
+expanded exit portion) were tested (see Fig. 2). The diameter
+of the cylindrical hole and the diameter of the cylindrical inlet
+section of the expanded holes was 10 mm. The length-to-diameter ratio LID was 6 for all hole geometries. The lateral expansion angle of both expanded holes was 14 deg, resulting in a
+hole width of 30 mm at the hole exit. The forward expansion
+angle of the laid-back fan-shaped hole was 15 deg, resulting in
+a hole length of 40 mm at the hole exit. The exit-to-entry area
+ratio of the fan-shaped and laid-back fan-shaped hole were 3.0
+and 3.1, respectively (areas perpendicular to hole axis).
+The hole geometries were decided in cooperation with the
+industrial partners involved in the present research program.
+The chosen geometry of the expanded holes is in agreement
+with the suggestion of Hay and Lampard (1995) that the length
+of the cylindrical section at the hole entrance of the expanded
+holes should be at least two hole diameters. This is to allow
+the flow to reattach before entering the expanded section and,
+therefore, to improve the diffusion of the flow. A large expansion angle would lead to an improved lateral coverage of the
+ejected film but flow separation in the diffuser section of the
+hole could occur. Therefore, the chosen expansion angle must
+be seen as a compromise.
+For the fan-shaped and the laid-back fan-shaped hole, the
+calculation of the blowing ratio was based on the inlet crosssectional area of these holes. Thus, the blowing ratio of the
+shaped holes can be directly compared to those of the cylindrical
+
+Nomenclature
+D = film-cooling hole diameter
+DR = coolant-to-mainflow density ratio
+/ = coolant-to-mainflow momentum
+flux ratio
+L = film-cooling hole length measured
+along the hole centerline axis
+M = blowing ratio
+Ma = Mach number
+ReD = Reynolds number based on hole
+diameter
+T, = total temperature
+TRec = recovery temperature
+
+Tu = turbulence intensity
+x = streamwise distance from downstream edge of the film-cooling
+hole
+z = lateral distance from centerline of
+the film-cooling hole
+a = angle of hole inclination
+/? = angle of coolant supply passage
+orientation with respect to the
+mainflow direction
+<599 = boundary layer thickness, 99 percent point
+
+rj = local film-cooling effectiveness
+rj = laterally averaged film-cooling effectiveness
+Subscripts
+AW = adiabatic wall conditions
+c = internal flow conditions
+CL = centerline
+m = external flow conditions
+
+550 / Vol. 120, JULY 1998
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 2
+
+Cylindrical, fan-shaped, and laid-back fan-shaped film-cooling hole geometries
+
+hole. The same blowing ratio is synonymous with same amount
+of coolant ejected if the mainflow conditions remain unchanged.
+This makes it more convenient to evaluate the effect of contouring the hole.
+Each hole geometry was tested for a matrix of three internal
+Mach numbers (Ma c = 0.0, 0.3, 0.6) and three external Mach
+numbers (Ma,„ = 0.3, 0.6, 1.2) over a range of blowing ratios.
+Adiabatic Wall Temperature Measurements. The test
+plate used for measuring adiabatic wall temperatures consisted
+of a high-temperature plastic material (TECAPEK) with a thermal conductivity of 0.2 W/mK and a maximum operating temperature of about 570 K. Surface temperatures were measured
+using both thermocouples placed on the surface of the test plate
+and an AGEMA 870 IR camera system. The IR camera system
+provided a two-dimensional distribution of the temperature on
+the plate surface. The image of the test plate surface was digitized into an array of 140 X 140 pixels. Accounting for the
+optical setup used with the IR camera, a spatial resolution 0.8
+mm X 0.8 mm per pixel could be achieved. The test plate
+surface was covered by black paint of a well-known emissivity
+of 0.95. The thermocouples placed on the plate surface were
+used for an in situ calibration of the IR camera system to increase the accuracy of the temperature measurements. Details
+of the in situ calibration procedure were given by Martiny et
+al. (1996).
+Since mainflow Mach numbers up to 1.2 were considered in
+the present study, viscous dissipation and compressibility effects cannot be neglected. Therefore, the definition of the local
+film-cooling effectiveness r\ was based on the mainflow recovery temperature as a reference temperature
+r](x/D, zlD)
+
+TAW(xlD,
+T
+•*• t c
+
+Figure 3 illustrates the good agreement between the present
+results and previously published data in terms of centerline
+effectiveness at moderate as well as high blowing ratios. The
+deviations of the different studies in the near-hole region at the
+moderate blowing ratio are believed to be due to differences in
+the experimental setup (i.e., hole inclination, hole length-todiameter ratio, density ratio, and boundary layer thickness),
+which would be most apparent close to the hole. At high blowing ratio, all studies indicate that the coolant jet is detached
+from the surface, resulting in a very low effectiveness.
+The main contributions to uncertainty in measuring the filmcooling effectiveness were due to variations in blowing ratio
+(<5M = 2 percent). As pointed out by Schmidt et al. (1996a)
+the jet position relative to the wall is very sensitive to slight
+variations of the blowing ratio at high blowing ratios. Other
+uncertainty contributions include thermocouple measurements
+for coolant and recovery temperatures. As shown by Martiny
+et al. (1996) the maximum deviation of the temperatures measured by means of the IR camera system from the temperatures
+of the surface thermocouples was less than 1.5 K. Combining
+these uncertainties results in an average uncertainty of 1.5 percent for the local and laterally averaged film-cooling effectiveness. The maximum uncertainty was calculated to be 8 percent.
+The uncertainty in setting the external and internal Mach number was within 3 percent and in setting the temperature ratio
+was 1.5 percent.
+The results of the present investigation will be presented in
+terms of two-dimensional effectiveness distributions, streamwise and spanwise variations of the local effectiveness as well
+as streamwise variation of laterally averaged effectiveness. As
+a baseline case, a mainflow Mach number of Ma„, = 0.6 and a
+
+z/D) - TR,
+— T1
+
+Rec,m
+
+The mainflow recovery temperature was measured on the test
+plate at a location not affected by the coolant ejection.
+Results and Discussion
+Preliminary tests were performed to check results of the present facility against previously published data presented by Sinha
+et al. (1991), Schmidt et al. (1996a), and Schmidt et al.
+(1996b). These references were chosen since the cylindrical
+hole geometries they used at high density ratios were similar
+to those applied in the present study.
+
+Present study
+Schmidt et al. (1996a)
+Schmidt et al. (1996b)
+Sinha et al. (1991)
+
+30°
+35°
+30°
+35°
+
+L/D
+
+DR
+
+Ma„,
+
+6
+4
+6
+1.75
+
+1.85
+1.6
+2.0
+1.6, 2.0
+
+0.3
+<0.1
+<0.1
+<0.1
+
+o>
+
+0.4 -
+
+4
+6
+streamwise distance, x/D
+Fig. 3
+
+Comparison of present results to published data
+
+Journal of Turbomachinery
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+JULY 1998, Vol. 120 / 551
+
+T|:
+Fig. 4
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+Local effectiveness rj for the cylindrical, fan-shaped, and laid-back fan-shaped hole at M a m = 0.6, Ma„ = 0.0, and p = 0 deg
+
+coolant supply passage crossflow Mach number of Mac = 0.0
+(i.e., plenum condition) were chosen from the test matrix. For
+this flow configuration, the effect of hole geometry and blowing
+ratio will be shown. Furthermore, the effect of the mainflow
+Mach number, the coolant supply passage crossflow Mach number as well as the coolant supply passage orientation on filmcooling performance will be presented for all hole geometries
+and compared to the baseline case.
+Two-Dimensional Effectiveness Distribution. Figure 4
+shows the two-dimensional distribution of the film-cooling effectiveness derived from IR camera images downstream of the
+baseline cylindrical hole, the fan-shaped hole, and the laid-back
+fan-shaped hole for three blowing ratios (M = 0.5, 1.0, and
+1.5). For the cylindrical hole the jet was found to be detached
+from the surface at the high blowing ratio {M = 1.5), resulting
+in a poor effectiveness. Decreasing the blowing ratio increases
+the effectiveness since the penetration of the jet into the mainflow is reduced. The lateral spreading of the jet is very poor.
+For the fan-shaped hole, only a small separation zone was found
+in the vicinity of the hole exit for high blowing ratios indicated
+by a slight decrease of effectiveness. The spreading of the jet
+is much better compared to the cylindrical hole, but most of
+the jet is still ejected along the centerline, resulting in large
+gradient in lateral direction, at least for high blowing ratios. For
+the laid-back fan-shaped hole, the centerline effectiveness is
+lower compared to the fan-shaped hole. On the other hand,
+improved spreading of the cooling film compared to the fanshaped hole was found. The nonsymmetric character of the flow
+exiting both shaped holes will be discussed later.
+Effect of Hole Shape
+Local Effectiveness. Figure 5 presents centerline effectiveness for all three hole geometries, confirming the conclusions
+drawn from the two-dimensional effectiveness images. Figure
+6 shows the lateral distribution of effectiveness at xlD = 6.
+The lateral expansion of the jet ejected from the cylindrical hole
+is small compared to both expanded holes, as one would expect.
+
+The fan-shaped hole provides a high centerline effectiveness,
+but effectiveness decreases rapidly off-centerline. Increasing the
+blowing ratio has only a small impact on effectiveness at z/D
+> 1.25. For the laid-back fan-shaped hole, centerline effectiveness is lower compared to the fan-shaped hole, but the spreading
+of the jet is better, which leads to improved off-centerline effectiveness.
+Figure 7 presents centerline effectiveness plotted versus
+blowing ratio at streamwise locations xlD = 2, 6, and 10.
+Maximum centerline effectiveness for the cylindrical hole occurs at low blowing ratios; further increasing the blowing ratio
+leads to jet separation and, therefore, drastically reduced effectiveness. Maximum centerline effectiveness for the fan-shaped
+hole was found at a blowing ratio of about unity. Further increasing the blowing ratio leads only to a slight reduction of
+effectiveness. For the laidback fan-shaped hole no maximum
+
+0.9
+
+-J-e-a-•*-•
+-a-a"»•
+-«-•
+-a-
+
+0.8
+0.7
+0.6
+
+cylindrical, M=0.50
+cylindrical, M=1.00
+cylindrical, M=1.50,
+fanshaped, M=0.50
+fanshaped, M=1.00
+fanshaped, M=1.50
+laidback, M=0.50
+laidback, M=1.00
+laidback, M=1.50
+
+0.5
+0.4
+0.3
+0.2
+0.1
+
+streamwise distance, x/D
+Fig. 5 Centerline effectiveness r;Ct for the three holes tested at Ma„,
+0.6, M a c = 0.0, and [i = 0 deg
+
+552 / Vol. 120, JULY 1998
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+- > - cylindrical, Nl=0.50
+- * - cylindrical, M=1.00
+- a - cylindrical, U«1.50
+-•*-• fanshaped, M=0.50
+--Q- fanshaped, M=1.00-a-- fanshaped, M=1.60
+-••*-• laldback, M=0.60
+• ••*>-•• laidback, M=1.00
+o laidback, M=1.50
+
+1
+
+1.5
+lateral distance, z/0
+
+2
+
+3
+4
+5
+streamwise distance, x/D
+
+Fig, 6 Local lateral effectiveness rj for the three holes tested at M a m
+0.6, M a c = 0.0, and p = 0 deg
+
+Fig. 8 Laterally averaged effectiveness f) for the three holes tested at
+Ma„ , = 0.6, Ma„ = 0.0, and p = 0 deg
+
+effectiveness was found. Centerline effectiveness increases for
+all blowing ratios within the range considered.
+Laterally Averaged Effectiveness. To account for the lateral
+spreading of the jet, local film-cooling effectiveness values were
+averaged across the lateral range covered by the IR camera
+(z/D = ±2.75) resulting in laterally averaged effectiveness
+
+J_
+
+/•2.7S
+
+r)(xlD,
+z/D)d(z/D)
+5.5 J-2.75
+Figure 8 presents the laterally averaged film-cooling effectiveness plotted versus streamwise distance for the three hole
+geometries. Due to the fact that the jet ejected from the cylindrical hole penetrates far into the mainflow and the lateral spreading of the film downstream of the cooling hole is very limited,
+the film-cooling performance at a high blowing ratio is poor.
+For both expanded holes, effectiveness decreases monotonously
+with streamwise distance from the hole for all blowing ratios
+considered. The superiority of the expanded holes as compared
+to the cylindrical hole is clearly demonstrated.
+The differences between the fan-shaped and the laidback fanshaped hole are shown in Fig. 9 where laterally averaged effectiveness is plotted versus blowing ratio. Additionally performed
+temperature measurements showed a streamwise increase of the
+surface temperature in the laid-back portion of the laid-back
+fan-shaped hole. This is obviously due to mixing of hot mainflow and coolant jet in the laid-back portion of the hole, which is
+rj(x/D) =
+
+exposed to the hot mainflow, revealing lower laterally averaged
+effectiveness as compared to the fan-shaped hole at low blowing
+ratios. For elevated blowing ratios, however, the performance
+of the laidback fan-shaped hole is better because of the limited
+lateral spreading of the jet ejected from the fan-shaped hole.
+Effect of Crossflow Mach Number at Hole Exit. Most
+previous film-cooling studies using flat test plates applied relatively low-speed mainflows and, therefore, didn't match enginelike conditions. To evaluate the effect of crossflow Mach
+number at the hole exit, the three test geometries were tested
+at three blowing ratios (M = 0.5, 1.0, 1.5) for three external
+crossflow Mach numbers (Ma,„ = 0.3, 0.6, 1.2). It is the first
+time that the effect of a supersonic crossflow on discrete hole
+flat plate film-cooling effectiveness was investigated.
+The results for the cylindrical hole (Fig. 10(a)) show that
+the laterally averaged film-cooling effectiveness is hardly affected by the crossflow Mach number for the subsonic test cases
+(Mam = 0.3 and 0.6) at all blowing ratios investigated, which
+corresponds to the findings of Liess (1975). The minor differences are due to run-to-run variations of the blowing ratio, as
+discussed above. For the supersonic case (Ma,„ = 1.2), however, the laterally averaged effectiveness was found to be increased as compared to the subsonic test cases. Two reasons can
+be identified for this behavior. The first reason is the drastically
+altered flowfield for the case of jet injection into a supersonic
+crossflow as discussed in previous studies (e.g., Spaid and Zu0.4
+
+-a-*-H3--•*-o••••*••••
+
+0.35
+0.3
+>
+•a
+
+i
+
+0.15
+cylindrical, x/D=2
+cylindrical, x/D=6
+cylindrical, x/D=10
+fanshaped, x/D=2
+fanshaped, x/D=6
+fanshaped, x/D=10
+laidback, x/D=2
+• laidback, x/D=6
+i laidback, x/Q=10
+
+0.4
+
+0.6
+
+0.8
+
+1
+1.2
+blowing ratio, M
+
+0.1
+
+1.4
+
+1.6
+
+1.8
+
+Fig. 7 Effect of blowing ratio M on centerline effectiveness rj C L for the
+three holes tested a t M a m = 0.6, M a c = 0.0, and p = 0 deg
+
+:
+
+0.25
+0.2
+
+-*-a-a--*-»i-
+
+cylindrical, x/D=2
+cylindrical, x/Ds8
+fanshaped, x/D=2
+fanshaped, x/D=6
+laidback, x/D=2
+laidback, x/D=6 _,^..
+
+7H x
+
+•^yr
+
+„..a.i
+
+,.•" '
+
+'•"
+
+_*
+
+u
+
+* " - - - j y—'^-Jll'l.','|
+
+-p"'"""
+
+v4C'~"'
+
+"
+
+"
+
+"
+
+*
+
+•
+
+"
+
+-
+
+-
+
+—
+
+.
+
+"'*-a
+
+= ^
+
+Y
+V
+0.4
+
+0.6
+
+0.8
+
+1
+1.2
+blowing ratio, M
+
+1.4
+
+1.6
+
+1.8
+
+Fig. 9 Effect of blowing ratio M on laterally averaged effectiveness fj
+for the three holes tested a t M a m = 0.6, Ma„ = 0.0, p = 0 deg
+
+Journal of Turbomachinery
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+JULY 1998, Vol. 120 / 553
+
+3
+4
+5
+streamwlse distance, x/D
+
+3
+4
+5
+streamwlse distance, x/D
+
+3
+4
+5
+streamwlse distance, xVD
+
+Fig. 10 Effect of mainflow Mach number Mam on the laterally averaged
+effectiveness J) for the three holes tested at Ma„ = 0.0 and p = 0 deg
+
+koski, 1968). The jet acts as an obstacle to the crossflow, causing the generation of a bow shock upstream of the injection
+location. Approaching the bow shock, the boundary layer faces
+a positive pressure gradient, which leads to a separation of the
+boundary layer from the surface. At the separation location an
+additional weak shock is formed. Downstream of the injection
+location, the combined jet and crossflow is forced back to the
+surface by means of a recompression shock. Obviously, the
+shock-induced pressure field turns the ejected jet rapidly into a
+flow parallel to the surface. Therefore, film-cooling effectiveness is increased compared to subsonic test cases. This holds
+
+true particularly for higher blowing ratios since in these cases
+the lift-off of the jet is impeded by the shock-induced pressure
+field. Additionally, the second reason, the change in crossflow
+Mach number of course affects the local recovery temperature
+of the flow. A reduced Mach number in the vicinity of the
+injection location leads to a slightly increased film-cooling effectiveness since the calculation of the effectiveness is based
+on the recovery temperature of the undisturbed crossflow. However, this effect is rather small because the reduction of the
+Mach number is small since the speed of the undisturbed crossflow is close to sonic.
+For the expanded holes (Fig. 10(6) and 10(c)) the penetration into the mainflow is not that pronounced as for the cylindrical hole as shown earlier (Thole et al., 1998). Therefore, the
+effect of a supersonic crossflow on film-cooling performance
+as described above is evident, but not as pronounced as for the
+cylindrical hole. For these holes, the results of the subsonic test
+cases differ somewhat, too. Two main reasons can be identified
+for this behavior. First, for the Mam = 0.6 test cases, an increased
+pressure ratio is needed to apply the same blowing ratio as
+compared to the Mam = 0.3 test cases. Laser light sheet flow
+visualization showed that the pressure ratio across the hole affects the coolant distribution in the hole exit plane: the higher
+the pressure ratio, the more coolant is ejected at the hole centerline. Lateral spreading is reduced. This is particularly true for
+the fan-shaped hole at high blowing ratios. Second, further experiments, which are not presented here in detail, revealed that
+the jet tends to separate from one of the side walls in a certain
+low-pressure-ratio range in the diffuser section of the hole, as
+indicated by Fig. 4. The skewed cooling film ejected from the
+hole leads to a reduced laterally averaged film-cooling effectiveness. This behavior was found for the fan-shaped at low blowing
+ratios as well as for the laidback fan-shaped for all blowing
+ratios. This effect is mainly dominated by the relatively large
+expansion angle of these holes. This is, however, only a temporary phenomenon since at even lower pressure ratios the flow
+becomes attached to both side walls, which is the range the
+diffuser operates at its best.
+Effect of Coolant Crossflow Mach Number and Orientation. Thus far, none of the film-cooling studies reported have
+investigated the effect of crossflow at the hole entrance. A plenum, widely used to feed the film-cooling holes, is not necessarily a correct means to represent the internal coolant supply
+passage of an airfoil. To evaluate the effect of coolant supply
+passage crossflow, three representative crossflow conditions
+were chosen from the test matrix. These comprise coolant passage Mach numbers Mac = 0.0 (i.e., plenum condition) and
+Mac = 0.6. For the Mac = 0.6 case two different orientations
+of the coolant passage with respect to the mainflow were considered: parallel (/3 = 0 deg) and perpendicular (/? = 90 deg).
+For the cylindrical hole (Fig. 11 ( a ) ) , at the low blowing ratio
+applied, no effect of the flow conditions at the hole entrance was
+found. At elevated blowing ratios, however, cooling performance is significantly affected. As pointed out by Thole et al.
+(1997), the flow conditions at the hole entrance govern the jet
+velocity and turbulence intensity distribution in the hole exit
+plane. Measurements reported showed that for the case of high
+coolant passage crossflow Mach number, a separation region is
+formed at the windward side of the hole entrance, shifting the
+coolant jet to the leeward side. The jet is ejected from the hole
+on the leeward side at a shallow flow angle. For the case of
+plenum condition, however, a separation region is formed at
+the leeward side of the hole entrance, shifting the coolant jet to
+the windward side. The jet is ejected from the hole more on
+the windward side at a rather steep flow angle. This causes
+enhanced mixing with the hot crossflow and leads to a reduced
+film-cooling effectiveness, as shown in Fig. 11(a). Rotating
+the coolant supply passage to a perpendicular position keeps
+the jet closer to the wall, particularly at high blowing ratios,
+
+554 / Vol. 120, JULY 1998
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+spreading of the jet. For the laid-back fan-shaped hole (Fig.
+11 (c)) only at the high blowing ratio an effect of coolant crossflow Mach number and orientation could be detected.
+Figure 12 shows the two-dimensional effectiveness distribution for the case of the coolant passage being rotated to a perpendicular position with respect to the mainflow. Coolant supply
+approach is from down to top. As can be seen, the maximum
+effectiveness either occurs on the upstream side with respect to
+the coolant flow approach (i.e., for the cylindrical and the laidback fan-shaped hole) resulting from a "reflection" of the jet
+inside the hole or on the downstream side (i.e., for the fanshaped hole). Further experiments showed that only for the
+cylindrical hole is the location of the maximum strongly dependent on blowing ratio. The general trend was that for high
+blowing ratios the maximum occurs on the downstream side
+and moves to the upstream side as the blowing ratio is reduced.
+For both expanded holes, the position of the maximum was not
+affected by the blowing ratio within the range considered.
+
+3
+4
+5
+streamwlse distance, x/D
+
+Conclusions
+An experimental investigation was conducted to determine
+the effect of hole geometry, including a cylindrical hole and
+two holes with a diffuser-shaped exit portion on film-cooling
+performance. At the hole exit side, crossflow Mach numbers up
+to 1.2 were considered. Additionally, the effect of internal coolant supply channel Mach number and orientation was investigated. The results showed that:
+•
+
+Holes with expanded exits show significantly improved
+film-cooling effectiveness as compared to a cylindrical
+hole, particularly at high blowing ratios.
+
+3
+4
+5
+streamwlse distance, x/D
+
+Itr
+
+r
+Ma.=0.0, MiO.50
+Mao=0.0, M=1.00
+Mao=0.0, M=1.50
+Mao=0.6, Q=0°, M=1.00
+Ma,.=0.6, M> „M-1.50
+.50
+.00
+.50
+
+0.4
+
+3
+4
+5
+streamwlse distance, x/D
+
+Fig. 11 Effect of coolant supply passage Mach number Ma„ and orientation p on the laterally averaged effectiveness f) for the three holes tested
+at Ma m = 0.6
+
+leading to an improved lateral spreading as well as to an increased maximum effectiveness.
+For the fan-shaped hole (Fig. 11 (£>)) the effect of the coolant
+passage crossflow Mach number is not as pronounced as for
+the cylindrical hole. The trend holds true that the film-cooling
+effectiveness is improved for the high-Mach-number crossflow
+in the coolant passage. The effect of rotating the coolant supply
+passage to a perpendicular position is contrary to the cylindrical
+hole. Effectiveness is rather reduced since the flow entering the
+diffuser section of the hole is highly disturbed, resulting in a
+poor performance of the diffuser and, therefore, a reduced lateral
+
+Fig. 12 Local effectiveness rj at Maro = 0.6, Ma„ = 0.6, M = 1.0, and /8
+= 90 deg: (a) cylindrical, {b) fan-shaped, (c) laid-back fan-shaped hole
+(coolant flow approach from down to top)
+
+Journal of Turbomachinery
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+JULY 1998, Vol. 120 / 555
+
+•
+
+The laid-back fan-shaped hole provides a better lateral
+spreading of the jet as compared to the fan-shaped hole
+and, therefore, leads to increased laterally averaged effectiveness, particularly at high blowing ratios.
+• Transonic crossfiow at hole exit side drastically alters the
+flowfield in the vicinity of the ejection location. Filmcooling effectiveness is increased as compared to subsonic
+flow cases, particularly for the cylindrical hole.
+• Coolant crossfiow Mach number and orientation have a
+strong impact on film-cooling performance in the nearhole region. Therefore, crossfiow at the hole entrance side
+has to be taken into account when modeling film-cooling
+at engine representative conditions.
+
+Acknowledgments
+This study was partly funded by the European Union through
+grant by the Brite Euram program ' 'Investigation of the Aerodynamics and Cooling of Advanced Engine Turbine Components"
+under Contract No. AER2-CT92-0044.
+
+Haller, B., and J. Camus, 1984, "Aerodynamic Loss Penalty Produced by Film
+Cooling Transonic Turbine Blades," ASME Journal of Engineering for Gas
+Turbines and Power, Vol. 106, pp. 198-205.
+Hay, N., D. Lampard, and S. Benmansour, 1983, "Effect of Crossflows on the
+Discharge Coefficient of Film Cooling Holes," ASME Journal of Engineering
+for Power, Vol. 105, pp. 243-248.
+Hay, N., and D. Lampard, 1995, "The Discharge Coefficient of Flared Film
+Cooling Holes," ASME Paper No. 95-GT-15.
+Liess, C , 1975, "Experimental Investigation of Film Cooling With Ejection
+From a Row of Holes for the Application to Gas Turbine Blades,'' ASME Journal
+of Engineering for Power, Vol. 97, pp. 21-27.
+Makki, Y., and G. Jakubowski, 1986, "An Experimental Study of Film Cooling
+From Diffused Trapezoidal Shaped Holes," AIAA Paper No. 86-1326.
+Martiny, M., R. Schiele, M. Gritsch, A. Schulz, and S. Wittig, 1996, "In Situ
+Calibration for Quantitative Infrared Thermography," in: QIRT'96 Eurotherm
+Seminar No. 50, Stuttgart, Germany, Sept. 2 - 5 .
+Schmidt, D., B. Sen, and D. Bogard, 1996a, "Film Cooling With Compound
+Angle Holes: Adiabatic Effectiveness," ASME JOURNAL OF TURBOMACHINERY,
+Vol. 118, pp. 807-813.
+Schmidt, D., B. Sen, and D. Bogard, 1996b, "Effect of Surface Roughness on
+Film Cooling," ASME Paper No. 96-GT-299.
+Sen, B., D. Schmidt, and D. Bogard, 1996, "Film Cooling With Compound
+Angle Holes: Heat Transfer," ASME JOURNAL OF TURBOMACHINERY, Vol. 118,
+pp. 800-806.
+Sinha, A., D. Bogard, and M. Crawford, 1991, "Film Cooling Effectiveness
+Downstream of a Single Row of Holes With Variable Density Ratio," ASME
+JOURNAL OF TURBOMACHINERY, Vol.
+
+References
+Giebert, D„ M. Gritsch, A. Schulz, and S. Wittig, 1997, "Film-Cooling From
+Holes With Expanded Exits: A Comparison of Computational Results With Experiment," ASME Paper No. 97-GT-163.
+Goldstein, R., E. Eckert, and F. Burggraf, 1974, "Effects of Hole Geometry
+and Density on Three-Dimensional Film Cooling," Int. J. Heat Mass Transfer,
+Vol. 17, pp. 595-607.
+Gritsch, M„ A. Schulz, and S. Wittig, 1998, "Discharge Coefficient Measurements of Film-Cooling Holes With Expanded Exits," ASME JOURNAL OF TURBOMACHINERY, Vol. 120, this issue, pp. 557-563.
+
+113, pp. 442-449.
+
+Spaid, F., and E. Zukoski, 1968, "A Study of the Interaction of Gaseous Jets
+From Transverse Slots With Supersonic External Flows," AIAA Journal, Vol. 6,
+pp. 205-212.
+Thole, K„ M. Gritsch, A., Schulz, and S. Wittig, 1997, "Effect of a Crossfiow
+at the Entrance to a Film-Cooling Hole," ASME Journal of Fluids Engineering,
+Vol. 119, pp. 533-540.
+Thole, K„ M. Gritsch, A. Schulz, and S. Wittig, 1998, "Flowfield Measurements for Film-Cooling Holes With Expanded Exits,'' ASME JOURNAL OF TURBOMACHINERY, Vol. 120, pp. 327-336.
+Wittig, S., A. Schulz, M. Gritsch, and K. Thole, 1996, "Transonic Film-Cooling
+Investigations: Effects of Hole Shapes and Orientations," ASME Paper No. 96GT-222.
+
+556 / Vol. 120, JULY 1998
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 07/29/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+

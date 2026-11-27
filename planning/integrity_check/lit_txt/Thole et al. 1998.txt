@@ -1,0 +1,982 @@
+K. Thole1
+M. Gritsch
+A. Schulz
+S. Wittig
+Institut fur Thermische
+Strfimungsmaschinen,
+Universitat Karlsruhe,
+Karlsruhe, Federal Republic of Germany
+
+Flowfield Measurements
+for Film-Cooling Holes
+With Expanded Exits
+One viable option to improve cooling methods used for gas turbine blades is to
+optimize the geometry of the film-cooling hole. To optimize that geometry, effects of
+the hole geometry on the complex jet-in-crossflow interaction need to be understood.
+This paper presents a comparison of detailed flowfield measurements for three different single, scaled-up hole geometries, all at a blowing ratio and density ratio of
+unity. The hole geometries include a round hole, a hole with a laterally expanded
+exit, and a hole with a forward-laterally expanded exit. In addition to the flowfield
+measurements for expanded cooling hole geometries being unique to the literature,
+the testing facility used for these measurements was also unique in that both the
+external mainstream Much number (Ma*, = 0.25) and internal coolant supply Mach
+number (Mac = 0.3) were nearly matched. Results show that by expanding the exit
+of the cooling holes, both the penetration of the cooling jet and the intense shear
+regions are significantly reduced relative to a round hole. Although the peak turbulence level for all three hole geometries was nominally the same, the source of that
+turbulence was different. The peak turbulence level for both expanded holes was
+located at the exit of the cooling hole resulting from the expansion angle being too
+large. The peak turbulence level for the round hole was located downstream of the
+hole exit where the velocity gradients were very large.
+
+Introduction
+New challenges in better turbine blade cooling are ever present with the aim of increasing turbine inlet temperatures to
+improve gas turbine efficiencies. The attempts in meeting those
+challenges have focused on improving inner blade convective
+heat transfer and improving external blade film-cooling. Blade
+film-cooling is attained by injecting the inner blade convective
+coolant fluid through the blade surface into the external blade
+boundary layer.
+From a flowfield perspective, ideal film-cooling would occur
+when a film-cooling jet has minimal penetration into the mainstream such that the jet remains attached to the cooling surface,
+yet the jet should have a high enough mass flow rate to cover
+a large area of the blade. Also, the cooling jet should have
+relatively low turbulent mixing to avoid dilution of the jet by
+the hot mainstream fluid. In many past studies the focus has
+been to optimize film-cooling fluid mechanical parameters, such
+as jet-to-mainstream blowing ratio and momentum flux ratio,
+for round film-cooling holes that are inclined at nominally 30
+deg. Further optimization is still needed. In particular, one viable alternative is to optimize the cooling hole geometry. By
+gaining a better understanding of the complex flowfield that
+results from cooling holes that have been laterally and forwardlaterally expanded, improvements can be made to the hole geometry to ultimately provide better cooling characteristics of
+the film.
+This paper presents detailed flowfield measurements for three
+different single, scaled-up, cooling hole geometries for a blowing ratio (M), momentum flux ratio (/), and density ratio (DR)
+of unity. The three hole shapes include a baseline round hole,
+a hole with a laterally expanded exit, and a hole with a forward1
+Present address: Department of Mechanical Engineering, University of Wisconsin, Madison, WI 53706-1572.
+Contributed by the International Gas Turbine Institute and presented at the 41st
+International Gas Turbine and Aeroengine Congress and Exhibition, Birmingham,
+United Kingdom, June 10-13, 1996. Manuscript received at ASME Headquarters
+February 1996. Paper No. 96-GT-174. Associate Technical Editor: J. N. Shinn.
+
+Journal of Turbomachinery
+
+laterally expanded exit. Thus far, there are no reported detailed
+flowfield measurements for these hole geometries. This study
+is also unique because in addition to the mainstream flow, representing the external blade flowfield, there is a parallel flowing
+coolant supply channel, representing the inner blade convective
+passage between the midspan and trailing edge of a nozzle
+guide vane. Thus far, there are no reported detailed flowfield
+measurements for holes that have both primary and coolant flow
+passages.
+Expanded Cooling Hole Studies
+Although it has been over 20 years since Goldstein et al.
+(1974) first reported their adiabatic effectiveness measurements
+for laterally expanded cooling holes, there have been relatively
+few studies reported in the open literature since that time discussing contoured film-cooling holes. Goldstein et al. (1974)
+showed that by laterally expanding the hole 10 deg, improved
+adiabatic effectiveness values were measured for a large range
+of blowing ratios. Specifically, Goldstein et al. showed that for
+a blowing ratio range between 0.8 < M < 2.2, the centerline
+adiabatic effectiveness remained constant at seven hole diameters downstream for the laterally expanded hole. In contrast,
+they showed for a blowing ratio above M > 0.3, the effectiveness dropped significantly for a round hole because of jet detachment. They attributed the improved performance for the
+laterally expanded hole to the reduced momentum of the exiting
+jet. A reduction in the exiting jet momentum can be achieved
+for the same jet mass flow rate by expanding the cooling hole
+exit area.
+In a later study, Makki and Jakubowski (1986) measured
+higher adiabatic effectiveness values for a forward-laterally expanded hole in comparison to a round hole. Sen et al. (1996)
+showed that improved cooling performance at a high momentum flux ratio (/ = 3.9) could also be obtained for a 60 deg
+compound angle hole when the hole had a forward expansion.
+Compound angle holes refer to holes that inject the coolant
+laterally with respect to the mainstream. Without the forward
+
+Copyright © 1998 by ASME
+
+APRIL 1998, Vol. 120 / 327
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+expansion, Sen et al. (1996) showed that the film-cooling was
+completely ineffective.
+
+Flowfleld Structures of Film-Cooling Jets
+Past flowfleld investigations have given some physical insight
+as to the primary flow structures dictating the interaction between the cooling jet and the mainstream crossflow for a round
+hole geometry. These flowfleld investigations include those of
+Yoshida and Goldstein (1984), Jubran and Brown (1985),
+Pietrzyk et al. (1989), Subramanian et al. (1992), Benz et al.
+(1993), Leylek and Zerkle (1993), Lee et al. (1994) and Garg
+and Gaugler (1995). At high blowing ratios, M > 1, the dominating flow structures for a round hole film-cooling jet include
+a separation region which forms at the inlet of the cooling hole,
+intense shear regions as the mainstream interacts with the jet,
+and longitudinal vortices that form at the lateral edges of the
+jet.
+The formation of a separation region was first identified by
+Pietrzyk et al. (1989) to occur at the hole entrance on the
+leeward side of the hole. In the Pietrzyk et al. (1989) study,
+the coolant was supplied by a plenum and as a result the flow
+encountered a large turning angle on the leeward side of the
+hole, which caused a separation region. This separation region
+skewed the exiting jet toward the windward side of the hole.
+Benz et al. (1993), Leylek and Zerkle (1993), and Garg and
+Gaugler (1995) also discuss the importance of numerically simulating the jet flow inside the cooling hole to achieve realistic
+exiting conditions. In addition to skewing the jet, the separation
+region causes high turbulence levels in the exiting jet, which
+promotes turbulent mixing and jet dilution.
+Upstream of the obstructing jet, the external boundary layer
+encounters a large blockage effect decelerating the boundary
+layer. At the upstream hole edge, the jet velocity is faster relative to the mainstream boundary layer, which then produces an
+intense shear region.
+Based on detailed flowfleld measurements, Andreopoulos and
+Rodi (1984) first identified counterrotating vortices in their
+study of a normal jet issuing into a mainstream. Similarly for an
+inclined film-cooling jet, measurements presented by Pietrzyk
+(1989) and Subramanian et al. (1992) showed a pair of counterrotating vortices that entrain "hot" mainstream fluid and
+transport that fluid toward the blade surface.
+Based on these flowfleld characteristics, it was the intent of
+this investigation to determine the effect of the hole geometry
+on this complex flowfleld in order to improve upon the overall
+heat transfer characteristics of a film-cooling jet. In particular,
+the primary improvements to the film cooling process can be
+made by insuring the jet remains attached to the surface, by
+eliminating the counterrotating vortices, and by minimizing the
+velocity gradients. The remainder of this paper discusses the
+experimental facility and instrumentation used for this investi-
+
+Coolanl supply channel
+(20mm x 60mm)
+
+M,L.^.
+
+minnows
+
+Film-cooling hole
+(D=10mm)
+
+Fig. 1 Schematic of the film-cooling test section
+
+gation and the flowfleld mappings for three different geometric
+cooling holes.
+Experimental Facility and Instrumentation
+The experiments discussed in this paper were conducted in
+a new test facility at the Institut fur Thermische Stromungsmaschinen, Universitat Karlsruhe, which is described in detail
+by Wittig et al. (1996). A sketch of the test section is shown
+in Fig. 1. Mainstream and coolant flow channels, which can be
+independently controlled, were included in the test facility to
+simulate the flowfields associated with external and internal
+blade cooling. The flow conditions in the primary and coolant
+channels are given in Table 1. The blowing ratio for each of
+the three holes tested was M = 1 at a density ratio of DR = 1.
+The air for both flow channels was supplied by a large compressor that has a capacity of producing 1 kg/s at a pressure of
+11 bar. Flow for the coolant channel was also provided by the
+compressor, but driven through the secondary flow loop by a
+sealed external blower.
+
+Table 1 Flow conditions for primary and coolant channels
+
+Mach Number
+Mean Freestream Velocity (m/s)
+Freestream Turbulence Intensity(%)
+Stagnation Pressure (Bars)
+Total Temperature at Injection (K)
+ReD
+899/D at x/D = -2
+099/batx/T> = -7
+Ree at x/D = -2
+
+Primary
+Channel
+0.25
+85.0
+1.5
+LOS
+300
+5.2 x 104
+0.8
+
+Coolant
+Channel
+0.30
+102.7
+1.0
+1.05-1.09
+300
+6.6 x 104
+0.2
+
+3800
+
+Nomenclature
+D = cooling hole diameter at hole inlet
+DR = jet-to-mainstream density ratio
+/ = jet-to-mainstream momentum flux
+ratio =
+pjVj/p^Vi
+L = cooling hole length along centerline axis
+M = jet-to-mainstream blowing or
+mass flux ratio = pjVjl p„Va
+Ma = Mach number
+ReD = hole diameter Reynolds number
+Re« = momentum thickness Reynolds
+number
+Tu = turbulence intensity =
+100 • V 0 . 5 ( K ' 2 + v'2)/
+
+£/„
+
+328 / Vol. 120, APRIL 1998
+
+Tuj = turbulence intensity inside
+u', v', w' = streamwise, vertical, and
+lateral rms velocities
+U, V, W = streamwise, vertical, and
+lateral mean velocities
+pu v = turbulent shear stress components
+pu , pv = turbulent normal stress
+components
+Vj = total jet velocity using hole
+inlet and mass flux
+x = streamwise distance based
+on hole centerline
+
+y = vertical distance based on exit of
+hole
+z = spanwise distance based on hole
+centerline
+<599 = boundary layer thickness, 99 percent point
+9 = momentum thickness
+p = density
+Subscripts and Superscripts
+ex = exit conditions
+j = jet conditions
+00 = mainstream conditions
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+in the streamwise direction. The length of the forward-lateral
+expanded hole extended four hole diameters.
+A two-component, coincident, fiber optic laser-Doppler velocimeter (LDV) was used to measure velocity fields for the three
+shaped holes. The commercial LDV system was an 85 mm fiber
+optic probe from Dantec. The processors used were Dantec's
+Enhanced Burst Spectrum Analyzers. The probe volume size
+was reduced, using a beam expander, to a diameter of 74 [im
+and a length of 0.6 mm. The LDV was rotated at 45 deg and
+tilted at nominally 4.5 deg to allow near-wall measurements.
+As a result of the tilt, the vertical velocity, v, reported in this
+paper contains a small lateral velocity component. The tilt does
+not affect the streamwise velocity component. The data were
+post-processed using a 2 //s coincident window and bias corrected using residence time weighting. Both the primary and
+coolant channel flows were seeded with oil (DES) particles
+having a mean diameter of 0.5 ^m. Because the coolant channel
+and primary flow were at different pressures, valves were used
+downstream of the seeder such that the seeding injection was
+independently controlled to avoid velocity biases.
+Vertical velocity profiles were taken at 14 streamwise locations at the streamwise centerline of the cooling holes. Vertical
+velocity profiles were taken at seven spanwise positions on one
+side of the cooling hole at xlD = 4 to compare the lateral
+spreading of the jet.
+
+Fig. 2 Film-cooling hole geometries
+
+The flow rate in the coolant channel was 0.12 kg/s and, at a
+blowing ratio of unity, the flow rate through the cooling hole
+was 7.5e-03 kg/s. As a result of the large disparity between the
+two flow rates, high uncertainties would occur if the flow rates
+upstream and downstream of the cooling hole were measured
+using the continuity equation to determine the blowing ratio.
+To reduce the uncertainty, the blowing ratio of the cooling hole
+was set by measuring the coolant mass flow entering the coolant
+channel. Leak tests were conducted on the coolant supply channel to insure that all of the mass flow rate entering the coolant
+channel was exhausted only through the cooling hole. The coolant channel flow was considered to be a boundary layer flow
+with a thickness of <599 = 2 mm as compared to a channel halfheight of 10 mm at a location of seven hole diameters upstream
+of the hole inlet.
+The three single, scaled-up hole shapes that were investigated
+are shown in Fig. 2. These hole geometries were obtained in
+cooperation with several European gas turbine companies. The
+diameter of all three holes at the inlet was 10 mm. These holes
+were machined into flat aluminum test plates 30 mm thick. All
+three holes were inclined at 30 deg, giving a length-to-hole
+diameter ratio of LID = 6, where L is measured along the hole
+centerline axis at the hole inlet. The lateral expansion angle,
+which started two hole diameters after the hole inlet for the two
+contoured holes, was 14 deg. The forward expansion angle for
+the forward-laterally expanded hole was 15 deg relative to the
+hole centerline axis and started five hole diameters after the
+hole inlet. The streamwise distance, x, also shown in Fig. 2,
+had the origin at the hole centerline axis just at the exit of the
+hole. The length of the round and lateral expanded holes, as
+viewed from above the hole exit, extended two hole diameters
+Journal of Turbomachinery
+
+Uncertainty Estimates
+Based on a 95 percent confidence interval, both bias and
+precision uncertainties were quantified. The data presented in
+this paper were typically averaged over 10,000 points or more
+depending on the data rate. The bias uncertainty for the mean
+velocities was 0.4 percent, whereas the precision uncertainties
+were 1 percent in the free stream and 3.4 percent near the wall.
+The precision uncertainty for the rms velocity measurements
+was 1.4 percent in the free stream and 5.8 percent near the wall.
+The precision uncertainty in the turbulent shear stress was 5.6
+percent. Positioning uncertainty of the LDV probe volume with
+respect to the hole was Ax = ±0.05 mm, Ay = ±0.05 mm,
+and Az = ±0.05 mm. The uncertainty in setting the coolant
+mass flow rate was 2 percent.
+Results
+Although flowfield measurements have previously been reported for round holes, as mentioned in the introduction, there
+have not been any reported flowfield studies in the open literature that have used a round hole geometry with a flowing coolant
+supply channel at the hole inlet. Prior to presenting the results
+with a flowing coolant supply, a benchmark comparison was
+made by turning off the blower that drives the coolant supply
+channel. By turning off the blower, the coolant channel was
+operated as a plenum supplying the cooling hole. Comparisons
+could then be made to data presented by Pietrzyk et al. (1989),
+who used a plenum. As can be seen in Fig. 3, the centerline
+velocity profiles at xlD = 3 agree fairly well. The differences
+between the data can be attributed to the present study having
+a larger hole length-to-diameter ratio of LID = 6 relative to
+that of Pietrzyk et al. (1989) who used an LID = 3.5, and the
+angle for the Pietrzyk et al. data was slightly steeper at 35 deg.
+The following sections present the mean flowfield results and
+turbulent flowfield results for all three hole geometries at a
+blowing ratio of M = 1. Velocity contours inside the cooling
+hole plane will be presented. This discussion will be followed
+by a discussion on the flowfield between - 2 < xlD < 10 in a
+vertical streamwise plane at the hole centerline and in a verticallateral plane at a streamwise location of xlD = 4.
+
+Film-Cooling Hole Flowfield
+By mounting the LDV fiber optic probe above the test section,
+it was possible to measure the streamwise velocity components
+APRIL 1998, Vol. 120 / 329
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+The streamwise velocity contours for the cooling holes with
+the expanded exits, also shown in Fig. 4, indicate the highest
+velocities occurring near the bottom and in the spanwise center
+of the cooling holes. There is little or no jet fluid occurring at
+the top of both the holes. The laterally-expanded hole does
+show slightly less variation in the spanwise direction, or rather
+the coolant does expand to fill the hole slightly better than the
+forward-lateral hole.
+Figure 5 shows the turbulence level contours for the three
+hole geometries at x/D = —0.75 inside the coolant hole. The
+turbulence levels are based on the rms of the streamwise velocity fluctuations and the total jet velocity as calculated from the
+blowing ratio (Tuj = u'/Vj). These results indicate much higher
+turbulence levels occuring inside the coolant hole for the two
+expanded cooling holes, 12 percent < Tuj < 20 percent, than
+for the round hole, 6 percent < Tu, < 12 percent.
+
+- e — u/U^, Pietrzyk et al. (1989)
+• • - - u/LL ITS Facility
+-B—
+
+U
+
+/U
+rms
+
+•• - - u
+
+M-
+
+Pietrzyk et al. (1989)
+
+/U M , ITS Facility
+
+'i i
+i
+x/D=4,
+x/D=4.1,
+
+r
+i
+ITS
+Pietrzyk,
+et al. (1989)
+
+y/D
+
+0.4
+/ U
+
+u
+
+0.6
+and
+
+0.8
+u/U
+
+Fig. 3 Comparison of mean and rms velocity data with those presented
+in the literature at M = 1 and DR = 1
+
+inside the film-cooling hole. These measurements were made
+in a vertical spanwise plane aix/D = -0.75, which corresponds
+to just 0.25D downstream of the windward start of the cooling
+hole. Note that this location is much downstream of the start
+of the lateral expansion in both of the expanded holes, but is
+still upstream of the start of the forward expansion for the
+forward-lateral expanded hole.
+Figure 4 compares streamwise velocity contours inside the
+cooling hole for the three different hole geometries. For the
+round hole, the highest velocities are found in the center of the
+cooling hole. The differences between these measurements and
+those numerical predictions presented by Leylek and Zerkle
+(1993), in which the highest speed fluid was predicted to occur
+on the top of cooling hole (windward side of the cooling hole),
+can be attributed to the differences between the jet coolant
+supply. In the study of Leylek et al, the coolant was supplied
+by a stagnant plenum, whereas in the present configuration, the
+jet fluid was supplied by a crossflow at the entrance. As described by Thole et al. (1997), the presence of the crossflow
+at a round hole entrance can have a major influence on the
+coolant jet.
+
+Round Hole
+0.0 pssi*—<**,
+
+Mean Flowfield Results
+Normalized mean velocity vectors in the near-hole region for
+the round, laterally expanded, and forward-laterally expanded
+hole geometries are shown in Fig. 6. The upstream and downstream edges of the holes are indicated by the lines placed below
+the x axis.
+At the leading edge of the cooling hole (x/D = - 1 ) , the
+round hole geometry shows a larger deceleration in the nearwall region as compared to both the expanded holes, indicating
+a more severe blockage effect. In the case of the round hole,
+just downstream of the leading edge of the hole at an x/D =
+—0.5, an upward penetration can already be detected. Farther
+downstream but still over the hole exit, the velocity vectors for
+the round hole show a stronger penetration relative to either of
+the expanded holes. In the case of the laterally expanded hole,
+it is not until the hole centerline (x/D = 0) that the streamlines
+indicate an upward motion. In the case of the forward-lateral
+expanded hole, the vertical deflection is even less, as indicated
+by the only slightly positive vertical velocity vectors starting at
+the hole centerline (x/D = 0). Because the jet-to-free stream
+momentum at the hole exit is the highest for the round hole
+relative to the expanded holes, there is a stronger penetration
+of the jet into the boundary layer. The jet-to-mainstream momentum flux ratio at the hole exit is / „ = 1 for the round hole,
+whereas at the exit of the two expanded holes, the momentum
+flux ratio is Iex = 0.25 (based on the area perpendicular to the
+hole centerline axis measured where the upstream edge of the
+hole hits the top of the test plate). Although the momentum
+flux ratio is nominally the same for both the lateral and forwardlateral holes at the hole exits, the forward expansion reduces
+the jet penetration relative to the laterally expanded hole.
+Upstream of the hole centerline between - 1 < x/D < -0.5
+for the forward-laterally expanded hole, the measured vertical
+
+Lateral Expanded Hole
+
+Forward-Lateral Expanded Hole
+
+0.5
+
+0.5
+
+UAA
+
+0.0
+y/D
+
+-1.0
+0.0
+
+0.5
+z/D
+
+1.0
+z/D
+
+1.0
+z/D
+
+Fig. 4 Streamwise velocity contours inside the coolant hole at x / D = -0.75 for the (a) round, (£>) laterally expanded, and (c)
+forward-laterally expanded holes
+
+330 / Vol. 120, APRIL 1998
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+0.0
+
+Lateral Expanded Hole
+
+Forward-Lateral Expanded Hole
+
+0.5
+
+0.5
+
+0.5
+z/D
+
+1.0
+Z/D
+
+Tuj[%]
+
+1.0
+Z/D
+
+Fig. 5 Jet turbulence level contours inside the coolant hole at x/D = -0.75 for the (a) round, (b) laterally expanded, and (c)
+forward-laterally expanded holes
+
+velocities, although quite low in magnitude, were negative in
+sign, indicating that some of the mainstream fluid is being ingested into the leading edge of the hole. From the standpoint
+of cooling, ingestion of the hot mainstream into the coolant hole
+would produce an overall lower possible cooling effectiveness.
+Measurements of the vertical velocity component for both the
+round hole and the laterally expanded hole were positive along
+the entire jet exit centerline.
+Figures 7 and 8 compare the mean streamwise and vertical
+velocity components for all three holes geometries at three
+streamwise positions, x/D - 0, 2, and 10. As a point of reference, also shown in Fig. 7 is the one-seventh power law for
+turbulent boundary layer with no injection. At the hole centerline (x/D = 0) of the round hole, the formation of a shear layer
+
+is indicated by a negative velocity gradient near the hole exit.
+The negative velocity gradient indicates a jet velocity that is
+slightly higher than the mainstream at the exit of the cooling
+hole. The velocity profile for the laterally expanded hole indicates essentially a zero velocity gradient near the hole exit and
+no formation of a negative velocity gradient shear layer. For
+the forward-laterally expanded hole, the jet exits primarily from
+the downstream portion of the hole and, thus, at the hole centerline only a slight deceleration with respect to a turbulent boundary layer is detected. As expected, a higher vertical mean velocity component, shown in Fig. 8, occurs for the round hole relative to the expanded holes at the hole centerline.
+The intense shear layers for a round film cooling hole geometry are quite evident at an x/D - 2, as shown in Fig. 1(b).
+
+Round Hole
+
+Lateral Expanded
+1.0
+Hole
+y/D
+
+Forward-Lateral
+Expanded Hole
+
+Fig. 6
+
+Mean velocity vectors for the (a) round, (b) laterally expanded, and (c) forward-laterally expanded cooling holes
+
+Journal of Turbomachinery
+
+APRIL 1998, Vol. 120 / 331
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Lateral
+
+Round
+1.5
+
+-r-rr-p-i-r-r-n
+
+ry
+
+x/D = 0
+
+r
+
+- • — Forward-Lateral
+
+' ' I '
+
+M
+
+x/D
+
+I ' ' ' I ' ' ' I
+=
+
+2
+
+1/7 Power Law
+
+y/D
+0.5
+
+tj
+
+o ? r O^B o i r
+u/U
+
+TJTZ
+
+Fig. 7
+
+f ^r.2 cr
+
+(5.2 0.4 0.6^0.8
+u/u
+„
+
+1
+
+1.2 0
+
+0 2 0 4 0 6 O 8
+
+1
+
+12
+
+U/U M
+
+Mean streamwise velocity profiles for all three hole geometries at (a) x/D = 0, (fa) x/D = 2, and (c) x / O = 10
+
+- • — Forward-Lateral
+
+Lateral
+
+y/D
+
+0
+
+6.1
+
+TT.2
+0.3
+v/U
+
+0.4
+
+0.5 6
+
+0.1 " 0 . 2
+0.3
+v/U
+
+0.4
+
+0.5 0
+
+0.1
+
+0.2
+
+0.3
+v/U^
+
+0.4
+
+0.5
+
+and c) x/D = 10.
+Fig. 8
+
+Mean vertical velocity profiles for all three hole geometries at (a) x/D = 0, (b) x/D = 2, and (c) x / D = 10
+
+Note that the peak mean streamwise velocity is u/U«, = 1.2 and
+greater than unity as a result of the skewed exiting jet profile.
+This is similar to those results already presented in the literature
+in Fig. 3. This streamwise location is one hole diameter beyond
+the downstream hole edge for both the round and laterally expanded cooling holes and is still over the hole exit for the
+forward-laterally expanded cooling hole. The shear layer forming at the windward side of the cooling hole, as discussed above,
+is clearly evident for the round hole at a y/D = 0.5. In the case
+of both expanded holes, there is no indication of the formation
+of a strong shear layer. In particular, the velocity profile for the
+forward-laterally expanded hole is relatively flat all the way
+down to the hole exit. The vertical velocity component of the
+round jet is much higher than that of the expanded holes as
+seen in Fig. 8(fr). Because the jet primarily exits from the
+downstream portion of the forward-laterally expanded hole, a
+larger vertical velocity component was measured relative to the
+laterally expanded hole at an x/D = 2.
+Remnants of the upstream shear layer, as indicated in Fig.
+7 ( c ) , are still evident at an x/D = 10 for the round hole. The
+streamwise velocity profile for the round hole indicates a larger
+velocity in the near-wall region, between 0 < y/D < 1, than
+for the expanded holes. These higher velocities also represent
+a larger overall massflow in the near-wall region. One plausible
+332 / Vol. 120, APRIL 1998
+
+explanation for the higher massflow is due to the mainstream
+entrainment by the longitudinal vortices. Since only two components of velocity were measured, longitudinal vortices could
+not be quantified in this study. However, comparisons of the
+vertical velocity components measured in a lateral-vertical plane
+at x/D = 4 are consistent with the presence of longitudinal
+vortices for the round hole geometry. At an x/D = 4 for the
+round hole geometry, positive vertical velocities were measured
+at the hole centerline and negative vertical velocities were measured at the outer edges of the jet. In comparison, the vertical
+velocity component for both the laterally expanded and forwardlaterally expanded holes indicated only a slightly positive vertical velocity at the jet centerline and no negative velocities at
+the jet edges. These results indicate that strong counterrotating
+vortices do not exist at an x/D = 4 for either of the expanded
+holes. Figure 8(c) shows the continued presence of a higher
+vertical velocity component for the round hole relative to the
+expanded holes at an x/D = 10.
+The spreading of the jet can be seen from the streamwise
+velocity contours presented in Fig. 9, which were measured in
+a vertical-lateral plane at an x/D = 4. Whereas the laterally
+and forward-laterally expanded holes show relatively uniform
+spanwise velocity contours, the round hole still has characteristics of a round jet.
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Round Hole
+
+Lateral Expanded Hole
+
+Forward-Lateral Expanded Hole
+
+2.0
+y/D
+
+Fig. 9 Comparison of the mean streamwise velocity contours at an x/D = 4 for the (a) round, (b) laterally expanded, and (c)
+forward-laterally expanded holes
+
+Turbulent Flowfield Results
+Before comparing the turbulent fields for these three geometries, it is important to recognize differences between a round
+hole with a flowing supply channel and a round hole with a
+plenum supply. As indicated in the introduction, past studies
+have identified the formation of a separation region on the leeward side of the cooling hole inlet, causing the exiting jet to
+be skewed toward the upstream edge of the hole at high blowing
+ratios (M = 1). The formation of this separation region was
+consistent with the high turbulence levels exiting the hole. A
+separation region occurs for a plenum condition because a large
+turning angle is required on the leeward side of the hole entrance. In the present configuration where the mainstream flow
+and coolant supply flow are both flowing in the same direction,
+it is expected that if there is a separation region, it would most
+likely occur on the upstream edge of the round hole entrance.
+However, based on the low turbulence intensities measured inside the round hole and at the exit plane of the hole for these
+flow conditions, a separation region was not apparent.
+Previous experiments completed by Pietrzyk et al. (1989) discuss the relationship between mean velocity gradients and both
+the normal and shear stress production. As already discussed, the
+streamwise mean velocity gradients for the round hole geometry
+are much larger than for the expanded cooling holes.
+Turbulence level contours in the near-hole region for all three
+hole geometries are shown in Fig. 10. The peak turbulence
+levels for the round, laterally expanded, and forward-laterally
+expanded cooling holes are Tu = 19.5, 18, and 17 percent,
+respectively. Although the peak turbulence levels for all three
+holes are comparable, the location of the peak turbulence level
+is quite different for the round hole as compared to the expanded
+holes. In the case of the round hole, the peak turbulence level
+is downstream of the hole exit at x/D = 2 as shown in Fig.
+10(a). In the case of the expanded holes, the peak turbulence
+level and turbulent shear stress occurs over the hole exit as
+shown in Figs. 10(b) and 10(c). Since the inlet geometry and
+flow conditions for all three holes are the same and since the
+turbulence levels exiting the round hole are quite low, thereby
+indicating no separation region inside the round hole, it can be
+expected that the expanded holes also have no separation region
+at the hole inlets. However, high turbulence levels do occur at
+the exits of the expanded holes. These high turbulence levels
+are a result of having a lateral expansion angle too large thereby
+allowing the jet to separate from the side walls. Recall, the
+lateral expansion half angle is 14 deg.
+Not only do the high turbulence levels begin at a location
+farther downstream for the round hole relative to the expanded
+
+Journal of Turbomachinery
+
+holes, the extent of the high turbulence region is over a much
+larger surface area. Turbulence levels as high as 18 percent are
+shown between 1.5 < x/D < 3.5 for the round hole, whereas
+for the laterally expanded hole the high-turbulence regions extend only over half of the hole exit. Because of the absence of
+strong shear layers for the expanded holes, there is no sustenance for the turbulence production over a region beyond the
+exit of the hole.
+The turbulence level contours in Fig. 11 are for the verticallateral plane at an x/D = 4. At this location the turbulence
+levels for both the expanded holes are much less than the round
+hole and, again, the jet characteristics are still evident for the
+round hole. The turbulence levels are slightly higher for the
+forward-laterally expanded jet because this location is only one
+hole diameter downstream of the hole edge.
+Figure 12 shows the turbulent shear stress contours in the
+near-hole region for the three hole geometries. The peak magnitudes of the turbulent shear stress for the round, lateral expanded, and forward-lateral expanded holes are u'v'/Ui
+=
+-0.014, —0.016, and -0.015, respectively. There is a relatively
+good correspondence between the location of peak turbulence
+level (normal stress) and peak turbulent shear stress for all
+three hole geometries. Again, the peak shear stress levels are
+similar in magnitude and sign for the three holes but the locations are much different.
+These measurements indicate a good correspondence between mean gradients and the peak stress locations. In the case
+of the round hole, the peak location is at x/D = 2, as shown in
+Fig. 12(a), which corresponds to a location of a large positive
+streamwise velocity gradient (dU/dy) and a large negative vertical velocity gradient (dV/dy) both of which contribute to a
+negative u'v' production. Positive normal stress production
+( K ' 2 ) occurs when the streamwise velocity gradient (dU/dy)
+and turbulent shear stress (u'v') are opposite in sign, which
+coincides with the peak shear stress location. Similarly, in this
+region the vertical velocity gradient (dV/dv) is negative giving
+a positive normal stress production of v'2.
+Results reported by Pietrzyk et al. (1989) showed relatively
+high positive u'v' values exiting the windward side of the round
+cooling hole similar to those shown in Fig. 12(a). However,
+unlike Pietrzyk et al., who showed u'v' values equal in magnitude but opposite in sign exiting on the downstream portion of
+the hole, these measurements show relatively low negative
+u'v' values exiting the downstream portion of the hole. This
+difference can be attributed to the separation region inside the
+coolant hole.
+
+APRIL 1998, Vol. 120 / 333
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Round Hole
+
+Lateral Expanded
+Hole
+
+Forward-Lateral
+Expanded Hole
+
+Fig. 10 Turbulence level contours for the (a) round, (b) laterally expanded, and (c) forward-laterally expanded cooling holes
+
+For both expanded holes, high negative u'v' values occur at
+the upstream portion of the cooling hole and relatively high
+positive u'v' values occur in the downstream portion of the
+cooling hole as shown in Figs. 12(b) and 12(c). In both the
+upstream and downstream regions of the expanded cooling
+holes, there is a relatively small vertical velocity gradient (dVI
+dy) and large positive streamwise velocity gradients (dU/dy)
+with the latter dictating the shear stress production. The positive
+u'v' values exiting the lee of the jet are lower in magnitude
+because of the reduced velocity gradients inside the expanded
+holes.
+
+Round Hole
+
+Conclusions
+Flowfields for three different film-cooling hole geometries
+have been measured and compared at a blowing ratio of M —
+1. Past heat transfer studies have indicated that by laterally
+expanding the exit of the hole, higher effectiveness values could
+be obtained over a wide range of blowing ratios (Goldstein et
+al., 1974). From a cooling standpoint, expanding the hole exit as
+much as possible also allows for greater blade surface coverage.
+In comparing both the expanded hole flowfields with the
+round hole flowfield, the jet penetration as well as the velocity
+
+Lateral Expanded Hole
+
+Forward-Lateral Expanded Hole
+
+2.0y/D ;
+1.5--
+
+Fig. 11 Turbulence level contours at an x/D = 4 for the (a) round, (b) laterally expanded, and (c) forward-laterally
+expanded cooling holes
+
+334 / Vol. 120, APRIL 1998
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Round Hole
+
+Lateral Expanded
+1.0
+/D
+Hole
+y ,
+
+Forward-Lateral
+Expanded Hole
+
+1.0Y /D
+
+Fig. 12 Turbulent shear stress contours for the (a) round, (b) laterally expanded, and (c) forward-laterally expanded holes
+
+gradients were significantly reduced for the laterally and forward-laterally expanded holes. Because the velocity gradients
+were reduced by expanding the cooling holes, the turbulence
+production downstream of the expanded holes was quite low
+relative to the round hole. The peak turbulence levels for both
+the expanded holes occurred over the hole exit, whereas the
+peak level for the round hole occurred downstream of the hole
+exit where the velocity gradients were very large. The high
+levels of turbulence exiting the expanded cooling holes resulted
+from having large expansion angles. Improved cooling performance for the expanded holes can be expected because of reduced jet penetration and because there was no indication of a
+strong vortical motion occurring at xlD = 4. Based on the
+flowfield measurements, the primary improvement to the expanded holes is to reduce the expansion angle with the tradeoff being a reduced lateral coverage.
+Both the laterally expanded and forward-laterally expanded
+flowfields were quite similar in terms of velocity gradients.
+The primary disadvantage, however, for the forward-laterally
+expanded hole is that even though the blowing ratio was quite
+high, the jet exits primarily from the leeward side of the cooling
+hole, thereby allowing ingestion of the mainstream fluid into
+the windward side of the cooling hole. This ingestion would
+reduce the performance of the film-cooling jet.
+In comparing the performance of each of the three hole geometries, this study has reaffirmed the importance of understanding
+how the jet forms inside the film-cooling hole for all hole geometries. The location and duration of the peak turbulence levels,
+which dictate the dilution of the cooling jet, depend upon what
+happens inside the cooling hole. As shown by previous investigators, the peak turbulence level at high blowing ratios for a
+round hole geometry occurs at the exit of the cooling hole.
+These turbulence levels result from a large separation region
+inside the hole that occurs due to the coolant fluid being supplied
+by a stagnant plenum. Lower turbulence levels over the cooling
+Journal of Turbomachinery
+
+hole exit (relative to previous studies) were presented in this
+paper for a round cooling hole that was supplied by a channel
+flowing parallel to the mainstream. These low turbulence levels
+indicate the lack of a (or only a small) separation region.
+
+Acknowledgments
+This study was partly funded by the European Union through
+a grant by the Brite Euram program "Investigation of the Aerodynamics and Cooling of Advanced Engine Turbine Components' ' under Contract No. AER2-CT92-0044. The authors wish
+to express their gratitude to the partners involved in the program
+for the permission to publish this paper and to R. Clifford from
+Rolls-Royce, who coordinated the program.
+
+References
+Andreopoulos, J., and Rodi, W., 1984, "Experimental Investigation of Jets in
+a Crossflow," Journal of Fluid Mechanics, Vol. 138, pp. 93-127.
+Benz, E., Wittig, S., Beeck, A., and Fottner, L„ 1993, "Analysis of Cooling
+Jets Near the Leading Edge of Turbine Blades," 72nd Fluid Dynamics Panel
+Meeting and Symposium on "Computational and Experimental Assessment of
+Jets in Cross Flow," Winchester, UK, Paper No. 37.
+Garg, V., and Gaugler, R., 1995, "Effect of Velocity and Temperature Distribution at the Hole Exit on Film Cooling of Turbine Blades," ASME Paper No. 95GT-275.
+Goldstein, R. J., Eckert, E. R. G„ and Burggraf, F., 1974, "Effects of Hole
+Geometry and Density on Three-Dimensional Film Cooling," International Journal of Heat and Mass Transfer, Vol. 17, pp. 595-607.
+Jubran, B., and Brown, A., 1985, "Film Cooling From Two Rows of Holes
+Inclined in the Streamwise and Spanwise Directions," ASME Journal of Engineering for Gas Turbines and Power, Vol. 107, pp. 84-91.
+Lee, S. W., Lee, J. S., and Ro, S. T., 1994, "Experimental Study on the Flow
+Characteristics of Streamwise Inclined Jets in Crossflow on Flat Plate," ASME
+JOURNAL OF TURBOMACHTNERY, Vol.
+
+116, pp. 97-105.
+
+Leylek, J. H., and Zerkle, R. D., 1993, "Discrete-Jet Film Cooling: A Comparison of Computational Results With Experiments," ASME JOURNAL or TURBOMACHINERY, Vol. 116, pp. 358-368.
+Makki, Z. H., and Jakubowski, G. S., 1986, "An Experimental Study of Film
+Cooling From Diffused Trapezoidal Shaped Holes," AIAA Paper No. 86-1326.
+
+APRIL 1998, Vol. 120 / 335
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Pietrzyk, J. R„ 1989, "Experimental Study of the Interaction of Dense Jets
+With a Crossflow for Gas Turbine Applications," Ph.D. Dissertation, University
+of Texas at Austin.
+Pietrzyk, J. R., Bogard, D. G., and Crawford, M. E., 1989, "Hydrodynamic
+Measurements of Jets in Crossflow for Gas Turbine Film Cooling Application,"
+ASME JOURNAL OF TURBOMACHINERY, Vol. I l l , pp. 1139-145.
+Schlichting, H., 1979, Boundary Layer Theory, McGraw-Hill, New York.
+Sen, B„ Schmidt, D. L„ and Bogard, D. G„ 1996, "Film Cooling With Compound Angle Holes: Heat Transfer," ASME JOURNAL OF TURBOMACHINERY, Vol.
+118, pp. 800-806.
+Subramanian, C. S., Ligrani, P. M., Green, J. G., Doner, W. D., and
+Kaisuwan, P., 1992, "Development and Structure of a Film-Cooling Jet in a
+
+336 / Vol. 120, APRIL 1998
+
+Turbulent Boundary Layer With Heat Transfer," Rotating Machinery Transport
+Phenomena, Proc. Third International Symposium on Transport Phenomena and
+Dynamics of Rotating Machinery (ISROMAC-3), pp. 53-68.
+Thole, K., Gritsch, M„ Schulz, A., and Wittig, S„ 1997, "Effect of Inlet
+Conditions for Jets-in-Crossflow as Applied to Film-Cooling," ASME Journal
+of Fluids Engineering, Vol. 119, pp. 533-540.
+Wittig, S., Schultz, A., Gritsch, M., and Thole, K„ 1996, "Transonic Film
+Cooling Investigations: Effects of Hole Shapes and Orientations," ASME Paper
+No. 96-GT-222.
+Yoshida, T., and Goldstein, R. J., 1984, "On the Nature of Jets Issuing From
+a Row of Holes into a Low Reynolds Number Mainstream Flow," ASME Journal
+of Engineering for Gas Turbines and Power, Vol. 106, pp. 612-618.
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/31/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

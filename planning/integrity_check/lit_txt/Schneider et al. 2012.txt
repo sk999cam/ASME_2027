@@ -1,0 +1,1016 @@
+Flow Turbulence Combust (2012) 88:101–120
+DOI 10.1007/s10494-011-9379-3
+
+Turbulent Heat Transfer and Large Coherent
+Structures in Trailing-edge Cutback Film Cooling
+Hayder Schneider · Dominic von Terzi ·
+Hans-Jörg Bauer
+
+Received: 18 November 2010 / Accepted: 20 October 2011 / Published online: 11 November 2011
+© Springer Science+Business Media B.V. 2011
+
+Abstract Film cooling is a key technology for improving the thermal efficiency and
+power output of gas turbines. The trailing-edge section of high-pressure turbine
+blades can be efficiently cooled by ejecting a film over a cutback on the pressure side
+of the blade. In this paper, results of Large–Eddy Simulations (LES) are presented
+that match an existing experimental setup. Altogether, eight simulations with the
+blowing ratio M varying as the only parameter were performed over a range from
+M = 0.35 to 1.4. Reasonably good agreement between LES and experiments were
+obtained for flow field statistics and adiabatic film-cooling effectiveness ηaw . Within
+a limited range of blowing ratios, an increase in the blowing ratio results in a
+counter-intuitive decrease of the cooling effectiveness. The present work suggests
+a mechanism that can explain this behavior. The visualization and analysis of large
+coherent structures showed that there exists dominant clockwise-rotating structures
+that can give rise to a combined upstream- and wall-directed turbulent heat flux.
+This turbulent heat flux represents the main contribution of the total heat flux and
+causes a significantly intensified thermal mixing process, which in turn results in the
+counter-intuitive decrease of the cooling effectiveness.
+Keywords Large–Eddy simulation · Large coherent structures · Turbulent mixing ·
+Heat transfer · Film cooling
+
+1 Introduction
+Film cooling is a key technology for improving the performance of gas turbines. The
+aim of film cooling is to increase the maximum allowable turbine inlet temperature,
+
+H. Schneider (B) · D. von Terzi · H.-J. Bauer
+Institut für Thermische Strömungsmaschinen, Karlsruhe Institute of Technology (KIT),
+Kaiserstr. 12, 76131 Karlsruhe, Germany
+e-mail: hayder.schneider@kit.edu
+
+102
+
+Flow Turbulence Combust (2012) 88:101–120
+
+which implicates an increase in thermal efficiency and power output, but also an
+extension of the durability and life of turbine components. The trailing-edge (TE)
+section of high-pressure turbine blades, see Fig. 1a, is subject to large heat loads
+and therefore requires substantial cooling efforts. An efficient cooling method for
+the TE is cutback film cooling, where cooling air is ejected over a cutback on the
+pressure side of the blade. Since the cooling air must be extracted from earlier
+compressor stages it does not perform work and, thus, amounts for a thermodynamic
+loss. Consequently, the design goal is to minimize the cooling air flow while still
+ensuring acceptable component temperatures.
+The key quantity for assessing the film cooling performance of a particular
+laboratory configuration is the adiabatic film cooling effectiveness ηaw . This quantity
+is mainly influenced by the geometrical features of the TE cutback, the blowing
+ratio M and the coolant channel flow characteristics. For incompressible, constant
+property flow, ηaw is defined as
+ηaw =
+
+Th − Taw
+,
+Th − Tc
+
+(1)
+
+where T is the averaged temperature and the idices ‘aw’, ‘h’, and ‘c’ refer to the
+temperatures of the adiabatic wall, the hot gas path, and the coolant channel,
+respectively. The blowing ratio is defined as
+M=
+
+(ρU)c
+,
+(ρU)h
+
+(2)
+
+where ρ is the density and U the bulk velocity in the streamwise direction. Other
+influencing parameters include transitioning boundary layers, free-stream turbulence, secondary flows, and rotational effects; a more complete list is provided
+by Bunker [1]. The large number of influencing parameters requires systematic
+parameter studies for the optimization of the cooling design. Experimental parameter studies are generally very expensive and often subject to severe measurement
+limitations. This motivates the use of numerical prediction methods which can
+provide more details about the flow physics and, ultimately, can lead to cooling
+design optimizations by exploiting the physical mechanisms at work.
+
+a)
+
+b)
+
+Pressure-side
+trailing-edge cutback
+
+Main simulation
+Center of coordinate system
+
+y
+z x
+
+Region of interest
+
+20H
+
+5H
+Precursor simulation I
+2H
+
+2H
+
+Extract
++
+Rescale
+
+12H
+H
+Precursor simulation II
+
+t
+
+2H
+
+H
+15H
+
+10H
+
+3H
+
+Fig. 1 Trailing-edge cutback: a three-dimensional view (top) and cross-sectional view (bottom).
+b Schematic of the part of the experimental setup computed with flow from left to right and the
+grey shaded area indicating the coolant flow, taken with permission from [12]
+
+Flow Turbulence Combust (2012) 88:101–120
+
+103
+
+The flow physics in TE cutback film cooling is governed by the formation of
+large coherent structures (LCS) which are periodically shed at the blunt cutback
+lip. These LCS dominate the mixing process and, subsequently, impact on the
+film cooling effectiveness. Because large-scale unsteadiness is so important for the
+mixing process, the Large–Eddy Simulation (LES) approach is conceptually the ideal
+calculation method for accurately and reliably predicting both the flow field and
+heat transfer. However, until recently, the more cost-efficient Reynolds-Averaged
+Navier–Stokes (RANS) [2–4] and hybrid LES/RANS [5, 6] calculation methods were
+used for predicting TE cutback film cooling; see for an overview on RANS and
+LES, and on hybrid LES/RANS methods the work of Pope [7], and of Fröhlich
+and von Terzi [8], respectively. Holloway et al. [2, 3], and Medic and Durbin [4]
+used unsteady RANS calculations and obtained a significant overprediction of the
+adiabatic film cooling effectiveness ηaw . Joo and Durbin [5] studied the reason for
+this overprediction and found that the near-wall processes are misrepresented by
+the selected RANS method. On the other hand, their hybrid LES/RANS calculation
+agreed reasonably well with the experimental data of Holloway et al. [2]. Martini
+et al. investigated experimentally [9, 10] and numerically [6] how internal cooling
+designs impact on film cooling. Note that internal cooling designs typically consist
+of so-called turbulators or pin-fins, and are important for the internal convective
+cooling which is applied prior to ejecting the cool gas onto the TE cutback [1].
+Their hybrid LES/RANS calculations agreed reasonably well with the experimental
+data and it was found that internal cooling designs strongly influence the mixing
+process and, hence, the film cooling effectiveness. In recent experiments, Horbach
+[11] studied various lip thickness’, lip shapes, and pin fin geometries in a setup with
+and without land extensions and confirmed the strong influence of these parameters
+on both film cooling effectiveness and heat transfer.
+Martini [10] also conducted reference experiments without land extensions and
+internal cooling designs. Recently, Schneider et al. [12] reported on highly-resolved
+LES of these experiments and established the scenario of reducing the blowing ratio
+from an engine-typical to a lower value by considering also a possible relaminarization of the cool gas flow. Reasonably good agreement of mean velocity profiles and
+ηaw with the experimental data was obtained. It was shown that changing either the
+blowing ratio or the flow regime of the cool gas flow can change both the type and the
+strength of the LCS. The change in LCS had significant consequences for the mixing
+process: it was possible to obtain a counter-intuitive increase in ηaw for the reduced
+blowing ratio. This counter-intuitive increase was also observed in the experiments
+[9, 10]. So far, the origin of this increase has been unclear, but it is conjectured to
+be related to LCS. Therefore, in the present study, calculations for a wide range
+of blowing ratios were conducted with the aim to further the understanding of this
+phenomena.
+
+2 Computational Setup
+2.1 Experiment simulated
+Figure 1b depicts the computational domain and its dimensions which represent a
+part of the experiment of Martini [10]. The geometry and Reynolds number are in
+
+104
+
+Flow Turbulence Combust (2012) 88:101–120
+
+accordance with the reference experiments with zero main flow acceleration along
+the trailing edge and without lands and internal cooling designs. The lip thickness t
+to slot height H ratio of t/H = 1. All values reported are made dimensionless using
+H and bulk values of the hot gas at the inlet. The Reynolds number based on H, the
+hot gas bulk velocity U h and kinematic viscosity νh is 6,250. The Prandtl number is
+0.71 and the Mach number was below 0.15. The center of the Cartesian coordinate
+system was placed at the upper corner of the cutback lip. The hot gas flow enters the
+domain 2H upstream the cutback lip with U h and temperature Th . The coolant flow
+with bulk velocity U c and temperature Tc passages an inclined channel with length
+2H and angle of incidence α = 10◦ .
+It should be noted that the experiments of Martini [10] were performed as
+part of the European research project AITEB–2 “Aerothermal Investigations of
+Turbine Endwalls and Blades”. All important parameters such as geometry and flow
+conditions were determined by a consortium of both gas turbine manufacturers and
+universities in order to ensure the engineering relevance. The Reynolds number and
+lip thickness to slot height ratio are typical for a turbine. Although the reference case
+may seem oversimplified at first, it is useful as it appoximates a wide range of other
+trailing-edge designs. When looking at internal designs, these are located upstream
+to the ejection slot and have a lateral spacing. In the case of a sufficiently large
+upstream distance (say several H) from the ejection slot and/or when the spacing is
+large between these designs, the geometry approaches the reference case. The same
+is true when land extensions have a large lateral spacing. Hence, even though the
+geometry is simplified, it is still of high practical relevance for turbine design.
+2.2 Numerical method and subgrid-scale model
+The three-dimensional, time-dependent, filtered Navier–Stokes equations governing
+incompressible, constant-property flow were solved using the Finite Volume inhouse code LESOCC2 developed at KIT; see Hinterberger [13]. The use of an
+incompressible flow solver is justified by the low Mach number in the experiment.
+LESOCC2 is a FORTRAN 95 program that allows for performing LES on bodyfitted, collocated, curvilinear, block-structured grids. Both the viscous and convective
+fluxes are approximated with a second-order accurate central differences scheme.
+Time advancement is accomplished by an explicit, low-storage three-step Runge–
+Kutta method. Conservation of mass is achieved by the SIMPLE algorithm with the
+pressure–correction equation being computed with the strongly implicit procedure
+(SIP) of Stone. Velocity and pressure decoupling is avoided by a momentum
+interpolation technique. Since compressibility effects were neglected, a convection–
+diffusion transport equation is solved for the temperature. Hence, the temperature
+is treated as a passive scalar. Parallelization is achieved via domain decomposition
+with the use of ghost cells and MPI for the data transfer. The standard Smagorinsky
+model with Cs = 0.1 and van Driest wall-damping was employed as subgrid-scale
+model for the LES reported here. The turbulent Prandtl number was 0.7. Since the
+contribution of the subgrid-scale model is rather low, with values of νt /ν below 1, the
+choice of the subgrid-scale model is expected to have a small impact on the results.
+This was confirmed by comparison to significantly better resolved simulations.
+
+Flow Turbulence Combust (2012) 88:101–120
+
+105
+
+2.3 Computational grid and averaging
+All simulations were carried out on the same block-structured mesh containing
+about 38.2 million cells. Table 1 summarizes how the cells are distributed among
+the domains of the two precursor simulations and the main simulation. The bulk of
+the computational cells is allocated in the main simulation above the TE cutback, i.e.
+the area denoted as the region of interest in Fig. 1b. In the region of interest, 96 and
+48 out of 288 cells were used to discretize the coolant channel and the cutback lip in
+the vertical direction, respectively. The grid was stretched towards the wall-normal
+direction to allow for wall-resolving simulations, and was equidistantly spaced in the
+streamwise and spanwise direction. The spanwise extent was Lz = 8H. Note that
+simulations with a span of Lz = 4 and Lz = 12 were also performed that yielded
+quite similar results with minor deviations in film cooling effectiveness’ and second
+order statistics. However, the phenomena investigated here proved to be robust with
+respect to the variation of the span. Adaptive time-stepping ensured a CFL limit of
+less than 0.65 and yielded non-dimensional time-steps of t ≈ 0.6 – 1.0 × 10−2 . Each
+simulation was run for at least 150H/U h , before starting averaging for 300H/U h . In
+addition, spanwise averaging was applied over all 192 cells in the z-direction.
+2.4 Boundary conditions and generation of inflow conditions
+At all walls, the no-slip boundary condition (BC) was applied. The cold gas temperature was in accordance to the experiment and had a value of Tc /Th = 0.75. A uniform
+temperature distribution was prescribed at the inflow boundaries. The lower wall
+had an adiabatic BC, whereas, for the walls confining the lip, an isothermal BC of
+Tw /Th = 0.86 was enforced. At the upper domain boundary of the main simulation,
+a symmetry condition was enforced resulting in an adiabatic no-stress wall. At the
+outlet, a convective outlet BC was chosen for all variables. Furthermore, a buffer
+zone was used in which the viscosity is artificially increased. To prevent negative
+velocities at the outlet, a cosine function was employed that ramped the viscosity
+from νh to 10νh within the region of x/H ∈ [17.5; 25].
+In the context of LES, the generation of appropriate inlet BC for the filtered
+velocity field u(x, t) that satisfy the filtered Navier–Stokes equations and, at the
+same time, provide realistic turbulent flow structures is not a trivial task. Here, mean
+
+Table 1 Details on the
+computational grid
+
+L—length of domain,
+N—number of cells, indices ξ
+& η correspond to the
+streamwise and wall-normal
+directions, z corresponds to
+the lateral direction
+
+Lξ
+Lη
+Lz
+Nξ
+Nη
+Nz
+Ntotal
+
+Precursor
+simulation I
+
+Precursor
+simulation II
+
+Region
+of interest
+
+12H
+2H
+8H
+160
+96
+192
+2.9 × 106
+
+3H
+1H
+8H
+48
+96
+192
+0.9 × 106
+
+15H
+5H
+8H
+480
+288
+192
+26.5 × 106
+
+106
+
+Flow Turbulence Combust (2012) 88:101–120
+
+values were prescribed and time-dependent fluctuations superimposed. At the hot
+gas inlet, the boundary layer profile was interpolated from the experimental data
+at the x/H = 0 location. The boundary layer had a thickness of δ = 2H and shape
+factor of H12 = 1.5. At the cold gas inlet, an equilibrium turbulent channel flow was
+imposed whose mass flux was matched to replicate the blowing ratio M. Note that the
+prescribed mean velocity profiles are likely to deviate somewhat from the (unknown)
+experimental values at the location of the inlet BC. The velocity fluctuations were
+generated by precursor simulations PS-I and PS-II that were running in parallel to
+the main simulation. These simulations were coupled by interfaces as can be seen in
+Fig 1b. Figure 2 gives an impression of the instantaneous flow field.
+In both PS-I and II, periodicity was enforced in the streamwise direction and a
+controller was used to enforce the prescribed mass flux. This technique allows for
+the generation of fully-developed channel turbulence with physically realistic timedependent flow structures. In PS-I, a half channel with half height 2H was computed
+using a symmetry condition at the upper boundary. In PS-II, a full channel with half
+height H/2 was simulated. The Reynolds number in the coolant channel is rather
+low and required a manipulation of the viscosity in PS-I and PS-II. The viscosity was
+set to νh /2 in order to ensure fully-developed turbulence even for very low blowing
+ratios for which the coolant channel flow would be prone to relaminarization.
+Instantaneous data were extracted at every time-step and the local mean values
+U ≡ u were subtracted. The obtained fluctuating velocities u = u − U were appropriately scaled and added to the prescribed mean values at the corresponding inlet
+BC of the main simulation. The rescaling operation was necessary in order to adjust
+the instantaneous fluctuations from PS-I and PS-II to the correct wall-shear of the
+main simulation. The rescaling technique was derived from the method proposed by
+Lund et al. [14] and contains some modifications specific to the setup here. The main
+differences are that, in our study, only the velocity fluctuations require the scaling
+and that the boundary layer thickness in the precursor and main simulations match.
+Furthermore, in the free-stream of the hot gas inlet (above y/H = 2), no fluctuations
+were added. To avoid a discontinuity between the instantaneous turbulent boundary
+layer and the calm free-stream, the rescaled fluctuations were attenuated towards the
+free-stream by using a cosine function in the region of y/H ∈ [1.8; 2].
+
+Fig. 2 Snapshot of LES for M = 0.8 at an arbitrary instant in time showing streamwise velocity u
+fluctuation with flow from left to right. Precursor simulations for inlet data generation are located
+upstream of the rescaling interfaces
+
+Flow Turbulence Combust (2012) 88:101–120
+
+107
+
+2.5 Simulation overview
+In total, eight calculations are presented. The simulations were performed for eight
+different blowing ratios M = 0.35, 0.5, 0.65, 0.8, 0.95, 1.1, 1.25 and 1.4. For each
+blowing ratio, fully-developed turbulence was imposed as the cool gas BC. Since the
+flow is calculated as incompressible, M reduces with the consant temperature ratio
+RT = Tc /Th = 0.75 to a velocity ratio U c /U h = M · RT .
+
+3 Results
+3.1 Turbulent heat transfer
+3.1.1 The counter-intuitive behavior
+Before presenting the results of ηaw for the whole range of blowing ratios M
+considered here, it is instructive to briefly recall the counter-intuitive behavior of ηaw
+which was described in the study of Schneider et al. [12]. Figure 3a shows a linearlogarithmic distribution of the film cooling effectiveness ηaw along the streamwise
+coordinate x/H for a high (engine-typical) and low value of M = 1.1 and 0.5,
+respectively. The counter-intuitive behavior is that the case with the higher blowing
+ratio yields the lower cooling effectiveness.
+In the literature, ηaw is typically plotted as f (x/H) for a given M, where f (·)
+denotes the functional dependence. Such a representation was shown in Fig. 3a.
+There exists two interesting regions in which: (1) ηaw remains approximately constant, and (2) ηaw decays approximately exponentially. When comparing the results
+of the film cooling effectiveness for a wider range of blowing ratios, it is better
+to plot ηaw = f (M) for a given streamwise location x/H. Figure 3b shows such an
+illustration for the entire range of blowing ratios at x/H = 2, 6, and 12. While ηaw
+maintains its maximum value of unity for all blowing ratios at x/H = 2, it shows a
+
+0.8
+ηaw
+
+b)
+
+1
+M=1.1
+M=0.5
+
+1
+0.8
+
+0.6
+
+ηaw
+
+a)
+
+0.6
+
+0.4
+
+0.4
+
+0.2
+
+0.2
+
+0
+
+0
+
+x/H=2
+x/H=6
+x/H=12
+
+R1
+2
+
+6
+x/H
+
+12
+
+0.4
+
+R2
+0.6
+
+R3
+
+0.8
+
+1
+
+1.2
+
+1.4
+
+M
+
+Fig. 3 Adiabatic film cooling effectiveness ηaw of LES. a Linear-logarithmic ηaw -distribution as
+function of streamwise coordinate x/H for selected blowing ratios M = 0.5 and 1.1. b ηaw distribution
+as function of M for x/H = 2, 6, and 12. Dash-dotted lines delimit regions R1, R2, and R3 comprising
+M ∈ [0.35; 0.65], M ∈ [0.65; 0.95], and M ∈ [0.95; 1.4], respectively
+
+108
+
+Flow Turbulence Combust (2012) 88:101–120
+
+qualitatively different trend within three regions of M at x/H = 6 and 12. The three
+regions are denoted R1, R2, and R3, and approximately comprise M ∈ [0.35; 0.65],
+M ∈ [0.65; 0.95], and M ∈ [0.95; 1.4], respectively. In R1, ηaw increases for increasing
+M. This is intuitive as more cool gas should yield an improved cooling performance.
+In R2, however, ηaw decreases for increasing M. Paradoxically, more cool gas yields
+a reduced cooling performance. Clearly, the counter-intuitive behavior persists not
+only for one selected blowing ratio as in Fig. 3a, but rather for an entire range
+of blowing ratios. In R3, one observes again the expected behavior as the cooling
+effectiveness increases for increasing blowing ratios. Figure 3b illustrates that there
+exists two local extrema: a maximum and a minimum of ηaw in the vicinities of
+M = 0.65 and 0.95, respectively.
+3.1.2 The ηaw map
+We saw that it is possible to plot ηaw = f (x/H) for selected M, or ηaw = f (M) for
+selected x/H. However, neither representation is perfectly satisfactory since for a
+given configuration ηaw = f (x/H, M). Therefore, a more comprehensive representation can be achieved by creating contours of ηaw with coordinates x/H and M. The
+advantage is that these contours provide a topology in which, like in a map, peaks
+and valleys can be easily identified. In the following, we demonstrate the usefulness
+of such maps and extend the concept to other quantities of interest.
+Figure 4a shows an ηaw -map which was obtained by cubic interpolation of the
+LES data. The map reveals at a glance a characteristic topology. The features of this
+topology can be attributed to the counter-intuitive behavior which was described
+in the discussion of Fig. 3. The three regions R1, R2, and R3, as well as the local
+maximum and minimum of ηaw are visible for the whole range of x/H. The same ηaw map has been created with the experimental data of Martini [10], see Fig. 4b. Clearly,
+the experimental data exhibit a similar topology with local performance maxima and
+minima. The interval comprising these extrema is, like in the LES, the region in
+which a counter-intuitive trend occurs. However, in the experiment, the levels of the
+
+Fig. 4 Contours of adiabatic film cooling effectiveness ηaw of LES as function of blowing ratio M
+and streamwise coordinate x/H. a SIM-T data; vertical dash-dotted lines delimit regions R1, R2, and
+R3. b Experimental data of Martini [10]
+
+Flow Turbulence Combust (2012) 88:101–120
+
+109
+
+local performance maxima and minima are less pronounced compared to the LES.
+Furthermore, the location of the interval is different and located at M ∈ [0.5; 0.8].
+Both the results from Martini [10] and Schneider et al. [12] showed that ηaw
+is highly sensitive to a variation in the boundary conditions. This allows for the
+conjecture that the differences between the experiments and the present LES shown
+in Fig. 4 are, at least partly, due to different boundary conditions and inherent
+simplifications of the setup. Recall that the present computational setup differs from
+the experiment, among other factors, by imposing (1) no free-stream turbulence
+in the hot gas path, (2) an estimated turbulent boundary layer profile in the
+hot gas path, (3) turbulent equilibrium flow in the coolant channel, (4) perfectly
+adiabatic BC along the TE cutback, (5) periodic BC in the lateral direction, (6)
+ideal geometric features, (7) passive scalar properties for the temperature, and (8)
+constant properties for the density and viscosity. Although differences between the
+computational and experimental setup exist, reasonably good qualitative agreement
+for ηaw was achieved, see Fig. 4. It is therefore conjectured that the current LES are
+well suited for further investigating the reasons for the characteristic topology of the
+ηaw -map.
+Why is it so important to have an ηaw -map? One obvious reason is to know about
+the location of the optimum operating point. Another important reason is to identify
+critical operating points. Such a critical point would be M = 0.8 in the LES, which in
+fact lies between the local performance extrema. Around M = 0.8, strong gradients
+exist in the ηaw -map along the M coordinate and, hence, little changes in M can have
+a drastic impact on the performance of the coolant film.
+3.1.3 Thermal mixing process
+The topological features of the ηaw -map are related to the thermal mixing process in
+the near-wall region. This mixing process can be appreciated by analyzing the vertical
+temperature distribution. The dimensionless temperature can be defined as
+=
+
+Th − T
+,
+Th − Tc
+
+(3)
+
+where T is the averaged temperature. It follows for the hot gas with Th that = 0,
+for the cool gas with Tc that = 1, and for the wall with Taw that = ηaw . The
+vertical distance from the wall is y∗ = (y − yw )/H, where yw is the wall position. In
+order to better relate the wall temperature, as shown in the ηaw -map, to the thermal
+mixing process, we introduce a -map; however, with coordinates y∗ and M.
+Figure 5a depicts a -map in the near field of the cutback lip at x/H = 2, where
+ηaw = 1. It can be seen that decreases from unity at the wall to zero in the freestream. Moreover, the vertical -distribution is strongly dependent on M. Again, the
+concept of the map proves to be an efficient means for identifying the characteristic
+topology of
+= f (y∗ , M). The features of the topology were highlighted by the
+solid bold -levels which indicate h = 0 + ε (hot gas) and c = 1 − ε (cool gas),
+where ε is an arbitrarily chosen small number. The region in which ∂ /∂ y  = 0 is
+enclosed by the h and c contour lines and resembles a thermal mixing layer.
+However, the notion of a thermal mixing layer is, commonly, used in the context
+of free shear flows. Since our problem involves a wall, we instead adopt the notion
+of a thermal layer (TL) in order to describe, in a more general sense, the region in
+
+110
+
+Flow Turbulence Combust (2012) 88:101–120
+
+Fig. 5 Contours of dimensionless temperature of LES as function of blowing ratio M and vertical
+wall-distance y∗ ; vertical dash-dotted lines delimit regions R1, R2, and R3. a Streamwise coordinate
+x/H = 2; solid bold lines indicate h and c . b x/H = 6; solid bold line indicates h and dashed bold
+line = 0.8
+
+which ∂ /∂ y  = 0. The vertical location of the upper and lower boundaries of the TL
+are δh = y∗ ( h , M) and δc = y∗ ( c , M), respectively. Hence, the thickness of the TL
+is δTL = δh − δc . Figure 5a illustrates that for increasing M, δTL increases within R1
+and R2, and slightly decreases within R3. The strongest increase of δTL occurs within
+R2, and is due to a concomitant increase of δh and decrease of δc . Interestingly, the
+mixing process is strongest around M = 0.95: there exists a maximum of δTL and a
+minimum of δc .
+Figure 5b shows the -map for the far field of the cutback lip at x/H = 6,
+where ηaw < 1. Two major differences can be observed by comparing Fig. 3b to
+a: (1)
+decreased below c , and (2) the topology of the
+contours changed
+qualitatively. The consequences of < c are that δc = 0. This implies, with our
+previous definition of the TL, that the TL extends from δh down to the adiabatic
+wall; thus δTL = δh . It can be seen that the thickness of the TL increased compared
+to the x/H = 2 location. Furthermore, δTL increases with increasing M and has its
+maximum in R3. We now turn attention to the qualitative change of the topology.
+This change becomes visible when looking at the near-wall region with y∗ < 1. The
+change of the
+topology can be easily grasped by noting the dashed bold line
+which indicates the arbitrarily chosen value of = 0.8. Similarly as for the x/H = 2
+location, the mixing process is strongest around M = 0.95: the contours collapse in
+the vicinity of the wall.
+The -map showed that the mixing process was strongest for the same range of
+M = 0.95 where the ηaw -map had its minimum. The results suggest that the mixing
+process in the near field of the cutback lip is of great importance for the downstream
+cooling performance. Perhaps this may not be surprising; but what is not clear yet is
+why this enhanced mixing occurs in that specific range of M.
+3.1.4 Turbulent heat f luxes
+are averaged temperatures and, hence, provide us with the most
+Both ηaw and
+fundamental description of the thermal field. The analysis of the thermal field can
+
+Flow Turbulence Combust (2012) 88:101–120
+
+111
+
+be extended by scrutinizing the heat flux. The total heat flux vector qtot can be
+decomposed into a molecular q and a turbulent qt contribution:
+qtot = q + qt .
+
+(4)
+
+Analysis of the present data showed that, in the near-field of the cutback lip, qt is up
+to four orders of magnitude larger than q. It follows that the temperature transport is
+significantly influenced by the fluctuating velocity field. In order to relate the thermal
+mixing process in the near-wall region, as shown in the -map, to the turbulent heat
+fluxes, we introduce a qt -map with coordinates y∗ and M. Since qt is a vector quantity,
+it is necessary to create a map for the two non-zero components of qt : the streamwise
+u T  /U h Th and the vertical v  T  /U h Th component. Note that for the sake of brevity
+the normalization factor U h Th is omitted in the following.
+Figure 6 illustrates the u T  -map (top) and v  T  -map (bottom) for the two streamwise locations x/H = 2 and 6. Similarly as in Fig. 5, the boundaries of the TL were
+highlighted by h and c . Furthermore, the -collapse was highlighted by = 0.8
+for x/H = 6. For both streamwise locations, the turbulent heat fluxes are non-zero
+within the TL and zero outside the TL. This is consistent with qt
+q and shows the
+
+Fig. 6 Contours of resolved streamwise 100 × u T  /U h Th (top) and vertical 100 × v  T  /U h Th
+(bottom) turbulent heat flux components of LES as function of the blowing ratio M and vertical walldistance y∗ ; same color contours shown with different contour lines, dashed contour lines indicate
+negative values; vertical dash-dotted lines delimit regions R1, R2, and R3. a Streamwise coordinate
+x/H = 2; solid bold lines indicate h and c contour levels. b x/H = 6; solid bold line indicates h
+and dashed bold line = 0.8
+
+112
+
+Flow Turbulence Combust (2012) 88:101–120
+
+turbulent heat fluxes are dominating the thermal mixing process. First, we inspect the
+v  T  -maps (bottom figures). The maps show that only negative values of v  T  occur
+within the TL. This means that heat is transported towards the wall which explains
+the deterioration of the cooling film. From our previous findings, one could presume
+that the maximum vertical heat transfer then should coincide with the -collapse
+around M = 0.95. However, maximum values of negative v  T  can be observed for
+M ≥ 1.1; and not for M = 0.95. Apparently, it is not sufficient to look at the vertical
+component v  T  alone. This becomes clear by noting that although v  T  > u T  , both
+components are of the same order of magnitude. Therefore, one has to consider the
+streamwise component u T  as well. The u T  -maps (top figures) show that there
+exists both positive and negative values within the TL. Note that negative values
+of u T  correspond to an upstream transport of heat. The u T  -map in Fig. 6b reveals
+at a glance that strong negative values of u T  occur for y∗ < 1 in the region around
+M = 0.95. That is in the exact same region of M for which the -collapse and the
+associated counter-intuitive behavior of ηaw occurs.
+We now relate the combined contribution of u T  and v  T  to the -collapse at
+x/H = 6. Figure 7 presents the corresponding qt -vectors in the near-wall region
+for selected M. The figure visualizes that (1) the angle of incidence, and (2) the
+magnitude of qt vary with the vertical wall-distance. The qt -distribution for M = 0.95
+shows that the -collapse can be attributed to both strong negative u T  and strong
+negative v  T  that extend very close to the wall. Similar observations can be made
+for the qt -distribution of M = 0.8 and 1.1. In contrast, the other cases for which
+the mixing is less intense are characterized by either low magnitudes of qt , as in
+M = 0.65, or by a positive streamwise component u T  , as in M ≥ 1.25. Hence, the
+strongest thermal mixing is due to a turbulent heat flux vector that carries heat not
+only towards the wall, but also in the upstream direction.
+3.2 Large coherent structures
+The previous analysis demonstrated that the counter-intuitive behavior of ηaw was
+caused by a particular composition of the turbulent heat flux vector in the near-wall
+region: both the vertical and the streamwise components were negative. In order to
+
+y
+x
+
+R2
+
+R3
+
+y*
+
+1
+
+0.5
+
+0
+0.6
+
+0.8
+
+1
+
+1.2
+
+1.4
+
+M
+
+Fig. 7 Turbulent heat flux vectors qt of LES in the near-wall region for selected blowing ratios M at
+x/H = 6; square linked by dashed line refers to location of maximum magnitude of qt and triangles
+linked by the dashed-dotted line refers to change in sign of x-component of qt vector; vertical dashdotted lines delimit regions R2 and R3 comprising M ∈ [0.65; 0.95] and M ∈ [0.95; 1.4], respectively.
+Flow is in positive x-direction, see coordinate system
+
+Flow Turbulence Combust (2012) 88:101–120
+
+113
+
+understand the origin of this particularity, we inspect the turbulent flow field which
+gives rise to the turbulent heat fluxes.
+3.2.1 Flow f ield statistics
+First, we give an impression of the flow field by providing profiles at selected
+streamwise locations for a single M. Profiles for other M together with a detailed
+comparison with the experimental results can be found in Schneider et al. [12].
+Figure 8 shows major flow field quantities for M = 0.8 at the streamwise locations
+x/H = 0, 2, and 6. The mean streamwise U/U h velocitiy, the streamwise urms /U h
+and vertical vrms /U h r.m.s. velocities, as well as the Reynolds shear-stress u v  /U h2
+are plotted against y∗ . Note that the normalization factors will be omitted in the
+following. The r.m.s. velocity is defined as the variance of the velocity fluctuation, e.g.
+in the streamwise direction urms ≡ (u u )1/2 . Hence, the r.m.s. velocities correspond
+to a normal Reynolds stress. Also note that the mean velocity in the spanwise
+direction, as well as the remaining Reynolds shear-stress components are zero due
+to the periodicity in the spanwise direction. As discussed in Section 3.1.2, there are
+differences in the setup between the simulation and the experiments. Nevertheless, it
+can be seen that the simulation and the experiment are in reasonably good qualitative
+agreement. In summary, the simulation is able to replicate the major flow-field
+characteristics of the experiment.
+So far, the concept of the map proved valuable. This suggests to transfer its
+concept to the Reynolds stresses – with the aim to identify a characteristic topology.
+In this way, it may be possible to relate the Reynolds stresses to the turbulent
+heat fluxes. Figure 9 shows the u u -map (top), the v  v  -map (middle), and the u v  map (bottom) for the two streamwise locations x/H = 2 and 6. First, we look at
+the stresses at x/H = 2 in Fig. 9a. For increasing M, the u u contours reveal the
+emergence of a double peak within the TL, and a single peak below the TL. On the
+
+4
+
+EXP
+LES
+
+x/H = 0
+
+y*
+
+3
+2
+1
+0
+4
+
+x/H = 2
+
+y*
+
+3
+2
+1
+0
+4
+
+x/H = 6
+
+3
+y*
+
+Fig. 8 Flow field statistics of
+LES and experimental data of
+Martini [10] for M = 0.8. From
+top to bottom: x/H = 0, 2, and
+6; from left to right: mean
+streamwise U/U h velocity,
+corresponding resolved
+streamwise urms /U h and
+vertical vrms /U h velocities, and
+resolved shear-stress
+component u v  /U h2
+
+2
+1
+0
+0
+
+0.5
+U/Uh
+
+1
+
+0
+
+0.2
+urms/Uh
+
+0
+
+0.2 -0.02
+vrms/Uh
+
+0
+0.02
+2
+u’v’/Uh
+
+114
+
+Flow Turbulence Combust (2012) 88:101–120
+
+Fig. 9 Contours of resolved streamwise 100 × u u /U h2 (top) and vertical 100 × v  v  /U h2 (middle)
+Reynolds stresses, and shear-stress component 100 × u v  /U h2 (bottom) of LES as function of the
+blowing ratio M and vertical wall-distance y∗ ; same color contours shown with different contour
+lines, dashed contour lines indicate negative values; vertical dash-dotted lines delimit regions R1,
+R2, and R3. a Streamwise coordinate x/H = 2; solid bold lines indicate h and c contour levels.
+b x/H = 6; solid bold lines indicate h (upper line) and u v  /U h2 = 0 (lower line), and dashed bold
+line u T  /U h Th = −0.3
+
+other hand, the v  v  contours testify for a single peak within the TL. The u v  contours
+show that there exists negative values in the upper part of the TL, and positive values
+in the lower part of the TL. It can be seen that the magnitude of all stresses increases
+for increasing M.
+
+Flow Turbulence Combust (2012) 88:101–120
+
+115
+
+From the above it is yet difficult to determine a relation between the Reynolds
+stresses and the turbulent heat fluxes. That there exists such a relation can be
+conjectured by appreciating the characteristic topology of the u v  -map for x/H = 6,
+as shown in Fig. 9b. Similarly as for x/H = 2, negative values of u v  can be observed
+in the upper part of the TL. However, instead of observing only positive values of
+u v  in the lower part of the TL, we observe both positive and negative values in the
+near-wall region with y∗ < 1. The negative values of u v  are found in R1, while the
+positive values are found in R3. Interestingly, u v  changes its sign in R2. Indeed,
+it is this change of sign which partially coincides with a region of negative values
+of u T  . The coincidence becomes clear by examining the u v  = 0 and u T  = −0.3
+contour levels that were highlighted in Fig. 9b. Hence, by considering only R1 and
+R2, the data suggest that the change of sign from negative to positive values of
+u v  correlates somehow with the emergence of negative values of u T  . But when
+considering R2 and R3, no such correlation can be observed. Here, u v  keeps its sign
+although u T  becomes positive for increasing values of M, see Fig. 6b. Moreover,
+u v  even increases in magnitude. A similar increase in magnitude is visible for u u
+and v  v  . Apparently, it is not possible to unambiguously relate the Reynolds stresses
+to the turbulent heat fluxes.
+3.2.2 Instantaneous f low structures
+The work of Schneider et al. [12] demonstrated that for the two M considered, i.e.
+M = 0.5 in R1 and M = 1.1 in R3, different kinds of LCS were formed. It was found
+that both the kind and the strength of these LCS determined the mixing process.
+In the remaining section, we will visualize instantaneous LCS in order to attempt
+locating the region of the counter-intuitive behavior. Differences in the type and
+strength of the LCS, and in the resulting flow field facilitate an explanation for the
+variations in the cooling performance.
+Figure 10 shows flow structures for five selected cases of M. The cases were
+selected according to the three regions R1, R2, and R3 of the ηaw -map: M = 0.5
+(in R1), 0.65 (performance maximum connecting R1 and R2), 0.95 (performance
+minimum connecting R2 and R3), 1.25 and 1.4 (in R3). As suggested in von Terzi
+et al. [15], the large-scale structures are visualized by iso-contours of the pressure
+fluctuation p , and the small-scale structures are visualized by iso-contours of the
+vortex identification criterion Q. The latter is defined as
+Q=
+
+
+1
+Wij Wij − Sij Sij ,
+2
+
+(5)
+
+where Wij is the rate of rotation and Sij the rate of strain of the instantaneous velocity
+field. Furthermore, color contours of the temperature are included at a vertical plane
+at z/H = 0 and at the lower wall which, in the present incompressible LES, visualize
+flow patterns similar to dye in water experiments.
+In a first step, we scrutinize the LCS which are formed for the performance
+minimum at M = 0.95. For this M, a line of large-scale clockwise-rotating structures
+(C-S), i.e. spanwise rollers, can be identified. In between the rollers, there exists
+small-scale braid-like structures, which are aligned predominantly in the streamwise
+direction. The strength of the small-scale structures decreases with increasing distance from the cutback lip. Inspection of the T/Th contours reveals the importance
+of the LCS for the turbulent heat transfer: as the C-S convect downstream, they
+
+116
+
+Flow Turbulence Combust (2012) 88:101–120
+
+Fig. 10 Snapshots of LES for
+selected M at an arbitrary
+instant in time showing the
+near-wall part of the
+computational domain along
+the TE cutback: large-scale
+structures visualized by
+iso-contours of pressure
+fluctuation p = −0.075
+(green); small-scale structures
+visualized by iso-contours of
+vortex identification criterion
+Q = 7.5 (grey); vertical slice at
+z/H = 0 and at the lower wall
+visualized by color contours of
+the temperature T/Th ; lip of
+TE cutback is indicated by the
+red rectangle
+
+entrain large quantities of hot-gas fluid towards the wall and, at the same time,
+cold-gas fluid towards the free-stream. This is more clearly illustrated in Fig. 11a,
+where the corresponding spanwise-averaged snapshot of the temperature contours
+is shown. It can be seen that each C-S transports a package of mixed hot- and coldgas fluid that resembles the crest of a breaking wave. The fundamental relationship
+between the turbulent flow field and the turbulent heat fluxes can be understood by
+examining Fig. 11b. This figure presents a spanwise-averaged snapshot of both the
+temperature and the velocity fluctuations. The strong rotational motion of the C-S
+
+Flow Turbulence Combust (2012) 88:101–120
+
+117
+
+Fig. 11 Spanwise-averaged snapshot of LES for selected M at an arbitrary instant in time (same
+instant as in Fig. 10). a Instantaneous temperature T/Th contours with superimposed lines of
+pressure fluctuation p = −0.075. b Temperature fluctuation T  /Th contours with superimposed
+lines of pressure fluctuation p = −0.075 and velocity fluctuation vectors; every nineth and twelfth
+vector in the streamwise and vertical directions shown, respectively
+
+causes a clockwise roll-up of the temperature, see for an illustrative example the C-S
+which is located around x/H = 8. Eventually, the roll-up is so strong that positive
+temperature fluctuations are transported in the upstream direction and towards the
+wall. This is the mechanism that causes the upstream directed heat flux which gives
+rise to the enhanced mixing in the region of the counter-intuitive behavior of ηaw .
+In a second step, we scrutinize the change in LCS for a decrease of M departing
+from M = 0.95. Recall that in R2 between M = 0.95 and 0.65 the drastic performance
+change in the ηaw -map occurred, see Fig. 4a. Hence, one could presume that this
+
+118
+
+Flow Turbulence Combust (2012) 88:101–120
+
+drastic performance change is caused by a drastic change in the flow structures.
+However, when scrutinizing the LCS for the performance maximum at M = 0.65,
+both similarities and drastic differences can be observed. The most striking similarity
+is the existence of only the large-scale C-S. The differences become clear by looking
+at the strength of these structures and by closely inspecting the shape of the temperature patterns in Fig. 11a. The T/Th contours reveal that the wave-like patterns are
+less pronounced compared to the M = 0.95 case. This is confirmed in Fig. 11b which
+illustrates that the fluctuations are rather weak. Consequently, the C-S have a weaker
+rotational moment and transport less heat towards the wall. For completeness, it
+should be noted that a further decrease to M = 0.5 causes a further weakening of the
+C-S. Eventually, when M is as low as 0.35 (not shown), the C-S break down already
+after the first shedding cycle. This breakdown is associated with the generation of a
+large number of smaller structures that are sustained at higher intensity levels farther
+downstream. For this case, the mixing process is apparently dominated by the smaller
+scales rather than by the larger ones.
+Next, we look at the change in LCS for an increase of M, again starting from
+M = 0.95. An increase to M = 1.25 results in a qualitative change in the kinds of
+LCS that are formed. For this case, we identify staggered pairs of C-S and counterclockwise rotating structures (CC-S). While the CC-S is stronger and extends over
+the entire span, the C-S is weaker and extends only over part of the span. Each pair
+of C-S and CC-S transports the packages of mixed hot- and cold-gas fluid. In contrast
+to the cases for M ≤ 0.95, these packages form mushroom-like patterns rather than
+wave-like patterns in the T/Th contours, see also Fig. 11a. Again, the reason becomes
+clear by inspecting the fluctuations which are shown in Fig. 11b. It can be seen that
+the lower CC-S obstructs the transport of heat towards the wall by the upper C-S, see
+the pair which is located around x/H = 7. This is concomitant with a net transport
+of heat in the downstream direction that correlates with an improved film-cooling
+effectiveness compared to M = 0.95. When M is further increased to M = 1.4, the
+wave-form appears again, but oriented in the reverse direction as shown in Fig. 11a.
+For this M, the temperature patterns are transported exclusively by the CC-S. The
+mechanism for the heat transfer here is essentially the same as in R2, but weaker
+since the upstream directive component of turbulent heat flux is missing.
+From the above it should be noted that the sole identification of the kind of LCS
+is not sufficient to properly assess their impact on heat transfer. While it was possible
+to discern R2 and R3 by the change in the kind of LCS being formed, this was not
+possible for R1 and R2. The reason is that not only the kind, but also the strength of
+the LCS determine the heat transfer. More importantly, the data imply that similar
+flow structures can yield very different ηaw distributions (M = 0.65 versus 0.95).
+Conversely, it is also possible that very different flow structures can yield similar
+ηaw distributions (M = 0.35 versus 1.25).
+
+4 Conclusions
+The interrelationship between turbulent heat transfer and large coherent structures
+in a film-cooled trailing-edge cutback section from a turbine airfoil was investigated
+through well-resolved LES. The objective of the present study was to elucidate
+the physical mechanisms causing a counter-intuitive decrease of the film-cooling
+
+Flow Turbulence Combust (2012) 88:101–120
+
+119
+
+effectiveness ηaw for an increase in the blowing ratio M, which was observed in
+previous simulations and experiments.
+In total, eight simulations with the blowing ratio varying as the only parameter
+were conducted over a range from M = 0.35 to 1.4. The computational setup
+is of practical interest as it replicated the geometry and Reynolds number of a
+corresponding experiment that was designed according to specifications from the
+turbomachinery industry. Time-dependent realistic inflow data were generated and
+appropriately rescaled to match the experimental inflow conditions. The computational setup was validated by a detailed comparison with experimental data in
+Schneider et al. [12], and supplementary data were shown here. Although deviations
+between the simulations and the experiments exist, these were consistently explained
+and it was deduced that the adopted approach captured the statistical characteristics
+of the flow and heat transfer. These characteristics were visualized by maps, which
+facilitated the statistical analysis for the wide range of blowing ratios considered here.
+From the identification and analysis of the large coherent structures being formed
+behind the cutback lip, we found evidence that dominant clockwise-rotating flow
+structures existed in the region of M in which the counter-intuitive behavior occurred. The statistical data suggested that these distinct LCS gave rise to a strong
+upstream- and wall-directed turbulent heat flux, which represented the main contribution of the total heat flux. This turbulent heat flux yielded the significantly enhanced thermal mixing process in the near-wall region that was concomitant with the
+excessive deterioration of the film cooling effectiveness. Therefore, the present work
+identified a possible mechanism that causes the counter-intuitive behavior of ηaw .
+Acknowledgements The work reported here was carried out within the “Research Group TurboDNS” at the Institut für Thermische Strömungsmaschinen. Its financial support by means of
+the German Excellence Initiative and Rolls–Royce Deutschland is gratefully acknowledged. The
+authors are grateful for the provision of computer time by Steinbuch Centre for Computing (SCC)
+Karlsruhe and Leibniz Computing Centre (LRZ) Munich, and to Dr. Patrick Martini for making the
+experimental data available.
+
+References
+1. Bunker, R.S.: Cooling design analysis. DOE–NETL, The Gas Turbine Handbook. http://
+www.netl.doe.gov/technologies/coalpower/turbines/refshelf/handbook/TableofContents. (2006).
+Accessed 30 August 2010
+2. Holloway, D.S., Leylek, J.H., Buck, F.A.: Pressure Side Bleed Film Cooling: Part I–Steady
+Framework for Experimental and Computational Results. ASME Paper No. GT–2002–30471
+(2002)
+3. Holloway, D.S., Leylek, J.H., Buck, F.A.: Pressure Side Bleed Film Cooling: Part II–Steady
+Framework for Experimental and Computational Results. ASME Paper No. GT–2002–30472
+(2002)
+4. Medic, G., Durbin, P.A.: Unsteady effects on trailing edge cooling. J. Heat Transfer 127, 388–392
+(2005)
+5. Joo, J., Durbin, P.A.: Simulation of turbine blade trailing edge cooling. ASME J. Fluids Eng. 131
+(2009). doi:10.1115/1.3054287
+6. Martini, P., Schulz, A., Bauer, H.-J., Whitney, C.F.: Detached Eddy simulation of film cooling
+performance on the trailing edge cutback of gas turbine airfoils. ASME J. Turbomach. 128, 292–
+300 (2006)
+7. Pope, S.B.: Turbulent Flows. Cambridge University Press, Cambridge (2000)
+8. Fröhlich, J., von Terzi, D.A.: Hybrid LES/RANS methods for the simulation of turbulent flows.
+Prog. Aerosp. Sci. 44, 349–377 (2008)
+
+120
+
+Flow Turbulence Combust (2012) 88:101–120
+
+9. Martini, P., Schulz, A., Bauer, H.-J.: Film cooling effectiveness and heat transfer on the trailing
+edge cutback of gas turbine airfoils with various internal cooling designs. ASME J. Turbomach.
+128, 196–206 (2006)
+10. Martini, P.: Filmkühlung hoch-beanspruchter Turbinen-schaufel-hinter-kanten: Wärmeübergang und Strömung im Nahfeld praxis-bezogener Ausblase-spalte. Dissertation, University
+of Karls-ruhe, Karlsruhe, Germany (2008)
+11. Horbach, T., Schulz, A., Bauer, H.-J.: Trailing edge film cooling of gas turbine airfoils—external
+cooling performance of various internal pin fin configurations. ASME J. Turbomach. 133 (2011).
+doi:10.1115/1.4002964
+12. Schneider, H., von Terzi, D.A., Bauer, H.-J.: Large–Eddy simulations of trailing-edge cutback film cooling at low blowing ratio. Int. J. Heat Fluid Flow 31, 767–775 (2010).
+doi:10.1016/j.ijheatfluidflow.2010.06.010
+13. Hinterberger, C.: Dreidimensionale und tiefengemittelte Large–Eddy-Simulation von
+Flachwasser-strömungen. Dissertation, University of Karls-ruhe, Karlsruhe, Germany (2004)
+14. Lund,T.S., Wu, X., Squires, K.D.: Generation of turbulent inflow data for spatially-developing
+boundary layer simulations. J. Comput. Phys. 140, 233–258 (1998)
+15. von Terzi, D.A., Sandberg, R.D., Fasel, H.F.: Identification of large coherent structures in
+supersonic axisymmetric wakes. Comput. Fluids 38, 1638–1650 (2009)
+
+

@@ -1,0 +1,1224 @@
+Proceedings of the ASME 2018
+International Mechanical Engineering Congress and Exposition
+IMECE2018
+November 9-15, 2018, Pittsburgh, PA, USA
+
+IMECE2018-86887
+SIMULATION OF FILM COOLING HEAT TRANSFER AND SIMULATION
+IMPROVEMENT WITH A MODIFIED DES TURBULENCE MODEL
+Feiyan Yu
+Department of Mechanical and Nuclear
+Engineering
+The Pennsylvania State University
+State College, PA, USA
+
+Savas Yavuzkurt
+Department of Mechanical and Nuclear
+Engineering
+The Pennsylvania State University
+State College, PA, USA
+
+ABSTRACT
+Modeling the heat transfer characteristics of the highly
+turbulent flow in gas turbine film cooling is important for better
+engineering solutions to the film cooling system design.
+URANS, LES, DES and modified DES models capability in
+simulating film cooling with a density ratio of 2.0 and blowing
+ratio of 1.0 are studied in this work. Detailed comparisons of
+simulation results with experimental data regarding the nearfield and far-fields are made. For near field predictions, DES
+gives decent prediction with a 21.4 % deviation of centerline
+effectiveness, while LES and URANS have deviation of 33.6%
+and 51.2% compared to the experimental data. Despite good
+predictions for near field, DES under predicts the spanwise
+spreading of counter rotating vortex pair and temperature field,
+therefore it over predicts the centerline effectiveness in the far
+field. To compensate for this shortcoming of DES, the eddy
+viscosity in the spanwise direction is increased to enhance
+spanwise-diffusion of the cooling jets. The modified DES
+prediction of overall centerline effectiveness deviates 12.4%
+from experimental data, while LES, unmodified DES and
+URANS predictions deviate 10.8%, 31.9% and 46.9%. The
+modified DES model has adequate predictions of vortices
+evolutions which URANS modeling lacks and consumes
+significant less computational time than LES. It can be said that
+the modified DES model results in satisfactory film cooling
+modeling with a moderate computational cost and time.
+
+Prt
+
+Turbulent Prandtl number
+
+Sij
+
+ui
+
+Strain rate tensor
+Temperature, K
+Mean velocity components, m / s
+
+ui
+
+Filtered velocity components, m / s
+
+T
+
+u
+
+Fluctuating velocity components, m / s
+
+'
+i
+
+'
+i
+
+uu
+
+'
+j
+
+ui'T '
+
+xi
+Greek Symbols
+
+Reynolds stress
+Turbulent heat flux
+Cartesian coordinates
+
+
+
+
+
+
+
+e
+t
+
+
+Thermal diffusivity
+Channel width,  m
+Dissipation rate for turbulent kinetic energy
+Film cooling effectiveness
+Dimensionless Temperature
+2
+Kinematic viscosity, m / s
+Subgrid-scale turbulent viscosity
+
+ ij
+
+Subgrid-scale Reynolds stress
+
+Eddy viscosity
+Density, kg / m 3
+
+Abbreviations
+
+DES
+LES
+TKE
+RANS
+URANS
+UDF
+
+NOMENCLATURE
+Constant
+c  , cs ,  k
+D
+
+Film cooling hole diameter, m
+
+k
+
+2
+2
+Turbulent kinetic energy, m / s
+
+l
+
+Length scale
+
+Detached eddy simulation
+Large eddy simulation
+Turbulent kinetic energy
+Reynolds-averaged Navier-Stokes
+Unsteady RANS
+User defined function
+
+1
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+INTRODUCTION
+Gas turbine thermal efficiency can be improved by allowing
+higher turbine inlet temperature. In today’s gas turbine industry,
+the gas turbine blade inlet temperature can be as high as 1600 oC
+[1, 2], which is much higher than the melting temperature of
+turbine blade material. Thus, delicate internal cooling [3] and
+film cooling [4] designs are used to cool the turbine blade and
+protect the turbine blade from damage. For the film cooling, a
+secondary cold air is injected from multiple holes on the surface
+of turbine blade and forms a protective film over the turbine
+blade. The complexity of film cooling flow comes from its
+highly turbulent nature. Better understanding of the turbulent
+fluid flow and turbulent heat transfer mechanisms in film cooling
+is critical for improving the turbine blade cooling performance.
+Review of experimental studies on film cooling can be found in
+open literature [5]. In a film cooling experiment, the flat plate
+surface temperature behind inclined cooling hole could be
+measured with thermocouples [6, 7, 8], infrared photography [9,
+10], or pressure sensitive paint (PSP) [11, 12]. The turbulent flow
+structures are analyzed based on temperature measurements, and
+a direct study of the jet and cross-flow interactions is lacking.
+Although in recent experimental studies, particle image
+velocimetry (PIV) systems [13, 14] are used to visualize internal
+flow structures, however, the cost and availability of PIV
+systems pose limitations. Computational fluid dynamics (CFD)
+has provided a possibility. With appropriate CFD simulations,
+the fluid flow features and mechanisms in film cooling flow can
+be elucidated. At the same time, CFD simulation can
+significantly reduce effort, time and cost in gas turbine film
+cooling development, and benefit the gas turbine industry.
+Extensive research has been performed on film cooling
+modeling using Reynolds-Averaged Navier-Stokes (RANS)
+equations. In a study of Hassan and Yavuzkurt [15], four
+turbulence models: the standard k-ε, RNG, realizable k- ε model,
+and the standard k-ω model under low free stream turbulence
+(FST) intensity were investigated and compared. In a following
+study [16], those models performance were further studied under
+high FST. It was found under high FST with high blowing ratio
+(M=1.5), all the models fail to give good predictions of the
+centerline effectiveness. In general, RANS model was found to
+underpredict the spanwise spreading and mixing of the cooling
+jet [17]. To tackle the issue of spanwise spreading
+underprediction in RANS, Lakehal et al. [18] adopted an
+anisotropy correction of the eddy viscosity proposed by Bergeles
+et al. [19]. The correction multiplies a factor to the eddy viscosity
+appearing in the spanwise components of the Reynolds stresses
+and heat fluxes. With this modification, the RANS model better
+predicts spanwise temperature spreading and then centerline
+effectiveness [20]. In following studies of Li et al. [21, 22], this
+anisotropic eddy viscosity method was validated by comparing
+with various sets of experimental data [21] and then using a large
+scale turbine blade cooling RANS simulation [22].
+Large eddy simulation (LES) has been used to study the
+turbulence structure and development of vortices in film cooling.
+In an early study, Tyagi and Acharya [23] performed LES to
+investigate the complex flow field created by jet and cross-flow
+
+interactions. Detailed flow structures like counter rotating vortex
+pair (CRVP), roller vortices, and upright wake vortices were
+found in their LES modeling, and the hair-pin shaped vortices in
+the coolant jet were analyzed in their study. Guo et al. [24]
+conducted LES study on film cooling and focused on the
+development of CRVP. The perpendicular injection and inclined
+injection were both studied, and their effects on CRVP formation
+and evolution were discussed. Peet and Lele [25] studied near
+field of film cooling jet with LES. Three vortex systems were
+described in their study to characterize the interactions of jet and
+cross-flow: horse shoe vortex, downstream spiral separation
+node and CRVP. Comparison of their LES modeling with
+experimentally measured mean velocity and turbulence statistics
+were in good agreement. Fujimoto [26] investigated octree
+hexahedral meshes density effect on the prediction accuracy of
+film cooling and pointed out that for blowing ratio of 0.5 the
+mesh dependency is weak while highly dense mesh (6.2 million)
+is needed for blowing ratio of 1.0 regarding film cooling.
+Kalghatgi and Acharya [27] performed LES on near field
+modeling of film cooling problem under mass ratio of 2.0 and
+blowing ratio of 1.0 with a mesh of 8 million, and had good
+prediction compared with experimental data. Oliver et al. [28]
+provided high fidelity LES simulation at near field region of a
+shaped hole under density ratio of 1.6, blowing ratio of 2.0 with
+a mesh of 15.9 million, and good match of the centerline and
+spanwise effectiveness, and the temperature field had been
+achieved.
+An alternative modeling method is detached-eddy
+simulation (DES). DES is a hybrid of RANS and LES models
+aiming to resolve high Reynolds number separated flows. Early
+application of DES was on CFD simulation on air foil flow [29].
+The first DES of film cooling was presented by Roy et al. [30],
+and they found the DES modeling captured more dynamic flow
+structures than RANS. Kim and Hassan [31] conducted a
+comparison study of DES with unsteady RANS (URANS) and
+LES. DES modeling successfully predicts the evolution of the
+typical vortical structures in jet cross-flow interaction and gives
+adequate modeling results when compared with experimental
+data. In Foroutan and Yavuzkurt [32]’s study, DES modeling was
+compared with RANS and experimental results. It was found
+DES resulted in better centerline effectiveness than RANS, a
+good match of experimental results under blowing ratio of 0.5
+and reasonable match under blowing ratio of 1.5. A new version
+DES, delayed DES was introduced to better handle transition
+from RANS to LES model [33]. In a review by Spalart [34], the
+strength and weakness of DES method was discussed,
+applications of DES in various applications, majorly in
+aerospace engineering, were also summarized. Although DES
+has been an available approach for years, DES modeling on film
+cooling is still at its early stage. As found in the present study,
+the delayed DES costs significantly shorten the computational
+time compared to LES on exactly the same mesh set, which poses
+new meaning of DES. In a recent study [35], measurements of
+temperature distribution behind a row of holes at different
+blowing ratios was performed. It was found under the large
+blowing ratio, the flow behind nearby rows interacts with each
+
+2
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+other even before x/D of 15. Thus, the large scale CFD modeling
+is actually needed to investigate multiple holes situation
+regarding realistic turbine blade of film cooling. However, to
+achieve good modeling result, LES needs multimillion mesh for
+the near field region corresponding to each cooling hole, which
+is a hardship in the flow field with multiple holes. As a result, a
+more detailed study of DES model, especially under high
+blowing ratio is needed. Comparing DES model with RANS and
+LES under high blowing ratio, and improvement of DES model
+under high blowing ratio is essential for evaluating and applying
+DES modeling in film cooling simulation.
+For film cooling modeling, the near field behavior is critical
+for several reasons. First, in today’s gas turbine film cooling
+design, the cooling holes are quite near with each other. For the
+far field, actually the flow behind each hole can interact with
+each other. So, for the realistic case, a long far field region may
+not exist. Although it is meaningful for modeling and exploring
+both near field and far field modeling based on available
+experiment data [5-14], the near field modeling depicts the
+temperature near the cooling hole. Secondly, at the near field, the
+jet and cross-flow have strong interactions. The strong shear
+generates large eddies and various vortex structures. Thus,
+resolving the near field problem is challenging but important
+one.
+The goal of this study is to draw attention and compare
+different turbulence models in predicting the near-field of film
+cooling. In addition, this study gives specific analysis of the
+spanwise temperature field and discusses prediction of the
+spanwise temperature field spreading for different models. At
+last, this study points out that the z-diffusion is important in film
+cooing modeling. An anisotropic eddy viscosity modification is
+made in the DES model. With this modification, DES model
+better predicts the spanwise temperature field spread as well as
+the centerline effectiveness. With exactly same mesh, this DES
+model has better prediction in the near field region while costing
+about one fourth computational time compared with LES
+modeling. The computational domain is set to be equivalent to
+the experimental study by Sinha et al. [40], in which film cooling
+with 7 inclined cylindrical film cooling holes in one row on a flat
+plate is studied. It is worthwhile to mention that only one
+working condition with density ratio of 2.0, blowing ratio of 1.0
+is explored in detail and thoroughly compared with well
+documented experimental data available. For a typical gas
+turbine engine condition, density ratio is around 2.0 [42]. And
+for the mass ratio of 1.0, the lift off and interactions between the
+mainstream and coolant jet are strong. Thus, density ratio of 2.0
+and mass ratio of 1.0 is usually chosen for a representative
+condition to investigate turbulence interactions of mainstream
+and coolant jet. Also this condition has been chosen as a typical
+condition for evaluating and comparing different models on gas
+turbine cooling modeling in several previous studies [26, 27].
+The mesh is generated with ANSYS ICEM and modeling is
+performed with ANSYS Fluent [41] with UDF development.
+Studies of near field simulation of cooling for lower density and
+blowing ratios is continuing. In recent years, more and more
+experimental data which resolves temperature contours using
+
+techniques like PSP and IR imaging is available [11, 12].
+Comparison of modeling results with experimental measured
+contours will further help to prove the validity of these models
+in predicting gas turbine blade film cooling using CFD. Ongoing
+research by the authors is also on comparing the predicted
+temperature contours with experimental data.
+TURBULENCE MODELS
+URANS, DES, and LES turbulence models are used and
+their performance are compared in this study. More specifically
+to compare the results of the realizable k −  based delayed
+DES model, the realizable k −  RANS model [36] is used in
+this study for URANS modeling. The realizable k −  RANS
+model is different from standard k −  RANS model as it sets
+mathematical constraints on the Reynolds stress. For realizable
+k −  RANS model, the positivity of normal stress and the
+Schwarz’ inequality for Reynolds shear stress needs to be
+ensured by adjusting C  as a variable. New model equations
+of C  and  are used in realizable k −  RANS model and
+the specific equations can be found in reference [36]. The major
+equations of LES and DES are introduced below.
+LES Formulation
+The governing equations of LES model are introduced here.
+The LES model only calculates large eddies, on the other hand,
+models the small eddies which are more isotropic and
+homogeneous. Through a filter function which can be regarded
+as an averaging in time and space, the small-scale information
+for the small eddies are eliminated from the numerical modeling.
+The filtered velocity can be expressed as [12-13]:
+ui ( x) =  G ( x, x ')ui ( x ')dx '
+
+(1)
+
+The filter function can be Gaussian, box filter, a cut off, etc.
+Every filter has a length scale ∆ with it. Length scale larger than
+∆ will be identified as large eddies which will be calculated
+directly. Meanwhile, length scale smaller than ∆ will be treated
+as small eddies and will be modeled by a subgrid-scale model.
+By applying the filter function to Navier-Stokes equations the
+following is obtained:
+ ij
+ui (ui u j )
+1 p
++
+=−
++2ui +
+t
+x j
+ xi
+x j
+
+(2)
+
+where the subgrid-scale Reynolds stress  ij is denoted as:
+
+ ij = ui u j − ui u j
+
+(3)
+
+This subgrid-scale Reynolds stress is simplified and modeled
+using Boussinesq hypothesis:
+
+3
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+1
+3
+
+ ij =  kk  ij − 2 e Sij
+
+A new version of DES, named delayed DES model, as
+introduced by Spalart et al. [33] is applied in the present study.
+DES was originally proposed for application of RANS model
+over the entire boundary layer region and applying the LES
+model in the separated flow regions. However, for the mesh in
+some cases, RANS model only covers part of the boundary layer,
+but the mesh density is not fine enough to obtain a correct LES
+solution. Thus, an approach is proposed to delay the transition
+from RANS to LES. A function f d is used to smoothly
+
+(4)
+
+where the ve is given by Smagorinsky-Lilly model [14-15] as:
+
+ e = Cs  2 S (u ) , Cs = 0.17, S (u ) = 2Sij Sij
+
+(5)
+
+Delayed DES Modeling Formulation
+The realizable k −  delayed DES model is used in this
+study. The governing equations are continuity, momentum and
+energy equations.
+ 
++
+(  ui ) = 0
+t xi
+
+transition from RANS to LES. In the boundary layer, f d equals
+0 indicates pure RANS and when f d equals 1 this indicates
+pure LES. The specific definition of f d can be found in [33].
+Thus, f d works as the secondary safeguard which postpones
+
+(6)
+
+the occurrence of LES. And the length scale lDES for delayed
+DES model is defined as:
+
+u u j 2 ul
+
+
+1 P 
++
+− 
+(ui ) +
+(ui u j ) = −
+[ ( i +
+)]
+t
+x j
+ xi x j x j xi 3 ij xl
+
+lDES = lRANS − f d max ( 0, lRANS − lLES )
+
+
++
+(−ui' u 'j )
+x j
+
+
+
+
+
+( ) +
+(u j ) =
+(
+− u 'j ' )
+t
+x j
+x j x j
+
+With lRANS and lLES are defined as k
+
+(7)
+
+CDES
+
+ui u j
+2
++
+) − k ij
+x j xi
+3
+
+−ui' ' =
+
+ t T
+Prt xi
+
+ t = C
+
+
+
+(9)
+(10)
+
+−u1' u3' =  t , z
+
+(11)
+
+a
+
+value
+
+of
+
+0.65,
+
+and
+
+ T
+u1
+, −u3'  ' = t , z
+x3
+Prt x3
+
+(15)
+
+Anisotropic eddy viscosity modification was made in
+momentum equations, turbulent kinetic equations, and energy
+equation as expressed in equation 15. As pointed out in another
+study [21], the z-diffusion in the energy equation is very
+important and enhances the lateral spreading of the temperature
+field in film cooling modeling. Thus, enhancing the z direction
+eddy viscosity that used to calculate thermal diffusivity is
+assumed to be a useful approach. Then a constant rate of
+anisotropy indicated by the ratios of eddy viscosity in lateral and
+normal direction  t , z /  t , y of 1, 2, 3, 4, 5 is tried in this study.
+
+(12)
+The dissipation term in Eq. (12) is different from the original
+realizable k −  model. It is modified as:
+
+k 3/ 2
+lDES
+
+with
+
+away from the wall and increases as the distance from wall
+decreases according to the experimental data of Quarmby and
+Quirk [38]. The same anisotropic diffusion behavior appears to
+eddy viscosity of thermal energy [38]. Bergeles et al. [19]
+proposed to modify the eddy visocisty in the lateral direction of
+Reynolds stress and scalar fluxes shown in equation 15:
+
+ k
+u u j ui
+
+
+
+(k ) +
+(ui k ) =
+[( + t )
+] + t ( i +
+)
+−  DES
+t
+x j
+x j
+ k x j
+x j xi x j
+
+ DES =
+
+constant
+
+Enhanced Diffusion
+In this study, the anisotropic eddy viscosity elaborated in
+Lakehal et. al [37] is adopted. Close to wall, eddy viscosity in
+the lateral direction is larger than that normal to the wall. For
+turbulent transfer of momentum, the ratio of eddy viscosity in
+lateral and normal direction  t , z /  t , y equals unity when it is
+
+The eddy viscosity is computed from turbulent kinetic
+energy (TKE) k and its dissipation rate  as follows.
+
+k2
+
+a
+
+/  and CDES max .
+
+ max = max( x ,  y ,  z ) .
+
+(8)
+
+With the concept of eddy viscosity, Boussinesq proposed to
+relate turbulent momentum and heat flux with mean flow in order
+to close the equation set. The Reynolds stress and turbulent heat
+flux terms are defined as:
+−ui' u 'j =  t (
+
+is
+
+3/ 2
+
+(14)
+
+(13)
+
+It is found a value of 4 is termed as 4-z diffusion already gives a
+significant improvement in the lateral spreading of temperature
+
+4
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+field and 5-z diffusion will lead further drop of centerline
+effectiveness leading to under prediction of centerline
+effectiveness compared with experimental data. Thus, the DES
+with 4-z diffusion is chosen for obtaining results reported and
+analysed in this study. In Quarmby and Quirk [38]’s study this
+anisotropic viscosity ratio was measured and the near wall value
+of 4.5 is used in Bergeles et al. [19]. In later studies, the enhanced
+anisotropic viscosity as function of y+ from direct numerical
+simulation modeling results [20, 39] are used to modify RANS
+model used in film cooling simulations. Thus, beyond the
+original adoption value of anisotropic viscosity to be about 4.5,
+a wide range of anisotropic viscosity values has been reported in
+literature. Although this anisotropic eddy viscosity strategy was
+adopted to modify and improve RANS film cooling model, this
+change has not been applied to DES film cooling model yet and
+the current study consists of the initial trial of this modification.
+The value of 4 is chosen to point out that the enhanced z diffusion
+strategy is effective in enhancing the spanwise spreading of
+temperature field and improving DES modeling of film cooling.
+ANSYS Fluent code [41] is used to solve all the above equations,
+while the anisotropic eddy viscosity is implemented into the
+model by user defined functions (UDF).
+
+this increase is less than 1%. Thus, the u matches well with
+the experimental measurements. Although it is always good to
+increase this dimension to decrease velocity increase, 10D is
+chosen as a compromise for maintaining both freestream
+velocity within acceptable limits and computational efficiency.
+
+Figure 1. Schematic of the experimental setup from Sinha et al.
+[40] and the computational domain used in this study.
+
+Geometry, Mesh and Time Step
+The test case is set up based on the experimental study by
+Sinha et al. [40] as shown in Figure 1. In their experiment, a row
+of 7 inclined cylindrical film cooling holes injected cool jet at a
+temperature of 150 K into the hot freestream at temperature of
+300K over a flat plate. The diameter of film cooling holes is
+0.0127m. Centerline and spanwise distribution of film cooling
+effectiveness were measured. The jet and mainstream
+corresponding to one injection hole is chosen as the modeling
+domain. In regards to using a single hole and corresponding
+domain to represent the experiment with a row of holes, if
+simulated jet spreads and reaches z/d = 1.5, i.e. the mid-plane
+between two film cooling holes, then it would be necessary to
+include more holes in the case to simulate the interaction
+between two jets, and possibly higher levels of advection and
+diffusion can be predicted. According to the experimental data,
+at least at x/D = 15, jet spread already reaches z/D = 1.5. But for
+URANS, LES and DES since they fail to predict enough
+spanwise spreading, and the jets do not interact with each other
+at x/D=15. Therefore, a single hole or a row of holes simulation
+is expected to not to make any difference except the latter will
+take more time and storage. For DES with 4 z-diffusion with
+higher rate of jet spread, dimensionless temperature at x/D = 15,
+z/D = 1.5 is 0.051, which might increase and move closer to
+Sinha et al.’s [40] data, if a row of holes is included to the
+simulation.
+Figure 2 shows the front and top view of the domain used
+in simulations. The domain consists of the plenum block, the
+coolant tube block, and the mainstream block. The mainstream
+block has a dimension of 59D×10D×3D. It is important here to
+discuss the chosen the domain height for the mainstream. For the
+10D domain height, the free stream velocity increases due to
+symmetry boundary condition at the upper boundary however
+
+Figure 2. Schematic of the front and top view of the
+computational domain.
+The main flow velocity is 20 m/s. The plenum is used to
+supply secondary cooling flow through the film cooling hole
+with an inline inclined angle of 35o. The density ratio and
+blowing ratio are defined as:
+
+j
+
+ ju j
+M=
+  u
+DR =
+
+(16)
+(17)
+
+while the plenum inlet coolant velocity is calculated based on the
+blowing ratio and it is uniform.
+A structured multi block mesh is used in this study. The
+meshing tool used is ANSYS ICEM and the modeling in the
+current study is performed using ANSYS Fluent code with UDF
+development [41]. The blocks are created before forming the
+
+5
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+mesh. The whole mesh is blocked and meshed with “O-Grid” to
+improve the angles in the block corners and enhance the mesh
+quality. The mesh in the mainstream is aligned with flow
+direction to reduce the false diffusion. Denser mesh is assigned
+at the near wall region, and the y+ of the first grid is ensured to
+be small than 1.
+A detailed mesh sensitivity study has been performed with
+URANS model. Two meshes with same blocking and meshing
+strategies are generated and mesh sizes are 1.8 and 2.8 million.
+The modeling results showed less than 2% difference. The strong
+turbulence in the interactions of mainstream and coolant jet and
+resulted in small vortices in flow. The modeling results of DES
+and LES eventually improves with denser mesh, especially for
+the near field modeling of film cooling. It is worthwhile to
+mention that 2.8 million mesh is not enough for best quality LES
+[26-28]. But a single cooling hole is the modeling domain and
+the modeling method which uses certain density of mesh and
+resolves the major vortices and lateral spreading is the point of
+interest. Thus this method can have potential to be applied to
+model domain that includes multi cooling holes. And the 2.8
+million mesh is consistently used for all computations in this
+study.
+
+Making comparisons of the overall thermal field besides the
+surface adiabatic effectiveness is important for further validation
+of the models, and the feasibility of doing this gets better as
+emerging experimental results on the temperature field in gas
+turbine film cooling obtained using infrared photography or PSP
+techniques becomes widely available for comparisons.
+RESULTS AND DISCUSSION
+Figure 4 shows the velocity distribution at x/D of -2, z/D
+of 0 for DES with 4 z-diffusion model. Circles in the plot
+represents grid nodes along y direction. It can be seen that the
+prediction of averaged mean velocity profiles from the model
+matches well with viscous sublayer and log law. The y+ value of
+the first grid point is less than 1. The boundary layer is well
+resolved using the current mesh.
+
+Figure 4. Time-averaged velocity distribution at x/D = -2, z/D =
+0 with 2.8 million mesh for DR=2, M=1 obtained using DES
+with 4 z-diffusion model.
+The instantaneous dimensionless temperature contours at
+the centerplane are shown for four different models used in
+Figure 5. The dimensionless temperature is defined as:
+
+Figure 3. Mesh for plenum, film cooling hole and mainstream.
+The time step is carefully chosen for the three different
+models used. For this problem, the RANS and URANS modeling
+results do not give significant difference. However, as URANS
+model is actually used as a part in delayed DES and to exclude
+any possible issues, URANS is used for comparison of delayed
+DES and LES results. The time step for URANS and delayed
+DES modeling is 2×10-5 s. Time step testing has been made, and
+further refining time step did not result in any observable in the
+results of URANS and delayed DES models. For the LES model,
+a time step of 2×10-6 s is used which as a typical value used in
+literature [25]. Fine time step in LES helps capture detailed small
+vortices in jet and cross-flow interactions. In the following
+sections for succinctness, we just use DES, and actually all DES
+modeling in this study is performed with delayed DES.
+
+=
+
+T − T
+T j − T
+
+(18)
+
+In the URANS results the jet forms a continuous film
+protection layer that attaches to the surface. This continuous film
+causes over prediction in the effectiveness downstream. On the
+other hand, LES modeling predicts the most vortical structures
+and mixing as expected. The DES and the modified DES with
+anisotropic eddy viscosity modification also give reasonable
+predictions of the vortices. As predicted by LES and two DES
+models, the hot main stream has stronger mixing vertically with
+the cooling jet compared to URANS results. This is because all
+these details are averaged out in URANS.
+
+6
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+Figure 5. Side view of instantaneous dimensionless temperature
+contours in the centerplane for DR=2, M=1 obtained using
+URANS, DES, DES with 4 z-diffusion and LES models.
+Figure 6 shows front view of the instantaneous temperature
+contours at three axial locations for 4 different models used. The
+contours show the similar trend and URANS, the jet retains its
+identity downstream even at x/D of 15. DES and LES models
+show similar behavior at x/D of 10 and 15. Both models predict
+the asymmetric nature of the jet. The roll up of the shear layer in
+the near field initializes CRVP and they are clearly seen in the
+velocity vector plots. The vortices contain strong recirculation
+which bring the mainstream flow underneath the jet.
+Time averaging of unsteady modeling results is made in the
+following manner. One in every five time steps is chosen for time
+averaging, and 3000 data samples are averaged. Thus, temporal
+results over period of 15000 time steps are averaged for
+exploring and comparing the characteristics of results obtained
+using different models. As shown in Figure 7, the spanwise
+mixing between the jet and the mainstream is very low in
+URANS model results. This underprediction of spanwise mixing
+causes insufficient expansion of the dimensionless temperature
+contour. This explains why in URANS modeling, the
+temperature contour is very narrow near the wall resulting in
+high centerline effectiveness. Contours of dimensionless
+temperature for the DES and anisotropic eddy viscosity modified
+DES, and LES are overall wider. Because of more spanwise
+mixing, the part of the cooling jet that touches the wall is warmer
+in those models than the URANS model. Therefore those models
+tend to give lower film cooling effectiveness than URANS and
+are closer to the experiment.
+
+Figure 6. Front view of instantaneous dimensionless temperature
+contours at (a) x/D=5, (b) x/D=10, (c) x/D=15 spanwise plane
+for DR=2, M=1 obtained using URANS, DES, DES with 4 zdiffusion and LES models.
+
+Figure 7. Front view of time-averaged dimensionless
+temperature contours at (a) x/D=5, (b) x/D=10, (c) x/D=15
+spanwise plane for DR=2, M=1 from URANS, DES, DES with
+4 z-diffusion and LES models.
+
+7
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+The film cooling effectiveness which is used to observe
+temperature on the wall is defined as:
+
+=
+
+Taw − T
+T j − T
+
+spanwise spreading of the jet. One possible explanation is that,
+the core of the coolant jet is separated from the surface, while the
+bottom part of the coolant jet barely touches it. The trajectory of
+the core will greatly influence the spanwise distribution of
+adiabatic effectiveness. If the predicted vertical trajectory of the
+coolant jet is only slightly higher than the experimental
+trajectory, a significant reduction in the lateral spread of the
+coolant jet will be shown on the surface. However, the centerline
+adiabatic effectiveness will decrease due to the higher trajectory,
+which is contrary to the predicted centerline effectiveness.
+Therefore, the discrepancy is due to underprediction of spanwise
+spreading.
+
+(19)
+
+Figure 8 shows the comparison of the time-averaged film
+cooling effectiveness contours for DES, DES with 4 z-diffusion
+and LES from the up to x= 20D. DES with 4-z diffusion is shown
+on top part of the contours and bottom part shows the results
+from DES and LES models. These results help to understand the
+reason for adoption of anisotropic eddy viscosity strategy in DES
+model. Although DES model provides certain prediction of
+vortices in the flow field, it still does not adequately predict the
+spanwise spreading of temperature field in the whole
+computational domain. At x/D of 8, DES and LES have similar
+spanwise spreading of dimensionless temperature whereas 4 zdiffusion DES overpredicts the spanwise diffusion. While at x/D
+of 15, the same temperature field develops and extends to 0.56
+D in the spanwise direction for LES, and only 0.35 D for DES.
+The spanwise spreading of temperature field is governed by
+CRVP evolution, and the DES apparently under predicts the
+spanwise spreading of this counter rotating vortices. on the other
+hand the 4 z-diffusion DES the temperature field extends to
+0.65 D, which is quite similar to the LES model results. This
+indicates that the anisotropic viscosity modification improves the
+DES in predicting spanwise CRVP and temperature field
+spreading.
+
+(a) x/D=5
+
+(b) x/D=10
+
+Figure 8. Top view of time-averaged film cooling effectiveness
+for DES, DES with 4 z-diffusion and LES solutions for DR=2,
+M=1.
+Figure 9 compares the spanwise profiles of film cooling
+effectiveness obtained using URANS, DES, DES with 4 zdiffusion, and LES models. At x/D of 15, the spanwise
+effectiveness is compared with available experiment data of [40].
+As can be seen URANS and DES models underpredict the
+
+(c) x/D=15
+Figure 9. Spanwise distribution of film cooling effectiveness
+obtained from URANS, DES, DES with 4 z-diffusion and LES
+models at (a) x/D=5, (b) x/D=10, (c) x/D=15 for DR=2, M=1.
+
+8
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+It can be seen clearly DES with 4 z-diffusion and LES
+predicts most spanwise spreading. And the experimental results
+indicate that the spanwise temperature field spreading is quite
+strong. Thus, it can be said that the DES with 4 z-diffusion and
+LES models capture the physics of the problem better as
+compared with other models. For URANS and DES models,
+isotropic eddy viscosity is assumed. For TKE as well as for
+energy equations, although the diffusion terms are summed up in
+x, y, and z directions, they have different diffusion behavior in
+different directions indeed. The diffusion is found to be
+anisotropic by nature, thus assuming isotropic diffusion may
+cause problems. In the experimental study from Quarmby and
+Quirk [38], they showed that eddy viscosity is larger in lateral
+direction compared to the normal direction both for momentum
+and energy transport. Thus, it was decided that by applying an
+anisotropic viscosity and enhance eddy viscosity in z direction,
+the spanwise spreading of the temperature field will be enhanced.
+And this is the motivation in studying 4 z-diffusion modified
+DES. The underlying mechanisms here needs further exploration
+in the future.
+Figure 10 shows the comparison of centerline effectiveness.
+URANS results are deviate considerably from experimental data
+since it does not resolve any vortices and unsteadiness. But for
+the experimental data, the jet strongly interacts with cross-flow,
+large scale unsteady turbulence is created. This explains why the
+URANS model cannot give adequate predictions. Further
+deviations can be seen in the predicted centerline effectiveness
+from the experimental data. In the near field, the DES and
+modified DES give results with 21.4% and 27.9% deviations,
+while LES and URANS predictions show deviations of 33.6%
+and 54.2%. One possible reason for LES results being so
+different from the experimental data in the near field could be
+caused by not using dense enough mesh for best quality LES
+modeling. However, it is always meaningful to compare different
+model results with moderate mesh density and moderate
+computational cost. Under the current mesh set, the DES gives
+better predictions in the near field. However, for the far field
+predictions improvement of DES is needed. The z-diffusion
+modified DES deviates 13.2% in the far field while LES and
+unmodified DES deviate 9.2% and 39.7%.
+For overall
+centerline effectiveness comparison, the URANS, DES,
+modified DES and LES predications have 46.9%, 31.9%, 12.4%
+and 10.8% deviations from experimental data. It is seen that the
+modified DES does not have as good prediction as DES before
+x/D = 10. After revising the eddy viscosity in lateral direction,
+the trajectory of flow at the near field region predicted by DES 4
+z-diffusion will have slight difference from the trajectory of flow
+predicted by DES. And near field region in film cooling is very
+sensitive to this trajectory, a slight change in flow trajectories
+will have a reflection on the centerline effectiveness. No
+turbulent diffusion modification were made for DES model and
+its predictions in this region is still better than the modified DES
+model. Thus, further calibration of the jet trajectory in the near
+field region and comparison of different model results based on
+the flow field is very important and valuable and should be
+investigated in more detail.
+
+Figure 11 shows the comparison of spanwise-averaged film
+cooling effectiveness. It is found that the 4 z-diffusion DES has
+the best prediction of the experimental results. Again, the LES
+modeling can be improved and it is expected that it will match
+better to the experimental results by use of much denser mesh. It
+might also be necessary to look at the near wall modeling in LES
+and this might need modifications. The comparisons made in this
+study are limited to comparisons with an identical moderately
+dense mesh set. For a rough comparison of computational cost,
+the calculation time for LES is about four times of the DES.
+
+Figure 10. Comparison of centerline effectiveness from URANS,
+DES, DES with 4 z-diffusion and LES models with experimental
+data for DR=2, M=1.
+
+Figure 11. Comparison of spanwise-averaged film cooling
+effectiveness from URANS, DES, DES with 4 z-diffusion and
+LES models with experimental data.
+
+9
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+are averaged quantities, and depend more on the trajectory of the
+jet, which is better captured in DES and LES models. DES model
+results also show coherent vortical structures like the horseshoe
+vortices, hairpin vortices, Kelvin-Helmholtz vortices, and then
+the vortex breakdown. The roll up of the shear layer in the near
+field is captured, which initializes CRVP. Hairpin vortical
+structure enhances the mixing process between the jet and
+mainstream. It can be said that in the far field DES modeling
+could also capture the major vortical structures in film cooling
+simulations.
+For further validation of the DES 4 z-diffusion model,
+another simulation under different conditions is considered.
+Results are shown in Figure 13. As can be seen centerline
+effectiveness for DR=1.6, M=1 predicted by DES with 4 zdiffusion although not perfect matches reasonably well with the
+experimental data. It is believed that these results show further
+robustness of this modification of the DES model.
+
+Figure 12. Comparison of vortices generated during jet main
+flow interaction from simulations using URANS, LES and DES
+with 4 z-diffusion models.
+
+CONCLUSIONS
+In this paper, different modeling methods of URANS, LES,
+DES and DES with enhanced z-diffusion modification are
+applied to simulate the film cooling performance of a single
+inline inclined hole flow simulations with density ratio of 2.0 and
+blowing ratio of 1.0. Different Predictions obtained using
+different models particularly in the near-field of film cooling jet
+are compared in detail. Based on the centerline effectiveness, it
+is found that URANS, DES, modified DES, and LES result in
+54.2%, 21.4%, 27.9% and 33.6% deviations from experimental
+data respectively. For an overall comparison including both near
+field and far field, the URANS, DES, modified DES and LES
+predictions deviate 46.9%, 31.9%, 12.4% and 10.8% from
+experimental data. In URANS modeling results, the jet retains its
+identity for a long distance downstream, and the mixing between
+the jet and mainstream is very low. LES does not give best results
+in the near field, on the other hand, DES gives good predictions
+in the near field of film cooling. LES captures finest vortical
+structures while DES also results in prediction of the vortical
+structures and eddies evolution to a lesser extend. In the far field
+for x/D > 10, DES does not give good results and the
+effectiveness stays high. To improve DES modeling, anisotropic
+eddy viscosity correction is adopted in DES modeling, and 4 zdiffusion modification is recommended. Although this
+anisotropic eddy viscosity correction has been proposed for
+improving RANS modeling in film cooling in earlier studies, it
+is the first time this method is applied to DES modeling to the
+authors’ knowledge. This enhanced z-diffusion DES model
+captures typical vortical structures and most importantly
+enhances spanwise spreading of CRVP in film cooling. Beyond
+the centerline effectiveness, the 4 z-diffusion DES is found to
+better match the local spanwise distribution of effectiveness and
+spanwise-averaged effectiveness at different x/D locations. The
+advantage of DES model is that it resolves enough details of
+vortical structures and turbulent eddies and at the same time, is
+computationally efficient. This is very important when extending
+the film cooling modeling work for more realistic schemes with
+
+Figure 13. Comparison of centerline effectiveness obtained using
+DES with 4 z-diffusion and experimental data for DR=1.6, M=1.
+Figure 12 shows the instantaneous isosurface of criterion
+value Q, which is defined as:
+
+Q=−
+
+1
+( Sij Sij − ij ij )
+2
+
+(20)
+
+The isosurface of Q is useful method to observe the coherent
+vortical structures in the flow [31]. As can be seen in Figure 12,
+LES is able to capture more details of the eddies. In the DES
+modeling, vortical structures in the near field region behave
+more like URANS, it is because URANS is applied in the near
+wall region and the LES part starts above. The vortical structures
+are instantaneous view of vortices and they are alike in the near
+field for URANS and DES modeling. However, the centerline
+effectiveness and spanwise-averaged film cooling effectiveness
+
+10
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+multi cooling holes. Study in further improvement turbulence
+modeling especially near field modeling where strong
+interactions exists for film cooling is continuing.
+
+[15] Hassan, J. S., and Yavuzkurt, S., 2006. “Comparison of
+four different two-equation models of turbulence in predicting
+film cooling performance,”. ASME Turbo Expo 2006, Barcelona,
+Paper No. GT2006-90860.
+[16] Yavuzkurt, S., and Hassan, J. S., 2007. “Evaluation of
+two-equation models of turbulence in predicting film cooling
+performance under high free stream turbulence,” ASME Turbo
+Expo 2007, Montreal, Paper No. GT2007-27184.
+[17] Yavuzkurt, S., and Habte, M., 2008. “Effect of
+computational grid on performance of two-equation models of
+turbulence for film cooling applications,” ASME Turbo Expo
+2008 Berlin, Paper No. GT2008-50153.
+[18] Lakehal, D., Theodoridis, G. S., and Rodi, W., 2001.
+“Three-dimensional flow and heat transfer calculations of film
+cooling at the leading edge of a symmetrical turbine blade
+model,” Int. J. Heat Fluid Flow, 22, No. 2, pp. 113-122.
+[19] Bergeles, G., Gosman, A. D., and Launder, B. E., 1978.
+“The turbulent jet in a cross stream at low injection rates: a threedimensional numerical treatment,”. Numer. Heat Transfer, Part
+A, 1, No. 2, pp. 217-242.
+[20] Lakehal, D., 2002. “Near-wall modeling of turbulent
+convective heat transport in film cooling of turbine blades with
+the aid of direct numerical simulation data,” ASME J.
+Turbomach., 124, No. 3, pp. 485-498.
+[21] Li, X., Ren, J., and Jiang, H., 2011. “Algebraic
+anisotropic eddy-viscosity modeling for application to turbulent
+film cooling flows,” ASME Turbo Expo 2011, Vancouver, Paper
+No. GT2011-45791.
+[22] Li, X., Ren, J., and Jiang, H., 2012. “Full field algebraic
+anisotropic eddy viscosity model for the film cooling flows,”.
+ASME Turbo Expo 2012, Copenhagen, Paper No. GT201268667.
+[23] Tyagi, M., and Acharya, S., 2003. “Large eddy
+simulation of film cooling flow from an inclined cylindrical jet,”
+ASME J. Turbomach., 125, No. 4, pp. 734-742.
+[24] Guo, X., Schröder, W., and Meinke, M., 2006. “Largeeddy simulations of film cooling flows,” Comput. Fluids., 35,
+No. 6, pp. 587-606.
+[25] Peet, Y. V., and Lele, S. K., 2008. “Near field of film
+cooling jet issued into a flat plate boundary layer: LES study,”
+ASME Turbo Expo 2008 Berlin, Paper No. GT2008-50420.
+[26] Fujimoto, S., 2012. “Large eddy simulation of film
+cooling flows using octree hexahedral meshes,” ASME Turbo
+Expo 2012, Copenhagen, Paper No. GT2012-70090.
+[27] Kalghatgi, P., and Acharya, S., 2014. “Modal analysis
+of inclined film cooling jet flow,” ASME J. Turbomach., 136, No.
+8, pp. 081007.
+[28] Oliver, T. A., Anderson, J. B., Bogard, D. G., Moser, R.
+D., and Laskowski, G., 2017. “Implicit LES for shaped-hole film
+cooling flow,” ASME Turbo Expo 2017, Charlotte, Paper No.
+GT2017-63314.
+[29] Spalart, P. R., and Streett, C., 2001. “Young-person's
+guide to detached-eddy simulation grids,” NASA CR-2001211032.
+
+REFERENCES
+[1] Hada, S., Takata, K., Iwasaki, Y., Yuri, M. and Masada,
+J., 2015. “High-efficiency gas turbine development applying
+1600°C class “J” technology,” Mitsubishi Heavy Industries
+Technical Review., 52, pp. 2–9, 2015.
+[2] Ito, E., Okada, I., Tsukagoshi, K., and Masada, J., 2011.
+“Development of key technologies for the next generation high
+temperature gas turbine,” ASME Turbo Expo 2011, Vancouver,
+Paper No. GT2011-45172.
+[3] Han, J. C., Dutta, S., and Ekkad, S., 2012. “Gas turbine
+heat transfer and cooling technology,”. Taylor & Francis.
+[4] Baldauf, S. M., Schulz, A., and Wittig, S., 2001. “Highresolution measurements of local effectiveness from discrete
+hole film cooling,” ASME J. Turbomach., 123, pp. 758–765.
+[5] Bogard, D. G., and Thole, K. A., 2006. “Gas turbine film
+cooling,” J. Propul. Power., 22, No. 2, pp. 249-270.
+[6] Yavuzkurt, S., Moffat, R. J., and Kays, W. M., 1980.
+“Full-coverage film cooling. Part 1. Three-dimensional
+measurements of turbulence structure,” J. Fluid Mech., 101, No.
+1, pp. 129-158.
+[7] Yavuzkurt, S., Moffat, R. J., and Kays, W. M., 1980.
+“Full-coverage film cooling. Part 2. Prediction of the recoveryregion hydrodynamics,” J. Fluid Mech., 101, No. 1, pp. 159-178.
+[8] Schmidt, D. L., Sen, B., and Bogard, D. G., 1996. “Film
+cooling with compound angle holes: adiabatic effectiveness,”
+ASME J. Turbomach., 118, No. 4, pp. 807-813.
+[9] Schulz, A., 2000. “Infrared thermography as applied to
+film cooling of gas turbine components,” Meas. Sci. Technol., 11,
+No. 7, pp. 948.
+[10] Gritsch, M., Schulz, A., and Wittig, S., 1997.
+“Adiabatic wall effectiveness measurements of film-cooling
+holes with expanded exits,” ASME International Gas Turbine
+and Aeroengine Congress and Exhibition 1997., Orlando, Paper
+No. 97-GT-164.
+[11] Han, J. C., and Rallabandi, A., 2010. “Turbine blade
+film cooling using PSP technique,” Frontiers in Heat and Mass
+Transfer (FHMT), 1, pp. 013001.
+[12] Khojasteh, A. R., Wang, S. F., Peng, D., Yavuzkurt, S.,
+and Liu, Y., 2017. “Structure analysis of adiabatic film cooling
+effectiveness in the near field of a single inclined jet:
+Measurement using fast-response pressure-sensitive paint,” Int.
+J. Heat Mass Transfer, 110, pp. 629-642.
+[13] Johnson, B., Tian, W., Zhang, K., and Hu, H., 2014.
+“An experimental study of density ratio effects on the film
+cooling injection from discrete holes by using PIV and PSP
+techniques,” Int. J. Heat Mass Transfer, 76, pp. 337-349.
+[14] Wright, L. M., McClain, S. T., and Clemenson, M. D.,
+2011. “Effect of freestream turbulence intensity on film cooling
+jet structure and surface effectiveness using PIV and PSP,”
+ASME J. Turbomach., 133, No. 4, pp. 041023.
+
+11
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+[30] Roy, S., Kapadia, S., and Heidmann, J. D., 2003. “Film
+cooling analysis using des turbulence model,” ASME Turbo Expo
+2003, Atlanta, Paper No. GT2003-38140.
+[31] Kim, S. I., and Hassan, I., 2010. “Unsteady simulations
+of a film cooling flow from an inclined cylindrical jet,” J.
+Thermophys Heat Transfer., 24, No. 1, pp. 145-156.
+[32] Foroutan, H., and Yavuzkurt, S., 2015. “Numerical
+simulations of the near-field region of film cooling jets under
+high free stream turbulence: application of RANS and hybrid
+URANS/large eddy simulation models,” ASME J. Heat Transfer,
+137, No. 1, pp. 011701.
+[33] Spalart, P. R., Deck, S., Shur, M. L., Squires, K. D.,
+Strelets, M. K., and Travin, A., 2006. “A new version of
+detached-eddy simulation, resistant to ambiguous grid
+densities,” Theor. Comput. Fluid Dyn., 20, No. 3, pp. 181.
+[34] Spalart, P. R., 2009. “Detached-eddy simulation,”
+Annu. Rev. Fluid Mech., 41, pp. 181-202.
+[35] Cai, T., Peng, D., Yavuzkurt, S., and Liu, Y. Z., 2018.
+“Unsteady 2-D film-cooling effectiveness behind a single row of
+holes at different blowing ratios: Measurements using fastresponse pressure-sensitive paint,” Int. J. Heat Mass Transfer,
+120, pp. 1325-1340.
+[36] T.-H. Shih, W. W. Liou, A. Shabbir, Z. Yang, and J.
+Zhu., 1995. “A new k-ϵ eddy-viscosity model for high Reynolds
+number turbulent flows – Model development and validation,”
+Computers Fluids, 24, No. 3, pp. 227-238.
+[37] D. Lakehal, G. S. Theodoridis, W. Rodi, 2003. “Threedimensional flow and heat transfer calculations of film cooling
+at the leading edge of a symmetrical turbine blade model,” Int.
+J. Heat Fluid Fl., 39, pp. 345-353.
+[38] Quarmby, A., and Quirk, R., 1974. “Axisymmetric and
+non-axisymmetric turbulent diffusion in a plain circular tube at
+high Schmidt number,” Int. J. Heat Mass Transfer, 17, No. 1, pp.
+143-147.
+[39] A. Azzi, D. Lakehal, 2002. “Perspectives in modeling
+film cooling of turbine blades by transcending conventional twoequation turbulence models,” ASME J. Turbomach., 124, pp.
+472-484.
+[40] Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991.
+“Film-cooling effectiveness downstream of a single row of holes
+with variable density ratio,” ASME J. Turbomach., 113, No. 3,
+pp. 442-449.
+[41] Fluent, ANSYS., 2009. “12.0 Theory Guide,” Ansys
+Inc, USA.
+[42] Bogard, D. G., 2006. "Airfoil film cooling," The Gas
+Turbine Handbook., 4, pp. 309-321.
+
+12
+Downloaded From: https://proceedings.asmedigitalcollection.asme.org on 01/18/2019 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Copyright © 2018 ASME
+
+

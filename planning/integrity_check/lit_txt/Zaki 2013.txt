@@ -1,0 +1,1306 @@
+Flow Turbulence Combust (2013) 91:451–473
+DOI 10.1007/s10494-013-9502-8
+
+From Streaks to Spots and on to Turbulence: Exploring
+the Dynamics of Boundary Layer Transition
+Tamer A. Zaki
+
+Received: 1 January 2013 / Accepted: 27 July 2013 / Published online: 18 September 2013
+© Springer Science+Business Media Dordrecht 2013
+
+“...an eerie type of chaos can lurk just behind a facade of order, and yet deep
+inside the chaos lurks an even eerier type of order.” Douglas Hofstadter
+Abstract Bypass transition to turbulence in boundary layers is examined using
+linear theory and direct numerical simulations (DNS). First, the penetration of lowfrequency free-stream disturbances into the boundary layer is explained using a
+model problem with two time scales, namely the shear and wall-normal diffusion.
+The simple model provides a physical understanding of the phenomenon of shear
+sheltering. The second stage in bypass transition is the amplification of streaks.
+Streak detection and tracking algorithms were applied to examine the characteristics
+of the streak population inside the boundary layer, beneath free-stream turbulence.
+It is demonstrated that simple statistical averaging masks the wealth of streak
+amplitudes in transitional flows, and in particular the high-amplitude, relatively rare
+events that precede the onset of turbulence. The third stage of the transition process,
+namely the secondary instability of streaks, is examined using secondary instability
+analysis. It is demonstrated that two types of instability are possible: An outer
+instability arises near the edge of the boundary layer on the lifted, low-speed streaks.
+An inner instability also exists, and has the appearance of a near-wall wavepacket.
+The stability theory is robust, and can predict the particular streaks which are likely
+to undergo secondary instability and break down in transitional boundary layers
+beneath free-stream turbulence. Beyond the secondary instability, turbulent spots
+are tracked in DNS in order to examine their characteristics in the subsequent nonlinear stages of transition. At every stage, we compare the findings from linear theory
+to the empirical observations from direct solutions of the Navier-Stokes equations.
+The complementarity between the theoretical predictions and the computational
+
+T. A. Zaki (B)
+Department of Mechanical Engineering, Imperial College London, London SW7 2AZ, UK
+e-mail: t.zaki@imperial.ac.uk
+
+452
+
+Flow Turbulence Combust (2013) 91:451–473
+
+experiments is highlighted, and it leads to a detailed view of the mechanics of
+transition.
+Keywords Boundary layers · Transition to turbulence · Bypass transition · Streaks ·
+Turbulent spots
+1 Introduction
+Fluid dynamicists have long marvelled at the inception of turbulence and the
+emergence of its whirls and eddies from orderly fluid motion. This keen interest in
+transition to turbulence has inspired a wealth of research activities into its various
+forms, in single- and two-phase flows and in simple and complex fluids. In addition to
+the interest in its fundamental aspects, transition has important practical implications
+due to the enhanced mixing of momentum, higher skin-friction drag and heat transfer
+rates associated with the onset of turbulence.
+The route to turbulence is not unique, even within a single flow configuration.
+For instance, in boundary layers, transition can take place via Tollmien–Schlichting
+instability waves [22], cross-flow instabilities [36], or Görtler instabilities [13, 38]
+among a wealth of other mechanisms. In an engineering flow configuration, for
+example a compressor or turbine passage (see Fig. 1), transition can be due to
+leading-edge effects [30, 33], curvature [38], the pressure distribution along the blade
+surface [44] or migrating disturbances from upstream stages [42, 46]. Efforts to
+understand the relevance of various flow configurations have focussed on canonical
+problems, in order to isolate a particular effect. However, a confluence of various
+mechanisms is also possible, and can lead to new transition phenomena [25, 26].
+We herein focus on zero-pressure-gradient boundary layers, where transition to
+turbulence is usually classified as orderly or bypass. The orderly transition process
+is well defined: It starts with the amplification of discrete Tollmien–Schlichting
+instability waves, followed by their secondary instability and finally breakdown to
+
+Fig. 1 Transition to turbulence in a compressor passage due to migrating free-stream turbulence
+[47]. Gray contours show the tangential velocity perturbation, ut , near the blade surface, −0.12 <
+ut < 0.12 The pressure surface boundary layer undergoes bypass transition. The suction surface
+boundary layer undergoes laminar separation and turbulent reattachment
+
+Flow Turbulence Combust (2013) 91:451–473
+
+453
+
+turbulence. The term bypass, on the other hand, has been used to refer to all
+other routes which lead to boundary layer turbulence, but deviate from the orderly
+scenario. The simple terminology singled out the orderly transition process, which
+reflects the focus of the original research efforts on that path. More recently, the term
+bypass started to become synonymous with one breakdown scenario, when boundary
+layers are exposed to free-stream vortical forcing. It is this form of breakdown that
+is the focus of the current review.
+1.1 Bypass transition
+When laminar boundary layers are exposed to free-stream vortical disturbances, they
+undergo transition to turbulence in an intriguing manner—see the pressure surface
+of the blade in Fig. 1. Despite the broadband nature of the free-stream forcing, the
+boundary layer is only distorted by low-frequency disturbances. This filtering process
+is known as shear-sheltering, a term coined by Hunt and Durbin [19] in reference
+to the ability of the shear to filter high-frequency vortical disturbances. Inside the
+boundary layer, the elongated distortions reach high amplitude, which can be larger
+than 10 % of the mean flow speed when the free-stream turbulence-intensity is only
+3 %. These distortions are termed Klebanoff modes and have been studied using
+linear theory [e.g. 18, 27, 43], experiments [e.g. 29, 41] and using direct numerical
+simulations [2, 43]. The final stage is the secondary instability of particular streaks,
+which precedes breakdown into turbulent spots. Secondary instability analyses were
+invoked in order to explain the possible modes of breakdown [e.g. 2, 40]. Beyond
+the secondary instability of streaks, turbulent spots are formed and spread as
+they convect downstream. Their sporadic onset, growth and merging maintains the
+downstream edge of the fully-turbulent boundary layer.
+The development of Klebanoff modes has received great attention in the literature
+on bypass transition. An explanation of the mechanism for the amplification of
+streaks was provided by rapid distortion theory [34]. A physical interpretation in
+terms of vertical displacement, or lift-up, of mean momentum was provided by
+Landahl [23]. The details of their amplification beneath free-stream turbulence have
+been studied experimentally [28, 29], using direct numerical simulations [21] and
+theory [12, 24]. Some of the literature has focused on the linearly-optimal streaks,
+which would arise due to an upstream optimal disturbance. While such a disturbance
+might not be present in the flow, the analysis correctly predicts the width of the
+streaks observed in experiments and their downstream amplification [1].
+The connection between Klebanoff modes and breakdown to turbulence is less
+clear, and has often been sought based on evidence from DNS [e.g. 21, 37] and
+experiments [e.g. 31]. The DNS by Jacobs and Durbin [21] showed that the low-speed
+streaks can become unstable when they are lifted towards the edge of the boundary
+layer where they are exposed to free-stream forcing by high-frequency modes. Zaki
+and Durbin [43] examined this transition mechanism using simulations of the interaction between only two free-stream vortical modes: A low-frequency disturbance
+which penetrates the shear and generates amplifying streaks. The second, highfrequency vortical mode remains in the free stream due to shear sheltering. However,
+it forces the lifted low-speed streaks at the edge of the boundary layer, and causes
+their secondary instability and bypass transition to turbulence. These simulations
+provided an uncluttered view of the essential interaction that precedes breakdown.
+
+454
+
+Flow Turbulence Combust (2013) 91:451–473
+
+The same methodology was used to explore the effects of pressure gradients [44] and
+the interaction between streaks and discrete instability waves [8, 25, 26].
+The empirical observations from DNS and experiments motivated theoretical
+studies of the instability of streaky boundary layers. In analogy to the work by
+Swearingen and Blackwelder [39] on the secondary instability of Görtler flows,
+Andersson et al. [2] performed secondary instability analyses of linearly-optimal
+streaks. They found that streaks must reach a very high amplitude, on the order of
+26 %, in order to develop the first unstable mode. This value is much higher than
+expected from experiments and simulations. As will be demonstrated herein, streaks
+with such high amplitude often host turbulent spots—an indication that the instability
+is mature, and was initiated much earlier when the streaks were at lower amplitudes.
+Another unanswered question regarding the stability of streaks was raised by
+the work of Nagarajan et al. [30]. They showed that transition is not only initiated
+near the edge of the boundary layer, but can also be initiated near the wall, in
+the form of wave-packets. This was the case in their simulations of zero-pressuregradient boundary layers when the leading edge was blunt. The role of the Klebanoff
+distortions in this case is less clear. The stability analysis by Vaughan and Zaki [40]
+provided an explanation, and will be discussed herein.
+Beyond streak instability, the formation of turbulent spots and their growth to
+form the fully-turbulent boundary layer has also been of interest since the work of
+Emmons [10]. It is difficult to study naturally occurring spots in experiments due
+to their sporadic onset in space and time. Therefore, experiments have resorted to
+artificially triggering turbulent spots, for example using a disturbance at the wall [7],
+and studying their evolution. On the other hand, direct numerical simulations provide a unique facility to investigate in detail naturally occurring spots in simulations
+of bypass transition beneath free-stream turbulence. By storing time-series of the
+flow field and applying laminar–turbulent discrimination, it is possible to identify
+these turbulent regions and to characterise their growth mechanism and rate.
+The structure of this paper follows the proceedings of bypass transition. After
+a brief description of the governing equations and the solution techniques, we
+discuss the following three stages. First, the low-pass filtering ability of the shear
+is discussed using a model problem, in order to explain shear-sheltering and the
+penetration of low-frequency disturbances into the boundary layer. Second, we
+characterise the population of streaks which grow inside the shear. Finally, we
+address the secondary instability of streaks. Throughout the presentation, we refer
+to our group’s recent research activity in each of these areas—an activity that relies
+on direct numerical simulations (DNS) and linear theory. We draw on the results of
+linear theory to interpret empirical observation from numerical simulations, and new
+observations from DNS motivate more advanced theory. This complementarity has
+proven essential in developing a clear understanding of the proceedings of bypass
+transition.
+
+2 Governing Equations
+Throughout our discussion of bypass transition, we will refer to observations from
+Direct Numerical Simulations (DNS) of the full Navier-Stokes equations and results
+from linear theory. Both frameworks are introduced briefly in this section, and the
+
+Flow Turbulence Combust (2013) 91:451–473
+
+455
+
+focus is directed towards the deductions based on these methods, rather than the
+details of their solution.
+2.1 Direct numerical simulations
+Direct numerical simulations of bypass transition are largely possible due to the
+moderate Reynolds number, and therefore the ability to accurately resolve all flow
+scales by solving the full Navier-Stokes equations. The governing equations are
+therefore the incompressibility constraint, and the Navier-Stokes equations,
+∂ui
+=0
+(1)
+∂ xi
+∂p
+1 ∂ 2 ui
+∂ui
+∂ui
++ uj
+=
++
+,
+(2)
+∂t
+∂xj
+∂ xi
+R ∂ x j∂ x j
+where ui = {u, v, w} is the velocity vector, p is the pressure, and R is the Reynolds
+number. In the following, uppercase variables and overline denote mean flow quantities (e.g. U which are obtained by spanwise and time-averaging, and primed variables
+represent perturbation quantities (e.g. u ). The Navier-Stokes equations are solved
+using a fractional-step procedure. The equations are discretised on a curvilinear,
+staggered grid using local volume fluxes. The convective terms are treated explicitly
+using Adams-Bashforth; the pressure and diffusive terms are advanced implicitly
+using Euler and Crank-Nicolson schemes, respectively. Details of the numerical
+method are given in the work of Rosenfeld et al. [35], and examples of its use
+in transition prediction include simulations of transition in pressure gradients [44],
+breakdown to turbulence due to Görtler instability [38], and transition in complex
+geometries [47].
+Results presented herein are from simulations of zero-pressure-gradient boundary
+layers undergoing bypass transition beneath free-stream turbulence. The schematic
+of the computational domain is shown in Fig. 2. The setup is similar to the original
+work of Jacobs and Durbin [21], where the inlet to the computational domain is
+downstream of the leading edge, and the inflow is a superposition of the Blasius
+profile and free-stream turbulence. The turbulence is synthesised from Fourier
+modes in the periodic spanwise direction and in time, and is a superposition of
+eigenmodes of the linear perturbation equations in the wall-normal direction as first
+introduced by Jacobs and Durbin [21]. The same approach has since been used by
+
+Fig. 2 Schematic of streaky boundary layer response to free-stream forcing, secondary instability
+and onset of turbulence
+
+456
+
+y
+
+Flow Turbulence Combust (2013) 91:451–473
+
+x
+z
+
+Fig. 3 Boundary layer breakdown beneath free-stream turbulence. Contours of the streamwise
+velocity perturbation, −0.15 < u < 0.15, at two planes: inside the boundary layer and in the free
+stream. Turbulent spots and the fully-turbulent boundary layer downstream are shown
+
+a number of researchers [e.g. 4, 32]. At the inlet to the domain, the turbulence
+intensity is Tu = 3 %, and the Reynolds number is R ≡ U ∞ δ0 /ν = 800 based on the
+characteristic velocity, U ∞ , and 99 % boundary layer thickness δ0 = δ(x = x0 ). The
+no-slip condition is applied at the wall, and the top boundary, which is a free-stream
+surface, is contoured to ensure zero-pressure-gradient in the streamwise direction. A
+convective boundary condition is applied at the exit plane.
+Both statistics and time-series of the velocity field were extracted from the DNS
+and will be used throughout the discussion. The database of the velocity fields
+includes 4000 snapshots of the velocity vector, at every-other grid point of the field,
+and separated by two time units, based on the convective timescale. An example
+of the perturbation field is shown in Fig. 3. The two planes shown correspond
+to a wall-normal location inside the shear and in the free stream. The snapshot
+contrasts the perturbation fields at the two heights, and highlights the formation of
+elongated, high-amplitude streaks inside the boundary layer, and the formation of
+turbulent spots which ultimately spread and become the fully-turbulent boundary
+layer downstream.
+2.2 Linear theory: the Orr–Sommerfeld and Squire equations
+The evolution of a small perturbation in a parallel shear flow is governed by the
+Orr–Sommerfeld and Squire equations for wall-normal velocity, v  , and vorticity, η ,
+respectively. Assuming a base state U(y), these equations are,
+
+∂t
+
+v
+η
+
+
+
+
+=
+
+
+
+ 
+ 
+v
+−1 d2y U∂x + R−1  − U∂x 
+0
+η
+R−1  − U∂x
+−d y U∂z
+
+(3)
+
+Flow Turbulence Combust (2013) 91:451–473
+
+457
+
+where  is the Laplacian operator, and −1 is its formal inverse. The initial-valueproblem (3) can be solved for the evolution of v  and η [see e.g. 43].
+The eigenvalue problem associated with Eq. 3 above can be obtained by assuming
+a Fourier representation in the homogeneous streamwise and spanwise directions
+and in time,
+ 
+ 
+
+v (x, t)
+φ(y) i(kx x+kz z−ωt)
+=
+e
+.
+η (x, t)
+χ (y)
+The resulting eigenvalue problem is,
+
+
+
+ 
+L 0
+φ(y)
+φ(y)
+−iω
+=
+−C S
+χ (y)
+χ (y)
+
+(4)
+
+where
+
+L = −1 ikx U  + ()/R − ikx U ,
+S = (/R) − ikx U ,
+C = ikz U  .
+For semi-bounded domains, the eigenspectrum of the Orr–Sommerfeld and Squire
+equations includes a discrete set of eigenvalues ωn , n = 1, 2, 3 . . . N, whose eigenfunctions vanish in the free stream, lim y→∞ φn , χn (y) = 0. The eigenspectrum also
+includes a continuous branch of modes with eigenvalues ωk y where k y is a parameter.
+Eigenmodes which belong to the continuous branch are bounded in the free stream,
+lim y→∞ φk y , χk y (y) bounded. Outside the boundary layer, these eigenfunctions resemble Fourier modes with wall-normal wavenumber k y . Inside the boundary layer,
+they decay towards the wall [15].
+
+3 Shear Sheltering
+In bypass transition, the disturbance environment in the free stream and inside the
+boundary layer are starkly different. The turbulence in the free stream is largely
+defined by its upstream properties, e.g. with respect to homogeneity and isotropy,
+and decays as it is convected downstream. Inside the boundary layer, the disturbance
+field is dominated by low-frequency streaks, which are the boundary layer response
+to the broadband forcing from the free stream. Figure 3 suggests a filtering process
+whereby only the low-frequency components of the free-stream turbulence penetrate
+the boundary-layer shear and lead to the formation of streaks. This phenomenon is
+known as “shear sheltering” [19], and was investigated by Jacobs and Durbin [20]
+and Zaki and Saha [45]. A physical interpretation of the sheltering behaviour of the
+shear is given herein, after the work of Zaki and Saha [45].
+The basic mechanism for sheltering is based on the relationship between two
+timescales: the timescale associated with the convection of a wave relative to an
+observer inside the shear, and the timescale of wall-normal diffusion into the
+boundary layer. This relationship can be explained with the aid of the schematic in
+Fig. 4, which elucidates the difference between low- and high-frequency disturbances,
+and the propensity of the former to penetrate the shear.
+
+458
+
+Flow Turbulence Combust (2013) 91:451–473
+
+Fig. 4 Schematic of modal penetration for low- and high-frequency free-stream vortical
+perturbations
+
+Consider a free-stream disturbance which convects at the free-stream velocity,
+U ∞ . An observer inside the shear is traveling at a lower speed, U ∞ + τ Y where
+τ is the mean shear and Y < 0 is inside the boundary layer. The relative speed is
+therefore τ |Y|. The influence of the free-stream disturbance reaches the observer
+over a diffusion timescale, Td ≡ 1/k2y ν, where k y is the wall-normal wavenumber of
+the disturbance (not shown in the schematic).
+During the characteristic diffusion time, the wave has convected a distance τ |Y|Td
+relative to the observer. Therefore, the number of wavelength that have streamed
+past the observer can be computed according to,
+n=
+
+τ |Y|/k2y ν
+kx τ |Y|
+τ |Y|Td
+.
+=
+=
+1/kx
+1/kx
+k2y ν
+
+(5)
+
+In the limit of weak shear or very long waves (small kx ), the observer is subject to a
+quasi-steady free-stream disturbance; this case is shown schematically at left in Fig. 4.
+In the limit of very high shear or short disturbance wavelength (large kx ), the number
+of waves that stream past the observer is large. The net effect at the observer location
+is vanishing since it is the “average” of many waves; this scenario is shown at right
+in Fig. 4.
+Based on the above model, the penetration of free-stream disturbances into
+ the
+shear is dependent on the ratio of two timescales: wall-normal diffusion Td ≡ 1/ k2y ν
+and the shear Ts ≡ 1/ (kx τ δ BL ). When the diffusion time is relatively short, an
+observer can “resolve” the free-stream disturbance that is convected at a relatively
+higher speed. Under strong shear, or when the diffusion time is relatively long, the
+observer cannot “resolve” the free-stream disturbance.
+Two observations are important to note as they have important implications on
+potential control strategies: First, the disturbance that is most effective at penetrating
+the boundary layer has a horizontal wavenumber vector (kx , kz ) which is orthogonal
+to the shear. Here, the horizontal wavenumber is (kx = 0, kz ) and the shear vector
+is (dU/dy, dW/dy) = (τ, 0). Second, the effect of the shear is cumulative: As the
+distance from the edge of the boundary layer is increased, the value of n also
+increases. As a result, only progressively lower-frequency waves can penetrate into
+the boundary layer closer to the wall. Motivated by these observations, Hack and
+Zaki [16] investigated a control strategy aimed at sheltering the boundary layer from
+free-stream turbulence by introducing time-dependent shear via wall oscillation. The
+introduction of a Stokes layer leads to a varying shear angle with wall-normal height.
+As a result, the sub-spectrum that can permeate the shear changes with proximity
+
+Flow Turbulence Combust (2013) 91:451–473
+
+459
+
+to the wall, and the cumulative filtering effect reduces the fraction of free-stream
+energy that can penetrate towards the wall.
+
+4 Amplification of Streaks
+Once low-frequency disturbances penetrate the boundary layer, they lead to the
+amplified streaky structures inside the shear. The streaks have a high amplitude of
+the streamwise velocity perturbation, while the cross-stream perturbations remain
+relatively weak. Streaks have been the subject of a wealth of investigations: Their
+elongated streamwise extent and high amplitude are well understood based on linear
+theory. Rapid distortion theory demonstrates that low-frequency disturbances will
+continue to amplify, without the action of restoring pressure [9, 34]. These disturbances are, therefore, the preferred boundary layer distortion which will dominate
+at long time.
+An alternative view is provided from the perturbation equations (3), which cover
+the linear evolution of an initial disturbance in parallel boundary layer flow. Optimisation over all possible initial conditions, in order to obtain the most amplifying linear
+disturbance, has been performed by Butler and Farrell [6]. They demonstrated that
+the optimal initial condition is a periodic arrangement of counter-rotating streamwise
+vortices that lead to the amplification of streaks with wall-normal and spanwise sizes
+on the order of the boundary layer thickness. Since the Orr–Sommerfeld equation is
+homogeneous, a small amplitude vertical velocity perturbation, v  , will simply decay
+due to viscous effects at sub-critical Reynolds number. The Squire equation, on the
+other hand, is forced by the vertical velocity. The response to this Orr–Sommerfeld
+forcing is an amplification in the normal vorticity, η . Zaki and Durbin [43] demonstrated that resonance exists between continuous Orr–Sommerfeld modes and the
+Squire operator. As a result, the Squire response amplifies linearly in time prior to
+the long-term viscous decay.
+Since the streaks reach large amplitudes, linear theory is not sufficient, and
+non-linear simulations are required in order to accurately predict the evolution of
+streaks. In addition, beneath free-stream turbulence, a wide spectrum of streaks
+is observed inside the boundary layer. Previous studies based on direct numerical
+simulations have, however, reduced the rich spectrum of streaks to simple statistical
+quantities, e.g. the root mean square velocity disturbance. Nolan and Zaki [32]
+adopted a different view: They considered the distribution of streak amplitudes
+within the transitional boundary layer, with the objective of identifying the particular
+streaks which undergo secondary instability and breakdown to turbulence. First,
+they applied laminar-turbulence discrimination in order to isolate the non-turbulent
+region of the flow from DNS fields. Streak tracking was subsequently applied in order
+to determine the characteristics of the streak population.
+An example of laminar-turbulence discrimination is shown in Fig. 5. In order
+to distinguish between the turbulent and non-turbulent flow, a detector function
+is required. Here, the disturbance velocity in the cross-flow plane is used, namely
+D ≡ |v  | + |w  |. In the streaky, pre-transitional region, the value of D is small and
+increases sharply with the onset of turbulent spots. The detector function is first lowpass filtered, and subsequently thresholded to yield an indicator function, , which is
+a logical indicator of turbulent ( = 1) versus non-turbulent ( = 0) flow.
+
+460
+
+Flow Turbulence Combust (2013) 91:451–473
+
+Fig. 5 Side (top) and plan (bottom) views showing laminar-turbulent discrimination. The black line
+denotes the boundary between the turbulent and non-turbulent flows. Contours are the streamwise
+velocity perturbation, u , with high- and low- speed streaks marked in red and blue, respectively
+
+Once the non-turbulent region of the flow is identified, streak detection is
+performed. Since the streaks are characterised by large u perturbations, a local
+maxima identification technique is effective at isolating the core of the streaks at each
+streamwise location. These maxima are correlated in successive cross-flow planes
+in order to establish the connectivity of the streaks. An example of the result for
+streak detection is shown in Fig. 5. The cores of the high- and low-speed streaks are
+identified in the figure by the blue and red lines, respectively.
+The streaks from successive snapshots are cross-correlated in order to construct
+a time-history of streak evolution. An example of streak evolution in space-time is
+shown in Fig. 6. The streak is treated as a Lagrangian object, denoted s, in space and
+
+Fig. 6 Top frame Side view showing the evolution of a low-speed streak in space and time, as it
+convects and amplifies downstream. The time interval between two streak instances is twenty time
+units. Contours are the streak amplitude, Asu . Bottom frame The wall-normal location, ys , of the
+maximum amplitude Asu during the streak evolution. The mean (solid line) and laminar-conditioned
+(dashed line) boundary-layer edges are also shown
+
+Flow Turbulence Combust (2013) 91:451–473
+
+461
+
+time. The coordinates of its core are therefore a function of time, and are denoted
+xs (t), and the amplitude is defined by,
+
+Asu (xs , t) ≡ u (x = xs , t).
+
+(6)
+
+At every streamwise location, the maximum streak amplitude over its history can be
+extracted,
+
+
+(7)
+Asu (x) = max Asu (xs , t) ,
+t,y,z
+
+as well as the wall-normal height of the occurrence of this maximum,
+
+
+ys (x) = y Asu (x) .
+
+(8)
+
+The above procedure is performed for all the streaks identified during the DNS of
+bypass transition beneath free-stream turbulence. The probability density function
+(PDF) of streak amplitudes is shown in Fig. 7, where it is contrasted to transitional
+averaging techniques, e.g. root mean square values. At left, the distribution of Au is
+plotted at a particular downstream location from the leading edge. The figure also
+includes the distribution of u perturbations in grey, and the root mean square value,
+urms , is indicated by the vertical dashed line. It is evident from the figure that the often
+reported urms underpredicts the average streak amplitude and, more importantly,
+the high intensity streaks at the tails of the distribution. The latter are the rare
+events which lead to the onset of turbulent spots and full non-linear breakdown to
+turbulence. The right hand pane shows the evolution of the PDF with downstream
+distance. In addition, the circles on the figure identify the streaks which hosted the
+inception of turbulent spots. As evident from the figure, streaks with amplitudes,
+Au ≥ 0.2, are the most likely events to initiate breakdown to turbulence. This result
+would be masked by conventional statistical averaging techniques.
+The above discussion has thus far addressed (a) the penetration of low-frequency
+free-stream disturbances into the boundary layer and (b) the amplification of streaks.
+The notion of streak breakdown was only mentioned in connection with a critical
+streak amplitude. However, the secondary instability which causes the streaks to
+
+Fig. 7 Left frame Probability density function of u (grey shading) and of the streak amplitude. The
+vertical line denotes urms obtained from time and spanwise averaging of the DNS data. Right frame
+The downstream evolution of the PDF of streak amplitude. Marked circles identify the onset of
+turbulent spots
+
+462
+
+Flow Turbulence Combust (2013) 91:451–473
+
+breakdown to turbulence has not been addressed, and is the subject of the next
+section.
+
+5 Breakdown to Turbulence
+5.1 Secondary instability of idealised streaks
+In order to accurately assess the stability of streaky boundary layers, Vaughan and
+Zaki [40] constructed a database of idealised streaks. These streaks were obtained by
+forcing the boundary layer with a single inflow continuous Orr–Sommerfeld mode,
+and computing the emergent streaky flow using DNS. Therefore, the streaks in their
+analysis take into account non-parallel and non-linear effects. The boundary layer
+profile was extracted at a target location (see Fig. 2), and secondary instability analysis was performed using Floquet theory. The base flow is therefore a superposition
+of a boundary layer profile, U 0 (y), and a saturated streak u1 (y, z, t),
+u2 (y, z, t) = U 0 (y) + u1 (y, z, t).
+
+(9)
+
+Since the streaks are periodic in the span and in time, a doubly-periodic Floquet
+expansion is required. It should also be noted that, while the prescribed freestream mode is monochromatic in the span and in time, the resulting streaks include
+harmonics in both dimensions due to non-linear effects. As a result, the Floquet
+expansion must take into account the various harmonics in the base flow,
+u1 (y, z, t) =
+
+N
+M 
+
+
+i(mωt+nkz z)
+.
+ ûm,n
+1 (y)e
+
+(10)
+
+m=0 n=0
+
+The velocity profile for a sample streak is shown in Fig. 8. A small mean flow
+distortion, relative to Blasius, can be seen in the figure and is due to the high10.0
+
+(b)
+
+(a)
+
+(c)
+
+7.5
+
+5.0
+
+2.5
+
+0
+
+0
+
+0.5
+
+1.0
+
+−0.2
+
+−0.1
+
+0
+
+0.1
+
+0.2
+
+−0.2 −0.1
+
+0
+
+0.1
+
+0.2
+
+Fig. 8 Wall-normal profile of an example streaky base flow at Reynolds number R = 360, streak
+amplitude Au = 20 % and streak frequency F = 60. a The distorted mean flow due to the
+presence of streaks (
+) and the Blasius profile (
+); b the fundamental; c the spanwise
+harmonic components (see Eq. 10). In (b,c), solid and dashed lines are the real and imaginary parts
+m,n
+of û1
+
+Flow Turbulence Combust (2013) 91:451–473
+
+463
+
+amplitude non-linear streaks. The effect of this distortion is stabilizing, and therefore
+the streaks must be sufficiently destabilising to lead to overall instability of the
+base flow.
+The linear perturbation equations which govern the evolution of the secondary
+instability are derived by assuming a total velocity of the form,
+v(x, y, z, t) = {U 0 (y) + u1 (y, z, t)}ex + Bv 3 (x, y, z, t),
+
+(11)
+
+where B is sufficiently small for linearization. Substituting Eq. 11 in the NavierStokes equations, the secondary linear instability problem can be expressed in terms
+of ∇ 2 v3 and η3 , the Laplacian of the wall-normal velocity and the wall-normal
+vorticity. The continuity equation is also required in order to complete the system,
+
+
+1 2
+∂
+∂ 2 U 0 ∂ v3
+∂
+∂
++
+∇ −
+− U0
+− u1
+∇ 2 v3
+∂ y2 ∂ x
+R
+∂t
+∂x
+∂x
+  2
+
+
+
+∂ u1 ∂
+∂ ζ 3 ∂ u1
+∂ u1
+∂ ξ3
++ −
++
+η3 +
+−
+∂ y∂z
+∂z ∂ y
+∂x
+∂z ∂z
+ 
+ 2
+
+
+2
+∂ v3 ∂ u 1
+∂ u1
+∂ w3 ∂ 2 u1
+∂ u3
++
+−
++
++
+= 0,
+(12)
+∂ x ∂ y2
+∂z2
+∂z
+∂ x ∂ y∂z
+
+
+
+∂
+∂ η3
+∂ v3 ∂ U 0
+1 2
+∇ −
+η3 −
+U0 −
+R
+∂t
+∂x
+∂z ∂ y
+
+
+∂ η3
+∂ v3 ∂ u1
+∂ v3 ∂ u1
+∂ 2 u1
+∂ 2 u1
+−
+u1 + v3
++ w3 2 −
++
+= 0,
+∂x
+∂ y∂z
+∂z
+∂ y ∂z
+∂z ∂ y
+∂ v3
+∂ w3
+∂ u3
++
++
+= 0.
+∂x
+∂y
+∂z
+
+(13)
+
+(14)
+
+The secondary instability v 3 is expressed in terms of a Fourier expansion in t
+and z,
+v 3 = e(iαx+σr t)
+
+∞
+
+
+∞
+
+
+v m,n (y)ei([nkz +γ ]z+[mω+σi ]t) ,
+
+(15)
+
+m=−∞ n=−∞
+
+where in the temporal problem both α and γ are real parameters, and σ is the
+complex eigenvalue. The eigenvalue problem governing the secondary instability is
+obtained by substituting Eq. 15 into Eqs. 12–14.
+The growth rates of the two most unstable modes of the boundary layer, when
+the Klebanoff streaks are steady, are shown in Fig. 9. The results demonstrate the
+presence of mode competition: Low amplitude streaks render the flow unstable to
+one type of disturbance; As the streak amplitude is increased, the growth rate of
+another type of instability becomes dominant. These two modes are referred to as the
+“inner” and “outer” instabilities, due to the wall-normal location of their respective
+critical layers. The wall-normal profiles of these two modes are shown in Fig. 10.
+In bypass transition under free-stream turbulence, the effect of streak unsteadiness can be important. Therefore, the growth rates of the inner and outer instabilities
+were evaluated for a range of base-streak frequencies, F = [0, 60]. The results are
+shown in Fig. 11 and demonstrate that, in general, streak unsteadiness increases
+
+464
+
+Flow Turbulence Combust (2013) 91:451–473
+
+Fig. 9 The growth rate of the
+two most unstable modes for a
+boundary layer distorted by
+steady streaks. The light line
+(——) is the growth rate of the
+inner mode; the dark line
+) is the outer mode
+(
+
+0.0100
+
+Outer mode
+sinuous
+
+0.0075
+0.0050
+
+σr
+Inner mode
+
+0.0025
+0
+−0.0025
+
+0
+
+0.10
+
+0.20
+
+0.30
+
+Au
+
+the growth rate of both modes. For the inner mode (Fig. 11a), Vaughan and Zaki
+[40] showed that the near-wall inflection points in the unsteady base flow play
+an important role in enhancing instability. They also observed a small stabilizing
+effect of the inner mode under two conditions: (i) increasing amplitude of steady
+streaks (F = 0), and (ii) increasing frequency at low streak amplitude ( A = 5 %).
+These conditions can be related to the literature on steady boundary layer streaks
+[11, 25, 26] and time-dependent shear flows [14], respectively. Apart from this small
+stabilizing effect, Fig. 11 establishes that unsteadiness in the base streaks significantly
+enhances flow instability, be it in terms of the inner or the outer mode.
+In order to develop a physical interpretation of these modes, Vaughan and Zaki
+[40] performed DNS of streaky boundary layers perturbed by an outer or inner
+instability. The resulting secondary instability of the streaks was computed from
+the initial linear stages and up to breakdown to turbulence. A top view of the
+inner instability is shown in Fig. 12 and is contrasted to the wave packets observed
+by Nagarajan et al. [30]. The spanwise perturbation pattern shows a distinctive
+checkered pattern near the wall, and which evolves into turbulent spots downstream.
+The events which lead to the formation of the turbulent spots are presented in the
+time sequence in Fig. 13. The inner instability is shown to be most amplified in the
+
+(a)
+
+(b)
+
+15
+
+10
+
+15
+
+10
+
+y
+
+y
+5
+y
+
+y
+
+5
+crit
+
+crit
+
+0
+
+0
+
+0.25
+
+0.50
+
+|u|
+
+0.75
+
+1.00
+
+0
+
+0
+
+0.25
+
+0.50
+
+0.75
+
+1.00
+
+|u|
+
+Fig. 10 Wall-normal profiles of a the inner and b the outer modes. The absolute value of the
+) the most energetic and (
+) the second most energetic
+u−disturbance is plotted for (
+components of the Floquet expansion
+
+Flow Turbulence Combust (2013) 91:451–473
+
+465
+
+(a)
+
+(b)
+0.05
+
+Au = 20%
+
+0.04
+
+0.04
+Au = 20%
+
+0.03
+
+0.03
+Au = 15%
+
+σr 0.02
+
+Au = 10%
+
+0.01
+
+σr 0.02
+
+Au = 15%
+
+0.01
+
+Au = 10%
+
+0
+
+0
+−0.01
+
+0.05
+
+Au = 5%
+
+0
+
+10
+
+20
+
+30
+F
+
+40
+
+50
+
+60
+
+−0.01
+0
+
+Au = 5%
+
+10
+
+20
+
+30
+F
+
+40
+
+50
+
+60
+
+Fig. 11 The influence of streak amplitude and frequency on the a inner and b outer modes
+
+overlap region between the low- and high-speed streaks. This region has previously
+been identified as a site of inception of turbulent spots based on empirical evidence
+only, for example in DNS [5] and experiments [31]. As the inner mode evolves
+downstream, at later time, the instability intensifies and lifts away from the wall.
+Ultimately, the secondary instability leads to the formation of turbulent patches and
+full breakdown to turbulence. It should be noted that the phase speed and growth
+rate of the inner instability were commensurate with the observations by Nagarajan
+et al. [30] and much higher than conventional Tollmien–Schlichting waves.
+Direct simulations of the outer instability were also performed by Vaughan and
+Zaki [40]. An overview of the resulting breakdown is shown in Fig. 14. The side view
+captures the initial laminar streaks, the formation of a turbulent patch and the fully
+turbulent flow downstream.
+The time series which precedes Fig. 14 is shown in Fig. 15. The side views show
+that the onset of the outer instability is hosted by the lifted, low-speed streaks.
+These observations are consistent with the breakdown mechanism observed by
+Jacobs and Durbin [21] in their simulations of bypass transition due to free-stream
+turbulence. The lifted low-speed streaks are exposed to free-stream turbulence in
+their simulations, and develop localised instability which lead to breakdown to
+turbulence. However, the forcing in their simulations was broadband, and the nature
+of the outer instability was not studied in detail. Here, we have explained the origin
+on this breakdown in terms of secondary instability analysis and DNS of breakdown
+due to forcing by the most unstable mode of the base streaks.
+
+0
+0.05
+z
+
+0.10
+0.15
+0.20
+0.7
+
+0.8
+
+0.9
+
+1.0
+
+x
+
+Fig. 12 Top view of the boundary layer. Contours of w  are shown from (left) the simulations by
+Nagarajan et al. [30] and (right) the DNS of the inner instability by Vaughan and Zaki [40]
+
+466
+
+Flow Turbulence Combust (2013) 91:451–473
+
+T0
+y/δ
+
+T1
+y/δ
+
+T2
+y/δ
+
+T3
+y/δ
+
+Streamwise distance, x
+Fig. 13 Time-series showing a side view of the streaky boundary layer response to forcing by an
+inner instability mode. The contours show streamwise velocity perturbation, u . The region of the
+flow-field shown in successive frames is translated downstream in time in order to retain the inner
+instability in the middle of the viewing window
+
+The existence of an outer and and an inner instability was hypothesized based on
+empirical observations from the DNS by Jacobs and Durbin [21] and Nagarajan et al.
+[30], respectively. These observations motivated the Floquet analysis by Vaughan
+and Zaki [40] which lead to the above findings. Whether an inner or outer instability
+
+y/δ
+
+Streamwise distance, x
+Fig. 14 Side view of the boundary layer when forced by a low-frequency vortical mode to generate
+streaks and an outer instability wave. The entire domain is shown, contoured with streamwise
+velocity perturbations, u
+
+Flow Turbulence Combust (2013) 91:451–473
+
+467
+
+T0
+y/δ
+
+T1
+y/δ
+
+T2
+y/δ
+
+T3
+y/δ
+
+Streamwise distance, x
+Fig. 15 Time-sequence of the streaky boundary layer in response to inflow forcing by the outer
+mode. The side view shows the events which precede breakdown to turbulence shown in Fig. 14. The
+region of the flow-field shown in successive frames is translated downstream in time to maintain the
+instability in the middle of the viewing window
+
+is observed in a given configuration remains a function of the flow conditions, for
+example the pressure gradient history and the leading edge geometry.
+The study of the secondary instability of idealized streaks presented a significant
+advance in our understanding of bypass transition. However, a challenging question
+remained: Can linear stability predict the localised instability of particular streaks in
+realistic bypass transition under broadband free-stream forcing? These instabilities
+are localized in space, appear on particular streaks within the boundary layer, and
+can be of the inner or outer type.
+5.2 Secondary instability of realistic streaks
+With the encouraging success of linear theory to explain the secondary instability of
+idealised streaks, Hack and Zaki [17] recently attempted to capture streak instability
+when the boundary layer is exposed to broadband free-stream turbulence. In this
+configuration, the flow is laden with streaks, with various spectral content and
+amplitudes. Examples are shown in Figs. 3, 5 and 16. The challenge is to predict
+
+468
+
+Flow Turbulence Combust (2013) 91:451–473
+
+Fig. 16 The secondary instability of streaks beneath free-stream turbulence. Top pane Plan view of
+the streamwise velocity perturbation, u , in the boundary layer. Bottom pane At left, a zoomed-in end
+view at x − x0 = 178, focusing on the region where the secondary instability is observed. Contours
+of the real (black) and imaginary (white) components of the instability eigenfunction are shown. The
+grey line is the critical layer. At right, the growth rate of the instability mode is plotted as the plane
+of analysis is advanced downstream
+
+which streak, as it evolves downstream, is most unstable and breaks down into a
+turbulent spot.
+Hack and Zaki [17] performed secondary instability analyses for spanwise planes,
+or two-dimensional base states, which were extracted from the DNS fields. The
+analysis follows the methodology described in the work of Barkley et al. [3]. The most
+unstable mode was computed, and its eigenfunction, growth rate and phase speed
+were recorded. Based on the phase speed, the plane of the analysis was translated
+downstream at a later time, and the stability analysis was repeated. This procedure
+was used to track the most unstable mode as it progressed downstream.
+The results of the above procedure are presented in Fig. 16 for one streak
+instability. The top panel shows a plan view of the boundary layer at a time where the
+low-speed streak has developed a secondary instability near z = 22.5. The end view
+(lower left panel) is a zoomed-in view of the low-speed streak and the secondary
+instability mode computed from the linear analysis. The magnitude of the instability
+eigenfunction is marked by the black contour lines, and the critical layer is shown by
+the dashed line. It is important to remark that the instability eigenfunction is localised
+on the low-speed streak which subsequently breaks down into a turbulent spot at
+a later stage. Therefore, the analysis can indeed identify the most unstable streak
+among the spectrum of Klebanoff distortions, and predict the localised secondary
+instability of that particular streaks.
+The mode shape suggests that this instability is of the outer type. In addition,
+the wavelength of the instability, as predicted from the linear analysis, compares
+favourably with the wavelength of the meandering of the streak as observed in the
+top view. Finally, the growth rate of the instability is also shown at right. The history
+of the growth rate is plotted from the initial tracking position near x = 110 to the
+final tracking location x = 180. It is clear that the growth rate of the mode is much
+higher than the conventional Tollmien-Schlinchting wave.
+
+Flow Turbulence Combust (2013) 91:451–473
+
+469
+
+In order to determine the statistical relevance of the outer and inner instabilities
+to the breakdown of boundary layers beneath free-stream turbulence, the above
+analysis must be repeated for a very long time series. Such effort is currently
+underway for zero- and adverse-pressure gradient boundary layers. The initial results
+confirm that the stability analysis is a robust approach to predicting localized streak
+instability.
+5.3 Turbulent spots
+Beyond the amplification of streaks and their secondary instability, the formation
+and growth of turbulent spots was also examined using the laminar-turbulent discrimination techniques presented earlier [32]. An example of spot tracking is shown
+in Fig. 17. The spot shape is extracted at various downstream locations, from a
+transitional, adverse-pressure-gradient boundary layer. The silhouette of the spot
+is coloured by progressively lighter shades to indicate later time instances in the
+evolution of the turbulent patch. The spread angle is marked in the top view. It is
+known from previous work that the spread angle depends on pressure gradient, and
+increases with adverse pressure conditions.
+
+Fig. 17 The history of the growth of a single spot in APG boundary layer. The spot outline is
+shown every 20 convective time units. The top pane shows a side view with the laminar-conditioned
+boundary-layer thickness indicated by a dashed line. The middle and bottom panes show a plan and
+end view of the spot history
+
+470
+
+Flow Turbulence Combust (2013) 91:451–473
+
+Fig. 18 Spot volume as a
+function of time extracted
+from simulations of transition
+in favourable, zero and
+adverse pressure gradient
+boundary layers. Also shown is
+a power-law fit with an
+exponent of 2.42
+
+The procedure of spot detection can be repeated for various spots and pressure
+gradient conditions. Spot characteristics, such as their spreading angle, extent, area
+and volume can be computed during the evolution of the turbulent patches. The
+time-dependence of the spot volume for various pressure gradient conditions was
+evaluated by Nolan and Zaki [32], and is shown in Fig. 18. The volume is independent
+of the flow conditions, unlike the spreading angle which was the focus of various
+previous studies. This can be explained in terms of the convective speed of the spots.
+In adverse pressure gradient, the spots convect at a relatively lower speed, and hence
+the spread angle increases relative to fast moving spots, for example in favourable
+pressure gradient. The spot volume, on the other hand, is insensitive to pressure
+gradient, which could be advantageous for transition modelling.
+
+6 Discussion
+Throughout our efforts to explain bypass transition, we have relied on the complementarity between theory and experiments. The theory has often motivated our
+numerical simulations, and the latter uncovered new phenomena that required the
+development of more advanced theory. The outcome has been an unprecedented
+view of the proceedings of transition to turbulence in boundary layers, beneath freestream vortical forcing.
+High-frequency free-stream perturbations are blocked by the boundary-layer
+shear. In contrast, the ability of low-frequency disturbances to penetrate the shear
+is evident in experimental and numerical studies of bypass transition. Linear theory
+of a model problem shed light on the balance between the shear and diffusive time
+scales, and explained the sheltering effect of the shear.
+The propensity of low-frequency distortions to amplify in shear flows is well
+understood. Therefore, we focused on characterising these streaks in terms of the
+distributions of their amplitude, when the boundary layer is forced by a broadband
+spectrum of free-stream vortical modes. The results demonstrate the wealth of streak
+amplitudes which cannot be inferred by only reporting urms . The importance of the
+high-amplitude events, which induce breakdown to turbulence, is demonstrated.
+These high-amplitude streaks are masked by conventional methods of statistical
+averaging in the homogeneous flow directions.
+
+Flow Turbulence Combust (2013) 91:451–473
+
+471
+
+The observation of localised breakdown, and its correlation with streak amplitude,
+motivated a study of the secondary instability of streaks. Doubly periodic Floquet
+analysis was performed in order to explain the modes of streak instability. Using
+idealised base streaks, we were able to identify two types of secondary instability:
+an outer and an inner instability. Both modes can lead to breakdown, and have
+been used to explain the observations from the numerical experiments by Jacobs and
+Durbin [21] and Nagarajan et al. [30], respectively. Beyond the stability of idealised
+streaks, we also demonstrated that linear theory can isolate the most unstable
+streak, when the boundary layer is exposed to broadband free-stream forcing and
+is laden with various streaks with different amplitudes. Such predictive capability
+is unprecedented and is currently being exploited to explore the effects of pressure
+gradients on boundary layer stability in realistic flow configurations.
+The complementarity between theory and simulations has advanced our understanding of every stage of bypass transition to turbulence. This understanding is
+essential for modelling transitional flows and in the longer term for flow control,
+for example transition delay. Attempts to target the initial, linear stages of the
+transition process have aimed at reducing the penetration of vortical disturbances
+into the shear, and weakening the amplitude of the streak distortions that result.
+Further efforts in this area will continue to rely on complementarity of theory and
+experiments, be the latter physical or numerical.
+Acknowledgements The author would like to thank Dr. S. Y. Jung, Dr. K. Nolan, Dr. S. Saha,
+Dr. N. Vaughan, J. Page and P. Hack for their contributions to this research. Financial support was
+provided by the U.S. Air Force Office of Scientific Research, and the U.K. and the E.U. Research
+Councils.
+
+References
+1. Andersson, P., Berggren, M., Henningson, D.S.: Optimal disturbances and bypass transition in
+boundary layers. Phys. Fluids 11(1), 134–150 (1999)
+2. Andersson, P., Brandt, L., Bottaro, A., Henningson, D.S.: On the breakdown of boundary layer
+streaks. J. Fluid Mech. 428, 29–60 (2001)
+3. Barkley, D., Blackburn, H.M., Sherwin, S.J.: Direct optimal growth analysis for time steppers.
+Int. J. Num. Meth. Fluids 57, 1435–1458 (2008)
+4. Brandt, L., Schlatter P., Henningson, D.S.: Transition in boundary layers subject to free-stream
+turbulence. J. Fluid Mech. 517, 167–198 (2004)
+5. Brandt, L., de Lange, H.C.: Streak interactions and breakdown in boundary layer flows. Phys.
+Fluids 20, 024107 (2008)
+6. Butler, K.M., Farrell, B.F.: Three-dimensional optimal disturbances in viscous shear flow.
+Phys. Fluids A 4, 1637–1650 (1992)
+7. Cantwell, B., Coles, D., Dimotakis, P.: Structure and entrainment in the plane of symmetry of a
+turbulent spot. J. Fluid Mech. 87(04), 641–672 (1978)
+8. Durbin, P.A., Zaki, T.A., Liu, Y.: Interaction of discrete and continuous boundary layer modes
+to cause transition. Int. J. Heat Fluid Flow 30, 403–410 (2009)
+9. Durbin, P., Wu, X.: Transition Beneath Vortical Disturbances. Ann. Rev. Fluid Mech. 39, 107–
+128 (2007)
+10. Emmons, H.W.: The laminar-turbulent transition in a boundary layer. Part i. J. Aero. Sci. 18,
+490–498 (1951)
+11. Fasel, H.F.: Numerical investigation of the interaction of the Klebanoff-mode with a Tollmien–
+Schlichting wave. J. Fluid Mech. 450, 1–33 (2002)
+12. Goldstein, M.E., Wundrow, D.W.: On the environmental realizability of algebraically growing
+disturbances and their relation to Klebanoff modes. Theor. Comput. Fluid Dyn. 10, 171–186
+(1998)
+
+472
+
+Flow Turbulence Combust (2013) 91:451–473
+
+13. Görtler, H.: Instabilität laminarer Grenzschichten an konkaven Wänden gegenüber gewissen
+dreidimensionalen Störungen. Z. Angew. Math. Mech. 21, 250–252 (1941)
+14. Grosch, C.E., Salwen, H.: The stability of steady and time-dependent plane Poiseuille flow.
+J. Fluid Mech. 34, 177–205 (1968)
+15. Grosch, C.E., Salwen, H.: The continuous spectrum of the Orr–Sommerfeld equation. Part 1.
+The spectrum and the eigenfunctions. J. Fluid Mech. 68, 33–54 (1978)
+16. Hack, M.J.P., Zaki, T.A.: The continuous spectrum of time-harmonic shear layers. Phys. Fluids
+24, 034101 (2012)
+17. Hack, M.J.P., Zaki, T.A.: Streak instabilities in boundary layers beneath free-stream turbulence.
+J. Fluid Mech. (2013, under review)
+18. Hultgren, L.S., Gustavsson, L.H.: Algebraic growth of disturbances in a laminar boundary layer.
+Phys. Fluids 24, 1000–1004 (1981)
+19. Hunt, J.C.R., Durbin, P.A.: Perturbed shear layers. Fluid Dyn. Res. 24, 375–404 (1999)
+20. Jacobs, R.G., Durbin, P.A.: Shear sheltering and the continuous spectrum of the Orr-Sommerfeld
+equation. Phys. Fluids 10, 2006–2011 (1998)
+21. Jacobs, R.G., Durbin, P.A.: Simulations of bypass transition. J. Fluid Mech. 428, 185–212 (2001)
+22. Kleiser, L., Zang, T.A.: Numerical simulation of transition in wall-bounded shear flows. Ann.
+Rev. Fluid Mech. 23, 495–537 (1991)
+23. Landahl, M.T.: A note on an algebraic instability of inviscid parallel shear flows. J. Fluid Mech.
+98, 243–251 (1980)
+24. Leib, S.J., Wundrow, W., Goldstein, M.e.: Effect of free-stream turbulence and other vortical
+disturbances on a laminar boundary layer. J. Fluid Mech. 380, 169–203 (1999)
+25. Liu, Y., Zaki, T.A., Durbin, P.A.: Boundary layer transition by interaction of discrete and
+continuous modes. J. Fluid Mech. 604, 199–233 (2008)
+26. Liu, Y., Zaki, T.A., Durbin, P.A.: Floquet analysis of secondary instability of boundary layers
+distorted by Klebanoff streaks and Tollmien–Schlichting waves. Phys. Fluids 20, 124102 (2008)
+27. Luchini, P.: Reynolds-number-independent instability of the boundary layer over a flat surface:
+optimal perturbations. J. Fluid Mech. 404, 289–309 (2000)
+28. Mandal, A.C., Venkatakrishnan, L., Key, J.: A study on boundary-layer transition induced by
+free-stream turbulence. J. Fluid Mech. 660, 114–146 (2010)
+29. Matsubara, M., Alfredsson, P.: Disturbance growth in boundary layers subjected to free-stream
+turbulence. J. Fluid Mech. 430, 149–168 (2001)
+30. Nagarajan, S., Lele, S. K., Ferziger, J. H.: Leading-edge effects in bypass transition. J. Fluid Mech.
+572, 471–504 (2007)
+31. Nolan, K., Walsh, E.J.: Particle image velocimetry measurements of a transitional boundary layer
+under free stream turbulence. J. Fluid Mech. 702, 215–238 (2012)
+32. Nolan, K., Zaki, T.A.: Conditional sampling of transitional boundary layers in pressure gradients.
+J. Fluid Mech. 728, 306–339 (2013)
+33. Ovchinnikov, V., Choudhari, M.M., Piomelli, U.: Numerical simulations of boundary-layer bypass transition due to high-amplitude free-stream turbulence. J. Fluid Mech. 613, 135–169 (2008)
+34. Phillips, O.M.: Shear-flow turbulence. Ann. Rev. Fluid Mech. 1, 245–264 (1969)
+35. Rosenfeld, M., Kwak D., Vinokur M.: A fractional step solution method for the unsteady
+incompressible Navier-Stokes equations in generalized coordinate systems. J. Comput. Phys. 94,
+102–137 (1991)
+36. Saric, W.S., Reed, H.L., White, E.B.: Stability and transition of three-dimensional boundary
+layers. Ann. Rev. Fluid Mech. 35, 413–440 (2003)
+37. Schlatter, P., Brandt, L., de Lange, H.C., Henningson, D.A.: On streak breakdown in bypass
+transition. Phys. Fluids 20, 101505 (2008)
+38. Schrader, L.-U., Brandt, L., Zaki, T.A.: Receptivity, instability and breakdown of Görtler flow.
+J. Fluid Mech. 682, 362–396 (2011)
+39. Swearingen, J.D., Blackwelder, R.F.: The growth and breakdown of streamwise vortices in the
+presence of a wall. J. Fluid Mech. 182, 255–290 (1987)
+40. Vaughan, N.J., Zaki, T.A.: Stability of zero-pressure-gradient boundary layer distorted by unsteady Klebanoff streaks. J. Fluid Mech. 681, 116–153 (2011)
+41. Westin, K.J.A., Boiko, A.V., Klingmann, B.G.B., Kozlov, V.V., Alfredsson, P.H.: Experiments
+in a boundary layer subjected to freestream turbulence. Part I: boundary layer structure and
+receptivity. J. Fluid Mech. 281, 193–218 (1994)
+42. Wu, X., Durbin, P.A.: Evidence of longitudinal vortices evolved from distorted wakes in a turbine
+passage. J. Fluid Mech. 446, 199–228 (2001)
+43. Zaki, T.A., Durbin, P.A.: Mode interaction and the bypass route to transition. J. Fluid Mech.
+531, 85–111 (2005)
+
+Flow Turbulence Combust (2013) 91:451–473
+
+473
+
+44. Zaki, T.A., Durbin, P.A.: Continuous mode transition and the effects of pressure gradient.
+J. Fluid Mech. 563, 357–388 (2006)
+45. Zaki, T.A., Saha, S.: On shear sheltering and the structure of vortical modes in single and twofluid boundary layers. J. Fluid Mech. 626, 111–148 (2009)
+46. Zaki, T.A., Wissink, J.G., Durbin, P.A., Rodi, W.: Direct computations of boundary layers
+distorted by migrating wakes in a linear compressor cascade. Flow, Turb. & Comb. 83, 307–322
+(2009)
+47. Zaki, T.A., Wissink, J.G., Rodi, W., Durbin, P.A.: Direct numerical simulations of transition in a
+compressor cascade: the influence of free-stream turbulence. J. Fluid Mech. 665, 57–98 (2010)
+
+

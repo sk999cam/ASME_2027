@@ -108,7 +108,7 @@ E12 & 4.2 & exact log split into density, energy, length, alignment \\
 %=====================================================================================================
 \section*{Abstract}
 \blk{Abstract}{Known RANS deficiencies are budgeted against one validated reference; the tested corrections are
-given with what each changes.}{F4, F5, F7, F8, F9, T2, F10}{$\etab$ within 0.008 from 20M; RANS 29--33\,\%
+given with what each changes.}{F4, F5, F7, F8, F9, T2, F10}{$\etab$ within 0.008 from 20M; RANS 29--34\,\%
 low; turbulent flux exceeds mean-flow flux from $x/D\sim4.5$ in the reference, never in the RANS; swap: velocity
 and coolant distribution in about equal parts; near-wall eddy viscosity 0.55--0.67, 20M LES within 10\,\%; $\Pr_t$ 0.23--0.45 against
 0.9; lower $\Pr_t$ fixes the centreline, not the spread; film heat flux recovers the shape.}{none in the abstract}
@@ -123,7 +123,7 @@ Milani 2017, 2020.}
 \blk{P2 The 7-7-7 hole on a flat plate}{The 7-7-7 is the most documented shaped hole and the common test case;
 flat plate at zero pressure gradient isolates model and resolution.}{literature}{$30^\circ$, $7^\circ$, $L=6D$,
 AR 2.5, $P=6D$; $\etab$ peaks near BR 1.5 at DR 1.2 and 1.5.}{Schroeder and Thole 2014, 2016, 2016b; Haydt
-2017, 2018; Saumweber 2003; Oliver 2017; Nunno 2022; Bin and Yang 2024.}
+2017, 2018; Oliver 2017; Nunno 2022; Bin and Yang 2024.}
 
 \blk{P3 What is known about the RANS error}{Eddy-viscosity RANS under-predicts lateral spreading and
 over-predicts centreline $\eta$; the errors are traced to E1 and E2; the vortex pair is too strong in SST-type
@@ -213,8 +213,8 @@ $\sim$0.01 (read from F2); hole cross-section 0.4--2.5 wall units (100M, 193M).}
 \section*{4\quad Results}
 
 \blk{Lead-in}{Order: validation, mean flow, coolant budget, wall layer (4.1); closure inputs (4.2); tested
-corrections (4.3).}{text}{lower simulations averaged over 6\,FT; reference regional values move by 0.046 or less
-between 6 and 10\,FT.}{none}
+corrections (4.3).}{text}{lower simulations averaged over 6\,FT, reference over 10\,FT (change between 6 and 10\,FT: no source,
+open).}{none}
 
 \subsection*{4.1\quad Coolant Flow}
 
@@ -224,7 +224,8 @@ quantifies. HV and WV defined here. WV in both views at $x/D$ 2 and 4; at $x/D=1
 RANS pair is the stronger (circulation 0.141 against 0.096 at $x/D=4$, F5a).}{F3a (193M), F3b (RANS 50M), F5a}{isosurface $Q(D/U_\infty)^2=0.005$; insets at $x/D$ 2, 4, 10.}{none}
 
 \blk{The hole}{The diffuser separation of the RANS is smaller, its recovery larger, so it passes more coolant at
-the same plenum pressure; the effect is a model effect and is small against the $\etab$ deficit.}{T1, text}{reversed
+the same plenum pressure; RANS is known not to capture mixing in large diffusers; the effect is small against
+the $\etab$ deficit.}{T1, text}{reversed
 region about twice the RANS near $s/D=-2$; RANS BR $+4.7$\,\%; reference BR standard deviation 1.2\,\%, coherent at
 St 0.27; $\etab$ changes 5--10\,\% between BR 1.0, 1.5, 2.0 in the data.}{Haydt 2018; Schroeder and Thole
 2014.}
@@ -232,8 +233,9 @@ St 0.27; $\etab$ changes 5--10\,\% between BR 1.0, 1.5, 2.0 in the data.}{Haydt 
 \blk{Effectiveness (validation)}{The scale-resolving simulations agree with each other and the experiment in
 $\etab$, within a third of the experimental uncertainty; the RANS is low by distribution, with a high centreline and
 no coolant at mid-pitch; the mid-pitch gap of the 3DNS to the experiment belongs to the laminar approach
-layer.}{F4}{experiment: Tu 0.5\,\%, Mach 0.03, $Re_D\approx4960$, tripped layer $Re_\theta$ 630--700, $\pm0.024$ in
-$\eta$ (95\,\%), up to $\pm6.5$\,\% in BR; within 0.008 over $x/D$ 2.5--7, 7--15, 15--20; RANS 29--33\,\% low
+layer.}{F4}{experiment: Tu 0.5\,\%, Mach 0.03, $Re_D\approx4960$, tripped layer $Re_\theta\approx670$, $\pm0.024$ in
+$\eta$ (95\,\%, Schroeder 2014), $\pm4.5$\,\% in BR at 1.5 (Schroeder 2015); within 0.008 over $x/D$ 2.5--7, 7--15,
+15--20; RANS 29--34\,\% low
 beyond $x/D=7$; centreline 0.50 against 0.39 at $x/D=20$; 3DNS mid-pitch 0.024 at $x/D=20$, experiment flat at
 $\sim$0.035.}{Schroeder and Thole 2014, 2015.}
 
@@ -249,7 +251,7 @@ by the mean flow from $x/D\sim4.5$; the RANS never does. The ratios depend on th
 three heights; the reference coolant balance closes.}{F5b (linear axis; black 193M, blue RANS; solid mean flow,
 dashed turbulent; band: one jackknife standard error)}{crossing of the 193M curves between $x/D$ 4.0 and 4.5; RANS
 turbulent flux 0.37--0.61 of the reference; RANS mean-flow flux 1.9--5.9 times; at $z/D=1.0$ RANS turbulent flux
-0.67--0.98, at $z/D=0.25$ towards the wall; balance below $z/D=0.5$ within 5\,\%, median 1.2\,\%; jackknife over ten
+0.67--0.99, at $z/D=0.25$ towards the wall; balance below $z/D=0.5$ within 5\,\%, median 1.2\,\%; jackknife over ten
 batches.}{Oliver 2017 (ratio of maxima $\sim$0.15, $x/d\le5$); Coletti 2013; Schroeder and Thole 2016b; Foroutan and
 Yavuzkurt 2014 (point comparison, small difference).}
 
@@ -281,9 +283,11 @@ stated once (detector $d=(v-\langle v\rangle_T)^2/U_\infty^2$, $v$ spanwise velo
 over $2D/U_\infty$, smoothed over $1D/U_\infty$, Otsu threshold on $\log_{10}d$); this layer is what the unfinished
 $\gamma=1$ run of 4.3 tests; coherent motions carry a small share of the mixing.}{F6 (plan views at two times,
 space-time diagram on the mid-pitch line), F4c ($\gamma$ of the 193M), text}{mid-pitch $H$ and $C_f$ leave the
-laminar curves from $x/D\sim8$ (3DNS), not in the RANS; mid-pitch $\gamma$ of the 193M above 0.8 from $x/D=15.7$;
-193M and LES within 0.03, 0.94 at $x/D=20$; RANS model $\gamma$ 0.02; plane mean $\gamma$ 0.17 against 0.72;
-periodic share of $\mu_{\mathrm{eff}}$ 0.05--0.08.}{Dellacasagrande 2023; Otsu 1979; Lav 2019; Fawcett 2013.}
+laminar curves from $x/D\sim8$ (3DNS), not in the RANS; mid-pitch $\gamma$ of the 193M above 0.8 from $x/D=15.5$;
+LES differs by up to 0.145 at $x/D=11.7$, within 0.03 from $x/D=16$, 0.94 at $x/D=20$; RANS model $\gamma$ 0.02;
+plane mean $\gamma$ over $x/D$ $-3$ to 20, full span, 0.17 against 0.73; periodic share of $\mu_{\mathrm{eff}}$
+0.03--0.06 (Lav filter width); approach-layer $H$ within 0.03 of 2.59 for $x/D<-6$, 2.67 just upstream of the
+hole.}{Dellacasagrande 2023; Otsu 1979; Lav 2019; Fawcett 2013.}
 
 \blk{From the flow to the closure}{The RANS heat flux has two inputs, $\mu_t$ and $\Pr_t$; both are measured in the
 reference; for the 20M LES the stress is the resolved stress plus the mean WALE stress.}{E8, E9, E10}{regional
@@ -314,7 +318,7 @@ Stratton and Shih 2019 (masked comparison).}
 \blk{Below $z_x$}{The RANS eddy viscosity is low, mostly through a short length scale; $k^{1/2}$ is also low; the
 assumed alignment gives part back.}{F7, F8a, F8b}{ratio 0.55--0.67 over $x/D$ 4--20; $\ln$ ratio $-0.415$,
 $-0.548$, $-0.589$ at $x/D$ 5, 10, 20, layer mean $-0.54$; terms: density $+0.02$, $k^{1/2}$ $-0.27$,
-$L_{\mathrm{eff}}$ $-0.70$, alignment $+0.41$; length 0.45--0.5; $1/\cos\theta$ of the reference 2.5 near the hole
+$L_{\mathrm{eff}}$ $-0.70$, alignment $+0.41$; length 0.43--0.50; $1/\cos\theta$ of the reference 2.5 near the hole
 to 1.7 at 20.}{Stratton and Shih 2019 (SST below the LES least-squares value; near-wall misalignment); Sandberg
 2018.}
 
@@ -330,27 +334,31 @@ rebinned to $0.1D$ in $x$; the same route gives the RANS layer means within 0.03
 $x/D=19.5$, against 1.06 for the RANS.}{none}
 
 \blk{Where in the span}{The reference near-wall turbulence spreads to mid-pitch, the RANS has little outside the jet;
-the short RANS length is a short dissipation length.}{text (cross-planes not shown)}{$L_{\mathrm{eff}}$ within 7\,\%
-of $C_\mu k^{3/2}/\varepsilon$ on the reference centreline.}{none}
+the short RANS length is a short dissipation length.}{text (cross-planes not shown)}{RANS
+$\mu_t/(\bar\rho k^{1/2})$ within 5\,\% of $C_\mu k^{3/2}/\varepsilon$ in the film (fig\_budget\_lines.py); the
+reference centreline value has no source (open).}{none}
 
 \blk{Turbulent Prandtl number}{The reference mixes heat faster than momentum in the film; regional values are below
 the setting of 0.9 and below the free-shear value; away from the wall the map is resolved; the wall layer over
-$x/D$ 10--20 has no map value (record final); pooled over $x/D$ 10--20, $\Pr_t$ is not resolved below $z^+\sim10$
-(adiabatic wall) and is $\sim0.9$ at $z^+$ 15--27, close to the RANS setting.}{F9, text}{map from every 193M grid point, cells $\sim0.1D$ by the mesh levels, volume-weighted sums;
+$x/D$ 10--20 has no map value (record final); pooled over $x/D$ 10--20, $\Pr_t$ is not resolved up to $z^+\approx11$
+(adiabatic wall) and is 0.9--1.0 at $z^+$ 13--30, close to the RANS setting.}{F9, text}{map from every 193M grid point, cells $\sim0.1D$ by the mesh levels, volume-weighted sums;
 grey where not defined (gradient below 0.05) or not resolved ($|\Pr_t|$ below twice its jackknife standard error,
 or a sign change of the denominator among the ten batches); volume, $z/D\ge0.3$: $x/D$ 3--10 0.226, $x/D$ 10--20 0.450 (not the region boundaries of 3.1); wall layer
 ($x/D$ 10--20, $z/D<0.2$) 46\,\% of the area not resolved; record final (ten batches, 10\,FT; a standard error of 0.1 per cell
 would need $\sim$11 times the record; merging cells to 0.5--1$D$ leaves 0.45 unresolved); pooled over $x/D$
-10--20: not resolved below $z^+\sim10$ ($z/D$ 0.07; $\partial_z T\to0$ at the adiabatic wall, denominator changes
-sign among batches); $z^+$ 14: $0.95\pm0.15$, 20: $0.87\pm0.10$, 27: $0.89\pm0.10$ ($z/D$ 0.11--0.2), against 0.45
+10--20: not resolved up to $z^+=10.7$ ($z/D$ 0.08; $\partial_z T\to0$ at the adiabatic wall, denominator changes
+sign among batches), lowest resolved $z^+=13.4$; $z^+$ 13.4 ($z/D$ 0.10): $0.98\pm0.18$, 26.8 (0.20): $0.89\pm0.10$,
+29.5 (0.22): $0.88\pm0.10$ (planning/integrity\_check/prt\_span\_out.txt), against 0.45
 over $x/D$ 10--20 above $z/D=0.3$.}{Kays 1994; Schlichting and Gersten 2017; Kohli and Bogard 2005; Ling 2015; Liu 2008, 2011; Stratton and
 Shih 2019; Rochhausen 2015.}
 
 \blk{Spanwise diffusion}{The reference heat diffusivity is anisotropic on the flanks, its momentum diffusivity about
-isotropic; the RANS lateral heat diffusivity at the film edges is low, mostly through the $\Pr_t$ setting, and its
-steeper lateral gradients offset most of it in the flux; the narrow film is not the result of this diffusivity
-alone.}{text (not shown)}{$\alpha_y/\alpha_z$ 3.2 at $x/D=10$; $\nu_y/\nu_z$ 0.7--1.1; RANS lateral heat
-diffusivity 0.5--0.6; confidence medium.}{Kaszeta and Simon 2000.}
+isotropic and below the measured momentum band; the RANS lateral heat diffusivity at the film edges is low, the
+$\Pr_t$ setting the larger contribution at $x/D=20$ and the reference anisotropy slightly larger at $x/D=10$; the
+steeper RANS lateral gradients offset most of it in the flux; the narrow film is not the result of this diffusivity
+alone.}{text (not shown)}{$\alpha_y/\alpha_z$ 3.2 at $x/D=10$; $\nu_y/\nu_z$ 0.7--1.1 against 1.5--4 for the
+same momentum ratio measured near the jet core at $x/D=2.5$ behind cylindrical holes; RANS lateral heat diffusivity 0.5--0.6; confidence
+medium.}{Kaszeta and Simon 2000 (momentum diffusivity ratio).}
 
 \planfig{fig_meff_maps.png}{1.0}{F7. Ratio to the 193M of the conditional span mean of the eddy viscosity: (a) RANS
 50M, (b) 20M LES; vertical scale doubled. Black line: $z_x$ of the RANS; grey: masked.}
@@ -392,7 +400,7 @@ $-0.036$, $-0.021$ (base $+0.100$, $+0.104$, $+0.110$; $\Pr_t$ 0.3 $+0.016$, $-0
 \blk{Guidance for design use}{Limits of validity stated first; then what each correction buys and what it does
 not, as far as the runs show; the 20M LES reproduces $\etab$ within 0.006 and the eddy viscosity below $z_x$
 within about 10\,\% with no correction, while no corrected RANS run matches both $\etab$ and the centreline; a lower $\Pr_t$ down to the wall is not supported by the reference in the wall
-layer over $x/D$ 10--20 at $z^+$ 15--27 ($\Pr_t\sim0.9$); span-mean agreement alone does not show a correct film; untested: the length scale
+layer over $x/D$ 10--20 at $z^+$ 13--30 ($\Pr_t$ 0.9--1.0); span-mean agreement alone does not show a correct film; untested: the length scale
 alone; three runs unfinished, among them $\gamma=1$ downstream of the hole, which tests the laminar mid-pitch layer
 (F6).}{T2, F10, F6}{flat plate, zero pressure gradient, BR 1.5, DR 1.5, VR $\sim$1.0, laminar
 approach layer, Tu 5.5\,\%, SST with $\gamma$--$Re_\theta$; not tested: turbulent approach layer, other BR, curved
@@ -405,7 +413,7 @@ or accelerating surfaces.}{Fawcett 2013.}
 \section*{5\quad Conclusions}
 One paragraph of setup, then four outcomes mirroring the aims:
 \begin{enumerate}[label=\arabic*.]
-\item Validation: $\etab$ within 0.008 from 20M; diffuser least resolved; RANS 29--33\,\% low, narrow, high
+\item Validation: $\etab$ within 0.008 from 20M; diffuser least resolved; RANS 29--34\,\% low, narrow, high
   centreline (F2, F4).
 \item Coolant budget: turbulent above mean-flow flux in the reference from $x/D\sim4.5$, never in the RANS;
   mean-flow excess shared between velocity and coolant distribution; inward sweep stronger; plume 0.75 wide at

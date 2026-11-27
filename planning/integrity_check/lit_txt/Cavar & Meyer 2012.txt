@@ -1,0 +1,2669 @@
+International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+Contents lists available at SciVerse ScienceDirect
+
+International Journal of Heat and Fluid Flow
+journal homepage: www.elsevier.com/locate/ijhff
+
+LES of turbulent jet in cross ﬂow: Part 2 – POD analysis and identiﬁcation
+of coherent structures
+Dalibor Cavar ⇑, Knud Erik Meyer
+Department of Mechanical Engineering, Technical University of Denmark, Nils Koppels Alle, Building 403, 2800 Kgs. Lyngby, Denmark
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Available online 27 April 2012
+Keywords:
+LES
+POD
+CFD
+Jet
+Cross ﬂow
+Turbulence
+
+a b s t r a c t
+The paper presents results of a Proper Orthogonal Decomposition (POD) investigation of the LES based
+numerical simulation of the jet-in-crossﬂow (JICF) ﬂowﬁeld with Reynolds number based on the cross
+ﬂow velocity and jet diameter Re = 2400 and the velocity ratio of R = 3.3. LES results are validated against
+pointwise time averaged Laser Doppler Anemometry (LDA) measurements in PART1 of this study. In
+PART2 of the presented study – a planar (2D) LES based snapshot POD analysis is ﬁrst conducted on
+two mutually perpendicular planes located in the jet-to-crossﬂow entrance zone. The obtained results
+are directly compared and found to be in close agreement with results of a Particle Image Velocimetry
+(PIV) based planar (2D) snapshot POD analysis by Meyer et al. (JFM 583, p. 199–227, 2007), indicating
+that LES is able to predict the same large scale ﬂow dynamics as that captured by PIV. Some differences
+are also observed, but appear to be directly connected to the differences in levels of the resolved turbulent kinetic energy (TKE) between LES and PIV datasets. Those differences proved to be linked to the process of ﬁltering out the small-scale ﬂuctuations implicit to the PIV measurement technique. Comparisons
+of TKE captured by the ﬁrst POD modes showed that they are not affected by this implicit ﬁltering.
+The LES based POD analysis was also conducted in 3D. The 3D POD analysis results based on the ﬁrst
+two POD modes show a full ability to directly visualize details of the relationship between the counterrotating vortex pair (CVP), the hanging vortex and the wake vortices. POD reconstruction shows that the
+CVP originates from the hanging vortex formed at the lateral sides of the jet. It also shows that the shedding process involving oscillation of the jet core is responsible for the creation of wake vortices and that
+the wake vortex originates from the hanging vortex, but grows quickly by ‘‘sucking up’’ the wall boundary
+layer ﬂuid and vorticity.
+Ó 2012 Elsevier Inc. All rights reserved.
+
+1. Introduction
+The Jet in Cross Flow (JICF) represents a basic ﬂow conﬁguration
+that was investigated quite extensively in the past, primarily due
+to its relevance to numerous engineering applications. The evolution of vortical ﬂow in and around JICF has been subjected to
+several experimental and numerical investigations aimed towards
+better understanding of the complex interaction mechanism between the jet and the cross-stream. Most experimental studies of
+the ﬂow dynamics are visualization studies. Good examples are
+(Fric and Roshko, 1994; Kelso et al., 1996), who used laminar
+oncoming ﬂows (at least on the cross-stream side) making it possible to directly trace the vorticity deformation and creation of vortical structures throughout the ﬂow ﬁeld. However, in most
+practical applications, where JICF occurs, both inﬂows are turbulent. The inherent unsteadiness of turbulent ﬂow makes ﬂow
+patterns highly irregular and makes their visualization much more
+⇑ Corresponding author. Tel.: +45 45254338.
+E-mail address: daca@win.dtu.dk (D. Cavar).
+0142-727X/$ - see front matter Ó 2012 Elsevier Inc. All rights reserved.
+http://dx.doi.org/10.1016/j.ijheatﬂuidﬂow.2012.03.010
+
+difﬁcult since tracers from a local source are quickly mixed into
+large regions. Even if the ﬂow has systematically appearing coherent ﬂow structures, inspection of instantaneous velocity ﬁelds
+(snapshots) in practice never show identical patterns. The coherent
+ﬂow structures are randomly perturbed by the turbulence. The
+direct comparison and interpretation of snapshots from different
+ﬂow realizations is therefore not usually feasible.
+Proper Orthogonal Decomposition (POD) can be used to perform statistical analysis of ﬂow snapshots (see e.g. Lumley, 1967;
+Sirovich, 1987). POD is today an established technique and many
+investigators have successfully used POD to analyze complex ﬂow
+ﬁelds. Podvin et al. (2006) used POD to investigate cavity ﬂows and
+were able to relate the ﬁrst couple of most the energetic and dominant POD modes to cavity ﬂow shear layer instabilities. Meyer
+et al. (2007) used PIV based POD to analyze ﬂow structures in
+the JICF ﬂow conﬁguration. Moin and Moser (1989) used DNS
+based POD analysis to study fully developed channel ﬂow, Kostas
+et al. (2005) used POD to analyze both the instantaneous velocity
+and vorticity ﬁelds of a backward-facing step, Orellano and Wengle
+(2001) combined POD and LES to analyze the forced turbulent
+
+36
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+ﬂow over a fence while a full 3-D snapshot POD analysis of a
+transitional, spatially evolving boundary layer was performed by
+Rempfer and Fasel (1994).
+Flows calculated with LES are usually compared to experiments
+using time-averaged local variables such as mean velocities and
+Reynolds stresses. For the present ﬂow case, we have presented
+this type of comparison in PART1. Good agreement with measurements using Laser Doppler Anemometry (LDA) has been found
+with the exception of a region on the side of the jet that faces
+the crossﬂow. It is suggested in PART1 that this may be caused
+by measurement errors. Therefore, one of the objectives of the
+present study is to investigate how POD can be used as a statistical
+tool to compare experimental data to the results calculated with
+LES.
+POD is based on energy considerations. If a ﬂow has large, energetic ﬂow structures that systematically appear they will be captured in the ﬁrst POD modes. POD can therefore be used to
+identify dominant ﬂow structures. The dynamics of the structures
+can be tracked if time-resolved data are available.
+Particle Image Velocimetry (PIV) adds a new dimension to
+experimental data by offering snapshots of a ﬂow. When compared
+to LES, PIV data still have two important shortcomings: measurements are usually not time-resolved and only capture data in a
+plane of the ﬂow. POD analysis does not require time-resolved data
+and is therefore well-suited as a statistical tool for PIV data analysis. The fact that data only comes from a plane that cuts through
+the ﬂow is more questionable. To represent three-dimensional
+ﬂow structures, POD analysis should formally be based on threedimensional velocity ﬁelds. However, the experimental investigation presented in Meyer et al. (2007) suggests that POD analysis
+of PIV data taken at different orthogonal planes that cut through
+central parts of the JICF do represent the same ﬂow structures.
+Therefore, another objective of the present study is to test this suggestion by comparing POD on LES data done both in planes similar
+to PIV data and on a full three-dimensional dataset.
+Finally, the three-dimensional POD analysis will be used to analyze details regarding the creation of the counter-rotation vortex
+pair (CVP). The CVP is the largest ﬂow structure in the jet in cross
+ﬂow, but the origin of the CVP is still debated in literature.
+As mentioned, PART1 of this study compares LES results to
+pointwise LDA measurements and establishes a ﬁrm and clear link
+between computations and measurements on the considered jetin-cross-ﬂow set-up. This PART2 of the presented study describes
+ﬁndings of the conducted POD analysis on available PIV (Meyer
+et al., 2007) and LES datasets. For information regarding experimental and computational set-up, a review of previous experimental and numerical studies related to jet-in-cross-ﬂow, etc., the
+reader is referred to PART1. It should be noted that all LES based
+2D POD results presented in the following are based on case LES
+6 (best numerical counterpart to LDA measurements) and all LES
+based 3D POD analyses are based on case LES 7 (longest overall
+computation (in time units) conducted during this investigation)
+as described in PART1.
+2. Proper Orthogonal Decomposition (POD) Basics
+An objective and unbiased method, that can be used to identify
+ﬂow structures in a given ﬂow, is Proper Orthogonal Decomposition – POD. In POD a series of ﬂow realizations is decomposed,
+using some mathematical tools, into a set of orthonormal basis
+functions, that span the given dataset in the most ‘‘optimal’’ way.
+The deﬁnition of optimality in POD is based on energy considerations, as POD eigenvalues, which represent the relative contribution of a given POD mode to the overall resolved kinetic energy, can
+be arranged in descending order, so the most energetic, i.e. largest
+ﬂow structures are captured in the ﬁrst couple of POD modes.
+
+Therefore in cases, where the ﬂow dynamics are dominated by
+some distinct coherent structures, it should be possible to capture
+them by considering a relatively small number of POD modes.
+2.1. Basic equations
+POD was introduced in the context of turbulence by Lumley in
+(1967). In the context of this work the method known as ‘‘snapshot
+POD’’ of Sirovich (1987) will be used. In the following we present a
+brief description of basic equations, that constitute a mathematical
+foundation of the applied method. For a detailed description of the
+general POD methodology, an interested reader may refer to the
+book by Holmes et al. (1998).
+Following the basic (classical POD) ideas of Lumley (1967), the
+equation for determining the POD eigenvalues and eigenfunctions
+can be derived as follows:
+
+Z
+
+Rðx; x0 ÞUðx0 Þdx0 ¼ kUðxÞ;
+
+ð1Þ
+
+X
+
+where X denotes the spatial domain (x = {x, y, z} 2 X) considered, R
+is the two-point correlation tensor and k and U are POD-eigenvalues and eigenfunctions, respectively.
+Considering an ensemble of uncorrelated ﬂow realizations,
+where a single realization – representing the ﬂuctuating part of,
+e.g. the velocity ﬁeld, is written as:
+
+un ¼ uðx; tn Þ;
+
+n ¼ 1; . . . ; N;
+
+ð2Þ
+
+one can approximate the two-point correlation tensor (assuming
+the ensemble is sufﬁciently large – see Sirovich, 1987) as:
+
+Rðx; x0 Þ ¼
+
+N
+1X
+uðx; tn ÞuT ðx0 ; t n Þ:
+N n¼1
+
+ð3Þ
+
+Assuming furthermore that the basis modes can be written in
+terms of the original dataset as:
+
+UðxÞ ¼
+
+N
+X
+Aðt n Þuðx; t n Þ;
+
+ð4Þ
+
+n¼1
+
+and inserting (3) and (4) into (1), after some rearrangements it
+yields:
+
+Z
+N 
+X
+1
+N
+
+n¼1
+
+
+uT ðx0 ; t n Þuðx0 ; t n Þdx0 Aðtn Þ ¼ kAðtn Þ:
+
+ð5Þ
+
+X
+
+Denoting
+
+C ¼ Cði; jÞ ¼
+
+1 T
+ðu ðx; ti Þuðx; t j ÞÞi;
+N
+
+j ¼ 1; . . . ; N;
+
+ð6Þ
+
+and
+
+A ¼ Aðtn Þ n ¼ 1; . . . ; N;
+
+ð7Þ
+
+the equation system (5) can be written in a compact form as:
+
+CA ¼ kA:
+
+ð8Þ
+
+By solving the eigenvalue-problem in Eq. (8) a set of N mutually
+orthogonal eigenvectors is obtained, and they can then be used to
+construct the POD modes according to Eq. (4). The POD modes are
+typically normalized giving the orthonormal basis of the considered dataset, as:
+
+PN
+i n
+n
+n¼1 A ðt Þuðx; t Þ
+Ui ðxÞ ¼ 
+P
+ N i n
+ i ¼ 1; ::; N:
+ n¼1 A ðt Þuðx; t n Þ
+
+ð9Þ
+
+In practice the method is applied on either experimental or
+numerical – i.e. discrete datasets (see e.g. Pedersen, 2003). Considering the POD analysis of N 2D datasets, which corresponds to N
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+planes consisting of k  m = M data points, by subtracting the mean
+value of the considered quantity, e.g. velocity component, its
+ﬂuctuating parts can be arranged in a matrix U as follows:
+
+2
+
+
+U ¼ u1 u2 .. . .. . uN1
+
+u11 u21
+6 .
+..
+6 ..
+.
+6
+6 1
+6 uM u2M
+6
+6 1
+6 v 1 v 21
+6
+
+..
+N ¼ 6 ..
+u
+6 .
+.
+6
+6 1
+6 v M v 2M
+6
+6 w1 w2
+6 1
+1
+6
+..
+6 ..
+4 .
+.
+
+3
+.. . .. . uN1
+uN1
+1
+..
+..
+.. 7
+.
+.
+. 7
+7
+7
+N1
+.. . .. . uM
+uNM 7
+7
+.. . .. . v N1
+v N1 77
+1
+7
+..
+..
+.. 7
+:
+.
+.
+. 7
+7
+N1
+N 7
+.. . .. . v M
+v M 77
+N7
+.. . .. . wN1
+w
+1
+1 7
+7
+..
+..
+.. 7
+.
+.
+. 5
+
+wNM
+w1M w2M .. . .. . wN1
+M
+Correspondingly, the auto-covariance N  N matrix C is formed
+as:
+
+C ¼ UT U:
+By solving the eigenvalue problem (8) and arranging solutions
+in a descending order we obtain:
+
+k1 > k2 >    > kN1 > kN ¼ 0:
+Corresponding POD q
+modes
+are then created, typically using the
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+discrete 2-norm kzk ¼ z21 þ z22 þ    þ z22M1 þ z22M as:
+
+PN
+i N
+n¼1 An u 
+/i ðxÞ ¼ 
+P
+ N
+
+i
+ n¼1 An uN 
+
+i ¼ 1; . . . ; N:
+
+ð10Þ
+
+One of the basic properties of POD is that each original snapshot
+can be reconstructed from the calculated POD modes. In order to
+do that the expansion coefﬁcients, called POD coefﬁcients, have
+to be calculated ﬁrst.
+Basically
+
+un ¼
+
+N
+X
+
+ani /i ¼ Wan ;
+
+ð11Þ
+
+i¼1
+
+where W = [/1/2 . . . /N1 /N] and the POD coefﬁcient vector for a
+given snapshot is deﬁned by an = [an(t1) an(t2) . . . an(tN1) an(tN)]T.
+Once the POD modes are calculated the unknown POD coefﬁcients can be determined from:
+
+an ¼ WT un :
+
+ð12Þ
+
+An important property of POD coefﬁcients an(t) is that they represent the amount of energy of un(x, t) in the ‘‘direction’’ of /n.
+Therefore the size of a given POD coefﬁcient directly indicates
+the signiﬁcance of the corresponding POD mode for the considered
+instantaneous ﬂow realization.
+3. Comparison of PIV-based and LES-based planar (2D) POD
+analyses
+Results presented in PART1 of the current LES study show that
+despite substantial numerical efforts, a clear disagreement between results from LDA measurements and ﬁndings of all considered LES cases was observed in the immediate jet-to-crossﬂow
+exhaustion zone. Therefore, it is interesting to consider a direct
+POD based comparison between ﬂow dynamics revealed by available PIV measurements and LES, as it can serve as an additional
+important validation step that indicates how well the LES is able
+to represent not only the statistical properties of the measured JICF
+ﬂow case, but also the dynamics of real ﬂow behavior. We ﬁnd it
+additionally very important to establish a clear indication that
+
+37
+
+POD results based on PIV (previously published in Meyer et al.,
+2007) and current LES based POD ﬁndings do in reality represent
+the same ﬂow physics, since our intention is to utilize ﬁndings
+from that study and bring it a considerable step further by introducing 3D POD analysis, which is presented and discussed in Section 5.
+As mentioned in the introduction, PIV measurements provide
+only snapshot based data in a plane. This does not guarantee that
+the most dominant ﬂow structures are captured. However, ﬁndings
+reported by Meyer et al. (2007) suggest that results from different
+planes do agree and that they represent the same ﬂow phenomena.
+Nevertheless, it is not unlikely that a POD analysis on the full
+three-dimensional ﬂow ﬁeld can lead to a substantially different
+outcome. Therefore, the ﬁrst POD analysis of the LES data is conducted using data that has been resampled to the same planar grid,
+as is used for PIV. Since LES data has a signiﬁcantly higher spatial
+resolution than the PIV data, this resampling can be done quite
+accurately (a second order inverse distance interpolation technique was used). Doing the POD analysis in the exact same points
+(same plane) means that deviations in results cannot be caused by
+the selection of data points.
+The POD analysis of PIV data is based on 1000 snapshots, which
+were obtained with sufﬁcient time between samples to ensure statistical independence. To test statistical convergence, the POD
+analysis was ﬁrst conducted with signiﬁcantly fewer samples.
+Using, e.g. 200 samples showed the same qualitative results for
+the ﬁrst app. 6 POD modes, but small irregularities and asymmetries were seen when compared to the results using 1000 samples.
+For increasing POD mode number, large difference were seen. A
+dataset comprising 1000 samples seemed to indicate that reasonable statistical convergence levels were reached and is therefore
+chosen as the basis for the presented analysis. The same number
+of independent samples in the LES case could not be provided for
+the obvious reasons of extreme computational overhead connected
+with it.
+The current LES based POD study is conducted based on the results of case LES 6 from PART 1 of this study and datasets extracted
+on two investigated planes during the overall time period that correspons to 30 Flow-Throught-Times (FLTs).1
+The turbulence time scale is increasing with the downstream
+distance in the JICF ﬂow. Assuming that the average integral time
+scale in the near-ﬁeld ﬂow is 3D/U1 (obtained from autocorrelation function Ruu at point x/D = 2, y/D = 0 z/D = 3 – Fig. 8 in PART
+1 of this study), the present LES dataset will only contain app. 90
+statistically uncorrelated samples. The initial analysis was conducted on these 90 uncorrelated ﬂow realizations showing qualitatively similar results to those based on 1000 samples. The main
+difference was that some structures were signiﬁcantly ‘‘blurred’’
+and were not easily identiﬁable in the small dataset analysis.
+Therefore, despite the fact that the LES dataset contained statistically correlated data, we decided to conduct the main LES analysis
+on the full dataset in order to accommodate a comparison of PIV
+and LES data up to a similar level of detail.
+The POD analyses are compared on two mutually perpendicular
+planes in the jet near-ﬁeld – y/D = 0 the symmetry plane and the x/
+D = 1 plane.
+Before preceding further, a comment on the data plotting method should be given. As the POD method is based on solution of an
+eigenvalue problem, the resulting eigenvectors, called POD modes
+are only determined up to a constant by this analysis. The scaling
+of the POD modes to make an orthonormal basis addresses this issue only partially, as the sign of eigenvectors, that results from the
+
+1
+The time it takes a massless particle to travel with average velocity from the inlet
+to the outlet of the computational domain.
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+z/D
+
+z/D
+
+2
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+
+0
+
+1
+
+2
+
+3
+
+0
+
+4
+
+LES
+
+0
+
+1
+
+x/D
+
+3
+2.5
+
+z/D
+
+3
+2
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+
+0
+
+1
+
+2
+
+3
+
+0
+
+4
+
+LES
+
+0
+
+1
+
+mode 3 with 3.4% of energy
+
+mode 3 with 4.3% of energy
+
+4
+
+3.5
+2.5
+
+z/D
+
+3
+
+2.5
+2
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+
+0
+
+1
+
+2
+
+3
+
+0
+
+4
+
+LES
+
+0
+
+1
+
+x/D
+
+2
+
+3
+
+4
+
+x/D
+
+mode 4 with 3.1% of energy
+
+mode 4 with 2.9% of energy
+
+3.5
+
+3.5
+3
+2.5
+
+z/D
+
+3
+2.5
+2
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+
+0
+
+1
+
+2
+
+3
+
+0
+
+4
+
+LES
+
+0
+
+1
+
+x/D
+
+2
+
+3
+
+4
+
+x/D
+
+mode 5 with 3.0% of energy
+
+mode 5 with 2.8% of energy
+
+3.5
+
+3.5
+3
+2.5
+
+z/D
+
+3
+2.5
+2
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+
+0
+
+1
+
+2
+
+3
+
+0
+
+4
+
+LES
+
+0
+
+1
+
+2
+
+3
+
+x/D
+
+x/D
+
+mode 6 with 2.6% of energy
+
+mode 6 with 2.3% of energy
+
+3.5
+
+4
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+2
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+
+0
+
+3
+
+x/D
+
+3
+
+0
+
+2
+
+x/D
+3.5
+
+0
+
+4
+
+3.5
+
+2.5
+
+0
+
+3
+
+mode 2 with 7.7% of energy
+
+3.5
+
+0
+
+2
+
+x/D
+
+z/D
+
+which is used in y/D = 0 and x/D = 1 planes, respectively. In this way
+the size of the ‘‘mean’’ POD mode in- vs. out-of-plane velocity is
+evaluated. To enable comparisons between modes, all plots of the
+POD modes use the same scaling for both the vector length and
+the color range in all of the presented Figures. Fixed scaling of the
+POD out-of-plane velocity component contours combined with
+the relative size of the out-of-plane POD velocity component from
+Eq. (13) gives both visual and quantitative estimate on which part
+of the POD based velocity component predominantly inﬂuences
+the considered mode.
+Below we present the results of the conducted POD analyses
+and compare them in such a way that the ﬁrst 6 POD modes on
+the two investigated, mutually perpendicular planes are directly
+compared. Additionally, the relative energy content in the ﬁrst
+20 modes for both PIV- and LES-based POD analysis is presented
+together with an estimate of the relative size of the out-of-plane
+POD velocity component from Eq. (13) for each of the planes
+considered.
+Results from the POD analyses based on datasets corresponding
+to the symmetry plane are presented in Fig. 1. Results are presented ‘‘in pairs’’ – so each column in the following Figures represent POD modes that are based on PIV data (left column) and LES
+calculations (right column). A thick black line indicated on all subﬁgures for the y/D = 0 plane represent the jet trajectory, which is
+estimated as the mean streamline emerging from the point
+x/D = z/D = 0 in the symmetry plane, following the deﬁnition of
+Yuan et al. (1999).
+A generally good agreement between POD modes calculated
+from PIV and LES datasets can be observed.
+It is evident that the ﬁrst two POD modes in both analyses show
+a clear dominance of the out-of-plane POD mode velocity component, where three dominant and almost parallel structures placed
+downstream of the jet trajectory are clearly visible, Fig. 1 and Table
+1 (note the extent of the Vrel parameter in the ﬁrst two modes in
+both LES and PIV based POD analyses, when compared to all other
+modes). They are interpreted as traces of wake vortices in Meyer
+et al. (2007). In addition to the generally good agreement between
+the two analyses in the case of the ﬁrst two modes, some differences in the near-wall region at position x/D  0.5 can be observed.
+In PART 1 of this study, a disagreement between LDA measurements
+and LES has been observed on this particular location too. It should
+also be noted that the PIV method introduces erroneous results,
+caused by a velocity bias towards zero, in the immediate vicinity
+of the jet entry point in region 0.5 < x/D < 0.5 – see Pedersen
+(2003).
+One should also note a difference in the extension of the ﬁrst
+dominant out-of-plane structure for POD mode 2 in the near-wall
+region 0.5 < x/D < 1.25, between PIV- and LES-based results.
+The third POD mode also shows similar tendencies in both analyses. Here, signiﬁcantly more dominant in-plane velocities are
+
+3
+2.5
+
+mode 2 with 9.8% of energy
+
+z/D
+
+ð13Þ
+
+3
+2.5
+
+0
+
+z/D
+
+U rel
+
+P
+i jui j
+ﬃ;
+¼ P qﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+v 2i þ w2i
+i
+
+mode 1 with 8.4% of energy
+3.5
+
+1.5
+
+z/D
+
+P
+i jv i j
+;
+V rel¼ P qﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+u2i þ w2i
+i
+
+mode 1 with 11.5% of energy
+3.5
+
+z/D
+
+solution of the underlying POD problem is arbitrary – i.e. it may
+strongly depend on the solution procedure.
+In should be noted furthermore that POD modes are vector
+ﬁelds that have the same form as the snapshots and represent
+deviations from the mean ﬁeld. The in-plane POD mode velocities
+(illustrated as vectors) in all subsequent Figures are scaled by the
+same factor in order to better visualize the existing ﬂow structures
+in the corresponding planes, while coordinate axes are normalized
+by the pipe diameter D and the out-of-plane component is plotted
+in color. Assessment of the relative inﬂuence of the in-plane-velocity POD mode component vs. out-of-plane-velocity POD mode
+component is basically done by introducing the parameter:
+
+z/D
+
+38
+
+PIV
+
+0
+
+1
+
+2
+
+x/D
+
+3
+
+4
+
+0
+
+LES
+
+0
+
+1
+
+2
+
+3
+
+4
+
+x/D
+
+Fig. 1. Plane y/D = 0, POD – modes 1–6. All subﬁgures in the left-hand side column
+are based on PIV measurements and all subﬁgures in the right-hand side column
+are based on the present LES calculations. Contour level scales are identical in all
+subﬁgures and are equal to the scales presented in the two uppermost contour plots
+in Fig. 3.
+
+arranged in such a way that two distinct areas with uniform vector
+orientations are placed on each side of the jet trajectory. This mode
+appears to represent changes in the degree of jet bending (Meyer
+et al., 2007).
+
+39
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+3
+
+4
+
+5
+
+6
+
+6.75
+4.89
+
+0.16
+0.26
+
+0.17
+0.10
+
+0.46
+0.11
+
+1.50
+1.13
+
+Upon further analysis of the results, it is evident that POD modes
+4 and 5 (Fig. 1) from LES and PIV based datasets also show a good
+agreement. Here, the most dominant is the in-plane motion, where
+some distinct traces of shear-layer vortical structures (Meyer et al.,
+2007) are visible in the vicinity of the jet trajectory. It seems that
+both modes 4 and 5 represent a similar vortical structure, which
+is only slightly shifted in the downstream direction. It should be
+noted here, that the out-of-plane motion is more signiﬁcant in
+the PIV based POD mode 5 than in its LES based counterpart.
+A general good agreement between POD mode 6 from both
+analyses is visible from Fig. 1, where very similar structures are revealed by the slightly dominant out-of-plane motion. However,
+some differences in the less dominant in-plane motion pattern
+can also be seen.
+Considering the relative energy content in the ﬁrst 20 POD
+modes and comparing it for the two analyses (Fig. 2), some differences can be observed, although the general energy distributions
+seem quite similar. In the PIV based analysis the ﬁrst two modes
+contain more than 20% of the overall resolved kinetic energy. The
+energy distribution shows a substantial drop in energy content
+from the second to the third mode and a much lower rate of energy
+decay from mode three onward is observed. In the LES based analysis the ﬁrst two modes are clearly more energetic than the rest of
+the modes. A substantial drop in energy content is seen between
+modes 2 and 3 here as well, but the third POD mode clearly contains more energy than the rest of the higher POD modes.
+Therefore it is evident that the general energy distribution between POD modes is quite similar regardless of the basis for the
+conducted analyses, but some distinct differences do exist. In Section 4 the overall kinetic energy resolved by PIV measurements
+and LES computation is compared and discussed. There it will become apparent, that the difference in relative energy for the ﬁrst
+two POD modes for PIV and LES, respectively, can be attributed
+to the presented overall kinetic energy differences.
+Focusing on the results from the x/D = 1 plane – Figs. 3–5 and
+Table 2, a reasonably good agreement is observed between
+conducted analyses. It is seen that traces of similar two-branch
+
+mode 1 with 13.8% of energy
+
+mode 1 with 10.0% of energy
+
+0.1
+
+4
+3.5
+
+0.1
+
+4
+
+0.08
+
+0.08
+
+3.5
+
+0.06
+
+0.06
+
+3
+
+0.04
+
+3
+
+0.04
+
+2.5
+
+0.02
+
+2.5
+
+0.02
+
+0
+
+2
+
+z/D
+
+2
+
+7.66
+4.75
+
+0
+
+2
+
+−0.02
+
+−0.02
+
+1.5
+
+1.5
+
+−0.04
+
+1
+
+−0.06
+
+1
+
+0.5
+
+−0.08
+
+0.5
+
+PIV
+
+−1.5 −1 −0.5 0
+
+0.5
+
+1
+
+−0.1
+
+1.5
+
+−0.04
+−0.06
+−0.08
+LES
+
+−1.5 −1 −0.5 0
+
+x/D
+
+0.5
+
+1
+
+1.5
+
+−0.1
+
+x/D
+mode 2 with 7.6% of energy
+
+mode 2 with 11.4% of energy
+4
+
+4
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+z/D
+
+1
+
+PIV
+LES
+
+z/D
+
+Mode
+
+structures are detectable from the out-of-plane velocity component in POD mode 1 in both cases. Note that both in-plane and
+out-of-plane POD mode velocities are mirrored (have an opposite
+sign) in PIV and LES based contour/vector plots. This is due to
+the previously mentioned arbitrary sign of eigenvectors resulting
+from the corresponding analyses. It is further seen that a similar
+and dominant in-plane velocity pattern is visible in subﬁgures that
+depict POD mode 1. Also in- and out-of-plane based structures represented by POD mode 2 are evidently similar in both analyses. It is
+especially observed from POD mode 2, that LES based out-of-plane
+structures are more ‘‘compressed’’ indicating, as discussed in PART 1
+of this study, that the computed jet is bending faster than the corresponding experimental jet. Besides that, the non-dominant outof-plane POD mode velocity component in the LES based POD
+mode 1 appears to depict traces of some vortical structures in
+the region 0.5 < x/D < 0.5 and 0 < z/D < 1.1, whereas the same
+structures cannot be seen in the PIV based subﬁgure. It should also
+be noted, that a similar reverse in the in-plane ﬂow pattern from
+mode 1 (z/D < 1.5) to mode 2 (1 < z/D < 2) is visible in both analyses
+from Fig. 3. POD modes 1 and 2 seem to show the interaction
+
+z/D
+
+Table 1
+Extent of the relative out-of-plane motion Vrel (deﬁned in Eq. (13), representing the
+relative ratio between ‘‘mean’’ POD mode in- vs. out-of-plane velocity components) in
+the ﬁrst 6 POD modes in the y/D = 0 plane.
+
+2
+
+2
+
+1.5
+
+1.5
+
+1
+
+1
+0.5
+
+0.5
+
+LES
+
+PIV
+
+−1.5 −1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+−1.5 −1
+
+1.5
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+x/D
+12
+
+mode 3 with 4.3% of energy
+
+mode 3 with 4.9% of energy
+
+LES
+PIV
+10
+
+4
+
+4
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+6
+
+z/D
+
+z/D
+
+% energi
+
+8
+
+2
+
+1.5
+
+1.5
+
+4
+
+1
+
+1
+
+0.5
+
+0.5
+
+−1.5 −1
+
+−0.5
+
+0
+
+x/D
+5
+
+10
+
+15
+
+20
+
+mode nr.
+Fig. 2. Relative energy content in the ﬁrst 20 POD modes in the y/D = 0 plane.
+
+LES
+
+PIV
+
+2
+
+0
+0
+
+2
+
+0.5
+
+1
+
+1.5
+
+−1.5 −1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+Fig. 3. Plane x/D = 1, POD – modes 1, 2 and 3. Subdivision of PIV- and LES-based
+subﬁgures follows the description from Fig. 1. Contour level scales are identical in
+all subﬁgures and are equal to the scales presented in the two uppermost
+subﬁgures.
+
+40
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+mode 4 with 4.0% of energy
+
+mode 4 with 3.3% of energy
+
+4
+
+3.5
+3
+2.5
+
+z/D
+
+3
+2.5
+2
+
+10
+
+2
+
+1.5
+
+1.5
+
+1
+
+1
+
+LES
+PIV
+
+12
+
+% energi
+
+3.5
+
+z/D
+
+14
+
+4
+
+8
+6
+
+4
+0.5
+
+0.5
+PIV
+
+−1.5 −1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+LES
+
+1.5
+
+−1.5 −1
+
+−0.5
+
+x/D
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+x/D
+
+mode 5 with 3.2% of energy
+
+mode 5 with 3.0% of energy
+
+4
+
+0
+0
+
+4
+
+5
+
+10
+
+15
+
+20
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+z/D
+
+z/D
+
+mode nr.
+
+2
+
+Fig. 5. Relative energy content in the ﬁrst 20 POD modes in the x/D = 1 plane.
+
+Table 2
+Extent of the relative out-of-plane motion Urel (deﬁned in Eq. (13), representing the
+relative ratio between ‘‘mean’’ POD mode in- vs. out-of-plane velocity components) in
+the ﬁrst 6 POD modes in the x/D = 1 plane.
+
+2
+
+1.5
+
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+PIV
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+LES
+
+1.5
+
+−1.5
+
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+x/D
+
+x/D
+mode 6 with 2.9% of energy
+
+4
+
+4
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+2
+
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+−0.5
+
+0
+
+x/D
+
+0.5
+
+1
+
+1.5
+
+LES
+−1.5
+
+2
+
+3
+
+4
+
+5
+
+6
+
+0.55
+0.53
+
+0.44
+0.43
+
+0.52
+0.44
+
+1.07
+0.31
+
+0.86
+0.91
+
+0.35
+0.89
+
+4. Resolved turbulent kinetic energy
+
+PIV
+−1
+
+1
+
+PIV
+LES
+
+case too. Here, the energy content in the ﬁrst two LES based modes
+is again lower than in the PIV based ones and some dissimilarities
+between PIV- and LES-based energy contents are generally observed in the case of the ﬁrst six modes.
+Summarizing the results presented in this section, it can be concluded that a POD based comparison of ﬂow dynamics between
+LES and PIV data appears to have a good agreement.
+
+2
+
+1.5
+
+−1.5
+
+1.5
+
+mode 6 with 2.8% of energy
+
+z/D
+
+z/D
+
+−1.5
+
+Mode
+
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+Fig. 4. Plane x/D = 1, POD – modes 4, 5 and 6. Subdivision of PIV- and LES-based
+subﬁgures follows the description from Fig. 1. Contour level scales are identical in
+all subﬁgures and are equal to the scales presented in the two uppermost subﬁgures
+of Fig. 3.
+
+process between the wake vortices and the CVP as explained by
+Meyer et al. (2007).
+Considering the in- and out-of-plane based structures represented by POD mode 3 (Fig. 3), a good agreement is observed.
+Furthermore, comparing POD modes 4–6 (Fig. 4), it is seen that
+PIV based mode 4 and LES based mode 5, PIV based mode 5 and
+LES based mode 6 and PIV based mode 6 and LES based mode 4 appear to have a reasonably good agreement. By considering the relative inﬂuence of the in- vs. out-of-plane velocity components
+(Table 2) this observation is further supported, as the relative inﬂuence factors agree much better if, e.g. the PIV based mode 6 and LES
+based mode 4 are compared etc. As the relative energy content in
+POD modes 4–6, especially in the LES based analysis, are almost
+equal, it can be expected that some of the (higher) modes resulting
+from this analysis can swap places.
+The relative energy content in the ﬁrst 20 POD modes shown in
+Fig. 5, indicates that the ﬁrst 2 modes are the dominant ones in this
+
+The underlying basis for the conducted POD analyses is turbulence, i.e. the ﬂuctuating part of the considered velocity ﬁeld. The
+POD results that were previously presented showed that many
+structures revealed by the analysis of POD modes are similar,
+regardless of the data acquiring procedure (experimental or
+numerical) used, but some differences in the obtained results have
+been observed too.
+Becuase the turbulent kinetic energy is a general way of quantifying turbulence levels in any analyzed ﬂowﬁeld, a comparison of
+levels of the resolved kinetic energy in the two underlying datasets
+used in the POD analyses, can actually give an indication of an extent to which the results from the conducted POD analyses can be
+expected to match.
+The resolved turbulent kinetic energy in PIV- and LES-based
+datasets used in the described POD analyses is presented in
+Fig. 6. Note that contour levels and colorbars shown in Fig. 6a
+and b are valid for all of the planes investigated.
+Analyzing the results from Fig. 6 it is clear that some differences
+in the levels of the resolved turbulent kinetic energy by PIV and LES
+do exist. It should be noted, that LES results are interpolated to the
+PIV-based grid points, so the results shown are directly comparable.
+The agreement between experimental and numerical results
+generally appears to be satisfactory, as similarly shaped highand low-turbulence intensity areas can be identiﬁed on both PIVand LES-based subﬁgures for both considered planes. However,
+there are differences in the general level of the resolved turbulent
+
+41
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+kturb resolved by PIV measurement
+
+kturb resolved by LES calculation
+4
+
+4
+3.5
+
+3.5
+
+1
+
+1
+
+3
+
+3
+0.8
+
+0.8
+
+2.5
+0.6
+
+2
+
+z/D
+
+z/D
+
+2.5
+
+1.5
+
+0.4
+
+1.5
+1
+
+0.6
+
+2
+
+0.4
+
+1
+
+0.2
+
+0.2
+
+0.5
+
+0.5
+
+−1.5 −1 −0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+0
+
+−1.5
+
+−1 −0.5
+
+y/D
+
+kturb resolved by PIV measurement
+
+1
+
+1.5
+
+0
+
+kturb resolved by LES calculation
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+2
+
+z/D
+
+z/D
+
+0.5
+
+y/D
+
+3.5
+
+1.5
+
+2
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+
+0
+
+0
+
+0
+
+1
+
+2
+
+3
+
+4
+
+x/D
+
+0
+
+0
+
+1
+
+2
+
+3
+
+4
+
+x/D
+
+Fig. 6. Turbulent kinetic energy k=U 21 in the considered planes resolved by PIV and LES. Contour level scale used in subﬁgures (a) and (b) is applied to all other subﬁgures and
+the difference between two contour levels in all subﬁgures is 0:1U 21 .
+
+kinetic energy (basically visible in all areas of the considered
+planes and is especially noticeable inside the jet core), as LES
+consequently indicates higher turbulence intensities, than those
+revealed by the PIV. In principle, this difference may be implicit
+to the applied analysis, as the interpolation of velocities from the
+numerical LES grid to the grid used in the present POD analysis will
+include the effect of all scales resolved by the numerical grid used
+in the basic computations, while limited resolution capabilities, a
+sort of low-pass ﬁltering and interrogation area averaging implicit
+to PIV measurements will essentially ‘‘remove’’ the smallest scales
+from the measured dataset. Therefore PIV can be expected to ﬁlter
+out small ﬂuctuations on the scale of the interrogation windows.
+Each POD analysis relies on the kinetic energy contained in the
+underlying dataset considered. It was previously shown that the
+ﬁrst two POD modes in all investigated planes represent similar
+ﬂow structures regardless the dataset used. In order to directly
+visualize the absolute energy content of POD modes 1 and 2, the
+total kinetic energy contained in the ﬁrst two POD modes is investigated. This implies that POD analysis has been redone, all snapshots recreated based on the ﬁrst two POD modes and the total
+kinetic energy contained in the datasets created in this way was
+calculated. The procedure was performed on both PIV and LES
+datasets. The results are presented in Fig. 7.
+Results from Fig. 7 show clearly that differences between the
+levels of turbulent kinetic energy represented by POD modes 1
+and 2 are signiﬁcantly smaller (on total/absolute basis), when compared between LES and PIV, than it was the case for the total kinetic
+energy contained in the complete set of instantaneous ﬂow realizations – Fig. 6. This directly indicates that it may be reasonable to
+
+assume that the ﬁrst modes represent similar levels (on the absolute basis) of the total turbulent kinetic energy resolved. At the
+same time the total (absolute) amount of the kinetic energy in the
+PIV-based dataset is lower than in its LES-based counterpart; hence
+it can be expected that the dominant structures in the PIV-based
+analysis contain relatively more energy than the relative energy
+contained in the same LES-based structures. This can most probably
+explain the qualitative but not quantitative agreement between the
+energy distributions in the ﬁrst couple of POD modes presented in
+this section.
+From the above argumentation it can be deduced further, that a
+general agreement between the present PIV- and LES-based POD
+analyses can only be expected on the level of dominant ﬂow structures; hence only the agreement between the most energetic (the
+ﬁrst couple of) modes can therefore be expected.
+5. 3D LES based POD analysis
+In the previous section the POD method was applied on datasets
+from two mutually perpendicular planes in the near-ﬁeld ﬂow of
+the jet. Two different sequences of data were used in those analyses
+(numerically and experimentally obtained ones) and the achieved
+2D results were compared and discussed. Even though many relevant ﬂow features can be revealed by this type of analysis, a generally better understanding of different ﬂow structures can be
+obtained by studying results of a corresponding 3D analysis. For
+this reason a new 3D POD analysis was conducted.
+In Meyer et al. (2007) it is also suggested that 2D PIV based POD
+analyses in x, y and z planes are closely correlated and the
+
+42
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+0.5
+
+4
+
+0.5
+
+4
+
+0.45
+
+0.45
+
+3.5
+
+3.5
+0.4
+
+3
+
+0.3
+0.25
+
+2
+
+0.35
+0.3
+
+2.5
+z/D
+
+2.5
+z/D
+
+0.4
+3
+
+0.35
+
+0.25
+
+2
+
+0.2
+1.5
+1
+
+0.05
+-1
+
+-0.5
+
+0
+y/D
+
+0.5
+
+1
+
+1.5
+
+3
+
+-1.5
+
+-1
+
+-0.5
+
+0
+y/D
+
+0.5
+
+1
+
+1.5
+
+0.4
+
+0
+
+0.5
+
+3
+
+0.4
+
+2.5
+0.3
+
+2
+
+z/D
+
+z/D
+
+0.05
+
+3.5
+
+2.5
+
+1.5
+
+0.2
+
+1
+
+0.3
+
+2
+1.5
+
+0.2
+
+1
+0.1
+
+0.5
+0
+
+0.1
+
+0.5
+
+0
+
+0.5
+
+3.5
+
+0.15
+
+1
+
+0.1
+
+0.5
+-1.5
+
+0.2
+1.5
+
+0.15
+
+0
+
+1
+
+2
+
+3
+
+4
+
+0
+
+x/D
+
+0.1
+
+0.5
+0
+
+0
+
+1
+
+2
+
+3
+
+4
+
+0
+
+x/D
+
+Fig. 7. Turbulent kinetic energy k=U 21 contained in the ﬁrst two POD modes in x/D = 1 and y/D = 0 planes. The difference between two contour levels in all subﬁgures is 0:1U 21 .
+
+corresponding modes represent traces of same 3D vortical structures. The conducted 3D LES based analysis has the potential to
+conﬁrm/disprove this argument.
+The computation process of 3D POD modes is far more involved
+and computationally demanding when compared to the 2D case.
+While the 2D snapshot POD analysis could be computed directly
+on a single PC unit in a short time period using commercial software
+packages such as Matlab™, the 3D POD analysis had to be subdivided
+into several steps, was directly coded in Fortran and performed on a
+large UNIX based shared-memory machine. We would like to
+emphasize further that our ability to perform 3D POD analysis is entirely due to the fact that snap-shot – and not classical POD analysis
+was performed. The latter was in fact impossible to conduct in our
+case, as the size of the matrices involved in the analysis largely
+extended our computational resource capabilities.
+The investigated JICF entrance zone2 was discretized by app.
+500,000 points, where points in the considered domain were mutually equidistantly displaced by 0.05 D. The underlying LES dataset
+comprised of app. 1.2 million points in the regarded region. Data
+points for POD analysis were correspondingly interpolated, using
+the second order inverse distance interpolation technique. Results
+of this analysis are presented below.
+The 3D POD analysis is based on case LES 7 from PART 1 of
+this study and the longest (in time units) overall computation
+conducted in the course of this entire study.
+The dataset used in the 3D analysis was extracted during the
+total time period corresponding to 100 FLTs. By making the same
+estimates previously made, the present 3D dataset (comprising
+1000 samples) will contain app. 300 statistically uncorrelated samples. As the agreements between PIV and LES based 2D POD analyses showed good general agreement despite the fact that the
+underlying LES dataset contained only app. 90 uncorrelated
+samples, the present 3D analysis is conducted on the full set of
+2
+
+1 < x/D < 4, 1.5 < y/D < 1.5 and 0 < z/D < 4.
+
+1000 samples. Results of the 2D POD analyses showed some distinct characteristics – e.g. the ﬁrst two POD modes, at all examined
+locations were noticeably dominant, as they represented a signiﬁcantly larger amount of the total turbulent kinetic energy, when
+compared to the remaining modes. As both 2D POD analyses were
+separately conducted, i.e. a single analysis took into account only
+the ‘‘local’’ dataset in the examined plane, it is interesting to investigate whether or not the ﬁrst two 2D POD modes in reality represent traces of the same 3D structure(s). In order to do this, the
+results of the 3D POD analysis were extracted on locations corresponding to the planes considered in the 2D POD analyses. Results
+are presented in Figs. 8 and 9 and Table 3. It should be noted that
+different scaling factors, compared to ones used in the previous
+section, were used in the contour/vector plots in Fig. 8 in order
+to obtain a suitable basis for comparisons with the 2D POD results.
+By inspecting the results from Figs. 8 and 9 and Table 3, many
+similarities between 3D and 2D POD analyses can be observed. First,
+the 3D analysis clearly produces two dominant modes as well (Fig. 9)
+and the ratio of out- vs. in-plane velocities in all investigated planes
+(Table 3) agree well with the corresponding 2D results (Tables 1 and
+2).
+A general good agreement between 3D and 2D results from the
+x/D = 1 plane is visible from Fig. 8a and b and 3. Clearly, the traces
+of vortical structures in mode 1 and a similar in-plane motion pattern in both modes is seen in both analyses. The dominant out-ofplane motion in modes 1 and 2 in the y/D = 0 plane shows a very
+good agreement (Fig. 8c and d and 1) too. Furthermore, it is seen
+from Fig. 9 that 3D POD mode 3 represents a noticeably higher level of the total kinetic energy when compared to the higher modes,
+than was the case for mode 3 form 2D POD analyses (especially the
+PIV based one), indicating that the signiﬁcance of the ‘‘jet-bendingprocess’’ associated with this mode (Meyer et al., 2007) is further
+ampliﬁed when the full 3D dataset is included in the analysis.
+From the above considerations it is evident that results regarding the ﬁrst two POD modes in both 2D and 3D analyses are in good
+
+43
+
+4
+
+4
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+y/D
+
+y/D
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+2
+
+2
+
+1.5
+
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+
+−1.5 −1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+−1.5 −1
+
+−0.5
+
+4
+
+4
+
+3.5
+
+3.5
+
+3
+
+3
+
+2.5
+
+2.5
+
+2
+1.5
+
+0.5
+
+1
+
+1.5
+
+ani /i þ aniþ1 /iþ1 ;
+
+2
+
+1.5
+
+1
+
+1
+
+0.5
+
+0.5
+
+0
+−1
+
+0
+
+x/D
+
+z/D
+
+z/D
+
+x/D
+
+0
+
+1
+
+2
+
+3
+
+0
+−1
+
+4
+
+0
+
+x/D
+
+1
+
+2
+
+3
+
+4
+
+x/D
+
+Fig. 8. Results of the 3D POD analysis extracted on locations corresponding to the
+planes of 2D POD analysis.
+
+8
+7
+6
+5
+
+% energi
+
+It should be noted that a full 3D POD ﬂowﬁeld analysis has not
+often been applied in the past. The main reason for this is, as previously discussed, the considerable computational effort connected
+with it, especially in cases, where a direct (classical) POD analysis is
+utilized. However, in the study by Rempfer and Fasel (1994) a full
+3D snapshot POD analysis was applied in order to investigate dominant structures in the transitional ﬂowﬁeld of a boundary layer.
+Results of Rempfer and Fasel’s analysis showed that POD modes
+appeared in pairs, i.e. two subsequent modes appeared to represent almost equal levels of energy and that the corresponding
+POD coefﬁcients, besides having a similar maximal magnitude appeared to be phase-shifted in time. All of this indicated that both
+considered modes represented the same ‘‘spatially displaced’’
+coherent structure. They suggested therefore that a better way of
+representing a coherent structure at a time tn on the energy level
+contained in those two modes (ki  ki+1) is given by their superposition as:
+
+4
+3
+2
+
+ð14Þ
+
+where ani is the considered POD coefﬁcient and /i is the corresponding POD mode.
+In Fig. 10 the time evolution of the ﬁrst two POD coefﬁcients of
+the 3D POD analysis is presented. From the Figure it is clear that
+the coefﬁcients behave in a very similar manner, have a small difference in maximal magnitude and are practically phase-shifted in
+time. The period can be app. estimated to be T⁄ = TU1/D = 11.25 corresponding to f⁄ = 1/T⁄ = 0.09. To emphasize the mentioned observation further, the sine and cosine functions, with the average of the
+maximum values of A1 and A2 coefﬁcients as amplitude, are superimposed on the analyzed coefﬁcients in Fig. 10, clearly underlining
+the phase shifted coefﬁcient behavior. Utilizing the results of Rempfer and Fasel’s analysis, this indicates that both mode 1 and 2 are directly connected to the same 3D coherent structure, which changes
+its shape (degenerate) and is convected downstream in time.
+Based on their 2D POD analysis, Meyer et al. (2007) argue that
+interaction between the standing (hanging) vortex of Yuan et al.
+(1999) (see Fig. 1 in PART1 of this study) and wake vortices in
+the downstream region of the jet entry point can be identiﬁed by
+analyzing a POD based ﬂow reconstruction of the JICF ﬂow ﬁeld.
+This analysis also showed that the best depictions of the interaction process can be obtained by analyzing z/D = const. planes.
+Fig. 11 depicts several aspects of a representative snapshot of
+the LES based depiction of the JICF ﬂow ﬁeld at the z/D = 0.55
+
+1
+0
+0
+
+600
+5
+
+10
+
+15
+
+20
+
+mode nr.
+400
+Fig. 9. Relative energy content in the ﬁrst 20 POD modes in the 3D POD analysis.
+
+200
+Table 3
+Extent of the relative out-of-plane motion in the ﬁrst two POD modes in planes
+corresponding to the 2D POD analysis.
+Mode number
+
+1
+
+2
+
+Vrel  y/D = 0 Plane
+Urel  x/D = 1 Plane
+
+10.56
+0.64
+
+8.60
+0.54
+
+0
+
+A1
+
+−200
+
+A2
+
+−400
+
+agreement. Therefore it can be concluded that the dominant modes
+revealed by the 2D POD analysis do represent traces of the same 3D
+coherent structures, as previously postulated in Meyer et al.
+(2007).
+Furthermore, it is interesting to investigate what kind of 3D
+structures are revealed by the 3D POD analysis. Results of this
+study are presented in the following.
+
+Ax sin(x)
+A cos(x)
+x
+
+−600
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+600
+
+700
+
+800
+
+Snapshot number
+Fig. 10. Time history of the ﬁrst two POD coefﬁcients in the 3D analysis. Dt⁄
+between the snapshots is Dt⁄ = Dt U1/D = 0.0313. In this context x refers to a
+variable which follows the number of snapshots, while Ax ¼ ðA1max þ A2max Þ=2.
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+1.5
+1
+
+y/D
+
+0.5
+0
+−0.5
+−1
+−1.5
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+x/D
+
+1.5
+1
+
+y/D
+
+0.5
+0
+−0.5
+−1
+−1.5
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+1.5
+1
+0.5
+
+y/D
+
+position. From Fig. 11a, where the snapshot of the velocity ﬁeld is
+presented showing the in-plane velocity components as vectors
+and out of plane velocity component as contour plot, various vortical structures can be identiﬁed. A vortex positioned at (x/D, y/
+D) = (0.6, 0.1) another one at (x/D, y/D) = (1.25, 0.3) and a third
+one at (x/D,y/D) = (1.75, 0.2) can be clearly recognized indicating
+that a continuous vortex-shedding process takes place in the wake
+region. On the corresponding POD based reconstruction, which is
+obtained by adding only the ﬁrst two POD modes to the mean ﬂow
+ﬁeld – Fig. 11b, it is seen that only vortices in the vicinity of the jet
+can be identiﬁed. Signiﬁcant variations in the positions of shaded
+vortices in the wake region (this can be visualized by inspection
+of several snapshots of the z/D = 0.55 plane – not shown here),
+indicate that the downstream transport of the wake vortices do
+not follow a regular pattern; hence each of the mentioned vortices
+singly is not capable of leaving a clear trace in the ﬁrst POD modes.
+Vortex-identiﬁcation methods such as Q-criterion (Hunt et al.,
+1988) have long been used as vortex-identiﬁcation tools. In
+Fig. 11c and d results of an application of the Q-criterion on the snapshot from Fig. 11a and its reconstruction from Fig. 11b are presented.
+As seen from Fig. 11c, various vortices on the upstream side of the jet,
+actually not directly seen in the snapshot itself (traces of shear-layer
+vortices) as well as vortices in the wake region can be identiﬁed.
+However, the most interesting part here is represented by three
+vortices seen on both Fig. 11c and d positioned at (x/D, y/
+D) = (0.45, 0.5), (x/D, y/D) = (0.4, 0.5) and (x/D, y/D) = (0.65, 0.2).
+As hypothesized by Meyer et al. (2007), the ﬁrst two vortices should
+represent traces of the standing (hanging) vortices of Yuan et al.
+(1999), while the last one should represent traces of a wake vortex.
+From Fig. 10 it is seen that the time variation of the A1 and A2
+coefﬁcients closely follow a phase shifted pattern of sine and cosine functions. Small variations in the amplitude and period of both
+coefﬁcients seen in Fig. 10 can probably be attributed to some random ﬂow variations. In order to diminish the effect of random variations on the present analysis, coefﬁcients are in the following part
+assumed to follow the idealized sine and cosine patterns indicated
+in Fig. 10.
+In order to better analyze the vortical structures seen in Fig. 11c
+and d the present investigation is continued in 3D – Fig. 12. Subﬁgures of Fig. 12 illustrate iso-surfaces, colored by xz, having the
+same positive Q value, where the Q-criterion has been applied on
+ﬂow reconstructions based on the ﬁrst two POD modes with idealized coefﬁcients (the modes are added to the mean ﬂow ﬁeld).
+Moreover, the subﬁgures of Fig. 12 actually follow the development of structures depicted in Fig. 12a throughout approximately
+one half of the periodical cycle of coefﬁcients A1 and A2 (180 snapshots – cf. Fig. 10).
+Generally, in Fig. 12 three to four distinct vortical structures can
+be identiﬁed. Two of them, which are positioned on the lateral
+edges of the jet, are visible on all subﬁgures. They slightly change
+their inclination angle with the z-axis (or jet trajectory) but always
+appear at approximately the same domain position. According to
+the deﬁnition of Yuan et al. (1999) they can be identiﬁed as hanging vortices.
+By inspecting Fig. 12a in a more detailed manner two additional
+structures, which are both attached to the corresponding hanging
+vortex can be identiﬁed. The process of continuous and alternating
+creation and destruction of these structures can be followed
+throughout Fig. 12a–f. In Fig. 12a it is seen that one of the mentioned structures is attached to the left hanging vortex, while the
+other is just about to be created in close proximity of the right
+hanging vortex. Following the vortex dynamics further – Fig. 12b,
+one can observe that the vortex connected to the left hanging vortex become detached from it, while the vortex connected to the
+right hanging vortex has grown in size, while it is convected
+downstream.
+
+0
+−0.5
+−1
+−1.5
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+1.5
+1
+0.5
+
+y/D
+
+44
+
+0
+−0.5
+−1
+−1.5
+−1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x/D
+
+Fig. 11. Snapshot of the z/D = 0.55 plane (a) and its reconstruction (b). Q-criterion
+applied on the snapshot (c) and its reconstruction (d). The reconstruction is based
+on the ﬁrst two POD modes.
+
+The growth and downstream convection of the vortex attached
+to the right hanging vortex can be followed through Fig. 12c–f)
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+45
+
+The current ﬁndings are in close agreement and provide additional support to the recent investigations of Meyer et al. (2007).
+
+6. Conclusion
+
+Fig. 12. Iso-surfaces, colored by xz, having the same positive Q value, with the Qcriterion being applied on ﬂow reconstructions based on the ﬁrst two POD modes
+with idealized coefﬁcients. Subﬁgures (a)–(f) follow the development of structures
+depicted in subﬁgure (a) throughout approximately half of the periodical cycle of
+coefﬁcients A1 and A2 (180 snapshots – cf. Fig. 10). A1- and A2-coefﬁcient values are
+indicated in the corresponding subﬁgures. (For interpretation of the references to
+colour in this ﬁgure legend, the reader is referred to the web version of this article.)
+
+depicts a mirror image of Fig. 12a, indicating that a new analogous
+process of creation and destruction of the attached/detached vortices from the hanging vortices takes place.
+The process described above clearly elucidates the process of a
+dynamical interaction of wake vortices and corresponding hanging
+vortices in the JICF ﬂow. Furthermore, from Fig. 12a and f a clear
+indication of the signiﬁcant role played by the hanging vortex in
+the creation process of wake vortices is underlined. It is seen that
+the wake vortex practically originates from the hanging vortex
+and grows in size in a tornado vortex like manner by ‘‘sucking
+up’’ the boundary layer ﬂuid and vorticity.
+The spatial location at which they are identiﬁed, the size and
+the fact that hanging vortices can clearly be visualized in all subﬁgures of Fig. 12 (representing app. one half of the periodical cycle of
+A1 and A2 coefﬁcients from Fig. 10), indicate that they play a dominant role in the process of creation and evolvement of the CVP
+vortical structure. The presented analysis thereby indicate that
+the creation process of wake vortices is directly connected to,
+controlled by and originates from the process of CVP creation in
+the JICF ﬂow ﬁeld.
+
+A clear link between present numerical LES study of the JICF
+ﬂowﬁeld and LDA measurements on the corresponding experimental set-up with respect to the mean ﬂow statistics has been established in PART1 of this study. Further investigations aimed at
+analyzing the ﬂow dynamics and understanding the complex ﬂow
+patterns that are pertinent to the JICF ﬂow ﬁeld are conducted by
+means of Proper Orthogonal Decomposition (POD) technique and
+are presented in this PART2 of the current study.
+The LES based POD analysis is directly compared to the corresponding POD analysis conducted based on measured PIV datasets,
+previously reported in Meyer et al. (2007). The comparisons are
+undertaken for two mutually perpendicular planes in the jetto-crossﬂow entrance zone (y/D = 0 and x/D = 1 planes), where
+in- and out-of plane velocity components in POD modes 1–6 are
+directly compared, showing a good quantitative agreement, underlining that LES predicts the same large scale ﬂow dynamics as is
+captured by PIV. Some differences are also observed, but they appear to be directly connected to the differences in the levels of
+the resolved turbulent kinetic energy in the LES computations
+and PIV measurements of Meyer et al. (2007). Those differences
+in the levels of the resolved turbulent kinetic energy seem however
+to be directly linked to limited resolution capabilities and interrogation area averaging implicit to PIV measurement technique. The
+well-known issue related to PIV measurements – the ﬁltering out
+of small-scale ﬂuctuations can directly lead to underestimation of
+the turbulent kinetic energy, seem to clearly be the case for the
+measurements of Meyer et al. (2007). However, a comparison of
+the kinetic energy captured by the ﬁrst POD modes shows that
+the ﬁrst POD modes are not affected by this implicit ﬁltering.
+The LES based POD analysis is extended to 3D. The results ﬁrst
+show a clear connection between the dominant modes found in 2D
+POD analyses, conﬁrming the ﬁndings of Meyer et al. (2007), who
+claimed that structures revealed by the separately conducted 2D
+POD analyses (in the y/D = 0 and x/D = 1 planes) do represent traces
+of the same 3D coherent structures. The measurements by Meyer
+et al. (2007) were not time-resolved, but the POD analysis suggested that a periodic shedding of wake vortices was the most
+important dynamic mechanism involving also the core of the jet.
+The 3D POD analysis of the LES results show that this is indeed
+the case. The frequency f of the wake vortices shedding is found
+to be f D/U1 = 0.09. This supports the idea put forward by Meyer
+et al. (2007) that this type of periodic ﬂow structure can be indicated by observing patterns in the POD reconstruction coefﬁcients.
+Dominant modes found from the POD analysis are added to the
+mean ﬂow ﬁeld and are analyzed in the z/D = 0.55 plane in order to
+isolate and directly visualize vortical structures in the wake region.
+This POD based reconstruction of the JICF ﬂowﬁeld is subsequently
+combined with the well-known Q-criterion vortex identiﬁcation
+method and is fully extended to 3D. Studies of a 3D ﬂow reconstruction in time, based on the ﬁrst two POD modes, reveals details
+of the relationship between the CVP, the hanging vortex and the
+wake vortices. The reconstruction conﬁrms that the CVP originates
+from the hanging vortex formed at the sides of the jet. Also, the
+wake vortices are created in a shedding process that involves oscillation of the jet core. A wake vortex originates from the hanging
+vortex, but grows quickly by ‘‘sucking up’’ the wall boundary layer
+ﬂuid and vorticity. It should be noted that since the ﬂow is in a turbulent boundary layer, some ﬂow mechanisms may be different for
+JICF in a laminar boundary layer.
+
+46
+
+D. Cavar, K.E. Meyer / International Journal of Heat and Fluid Flow 36 (2012) 35–46
+
+References
+Fric, T., Roshko, A., 1994. Vortical structure in the wake of a transverse jet. Journal of
+Fluid Mechanics 279, 1–47.
+Holmes, P., Lumley, J., Berkooz, G., 1998. Turbulence, Coherent Structures,
+Dynamical Systems and Symmetry. Cambridge University Press.
+Hunt, J.C.R., Wray, A.A., Moin, P., 1988. Eddies, stream and convergence zones in
+turbulent ﬂows. In: Proceedings of the 1988 Summer Program, Report CTR-S88.
+Center for Turbulence Research, pp. 193–208.
+Kelso, R., Lim, T., Perry, A., 1996. An experimental study of round jets in cross-ﬂow.
+Journal of Fluid Mechanics 306, 111–144.
+Kostas, J., Soria, J., Chong, M.S., 2005. A comparison between snapshot pod analysis
+of piv velocity and vorticity data. Experiments in Fluids 38 (2), 146–
+160.
+Lumley, J., 1967. The structure of inhomogeneous turbulent ﬂows. In: Yaglom, A.,
+Tatarsky, V. (Eds.), Atmospheric Turbulence and Radio Wave Propagation, pp.
+166–178.
+
+Meyer, K., Pedersen, J., Özcan, O., 2007. A turbulent jet in crossﬂow analysed with
+Proper Orthogonal Decomposition. Journal of Fluid Mechanics 583, 199–227.
+Moin, Moser, 1989. Characteristic-eddy decomposition of turbulence in a channel.
+Journal of Fluid Mechanics 200, 471–509.
+Orellano, Wengle, 2001. Pod analysis of coherent structures in forced turbulent ﬂow
+over a fence. Journal of Turbulence 2.
+Pedersen, J.M., 2003. Analyses of Planar Measurements of Turbulent Flows. Ph.D.
+Thesis, Technical University of Denmark, DTU.
+Podvin, Fraigneau, Lusseyran, Gougat, 2006. A reconstruction method for the ﬂow
+past an open cavity. Transactions of the ASME. Journal of Fluids Engineering 128
+(3), 531–540.
+Rempfer, D., Fasel, H.F., 1994. Evolution of three-dimensional coherent structures in
+a ﬂat–plate boundary layer. Journal of Fluid Mechanics 260, 351–375.
+Sirovich, L., 1987. Turbulence and the dynamics of coherent structures. PART I:
+coherent structures. Quarterly of Applied Mathematics 45 (3), 561–570.
+Yuan, L.L., Street, R.L., Ferziger, J.H., 1999. Large-Eddy Simulations of a round jet in
+crossﬂow. Journal of Fluid Mechanics 379, 71–104.
+
+

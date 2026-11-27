@@ -1,0 +1,53 @@
+acharya2001	OK	10.1111/j.1749-6632.2001.tb05846.x	
+azzi2002	OK	10.1115/1.1485294	
+bin2024	OK	10.1016/j.ijheatmasstransfer.2024.125816	
+bogard2006	OK	10.2514/1.18034	
+clark2024	DIFF	10.1115/GT2024-124918	pages missing in bib; crossref V12BT30A019
+coletti2013	OK	10.1016/j.ijheatfluidflow.2013.06.001	
+dellacasagrande2023	OK	10.1115/1.4055971	
+fawcett2013	OK	10.1016/j.ijheatfluidflow.2013.01.001	
+foroutan2014	DIFF	10.1115/1.4028646	pages missing in bib; crossref 011701
+fric1994	OK	10.1017/s0022112094003800	
+goldstein1982	OK	10.1115/1.3245096	
+gritsch1998	OK	10.1115/1.2841752	
+harrison2008	OK	10.1115/GT2008-51423	
+haven1997	OK	10.1017/S0022112097007271	
+haydt2017	DIFF	10.1115/1.4036199	pages missing in bib; crossref 091012
+haydt2018	DIFF	10.1115/1.4038871	pages missing in bib; crossref 051002
+kar2026	LOOKUP_FAILED	10.33737/gpps26-tc-005	HTTP Error 404: Not Found
+kaszeta2000	OK	10.1115/1.555421	
+kays1994	OK	10.1115/1.2911398	
+kohli2005	OK	10.1115/1.1865221	
+lakehal2002	OK	10.1115/1.1482408	
+langtry2009	OK	10.2514/1.42362	
+laroche2023	OK	10.1115/GT2023-101447	
+lav2019	OK	10.1016/j.jcp.2019.01.022	
+ling2015	OK	10.1115/1.4031698	
+ling2016	DIFF	10.1115/1.4034556	pages missing in bib; crossref 021008
+liu2008	OK	10.1016/j.ijheatmasstransfer.2008.04.039	
+liu2011	OK	10.1016/j.ijheatmasstransfer.2010.10.015	
+mcconkey2022	OK	10.1063/5.0083074	
+menter1994	OK	10.2514/3.12149	
+milani2017	DIFF	10.1115/1.4038275	pages missing in bib; crossref 021006
+milani2020	DIFF	10.1017/jfm.2020.820	pages missing in bib; crossref A27
+nicoud1999	OK	10.1023/A:1009995426001	
+nunno2022	OK	10.2514/6.2022-1404	
+oliver2017	DIFF	10.1115/gt2017-63314	pages missing in bib; crossref V05AT12A005
+otsu1979	OK	10.1109/TSMC.1979.4310076	
+pope2000	NO_DOI	book	Turbulent Flows
+rochhausen2015	NO_DOI	inproceedings	Modelling Turbulent Heat Transport in Planar Hot Jets with Different Turbulent Closures
+sandberg2018	DIFF	10.1115/1.4041268	pages missing in bib; crossref 101008
+saumweber2003	OK	10.1115/1.1515336	
+schlichting2017	OK	10.1007/978-3-662-52919-5	
+schmitt2007	OK	10.1016/j.crme.2007.08.004	
+schroeder2014	DIFF	10.1115/gt2014-25992	pages missing in bib; crossref V05BT13A036
+schroeder2015	DIFF	10.1115/gt2015-43339	pages missing in bib; crossref V05BT12A038
+schroeder2016	DIFF	10.1115/1.4032736	pages missing in bib; crossref 091001
+schroeder2016b	DIFF	10.1115/1.4034798	pages missing in bib; crossref 021012
+spalart2000	OK	10.1016/S0142-727X(00)00007-2	
+stratton2019	OK	10.2514/1.b37314	
+tam1993	OK	10.1006/jcph.1993.1142	
+thole1998	OK	10.1115/1.2841410	
+tyagi2003	OK	10.1115/1.1625397	
+wheeler2016	OK	10.1115/1.4032435	
+wu2018	OK	10.1103/PhysRevFluids.3.074602	

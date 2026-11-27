@@ -1,0 +1,1634 @@
+Proceedings of ASME Turbo Expo 2008: Power for Land, Sea and Air
+GT2008
+June 9-13, 2008, Berlin, Germany
+
+GT2008-51423
+
+Katharine L. Harrison and David G. Bogard
+Department of Mechanical Engineering
+University of Texas at Austin, Austin, Texas 79712, USA
+ABSTRACT
+The realizable k-ε, standard k-ω, and RSM turbulence models
+were used to simulate flat plate film cooling experiments that are
+commonly described in literature. Adiabatic effectiveness simulations
+revealed that using the standard k-ω model resulted in the closest
+agreement with experimentally determined laterally averaged adiabatic
+effectiveness, but the worst agreement with centerline adiabatic
+effectiveness. Conversely, the realizable k-ε model agreed worst with
+experimental laterally averaged adiabatic effectiveness values and best
+with centerline values. Use of the anisotropic RSM model was not
+found to predict more realistic coolant spreading than the other
+models. Simulations to find heat transfer coefficients without film
+cooling showed good agreement with correlations for all three models,
+and the closest agreement resulted from using the realizable k-ε model.
+Heat transfer coefficient augmentation was also examined for two
+configurations: unit density ratio with and without upstream heating.
+Laterally averaged heat transfer coefficient augmentation simulations
+using all three turbulence models agreed well with experiments.
+However, the spanwise variation in heat transfer coefficient
+augmentation in all cases was greater than is typically seen
+experimentally.
+INTRODUCTION
+Many computational studies in literature have compared various
+turbulence models with experimental film cooling data. Despite this,
+selecting a turbulence model for CFD predictions of film cooling
+based on results from literature remains a difficult task due to the
+many different studies and recommendations based on limited and
+varying criteria. This study aims to find the best turbulence model for
+predictions of film cooling on a flat plate.
+Many studies have made significant contributions to film cooling
+CFD. A systematic computational methodology for CFD simulation of
+film-cooling was developed by Walters and Leylek [1]. They proposed
+four critical steps necessary for successfully simulating film cooling
+including effective turbulence modeling. They simulated adiabatic
+effectiveness, η, experiments and compared to data from Sinha et al.
+[2] using the standard k-ε turbulence model (SKE) with standard wall
+functions (SWF). Less lateral coolant spreading was apparent in the
+simulations than experiments and centerline η was not very well
+predicted. The authors suggested that some of the disagreement
+between computational and experimental results could be explained by
+jet skewness in the experiments of Sinha et al. [2]; after correcting for
+this skewness, the centerline results showed much better agreement
+with experiments.
+
+When using the SKE turbulence model with SWF, Walters and
+Leylek [1] were not able to capture the jet separation and reattachment
+that was suggested by low η levels close to the hole. They postulated
+that separation was not predicted due to the use of wall functions with
+limited grid resolution at the wall. The grid was refined such that it
+extended into the viscous sublayer and they predicted separation more
+accurately. However, as the authors cautioned, SWF are invalid in this
+region so the results were just a suggestion that that near-wall
+modeling may have led to better predictions. The authors also
+predicted that CFD would continue to under-predict lateral spreading
+until anisotropic turbulence models were used.
+The Walters and Leylek group later studied seven turbulence
+modeling approaches in Ferguson et al. [3]: SKE with SWF, SKE with
+non-equilibrium wall functions (NEWF), SKE with two layer wall
+treatment (2LWT), renormalization group k-ε (RNG) with SWF, RNG
+with NEWF, Reynold’s stress model (RSM) with SWF, and RSM with
+NEWF. The SKE with 2LWT predicted experimental measurements of
+centerline and spanwise η by Sinha at el. [2] more accurately than the
+RNG or RSM models at M = 1. The SKE with 2LWT also predicted
+separation along the centerline much more accurately than any other
+wall treatment. The superiority of the SKE model with 2LWT was
+reiterated in Walters and Leylek [4].
+Thermal profiles above a film cooled flat plate were examined
+computationally by Lakehal et al. [5] using the SKE with SWF and
+SKE with 2LWT turbulence models. Simulations using SKE model
+with 2LWT resulted in more lateral jet spreading and less jet spreading
+normal to the flat plate in comparison to the SKE model with SWF for
+M = 0.5. Simulations using 2LWT also showed better agreement with
+experimental results by Honami et al. [6] near the wall.
+Keimasi and Taribi-Rahni [7] studied the velocity and turbulence
+profiles of square jets in crossflow using the SKE with SWF and the kω shear stress transport (SST) turbulence models. Agreement with
+experimental data by Ajerch et al. [8] was highly dependent on
+position and the flow variable being considered. The study did not
+mesh the plenum and also ran simulations with the experimental jet
+exit profile set as the boundary condition at the hole exit.
+Simulations of a turbine airfoil using the SKE with 2LWT,
+realizable k-ε (RKE) with 2LWT, RNG with 2LWT, and RSM with
+2LWT turbulence models were run by Walters and Leylek [9] and
+compared to experimental turbulence intensity and primary loss
+coefficients found by Ito [10] and Ito et al. [11]. The SKE, RKE, and
+RNG models were also compared to experimental results for η at M
+= 1. They found that overall, the RKE and RSM turbulence models
+best predicted experimental results.
+
+1
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+COMPARISON OF RANS TURBULENCE MODELS FOR PREDICTION OF FILM
+COOLING PERFORMANCE
+
+the centerline η at M = 0.5 and vastly over-predicted the centerline η
+at M = 1.5. The SKE model provided the overall best prediction of
+centerline η.
+Flat plate film cooling using the RKE with 2LWT, SST, and SA
+turbulence models was simulated by Na et al. [20] and compared to
+measurements by Kohli and Bogard [22]. The study found that the
+SST model best predicted laterally averaged effectiveness, η , and the
+RKE provided the worst prediction. Conversely, the RKE model best
+predicted centerline η and the SST model predicted η worst along the
+centerline. The study also used several meshing strategies which
+varied in the level of refinement and how the grids were structured
+around the hole exit. They found the best results when the grid was
+very refined and when the grid lines wrapped around the corners of the
+hole exit. However, the small differences between the meshes were
+confined to the first few hole diameters.
+Gustafsson and Johansson [23] used the RKE with 2LWT, SST,
+and the RSM with 2LWT turbulence models and compared the
+velocity distributions to experimental data also presented in the paper.
+They found that the RSM model best predicted experimental results
+and the RKE model resulted in the worst agreement.
+Hoda and Acharya [24] simulated velocity and turbulence fields
+above the wall with several forms of the k-ε and k-ω turbulence
+models and compared the simulations to experiments. The study found
+that none of the models captured the flow adequately.
+Several computational studies have also compared various
+modified forms of turbulence models. Some research groups have
+modified certain parameters, some have used a correction for
+anisotropic turbulence suggested by Bergeles et al. [25], and some
+have used DNS data near the wall to better model the near wall region.
+These authors include: Amer et al. [26], Chen et al. [27], Lakehal et al.
+[28], Azzi and Lakehal [29], Lakehal [30], Azzi and Jubran [31], and
+Bacci and Facchini [32]. Most of these attempts to improve twoequation models have resulted in improved predictions of experimental
+data. These results will not be discussed in detail because this study
+aims to determine the best turbulence model for modeling both
+adiabatic effectiveness and heat transfer without modifying existing
+turbulence models. Also, often these modifications result in better
+agreement only under certain conditions.
+Many computational flat plate film cooling studies have based
+simulations on the experiments of Sinha et al. [2] with varying degrees
+of success and many compare only to centerline η. Although centerline
+η is an important result to match, it is also experimentally difficult to
+ensure the centerline values are determined precisely with the array of
+thermocouples used in Sinha et al. [2]. The study is undoubtedly a
+quality benchmark case and there are advantages to many
+computational studies using the same geometry and conditions for
+comparisons. However, using more current experimental studies has
+the advantage of being able to provide better spatial resolution with
+more advanced thermal measurement techniques. Moreover, Walters
+and Leylek [1] showed that just the small amount of jet skewness in
+Sinha et al. [2] complicates comparisons between computationally
+determined centerline η and experimental data. This is a clear
+demonstration of the difficulty in measuring η values exactly at the
+centerline in studies that use arrays of thermocouples. Yet many
+computational studies have continued to compare primarily centerline
+η to Sinha et al. [2] and other experimental data sets.
+Furthermore, it has been shown repeatedly that simulations with
+standard two equation turbulence models generally result in less lateral
+spreading than is seen in experiments. This makes two-equation
+models difficult to use for accurate predictions of centerline
+effectiveness. It is useful to compare laterally averaged adiabatic
+effectiveness because over-predicted centerline values are generally
+
+2
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+The SST, SKE with 2LWT, and RSM with 2LWT turbulence
+models were compared for simulated normal jet film cooling injection
+by Javadi et al. [12]. The RSM model best predicted jet velocity
+profiles, shear stress, and turbulence kinetic energy found by Ajersch
+et al. [8] at various M.
+York and Leylek [13] conducted a conjugate heat transfer study
+and found the overall effectiveness on the surface of a simulated
+turbine vane using the SKE and RKE turbulence models with 2LWT.
+The RKE model better matched experimental data by Hylton et al. [14]
+than the SKE model.
+Flat plate film cooling was investigated computationally by Silieti
+et al. [15] using the SKE with 2LWT, RNG with 2LWT, RKE with
+2LWT, standard k-ω (SKW), and SST turbulence models. The study
+found that close to the hole (x/d < 6), the RKE model best predicted
+experimental centerline η data from Gritsch et al. [16] for M = 1.
+Farther from the hole (6 < x/d < 10), the SKE model predicted the
+experimental data most accurately. The RNG, SKW, and SST models
+under-predicted centerline η near the hole and over-predicted η farther
+from the hole.
+Silieti et al. [17] ran simulations of a fan-shaped film cooling hole
+on a flat plate using the RKE with 2LWT, SST, and V2F turbulence
+models. Use of the RKE and SST models resulted in very similar
+centerline adiabatic effectiveness near the hole, but the SST model
+results agreed slightly better with experiments by Gritsch et al. [16] far
+from the hole. The V2F model showed the worst agreement with
+experimental data. The study also evaluated the results from
+hexahedral, hybrid, and tetrahedral meshes, finding that the hexahedral
+and hybrid meshes exhibited the closest agreement with experimental
+data and were very similar.
+Zhang and Hassan [18] modeled flat plate film cooling based on
+the geometry and flow conditions in Sinha et al. [2] and compared the
+RKE with SWF, RKE with NEWF, SKE with SWF, RNG with SWF,
+Spalart-Allmaras (SA), SKW, and RSM with SWF turbulence models
+to centerline η at M = 1. The RKE with SWF best captured centerline
+jet separation and the study matched experimental data more closely
+than previous studies. Whereas past studies have found that agreement
+with experiments was worst at the centerline, Zhang and Hassan [18]
+matched η experimental results fairly well at the centerline. They
+attributed their successful agreement to several factors. First, they used
+a structured mesh, which they found to require many fewer cells to
+achieve the same accuracy as the unstructured mesh. Second, they
+stressed the importance of using correct y+ values and suggested that
+SWF could be better than 2LWT (but they did not compare SWF and
+2LWT). Third, they found that the height of the domain affected
+solution accuracy. A domain height of at least 20d provided the closest
+match to experimental data. However, the grid independence study
+showed that changing the grid from 450,000 cells to the maximum grid
+size of 900,000 cells resulted in changes in centerline η of up to 8%.
+They also commented that many studies prior to Sinha et al. [2] may
+not have correctly accounted for conduction effects, and this could
+explain some scatter in early experimental data. However, most
+computational studies compare to Sinha et al. [2] or later experimental
+studies.
+Another turbulence model comparison analyzing flat plate film
+cooling was performed by Hassan and Yavuzkurt [19]. The SKE with
+2LWT, RNG with 2LWT, RKE with 2LWT, and SKW turbulence
+models were compared to experimental centerline η data. They found
+that the RNG and RKE models showed slightly better lateral spreading
+than the SKE model, but predicted centerline η measured by Mayhew
+[20] less accurately. At M = 0.5, the RKE and RNG models overpredicted the centerline η, but at M = 1.5, they both under-predicted
+the centerline η. Conversely, the SKW model vastly under-predicted
+
+NOMENCLATURE
+Symbols:
+d = Hole diameter
+DR = Density ratio = ρc/ρ∞
+h0 = Heat transfer coefficient = q”/(Tr -Tsurface)
+hf = Heat transfer coefficient = q”/(Taw -Tsurface)
+l = Hole length
+
+M = Blowing ratio = ρcUc/ρ∞U∞
+NEWF = Non-equilibrium wall functions
+Nu = Nusselt number = hx/k
+p = Hole spacing
+q˝ = Heat flux
+RKE = Realizable k-ε
+RNG = Renormalization group k-ε
+RSM = Reynold’s stress model
+SA = Spalart-Allmaras
+SKE = Standard k-ε
+SKW = Standard k-ω
+SST = Shear stress transport k-ω
+SWF = Standard wall functions
+t = Thickness of airfoil
+Tr = Recovery temperature = T∞ + Pr1/3U2 / 2c
+Tu = Turbulence intensity
+U = Velocity
+VR = Velocity ratio = Uc/U∞
+V2F = V2F model
+Λ = Turbulence integral length scale
+α = Hole angle
+δ1 = Displacement thickness
+η = Adiabatic effectiveness = (Tr -Taw) / (Tr -Tc,exit)
+2LWT = Two layer wall treatment
+Subscripts
+aw = Adiabatic wall
+c = Coolant
+exit = Evaluated at hole exit
+surface = Evaluated at surface of plate
+∞ = Mainstream
+COMPUTATIONAL SETUP
+Flat plate film cooling was simulated using geometry and flow
+conditions based on Baldauf et al. [33]. The geometry and hexahedral
+mesh were generated using GAMBIT (part of the FLUENT package)
+and cases were solved using FLUENT 6.3. The geometry used in the
+simulations is shown in Fig. 1 and the initial mesh of the injection
+region is shown in Fig. 2. The mesh for all simulations was developed
+with y+ values approximately equal to unity so that near wall treatment
+could be used. The maximum stretching ratio normal to the flat plate
+wall was 1.25. Three turbulence models were examined: RKE, SKE,
+and RSM. For the RKE and RSM models, enhanced wall treatment (a
+two layer treatment) was used.
+Symmetry boundary conditions at the hole center plane and half
+pitch plane between the holes were used to simulate a row of film
+cooling holes. To prevent formation of a boundary layer at the top of
+the domain, a symmetry boundary condition was also used at the top
+of the tunnel. Adiabatic effectiveness simulations were run with the
+domain height increased to 20d in addition to the 6d height shown in
+Figure 1. The increase in height had no effect on the solution, so 6d
+was deemed high enough. All walls were set to adiabatic for the η
+simulations and all walls except the top of the flat plate were set to
+adiabatic for the heat transfer simulations. For the heat transfer
+simulations, a constant heat flux boundary condition (q” = 15 kW/m2)
+was applied to the surface of the flat plate.
+Simulations were run with and without heating upstream of the
+holes. Studies by Coulthard et al. [38] on a flat plate and Harrison et
+al. [39] on a turbine vane have demonstrated that there are significant
+differences in heat transfer coefficient augmentation with and without
+upstream heating. Because upstream heating is a more realistic
+
+3
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+compensated for to some degree by lower values in between the holes.
+Thus, a turbulence model would be very useful if it could accurately
+predict laterally averaged adiabatic effectiveness even if it was
+incapable of capturing exact values for centerline effectiveness. The
+current study is based on the geometry of Baldauf et al. [33] and
+centerline, lateral distributions, as well as laterally averaged results
+will be presented.
+While there are many computational studies comparing
+turbulence model predictions of adiabatic effectiveness on a flat plate,
+there are fewer computational predictions of heat transfer coefficients.
+Many computational studies have simulated heat transfer experiments
+on airfoils, but few on flat plates. Ferguson et al. [3] ran heat transfer
+simulations and examined centerline and lateral distributions of heat
+transfer coefficient augmentation, hf/h0. Results found from using SKE
+with SWF, RNG with SWF, and RSM with SWF turbulence models
+were compared to experimental data from Sen [34]. For M = 1,
+centerline hf/h0 was over-predicted near the hole and under-predicted
+far from the hole using the SKE model with SWF. Simulations with
+the RNG model with SWF resulted in over-predicted centerline hf/h0
+values but merged with the experimental data downstream. Centerline
+hf/h0 was best predicted through simulations with the RSM model with
+SWF, except very close to the hole. Lateral distributions of hf/h0 using
+the SKE with SWF and the RNG with SWF resulted in much greater
+variation than found experimentally and hf/h0 values were generally
+over-predicted by the simulations. The RSM model with SWF
+predicted a laterally constant distribution in hf/h0 and best agreed with
+experimental data, although the experimental data does indicate some
+lateral variation.
+Zhang and Hassan [35] simulated heat transfer experiments by
+Eriksen [36] using the SKW, RSM with SWF, SA, SKE with SWF,
+SKE with NEWF, and SKE with 2LWT. The RKE model with SWF
+resulted in the closest overall agreement with experiments for M = 1,
+but the SA and SKW models also resulted in reasonable predictions of
+centerline hf/h0. The RSM model resulted in the worst predictions far
+from the hole but the best prediction close to the hole. Comparisons of
+the SKE model with SWF, NEWF, and 2LWT showed little difference
+in centerline hf/h0. The study also compared simulation results to
+experiments by Sen [34] and found simulations agreed well with
+centerline hf/h0 for M = 1. For M = 0.5, the SKE with SWF underpredicted centerline hf/h0, especially near the hole. Lateral hf/h0
+simulation results found by applying a constant heat flux to the flat
+plate showed more variation in hf/h0 than was seen experimentally in
+Sen [34], as was also shown by Ferguson et al. [3].
+Since it is difficult to determine the best turbulence model based
+on literature, this study aims to analyze both adiabatic effectiveness
+and heat transfer coefficients. The results are used for turbulence
+model selection in Harrison and Bogard [37]. To analyze the
+turbulence model performance thoroughly, centerline, lateral
+distributions, and laterally averaged adiabatic effectiveness and heat
+transfer coefficients are compared. Previous turbulence model studies
+have not examined the effects of various turbulence models by
+comparing laterally averaged, centerline, and lateral distributions for
+both adiabatic effectiveness and heat transfer coefficient augmentation.
+
+situation in a turbine, heat transfer coefficients were found with
+upstream heating. However, simulations without heating upstream of
+the holes were also run for comparison to other studies, which mostly
+neglect the effects of upstream heating. Heat transfer simulations were
+run to determine the heat transfer coefficients without blowing, h0, and
+with blowing, hf.
+
+from 6d to 20d. It is clear that the domain height does not affect
+solution accuracy.
+Table 1 Operating parameters
+Name
+
+Simulation Description
+
+α = 30 degrees
+Geometry
+
+p/d = 3
+d = 0.005 m
+Tu =1.5%
+
+Λ/d = 1d
+
+Tunnel Inlet
+x/d = 0
+
+U = 60 m/s (nominally)
+T = 450 K
+Tu = 2%
+
+Plenum Inlet
+
+Λ/d = 1d
+
+Fig. 1 Computational domain
+
+Fig. 2 Initial Mesh
+0.5
+
+RKE 1.36 million cells
+SKW 1.36 million cells
+RSM 1.36 million cells
+RKE 1.46 million cells
+SKW 1.46 million cells
+RSM 1.46 million cells
+RKE 1.57 million cells
+SKW 1.57 million cells
+RSM 1.57 million cells
+RKE 20d domain height
+
+0.45
+0.4
+0.35
+0.3
+
+η
+
+Blowing ratios of M = 0.5 and M = 1 were examined for both the
+adiabatic effectiveness and heat transfer simulations. For η
+simulations, density ratios of DR = 1.5 and 1.8 were analyzed. The
+heat transfer simulations were run at unit density ratio to compare to
+what is commonly used experimentally. In all simulations, the
+properties of air were set to vary as either linear or quadratic functions
+of temperature since there was considerable density variation.
+The flow parameters are summarized in Table 1. The mainstream
+velocity was set to nominally 60 meters/second for consistency with
+Baldauf et al. [33], and a velocity profile was added at the tunnel inlet
+to match the displacement thickness of δ1/d = 0.1 reported at the hole.
+The turbulence intensity at the inlet was set to Tu = 1.5% to match
+Baldauf et al. [33]. Since values for the turbulence length scales in the
+tunnel and plenum and for the turbulence intensity in the plenum were
+not reported, the turbulence length scale and turbulence intensity at the
+plenum inlet were set to Λ = 1d and Tu = 2%, respectively.
+Convergence and grid independence were carefully determined.
+Simulations were judged to be converged when each of several
+parameters did not change more than 0.005% for at least 100
+iterations. The parameters used for convergence criteria were: laterally
+averaged adiabatic effectiveness on the surface of the plate, velocity at
+the center of the hole exit, and Tu at the center of the hole exit. The
+residuals for all parameters dropped by at least five orders of
+magnitude (energy at least 7 orders) when the solution had converged
+in all simulations.
+After solutions were found with the initial mesh, shown in Fig. 2,
+adiabatic effectiveness simulation files were then adapted based on
+gradients in temperature. A comparison of η between initial and
+adapted meshes for the RKE, SKE, and RSM turbulence models is
+shown in Figure 3. The initial meshes consisted of 1.36 million cells
+(1.43 million nodes) and the twice adapted meshes consisted of
+approximately 1.57 million cells (1.71 million nodes). Based on the
+adaption results, the original mesh was deemed to be a grid
+independent solution since adaptions had essentially no effect on the
+solution when cells were added in the regions of high gradients. The
+maximum change in laterally averaged adiabatic effectiveness was
+much less than 0.5%. Similar results were found for other adapted
+files. Also shown in Fig. 3 is the effect of increasing the domain height
+
+0.25
+0.2
+0.15
+0.1
+0.05
+0
+0
+
+5
+
+Fig. 3 Comparison of
+= 0.5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+η found from initial and adapted meshes for M
+
+RESULTS
+Simulations were run to determine the adiabatic effectiveness and
+heat transfer coefficient augmentation distributions on a flat plate and
+the results are presented in laterally averaged, centerline, and lateral
+distribution plots. Fig. 4 shows η for all three turbulence models at
+DR = 1.5 and 1.8 and M = 0.5 compared to experiments from Baldauf
+et al. [33]. The figure clearly shows that the SKW model predicts
+
+4
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+δ1/δ = 0.1 (at x/d = -2)
+
+0.5
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+Baldauf et al. [33] DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [33] DR=1.8
+
+0.45
+0.4
+0.35
+
+η
+
+0.3
+0.25
+
+centerline η is over-predicted because the two equation models cannot
+predict anisotropic turbulence. Studies which have modified the k-ε
+model to include anisotropy have resulted in improved predictions as
+discussed previously. While this may be part of the problem, it is
+unlikely to be entirely responsible for the poor centerline predictions
+since the RSM model does not show improvement over the RKE
+model.
+Zhang and Hassan [18] suggested that the centerline η is poorly
+predicted in many studies due to several factors: 1) use of two-layer
+wall treatments, 2) use of domains which are not of sufficient height to
+capture the flow properly, 3) use of tetrahedral meshes, 4) comparison
+to experimental studies which did not account for conduction losses
+through the flat plate. However, other studies have suggested that use
+of two-layer wall treatments improve the accuracy of centerline
+predictions (Ferguson et al. [3], Lakehal et al. [4]). Figure 3 shows
+clearly that the domain height used in this study, which is similar to
+many computational studies, is sufficient for capturing the adiabatic
+effectiveness distribution. The experimental study, Baldauf et al. [33],
+compared to in the current study accounted for conduction effects.
+Also, a hexahedral mesh was used in the current study and many other
+studies in which centerline η was still over-predicted.
+1
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Sinha [2] DR=1.6
+Kohli and Bogard [22] DR=1.6
+Drost et al. [45] DR=1.6
+Baldauf et al. [40] M=0.6 DR=1.5
+Baldauf et al. [40] M=0.4 DR=1.8
+Baldauf et al. [40] M=0.6 DR=1.8
+
+0.9
+0.8
+0.7
+
+0.2
+
+0.6
+
+η
+
+0.15
+0.1
+
+0.5
+0.4
+
+0.05
+
+0.3
+
+0
+0
+
+5
+
+Fig. 4 Predictions of
+for M = 0.5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+0.2
+
+η distributions using various turbulence models
+
+0.1
+0
+0
+
+0.5
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+Baldauf et al. [33] DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [33] DR=1.8
+
+0.45
+0.4
+0.35
+
+η
+
+0.3
+0.25
+0.15
+0.1
+0.05
+0
+5
+
+Fig. 5 Predictions of
+for M = 1
+
+10
+
+15
+x/d
+
+20
+
+25
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 6 Predictions of centerline η distributions using various
+turbulence models for M = 0.5
+
+0.2
+
+0
+
+5
+
+30
+
+η distributions using various turbulence models
+
+Centerline adiabatic effectiveness at DR = 1.5 and 1.8 for M = 0.5
+is shown in Fig. 6. All three models over-predict centerline η
+significantly. This is consistent with many studies in literature as
+discussed in the introduction. Various explanations have been
+suggested for this phenomenon. Some papers suggest that the
+
+Regardless of the reason for over-predictions of centerline η, it is
+necessary to analyze which turbulence model best captures the correct
+centerline η distribution. It is clear from Fig. 6 that the SKW model,
+which was best at predicting η , was worst at predicting centerline η
+at M = 0.5. This is consistent with other literature (Zhang and Hassan
+[18], Na et al. [21], Silieti et al. [15]). The RKE and RSM models
+exhibit similar performance, but the RKE simulates experimental data
+slightly better. Density ratio had only a small effect on the centerline η
+at M = 0.5.
+Several data sets are plotted which have similar conditions to
+point out the variance in experimental centerline η. The data from
+Baldauf et al. [40] was extracted from contour plots, so only values of
+η at the edges of contours are presented in Fig. 6. The contours were
+divided into η = 0.1 increments at higher η levels and 0.05 increments
+at η levels less than 0.2. Also, the data from Baldauf et al. [40] is at
+slightly different blowing ratios (M = 0.4 and 0.6 rather than M = 0.5)
+because M = 0.5 was unavailable for these configurations.
+As for M = 0.5, for M = 1 the SKW model predicted experimental
+centerline η worst of the three models as shown in Fig. 7. The RKE
+model was again the best predictor of experimental values. Centerline
+
+5
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+η most accurately near the hole. The RSM model agrees with
+experiments slightly better than the RKE model, but not as well as the
+SKW model. These results are similar to comparisons between the
+SST k-ω model and the RKE model in Na et al. [21], in which the SST
+model resulted in better predictions than RKE.
+Far from the hole, all turbulence models predict similar η levels
+and predict experimental values fairly accurately. All models predict
+that simulations at DR = 1.8 result in slightly higher η than
+simulations at DR = 1.5. The experimental η values for DR = 1.5 and
+1.8 are within experimental uncertainty. Both experiments and
+simulations show density ratio to be a small effect for M = 0.5.
+As was clear for M = 0.5, Fig. 5 shows that the SKW model best
+predicts η for M = 1 and the RKE model results in the worst
+predictions. At DR = 1.8, the η values measured by Baldauf et al.
+[33] were higher than at DR = 1.5 and the density ratio effect was
+much greater for M = 1 than for M = 0.5. All three turbulence models
+correctly predicted these trends. This is because the VR is higher for
+the lower density ratio, so greater separation occurs for DR = 1.5.
+
+1
+0.8
+0.7
+
+η
+
+0.6
+
+1
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [40] M=0.6 DR=1.5
+Baldauf et al. [40] M=0.4 DR=1.8
+Baldauf et al. [40] M=0.6 DR=1.8
+
+0.9
+0.8
+0.7
+
+η
+
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [40] DR=1.8
+Drost et al. [44] DR=1.6
+Schmidt et al. [45] DR=1.6
+
+0.9
+
+It is difficult to choose any of the models as the best predictor of
+experimental spanwise distributions in η. Higher η is predicted with
+the SKW model in most locations, but the lateral spreading is not more
+like the experimental data than the RKE or RSM predictions.
+For M = 0.5 and x/d = 20, all turbulence models predict more
+lateral spreading than at x/d = 5, as shown in Fig. 9. However, less
+spreading is still predicted than is evident in experimental
+measurements. There are few data points from Baldauf et al. [40]
+because the data are extracted from contour plots and there are few
+contours at x/d = 20 since the η levels are fairly uniform. The RSM
+and RKE models are very similar, but the SKW model shows higher
+centerline η and slightly lower η than the other models near z/d = 1.5.
+
+0
+0
+
+0.5
+
+1
+
+0.4
+0.3
+
+0.8
+
+0.2
+
+0.7
+
+0.1
+
+0.6
+
+η
+
+0
+10
+
+15
+x/d
+
+20
+
+25
+
+1.5
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [40] M=0.6 DR=1.5
+Baldauf et al. [40] M=0.4 DR=1.8
+Baldauf et al. [40] M=0.6 DR=1.8
+
+0.9
+
+5
+
+1
+
+Fig. 8 Predictions of spanwise η distributions using various turbulence
+models for M = 0.5 at x/d = 5
+
+0.5
+
+0
+
+z/d
+
+0.5
+
+30
+
+0.4
+
+Fig. 7 Predictions of centerline η distributions using various
+turbulence models for M = 1
+It is useful to examine the spanwise distribution of η for the three
+turbulence models being examined in addition to centerline and
+laterally averaged data. Fig. 8 shows the spanwise distribution at x/d =
+5 for M = 0.5. Clearly, all turbulence models predict less lateral
+spreading than experimental values indicate. This is consistent with
+many other CFD studies. Despite including anisotropic turbulence
+effects, the RSM model does not show significantly more lateral
+coolant spreading. It was verified that the RSM model was predicting
+Reynold’s stresses that differed in the three coordinate directions, so
+anisotropic turbulence was captured. However, this anisotropic
+behavior does not appear to greatly affect the spanwise heat transfer.
+Note that there are studies in the literature suggesting that the RSM
+better predicts velocity, shear stress, and turbulence distributions than
+other RANS models (Javadi et al. [12], Gustafsson and Johansson
+[23]). However, there is not strong evidence that the RSM model
+predicts adiabatic effectiveness distributions significantly better than
+other RANS models (Ferguson et al. [3], Walters and Leylek [9],
+Zhang and Hassan [18]).
+
+0.3
+0.2
+0.1
+0
+0
+
+0.5
+
+z/d
+
+1
+
+1.5
+
+Fig. 9 Predictions of spanwise η distributions using various turbulence
+models for for M = 0.5 at x/d = 20
+The spanwise distributions of η for M = 1 are shown in Figures
+10 and 11 at x/d = 5 and x/d = 20, respectively. Similar to Figures 8
+and 9 shown for M = 0.5, all turbulence models predict less lateral
+spreading than was measured experimentally and it is difficult to
+determine the most physical model because none of the models really
+capture the correct trends.
+Since this study aims to determine the best turbulence model for
+film cooling, it is necessary to also examine how well turbulence
+models predict heat transfer coefficients. Values for h0, the heat
+transfer coefficient without film cooling were examined and compared
+to correlations from Kays and Crawford [41] and Cengel [42] as
+
+6
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+η for the RKE model monotonically decreased, whereas the RSM and
+SKW model curves show a dip near injection that suggests separation
+and reattachment along the centerline. Since a large dip in centerline η
+was also apparent in Baldauf et al. [40] data, the RSM and SKW
+models capture more of the physics of separation and reattachment
+than the RKE model. The centerline η values predicted by the SKW
+model near the hole are actually very close to the experimental data,
+but since the values are much higher than experimental data after the
+first few hole diameters, it is likely that the model predicts stronger jet
+re-attachment than was present in experiments. The other experimental
+data sets also have η distributions that indicate separation and
+reattachment close to the hole, but they do not predict as strong of an
+effect. Despite the highest over-predictions overall, the SKW model
+may better capture the physics of separation and reattachment near the
+hole than the RKE and RSM models.
+For M = 1, all three models show a much larger density ratio
+effect than for M = 0.5. This was also shown in the η plots and is due
+to more separation at lower DR cases with higher VR. Several
+experimental data sets are presented to compare to the simulations. It
+is clear that data from Baldauf et al. [40] is significantly higher than
+the other data sets. This may be because the DR used in Baldauf et al.
+[40] is DR = 1.8, whereas DR = 1.6 was used in the other experimental
+data sets. This could also be because the angle of injection was α = 30
+degrees in Baldauf et al. [40] and α = 35 degrees in the other studies.
+
+Simulations to determine heat transfer coefficient augmentation,
+hf/h0, were run with and without upstream heating at DR = 1 and for
+both M = 0.5 and M = 1. DR = 1 was used to simulate typical
+experimental conditions. When upstream heating was used, the hf
+values were normalized by h0 values from simulations also with
+upstream heating. Similarly, hf values without upstream heating were
+compared to h0 values from simulations without upstream heating.
+300
+RKE
+SKW
+RSM
+Kays and Crawford (2005)
+Cengel (2003)
+
+2
+
+h0 (W/m K)
+
+250
+
+200
+
+150
+
+1
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [40] DR=1.8
+
+0.9
+0.8
+0.7
+
+η
+
+0.6
+
+100
+-11
+
+0.4
+0.3
+0.2
+0.1
+0
+0.5
+
+1
+
+1.5
+
+x/d
+
+Fig. 10 Predictions of spanwise η distributions using various
+turbulence models for M = 1 at x/d = 5
+1
+
+RKE DR=1.5
+SKW DR=1.5
+RSM DR=1.5
+RKE DR=1.8
+SKW DR=1.8
+RSM DR=1.8
+Baldauf et al. [40] DR=1.8
+
+0.9
+0.8
+0.7
+
+1.8
+
+1.4
+
+0.3
+
+1.2
+
+hf/h0
+
+1.6
+
+0.4
+
+0.2
+
+1
+
+0.1
+
+0.8
+
+0
+
+0.6
+0.5
+
+z/d
+
+1
+
+29
+
+2
+
+0.5
+
+0
+
+19
+
+Laterally averaged hf/h0 values without upstream heating for M =
+0.5 and M = 1 are shown in Figures 13 and 14, respectively. There are
+many experimental results to compare to that have analyzed laterally
+averaged hf/h0 values without upstream heating including Ammari et
+al. [43] and Hay et al. [44]. However, there are not any experimental
+results for laterally averaged hf/h0 with upstream heating on a flat plate
+in the literature, so only simulations without upstream heating were
+shown in the laterally averaged plot. For both blowing ratios, the RSM
+and RKE turbulence model results are fairly similar, but the SKW
+results are about 10% lower. Since the experimental data are close to
+the laterally averaged hf/h0 distributions for all three turbulence
+models, it is difficult to determine which turbulence model best
+simulates experimental results. All three models agree reasonably well
+with experiments.
+
+η
+
+0.6
+
+9
+x/d
+
+Fig. 12 Predictions of h0 with various turbulence models and
+comparison to correlations
+
+0.5
+
+0
+
+-1
+
+0.4
+
+1.5
+
+Fig. 11 Predictions of spanwise η distributions using various
+turbulence models for M = 1 at x/d = 20
+All three turbulence models show good agreement with the
+correlations after about x/d = 0, which is the location of interest in this
+study because x/d > 0 is downstream of the hole location. The RKE
+model shows the best agreement overall but all three models are
+reasonably accurate. The RSM model exhibits strange behavior near
+the onset of heating in which there is a dip in the heat transfer
+coefficient. It is unclear why this occurs.
+
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Ammari et al. [43]
+Hay et al. [44]
+
+0.2
+0
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 13 Predictions of laterally averaged hf/h0 distributions using
+various turbulence models for M = 0.5
+Coulthard et al. [37] conducted a heat transfer study and
+presented centerline and lateral distributions of hf/h0 with and without
+upstream heating. The geometry in Coulthard et al. [38] was similar to
+
+7
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+shown in Fig. 12. The plate was heated upstream of the hole location
+for the simulation depicted in the figure. There was no hole in the h0
+simulations, but to be consistent with simulations that include film
+cooling, x/d = 0 is still defined where the downstream hole edge would
+be if film cooling was being simulated. The values of x/d span from 11 to 30 because the domain extends 11d upstream of the downstream
+hole edge and 30d downstream of the downstream hole edge. A
+boundary layer was applied at the tunnel inlet to match the momentum
+thickness reported in Baldauf et al. [33] so essentially the
+hydrodynamic boundary layer began upstream of the domain. Heating
+was applied on the plate surface at the beginning of the computational
+domain so there is an unheated starting length upstream of the domain.
+The correlations for Nu by Kays and Crawford [41] and Cengel [42]
+that were used to compare to simulations accounted for the unheated
+starting length. Since there were large temperature differences in the
+simulations, variable property corrections were applied to both
+correlations.
+
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Ammari et al. [43]
+Hay et al. [44]
+
+1.6
+
+hf/h0
+
+1.4
+
+1.5
+
+1
+
+0.5
+
+1.2
+1
+
+0
+
+0.8
+
+0
+
+0.6
+0.4
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 16 Predictions of centerline hf/h0 distributions using various
+turbulence models for M = 1
+
+0.2
+0
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+2
+
+30
+
+1.8
+
+Fig. 14 Predictions of laterally averaged hf/h0 using various turbulence
+models for M = 1
+
+1.5
+
+1.6
+1.4
+
+hf/h0
+
+RKE DR=1 Upstream Heating
+SKW DR=1 Upstream Heating
+RSM DR=1 Upstream Heating
+Coulthard et al. [38] Upstream Heating
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Coulthard et al. [38] No Upstream Heating
+
+2
+
+hf/h0
+
+RKE DR=1 Upstream Heating
+SKW DR=1 Upstream Heating
+RSM DR=1 Upstream Heating
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Coulthard et al. [38] No Upstream Heating
+Coulthard et al. [38] Upstream Heating
+
+2
+
+hf/h0
+
+2
+1.8
+
+each of the three turbulence models are compared to experiments for
+M = 0.5 at x/d = 6 in Fig. 17 and for M = 1 in Fig. 18. It is clear that
+the simulations for both M show much more lateral variation in hf/h0
+than was measured in the experiments. This large variation has been
+shown in Ferguson et al. [3] and from the constant heat flux boundary
+condition simulations in Zhang et al. [18].
+
+1.2
+1
+0.8
+
+RKE DR=1 Upstream Heating
+SKW DR=1 Upstream Heating
+RSM DR=1 Upstream Heating
+Coulthard et al. [38] Upstream Heating
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Coulthard et al. [38] No Upstream Heating
+
+0.6
+0.4
+0.2
+
+1
+
+0
+0
+
+0.5
+
+1
+
+1.5
+
+x/d
+0.5
+
+Fig. 17 Predictions of spanwise hf/h0 distributions using various
+turbulence models for M = 0.5 at x/d = 6
+
+0
+0
+
+5
+
+10
+
+15
+x/d
+
+20
+
+25
+
+30
+
+Fig. 15 Predictions of centerline hf/h0 distributions using various
+turbulence models for M = 0.5
+Despite under-predictions of centerline hf/h0, the simulations all
+captured the effects of upstream heating reasonably well. The relative
+difference between the upstream and no upstream heating simulations
+were similar to the relative differences measured in experiments. For
+M = 0.5, near injection there was a significant difference between the
+upstream heating and no upstream heating cases. There is a much
+smaller difference between the upstream heating and no upstream
+heating cases for M = 1. The simulations with all three turbulence
+models captured these trends fairly well.
+Since simulation results for laterally averaged hf/h0 agreed well
+with experiments but centerline agreement was much poorer, lateral
+hf/h0 distributions are also useful to examine. Lateral distributions with
+
+Regardless of larger lateral variation in augmentation, both
+experiments and simulations predict similar trends at M = 0.5: the
+lowest values at the centerline, large values around z/d = 0.5, and
+values near unity at the midline between holes. The trend of low
+centerline values and high values around z/d = 0.5 (near the edge of the
+jet) has been attributed to counter-rotating vortices as discussed in
+Coulthard et al. [38].
+The SKW model predicted the largest variation in hf/h0 out of the
+three turbulence models for M = 0.5. Upstream heating effects were
+captured reasonably well, but all three turbulence models predicted
+upstream heating to cause higher augmentation near the centerline and
+lower augmentation at the midline between holes than the case without
+upstream heating. Conversely, in experiments augmentation was
+always higher with upstream heating.
+Using the RKE and RSM models for M = 1 resulted in similar
+trends as were predicted for M = 0.5, but the SKW model predicted
+dissimilar trends. With the SKW model, augmentation was predicted
+
+8
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+the current study and the distance of upstream heating was also similar.
+Simulated and experimental centerline hf/h0 distributions with and
+without upstream heating are shown in Fig. 15 for M = 0.5 and Fig. 16
+for M = 1. While agreement with experiment was very good for
+laterally averaged hf/h0 values, centerline agreement was not as close;
+all three turbulence models under-predicted hf/h0 along the centerline
+for both M. The SKW model resulted in the largest under-prediction
+far from the hole and the largest over-prediction close to the hole for
+both blowing ratios. The RSM model showed the most consistent
+agreement with experimental data. These under-predictions are
+consistent with results using the SKE model with SWF from Ferguson
+et al. [3] and also with some results from Zhang and Hassan [18].
+
+to be high at the centerline in contrast with the other models, low
+around z/d = 0.2, high around z/d = 0.5, and near unity at the midline
+between holes. This was not measured experimentally. Farther
+downstream, the results looked more similar to those for M = 0.5. It is
+worth noting that there is also experimental data that suggests the
+highest augmentation occurs along the centerline.
+2
+
+model really is a matter of picking the best model for the particular
+application being examined. If the aim is to determine the best
+turbulence model for predicting laterally averaged adiabatic
+effectiveness and heat transfer, the SKW model is the best choice.
+ACKNOWLEDGMENTS
+The authors would like to thank to Office of Naval Research for
+funding this research through the Electric Ship Consortium.
+
+1.8
+
+hf/h0
+
+1.4
+1.2
+1
+RKE DR=1 Upstream Heating
+SKW DR=1 Upstream Heating
+RSM DR=1 Upstream Heating
+Coulthard et al. [38] Upstream Heating
+RKE DR=1 No Upstream Heating
+SKW DR=1 No Upstream Heating
+RSM DR=1 No Upstream Heating
+Coulthard et al. [38] No Upstream Heating
+
+0.8
+0.6
+0.4
+0.2
+0
+0
+
+0.5
+
+1
+
+1.5
+
+x/d
+
+Fig. 18: Predictions of spanwise hf/h0 distributions using various
+turbulence models for M = 1 at x/d = 6
+As was shown for M = 0.5, for M = 1 the upstream heating
+simulations resulted in higher augmentation than the no upstream
+heating simulations close to the hole but lower augmentation at the
+midline between holes. The experimental data agreed with this trend
+for M = 1, but the point in which the upstream heating and no
+upstream heating augmentation curves crossed was not predicted
+exactly by any of the turbulence models.
+CONCLUSIONS
+It is difficult to determine the most effective turbulence model for
+simulating both film cooling adiabatic effectiveness and heat transfer
+coefficients. Recommendations in literature vary and few studies
+include both heat transfer and adiabatic effectiveness. Furthermore,
+many studies are limited to or focused on centerline adiabatic
+effectiveness and are based on studies using arrays of thermocouples
+which are very sensitive to thermocouple placement and jet skewness.
+This study sought to analyze both adiabatic effectiveness and heat
+transfer coefficient augmentation and compare results to experimental
+laterally averaged, centerline, and lateral distributions.
+The SKW (standard k-ω) model best predicted laterally averaged
+adiabatic effectiveness and the RKE (realizable k-ε) model resulted in
+the worst predictions. Centerline adiabatic effectiveness was best
+predicted by the RKE model and worst predicted by the SKW. All
+three turbulence models provide poor predictions of lateral
+distributions due to lack of sufficient lateral spreading. Although
+anisotropic, use of the RSM (Reynold’s stress) model did not result in
+significantly better lateral spreading.
+Heat transfer coefficients were also examined. The RKE model
+best predicted h0, but all three models predicted reasonable results. All
+three models predicted reasonable laterally averaged hf/h0 distributions
+but also under-predicted centerline hf/h0 and over-predicted lateral
+variations in hf/h0. Use of the RSM model resulted in the least underpredicted centerline augmentation values. All models captured the
+effects of upstream heating well.
+An argument could be made for any turbulence model being the
+best model for simulating film cooling. The choice of turbulence
+
+REFERENCES
+[1] D.K. Walters, and J.H. Leylek, 1997, “A systematic
+computational methodology applied to a three-dimensional filmcooling flowfield,” Journal of Turbomachinery, v 119, p 777-785.
+[2] Sinha, A. K., Bogard, D. G., and Crawford, M.E., 1991, “Film
+Cooling Effectiveness Downstream of a Single Row of Holes
+with Variable Density Ratio,” Journal of Turbomachinery, v 113,
+p 442-449.
+[3] J.D. Ferguson, D.K. Walters, and J.H. Leylek, 1998,
+“Performance of turbulence models and near-wall treatments in
+discrete jet film cooling simulations,” ASME Paper 98-GT-438.
+[4] D.K. Walters and J.H. Leylek, 2000, “A Detailed Analysis of Film
+Cooling Physics: Part 1—Streamwise Injection with Cylindrical
+Holes,” Journal of Turbomachinery, v 122, p 102-112.
+[5] D. Lakehal, G.S. Theodoridis, and W. Rodi, 1998, “Computation
+of film cooling of a flat plate by lateral injection from a row of
+holes,” International Journal of Heat and Fluid Flow, v 19, p 418430.
+[6] S. Honami, T. Shizawa, and A. Uchiyama, 1992, “Behaviors of
+the laterally injected jet in film cooling: measurements of surface
+temperature and velocity/temperature field within the jet,” ASME
+Paper 92-GT-180.
+[7] M.R. Keimasi and M. Taeibi-Rahni, 2001, “Numerical simulation
+of jets in a crossflow using different turbulence models,” AIAA
+Journal, v 39, n 12, p 2268-2277.
+[8] P. Ajersch, J.M. Zhou, S. Ketler, M. Salcudean, I.S. Gartshore,
+1995, “Multiple jets in a crossflow: detailed measurements and
+numerical simulations,” ASME Paper 95-GT-9.
+[9] Walters, D.K. and Leylek, J.H., 2002, “Computational study of
+film-cooling effectiveness on a low-speed airfoil cascade—Part 1:
+Methodology and validation,” Proceedings of the ASME Design
+Engineering Technical Conference, v 1, p 281-288.
+[10] Ito, S., 1976, “Film cooling and aerodynamic loss in a gas turbine
+cascade,” Ph.D. Thesis, University of Minnesota.
+[11] S. Ito, R.J. Goldstein, E.R.G. Eckert, 1978, “Film cooling of a gas
+turbine blade,” ASME Journal of Engineering for Power, v 100, p
+476-481.
+[12] Javadi, A., Javadi, K., Taeibi-Rahni, M. Keimasi, M.R., 2002,
+”Reynold’s stress turbulence models for prediction of shear stress
+terms in cross flow film cooling numerical simulation,”
+PVP2002-1586,
+Computational
+Technologies
+for
+Fluid/Thermal/Structural/Chemical Systems with Industrial
+Applications, v 2, p 155-167.
+[13] W.D. York and J.H. Leylek, 2003, “Three-dimensional conjugate
+heat transfer simulation of an internally-cooled gas turbine vane,”
+ASME Paper GT2003-38551.
+[14] L.D. Hylton, M.S. Milhec, E.R. Turner, D.A. Nealy, R.E. York,
+1983, “Analytical and experimental evaluation of heat transfer
+distribution over the surface of turbine vanes,” NASA CR
+168015.
+[15] M. Silieti, E. Divo, and A.J. Kassab, 2004, “Numerical
+investigation of adiabatic and conjugate film cooling
+
+9
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+1.6
+
+[16]
+
+[17]
+
+[19]
+
+[20]
+
+[21]
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+[26]
+
+[27]
+
+[28]
+
+[29]
+
+[30]
+
+[31]
+
+[32]
+
+[33] Baldauf, S., Scheurlen, M., Schultz, A., and Wittig, S., 2002,
+“Correlation of Film Cooling Effectiveness from Thermographic
+Measurements at Engine Like Conditions,” ASME Paper GT2002-30180.
+[34] Sen, B., 1995, “Effects of Injection Hole Geometry, High
+Freestream Turbulence, and Surface Roughness on Film Cooling
+Heat Transfer,” M.S. Thesis, University of Texas at Austin.
+[35] Zhang, X. Z. and Hassan, I., 2006, “Numerical Investigation of
+Heat Transfer on Film Cooling with Shaped Holes,” International
+Journal of Numerical Methods for Fluid Flow, v 16, n 8, p 848869.
+[36] Ericksen, V.L., 1971, “Film cooling effectiveness and heat
+transfer with injection through holes,” PhD Dissertation,
+Univeristy of Minnesota, Minneapolis, MN.
+[37] Harrison, K. and Bogard, D., 2008, “Use of the adiabatic wall
+temperature in film cooling to predict wall heat flux and
+temperature,” ASME Paper GT2008-51423.
+[38] Coulthard, S. M., Volino, R. J., and Flack, K. A., 2006, “Effect of
+Unheated Starting Lengths on Film Cooling Effectiveness,”
+ASME Journal of Turbomachinery, v 128, pp. 579-588.
+[39] Harrison, K., Dorrington, J., Dees, J., Bogard, D., and Bunker, R.,
+2007, “Turbine Airfoil Net Heat Flux Reduction with Cylindrical
+Holes Embedded in a Transverse Trench,” ASME Paper GT200727996.
+[40] Baldauf, S., Schulz, A., and Wittig, S., 2001, “High-resolution
+Measurements of Local Effectiveness from Discrete Hole Film
+Cooling,” Journal of Turbomachinery, v 123, n 4, p 758-765.
+[41] Kays. W., Crawford, M., and Weigand, B., 2005, Convective
+Heat and Mass Transfer, 4th Edition, McGraw Hill, pp. 251-256.
+[42] Cengel, 2003, Heat Transfer: A Practical Approach, 2nd Edition,
+McGraw Hill, p 373-377.
+[43] Ammari H., Hay, N., and Lampard, D., 1990. “The Effect of
+Density Ratio on the Heat Transfer Coefficient from a FilmCooled Flat Plate,” Journal of Turbomachinery, v 112, p 444-450.
+[44] Hay, N., Lampard, D., and Saluja, C.L., 1985, “Effects of cooling
+films on the heat transfer coefficient on a flat plate with zero
+mainstream pressure gradient,” Journal of Engineering for Gas
+Turbines and Power, v 107, p 105-110.
+[45] Drost, U., Bolcs, A., and Hoffs, A., 1997, “Utilization of the
+transient liquid crystal technique for film cooling effectiveness
+and heat transfer investigations on a flat plate and a turbine
+airfoil,” ASME Paper 97-GT-26.
+[46] Schmidt, D.L., Sen, B., and Bogard, D.G., 1996, “Film cooling
+with compound angle holes: adiabatic effectiveness,” Journal of
+Turbomachinery, v 118, p 807-813.
+
+10
+
+Copyright © 2008 by ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2008/​43147/​1187/​2687261/​1187_1.​pdf by Cambridge University user on 17 November 2026
+
+[18]
+
+effectiveness on a single cylindrical film-cooling hole,” ASME
+Paper IMECE2004-62196.
+M. Gritsch, A. Schulz, and S. Wittig, 1998, “Adiabatic wall
+effectiveness measurements of film cooling holes with expanded
+exits: a comparison of computational results with experiments,”
+ASME Paper 97-GT-163.
+M. Silieti, A.J. Kassab, and E. Divo, 2005, “Film cooling
+effectiveness from a single scaled-up fan-shaped hole a CFD
+simulation of adiabatic and conjugate heat transfer models,”
+ASME Paper GT2005-68431.
+Zhang, X. Z. and Hassan, I., 2006, “Film cooling effectiveness of
+an advanced-louver cooling scheme for gas turbines,” Journal of
+Thermophysics and Heat Transfer, v 20, n 4, p 754-763.
+J.S. Hassan and S. Yavuskurt, (2006), “Comparison of four
+different two-equation models of turbulence in predicting film
+cooling performance,” ASME Paper GT2006-90860.
+J.E. Mayhew, 1999, “An experimental investigation of the effect
+of freestream turbulence on film cooling using thermochromic
+liquid crystal thermography,” Ph.D. Dissertation, University of
+California, Davis.
+Na, S., Zhu, B., Bryden, M., and Shih, T.I-P., 2006, “CFD
+analysis of film cooling,” AIAA Paper AIAA 2006-0022.
+Kohli, A. and Bogard, D. G., 1997, “Adiabatic Effectiveness,
+Thermal Fields, and Velocity Fields for Film Cooling With Large
+Angle Ejection,” Journal of Turbomachinery, v 119, p 352-358.
+Gustafsson, K.M.B., Johansson, T.G., 2006, “Numerical
+simulation of effusion cooling with comparison to experimental
+data,” Progress in Computational Fluid Dynamics, v 6, n 1/2/3, p
+101-109.
+Hoda, A. and Acharya, S., 1999, “Predictions of a film coolant jet
+in crossflow with different turbulence models,” ASME Paper 99GT-124.
+Bergeles, G., Gosman, A.D., and Launder, B.E., 1978, “The
+turbulent jet in a cross stream at low injection rates: a threedimensional numerical treatment,” Numerical Heat Transfer, v 1,
+p 217-242.
+A.A. Amer, B.A. Jubran, and M.A. Hamdan, 1992, “Comparison
+of different two-equation turbulence models for prediction of film
+cooling from two rows of holes,” Numerical Heat Transfer, Part
+A: Applications, v 21, p 143-162.
+H.-C. Chen, G. Wei, and J.-C. Han, 1999, “Computation of
+discrete-hole film cooling by a near-wall second-moment
+turbulence closure,” ASME Heat Transfer Division Publication, v
+364-1, p 219-226.
+D. Lakehal, G.S. Theodoridis, and W. Rodi, 2001, “Threedimensional flow and heat transfer calculations of film cooling at
+the leading edge of a symmetrical turbine blade model,”
+International Journal of Heat and Fluid Flow, v. 22, p 113-122.
+Azzi, A. and Lakehal, D., 2002, “Perspectives in modeling film
+cooling of turbine blades by transcending conventional twoequation turbulence models,” Journal of Turbomachinery, v 124,
+p 472-484.
+D. Lakehal, 2002, “Near-wall modeling of turbulent convective
+heat transport in film cooling of turbine blades with the aid of
+direct numerical simulation data,” Journal of Turbomachinery, v
+124, p 485-498.
+A. Azzi and B.A. Jubran, 2003, “Numerical modeling of film
+cooling from short length stream-wise injection holes,” Journal of
+Heat and Mass Transfer, v 39, p 345-353.
+Bacci, A. and Facchini, B., 2007, “Turbulence modeling for the
+numerical simulation of film and effusion cooling flows,” ASME
+Paper GT2007-27182.
+
+

@@ -1,0 +1,3144 @@
+c 2008 Cambridge University Press
+J. Fluid Mech. (2008), vol. 613, pp. 135–169. 
+doi:10.1017/S0022112008003017 Printed in the United Kingdom
+
+135
+
+Numerical simulations of boundary-layer bypass
+transition due to high-amplitude
+free-stream turbulence
+V I C T O R O V C H I N N I K O V 1 , M E E L A N M. C H O U D H A R I 2
+A N D U G O P I O M E L L I 3†
+1
+
+Department of Chemical Engineering, Massachusetts Institute of Technology, Cambridge,
+MA 02139 USA
+2
+3
+
+NASA Langley Research Center, Hampton, VA 23681, USA
+
+Department of Mechanical Engineering, University of Maryland, College Park,
+MD 20742, USA
+
+(Received 4 April 2007 and in revised form 13 June 2008)
+
+Direct numerical simulations (DNS) of bypass transition due to high-amplitude
+free-stream turbulence (FST) are carried out for a ﬂat-plate boundary layer. The
+computational domain begins upstream of the plate leading edge and extends into
+the fully turbulent region. Thus, there is no ad hoc treatment to account for the initial
+ingestion of FST into the laminar boundary layer. We study the eﬀects of both the
+FST length scale and the disturbance behaviour near the plate leading edge on the
+details of bypass transition farther downstream. In one set of simulations, the FST
+parameters are chosen to match the ERCOFTAC benchmark case T3B. The inferred
+FST integral length scale L11 is signiﬁcantly larger (RL = U L11 /ν = 6580) than that
+employed in previous simulations of bypass transition (RL  1000). An additional set
+of simulations was performed at RL = 1081 to compare the transition behaviour in
+the T3B case with that of a smaller value of FST length scale. The FST length scale is
+found to have a profound impact on the mechanism of transition. While streamwise
+streaks (Klebanoﬀ modes) are observed at both values of the FST length scale, they
+appear to have clear dynamical signiﬁcance only at the smaller value of RL , where
+transition is concomitant with streak breakdown. For the T3B case, turbulent spots
+form upstream of the region where streaks could be detected. Spot precursors are
+traced to quasi-periodic spanwise structures, ﬁrst observed as short wavepackets in
+the wall-normal velocity component inside the boundary layer. These structures are
+reoriented to become horseshoe vortices, which break down into young turbulent
+spots. Two of the four spots examined for this case had a downstream-pointing
+shape, similar to those found in experimental studies of transitional boundary layers.
+Additionally, our simulations indicate the importance of leading-edge receptivity for
+the onset of transition. Speciﬁcally, higher ﬂuctuations of the vertical velocity at the
+leading edge of the plate result in higher levels of streamwise Reynolds stress inside
+the developing boundary layer, facilitating breakdown to turbulence.
+
+† Present address: Department of Mechanical and Materials Engineering, Queen’s University,
+Kingston, ON, CANADA, K7L 3N6
+
+136
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+1. Introduction
+In many wall-bounded ﬂows of engineering interest, it is desirable to control
+the onset of laminar–turbulent transition. In aerospace applications, it may be
+advantageous to maintain laminar ﬂow over a major portion of an airfoil to reduce
+drag. In low-pressure turbines, the state of the boundary layer ﬂow has an impact on
+its ability to negotiate adverse pressure gradients and, hence, inﬂuences the energy
+eﬃciency of the turbine device. Transition to turbulence has therefore been the focus
+of extensive research in the past century.
+Traditionally, the study of transition in a boundary layer has been approached
+from the point of view of linear stability. When the Tollmien–Schlichting (TS)
+wave amplitude exceeds approximately 1% of the free-stream velocity, the perturbed
+boundary layer develops secondary three-dimensional instabilities, which harbinger
+the onset of transition. Because TS waves grow on a viscous time scale, they typically
+attain the amplitudes required for secondary instability to set in only when the
+boundary-layer Reynolds number is large, of the order of 106 .
+In many ﬂows with a higher-amplitude disturbance environment, however, transition
+is observed at Reynolds numbers of the order of 105 and does not involve the TS
+mechanism. The term ‘bypass transition’ (Morkovin 1969) has been used to describe
+various cases in which the TS waves are bypassed. The case of boundary-layer bypass
+transition due to free-stream turbulence (FST) has received recent attention, and is
+the focus of this study.
+1.1. Experimental work on transition due to FST
+Klebanoﬀ (1971) observed that a Blasius boundary layer subjected to FST develops
+low-frequency spanwise undulations in the streamwise velocity distribution within
+the boundary layer. The amplitude of the peak response increased in proportion to
+the FST amplitude, and grew larger in proportion to the boundary-layer thickness.
+Kendall (1985) observed long streamwise streaks with small spanwise scales, which
+he called Klebanoﬀ modes. Matsubara & Alfredsson (2001) have reviewed several
+experiments performed at the Royal Institute of Technology in Stockholm (KTH).
+They observe that the spanwise spacing of streaks increases with the FST level,
+and also slightly increases with the downstream distance. They suggested that the
+spanwise scale selection occurs within the boundary layer. In a later publication,
+however, Fransson & Alfredsson (2003) conclude that the selection process is more
+complex and is inﬂuenced by the FST length scale, among other eﬀects.
+Fransson, Matsubara & Alfredsson (2005) performed additional experiments using
+a wide range of FST intensities and length scales and made several important
+observations. First, there is an initial region near the leading edge where the amplitude
+of boundary-layer ﬂuctuations grows more slowly than farther downstream, i.e. the
+transient growth process begins a ﬁnite distance downstream from the leading edge.
+Second, the disturbance energy increases in proportion to both the FST energy and
+the ﬂat-plate Reynolds number. Third, the transition Reynolds number is inversely
+proportional to the FST energy. Finally, the extent of the transition zone increases in
+proportion to the ﬂat-plate Reynolds number. Although Fransson et al. (2005) varied
+the FST length scale in a controlled manner, they did not sort their data based on the
+length scale. Thus, the eﬀect of the FST length scale is not addressed in their work.
+Jonáš, Mazur & Uruba (2000) studied the eﬀect of the FST dissipation length scale
+on the onset of transition at the FST intensity of 3%. Based on their measurements
+
+Bypass transition in boundary layers
+
+137
+
+of the intermittency, they noted that the onset of transition moved upstream with
+increasing FST length scale, and that the transition region became longer. However,
+their study did not address the eﬀect of length scale on the details of the transition
+process and, in particular, whether or not the FST length scale had any eﬀect on the
+physical mechanism(s) underlying the onset of transition.
+1.2. Computational work
+Large-eddy simulations (LES) and direct numerical simulations (DNS) of transition
+in boundary layers have been slow to appear, owing to the large computational
+requirements involved. The ﬁrst DNS of boundary-layer transition due to FST in
+a spatial formulation was performed by Rai & Moin (1993), who used a ﬁfthorder upwind biased ﬁnite-diﬀerence fractional-step compressible Navier–Stokes
+solver to model the experiments of Blair (1983). The disturbance was generated
+to match the von Kármán energy spectrum with a prescribed intensity and length
+scale. The predicted location of transition onset showed reasonable agreement
+with the experimental data, but the skin friction development farther downstream
+was compromised because of under-resolution. Their work also indicated that the
+resolution needed to simulate a transitional ﬂow is at least as high as that for a
+turbulent boundary layer.
+Voke & Yang (1995) used a ﬁnite-volume conservative method to perform an LES
+of boundary-layer transition, in an attempt to reproduce the experiments of Roach
+& Brierley (1992). Although their simulations were severely under-resolved and the
+FST properties were not matched to the experiment, they were able to provide
+qualitative insights into the transition mechanism. The interaction of the wall-normal
+FST component with the mean shear was proposed to be the key mechanism for the
+production of Reynolds shear stress, which, together with the mean shear, drives the
+production of the streamwise Reynolds stress.
+A well-resolved DNS of FST-induced transition was performed by Jacobs &
+Durbin (2001). To provide a somewhat realistic inﬂow condition without simulating
+the ﬂow around the leading edge, these authors chose to expand the FST and the
+associated inﬂow disturbance proﬁle in terms of the eigenfunctions of the linear Orr–
+Sommerfeld operator (Grosch & Salwen 1978). With a ﬁne, turbulent-like resolution
+in the entire boundary layer, they obtained very good agreement with the T3A
+experiment of Roach & Brierley (1992) at 3% FST intensity. Klebanoﬀ modes were
+found to be a prominent feature of their simulations, and were generated nonlinearly
+by the penetration of the FST into the boundary layer. The spanwise streak spacing
+was in agreement with the optimal results of Andersson et al. (1999). No evidence
+of streak instability was reported in their work. Instead, low-speed streaks provide a
+receptivity path between the FST and the boundary layer, but are otherwise irrelevant
+to transition. The onset of transition was attributed to the direct penetration of the
+free-stream disturbance into the perturbed laminar boundary layer.
+Brandt, Schlatter & Henningson (2004) performed DNS of boundary-layer
+transition due to FST with variable length scale and intensity. They used a similar
+method to Jacobs & Durbin (2001) to generate the inﬂow disturbance, but also
+included the Squire modes for the wall-normal vorticity. They found that for a given
+FST intensity, increasing the FST length scale moves the onset of transition upstream.
+The spanwise scale of streaks did not vary appreciably with the FST length scale.
+Many aspects of their simulations are in qualitative agreement with the experiments
+of Matsubara & Alfredsson (2001). Using ﬂow visualizations, Brandt et al. (2004)
+
+138
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+conclude that streak breakdown and turbulent spot formation is caused by either of
+two types of instability modes of low-speed streaks. The sinuous mode, characterized
+by streak oscillations in the spanwise direction, was observed more frequently than
+the varicose mode of instability.
+Zaki & Durbin (2005) performed a theoretical and computational analysis of
+boundary-layer bypass transition within the framework of coupled modes of the
+linear Orr–Sommerfeld (OS) and Squire operators. The former are sheltered by the
+boundary-layer mean shear to varying degrees: modes with low frequency and low
+wall-normal wavenumber are able to ‘penetrate’ into the boundary layer and excite
+the corresponding Squire modes, whereas high-frequency modes are not. This fact
+prompted Zaki & Durbin to deﬁne a coupling coeﬃcient to measure the eﬀectiveness
+of the OS modes in generating low-frequency boundary-layer ‘breathing modes’ via the
+excitation of the Squire modes. Using DNS, they show that including a high-frequency
+(low-penetrating) OS mode at the inﬂow boundary, in addition to a low-frequency
+mode, is suﬃcient to cause transition to turbulence.
+Nagarajan, Lele & Ferziger (2007) studied the inﬂuence of a blunt superelliptical
+leading edge on bypass transition by LES. They employed compressible-ﬂow equations
+at low Mach number. FST was generated to match the von Kármán spectrum, and
+several values of the FST intensity and length scale were used in the simulations. They
+found that at low levels of FST and the superellipse aspect ratio AR = 10, transition
+occurs via streak instabilities, similarly to those observed by Brandt et al. (2004). At
+higher levels of the FST intensity and/or length scale, and the leading-edge aspect ratio
+of AR = 6, they observed a diﬀerent transition mechanism, characterized by localized
+wavepacket-like oscillations in the spanwise velocity ﬂuctuation, which grew in spatial
+extent and amplitude as they were convected downstream, and eventually broke
+down into turbulence. These wavepackets were traced to the stretching of free-stream
+vortices around the leading edge: particularly strong vortices produce streamwise
+vortical disturbances in the boundary layer that give rise to the wavepackets.
+Nagarajan et al. showed that the wavepackets have markedly diﬀerent properties
+from the spot precursors found in the cases of breakdown due to streak instability.
+1.3. Aim of the current work
+In this study we perform high-resolution DNS of boundary-layer transition due to
+FST of large amplitude and length scale. The ﬂow around the plate leading edge is
+explicitly computed within the simulation, and the FST characteristics, including the
+FST length scale, are matched with the measured data from the T3B experiment of
+Roach & Brierley (1992).
+Our goal is to approximate the T3B experiment with suﬃcient ﬁdelity that the
+simulation database can be used to examine the underlying transition physics as
+well as to guide the development of physics-based engineering prediction methods.
+Two additional simulations are performed with a smaller FST length scale in order
+to examine the eﬀects of length scale variation on the transition mechanism. To
+our knowledge, this is the ﬁrst numerical study of bypass transition in which the
+FST length scale is much larger than the transitional boundary-layer thickness. The
+paper is organized as follows. Section 2 outlines the problem formulation, simulation
+parameters, and validation. Section 3 describes the results, starting with a statistical
+examination of the ﬂow ﬁelds, moving on to a discussion of the eﬀects of various FST
+parameters on the transition characteristics, and ﬁnishing with a visualization study
+of the transition process. Section 4 provides a discussion and concluding remarks.
+
+Bypass transition in boundary layers
+
+139
+
+2. Problem formulation
+We use the incompressible Navier–Stokes (NS) equations to perform DNS of
+boundary-layer transition due to FST. The equations of continuity and momentum
+∂uj
+= 0,
+∂xj
+∂ui
+1 ∂p
+∂
+(uj ui ) = −
++ ν∇2 ui + fi ,
++
+∂t
+∂xj
+ρ ∂xi
+
+(2.1)
+(2.2)
+
+are discretized using a second-order-accurate ﬁnite-diﬀerence method on a staggered
+Cartesian grid. The method fully conserves mass, momentum and kinetic energy
+in the discrete sense (see Morinishi et al. 1998). The presence of the body forces
+fi is due to the immersed-boundary method, described at the end of this section.
+The coordinates x, y, and z refer, respectively, to the streamwise, wall-normal, and
+spanwise directions. The velocity components in these directions are, respectively, u,
+v and w. All grids used are uniform in the spanwise direction z, and stretched in the
+streamwise and wall-normal directions to allow accurate resolution of boundary-layer
+disturbances, particularly in the transitional region. The equations are integrated in
+time using an explicit fractional time-step method (Chorin 1968; Kim & Moin 1985),
+in which the convective and diﬀusive terms are advanced in time using the secondorder-accurate Adams–Bashforth method. The algorithm was parallelized using the
+message-passing interface (MPI). The code has been previously validated for a variety
+of turbulent (Balaras, Benocci & Piomelli 1995; Balaras, Piomelli & Wallace 2001),
+re-laminarizing (Piomelli, Balaras & Pascarelli 2000), and transitional (Ovchinnikov,
+Piomelli & Choudhari 2006) ﬂows. More details on the implementation can be found
+in these references.
+2.1. Determination of FST length scale
+The primary goal of the current investigation was to study the mechanism of bypass
+transition in a realistic high-intensity FST environment. Thus, the conﬁguration of
+the main simulations was chosen to approximate the wind tunnel experiment T3B by
+Roach & Brierley (1992), which involved an FST amplitude of 6% of the free-stream
+velocity at the leading edge.
+The available experimental data include the evolution of the FST intensity with the
+streamwise distance, but not its integral length scale, L11 , deﬁned as
+ ∞ 
+u (x)u (x + r)
+L11 =
+dr.
+(2.3)
+u (x)u (x)
+0
+In experimental measurements of homogeneous turbulence that use hot-wire
+anemometry, L11 is approximated from the integral time scale using Taylor’s frozen
+turbulence hypothesis as
+ ∞ 
+u (t)u (t + s)
+ds.
+(2.4)
+L11  Uconv
+u (t)u (t)
+0
+In the above, u denotes the free-stream velocity ﬂuctuation, Uconv , the local mean
+velocity in the frozen turbulence approximation, and the overbar the long-time
+average. The energy dissipation length scale, deﬁned as
+Lk = −
+
+k 3/2
+,
+U∞ dk/dx
+
+(2.5)
+
+140
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+x
+0.08
+
+–50
+
+0
+
+50
+
+–2
+
+0
+
+2
+
+100
+
+150
+
+200
+
+250
+
+300
+
+12
+
+14
+
+350
+
+400
+
+0.06
+Tu
+
+0.04
+
+0.02
+4
+
+6
+
+8
+Rex
+
+10
+
+16
+
+18
+(×104)
+
+Figure 1. Evolution of the FST intensity.
+, Case T3Bs;
+, Case T3Bf;
+, Case
+, Case SLSf; 䊊, T3B experiment of Roach & Brierley (1992); +, Power law
+SLSs;
+y = C(x − x0 )α with C = 1.4, x0 = −75, α = −0.7; 䉫, Power law y = C(x − x0 )α with C = 3.0,
+x0 = −370, α = −0.65.
+
+where k denotes the turbulent kinetic energy, can be computed directly from the
+streamwise FST intensity evolution. According to this deﬁnition, the smaller
+the turbulence decay rate, the larger the associated length scale value, consistent
+with the conventional spatial understanding of the length scale.
+In the following discussion, R denotes the half-thickness of the plate, and is chosen
+as the length scale for non-dimensional quantities. (This choice of normalization is
+made here for convenience; we do not assert that R is a physically relevant parameter
+in transition.) R is also equivalent to the leading-edge radius of the plate in the T3B
+experiment.
+For the T3B experimental data, assuming isotropy of the incoming FST, we found
+Lk = 25R at the leading edge. To match the measured FST decay in the experiment,
+we chose L11 = 14R; this condition also ensures that Lk = 25R, as derived from the
+experimental data. We note that our value for L11 is in fair agreement with a recent
+empirical estimate of L11 = 16.7R (Johnson & Ercan 1999), which was based on the
+data of Roach (1987). Two simulations were carried out with L11 = 14R. From this
+point on, we will refer to these as the T3B simulations.
+Two additional simulations were performed in this study. The essential diﬀerence
+from the T3B simulations is that the FST integral length scale was set to 2.3R,
+which is similar to the values used in other numerical investigations of FST-induced
+bypass transition. These two simulations will be denoted as cases SLS, in which
+SLS abbreviates ‘small length scale’. The main purpose of the SLS simulations is
+to compare the transition features in this well-studied regime to the T3B case. The
+computational details of the four simulations, denoted by T3Bs, T3Bf, SLSs, and
+SLSf, are described in the next section.
+In the simulations of Brandt et al. (2004), L11 was varied between 1R and 3R,
+when converted to our units. (The conversion was made by comparing the values of
+the Reynolds number based on the FST length scale.) This value was speciﬁed at
+Reδ∗ = 300 in their simulation and not upstream of the leading edge, as in ours. From
+the data of Jacobs & Durbin we estimated Lk to be 3.1R. The leading edge was not
+included in the computational domain of the simulations discussed in both references.
+The evolution of the FST intensity for the T3B experiment and our simulations is
+shown in ﬁgure 1. Negative values of x correspond to locations upstream of the
+
+141
+
+Bypass transition in boundary layers
+v = dδ∗/dx,
+du/dy = dw/dy = 0
+
+v = du/dy = dw/dy = 0
+Block I
+
+Buffer region
+Block II
+
+Ly I
+v = 0, du/dy = dw/dy = 0
+y
+u = 0, v = w = 0
+d/dt + Ud/dx = 0
+AR = 6
+x R
+Lx I
+
+(a)
+
+Ly II
+
+u = 0, v = w = 0
+
+Lx II
+(b)
+
+v = du/dy = dw/dy = 0
+Block I
+
+Buffer region
+
+u = 0, v = w = 0
+d/dt + Ud/dx = 0
+
+v = dδ∗/dx,
+du/dy = dw/dy = 0
+Ly II
+Block II
+u = 0, v = w = 0
+
+AR = 6
+Ly I
+
+Lx II
+
+2R
+
+y
+
+x
+
+v = du/dy = dw/dy = 0
+Lx I
+
+Figure 2. Computational conﬁguration and boundary conditions; (a) domain with
+symmetry plane; (b) full domain.
+
+leading edge, and the irregular behaviour near the inﬂow plane is due to the initial
+adjustment of a synthetic disturbance ﬁeld. A comparison of the streamwise evolution
+of the integral length scale with the corresponding power laws is shown in an Appendix
+available with the online version of the paper, § A.1.
+2.2. Computational domains
+The two types of computational domain used for our simulations are illustrated in
+ﬁgure 2, and simulation parameters are summarized in table 1. Because the T3B
+simulations presented in this study required substantial computational resources, two
+approximations were made to decrease the cost of computation.
+First, each computational domain was split into two overlapping blocks along the
+streamwise direction. The ﬁrst box contained the ﬂat-plate superellipse, and had very
+ﬁne resolution near the plate leading edge. A short distance downstream, at x = 15
+and x = 20 for the SLS and T3B cases, respectively, a time-sequence of planes of
+velocity was stored and used as the inﬂow condition for a second computational
+domain. This domain had fewer points in the wall-normal direction, but maintained
+the ﬁne streamwise resolution required to resolve the transition zone. The multiblock approach has been successfully used in the past (Huai, Joslin & Piomelli,
+1997). However, strictly speaking, it violates the ellipticity of the incompressible NS
+equations (the pressure in the two blocks is not mutually coupled). The errors due
+to multi-block splitting were estimated by Ovchinnikov et al. (2006), in the related
+
+142
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+Case
+SLSs
+SLSf
+T3Bs
+T3Bf
+
+Block
+Block
+Block
+Block
+
+I
+II
+I
+II
+
+Block
+Block
+Block
+Block
+
+I
+II
+I
+II
+
+L11
+
+ReL
+
+Lx × Ly × Lz
+
+nx × ny × nz
+
+Largest grid size at wall
++
+x + × ywall,max
+× z+
+
+2.3
+
+1081
+
+2.3
+
+1081
+
+38 × 31 × 23
+538 × 30 × 23
+38 × 62 × 23
+538 × 30 × 23
+
+288 × 222 × 192
+1472 × 160 × 192
+288 × 444 × 192
+1472 × 160 × 192
+
+10 × 0.6 × 3.5
+12 × 0.7 × 3.8
+9.5 × 0.6 × 3.5
+12 × 0.7 × 3.6
+
+120 × 67 × 67
+330 × 66 × 67
+120 × 133 × 67
+330 × 66 × 67
+
+504 × 240 × 512
+882 × 170 × 512
+480 × 421 × 540
+864 × 170 × 540
+
+10 × 0.8 × 4.0
+10 × 0.8 × 3.5
+10 × 0.8 × 3.8
+10 × 0.8 × 3.3
+
+14
+
+6580
+
+14
+
+6580
+
+Table 1. Simulation parameters. The FST integral length scale is reported at the leading edge.
+The FST intensity at the leading edge is 5.9% and 6.7% for cases T3B and SLS, respectively.
+The location of the inﬂow boundary of the ﬁrst simulation box was at x = −15 and x = −65
+relative to the plate leading edge for cases SLS and T3B, respectively. All lengths are shown in
+the units of the plate half-thickness, R. ReL is the Reynolds number based on the free-stream
+velocity, U∞ , and L11 .
+
+context of boundary-layer bypass transition due to a cylinder wake, and were found
+to be insigniﬁcant.
+Even with the multi-block approach, computing the ﬂow around the entire leading
+edge turned out to be costly for the T3B case: the calculation would require around
+190 million points. This high cost was primarily due to the need for a domain that
+is large enough to accommodate the FST integral scales, yet resolved ﬁnely enough
+to capture the smallest boundary-layer scales. Thus, to perform a T3B calculation
+with good statistical convergence, we chose to make the second approximation that
+the mid-plane of the plate can be represented as a plane of symmetry. The symmetry
+assumption halves the computational cost in the ﬁrst block, reducing the overall cost
+to 140 million points. We will refer to this calculation as the T3Bs case. To have a
+qualitative indicator of the accuracy of the symmetry approximation, we carried out
+another simulation using the entire domain, the T3Bf case, but for only one half of
+the integration time of the T3Bs case. The corresponding statistical sample is not as
+well converged, and to facilitate comparisons between T3Bs and T3Bf cases, we apply
+a low-pass ﬁlter to the T3Bf data in the streamwise development plots.
+To further quantify the errors due to the symmetry approximation, we conducted the
+SLS simulations with the smaller FST length scale, L11 = 2.3, both with and without
+the symmetry condition in the ﬁrst block. Simulating the SLS case on a full domain
+is aﬀordable because of the low value for the FST length scale. In the remainder of
+this paper, SLSs refers to the SLS simulation with the symmetry condition, and SLSf
+refers to the SLS simulation preformed on the full domain.
+2.3. Leading edge geometry
+The leading edge of the ﬂat plate in the Roach & Brierley (1992) experiment was
+asymmetrical with a circular tip of radius 0.75 mm. The Reynolds number based on
+the average free-stream velocity of 9.4 m s−1 and the leading-edge radius was 470. In
+our simulations, we used a symmetrical superellipse with an aspect ratio (AR) of 6.0
+to model the leading edge of the plate. The geometry for the superellipse used in our
+study is given by
+4  2
+
+y
+1 x
++
+= 1.
+(2.6)
+1−
+AR R
+R
+
+Bypass transition in boundary layers
+
+143
+
+In all of our simulations, the Reynolds number based on the free-stream velocity
+and the minor half-axis of the superellipse, R, was ﬁxed at 470. The minor axis of
+the superellipse corresponds to the plate thickness. Note that in order to obtain the
+Reynolds number based on any length scale expressed in the units of R, one simply
+multiplies that length scale value by 470. For example, the Reynolds numbers based
+on the FST length scale for cases T3B and SLS are 6580 and 1081, respectively.
+The above geometry was motivated by the availability of two-dimensional numerical
+data for ﬂow validation, and the assumption that the diﬀerences in leading-edge
+geometry would be less signiﬁcant when the estimated length scale of the FST is
+much larger than the leading-edge radius. We note that the symmetry of the leadingedge leads to a suction peak that was probably absent in the reference experiment.
+However, the experimental conﬁguration cannot be reproduced exactly because the
+test plate had a ﬂap attached to the end, which cannot be simulated easily. Some
+discussion of leading-edge-geometry eﬀects measured in wind tunnel experiments can
+be found in Klingmann et al. (1993) and Fransson (2004). Validation of the immersedboundary representation of the leading edge is described in the next section.
+2.4. Boundary conditions
+The following boundary conditions were applied:
+(a) The inlet velocities are imposed by adding a zero-mean perturbation ﬁeld
+to the uniform mean ﬂow U = (U∞ , 0, 0). The disturbance was generated using the
+algorithm due to Rogallo (1981) as described by Jacobs & Durbin (2001), but with
+Fourier modes, instead of Orr–Sommerfeld modes. The disturbance ﬁeld has the
+model spectrum due to von Kármán, and is designed to be homogeneous, isotropic,
+and divergence-free to avoid large pressure ﬂuctuations near the inﬂow plane. For
+all four cases, the FST amplitude in the vicinity of the leading edge was around 6%
+three velocity
+of
+ r.m.s. values were within 10% of T u, which was deﬁned as
+U∞ ; the 
+( u u + v  v  + w w )/3. Thus, the FST generated by the Rogallo algorithm
+is approximately isotropic. The angle brackets denote Reynolds averaging, and the
+prime a ﬂuctuation from the mean. Further details on the inﬂow generation can be
+found in Ovchinnikov, Piomelli & Choudhari (2004).
+(b) The interface condition between the ﬁrst and second blocks was obtained by
+interpolating velocities from the ﬁrst box onto the wall-normal grid of the second
+box. The plane from which velocity data were extracted was located at x = 15 for
+cases SLSs and SLSf, and x = 20 for cases T3Bs and T3Bf. The streamwise distances
+are quoted relative to the leading edge of the plate.
+(c) At the outlet of each computational block, a convective outﬂow boundary
+condition was applied to each velocity component (Orlanski 1976). Simulation results
+in the last 10–15% of each block were discarded in order to eliminate the eﬀects of
+proximity to the outﬂow boundary.
+(d) In the spanwise direction, z, periodic conditions were used.
+(e) The no-slip condition was imposed along the plate surface, whereas a symmetry
+condition was used upstream of the plate leading edge within the ﬁrst block of cases
+SLSs and T3Bs.
+(f) Along the free-stream boundary of the ﬁrst block of each simulation, we
+imposed slip-wall conditions, and at the free-stream boundary of the second block,
+we applied ∂u/∂y = 0, v = dδ ∗ /dx, ∂w/∂y = 0, where δ ∗ is the displacement thickness
+computed for the Blasius velocity proﬁle at each location. The boundary condition on
+the v-component provides the correct mass ﬂux through the top wall to account for
+the Blasius boundary-layer growth in the zero-pressure-gradient regime. It becomes
+
+144
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+0.5
+(b)
+
+80
+
+(a)
+
+60
+
+0
+ωz
+
+Cp
+
+40
+
+–0.5
+20
+–1.0
+
+0
+
+5
+
+10
+
+15
+x
+
+20
+
+25
+
+0
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+x
+
+Figure 3. Comparison of surface properties for a two-dimensional ﬂow over a superellipse:
+, current immersed-boundary simulation;
+(a) pressure coeﬃcient, Cp ; (b) wall vorticity, ωz ,
+, simulation by Lin, Reed & Saric (1992).
+
+less accurate in the transitional and turbulent boundary-layer regions, but does not
+result in signiﬁcant free-stream acceleration. In all four simulations, the acceleration
+coeﬃcient, K = −(ν/U∞2 )(dU∞ /dx) was of the order of 10−7 for both blocks. The
+value of K at which a turbulent boundary layer is expected to re-laminarize is around
+3.0 × 10−6 (Spalart 1986). Since the value of K in our case is an order of magnitude
+lower, we do not expect the acceleration to have an appreciable eﬀect on the onset
+of transition.
+To satisfy the no-slip boundary conditions on the superellipse surface, we employ
+the immersed-boundary method of Fadlun et al. (2000), following the implementation
+of Balaras (2004). In this procedure, the body forces, fi , are non-zero only in gridcells adjacent to the surface, and are assigned in such a way that the velocity on
+the surface is zero to second-order accuracy. The immersed-boundary method, as
+described above, has been extensively validated in laminar and turbulent ﬂows. For
+more details on the implementation, the reader is referred to Fadlun et al. (2000) and
+Balaras (2004).
+To ensure that the immersed-boundary representation of the superelliptical leading
+edge was accurate, we performed a two-dimensional simulation of the ﬂow past a
+superellipse with AR = 6, described by equation (2.6). The computational domain was
+similar to the one in ﬁgure 2(a), and extended over 25 and 16 units in the x- and
+y-directions, respectively, and was resolved with 1075 and 300 cells in the respective
+directions. The lengths were normalized by the minor half-axis of the superellipse,
+and the Reynolds number based on this length scale was 2400. This geometry and
+Reynolds number parameter was chosen to match the calculations of Lin, Reed &
+Saric (1992), who used an NS solver on a curvilinear grid. Comparisons of the pressure
+coeﬃcient, Cp = 2(p − p∞ )/ρU∞2 , along the surface of the ellipse, and the vorticity, ωz ,
+are shown in ﬁgure 3. The overall agreement is good. The small discrepancy may be
+due to the extrapolation of pressure and velocity values from the grid nodes onto the
+immersed boundary, or the diﬀerences in the spatial resolution.
+Finally, we note that the immersed-boundary representation of the superellipse was
+only necessary in the ﬁrst block of each simulation. The second box was constructed
+such that its bottom boundary coincides with the surface of the plate.
+2.5. Grid requirements
+The computations performed in this work required long integration times. A typical
+simulation required a month of clock time on an 8-processor Beowulf cluster (6000
+CPU-hours). We were thus unable to perform a grid-reﬁnement study. Ovchinnikov
+
+Bypass transition in boundary layers
+
+145
+
+et al. (2004), however, performed calculations of bypass transition in a conﬁguration
+similar to the one studied here (their calculations did not include the leading edge and,
+therefore, were much less demanding computationally). They observe that inadequate
+streamwise resolution in the transition region may lead to a premature and abrupt
+transition, probably because energy is aliased into the unstable scales due to underpredicted dissipation. They obtained grid-converged results with the grid spacings,
++
+1
+normalized by the friction velocity uτ and the viscosity ν, of x +  7–12, ywall,max
++
+and z  2.5–3. We used similar values in our calculations, as reported in table 1.
+Note that these spacings are typical of turbulent ﬂow calculations, and are smaller
+than those used by Jacobs & Durbin (2001) in their simulations of bypass transition.
+They used a ﬁnite-diﬀerence algorithm with second-order spatial accuracy that was
+similar to the one employed in this study.
+To ensure that the computational domains were suﬃciently large in the spanwise
+direction, we computed spanwise correlations of the velocity ﬂuctuations. These will
+be discussed in detail in § 3.3. For the SLS simulations, in which L11 = 2.3, the spanwise
+correlation functions approach the zero line well within the computational domain.
+For the T3B case, the correlation function is not exactly zero within the domain.
+However, an additional simulation performed on a domain that was twice as large
+in the spanwise and wall-normal directions, but without the ﬂat plate, showed that
+the FST decay rate was unchanged. Therefore, we are conﬁdent that the external
+free-stream environment has been adequately captured.
+2.6. Mean and instantaneous quantities
+In this section, we recall several deﬁnitions that will be useful for the remainder of
+this paper. Mean quantities are deﬁned as
+ 
+1 1 Lz t
+f (x, y, z, τ ) dτ dz.
+(2.7)
+F = f (x, y) =
+Lz T 0
+t−T
+The mean skin friction coeﬃcient
+Cf =
+
+τw
+ρU∞2 /2
+
+(2.8)
+
+is an indicator of transition onset since it increases markedly across the region of
+laminar–turbulent transition. In this equation, τw is the mean wall shear stress, deﬁned
+as
+ 
+du 
+τw = μ
+.
+(2.9)
+dy 
+y=0
+
+The shape factor, H , is deﬁned as H = θ/δ ∗ , where δ ∗ and θ are, respectively, the
+displacement and momentum thicknesses, given by
+
+
+
+ yedge
+ yedge 
+U
+U
+U
+∗
+1−
+dy;
+θ=
+1−
+dy.
+(2.10)
+δ =
+Uedge
+Uedge
+Uedge
+0
+0
+The integration in (2.10) is performed up to the edge of the boundary layer, yedge ,
+taken to be the wall-normal location at which the mean U -velocity gradient falls below
+0.01. The eﬀective free-stream velocity, Uedge , is the mean velocity at this location. H
+is also an indicator of transition because the momentum thickness, θ, rises steeply as
+the ﬂow passes from the laminar to the turbulent regime.
+In § 3.4 we will present three-dimensional visualizations of transitional ﬂow ﬁelds.
+To identify vortical structures, we will plot instantaneous isosurfaces of the quantity
+
+146
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+x
+0
+10
+–3
+(×10 )
+9
+
+100
+
+200
+
+300
+
+400
+
+500
+
+8
+7
+Cf
+
+6
+5
+4
+3
+2
+1
+0
+
+0.5
+
+1.0
+
+1.5
+Rex
+
+2.0
+
+2.5
+(×105)
+
+Figure 4. Evolution of the skin friction coeﬃcient, Cf .
+, case T3Bs;
+, case T3Bf;
+, case SLSs;
+, case SLSf; 䊊, T3B experiment of Roach & Brierley (1992);
+,
+Blasius Cf . The start of the boundary layer, i.e. the location x = 0, is taken to be the tip of the
+superellipse.
+
+Q deﬁned as
+Q=−
+
+∂ui ∂uj
+.
+∂xj ∂xi
+
+(2.11)
+
+2.7. Statistical convergence
+The governing equations were advanced in time until a statistically stationary state was
+reached. For cases SLSf, SLSs and T3Bs, ﬂow statistics were subsequently accumulated
+for a time period required for the mean ﬂow to traverse the entire domain three times.
+Convergence of the statistical sample in these cases was veriﬁed by comparing the statistics based on one half of the time history with those obtained using the entire sample.
+First-order quantities diﬀered by less than 3%, second moments by less than 6%. For
+case T3Bf, which was the most computationally intensive, one-and-a-half ﬂow-through
+periods were recorded. Statistics from this calculation may thus be less reliable.
+3. Results
+We begin by comparing simulation statistics from cases T3B to the available
+experimental dataset. Noting discrepancies between cases T3Bs and T3Bf, we examine
+the eﬀects of the symmetry condition on the transition mechanism and onset location.
+The discussion reveals the importance of receptivity to ﬂuctuations in the wallnormal velocity at the leading edge of the plate, particularly for cases T3B. We then
+characterize the transition mechanism for the T3B cases, and demonstrate that it
+is qualitatively diﬀerent from that of the SLS cases, which is accompanied by the
+breakdown of Klebanoﬀ modes.
+3.1. Comparison of T3B simulations with experiment
+The streamwise development of the computed skin friction coeﬃcient, Cf , is shown
+in ﬁgure 4. The approximate locations of transition onset are x = 100, x = 60, x = 95,
+and x = 75 for cases SLSs, SLSf, T3Bs and T3Bf, respectively. The corresponding
+
+147
+
+Bypass transition in boundary layers
+100
+
+2.8
+
+x
+300
+
+200
+
+400
+
+500
+
+(a)
+2.4
+H
+
+2.0
+1.6
+0.5
+
+12
+
+0
+
+50
+
+1.0
+
+100
+
+150
+
+1.5
+Rex
+x
+200 250
+
+2.0
+
+300
+
+2.5
+(×105)
+350
+
+400
+
+(b)
+8
+δ99
+4
+
+0
+
+0.4
+
+0.8
+
+1.2
+Rex
+
+1.6
+
+2.0
+(×105)
+
+Figure 5. Evolution of (a) the shape factor, H ; (b) the boundary-layer thickness, δ99 (shown
+, case T3Bs;
+, case T3Bf;
+, case SLSs;
+, case SLSf;
+only for cases T3B).
+䊊, T3B experiment of Roach & Brierley (1992).
+
+Rex values are 47 400, 28 440, 45 030, and 35 550. The location of transition onset
+is nominally deﬁned as the x-location at which the skin friction is at its minimum
+(young turbulent spots are often observed upstream of this location). The initial
+mismatch between the Blasius Cf and the simulation data is due to (i) the fact that
+Blasius similarity is invalid close to the leading edge, (ii) the imposition of the free-slip
+boundary condition at the top wall of the ﬁrst block of each simulation, and (iii) the
+large amplitude of the FST.
+The boundary-layer shape factor, H , is shown in ﬁgure 5(a). H equals 2.6 for
+Blasius ﬂow and lies around 1.4 for turbulent boundary-layer ﬂow at low values
+of Reθ . The shape factor is an inverse measure of the boundary-layer momentum,
+which increases in the turbulent regime. The diﬀerences between the plots in ﬁgure
+5(a) are due to diﬀerent onsets of transition. Figures 4 and 5(a) show that the
+T3Bs simulation captures the onset and the progress of transition well: x = 100
+(Rex = 47 000). However, the onset of transition for case T3Bf occurs signiﬁcantly
+farther upstream at x = 75 (Rex = 35 550). This ﬁnding is somewhat surprising, since
+case T3Bf should be a better approximation to the T3B experiment. A detailed
+examination of the diﬀerences between cases T3Bs/f, and also cases SLSs/f, is
+performed in the next subsection, and reveals the inﬂuence of the symmetry condition
+on the development of boundary-layer Reynolds stress.
+Figure 5(b) shows the development of the boundary-layer thickness, δ99 , for cases
+T3B. The good agreement between the simulation and experiment indicates that the
+rate of boundary-layer growth is captured well. The reason the predicted δ99 agrees well
+with the experiment for both T3Bs and T3Bf cases, but only the T3Bs case shows the
+
+148
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+(b)
+
+0.3
+
+50 (a)
+40
+
+0.2
+u+
+
+urms
+U∞
+
+30
+20
+
+0.1
+
+10
+
+log law: 2.5 ln y+ + 5.1
+
+0
+100
+
+101
+
+102
+
+0
+
+103
+
+5
+
+10
+
+15
+
+20
+
+25
+
+0.25
+(c)
+
+0.20
+
+(d )
+0.20
+
+0.16
+vrms 0.12
+U∞
+0.08
+
+wrms
+U∞
+
+0.10
+0.05
+
+0.04
+0
+
+0.15
+
+5
+
+10
+
+15
+y
+
+20
+
+25
+
+0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+y
+
+Figure 6. Comparison of velocity and turbulent intensities for T3B simulations vs. experiment.
+, T3Bs
+,
+(a) Mean streamwise velocity, u; b) urms ; c) vrms ; d) wrms ; lines: simulation;
+T3Bf; symbols: experiment; the dashed line in (b–d) marks the location of the boundary-layer
+edge, δ99 ; , x = 60, Rex = 28 440; , x = 93, Rex = 44 082; ∗, x = 127, Rex = 60 198; 䉫, x = 193,
+Rex = 91 482; +, x = 260, Rex = 123 240; in (a) successive curves are shifted in the vertical
+direction by 10, and in (b), (c) and (d), by 0.05.
+
+correct shape factor evolution, is that the latter depends on the momentum thickness
+which increases rapidly across transition, which was observed earlier in the T3Bf case.
+Further comparison between the T3B simulations and the experiment is shown in
+ﬁgure 6(a–d). In ﬁgure 6(a), velocity proﬁles corresponding to the T3Bs simulation
+agree well with the experimental data across the range x ∈ [60, 260], consistent
+with the agreement in the Cf curve. Figure 6(b–d) shows that the evolution of
+boundary-layer turbulence intensities is also captured well. The dominant component
+of the boundary-layer perturbation is u and its proﬁles agree with the measurements
+at all four stations shown. The v  and w proﬁles in the outer region of the
+boundary layer also agree well. However, noticeable discrepancies are observed in
+the near-wall region for the v  -component, particularly at the upstream locations.
+Fransson & Westin (2002) investigated errors in hot-wire X-probe measurements in
+the transitional boundary layer by comparing hot-wire and laser Doppler velocimetry
+(LDV) measurements. A near-wall peak of vrms was present only in the hot-wire
+dataset, and they concluded that it was an artefact of the hot-wire measurement
+technique. It can also be seen that the T3Bf v  data give a better match with the
+experiment. However, judging from the Cf curve in ﬁgure 4, at this location the T3Bf
+dataset corresponds to a later stage in the transition than the experiment, so this
+agreement is probably coincidental.
+
+Bypass transition in boundary layers
+
+149
+
+The development of the turbulent kinetic energy (TKE) budget across the
+transitional region is qualitatively similar to that described by Ovchinnikov et al.
+(2006), and is relegated to § A.3 of the online supplement.
+Finally, we mention the movement of the stagnation line in simulations T3Bf and
+SLSf. In both cases, the location of the stagnation point at any spanwise location
+along the stagnation line was in the range s ∈ [−0.1, 0.1], where s is the arclength
+measured from the axis of the leading edge. Time evolution of stagnation point
+location at a ﬁxed spanwise coordinate showed a quasi-periodic signal with period
+of approximately 25 in both cases. The length scale of the spanwise variation in the
+instantaneous stagnation line appears to be proportional to the length scale of the
+oncoming FST. These observations are summarized in ﬁgures 21 and 22 in the online
+supplement § A.1
+3.2. The eﬀect of symmetry condition: insights into leading-edge receptivity
+Since we observed signiﬁcant diﬀerences in transition onsets between cases T3Bs and
+T3Bf, in this section we examine the diﬀerences between the two simulations. Our
+focus is on the T3B test case, and important diﬀerences from the SLS case will be
+highlighted at the end of this section.
+Cases T3Bs and T3Bf were identical except for the symmetry boundary condition
+upstream of the leading edge in simulation T3Bs. Even though the FST intensity,
+shown in ﬁgure 1, evolves almost identically for the two cases, the Reynolds stress
+magnitudes at the boundary-layer edge are diﬀerent. In ﬁgures 7(a) and 7(b), we
+compare proﬁles of the streamwise Reynolds stress uu and wall-normal Reynolds
+stress vv , respectively, at several streamwise locations. The short horizontal lines
+indicate the local boundary-layer thickness, δ99 .
+In § 3.1 we observed that the location of transition onset is farther downstream
+in the symmetry-plane case T3Bs. However, ﬁgure 7(a) shows that for x 6 20, the
+streamwise component of the Reynolds stress at the boundary-layer edge is about
+twice as high in the T3Bs simulation. The diﬀerence in the free-stream TKE between
+the two cases is diminished by the wall-normal component of the Reynolds stress,
+which becomes stronger for the T3Bf simulation away from the wall (see ﬁgure 7b x =
+2, 5, 10) so that the turbulence intensities in the free stream are the same, consistent
+with the streamwise evolution of T u (cf. ﬁgure 1). The spanwise component of the
+Reynolds stress, ww , is very similar between the two cases and is not shown in
+ﬁgure 7. Although in the T3Bf case, uu is lower outside, inside the boundary layer it
+has a sharp peak that is higher in magnitude than that of case T3Bs. The most likely
+explanation for this behaviour is in the levels of vv in the vicinity of the ﬂat-plate
+leading edge.
+Exactly at x = 0, vv is approximately six times higher for the T3Bf case than for
+the T3Bs case. However, at x = 0, vv expressed in Cartesian coordinates corresponds
+to the component of Reynolds stress tangent to the ﬂat-plate surface. We believe that
+the uu peak at locations x = 2, 5, 10 for case T3Bf probably arises from the
+advection of vv at x = 0 along the curvilinear coordinate of the superelliptical
+surface. In ﬁgure 23 in the online supplement § A.2, we compare the components of
+the Reynolds stress tangent and normal to the ﬂat plate for cases T3B and SLS near
+the wall. It can be seen that the major eﬀect of the symmetry condition is to remove
+tangential Reynolds stress in the leading-edge vicinity. The Reynolds stress farther
+along the surface, which corresponds to uu , is also reduced. These observations
+suggest that the leading edge couples velocity ﬂuctuations normal to the plate axis at
+the leading edge to initial levels of the streamwise Reynolds stress in the developing
+
+150
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+4
+(a)
+3
+
+y 2
+
+1
+
+0
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+0.05
+
+0.06
+
+0.07
+
+0.08
+
+0.09
+
+fuug/U 2∞
+5
+(b)
+4
+3
+y
+2
+1
+
+0
+
+0.002
+
+0.004
+
+0.006
+
+0.008
+0.01
+fvvg/U 2∞
+
+0.012
+
+0.014
+
+0.016
+
+Figure 7. Proﬁles of (a) streamwise Reynolds stress uu , and (b) the wall-normal Reynolds
+stress vv . From left to right, the plots correspond to x = 0, 2, 5, 10, 20, 75, 250; Rex = 0; 940,
+, Case T3Bs;
+, Case T3Bf; the short horizontal
+2350, 4700, 9400, 35250, 117500.
+lines indicate the local boundary-layer thickness δ99 . On the x-axis, the proﬁles are oﬀset by
+0.01 for (a). In (b) the ﬁrst two plots are oﬀset by 0.004 for clarity and the the rest by 0.002.
+
+boundary layer. By employing the symmetry condition, we attenuate this mechanism
+signiﬁcantly, thus decreasing the intensity of streamwise velocity perturbation in the
+downstream boundary layer. We also expect that this receptivity mechanism will
+be sensitive to the geometry of the leading edge, for example through the eﬀect of
+leading-edge curvature.
+In contrast to its discrepant behaviour at the leading edge, at locations downstream
+of the leading edge, vv levels inside the boundary layer are almost the same for the
+T3B cases with the exception of the boundary-layer vv peak at x = 75. This peak,
+however, is due to the onset of transition, which is closer upstream for case T3Bf.
+Voke & Yang (1995) performed a large-eddy simulation of boundary-layer bypass
+transition and proposed a ‘distributed’ receptivity mechanism, in which the wallnormal Reynolds stress along the ﬂat surface of the plate drives the production of the
+Reynolds shear stress. However, the fact that the levels of vv show little diﬀerence
+between our cases T3Bs/f suggests that such a mechanism does not account for
+the discrepancies between the two T3B cases. We also note that our observations
+neither support nor challenge the conclusions of Voke & Yang (1995), but point to
+an additional mechanism that operates near the leading edge.
+The foregoing discussion also suggests possible explanations for the early transition
+observed for case T3Bf. One possibility is that the wall-normal turbulence intensity
+i.e. T v) in the experiment of Roach & Brierley (1992) is signiﬁcantly lower than T u.
+
+151
+
+Bypass transition in boundary layers
+5
+
+5
+(a)
+
+(b)
+
+4
+
+4
+
+y 3
+δ∗ 2
+
+3
+
+1
+
+1
+
+0
+
+2
+
+0.2
+
+0.4
+0.6
+urms /urms(max)
+
+0.8
+
+1.0 0
+
+0.2
+
+0.4
+0.6
+urms /urms(max)
+
+0.8
+
+1.0
+
+Figure 8. Normalized proﬁles of urms across the boundary layer; δ ∗ is the local displacement
+, x = 54;
+thickness; (a) case T3Bs; (b) case T3Bf; 䊉, x = 4; , x = 8; 䊊, x = 12; ∗, x = 15;
+, x = 73;
+, self-similar proﬁles from wind tunnel measurements of Matsubara &
+Alfredsson (2001).
+
+Another possibility is that in the experiment, the receptivity to vv at the leading edge
+is lower because of its diﬀerent shape. Roach & Brierley (1992) report, however, that
+the FST generated using their grids was ‘extremely isotropic’. The second hypothesis
+should be investigated in a future study, where the curvature of the leading edge, for
+example, is varied while FST parameters are kept ﬁxed.
+In ﬁgure 8(a, b) we show wall-normal urms proﬁles for the two T3B cases, normalized
+by the corresponding boundary-layer maxima. In ﬁgure 8(b), which corresponds to
+case T3Bf, the wall-normal peak in urms is approximately at 1.3δ ∗ , consistent with
+the experiments of Matsubara & Alfredsson (2001), whereas in ﬁgure 8(a), which
+corresponds to case T3Bs, this peak is at 1.65. The level of urms above the boundary
+layer δ ∗ > 3 is also signiﬁcantly higher in case T3Bs. We ascribe these discrepancies to
+the diﬀerent levels of boundary-layer contamination at the leading edge, which alter
+the development of the streamwise Reynolds stress.
+In the light of the diﬀerences in the development of the Reynolds stresses between
+cases T3Bs and T3Bf, one may also expect to see signiﬁcant diﬀerences between the
+respective transition mechanisms. To qualify the diﬀerences, we studied the ﬂow ﬁelds
+for these cases visually. The details of this study are presented in § 3.4. An important
+conclusion that we state here is that, despite the diﬀerences in the streamwise Reynolds
+stress development, cases T3Bs/f undergo transition by the same mechanism.
+We close this section with a discussion of the eﬀect of the symmetry condition
+on cases SLSs/f. Analogous to the T3Bs/f cases, the symmetry condition results
+in a delayed onset of transition (ﬁgure 4). Speciﬁcally, transition begins at x = 110
+(Rex = 52 000) for case SLSs, in comparison with x = 60 (Rex = 28 000) for case SLSf.
+In ﬁgure 9(a, b) we show the proﬁles of streamwise and wall-normal Reynolds
+stresses for cases SLSs/f. As observed for cases T3Bf and T3Bs, one sees a sixfold
+diﬀerence between the amplitudes of vv at x = 0. However, the behaviour of the
+streamwise Reynolds stress in the SLS cases is diﬀerent from the T3B cases: uu is
+higher for case SLSf at all wall-normal locations, and the wall-normal urms proﬁles
+in both cases exhibit a peak at the same location. Figure 27(a, b) in the online
+supplement § A.4 shows that this location coresponds to y = 1.3δ ∗ .
+Figures 10(a) and 10(b) show the evolution of the maximum streamwise Reynolds
+stress, uu , inside the boundary layer. In ﬁgure 10(b), the data are normalized using
+the turbulent kinetic energy at the boundary-layer edge. The agreement between cases
+SLSs and SLSf up to x  30 in ﬁgure 10(b) suggests that for the low FST length
+
+152
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+4
+(a)
+3
+
+y
+
+2
+
+1
+
+0
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+0.05
+
+0.06
+
+0.07
+
+0.08
+
+0.09
+
+fuug/U 2∞
+5
+(b)
+4
+3
+y
+2
+1
+
+0
+
+0.002
+
+0.004
+
+0.006
+
+0.008
+
+0.01
+
+0.012
+
+0.014
+
+0.016
+
+fvvg/U 2∞
+
+Figure 9. Proﬁles of (a) streamwise Reynolds stress uu , and (b) the wall-normal Reynolds
+stress vv . From left to right, the plots correspond to x = 0, 2, 5, 10, 20, 75, 250; Rex = 0, 940,
+, case SLSs;
+, case SLSf; the short horizontal
+2350, 4700, 9400, 35 250, 11 7500.
+lines indicate the local boundary-layer thickness δ99 On the x-axis, the proﬁles are oﬀset
+by 0.01 for (a). In (b) the ﬁrst two plots are oﬀset by 0.004 for clarity and the rest
+by 0.002.
+
+scale, L11 = 2.3, the initial disturbance amplitude is proportional to the turbulence
+intensity at the boundary-layer edge. Brandt et al. (2004) report similar behaviour in
+their simulations.
+Interestingly, ﬁgure 10(a) shows that for all cases, rapid increase of the Reynolds
+stress levels is preceded by a region of slower growth, and that this region has
+larger extent in the T3B cases. Fransson et al. (2005) also observed regions of slower
+initial growth of urms before a linear increase. They explained this phenomenon by
+a ‘receptivity distance’, i.e. a distance needed for the adjustment of discrepant length
+scales in the free stream and the boundary layer. Our results are consistent with this
+possibility, in the sense that the receptivity distance increases with the degree of scale
+mismatch (e.g. L11 vs. δ99 ), which is greater for case T3B.
+From these observations, we conclude that at the lower FST length scale of case
+SLS, the eﬀect of the symmetry condition was primarily to delay the onset of transition
+without modifying qualitatively the nature of the Reynolds stress evolution. We may
+also speculate that the reason for the diﬀerent behaviour in cases SLS from T3B
+(i.e. evolution of uu ) arises from higher distributed receptivity of the boundary
+layer to lower-length-scale turbulence. According to this conjecture, the ‘deﬁcit’ in
+the streamwise Reynolds stress inside the developing boundary layer caused by the
+
+153
+
+Bypass transition in boundary layers
+
+fuugmax /U∞2
+
+50
+
+0.035
+0.03 (a)
+0.025
+0.02
+0.015
+0.01
+0.005
+0
+0.2
+
+100
+
+x
+200
+
+150
+
+250
+
+300
+
+350
+
+400
+0.03
+0.02
+0.01
+
+0.4
+
+0.6
+
+0.8
+
+1.0 1.2
+Rex
+
+1.4
+
+0
+1.8 2.0
+(×105)
+
+1.6
+
+x
+20
+
+0
+
+50
+
+100
+
+150
+
+200
+
+250
+
+300
+
+350
+
+400
+
+20
+
+fuugmax /kedge
+
+(b)
+15
+
+15
+
+10
+
+10
+
+5
+
+5
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0
+Rex
+
+1.2
+
+1.4
+
+1.6
+
+0
+1.8 2.0
+5
+(×10 )
+
+Figure 10. Evolution of the maximum streamwise Reynolds stress inside the boundary layer;
+, case
+(a) normalized by U∞ ; (b) normalized by the TKE at the boundary-layer edge:
+, case T3Bf;
+, case SLSs;
+, Case SLSf; 䊊, T3B experiment of Roach &
+T3Bs;
+Brierley (1992). The asterisks indicate the onset of transitional Cf rise corresponding to x = 95,
+x = 75, x = 100 and x = 60 for cases SLSs, SLSf, T3Bs and T3Bf, respectively.
+
+symmetry plane would be replenished by contamination from the free stream more
+rapidly in case SLS than T3B. For case T3B, this contamination is retarded by the
+large disparity between the FST and boundary-layer length scales.
+A qualitative comparison of SLSs/f ﬂow ﬁelds is made in the online supplement
+ﬁgure 28 (§ A.4), which shows instantaneous contours of the streamwise velocity
+ﬂuctuation in the (x, z)-plane inside the boundary layer. A higher-amplitude near-wall
+disturbance environment near the leading edge is seen for case SLSf, and the corresponding boundary layer appears more disturbed throughout the domain, consistent
+with the more rapid transition onset indicated in ﬁgure 4. Aside from the diﬀerences in
+the overall perturbation levels, the two ﬂow ﬁelds are very similar. This suggests that
+the underlying transition mechanism is the same in both instances. At this FST length
+scale (L11 = 2.3) and range of FST intensities, transition appears to be accompanied
+by Klebanoﬀ modes. Their role in transition will be brieﬂy discussed in § 3.4.
+3.3. Two-point correlations
+Two-point spanwise correlations of the velocity signal can provide information on the
+dominant spanwise length scale of the ﬂow. In transitional and turbulent boundary
+layers, correlations of the streamwise velocity (u ) are used to estimate the average
+spanwise separation between adjacent streamwise streaks. This distance is taken to
+be the distance to the ﬁrst minimum of the correlation function. In ﬁgure 11(a, b) the
+two-point correlation functions of u are shown for cases SLSs and T3Bs, respectively.
+The corresponding plots for case SLSf and T3Bf are qualitatively similar. The dashed
+
+154
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+4
+
+4
+(a)
+
+(b)
+
+3
+
+Ruu
+
+3
+
+2
+
+Ruu
+
+2
+
+1
+
+1
+
+0
+
+0
+0
+
+1
+
+2
+
+3
+z
+
+4
+
+5
+
+0
+
+2
+
+4
+
+6
+
+8
+z
+
+10
+
+12
+
+14
+
+16
+
+Figure 11. Spanwise correlation functions of the streamwise velocity ﬂuctuations; the z-axis
+is truncated by 50% in each case to focus on the region of signiﬁcant variation. (a) Case
+, correlation functions at the location of maximum
+SLSs, Ruu ; (b) case T3Bs, Ruu ;
+boundary-layer urms ;
+, correlation functions at the boundary-layer edge; from bottom to
+top: x = 38, Rex = 19 000; x = 96, Rex = 47 800; x = 154, Rex = 76 800; x = 308, Rex = 153 600.
+
+lines represent the correlation function at the boundary-layer edge, and the solid lines
+the correlation function at the location of maximum urms inside the boundary layer.
+The correlation function at the boundary-layer edge indicates a much larger spanwise
+scale for case T3Bs, as expected. (Note the diﬀerent ranges of abscissa in ﬁgures 11a
+and 11b.)
+The solid curve that corresponds to x = 96 (Rex = 45 000) is located near the onset
+of skin friction growth for both cases. It can be seen that the spacing between the
+streaks is approximately 3.4 (4.1δ ∗ ) for the T3Bs case, compared to about 1.8 (2.8δ ∗ )
+for case SLSs. The solid curves corresponding to x = 308 (Rex = 145 000) show that in
+the fully turbulent region, the streak spacing is the same for the two cases, regardless
+of the diﬀerences in the upstream development, indicating 
+a universal turbulent
+equilibrium. In wall units, deﬁned by x + = xuτ /ν, where uτ = (1/ν)dU /dy is the
+friction velocity, this spacing is 100, consistent with a turbulent boundary layer. These
+streaks are certainly not the same as their counterparts in the transitional region.
+Recall from ﬁgure 7(a) that the location of the uu maximum moves close to the
+wall at the onset of turbulence.
+Figure 12(a) shows the streamwise evolution of the location of the minimum
+of the correlation function. The ﬁgure shows that for cases SLSs and SLSf the
+transitional streak spacing of  2 is established by x = 75. For cases T3Bs and
+T3Bf, the appearance of streaks (with separation  3.4 and 3), is delayed to x  100
+and 70, respectively. This was also conﬁrmed by observing the ﬂow ﬁeld directly.
+It is interesting to see that while for the T3B cases there is a marked shift in
+the streak separation distance across the laminar–turbulent transition region, for
+cases SLSs and SLSf the separation distance does not change signiﬁcantly. This
+observation suggests that there is no universal value for streak separation in the
+perturbed boundary layer. Rather, it may be determined by the FST length scale.
+Fransson & Alfredsson (2003) performed controlled experiments of boundary-layer
+transition with and without distributed suction and found that the spanwise streak
+spacing was virtually unchanged between the two cases, despite a factor 2 reduction
+in the boundary-layer thickness for the case with suction. They suggested that the
+scale selection process involves the free-stream length scales. Figure 12(a) shows that
+
+155
+
+Bypass transition in boundary layers
+0
+
+100
+
+200
+
+x
+300
+
+400
+
+500
+
+0
+
+100
+
+200
+
+x
+300
+
+400
+
+500
+
+5
+
+10
+
+4
+
+8
+
+Δz 3
+
+3
+
+Δz 6
+δ∗ 4
+
+6
+
+2
+
+2
+
+2
+
+2
+
+1
+
+1
+
+5
+
+(a)
+4
+
+0
+
+0.5
+
+1.0
+
+1.5
+Rex
+
+2.0
+
+2.5
+(×105)
+
+0
+
+(b)
+
+10
+8
+4
+
+0.5
+
+1.0
+
+1.5
+Rex
+
+2.0
+
+2.5
+(×105)
+
+0
+
+Figure 12. Streamwise evolution of the location of the minimum of the spanwise correlation
+functions of the streamwise velocity; (a) in units of R; (b) normalized by the boundary-layer
+displacement thickness; the correlation functions are computed at the location of maximum
+, case T3B;
+, case T3B;
+, case SLSs;
+, case SLSf.
+boundary-layer urms ;
+
+within the transitional and turbulent regions, the streak spacing slowly increases with
+the downstream distance. Figure 12(b) shows that it slowly decreases relative to the
+local boundary-layer displacement thickness. Both of these ﬁndings are in qualitative
+agreement with Matsubara & Alfredsson (2001). However, in their experiments, the
+distance to the correlation function minimum in the transition region tends to 3δ ∗ ,
+whereas our values for cases SLSs and SLSf are closer to 2δ ∗ . For case T3B, the
+streak spacing is 4δ ∗ in the transitional region. However, we will show in the next
+section that the appearance of streaks for this case does not initiate transition.
+3.4. Mechanism of transition in the T3B case
+Jacobs & Durbin (2001) were the ﬁrst to visualize Klebanoﬀ modes and their
+breakdown into turbulent spots in a spatial boundary-layer simulation. With the
+FST intensity set to 3%, the boundary layer developed streaks that were about
+1.2δ99 apart. Turbulent spot formation was apparently triggered via the penetration
+of FST into the outer boundary layer. The spots grew in size as they were convected
+downstream and merged with developed turbulence to maintain its upstream front.
+Jacobs & Durbin concluded that the low-speed streak provides a path for the direct
+contamination of the boundary layer with the FST when the streak moves into the
+outer boundary layer, but is otherwise irrelevant to transition, i.e. no evidence of streak
+instability was found. The turbulent spots resulting from this FST/boundary-layer
+interaction were called ‘top-down’ spots because they originated from an incursion of
+the FST into the outer boundary layer and spread vertically toward the wall while
+being convected downstream with the mean ﬂow.
+Motivated by previous work on streak instability and breakdown (Andersson
+et al. 2001; Brandt & Henningson 2002), Brandt et al. (2004) illustrated a diﬀerent
+mechanism. Using planar and three-dimensional images of the ﬂow ﬁeld, they
+concluded that in their simulations, the formation of turbulent spots was caused
+by one of two instability modes of the streamwise streak. The sinuous, or the
+antisymmetric mode, was observed more often than the varicose, or the symmetric
+mode. This could be explained by the analysis of Wu & Choudhari (2003) and
+Andersson et al. (2001), who found the sinuous mode to be more unstable.
+We note that neither Jacobs & Durbin (2001), nor Brandt et al. (2004) observed
+spots of a well-deﬁned shape. Arrowhead-shaped spots were reported by Matsubara
+& Alfredsson (2001) in their studies of boundary-layer bypass transition. In this
+section, we examine the evolution of boundary-layer disturbances for our cases T3Bs
+
+156
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+and SLSs using a combination of three- and two-dimensional images. We follow the
+development of turbulent spots from their birth to their merger with the downstream
+turbulent front. We note that, because of the high intensity of the background FST,
+it is diﬃcult to perform a quantitative characterization of turbulent spot precursors,
+or to compute the leading- and trailing-edge velocities of the spots. We will focus on
+the T3Bs case since, to our knowledge, the type of FST-induced transition observed
+in this simulation has not been described before.
+The spanwise domain of the T3B simulations is suﬃciently large to permit
+unhindered development of turbulent spots. Four turbulent spots were observed
+and followed from birth to maturation during the course of the simulation. Two of
+the spots observed have shapes that point in the streamwise direction, similar to the
+illustration in ﬁgure 4(b) in Matsubara & Alfredsson (2001). The other two seem to
+have rather arbitrary shapes. One spot from each category will be discussed.
+Figure 13 illustrates the three-dimensional development of one turbulent spot
+observed in the T3Bs simulation. The left halves of ﬁgures 13(a) and 13(b) show
+spanwise-elongated structures at somewhat regular intervals in the streamwise
+direction. These quasi-periodic structures have a spanwise length of 5, about three
+times larger than the local boundary-layer thickness δ99  1.6 (see ﬁgure 5b). The
+streamwise separation of adjacent spanwise structures is approximately 7.0, which
+is ﬁve times larger than the local boundary layer thickness, and the period is 12.5,
+corresponding to a convection speed of approximately 0.56. These structures are
+stretched in the streamwise and wall-normal directions by the boundary-layer mean
+shear around x = 50 (ﬁgure 13b), and reorient themselves into a series of horseshoe
+vortices (these vortices have also been called lambda, -, or hairpin) by x = 60
+(ﬁgure 13c, d). Birth of additional horseshoe vortices can also been seen to the right
+of the original trailing horseshoe vortex in this ﬁgure. Figure 13(e, f ) shows the same
+structure at later times, when the horseshoe vortices have increased in number and
+are organized into a young turbulent spot. At this stage, the shape of this spot is
+reminiscent of an arrowhead. Two more horseshoe vortices are forming behind and
+to the right of the spot, suggesting a possible mechanism by which the spot can
+grow laterally while preserving an arrowhead shape, i.e. by inducing the formation
+of more vortices on its ﬂanks. Note that streamwise streaks are also present in the
+ﬁgures. In ﬁgure 13(b), two low-speed streaks (black contours) are seen to the right
+of the developing horseshoe vortex. However, both of them remain intact in ﬁgure
+13(f ), at which point the turbulent spot is mature. Thus, the boundary-layer streaks
+do not appear to participate in the transition process in the T3B case. Additional,
+shorter high- and low-speed streaks are also present in ﬁgure 13(d) around and
+underneath the growing horseshoe vortices. In this case, the streaks are generated
+by the horseshoe vortices, and therefore do not initiate the transition process. From
+ﬁgures such as ﬁgures 13(e) and 13(f ), we estimated the celerities of the leading and
+trailing edges of this spot to be 0.88 and 0.72, respectively. The location of the leading
+horseshoe vortex, and the most downstream location of quiescent ﬂow behind the
+spot, respectively, were used to compute these values.
+3.5. Origin of the quasi-periodic disturbances
+In ﬁgure 14 we show the streamwise evolution of the wall-normal velocity ﬂuctuation
+along the line (y, z) = (0.68, 35) that passes through the quasi-periodic structures in
+ﬁgure 13. The streamwise structures have the signature of a short wavepacket with
+the streamwise wavelength λ and velocity c of approximately 7 and 0.6, respectively,
+corresponding to a period of 12. The wavelength of the wavepacket is deﬁned as the
+
+157
+
+Bypass transition in boundary layers
+(a)
+
+(b)
+
+60
+
+60
+
+x
+
+x
+
+40
+
+40
+(d)
+
+(c)
+
+60
+60
+x
+
+x
+40
+
+40
+
+(f )
+
+(e)
+
+120
+90
+
+70
+
+80
+
+100
+
+x
+
+x
+80
+
+60
+
+Figure 13. Isosurfaces of the streamwise velocity ﬂuctuation, u = ±0.3, shown in light grey
+and black, respectively, and isosurfaces of Q = 0.015, shown in dark grey. The images illustrate
+the development of a turbulent spot from the T3Bs simulation; (a) t = 189, (b) t = 205, (c)
+t = 219, (d) t = 229, (e) t = 260, (f ) t = 295.
+
+average distance between adjacent peaks, and the velocity is computed by dividing the
+displacement of the most prominent peak in the wavepacket by the coresponding time
+interval. The approximate local value of δ99 = 1.2 yields λ/δ99 = 5.8. The corresponding
+frequency ω of the wavepacket is 0.52, which yields for the non-dimensional frequency,
+F = ων/U∞2 , the value 1100.
+Nagarajan et al. (2007) observed a bypass transition scenario in which boundarylayer disturbances appear in the form of wavepackets in the spanwise velocity signal.
+The values for the group velocity and wavelength they reported were, on the average,
+c = 0.52 and λ/δ99 = 5. While these numbers are in approximate agreement with our
+results, we note that in our case the wavepacket manifests itself in the wall-normal, and
+not the spanwise velocity component. Thus, the relationship between the transition
+scenario reported by those authors and the one described here is uncertain.
+
+158
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+0.05
+v′
+
+0
+–0.05
+20
+0.05
+
+v′
+
+80
+
+100
+
+120
+
+140
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+40
+
+60
+
+80
+x
+
+100
+
+120
+
+140
+
+0
+–0.05
+20
+0.05
+
+v′
+
+60
+
+0
+–0.05
+20
+0.05
+
+v′
+
+40
+
+0
+–0.05
+20
+
+Figure 14. Streamwise evolution of the wall-normal velocity ﬂuctuation, v  , at location
+(y, z) = (0.68, 35), showing the movement of a wavepacket. Successive plots are separated
+by t = 16.
+
+The wavepackets we observe are not due to TS waves. The Reynolds number based
+on the displacement thickness at the location at which the wavepackets are detected
+is approximately Reδ∗ = 250. The eigenfunctions corresponding to our values of Reδ∗
+and F = 1100 are well within the stability region for a temporally growing wave in a
+Blasius boundary layer.
+Based on their values for c and F , Nagarajan et al. also concluded that the wavepackets seen in their simulations are not due to TS waves, for which the corresponding
+values would be under c = 0.44 and F = 400 (Jordinson, 1970; Gaster & Grant 1975).
+To examine the origins of the wavepackets, in ﬁgure 15 we show ﬁlled contours of
+the spanwise vorticity (deﬁned as Ωz = ∂V /∂x − ∂U /∂y) in a plane located at z = 35,
+which cuts approximately through the centre of both wavepackets that are clearly
+visible in ﬁgure 13(b). The large contribution by the mean shear, ∂U/∂y, causes high
+negative values of the vorticity in the boundary layer. The grey scale is adjusted to
+highlight the increase in the spanwise vorticity during the time period over which
+the wavepackets are observed. The vector plot superposed on the vorticity contours
+represents the projection of the velocity ﬂuctuation ﬁeld onto the plane. Finally,
+contours of Q are plotted as solid lines at the same value as in ﬁgure 13 to indicate
+the locations of the wavepackets.
+Figure 15 shows that the appearance of the wavepackets is associated with regions of
+high shear that are found inside the boundary layer during the period of wavepacket
+formation, corresponding approximately to 155 6 t 6 205, shown in ﬁgure 15(a–d).
+These higher levels of shear appear to be caused by large free-stream eddies moving
+toward the wall and sending high-momentum ﬂuid towards the boundary layer. This is
+consistent with the velocity ﬂuctuation vectors above the boundary layer in ﬁgure 15,
+t = 172, which show that the velocity is directed toward the surface in the vicinity of
+the shear layer and the wavepacket.
+
+159
+
+Bypass transition in boundary layers
+(a)
+3
+y 2
+1
+0
+25
+–2.5
+
+–2.4
+
+30
+–2.3
+
+35
+–2.2
+
+40
+–2.1
+
+45
+–2
+
+–1.9
+
+50
+–1.8
+
+55
+–1.7
+
+60
+–1.6
+
+–1.5
+
+(b)
+3
+y 2
+1
+0
+25
+–2.5
+
+–2.4
+
+30
+–2.3
+
+35
+–2.2
+
+40
+–2.1
+
+45
+–2
+
+–1.9
+
+50
+–1.8
+
+55
+–1.7
+
+60
+–1.6
+
+–1.5
+
+(c)
+3
+y 2
+1
+0
+25
+–2.5
+
+–2.4
+
+30
+–2.3
+
+35
+–2.2
+
+40
+–2.1
+
+45
+–2
+
+–1.9
+
+50
+–1.8
+
+55
+–1.7
+
+60
+–1.6
+
+–1.5
+
+(d)
+3
+y 2
+1
+0
+25
+–2.5
+
+–2.4
+
+30
+–2.3
+
+35
+–2.2
+
+40
+–2.1
+
+45
+–2
+
+–1.9
+
+50
+–1.8
+
+55
+–1.7
+
+60
+–1.6
+
+–1.5
+
+(e)
+3
+y 2
+1
+0
+45
+–2.5
+
+–2.4
+
+50
+–2.3
+
+55
+–2.2
+
+60
+–2.1
+
+65
+–2
+
+–1.9
+
+70
+–1.8
+
+75
+–1.7
+
+80
+–1.6
+
+–1.5
+
+(f )
+3
+y 2
+1
+0
+45
+–2.5
+
+–2.4
+
+50
+–2.3
+
+55
+–2.2
+
+60
+–2.1
+
+65
+–2
+
+–1.9
+
+70
+–1.8
+
+75
+–1.7
+
+80
+–1.6
+
+–1.5
+
+(g)
+3
+y 2
+1
+0
+65
+–2.5
+
+–2.4
+
+70
+–2.3
+
+75
+–2.2
+
+80
+–2.1
+
+85
+–2
+
+–1.9
+
+90
+–1.8
+
+95
+–1.7
+
+100
+–1.6
+
+–1.5
+
+Figure 15. Time evolution of a wavepacket in the (x, y)-plane. Filled greyscale contours
+correspond to the spanwise vorticity, vectors denote the velocity ﬂuctuation, and the thick
+contours with Q = 0.015 highlight the location of the wavepacket. (a) t = 155, (b) t = 172,
+(c) t = 189, (d) t = 205, (e) t = 231, (f ) t = 245, (g) t = 265.
+
+160
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+(a)
+
+0.2
+
+(b)
+
+40
+
+0.05
+40
+
+z
+
+0
+
+0
+30
+
+30
+–0.05
+
+–0.2
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+80
+
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+80
+
+(d)
+
+(c)
+0.2
+
+40
+z
+
+0.05
+40
+
+0
+30
+
+0
+30
+
+–0.2
+40
+
+50
+
+60
+
+70
+
+80
+
+–0.05
+40
+
+90
+
+50
+
+60
+
+70
+
+80
+
+90
+
+(f )
+
+(e)
+0.2
+
+40
+z
+
+0.05
+40
+0
+
+0
+30
+
+30
+–0.2
+70
+
+80
+
+90
+
+–0.05
+70
+
+100 110 120 130
+
+80
+
+90
+
+100 110 120 130
+
+(h)
+
+(g)
+0.2
+
+40
+z
+
+0.05
+40
+0
+
+0
+30
+
+–0.2
+90
+
+100 110 120 130 140 150
+x
+
+30
+–0.05
+90
+
+100 110 120 130 140 150
+x
+
+Figure 16. Contours of velocity ﬂuctuations for a turbulent spot of type I. Case T3Bs:
+y = 0.68; (a), (c), (e), (g) streamwise velocity ﬂuctuation; (b), (d), (f ), (h) wall-normal velocity
+ﬂuctuation; (a, b) t = 189; (c, d) t = 241; (e, f ) t = 296; (g, h) t = 320.
+
+We can also see from ﬁgure 15 that the wavepacket, as identiﬁed by the Q = 0.015
+criterion, occupies a major portion of the boundary-layer thickness. See, for example,
+ﬁgure 15, t = 189: the boundary layer thickness δ99 is  1.2 at x = 25.
+3.6. Further visualizations of turbulent spots
+In this section, we will track the temporal development of two distinct wavepackets
+into turbulent spots by examining two-dimensional slices parallel to the wall. The spot
+already shown in ﬁgure 13 is termed type I, and the second spot is termed type II.
+Figures 16 and 17 correspond to spots of type I and II, respectively, and reveal the
+features of the spot cross-sections. They complement the three-dimensional images
+shown in ﬁgure 13 and x, y-slices in ﬁgure 15.
+Again, these ﬁgures show no evidence that streak instability is related to the
+origin of either spot. The spot precursors – the wavepackets – appear as regions of
+upward- and downward-moving ﬂuid, alternating in the streamwise direction, with
+small oscillations perpendicular to the direction of the ﬂow. This is shown for the ﬁrst
+spot in ﬁgure 16(b) at (x, y) = (33, 33), and 16(d) at (x, y) = (47, 27), where another
+spot is forming upstream of the main one, and for the second spot in ﬁgure 17(b)
+at (x, y) = (35, 27). In the ﬁrst spot, the ends of the low/high-speed region are then
+reoriented toward the ﬂow direction, so that the resulting perturbation has the wall-
+
+161
+
+Bypass transition in boundary layers
+(a)
+
+(b)
+40
+
+z 30
+20
+
+0.2
+
+40
+
+0.05
+
+0
+
+30
+
+0
+
+–0.2
+
+20
+
+30 40 50 60 70 80 90 100
+
+–0.05
+30 40 50 60 70 80 90 100
+
+(c)
+
+(d)
+40
+
+z 30
+20
+
+0.2
+
+40
+
+0.05
+
+0
+
+30
+
+0
+
+–0.2
+
+20
+
+–0.05
+
+60 70 80 90 100 110 120 130
+
+60 70 80 90 100 110 120 130
+
+(e)
+
+(f)
+40
+
+z 30
+20
+
+0.2
+
+40
+
+0.05
+
+0
+
+30
+
+0
+
+–0.2
+
+20
+
+–0.05
+
+70 80 90 100 110 120 130 140
+
+70 80 90 100 110 120 130 140
+
+(g)
+
+(h)
+40
+
+z 30
+20
+110 120 130 140 150 160 170 180
+x
+
+0.2
+
+40
+
+0.05
+
+0
+
+30
+
+0
+
+–0.2
+
+20
+
+–0.05
+110 120 130 140 150 160 170 180
+x
+
+Figure 17. Contours of velocity ﬂuctuations for a turbulent spot of type II. Case T3Bs;
+y = 0.68: (a), (c), (e), (g) streamwise velocity ﬂuctuation; (b), (d), (f ), (h) wall-normal velocity
+ﬂuctuation; (a, b) t = 82; (c, d) t = 154; (e, f ) t = 179; (g, h) t = 261.
+
+normal velocity signature of a horseshoe vortex. This is most clearly seen from ﬁgure
+16(f ) at (x, y) = (80, 27) in the spot developing upstream. The reorientation of this
+perturbation is due to the boundary-layer mean shear. When the central part of the
+low/high-speed region is moved up by the ﬂuctuating velocity, the velocity gradient
+causes it to move faster than the ends, stretching the disturbance into a > shape.
+For the second spot (ﬁgure 17), only the top half of the low/high-speed region is
+reoriented toward the streamwise direction, which gives it the appearance of a quasistreamwise vortex. This is shown in ﬁgure 17(d) at (x, y) = (80, 33). As a result of the
+asymmetry, the ensuing turbulent spot does not have a > shape.
+Next, the vortical structures develop instabilities, which appear as oscillations in the
+wall-normal velocity along their axes. These instabilities lead directly to turbulence,
+in the sense that no coherent structures can be identiﬁed once these oscillations
+are pronounced. This can be seen in ﬁgures 16(f ) at (x, y) = (87, 32) and 17(f ) at
+(x, y) = (93, 35). Figure 30 in the online supplement § A.6 shows a magniﬁed view of
+the upstream horseshoe vortex in ﬁgure 16(e, f ) undergoing breakdown to turbulence.
+A three-dimensional view of the breakdown process can also be seen in ﬁgure 13(a–c)
+in the isosurfaces of Q.
+
+162
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+120
+
+110
+
+110
+
+100
+(a)
+
+(b)
+
+Figure 18. Isosurfaces of the streamwise velocity ﬂuctuation, u = ± 0.30, shown in light grey
+and black, respectively, and isosurfaces of Q = −(∂ui /∂xj )(∂uj /∂xi ) = 0.045, shown in dark
+grey. The images illustrate two types of streak breakdown observed for case SLSs; (a) t = 136;
+asymmetric breakdown; (b) t = 270; symmetric breakdown.
+
+The ﬁrst spot spreads upstream through its lateral edges and merges with the fully
+turbulent region at x  220. The contours of the wall-normal velocity ﬂuctuation in
+ﬁgures 16(f ) and 16(h) suggest that the shape of the spot points in the streamwise
+direction. Interestingly, the shape of the second spot appears to be arbitrary up to
+t = 261, at which point it has just merged with another nascent spot developing below
+it (seen in ﬁgure 17(f ) at (x, y) = (110, 17)). The resulting larger spot points upstream
+(ﬁgure 17h at (x, y) = (145, 30)). This shape persists until the spot merges with the
+turbulent front (not shown).
+Since the Reynolds stresses in the T3Bs case showed a somewhat diﬀerent
+development from the T3Bf case in the pre-transitional region, as described in § 3.1,
+we also examined frame-by-frame the transitional ﬂow ﬁeld corresponding to the
+T3Bf case, in which the presence of the full leading edge is expected to result in a
+more physical ﬂow ﬁeld. The results of the comparison between cases T3Bs and T3Bf
+indicate that turbulent spot formation and evolution remain the same. For example,
+ﬁgure 29(a, b) in the online supplement § A.5 correspond to a young turbulent spot
+from the T3Bf simulation, and should be compared with ﬁgures 16(e) and 16(f )
+respectively, which show a turbulent spot in a similar stage of development for case
+T3Bs.
+For comparison with the T3B scenario, we conclude this section with a brief
+description of breakdown to turbulence for case SLSs. Figure 18 shows threedimensional images of two streaks undergoing two diﬀerent types of deformation
+leading to the formation of turbulent spots. Isosurfaces of positive and negative
+streamwise velocity ﬂuctuation (u = ±0.30) are shown in light grey and black,
+respectively, and isosurfaces of Q = −(∂ui /∂xj )(∂uj /∂xi ) = 0.045, in dark grey.
+The ﬁrst type of streak deformation is illustrated in ﬁgure 18(a), which shows two
+adjacent high- and low-velocity streaks undergoing oscillations about their axes. The
+second type of deformation observed is shown in ﬁgure 18(b). The high-speed streak in
+the middle appears to be undergoing symmetric ﬂuctuations about its axis, as shown
+by two ﬂanking low-speed streaks (black) and two smaller-scale eddies shown in grey
+and corresponding to Q isosurfaces. In both cases, breakdown is accompanied by a
+progressive loss of a well-deﬁned streaky structure and the appearance of smaller-scale
+eddies, shown by the dark grey contours of Q. Details on the temporal evolution of
+
+163
+
+Bypass transition in boundary layers
+x
+0
+Power (low frequency)
+
+50
+
+20
+
+40
+
+60
+
+80
+
+1
+
+2
+
+3
+
+4
+
+100
+
+120
+
+140
+
+5
+
+6
+
+7
+
+160
+
+180
+
+(a)
+
+40
+30
+20
+10
+0
+
+Rex
+
+8
+9
+(× 104)
+
+5
+(b)
+4
+
+y
+δ∗
+
+3
+2
+1
+
+0
+
+0.2
+
+0.4
+0.6
+urms/urms(max)
+
+0.8
+
+1.0
+
+Figure 19. (a) Evolution of the power in the discrete modes for case SLSs: ∗, F 6 15; ×,
+F > 100. (b) Normalized proﬁles of urms across the boundary layer in low-frequency modes
+(using a sharp Fourier cutoﬀ ﬁlter at F = 106 ων/U∞2 = 15), except for the curve marked by
+×, which represents high-frequency modes (F >100) at x = 54; δ ∗ is the local displacement
+, x = 54;
+, x = 73;
+, data from Matsubara & Alfredsson
+thickness; 䊉, x = 4;
+(2001).
+
+the two streaks including images of the resulting turbulent spots are given in § A.4 of
+the online supplement.
+From our simulations of cases SLSs/f, we cannot determine whether streak
+breakdown is caused by secondary instabilities. Some support for this conjecture
+comes from the fact that the two modes of breakdown we observe have asymmetry
+and symmetry, consistent with the notion of sinuous and symmetric instability.
+Nevertheless, the background 6% FST in our simulations prevents us from ruling out
+the scenario proposed by Jacobs & Durbin (2001) in favour of that of Brandt et al.
+(2004).
+To underscore the importance of streaks in transition of the SLS cases, we
+computed frequency spectra of the streamwise velocity at various locations within the
+computational domains. The wall-normal location at which the spectra are calculated
+corresponds to the maximum boundary-layer urms . This position is approximately in
+the middle of the transitional boundary layer, but moves close to the wall at the onset
+of turbulence, near x = 150. Asterisks in ﬁgure 19(a) indicate the evolution of energy
+in the low-frequency portion of the spectrum, F = 106 ων/U∞2 6 15, and ﬁgure 19(b)
+shows proﬁles of the square root of this energy component across the boundary layer.
+
+164
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+Comparison of this ﬁgure with ﬁgure 27 (a) from the online supplement § A.4, in
+which the square root of the total energy (i.e. urms ) has been plotted, suggests that
+the increase in the boundary-layer urms for case SLSs is due to energy growth in
+the low frequencies. For comparison, in ﬁgure 19(a), we include the evolution of the
+high-frequency energy component (F > 100). The square root of this energy is also
+plotted across the boundary layer in ﬁgure 19(b) for x = 54. The corresponding modes
+are seen to peak closer to the edge of the boundary layer (δ99  3δ ∗ ), and, unlike the
+low-frequency modes, are not ampliﬁed in the streamwise direction. These results
+are consistent with both experiments, e.g. Klebanoﬀ (1971), Matsubara & Alfredsson
+(2001), and theoretical models (Choudhari 1996; Leib, Wundrow & Goldstein 1999).
+An important conclusion from the comparison between transitional ﬂows in the
+SLS and T3B cases is that, in the former, streamwise streaks actively participate in
+transition, whereas in case T3B, the transition mechanism is fundamentally diﬀerent,
+and involves streamwise wavepackets with spanwise scales much larger than the local
+boundary-layer thickness.
+4. Discussion and conclusion
+We have performed four DNS of boundary-layer transition due to 6% FST with
+the aim of studying the eﬀects of the FST length scale variations on the transition
+behaviour. Two of the simulations are designed to match the T3B experiment by
+Roach & Brierley (1992). These simulations are carried out at the FST length scale
+value of 14, RL = 6580, to match FST evolution in the experiment. This value for
+the FST length scale is several times larger than typical values (3) used in previous
+simulations.
+The two simulations (T3Bs/f) diﬀer in terms of the symmetry of the oncoming
+disturbance ﬁeld: for case T3Bs, we used a symmetry condition along y = 0 in the
+region upstream of the plate leading edge, and for case T3Bf, the symmetry condition
+is not imposed, i.e. the full domain is considered. The purpose of the T3Bs case was to
+permit longer simulation times, and to study the eﬀect of changing the leading-edge
+disturbance environment on transition.
+We performed two additional simulations, SLSs/f, which were almost identical to
+the T3Bs/f cases, respectively, except for the lower value of the FST length scale. In
+these two cases, the FST integral length scale is set to 2.3. This value was chosen
+to match previous simulations, in which transition via the breakdown of Klebanoﬀ
+modes was reported. The transition mechanism observed for the SLS cases appears
+the same as reported in previous simulations and experiments, and was compared
+with the transition mechanism of the T3B case.
+The main eﬀect of the symmetry condition on the T3B simulation is a downstream
+shift in the location of transition. The Reynolds stress development within the
+boundary layer is altered: the amplitude of the vertical Reynolds stress vv † at
+the leading edge is reduced by a factor 6 in the T3Bs case compared to the T3Bf
+case. This discrepancy accounts for diﬀerent development of the streamwise Reynolds
+stress downstream of the leading edge. In the T3Bf case, uu is concentrated in a
+rapidly growing sharp peak in the middle of the boundary layer, at y/δ ∗ = 1.3, and
+in the T3Bs cases it grows more slowly and has a more diﬀuse wall-normal peak
+at y/δ ∗ = 1.65. Noting that at the leading edge, vv is the component of Reynolds
+† At the leading edge, the y-direction is parallel to the vector tangent to the plate tip.
+
+Bypass transition in boundary layers
+
+165
+
+stress that is tangential to the plate surface, we suggested that the sharp uu peak
+in the T3Bf cases arises by advection of vv in the leading-edge vicinity along the
+curvilinear coordinate of the ﬂat plate. Thus, the boundary layer is receptive to the
+FST at the leading edge of the plate, i.e. suppression of the vv amplitude in the
+vicinity of the leading edge via the use of the symmetry condition results in notable
+diﬀerences in the boundary-layer contamination as measured by uu .
+Additional insight comes from comparing cases SLSs/f, which correspond to
+L11 = 2.3. The main eﬀect of the symmetry condition is, again, to delay the onset
+of transition in case SLSs, compared to SLSf. However, although the discrepancy in
+vv at the leading edge between cases SLSs and SLSf is similar to that described for
+the T3B cases, the downstream proﬁles of uu inside the boundary layer have the same
+shape, and exhibit a peak at the same location, y  1.3δ ∗ . Furthermore, in the early
+stages of boundary-layer development (x = 5–40), proﬁles of the maximum streamwise
+Reynolds stress inside the boundary layer scaled by the TKE at the boundary-layer
+edge fall on top of each other (cf. ﬁgure 10), indicating a ‘local similarity’, i.e. coupling
+between the local free stream and the boundary layer. We loosely refer to this coupling
+as ‘distributed receptivity’ because the interaction between the boundary layer and the
+free stream takes place over a ﬁnite streamwise region. Thus, for case SLSs, although
+the attenuated vv causes a deﬁcit in uu downstream of the leading edge, this deﬁcit
+is rapidly replenished through the coupling between the free stream and the boundary
+layer, in proportion with the overall FST intensity. For this reason, the qualitative
+development of the perturbed boundary layer is the same in cases SLS. In contrast, the
+qualitative diﬀerences in the behaviour of the streamwise Reynolds stress development
+observed for the T3Bs/f cases suggest that the distributed receptivity mechanism is
+weaker, i.e. insuﬃcient to replenish the uu deﬁcit caused by the attenuated vv at
+the leading edge. Finally, we note that the transition delay in the T3Bs is not simply
+because the vv is lower along the surface of the plate. In fact, despite signiﬁcant
+attenuation near the leading edge, by x = 5, the near-wall vv proﬁles are essentially
+identical in the two cases (cf. ﬁgure 7). An explanation for the reduced distributed
+receptivity in the downstream region for cases T3B and SLS may be related to the
+larger mismatch between the free stream and boundary-layer length scales in the T3B
+case. For the SLS cases, L11 is comparable to the boundary-layer thickness δ99 at
+the onset of transition, and for cases T3Bs and T3Bf, it is approximately six times
+the transitional δ99 . This conjecture is consistent with the fact that, in the limit of
+large spanwise wavelengths, the transient growth of Klebanoﬀ mode perturbations
+is known to scale inversely with the spanwise wavelength (Choudhari 1996; Lieb,
+Wundrow & Goldstein, 1999).
+The hypothesis of reduced receptivity does not contradict the conclusion of Brandt
+et al. (2004) and Ovchinnikov et al. (2004) that increasing the FST length scale
+accelerates transition. First, the largest FST length scale used in their simulations was
+approximately 3δ99 at Rex  30 000, whereas the FST length scale used in our cases
+T3B is around 7δ99 at this location. Second, these authors used truncated simulations,
+in which the computation is started downstream of the leading edge at an arbitrarily
+prescribed Rex . Therefore, their simulations do not account for the receptivity in the
+vicinity of the leading edge.
+The experiments of Jonáš, Mazur & Uruba (2000), on the other hand, span the
+range of length scales used in the current simulations, and indicate that increasing
+the FST length scale moves the transition region upstream. Thus our results are in
+qualitative disagreement. However, the FST intensity in their experiments was ﬁxed at
+
+166
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+3%, compared to 6% in our simulations. It is possible that at the higher intensity, the
+optimal FST length scale for transition is smaller. Some support for this conjecture
+comes from the fact that small-scale turbulence penetrates the boundary layer more
+easily (Brandt et al. 2004), but its free-stream intensity also decays more rapidly.
+Thus, the overall perturbation of the boundary layer is reduced compared to the case
+of large-scale turbulence, which decays more slowly. Increasing the FST intensity may
+oﬀset the faster decay of the small-scale turbulence and make it more eﬀective than
+the larger scales in inducing transition.
+The transition mechanism for the SLS cases has been described before (Jacobs &
+Durbin 2001; Brandt et al. 2004) and is diﬀerent from that in the main simulation
+cases T3B. The boundary-layer disturbances are low-frequency modes that appear
+as low- and high-speed streaks of the streamwise velocity. Their energy increases
+approximately linearly with the streamwise distance after an initial adjustment region,
+and in the transitional region they have a spanwise separation of 2δ ∗ –3δ ∗ . The
+conclusion regarding the involvement of streaks in transition is indirectly supported
+by the following. The earlier onset of transition in case SLSf relative to SLSs
+is accompanied by an earlier rise in the streamwise Reynolds stress (ﬁgure 10a).
+However, examination of the energy in the u-velocity spectrum shows energy
+increasing in low-, but not high-frequency modes (cf. ﬁgure 19a), consistent with
+known increase in Klebanoﬀ mode amplitude with downstream distance. Furthermore,
+the wall-normal proﬁle of the low-frequency modes is essentially the same as that
+based on the full spectrum.
+For case T3Bs, we have shown that spot precursors are present as close upstream as
+x = 35, and a small turbulent spot is shown at x  65 (ﬁgure 16c, d). However, streaks
+with a well-deﬁned spanwise separation ﬁrst appear around x  100 (cf. ﬁgure 12a).
+Thus, these streaks cannot be directly responsible for transition. Their appearance
+may be unrelated to the turbulent spots, or, alternatively, may be caused by the
+turbulent spots themselves, since any localized disturbance will be stretched by the
+boundary-layer mean shear, which will give it a streaky appearance.
+The absence of streaks near the leading edge unmasks an alternative transition
+mechanism. The FST induces a streamwise wavepacket that appears in the wallnormal velocity component. Wavepackets are associated with spanwise vortical
+structures, which occupy most of the vertical extent of the boundary layer. Unlike the
+streaks, which are present close to the leading edge in the SLS cases, wavepackets
+are ﬁrst detected at x  25 in the T3Bs case. Initially perpendicular to the mean ﬂow,
+the spanwise vortices subsequently reorient themselves to become partially aligned
+in the streamwise direction; at this stage, the dominant structures appear either as
+symmetric horseshoe/lambda/hairpin vortices (two legs) or quasi-streamwise vortices
+(one leg). The vortices develop instabilities and break down to turbulence. Hairpin
+vortices appear to generate spots with a shape that points approximately downstream,
+and single-leg quasi-streamwise vortices lead to spots of arbitrary shape. We note that
+this mechanism appears diﬀerent from the one described by Nagarajan et al. (2007).
+First, the disturbance in our case seems to originate from spanwise and not streamwise
+vorticity, as observed in their work. Second, in our case the wavepackets appear in
+the wall-normal rather than the spanwise velocity component. Third, in our case,
+the wavepacket is not conﬁned only to the lower regions of the boundary layer.
+Fourth, the wavepackets observed by Nagarajan et al. (2007) do not develop into
+turbulent spots of a well-deﬁned shape. One possible explanation for the diﬀerences
+between our results and those of Nagarajan et al. is that in their case, the highest
+Reynolds number based on the FST integral length scale was ReL = 2250, compared
+
+Bypass transition in boundary layers
+
+167
+
+to ReL = 6580 for our cases T3Bs/f. The maximum FST intensity in their simulations
+is 4.5%, which is also lower than in our simulations.
+Hairpin and quasi-streamwise vortices have been found in numerous previous
+studies of transitional boundary layers. Perry, Lim & Teh (1981) created a turbulent
+spot by a short pulse of air from a small hole drilled in the ﬂoor of their wind tunnel.
+The spot was composed of an array of ‘folds’ near the wall, which were similar in
+appearance to -vortices. It had an arrowhead shape and was trailed by long streaky
+tails. They hypothesized that a tubulent spot is simply a staggered arrangement of
+a series of -shaped vortices. Asai & Nishioka (1990) investigated boundary-layer
+transition at subcritical (i.e. linearly stable) Reynolds numbers, caused by acoustic
+perturbations near the leading edge. Their smoke visualization study revealed that a
+hairpin-like structure was important in the transition process. Singer & Joslin (1994)
+and Singer (1996) performed DNS to study the evolution of a single hairpin vortex
+in the ﬂat-plate boundary layer and its subsequent development into a turbulent spot.
+The hairpin vortex was generated by blowing at the wall and its evolution was very
+similar to that described in previous studies. The spot was composed of hairpin and
+quasi-streamwise vortices, possessed a clear arrowhead shape and was followed by
+velocity streaks. In addition, they observed the formation of new hairpin vortices near
+the trailing edge of the spot.
+The similarities between the spots found in our T3B simulations and those observed
+in the above studies are striking. This might seem surprising since in our case
+turbulent spots are generated by forcing at the boundary-layer edge and not at the
+wall. However, the similarity is consistent with the well-established observation that
+the turbulent spot as described in this and many previous studies is a fundamental
+feature of transitional boundary layers.
+The present results indicate the importance of the FST length scale in determining
+not only the onset of transition, but also the underlying physical mechanism. Future
+numerical and experimental studies of boundary-layer transition should consider not
+only the eﬀects of the Reynolds number based on either the plate thickness or the
+FST length scale, but also the ratio between the two length scales as an additional
+parameter. It is possible, for instance, that for a ﬁxed leading-edge geometry, FST of
+slightly diﬀering length scales will produce diﬀerent disturbance growth rates inside
+the boundary layer, which could reconcile the diﬀerences in the measured transition
+onsets among experiments.
+V. O. and U. P. acknowledge the ﬁnancial support of the NASA Langley Research
+Center under Cooperative Agreement NAG12285. Thanks are also due to Dr Jens
+Fransson for sharing with us the results of ﬂow visualizations based on wind tunnel
+experiments at KTH, Stockholm. Finally, we are grateful to an anonymous reviewer
+for clariﬁcation of experimental techniques for measuring Reynolds stress near the
+wall.
+
+REFERENCES
+Andersson, P., Berggren, M. & Henningson, D. S. 1999 Optimal disturbances and bypass
+transition in boundary layers. Phys. Fluids 11, 134–150.
+Andersson, P., Brandt, L., Bottaro, A. & Henningson, D. S. 2001 On the breakdown of boundary
+layer streaks. J. Fluid Mech. 428, 29–60.
+Asai, M. & Nishioka, M. 1990 Development of wall turbulence in Blasius ﬂow. In Laminar-Turbulent
+Transition (ed. D. Arnal & R. Michel), pp. 215–222. Springer.
+
+168
+
+V. Ovchinnikov, M. M. Choudhari and U. Piomelli
+
+Balaras, E. 2004 Modeling complex boundaries using an external force ﬁeld on Cartesian grids in
+large-eddy simulations. Comput. Fluids 33, 375–404.
+Balaras, E., Benocci, C. & Piomelli, U. 1995 Finite diﬀerence computations of high Reynolds
+number ﬂows using the dynamic subgrid-scale model. Theor. Comput. Fluid Dyn. 7, 207–216.
+Balaras, E., Piomelli, U. & Wallace, J. M. 2001 Self-similar states in turbulent mixing layers
+J. Fluid Mech. 446, 1–24.
+Blair, M. F. 1983 Inﬂuence of free-stream turbulence on turbulent boundary-layer heat transfer
+and mean proﬁle development. Part I – Experimental data. Trans. ASME: J. Heat Transfer
+105, 33–40.
+Brandt, L. & Henningson, D. S. 2002 Transition of streamwise streaks in zero-pressure gradient
+boundary layers. J. Fluid Mech. 472, 229–261.
+Brandt, L., Schlatter, P. & Henningson, D. S. 2004 Transition in boundary layers subject to
+free-stream turbulence. J. Fluid Mech. 517, 167–198.
+Chorin, A. J. 1968 Numerical solution of the Navier-Stokes equations. Math. Comput. 22, 742–762.
+Choudhari, M. 1996 Boundary-layer receptivity to three-dimensional unsteady Vortical disturbances
+in free stream AIAA Paper 1996-0181.
+Collis, S. S. & Lele, S. K. 1996 A computational approach to swept leading-edge receptivity. AIAA
+Paper 96-0180.
+Fadlun, E. A., Verzicco, R., Orlandi, P. & Mohd-Yusof, J. 2000 Combined immersed-boundary
+ﬁnite-ﬁﬀerence methods for three-dimensional complex ﬂow simulations. J. Comput. Phys. 161,
+35–60.
+Fransson, J. H. M. 2004 Leading edge design process using a commercial ﬂow solver. Exps. Fluids
+37, 929–932.
+Fransson, J. H. M. & Alfredsson, P. H. 2003 On the disturbance growth in an asymptotic suction
+boundary layer. J. Fluid Mech. 482, 51–90.
+Fransson, J. H. M., Matsubara, M. & Alfredsson, P. H. 2005 Transition induced by free-stream
+turbulence. J. Fluid Mech. 527, 1–25.
+Fransson, J. H. M. & Westin, K. J. 2002 Errors in hot-wire X-probe measurements induced by
+unsteady velocity gradients. Exps. Fluids 32, 413–415.
+Gaster, M. & Grant, I. 1975 An experimental investigation of the formation and development of
+a wavepacket in a laminar boundary layer. Proc. R. Soc. Lond. A 347, 253–269.
+Grosch, C. E., Salwen, H. 1978 The continuous spectrum of the Orr-Sommerfeld equation. Part 1.
+The spectrum and the eigenfunctions J. Fluid Mech. 87, 33–54.
+Huai, X., Joslin, R. D. & Piomelli, U. 1997 Large-eddy simulation of transition to turbulence in
+boundary layers. Theor. Comput. Fluid Dyn. 9, 149–163.
+Jacobs, G. J. & Durbin, P. A. 2001 Simulations of bypass transition. J. Fluid Mech. 428, 185–212.
+Johnson, M. W. & Ercan, A. H. 1999 A physical model for bypass transition. Intl J. Heat Fluid
+Flow 20, 95–104.
+Jonáš, P., Mazur, O. & Uruba, V. 2000 On the receptivity of the by-pass transition to the length
+scale of the outer stream turbulence. Eur. J. Mech. B/Fluids 19, 707–722.
+Jordinson, R. 1970 The ﬂat plate boundary layer. Part 1. Numerical integration of the OrrSommerfeld equation. J. Fluid Mech. 43, 801–811.
+Kendall, J. M. 1985 Experimental study of disturbances produced in a pre-transitional laminar
+boundary layer by weak free stream turbulence. AIAA Paper 85-1695.
+Kim, J. & Moin, P. 1985 Application of a fractional step method to incompressible Navier-Stokes
+equations. J. Comput. Phys. 59, 308–323.
+Klebanoff, P. S. 1971 Eﬀect of freestream turbulence on the laminar boundary layer. Bull. Am.
+Phys. Soc. 10, 1323.
+Klingmann, R. G. B., Boiko, A. V., Westin, K. J., Kozlov, V. V. & Alfredsson, P. H. 1993
+Experiments on the stability of Tollmien-Schlighting waves. Eur. J. Mech. B/Fluids 12, 493–
+514.
+Leib, S. J., Wundrow, D. W. & Goldstein, M. E. 1999 Eﬀect of free-stream turbulence and other
+vortical disturbances on a laminar boundary layer. J. Fluid. Mech. 380, 169–203.
+Lin, N., Reed, H. L., Saric, W. C. 1992 Eﬀect of leading-edge geometry on boundary layer
+receptivity to free-stream sound. In Instability, Receptivity, and Turbulence (ed. M. Hussaini,
+A. Kumar & C. Streett), pp. 421–440 Springer.
+
+Bypass transition in boundary layers
+
+169
+
+Luchini, P. 2000 Reynolds-number independent instability of the boundary layer over a ﬂat surface.
+Part 2. Optimal perturbations. J. Fluid Mech. 404, 289–309.
+Matsubara, M. & Alfredsson, H. 2001 Disturbance growth in boundary layers subjected to
+free-stream turbulence. J. Fluid. Mech. 430, 149–168.
+Morinishi, Y., Lund, T. S., Vasilyev, O. V. & Moin, P. 1998 Fully-conservative higher order ﬁnite
+diﬀerence schemes for incompressible ﬂow. J. Comput. Phys. 143, 90–124.
+Morkovin, M. V. 1969 On the many faces of transition. In Viscous Drag Reduction (ed. C. S. Wells),
+pp. 1–31, Plenum.
+Nagarajan, S., Lele, S. K. & Ferziger, J. H. 2007 Leading edge eﬀects in bypass transition. J.
+Fluid Mech. 572, 471–504.
+Orlanski, I. 1976 A simple boundary condition for unbounded hyperbolic ﬂows. J. Comput.
+Phys. 21, 251–269.
+Ovchinnikov, V. O., Piomelli, U. & Choudhari, M. M., 2004 Inﬂow conditions for numerical
+simulations of bypass transition AIAA Paper 2004-0591.
+Ovchinnikov, V. O., Piomelli, U. & Choudhari, M. M. 2006 Numerical simulations of boundarylayer transition induced by a cylinder wake. J. Fluid Mech. 547, 413–441
+Perry, A. E., Lim, T. T. & Teh, E. W. 1981 A visual study of turbulent spots. J. Fluid Mech. 104,
+387–405.
+Piomelli, U., Balaras, E. & Pascarelli, A. 2000 Turbulent structures in accelerating boundary
+layers. J. Turbulence 1 (001), 1–16.
+Rai, M. M. & Moin, P. 1993 Direct numerical simulation of transition and turbulence in a spatially
+evolving boundary layer. J. Comput. Phys. 109, 169–192.
+Roach, P. E. 1987 The generation of nearly isotropic turbulence by means of grids. Intl J. Heat
+Fluid Flow 8, 82–92.
+Roach, P. E. & Brierley, D. H. 1992 The inﬂuence of a turbulent free-stream on zero pressure
+gradient transitional boundary layer development part I: test cases T3A and T3B. In Numerical
+Simulation of Unsteady Flows and Transition to Turbulence (ed. O. Pironneau, W. Rodi, I. L.
+Rhyming, A. M. Savill & T. V. Truong), pp. 319–347. Cambridge University Press.
+Rogallo, R. S. 1981 Numerical experiments in homogeneous turbulence. NASA Tech. Mem. 81315.
+Singer, B. A. 1996 Characteristics of a young turbulent spot. Phys. Fluids 8, 509–521.
+Singer, B. A. & Joslin, R. D. 1994 Metamorphosis of a hairpin vortex into a young turbulent
+spot. Phys. Fluids 6, 3724–3736.
+Spalart, P. R 1986 Numerical study of sink ﬂow boundary layers. J. Fluid Mech. 172, 307–328.
+Van Dyke, M. 1982 An Album of Fluid Motion. The Parabolic Press.
+Voke, P. & Yang, Z. 1995 Numerical study of bypass transition. Phys. Fluids 7, 2256–2264.
+Wu, X. & Choudhari, M. 2003 Linear and nonlinear instabilities of Blasius boundary layer
+perturbed by streamwise voritices. Part 2. Intermittent instability induced by long-wavelength
+Klebanoﬀ modes J. Fluid. Mech. 483, 249–286.
+Zaki, T. A. & Durbin, P. A. 2005 Mode interaction and the bypass route to transition. J. Fluid
+Mech. 531, 85–111.
+
+

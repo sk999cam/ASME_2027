@@ -1,0 +1,1043 @@
+Proceedings of ASME Turbo Expo 2016: Turbomachinery Technical Conference and Exposition
+GT2016
+June 13 – 17, 2016, Seoul, South Korea
+
+GT2016-56967
+THERMAL FIELD MEASUREMENTS FOR A SHAPED HOLE
+AT LOW AND HIGH FREESTREAM TURBULENCE INTENSITY
+Robert P. Schroeder* and Karen A. Thole
+Department of Mechanical and Nuclear Engineering
+The Pennsylvania State University
+University Park, PA 16802
+ABSTRACT
+Shaped holes are increasingly selected for airfoil cooling in
+gas turbines due to their superior performance over that of
+cylindrical holes, especially at high blowing ratios. The
+performance of shaped holes is regarded to be result of the
+diffused outlet which slows and laterally-spreads coolant,
+causing coolant to remain close to the wall. However, few
+thermal field measurements exist to verify this behavior at high
+blowing ratio or to evaluate how high freestream turbulence
+alters the coolant distribution in jets from shaped holes. The
+present study reports measured thermal fields, along with
+measured flowfields, for a shaped hole at blowing ratios up to 3
+at both low and high freestream turbulence intensities of 0.5%
+and 13.2%. Thermal fields at low freestream turbulence
+intensity showed that the coolant jet was initially attached, but
+far downstream of the hole the jet lifted away from the surface
+due to the counter-rotating vortex pair. Elevated freestream
+turbulence intensity was found to cause strong dilution of the
+coolant jet and also increased dispersion, almost exclusively in
+the lateral as opposed to the vertical direction. Dominance of
+lateral dispersion was due to the influence of the wall on
+freestream eddies, as indicated from changes in turbulent shear
+stress between the low and high freestream turbulence cases.
+
+the distribution of coolant within these jets, especially for cases
+with high freestream turbulence intensity that is characteristic
+of flow exiting the gas turbine combustor.
+The present study reports thermal fields measured for
+shaped holes at high blowing ratio. First, thermal fields are
+presented for a condition of low freestream turbulence intensity,
+Tu∞ = 0.5%. Comparison is made to flowfield data to gain
+insight into behavior of the shaped hole jet. Then thermal field
+and flowfield data is presented for high freestream turbulence
+intensity of Tu∞ = 13.2%. Jet behavior is again discussed.
+Differences in how coolant disperses at low and at high
+freestream turbulence intensity are explained. As well as
+illuminating behavior of shaped hole jets, data of the present
+study is useful for validating film-cooling CFD models at
+quiescent and at highly-turbulent freestream conditions.
+PREVIOUS STUDIES
+Thermal field studies of film cooling flows provide
+insights not available from the surface measurements alone.
+For example, Thole et al. [2] measured thermal fields in the
+centerline plane of cylindrical holes and observed the different
+trajectories of jets over a range of density ratios and coolant
+flowrates. From the thermal fields they identified three regimes
+of jet-trajectory behavior for cylindrical holes: attached (I <
+0.4), initially detached but then reattaching downstream (0.4 < I
+< 0.8), and fully detached downstream of the hole (I > 0.8).
+Thermal field measurements with shaped holes are rare.
+Kohli and Bogard [5] reported thermal fields for shaped holes
+with steep injection angle (α = 55º) at blowing ratios up to
+M = 0.8. They observed mainstream ingestion into the diffused
+outlets, but performance was still superior to cylindrical holes
+because coolant was spread laterally by the diffused outlets.
+Takeishi et al. [6] used PLIF to measure thermal fields for
+shaped holes at blowing ratios up to M = 1.5 and likewise
+observed instances of mainstream ingestion.
+They also
+observed increased coolant penetration into the mainstream
+with increased blowing ratio, with the coolant jet detaching at
+the shaped hole trailing edge in one instance. Funazaki et al.
+[7] reported thermal fields at M = 0.5 and 1.0 for shaped holes
+with and without protrusions on the film cooled surface
+upstream of the holes. Protrusions were shown to cause slight
+coolant dilution but also increased lateral spreading of coolant
+
+INTRODUCTION
+With combustion temperatures far exceeding the melting
+temperature of metal components in gas turbines, film cooling
+holes are critical for maintaining parts at acceptable service
+temperature. Cooling designers often use shaped holes, owing
+to how shaped holes promote jet attachment and exhibit
+adiabatic effectiveness that only gradually varies with blowing
+ratio [1]. At high coolant flowrates, shaped holes can deliver
+satisfactory performance whereas jets from cylindrical holes are
+fully-detached [2]. Recent studies indicate interest in shaped
+hole performance at high coolant flowrates: adiabatic
+effectiveness for shaped holes is reported by Heneka et al. [3]
+up to M = 3.0 (I = 6.0) and by Colban et al. [4] up to M = 4.0
+(I = 8.0). However, corresponding measurements of thermal
+field at high blowing ratio have not been made to investigate
+performance of these shaped hole jets. Little is known about
+*
+
+Presently at Sargent & Lundy, Chicago, Illinois
+
+1
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+close to the wall. All these shaped hole studies were performed
+with low freestream turbulence intensity.
+While thermal field measurements at high freestream
+turbulence have not been previously reported for shaped holes,
+the authors are aware of two experimental studies on cylindrical
+holes. Kohli and Bogard [8] measured the fluctuating thermal
+field for M = 0.4 jets from cylindrical holes with freestream
+turbulence of 20% and found that the high freestream
+turbulence ―obliterated‖ the jet-mainstream interface.
+Mainstream fluid intermittently penetrated through the coolant
+jet to the wall, and conversely some coolant was ejected from
+the jet into the mainstream. Cutbirth and Bogard [9] measured
+time-mean thermal fields for compound-angle cylindrical holes
+on a vane pressure side with turbulence intensity of 20% at the
+cascade inlet.
+They observed the elevated freestream
+turbulence caused unsteady lateral oscillation (displacement) of
+the coolant jet rather than increased dispersion of the coolant
+jet. Correspondingly, flowfield measurements showed that
+turbulence surrounding the coolant jet was dominated by
+fluctuations in the lateral velocity component.
+To add to this thermal field literature, the present study
+reports thermal fields for a baseline, publicly-available shaped
+hole design [10]. Measurements were performed at high
+blowing ratios up to M = 3 and were performed at both low and
+high freestream turbulence intensities.
+To provide a
+comprehensive understanding, thermal field data is
+complemented by previously-measured flowfield data [11] at
+the same conditions. Besides adding to our understanding of
+shaped hole performance, data of the present study is useful for
+benchmarking of CFD simulations and qualification of new
+film cooling experimental facilities.
+
+6:1 contraction to enter the test section featuring a flat-plate
+floor with a row of five shaped holes. Test section conditions
+were maintained at 295 K and 10 m/s mainstream velocity.
+To control the boundary layer over the flat plate, a suction
+loop was used to remove the incoming boundary layer so that a
+new boundary layer developed from the plate leading edge. A
+trip wire at x/D = -33 caused transition to a turbulent boundary
+layer. Per boundary layer profiles previously reported by
+Schroeder and Thole [11], the boundary layer was fullyturbulent at x/D = -2. Table 1 provides characterization of the
+mainstream approach boundary layer.
+Table 1. Boundary Layer Characteristics
+
+Tu∞
+0.5%
+13.2%
+
+δ2/D
+0.14
+0.12
+
+H
+1.45
+1.38
+
+Reδ2
+670
+580
+
+cf/cf,0
+1.0
+1.19
+
+Tests were performed at two freestream turbulence
+intensities in this study, Tu∞ = 0.5% and 13.2%. Turbulence
+intensities are reported for the x/D = -2 location. The low
+intensity of Tu∞ = 0.5% was obtained without a turbulence grid
+installed in the wind tunnel. High freestream turbulence
+intensity of Tu∞ = 13.2% was obtained by precisely positioning
+a passive grid of vertical bars near the test section entrance at
+x/b = -14, where bar diameter was b = 38 mm. Bars were
+spaced apart 2b center-to-center. As measured by hot wire, the
+integral length scale of the Tu∞ = 13.2% turbulence was
+Λx = 5.2D at the shaped hole trailing edge.
+The supply loop for the film cooling flow is shown at the
+bottom of Figure 1. Air for coolant was withdrawn from the
+wind tunnel far upstream of the test section and was driven by a
+hermetically-sealed blower through a heat exchanger to cool
+the air using liquid nitrogen. Coolant flowrate was measured
+by a Venturi flowmeter and then coolant flowed up through a
+plenum with fine screens to be evenly-distributed to entrances
+of the five shaped holes. All experiments were performed at
+the density ratio DR = 1.5, which necessitated strategies to
+avoid frost formation on cold surfaces. Prior to experiments,
+all wind tunnel air was dried by routing it through the desiccant
+vent dryer branch of the coolant loop.
+Also, during
+experiments a separate pipeline was used to keep the wind
+tunnel positively pressurized with nitrogen gas.
+The shaped holes used in this study were those introduced
+as a baseline geometry by Schroeder and Thole [10]. CAD
+models and performance data for these holes are publicly
+available for download at the authors’ website
+(http://www.mne.psu.edu/psuturbine). Geometry of this hole is
+shown in Figure 2 and geometric parameters are listed in
+Table 2. Expansion angles of the shaped hole were 7º in each
+of the three directions from the metering-section centerline.
+Metering diameter was D = 7.75 mm.
+The flat plate material in which the shaped holes were
+machined was styrofoam residential sheathing (polystyrene).
+Polystyrene was the preferred material for adiabatic
+effectiveness measurements and thermal field measurements
+due to its low conductivity of k = 0.029 W/m·K. The test plate
+material remained the same for flowfield measurements.
+
+EXPERIMENTAL FACILITY AND METHODS
+The recirculating wind tunnel shown in Figure 1 was used
+for experiments with the baseline shaped hole [10].
+Mainstream test section air was driven by an in-line centrifugal
+fan and air temperature was conditioned by a chilled-water heat
+exchanger and an electric heater bank. Air flowed through a
+_______________
+
+Figure 1. Schematic of the film cooling wind tunnel.
+
+2
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Table 2. Geometric Parameters of the Shaped Hole
+
+P/D 6
+α 30º
+βfwd, βlat 7º
+
+Lm/D 2.5
+Llat/D, Lfwd/D 3.5
+Area Ratio, AR 2.5
+
+Figure 3. Measurement setups for (a) PIV in the centerline
+plane and (b) stereo PIV in the x/D = 4 crossplane.
+
+Figure 2. Shaped hole geometry.
+
+For PIV in the centerline plane, images were obtained
+using a single camera viewing normal to measurement plane as
+shown in Figure 3a. Image pairs were recorded at 4 kHz with
+image size of 1024x256 pixels. Time-mean flowfields were
+calculated over at least 8000 time instants spread over a period
+of 2 seconds which corresponded to more than 240 flow
+crossings of the PIV field of view (x/D = -2 to 8.6). Time delay
+between laser pulses was chosen to provide particle
+displacements around 8 pixels in the image pairs. Particle
+displacements, and thereby velocities, were calculated with
+commercial software [13] using a multi-pass scheme of
+interrogation windows ending with final window size of 16x16
+pixels and 75% overlap. This final window size corresponded
+to 0.18D x 0.18D since spatial resolution was 11.6 pixels/mm.
+Background subtraction, intensity normalization, and universal
+outlier detection were all implemented.
+A stereo PIV setup was used to measure flowfields in the
+x/D = 4 crossplane. This setup, shown in Figure 3b, used
+perspective views from two cameras to measure all three
+components of velocity. Scheimpflug lens adapters brought the
+measurement plane into focus for each camera. Image pairs
+were recorded at 250 Hz on each camera with image size of
+1024x512 pixels. Time-mean flowfields were calculated over
+at least 4000 time instants spread over a period of 16 seconds.
+Time delay between laser pulses was set between 22-26 µs to
+obtain particle displacements around 4 pixels in the dewarped
+images used to compute vectors. Velocities were calculated
+[13] using a multi-pass scheme of interrogation windows
+ending in 32x32 pixel interrogation windows with 50% overlap.
+Final window size corresponded to 0.19D x 0.19D since the
+spatial resolution was 21.9 pixels/mm. Intensity normalization
+and universal outlier detection were used for calculating
+velocities in the x/D = 4 crossplane.
+
+ADIABATIC EFFECTIVENESS MEASUREMENTS
+Adiabatic wall temperatures were measured and nondimensionalized in effectiveness (η) levels using an infrared
+camera. The infrared camera viewed the film-cooled surface
+through a ZnSe window in the test section ceiling. To ensure
+that temperatures were accurately detected for the entire range
+of surface temperatures, camera output was calibrated to
+thermocouples on the test plate surface similar to as done by
+Eberly and Thole [12]. The calibration was applied to infrared
+images to obtain the adiabatic wall temperature. Freestream
+and coolant temperatures were both averages of multiple
+thermocouples in the respective locations (mainstream, and
+coolant plenum 2.5D below entrances to film cooling holes).
+THERMAL FIELD MEASUREMENTS
+The time-mean thermal field (θ) was measured using a
+specially designed thermocouple rake. The thermal field was
+measured in three planes: the centerline x-y plane and the y-z
+crossplanes at x/D = 4 and 10. Thermocouples on the rake had
+wire diameter of 0.05 mm and junction diameter of
+approximately 0.12 mm. Heat leak down the wires was
+minimized based on a conductive analysis of the probes. Error
+in thermocouple readings due to heat leak along wires was
+estimated to be less than |Δθ| = 0.05, based on numerical
+simulations of a 1-D thermocouple model. Temperatures were
+the time-mean of at least 36,000 samples taken over at least 30
+seconds for each measurement location, which was verified in
+each case to provide converged values of θ.
+FLOWFIELD MEASUREMENTS
+Particle image velocimetry (PIV) was used to measure
+flowfields in two planes of the flow: the centerline x-y plane
+and the y-z crossplane at x/D = 4. These planes and their
+respective PIV setups are illustrated in Figures 3a-b. Note that
+PIV measurements were made in the same manner as
+previously reported [11]. For both setups in the present study,
+mainstream and coolant were equally seeded with di-ethylhexyl-sebecat (DEHS) droplets that followed the flow due to
+their low Stokes number (maximum Stk = 0.010). A dual-head
+Nd:YLF laser illuminated the respective measurement planes
+and high-speed CMOS cameras captured image pairs of the
+illuminated particles.
+
+UNCERTAINTY ANALYSIS
+Uncertainty was calculated for all measurements.
+Propagation of uncertainty was estimated using the partial
+derivatives method of Figliola and Beasley [14] and values are
+reported for a 95% confidence interval. Regarding test
+conditions, maximum uncertainty in density ratio was ±0.04.
+For blowing ratio the uncertainty was dominated by bias
+uncertainty of the Venturi flowmeter and variation during
+
+3
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+RESULTS AND DISCUSSION
+
+thermal field measurements. Uncertainty was higher at lower
+blowing ratios. Maximum uncertainty in M = 1.5 was ±6.5%.
+For adiabatic effectiveness, uncertainty was driven by
+uncertainty in the coolant temperature and in the plate surface
+temperature.
+Adiabatic effectiveness uncertainty was
+calculated to be δη = ±0.025. Analogously, major contributors
+to thermal field uncertainty were the uncertainties in coolant
+temperature and in temperature measured by the thermocouple
+rake, as well as heat leak down the thermocouple wires.
+Including a representative heat leak error of Δθ = -0.035,
+maximum uncertainty was calculated to be δθ = ±0.048.
+Repeatability checks of thermal field profiles agreed within this
+uncertainty, as shown in Figure 4.
+
+First presented is thermal field and flowfield data for the
+low freestream turbulence intensity case of Tu∞ = 0.5%.
+Comparison is made between apparent position of the jet, as
+indicated by flowfields, and time-mean height of the coolant
+core, as indicated by maximum θ. The comparison is especially
+of interest at M = 3 where peaks in mean velocity occurred
+significantly above the wall. Subsequently, thermal field and
+then flowfield data is presented for the high freestream
+turbulence intensity case of Tu∞ = 13.2%.
+LOW FREESTREAM TURBULENCE RESULTS
+Thermal fields in the centerline plane at blowing ratios of
+M = 1.5 and 3 and Tu∞ = 0.5% are presented Figures 5a-b. At
+M = 1.5 the time-mean coolant jet remained on the wall
+throughout the measurement domain, reaching a height of
+y/D = 2.1 at 30 diameters downstream of the hole centerline
+breakout. At M = 3 the coolant jet was also initially attached to
+the wall but exhibited maximum coolant concentration off the
+wall starting at x/D = 14. At x/D = 30 the top of the jet had
+reached a height of y/D = 3.1 and highest θ occurred at y/D = 1,
+off the wall.
+Such delayed liftoff has not been previously reported in
+literature for either shaped holes ([5]) or cylindrical holes ([2]).
+The diffused outlet of shaped holes generally promotes jet
+attachment since the outlet slows coolant relative to velocity
+which would occur at a cylindrical hole exit. Past shaped hole
+studies, however, have still shown presence of a counterrotating vortex pair (CRVP) that lifts coolant away from the
+wall [11]. In Figure 5b, coolant liftoff was delayed to x/D = 14
+because forward expansion of the outlet (βfwd) lowered the
+effective injection angle and because coolant was laterally
+spread over the flat trailing edge of the hole. The CRVP
+brought mainstream fluid underneath sides of the coolant jet but
+downstream distance was required for this mainstream
+incursion to reach the z/D = 0 centerline. Kohli and Bogard [5]
+did not observe such liftoff in their thermal field measurements
+with shaped holes, likely due to the low blowing ratio (M ≤ 0.8)
+and no measurements being downstream of their x/D = 10.
+Vertical profiles of thermal and flowfield variables at the
+M = 1.5 and 3 conditions are shown in Figures 6a-h. Data is
+from two stations in the centerline plane, x/D = 1 and 8. For
+each instance, dotted horizontal lines across the plots denote
+height at which coolant concentration fell below θ = 0.05, an
+indicator of the coolant jet height. Also, for the x/D = 8 station
+which was downstream of the hole, measured adiabatic
+effectiveness (η) is plotted with θ, showing good agreement
+between the measures.
+At x/D = 1 in Figures 6a-d the jet was exiting the shaped
+hole diffused outlet. Consequentially, the vertical temperature
+(θ) profile extended only slightly higher at this position for the
+M = 3 jet as compared to the M = 1.5 jet. Clear differences
+between M = 1.5 and 3 were seen in the profiles of mean
+streamwise velocity. At M = 1.5 the jet exited the hole with
+velocity lower than that of the freestream, while at M = 3 the jet
+
+x/D = 4, Initial
+x/D = 4, Repeat Day 1
+x/D = 10, Initial
+x/D = 10, Repeat Day 1
+x/D = 10, Repeat Day 2
+
+3
+
+2
+
+y/D
+1
+
+0
+
+0
+
+0.2
+
+0.4
+
+
+
+0.6
+
+0.8
+
+1
+
+Figure 4. Thermal field profiles showing repeatability for
+two streamwise locations in the centerline plane. Data is
+for shaped holes of a separate study at Tu∞ = 0.5%, M = 3.0.
+
+For PIV flowfield measurements both the bias and
+precision uncertainties were considered. Bias uncertainties
+were estimated by assuming a displacement bias uncertainty of
+±0.15 pixels, which translated to velocity bias uncertainty of
+±1.9% in the centerline plane and ±4.8% in the x/D = 4
+crossplane.
+Precision uncertainties were estimated from
+repeatability tests in the centerline plane and were combined
+with bias uncertainty to estimate overall uncertainties in
+individual components of mean velocity. Overall uncertainty of
+U was estimated to be ±4.5% and ±6.3% in the centerline plane
+and crossplane, respectively, with percentages based on U∞.
+Overall uncertainty of V (and of W) was similarly estimated to
+be ±2.5% and ±5.1% in those same respective planes.
+Repeatability tests in the centerline plane were also used to
+estimate precision uncertainties for rms velocities and turbulent
+shear stresses. Uncertainties were estimated to be ±4% for u′,
+±4% for v′ and w′, and ±5% for turbulent shear stresses such as
+¯¯¯.
+u′v′ For rms velocities and shear stresses, percentages were
+based on maximum magnitude observed with each respective
+variable.
+
+______________
+
+4
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 5. Thermal field contours in the z/D = 0 centerline plane at Tu∞ = 0.5% for blowing ratios of (a) M = 1.5 and (b) M = 3.0.
+
+(a) x/D = 1
+
+(b) x/D = 8
+
+.
+
+Figure 6. Thermal field and flowfield profiles at Tu∞ = 0.5% for M = 1.5 and 3 in the centerline plane at (a-d) x/D = 1 and (e-h) x/D = 8.
+
+had greater velocity than the freestream. Note the lines of
+θ = 0.05 intersected mean velocity profiles approximately
+where the velocities returned to values consistent with the
+approach boundary layer. Such correspondence between timemean temperature and velocity was expected, since path of the
+coolant was dictated by the mean flowfield. Figures 6c and 6d
+show profiles of rms velocity fluctuations. It was difficult to
+judge jet height from these rms profiles due to their smooth,
+gradual changes with y/D height above the wall.
+The profiles at x/D = 8 emphasize the same points and are
+shown in Figures 6e-h. Thermal field profiles show that the
+M = 3 jet extended higher into the mainstream than the M = 1.5
+jet. For M = 3 both the thermal field reached θ = 0.05 and the
+mean velocity asymptotically reached U/U∞ = 1 at the same
+height, y/D = 2. This agreement for the top edge of the jet
+
+again was consistent with how coolant was transported
+primarily by mean-flow convection. Similar correspondence
+was hard to ascertain at M = 1.5 because U/U∞ exhibited a
+monotonic profile. Profiles of rms velocity varied even more
+gradually than at x/D = 1 and therefore it was not feasible to
+relate these rms profiles to the θ = 0.05 heights.
+While θ and U/U∞ profiles agreed on vertical extent of the
+coolant jet, the profiles did not agree on apparent position of
+the coolant jet ―core‖. At x/D = 1 and 8 the coolant was most
+concentrated at y/D = 0 as seen in the thermal field profiles of
+Figures 6a and 6e. By contrast, peaks in mean streamwise
+velocity in Figures 6b and 6f occurred off the wall. Therefore,
+flowfield data indicated vertical extent of the region containing
+the coolant jet but provided little information on relative
+coolant concentrations within this region.
+
+5
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+HIGH FREESTREAM TURBULENCE RESULTS
+Thermal fields were measured for the blowing ratio M = 3
+at Tu∞ = 13.2%. Contours in the centerline plane are shown in
+Figure 7. For reference, dashed lines show contour levels of
+θ = 0.05, 0.40, and 0.60 from the corresponding M = 3 low
+freestream turbulence case which was shown in Figure 5b.
+Contours of θ were significantly different between the low
+and high freestream turbulence cases. At high freestream
+turbulence the jet was more diluted than at low freestream
+turbulence, apparent from how θ = 0.40 and θ = 0.60 contour
+levels extended shorter distances downstream for Tu∞ = 13.2%
+as compared to the Tu∞ = 0.5% case. However, there was
+negligible change in location of the θ = 0.05 level representing
+the top of the coolant jet.
+Also apparent in Figure 7 is that liftoff did not occur in the
+high freestream turbulence case. Absence of the delayed liftoff
+was due to strong dilution of coolant caused by freestream
+turbulence, rather than due to a significant change in dynamics
+of the flowfield. Schroeder and Thole [11] previously showed
+
+that there were no significant differences in mean velocities
+between the low and high freestream turbulence cases. The
+CRVP was of similar size and had similar velocities between
+the Tu∞ = 0.5% and 13.2% cases. Absence of detachment can
+be understood as follows. At low freestream turbulence
+intensity, the jet stayed coherent for long distances downstream
+and therefore the CRVP eventually brought mainstream fluid
+beneath the core of the coolant jet. Conversely, the high
+freestream turbulence intensity caused aggressive mixing
+between coolant and the mainstream, especially in the top and
+middle of the coolant jet where turbulent fluctuations were not
+damped by the wall. By the downstream position of x/D = 14
+the jet was more dilute and less coherent than at Tu∞ = 0.5%.
+The CRVP was not able to bring appreciably-warmer fluid
+beneath the already-dilute jet, so liftoff was not seen.
+Vertical profiles of the thermal field and flowfield are
+plotted in Figures 8a-h, similar to Figures 6a-h given for the
+low freestream turbulence cases. Trends were similar to those
+_______________________________________________________________
+
+Figure 7. Thermal field contours in the z/D = 0 centerline plane for M = 3.0 at Tu∞ = 13.2%. Labeled dashed white lines denote
+contour levels of θLFST = 0.05, 0.40, and 0.60 for the corresponding case at low freestream turbulence.
+
+(a) x/D = 1
+
+(b) x/D = 8
+
+.
+
+Figure 8. Thermal field and flowfield profiles at Tu∞ = 13.2% for M = 3 in the centerline plane at (a-d) x/D = 1 and (e-h) x/D = 8. Legend
+is the same as in Figures 6a-h.
+
+6
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+seen with low freestream turbulence intensity. At each position
+the thermal field reached θ = 0.05 and streamwise velocity
+approached mainstream values at matching y/D height,
+indicating that vertical extent of the jet at Tu∞ = 13.2% was still
+driven by the mean flowfield. Shape of the θ and U/U∞ profiles
+again did not match, since highest θ occurred at the wall.
+Profiles of rms velocity fluctuations featured elevated values
+due to the turbulent freestream, and therefore rms velocity
+profiles did not sharply distinguish the jet/mainstream interface.
+Thermal fields in the x/D = 10 lateral crossplane are
+compared between the low and high freestream turbulence
+cases in Figures 9a-b. For both these M = 3 cases the thermal
+field contours were widest above the wall, not at the wall.
+Therefore, tracing downward in y/D the contour lines bent
+inward in the region nearest the wall, caused by the CRVP
+which gradually brought hot mainstream fluid underneath sides
+of the coolant jet. Just as Kohli and Bogard [5] did not observe
+delayed liftoff with their shaped holes, they also did not
+observe θ contour lines bending inward at the wall at the
+x/D = 10 crossplane or elsewhere. The difference between their
+study and the present study is again attributed to their lower
+flow rate, M ≤ 0.8, accompanied by a weaker CRVP.
+Figures 9a-b show that elevated freestream turbulence
+caused increased dilution but also caused increased lateral
+dispersion of the coolant. For the low freestream turbulence
+case shown in Figure 9a, the highest coolant concentration was
+at the wall with maximum θ = 0.61. The θ = 0.05 contour level
+extended between z/D = ±1.9. Figure 9b shows that elevated
+freestream turbulence diluted the coolant such that maximum
+θ = 0.51. Elevated freestream turbulence increased the lateral
+extent of θ = 0.05 to z/D = ±2.2. In agreement with
+
+Figure 7, the high freestream turbulence caused little increase
+in how high the θ = 0.05 contour level extended above the wall.
+The prevalence of dilution and of lateral dispersion with
+elevated freestream turbulence is illustrated by select adiabatic
+effectiveness contours in Figure 10. Dashed lines represent η
+contour levels for the low freestream turbulence case, while
+solid lines represent η at high freestream turbulence. High
+freestream turbulence quickly penetrated coolant jets and
+diluted the jet core, as shown by how η = 0.60 levels extended
+shorter distances downstream of holes for the Tu∞ = 13.2%
+case. At the same time, the high freestream turbulence
+increased spreading at the sides of the coolant jet. For these
+shaped holes spaced at P/D = 6, the η = 0.05 levels merged
+between adjacent jets by x/D = 15 for the Tu∞ = 13.2% case.
+LATERAL DISPERSION AT HIGH TURBULENCE
+Thermal fields presented above showed that increased
+freestream turbulence caused increased lateral dispersion of
+coolant but negligible increase in vertical dispersion of coolant.
+To illuminate mechanisms causing the difference between
+lateral and vertical dispersion, flowfields were examined in the
+x/D = 4 crossplane that was 1.6D downstream of the shaped
+hole trailing edge. Figures 11a-f show contours of rms velocity
+fluctuations at M = 3, comparing u′, v′, and w′ between the low
+and high freestream turbulence cases. Gray arrows overlaying
+the contours show the in-plane mean velocity, revealing the
+counter-rotating vortex pair that was present. Also overlaid is
+the θ = 0.05 level representing the perimeter of the coolant jet.
+______________________
+
+_____________________
+
+Figure 10. Comparison of lateral spreading of M = 3.0 jets at
+freestream turbulence of Tu∞ = 0.5% (dashed lines) and
+Tu∞ = 13.2% (solid lines) through plotting of η = 0.05 and
+0.60 adiabatic effectiveness levels.
+
+Figure 9. Thermal field contours in the x/D = 10 crossplane
+at M = 3.0 with freestream turbulence intensities of
+(a) Tu∞ = 0.5% and (b) Tu∞ = 13.2%.
+
+7
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 11. Contours of rms velocity fluctuations at M = 3.0 in the x/D = 4 crossplane with (a-c) Tu∞ = 0.5% and (d-f) Tu∞ = 13.2%.
+In-plane mean velocity is shown by gray arrows. The thermal field θ = 0.05 contour is shown by the black curve.
+
+These perimeters, and θ contours overall (not shown for
+brevity), were similar in this x/D = 4 crossplane between the
+low and high freestream turbulence cases. Similar thermal
+fields here were expected, due to the crossplane being only a
+short distance downstream of the hole breakout.
+Contours at low freestream turbulence intensity are plotted
+in Figures 11a-c. With low freestream turbulence the jet had
+higher turbulence intensity than the surrounding mainstream,
+resulting in regions of high turbulent fluctuations being wellcontained within the θ = 0.05 contour level. The only
+exception was that high levels of v′/U∞ extended slightly
+beyond the top of the θ = 0.05 contour level, indicating that
+coolant reached this height but was so dilute that concentration
+was below θ < 0.05.
+Contours at high freestream turbulence intensity are plotted
+in Figures 11d-f. For the streamwise and lateral velocity
+components, fluctuations surrounding the coolant jet increased
+to u′/U∞ = w′/U∞ = 0.14 with this case of Tu∞ = 13.2%. Vertical
+velocity fluctuations also increased, reaching v′/U∞ = 0.10 at
+the top of the coolant jet. Tracing slightly down sides of the
+coolant jet, u′/U∞ and w′/U∞ remained large but v′/U∞ decreased
+due to the damping influence of the wall. Tracing down further,
+to the wall at y/D = 0, one finds that the minimum values of
+w′/U∞ in Figure 11f occurred where the θ = 0.05 jet periphery
+met the wall. Lateral fluctuations here were w′/U∞ = 0.09,
+similar to v′/U∞ at the top of the coolant jet. This near-wall
+region of minimum w′/U∞ was due to acceleration of the lateral
+velocity component, which suppressed w′ fluctuations.
+Acceleration was caused by the CRVP which brought
+mainstream fluid (having low-magnitude lateral velocity) into
+the high-lateral-velocity region comprising the bottom section
+of the CRVP. While lateral fluctuations were damped by this
+phenomenon, lateral fluctuations were still greater than the
+w′/U∞ = 0.05 present at the same location with Tu∞ = 0.5%
+(Figure 11c).
+
+Comparable magnitude between v′ at the coolant jet top
+and w′ at coolant jet sides was a significant difference from the
+study by Cutbirth and Bogard [9], performed with compoundangle cylindrical holes on a vane pressure side. Their thermal
+fields showed, as in the present study, that high freestream
+turbulence caused increased lateral dispersion but not vertical
+dispersion of coolant. Cutbirth and Bogard attributed such
+dispersion to dominance of lateral fluctuations. Acceleration
+through the vane passage caused lateral fluctuations
+surrounding their coolant jet to be w′/U∞ = 0.20, measured in a
+plane analogous to the x/D = 4 plane of the present study. By
+comparison, other components were u′/U∞ = v′/U∞ = 0.12
+around their coolant jet.
+In the present study, turbulent shear stresses in the same
+x/D = 4 crossplane provide insight into why high freestream
+turbulence caused primarily lateral spreading of coolant,
+instead of both lateral and vertical spreading. Figures 12a-c
+show normalized contours of ¯¯¯,
+u′v′ u′w′
+¯¯¯, and v′w′
+¯¯¯ in the
+crossplane with the M = 3 jet at Tu∞ = 0.5%. Figures 12d-f
+show the corresponding contours at Tu∞ = 13.2%. Mean inplane velocities and the θ = 0.05 jet periphery are overlaid as in
+Figures 11a-f. Figures 12a,d compare ¯¯¯
+u′v′ between the low and
+high freestream turbulence cases.
+For both freestream
+turbulence intensities, the upper half of the θ > 0.05 region had
+positive ¯¯¯
+u′v′ consistent with momentum transport by turbulent
+viscosity. Packets of fluid originating at the center of the jet
+had high u-velocities. Such packets which had higher-thanaverage vertical velocity brought fast-moving M = 3 coolant
+toward the top boundary of the jet, contributing to positive ¯¯¯.
+u′v′
+The region of positive ¯¯¯
+u′v′ decayed toward zero before
+encountering the θ = 0.05 periphery, indicating that packets of
+concentrated coolant rarely made excursions far above the jet.
+The region of positive ¯¯¯
+u′v′ had similar magnitude and similar
+vertical extent between the Tu∞ = 0.5% and 13.2% cases,
+showing that large eddies of the 13.2% freestream turbulence
+_____________________________________
+
+8
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 12. Contours of turbulent shear stresses at M = 3.0 in the x/D = 4 crossplane with (a-c) Tu∞ = 0.5% and (d-f) Tu∞ = 13.2%.
+In-plane mean velocity is shown by gray arrows. The thermal field θ = 0.05 contour level is shown by the black curve.
+
+did little to modify the dispersion occurring at the top of the
+coolant jet.
+Freestream turbulence did make a difference in dispersion
+at sides of the coolant jet, as contours of u′w′
+¯¯¯ show. In
+Figure 12b the regions of negative and positive u′w′
+¯¯¯ at the
+respective left and right sides of the jet were contained within
+the θ > 0.05 region, just as with positive ¯¯¯
+u′v′ in Figure 12a.
+Such behavior was expected for low freestream turbulence,
+since turbulent fluctuations associated with the jet would not
+extend beyond the well-defined jet/mainstream shear layer.
+The patterns were different for the Tu∞ = 13.2% case in
+Figure 12e. With high freestream turbulence, magnitudes of
+u′w′
+¯¯¯ were increased in the left and right regions relative to the
+Tu∞ = 0.5% case. The left and right regions also extended
+laterally beyond the θ = 0.05 periphery, to z/D = –2.3/+2.6.
+Note that lateral extent was greatest at y/D = 0. Wider u′w′
+¯¯¯
+patterns with Tu∞ = 13.2% were due to instances where the
+coolant jet was swept by downward-moving eddies from the
+freestream turbulence. When these eddies started to feel
+impaction with the wall they deflected laterally, thereby
+contributing to much-wider regions of non-zero u′w′
+¯¯¯ than seen
+at Tu∞ = 0.5%. This influence of the wall on freestream eddies
+was the reason why elevated freestream turbulence
+preferentially augmented the lateral dispersion of coolant as
+compared to vertical dispersion. Unlike at the top of the jet, at
+sides of the jet the eddies from freestream turbulence did
+indeed modify the dispersion behavior.
+The third turbulent shear stress, v′w′
+¯¯¯, is compared between
+low and high freestream turbulence cases in Figures 12c,f.
+Non-zero regions of v′w′
+¯¯¯ occurred beyond lateral sides of the
+coolant jet at Tu∞ = 13.2% but not at Tu∞ = 0.5%, which further
+confirmed that the wall was preferentially directing turbulent
+eddies laterally.
+Increased lateral dispersion with high freestream
+turbulence was mainly due to influence of the wall on eddies.
+However, changes in the distribution of turbulence within the
+
+jet caused dilution of coolant that was also a contributing factor
+to dominance of lateral dispersion. Figures 13a-b compare
+turbulence intensity measured in the centerline plane at
+Tu∞ = 0.5% and 13.2%. Thermal field contours at intervals of
+Δθ = 0.10 are overlaid, with the θ = 0.05 level included as well.
+Outside the jet, Figures 13a-b show increased turbulence with
+the elevation of freestream turbulence intensity to Tu∞ = 13.2%.
+Within the jet, the region where turbulence intensity increased
+most was the upper portion of the developed jet at several
+diameters downstream of the hole (past x/D = 4). This increase
+is evident, for example, from tracing upward at x/D = 7: in
+Figure 13a the turbulence intensity decreases as one traces from
+the lower to the upper portion of the jet, while in Figure 13b the
+turbulence intensity begins one contour level higher than at
+Tu∞ = 0.5% but then remains high in the upper portion of the jet.
+___________________________
+
+Figure 13. Contours of turbulence intensity in the centerline
+plane, overlaid with contours levels of θ, at M = 3.0 with
+freestream turbulence of (a) Tu∞ = 0.5% and (b) Tu∞ = 13.2%.
+
+9
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+The higher turbulence intensity in the upper part of the jet for
+the Tu∞ = 13.2% case was not accompanied by significant
+change in contour levels of low θ representing the top edge of
+the jet. (Note that θ did decrease in regions closer to the wall
+with the elevation of freestream turbulence.)
+Elevated
+freestream turbulence caused mixing in the jet such that packets
+of cooler fluid dispersed upward were already dilute and
+therefore did not contribute to increased height of the θ = 0.05
+level from the Tu∞ = 0.5% to the 13.2% case. A similar
+situation of unchanging-θ at the jet periphery was observed in
+the high freestream turbulence study of Kohli and Bogard [8]
+for a position 3D downstream of their cylindrical holes.
+With elevation of freestream turbulence intensity from
+0.5% to 13.2%, the constant θ at the top of the jet and the
+constant ¯¯¯
+u′v′ contained within the jet (Figures 12a,d) were
+related effects. At the top of the coolant jet, instantaneous
+coolant concentrations and instantaneous fluid packets bearing
+high u-velocities representative of the jet were so dilute that
+they both made little contribution in the time-mean, even when
+freestream eddies swept the coolant upward out of the jet.
+Therefore, the high freestream turbulence caused increased
+lateral spreading of coolant without similar vertical spreading
+for two reasons: 1) eddies near the wall were preferentially
+directed laterally and 2) coolant subjected to these lateral
+fluctuations was more concentrated than coolant dispersed
+vertically out the top of the jet.
+
+The present study provides new information on dynamics
+of film cooling from shaped holes. Experimental data on
+phenomena such as delayed liftoff of jets and near-wall
+strengthening of lateral dispersion can lead to improved
+correlations and turbulence models used by designers for
+predicting shaped hole performance.
+ACKNOWLEDGMENTS
+Support for this study was provided by the NASA
+Aeronautics Scholarship Program under grant number
+NNX14AE97H. The authors are grateful for this support and
+would like to thank James Heidmann and Mark Celestina at
+NASA for their guidance.
+NOMENCLATURE
+A
+hole cross-sectional area
+AR area ratio, Aexit/Ainlet
+b
+diameter of turbulence grid bars
+cf
+skin friction coefficient, measured experimentally
+cf,0
+flat plate correlation cf, 0.036·Reδ2-0.3 (for Reδ2<3000) [15]
+CRVP counter-rotating vortex pair
+dp
+diameter of seeding particle
+D
+diameter of film cooling holes
+DR density ratio, ρc/ρ∞
+H
+boundary layer shape factor
+I
+momentum flux ratio, ρcUc2/ρ∞U∞2
+k
+thermal conductivity
+L
+hole length
+ṁc
+coolant mass flow rate
+M
+blowing ratio, ρcUc/ρ∞U∞ = (ṁc /Ac)/ρ∞U∞
+P
+lateral distance between holes, pitch
+PIV particle image velocimetry
+Re
+Reynolds number (Reδ2 = δ2∙U∞/ν∞)
+Stk Stokes number, ρpdp2Uc/18ρνD = (ρpdp2/18ρν) / (D/Uc)
+T
+temperature
+Tu∞ freestream turbulence intensity,
+Uc
+coolant area-average velocity in metering section
+U∞
+mainstream mean velocity
+u,v,w x-, y-, and z- velocities
+¯¯¯
+u′v′ streamwise-vertical component of turbulent shear stress
+u′w′
+¯¯¯ streamwise-lateral component of turbulent shear stress
+v′w′
+¯¯¯ vertical-lateral component of turbulent shear stress
+x,y,z position, from origin at hole centerline breakout
+
+CONCLUSIONS
+Thermal fields were measured for jets from shaped holes at
+high blowing ratios, at low and high freestream turbulence
+intensities of 0.5% and 13.2%. With low freestream turbulence
+the jets penetrated farther into the mainstream with increased
+blowing ratio. At M = 3, the highest blowing ratio tested, the
+jet was attached to the wall as it exited the hole but farther
+downstream the jet lifted away from the wall due to action of
+the counter-rotating vortex pair.
+The delayed liftoff observed at low freestream turbulence
+intensity was not observed with high freestream turbulence, due
+to strong dilution of the coolant jet by freestream turbulence.
+The main effects of high freestream turbulence were dilution of
+the coolant jet and increased lateral dispersion of coolant, as
+seen in thermal field and adiabatic effectiveness measurements.
+Thermal fields showed that high freestream turbulence caused
+little increase in vertical dispersion of the coolant jets.
+Flowfields measured at the same conditions were
+compared to thermal field measurements but correlations were
+not found between flowfield variables and the distribution of
+coolant within jets. Turbulent shear stresses however did reveal
+reasons for the preferential lateral dispersion of coolant by
+elevated freestream turbulence. While the elevated turbulence
+did impose similar-magnitude vertical and lateral velocity
+fluctuations, coolant was dispersed more in the lateral direction
+because of low coolant concentration at the top of the jet and
+because turbulent eddies containing the more-concentrated
+coolant were preferentially directed laterally by the wall.
+
+Greek
+α
+hole injection angle
+β
+expansion angle for diffused outlet
+δ2
+boundary layer momentum thickness
+η
+local adiabatic effectiveness, (T∞-Taw)/(T∞-Tc)
+θ
+non-dimensional fluid temperature, (T∞-T)/(T∞-Tc)
+Λx
+integral length scale of freestream turbulence
+ν
+kinematic viscosity
+ρ
+fluid density
+
+10
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Subscripts
+aw
+adiabatic wall
+c
+coolant, at hole inlet
+eff
+effective, based on area ratio at hole exit
+exit exit plane of the film cooling hole, per Figure 2
+fwd forward expansion of shaped hole
+inlet inlet plane of the film cooling hole, per Figure 2
+lat
+lateral expansion of shaped hole (half-angle)
+m
+metering section
+p
+seeding particle (DEHS droplet)
+∞
+mainstream
+
+[10] Schroeder, R. P., and Thole, K. A., 2014, "Adiabatic
+Effectiveness Measurements for a Baseline Shaped Film
+Cooling Hole," Proc. ASME Turbo Expo, GT2014-25992.
+[11] Schroeder, R. P., and Thole, K. A., 2015, ―Effect of High
+Freestream Turbulence on Flowfields of Shaped Film
+Cooling Holes,‖ Proc. ASME Turbo Expo, GT201543339.
+[12] Eberly, M. K., and Thole, K. A., 2014, ―Time-Resolved
+Film Cooling Flows at High and Low Density Ratios,‖
+J. Turbomach., 136(6), pp. 061003.
+[13] Product Manual for DaVis 8.2.1.48998: FlowMaster,
+2014, LaVision GmbH, item number 1105011-4.
+[14] Figliola, R. S., and Beasley, D. E., 2006, Theory and
+Design for Mechanical Measurements, John Wiley &
+Sons, Inc., Hoboken, NJ.
+[15] Bogard, D. G., and Thole, K. A., 1998, ―Wall-Bounded
+Turbulent Flows,‖ CRC Handbook of Fluid Dynamics,
+Section 13.5, CRC Press, Boca Raton, pp. 13.49-13.63.
+
+Superscript
+′
+fluctuating/rms value
+REFERENCES
+[1] Bunker, R. S., 2005, ―A Review of Shaped Hole Turbine
+Film Cooling Technology,‖ J. Heat Transfer, 127(4), pp.
+441-453.
+[2] Thole, K. A., Sinha, A. K., Bogard, D. G., and Crawford,
+M. E., 1992, ―Mean Temperature Measurements of Jets
+with a Crossflow for Gas Turbine Film Cooling
+Application,‖ Rotating Machinery Transport Phenomena,
+J. H. Kim and W. J. Yang, ed., Hemisphere Publishing
+Corporation, New York.
+[3] Heneka, C., Schulz, A., Bauer, H., Heselhaus, A., and
+Crawford, M. E., 2012, ―Film Cooling Performance of
+Sharp Edged Diffuser Holes With Lateral Inclination,‖
+J. Turbomach., 134(4), pp. 041015.
+[4] Colban, W., Thole, K. A., and Bogard, D., 2011, "A Film
+Cooling Correlation for Shaped Holes on a Flat-Plate
+Surface," J. Turbomach., 133(1), pp. 011002.
+[5] Kohli, A., and Bogard, D. G., 1999, ―Effects of Hole
+Shape on Film Cooling With Large Angle Injection,‖
+ASME International Gas Turbine and Aeroengine
+Congress, 99-GT-165.
+[6] Takeishi, K., Kitamura, T., Komiyama, M., Oda, Y., and
+Mori, S., 2009, ―Study on the Thermal and Flow Fields of
+Shaped Film Cooling Holes,‖ Proc. Turbine-09, Int’l
+Symposium on Heat Transfer in Gas Turbine Systems,
+Antalya, Turkey.
+[7] Funazaki, K., Nakata, R., Kawabata, H., Tagawa, H., and
+Horiuchi, Y., 2014, ―Improvement of Flat-Plate Film
+Cooling Performance by Double Flow Control Devices:
+Part I – Investigations on Capability of a Base-Type
+Device,‖ Proc. ASME Turbo Expo, GT2014-25751.
+[8] Kohli, A., and Bogard, D. G., 1998, ―Effects of Very High
+Freestream Turbulence on the Jet-Mainstream Interaction
+in a Film Cooling Flow,‖ J. Turbomach., 120(3), pp. 785790.
+[9] Cutbirth, J. M., and Bogard, D. G., 2002, ―Evaluation of
+Pressure Side Film Cooling With Flow and Thermal Field
+Measurements—Part
+II:
+Turbulence
+Effects‖,
+J. Turbomach., 124(4), pp. 678-685.
+
+11
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 05/16/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

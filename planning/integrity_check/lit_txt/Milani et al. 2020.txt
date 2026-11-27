@@ -1,0 +1,1040 @@
+Proceedings of ASME Turbo Expo 2019: Turbomachinery Technical Conference and
+Exposition
+GT2019
+June 17-21, 2019, Phoenix, AZ, USA
+
+arXiv:1910.03097v1 [physics.flu-dyn] 7 Oct 2019
+
+GT2019-90498
+
+GENERALIZATION OF MACHINE-LEARNED TURBULENT HEAT FLUX MODELS
+APPLIED TO FILM COOLING FLOWS
+
+Pedro M. Milani∗
+Mechanical Engineering Department
+Stanford University
+Stanford, CA 94305
+Email: pmmilani@stanford.edu
+
+Julia Ling
+Director of Data Science
+Citrine Informatics
+Redwood City, CA 94063
+
+ABSTRACT
+The design of film cooling systems relies heavily on
+Reynolds-Averaged Navier-Stokes (RANS) simulations, which
+solve for mean quantities and model all turbulent scales. Most
+turbulent heat flux models, which are based on isotropic diffusion
+with a fixed turbulent Prandtl number (Prt ), fail to accurately
+predict heat transfer in film cooling flows. In the present work,
+machine learning models are trained to predict a non-uniform
+Prt field, using various datasets as training sets. The ability of
+these models to generalize beyond the flows on which they were
+trained is explored. Furthermore, visualization techniques are
+employed to compare distinct datasets and to help explain the
+cross-validation results.
+
+GDH Gradient Diffusion Hypothesis
+ML Machine Learning
+RF Random Forest
+PCA Principal Component Analysis
+t-SNE t-Distributed Stochastic Neighbor Embedding
+
+1
+
+INTRODUCTION
+Gas turbine blades operate in extremely high temperature
+environments, and thus require well-engineered cooling techniques to meet desired lifespans. Discrete hole film cooling is
+one such technique [1] in which coolant (usually air diverted
+from the compressor stage) is ejected from holes in the blade
+to create a protective layer of cooler fluid on the blade’s outer
+surface. When designing film cooling schemes, engineers aim
+to minimize the coolant flow while providing enough thermal
+protection. Computational fluid dynamics simulations are therefore used extensively in the design process to predict the mean
+temperature field arising from a certain film cooling configuration. Scale-resolving simulations, such as Large Eddy Simulations (LES), are typically able to accurately predict the mean
+temperature field in film cooling flows. However, they cannot feasibly be used to design complex geometries due to their
+prohibitive computational cost. Therefore, Reynolds-Averaged
+Navier Stokes (RANS) simulations are the workhorse in the industry, and will remain so for the foreseeable future. The downside of using RANS simulations is that their results are typically
+inaccurate, particularly for the mean temperature field. Recent
+
+NOMENCLATURE
+θ Dimensionless temperature
+ui Velocity component in the i-th direction
+D Hole diameter in film cooling flows
+BR Blowing ratio in a jet in crossflow configuration
+d Distance to the nearest wall
+k Turbulent kinetic energy
+ε Turbulent dissipation rate
+νt Eddy viscosity calculated by realizable k − ε model [m2 /s]
+αt Turbulent diffusivity [m2 /s]
+Prt Turbulent Prandtl number νt /αt
+V (i) Volume of the i-th computational cell
+
+∗ Address
+
+all correspondence to this author.
+
+John K. Eaton
+Mechanical Engineering Department
+Stanford University
+Stanford, CA 94305
+
+1
+
+Copyright c 2019 by ASME
+
+results from Nikiparto et al. [2] exemplify this - all their RANS
+simulations failed to match experimental data for adiabatic effectiveness in a turbine blade. The long-term goal of the present
+work is to address this insufficiency.
+In this paper, the flow is considered incompressible and the
+temperature is assumed to behave as a passive scalar. The equation governing the mean temperature distribution θ̄ that is solved
+in a RANS simulation is given in Eq. 1, where ui represents the
+velocity field and α is the molecular diffusivity. The unclosed
+term u0i θ 0 is the turbulent heat flux, for which a model needs
+to be prescribed. The most widely used closure is the gradient
+diffusion hypothesis (GDH), which assumes the heat flux is proportional to the mean temperature gradient as shown in Eq. 2.
+To specify the turbulent diffusivity αt , solvers usually employ a
+fixed turbulent Prandtl number, Prt = νt /αt , where νt is the eddy
+viscosity field calculated by the momentum solver. The value
+chosen, usually Prt = 0.85, is backed out of experimental profiles in the log-layer of a flat plate turbulent boundary layer [3].
+
+∂
+∂ θ̄
+∂ 0 0
+∂
+uθ
+(ūi θ̄ ) =
+(α
+)−
+∂ xi
+∂ xi ∂ xi
+∂ xi i
+
+u0i θ 0 = −αt
+
+∂ θ̄
+∂ xi
+
+ing approach will be employed.
+Machine learning is a collection of algorithms that process
+large amounts of data and attempt to extract patterns from that
+data [12]. In the past 10 years, it has attracted considerable attention due to extraordinary results obtained in fields like image recognition and machine translation. Its use in the turbulence modeling community is incipient, but promising. Ling
+et al. [13] proposed a deep neural network architecture that respects Galilean invariance to predict the turbulent anisotropy tensor, and demonstrated improved results compared to linear eddy
+viscosity models. Sandberg et al. [14] used gene expression programming to obtain non-linear closed-form expressions for the
+anisotropy tensor and the turbulent diffusivity in 2D slot film
+cooling geometries, which significantly improved RANS predictions. Singh et al. [15] employed field inversion (through adjoint
+optimization) combined with neural networks to improve closure
+equations for the momentum solver, which improves lift predictions in airfoils with separated flows. The present paper is based
+on the machine learning framework first proposed by Milani et
+al. [16], but with key differences that will be highlighted in Section 2. In their work, a random forest was used to predict the
+turbulent diffusivity in film cooling flows, and it produced significant improvements in mean temperature predictions, particularly close to the wall.
+Robustness of such machine-learned models is an outstanding topic. In particular, how closely related must the training data
+be to a flow configuration of interest for the model to produce improved results? Ultimately, this question is crucial because the
+usefulness of any turbulence model based on machine learning
+techniques depends on it. The work reported in this paper investigates this question in the context of turbulent heat flux models
+for film cooling applications. Section 2 explains the model and
+describes the datasets and experiments used to address generalization. Section 3 shows results for the turbulent Prandtl number obtained in inclined jets in crossflow with differently trained
+models. Section 4 presents the mean temperature obtained by
+solving Eq. 1 using the Prt fields predicted in Section 3. Section
+5 introduces visualization techniques and employs them in an attempt to explain the results of Sections 3 and 4. Finally, Section
+6 presents conclusions and ideas for future work.
+
+(1)
+
+(2)
+
+Previous work has shown that the traditional model described earlier is inappropriate in film cooling. Kohli and Bogard [4] assumed the GDH was valid and measured highly nonuniform values of Prt in film cooling flows. Muppidi and Mahesh [5] and Schreivogel et al. [6] studied turbulent mixing in
+different jet in crossflow geometries and found localized regions
+of counter-gradient diffusion, contradicting the fixed Prt and the
+isotropic diffusivity assumptions. Oliver et al. [7] found misalignment between the turbulent heat flux and the mean temperature gradient vectors, which also contradicts the GDH of Eq. 2.
+A few other models for the turbulent heat flux u0i θ 0 have been
+proposed, including the generalized gradient diffusion hypothesis (GGDH) of Daly and Harlow [8] and the higher order generalized gradient diffusion hypothesis (HOGGDH) of Abe and
+Suga [9]. However, Ling et al. [10] and Ryan et al. [11] tested
+these higher order models in film cooling flows and saw modest improvement at best. They also obtained significantly better mean temperature distribution by using a turbulent diffusivity
+field calculated from LES data, showing that the prescription of
+αt in Eq. 2 is an important source of error. So, due to the poor
+performance of the traditional models and lack of clearly superior alternatives, the sole focus of the present work will be improving turbulent heat flux modeling. For that, a machine learn-
+
+2 METHODOLOGY
+2.1 Machine Learning Model
+The machine learning model for turbulent heat flux will be
+discussed in this subsection. In summary, the GDH of Eq. 2 is
+employed, but the turbulent diffusivity is not prescribed with a
+fixed turbulent Prandtl number. Instead, a random forest (RF) algorithm is used to predict Prt at each point in the domain based
+on local mean flow information. As a supervised learning algorithm, the RF must be trained in datasets where the mean flow
+information is known together with the correct value of Prt .
+2
+
+Copyright c 2019 by ASME
+
+Prt = νt /αt,LES , and is clipped between 0.01 and 100.
+
+To train the algorithm, well-validated, high-fidelity simulations are needed. The local mean quantities that are assumed to
+govern the value of the turbulent Prandtl number are extracted
+from the LES: they are the mean velocity gradient, ∇ū, the
+mean temperature gradient, ∇θ̄ , the eddy viscosity ratio, νt /ν,
+and the√Reynolds number based on distance to the nearest wall
+Red = kd/ν. The velocity and temperature gradients are nondimensionalized using local turbulent scales built with k and ε.
+Also, to enforce Galilean invariance of the output diffusivity as
+recommended by Ling et al. [17], an invariant basis is contructed
+based on the gradients and this basis is used as the input to the
+ML algorithm. A complete list with the 19 inputs can be found
+in Milani et al. [16]. It is important to note that the high-fidelity
+simulation directly provides mean velocity and temperature; to
+obtain the turbulence quantities such as k, ε, and νt , the mean velocity field is frozen and RANS turbulence equations are solved
+on the LES mesh (similar to the approach of Sandberg et al. [14]).
+In the present case, realizable k − ε equations of Shih et al. [18]
+are solved using ANSYS Fluent 18.0. Also note that this approach differs from the one presented in Milani et al. [16]: in
+their work, RANS variables were used as inputs. In the present
+work, LES mean quantities (with a k − ε solution for turbulence)
+are used instead. This makes the current model closer to a “true”
+turbulence model since it takes in the high-fidelity mean quantities and tries to map them to a turbulence quantity of interest.
+When the model is trained on RANS quantities, it has to account
+not only for turbulence, but also for errors incurred by the original RANS simulation (since the RANS mean velocity and temperature fields might incorrectly portray reality).
+To calibrate the random forest, the “true” value of Prt in each
+cell is also needed. To obtain that, the local value of αt is backed
+out of the high fidelity simulation: information on the turbulent
+heat flux u0i θ 0 is employed to algebraically extract αt,LES at each
+cell of the domain. In Milani et al. [16], a simple least squares
+solution for αt,LES is used. The present work uses a slight modification of this approach, which mitigates the underestimation of
+turbulent diffusion observed previously. A weighted average of
+the least squares sum is used, where the weight F in each of the
+three directions decreases as the mean advection in that direction
+increases. The reasoning behind this is that in a direction with
+strong mean advection (generally the streamwise direction), the
+contribution of turbulent mixing to the overall mean scalar transport is negligible regardless of the value of αt . Thus the information from that direction should not influence the extracted αt,LES .
+In contrast, it is more important to predict the turbulent transport
+accurately in directions in which the mean advection is weak (for
+example, the spanwise direction in most flows). Empirically, this
+generated anywhere between no difference and significant improvement across the flow geometries in this paper when compared to the approach of Milani et al. [16]. Equations 3 and 4
+summarize how αt,LES is extracted from LES quantities. The
+turbulent Prandtl number used to train the RF is calculated as
+
+αt,LES = −
+
+Fi ≡ q
+
+∑3i=1 u0i θ 0 ∂∂ xθ̄i Fi
+∑3j=1 ∂∂xθ̄j
+
+∂ θ̄
+∂ x j Fj
+
+1
+u0j θ 0
+
+(3)
+
+(4)
+
+u0j θ 0 + ūi θ̄
+
+The random forest algorithm is used to map from the 19
+inputs to ln(Prt ) in each computational cell of the high-fidelity
+simulations in the training set. The natural logarithm is important to ensure that the relative, not absolute, error in Prt is minimized (e.g., if the true Prt is 0.1 and the prediction is 0.2, the
+model is penalized just as much as if the true Prt were 10 and the
+predicition were 20). The RF is chosen because Ling and Templeton [19] showed that it achieves good results in turbulence
+modeling, and unlike neural networks it is robust to noise and
+to outliers and is also mostly insensitive to the hyperparameters.
+In this paper, 500 trees were used and criteria were set for early
+stopping (maximum depth of 25 and minimum number of samples required to split a node of the tree of 0.01% of the total training set size). This set of hyperparameters leads the RF to perform
+similarly to the one of Milani et al. [16], but creates more concise
+models and speeds up training on large datasets. The model was
+implemented in Python using the scikit-learn library [20]. For
+more information on random forests, consult Louppe’s comprehensive review [21].
+2.2
+
+Datasets
+Four datasets representing different configurations are used
+in the present work. They are:
+1.
+2.
+3.
+4.
+
+BR1 (shown in Fig. 1(a) and Fig. 2(b))
+BR2 (shown in Fig. 1(b))
+Skewed (shown in Fig. 2(a))
+Cube (shown in Fig. 3)
+
+In all the cases, a high-quality LES or direct numerical simulation (DNS) is available, where both momentum and passive
+scalar equations are solved (the latter as a proxy to temperature) and statistics on turbulent heat flux u0i θ 0 were collected.
+The four simulations show good agreement against experimental data. The rest of this subsection describes them in-depth.
+The first two cases, BR1 and BR2, are run in a baseline
+film cooling geometry, which contains a single circular cooling hole of diameter D discharging into a square channel of side
+8.6D. The hole is inclined 30◦ and its length is L/D = 4.1. The
+3
+
+Copyright c 2019 by ASME
+
+and is also wall-resolved. It is described in detail and validated
+against MRI experiments in Folkersma et al. [25].
+
+FIGURE 2. Streamwise planes located at X/D = 2 showing contours
+of θ̄ in the (a) Skewed and (b) BR1 cases. The hole is shown in gray and
+a vertical line at Z/D = 0 indicates the center of the hole as it meets the
+bottom wall. The main flow direction is out of the page.
+
+FIGURE 1. Center spanwise plane showing contours of θ̄ in the baseline geometry for two distinct blowing ratios, (a) BR = 1 and (b) BR = 2.
+
+fully turbulent incoming boundary layer has thickness δ /D = 1.5
+measured 2D upstream of the hole. Note that, since the simulation is incompressible, the density ratio is exactly 1.0. The hole
+is fed from a plenum underneath the channel, where the dimensionless temperature is θ̄ = 1; at the channel inlet, the temperature is set to θ̄ = 0. All walls are adiabatic and the molecular
+Prandtl number is Pr = 1.0. The two cases are distinct due to
+their blowing ratio, BR = ρU j /ρUc , where U j is the bulk velocity in the jet and Uc is the bulk velocity in the main channel. The
+first has BR = 1 (and ReD = 2, 900) and the second has BR = 2
+(and ReD = 5, 800), where ReD = U j D/ν is the Reynolds number
+based on the hole diameter and jet bulk velocity. The two LES’s
+followed the methodology of Bodart et al. [22], and were run
+using the incompressible solver Vida from Cascade Technologies. The meshes (40.1M cells and 48.3M cells respectively) are
+wall-resolved in the bottom wall and cooling hole (y+ < 1.5). A
+posteriori analysis showed that the mean subgrid scale viscosity
+(which uses the Vreman model [23]) is negligible compared to
+the laminar viscosity. The mean velocity and temperature compare satisfactorily against 3D MRI data obtained in the same geometry. More simulation details and the validation are presented
+in Milani et al. [24]. Figure 1 shows the centerplane from those
+two simulations.
+The third dataset is the Skewed case, produced by Folkersma
+et al. [25]. It is the same as the baseline geometry, except that
+the cooling hole has a compound angle of injection: inclined
+30◦ about the streamwise and spanwise directions (see Fig. 2(a)).
+The channel has a rectangular cross-section (17.2D by 8.6D) and
+the incoming boundary layer has thickness δ /D = 1.9 measured
+2D upstream of the hole. The density and blowing ratios are both
+1.0, and ReD = 5, 800. The walls are adiabatic and the molecular
+Prandtl number is Pr = 1.0. The LES has around 101M cells
+
+FIGURE 3. Center spanwise plane of Cube case, showing contours of
+mean temperature θ̄ .
+
+The last dataset is the Cube, computed by Rossi et al. [26].
+In this flow, a turbulent boundary layer meets a wall-mounted
+cube of side D, which causes flow separation behind it. A circular source centered on the top surface of the cube injects small
+amounts of heated fluid, which creates a non-trivial mean temperature distribution (see Fig. 3). The Reynolds number based
+on cube height and free-stream velocity is ReD = 5000 and the
+molecular Prandtl number is set to Pr = 0.285. This dataset,
+despite not being directly relevant to film cooling, was chosen
+because of the availability of a high-fidelity simulation with a
+scalar contaminant. Furthermore, it contains features relevant to
+film cooling such as turbulent mixing within a separation bubble. A DNS was run in this case, and the results were validated
+against experimental data. Further details are available in Rossi
+et al. [26].
+2.3
+
+Cross-Validation
+The current study leverages the concept of cross-validation.
+Cross-validation is an important tool in machine learning to evaluate the capacity of a model to generalize beyond its training
+4
+
+Copyright c 2019 by ASME
+
+data. It consists of training a model and testing its performance
+in different subsets of the total set of examples available. In
+the present paper, 4 different datasets are available. In total, 6
+different random forests were trained to predict Prt given local mean flow features. Those models were then applied to the
+two datasets of the baseline geometry, BR1 and BR2. The performance of the models is dictated by how accurately the mean
+temperature field is predicted compared to the LES mean field.
+Table 1 summarizes the 6 trained models used.
+Note that models are only tested on the BR1 and BR2 cases
+for the sake of brevity; the two cases were chosen because they
+illustrate physics of turbulent mixing in film cooling. The first
+4 models were trained on each of the 4 datasets individually in
+order to understand how much physics each flow by itself can
+provide to the RF. The last two training sets contain all datasets
+except BR2 (which is applied to the BR2 case) and all datasets
+except BR1 (which is applied to the BR1 case) respectively. This
+tests the ability of models trained on several distinct datasets to
+generalize to an unseen case.
+In all cases, the algorithm is trained only on computational
+cells where the temperature gradient non-dimensionalized by the
+local turbulent length scale is above a given threshold. In this paper, the threshold used is 10−3 , but the results are mostly insensitive to this parameter within a few orders of magnitude. This is
+done because the turbulent diffusivity αt,LES should only be extracted according to Eq. 3 in locations where the temperature gradient is not negligible; otherwise, the denominator approaches
+zero and the results become extremely noisy. At test time, predictions are only made in locations that obey the 10−3 cutoff;
+elsewhere, a default value of Prt = 0.85 is employed.
+TABLE 1.
+
+Model
+RF_b1
+RF_b2
+RF_s
+RF_c
+RF_csb1
+RF_csb2
+
+best possible predictions can be expected when the ML model
+is trained on the same data on which it is applied. Note that this
+field is extremely similar to the exact Prt field, extracted from the
+LES results using Eq. 3 (not shown in Fig. 4). Some features of
+this ideal Prt field become clear. First, it is highly non-uniform
+as previously reported (e.g. [4]), so a fixed Prt = 0.85 is likely inappropriate for this flow. The centerplane plot suggests that the
+bottom half of the jet requires high values of turbulent Prandtl
+number (Prt > 4), while in the top half moderate values around
+0.85 are more appropriate.
+Figure 4(b) shows the Prt field predicted by the model that is
+trained only on the Cube case. It produces consistently high values of Prt throughout the whole domain, contradicting the predictions of the RF_b1 model. This effectively translates to low
+turbulent diffusivities almost everywhere in Eq. 1. The poor predictions are not surprising, since the Cube flow is significantly
+different from the BR1 flow and therefore might not, by itself,
+provide a good training set. Finally, Fig. 4(c) illustrates the turbulent Prandtl number predicted by a model trained only on the
+BR2 case. The training and evaluation sets have the same geometry, but the blowing ratio is a crucial parameter in film cooling,
+and doubling it from 1 to 2 significantly alters the resulting mean
+flow and temperature. So, this scenario tests the ability of the
+model to generalize beyond its training set. Despite some differences, the field in Fig. 4(c) has notable similarities to the one
+produced by RF_b1. For instance, high values of Prt in the bottom part of the jet, particularly right after injection, and moderate
+values of Prt in the top shear layer.
+Figure 5 shows turbulent Prandtl number fields predicted in
+the BR2 case with three different random forests. Figure 5(a)
+is generated by RF_b2, which again shows a performance upper bound for this ML framework. Again, higher values or Prt
+are present on the bottom half of the jet, which is particularly
+evident right after injection (as shown in the streamwise plot).
+Figure 5(b) contains predictions from RF_b1, which seem to
+overestimate Prt in most of the domain, particularly towards the
+top and sides of the jet. Figure 5(c), was produced with a model
+trained on all datasets except for BR2, namely RF_csb1. It is
+far from ideal, but it shows some improvement over the field produced by RF_b1 because the overestimation of Prt is not as severe. Furthermore, in Fig. 5(c) the trend of higher Prt in the
+bottom half of the jet and moderate Prt in the top half of the jet
+becomes apparent.
+Some of the results in this section are consistent with previous work in the literature. For example, Ling et al. [27] argued
+that the asymptotic behavior of v0 θ 0 and v0 u0 is distinct as you approach an adiabtic wall, so a fixed ratio of νt to αt is invalid. That
+led them to propose a near-wall correction in which Prt would
+exponentially decrease at y+ < 70, which produced improved results in slot film cooling geometries [27]. The predictions in both
+BR1 and BR2 cases show that the random forests have learned
+this pattern: a consistent thin blue strip right above the bottom
+
+Summary of the random forests trained.
+
+Trained on
+Baseline geometry with BR=1
+Baseline geometry with BR=2
+Skewed
+Cube
+Cube, Skewed, and BR1 cases
+Cube, Skewed, and BR2 cases
+
+3
+
+TURBULENT PRANDTL NUMBER RESULTS
+The first step of the cross-validation study is to use the different models to predict the turbulent Prandtl number. Fig. 4
+shows contour plots with Prt values predicted by three different
+random forests on the BR1 case. The plots on Fig. 4(a) have Prt
+predictions from the model trained on the case BR1 itself. This
+is not realistic for practical purposes, because a machine learning model is expected to be employed for cases distinct from the
+ones it was trained on. However, it is useful in the context of
+this paper because it illustrates a performance upper bound: the
+5
+
+Copyright c 2019 by ASME
+
+FIGURE 4. Turbulent Prandtl number predicted by different models on the BR1 case. The plots also contain isocontour lines of mean temperature
+calculated by the LES at θ̄ = 0.2, 0.4, 0.6, 0.8. The plots on the left show center spanwise planes at Z/D = 0 and plots on the right show streamwise
+planes at X/D = 2. From top to bottom, the predictions of Prt are made by (a) RF_b1, (b) RF_c, and (c) RF_b2.
+
+FIGURE 5. Turbulent Prandtl number predicted by different models on the BR2 dataset. The plots are superimposed with isocontour lines of mean
+temperature from the LES at θ̄ = 0.2, 0.4, 0.6, 0.8. The plots on the left show center spanwise planes at Z/D = 0 and plots on the right show streamwise
+planes at X/D = 2. From top to bottom, the predictions of Prt are made by (a) RF_b2, (b) RF_b1, and (c) RF_csb1.
+
+wall shows that most of the ML models predict reduced values
+of Prt when y+ is small. The high values of turbulent Prandtl
+number found right after injection and close to the bottom wall
+in the two datasets are also consistent with the findings of Mi-
+
+lani and Eaton [28]. They used MRI data and an optimization
+approach to conclude that this region should have extremely low
+values of vertical turbulent diffusivity across five distinct film
+cooling flows.
+6
+
+Copyright c 2019 by ASME
+
+4
+
+MEAN TEMPERATURE RESULTS
+The previous section compared different models to predict
+the turbulent Prandtl number. However, the ultimate goal of this
+work is to improve mean temperature predictions. Thus, the preferred way to evaluate different Prt fields is to solve Eq. 1 using
+them and then compare the resulting mean temperature against
+the LES mean temperature. Eq. 1 is solved on the LES mesh
+with the LES velocity field. The correct velocity field is used
+instead of a RANS velocity field to isolate the errors in θ̄ due
+to the turbulent heat flux model. This contrasts with our previous work [16, 29] where the temperature field was calculated
+using the RANS velocity field. It is important to note that the
+ML models predict the Prt field once based on the LES flow information, including the LES mean concentration gradient ∇θ̄ ,
+and then this Prt field is used to solve the temperature transport
+equation. While this method is acceptable for studying model
+generality, it is not consistent if used directly on a RANS simulation. In that case, the RF model would need to be built into the
+RANS solver and used iteratively, since the predicted Prt field is
+a function of the underlying true temperature gradient.
+4.1
+
+Baseline geometry with BR = 1
+Figure 6 shows contours of θ̄ obtained with selected models
+in the BR1 case. Figure 6(a) contains the mean temperature field
+from the LES, which was validated against experimental data and
+is thus considered the “ground truth” against which to compare
+results from different models. Fig. 6(b) shows the temperature
+resulting from the traditional fixed turbulent Prandtl number assumption, Prt = 0.85. As evidenced by the results, the turbulent
+mixing seems to be overestimated in most of the domain, particularly close to the wall, since the high scalar values in the jet core
+tend to diffuse towards the bottom wall.
+Figure 6(c) contains the temperature predictions of the random forest trained exclusively on the BR1 case (which produced
+the Prt field shown in Fig. 4(a)), and therefore represents the
+results that this framework yields with a perfectly trained ML algorithm. As seen in Fig. 4(a), there are high values of Prt in the
+bottom half of the jet which imply lower values of αt there. This
+fixes the problem of too much mixing in this region and generates better temperature results close to the wall. However, this
+model is still deficient: the θ̄ = 0.4 isocontour shows that in the
+core of the jet the model fails to capture the correct turbulent heat
+flux. This points the finger at the model form (the GDH of Eq. 2)
+since, even with a perfect mean velocity and Prt distribution, the
+mean temperature is still incorrectly calculated.
+Figures 6(d) and (e) show results that are qualitatively similar to Fig. 6(c). This suggests that a random forest trained on the
+BR2 case captures the turbulent heat flux approximately as well
+as one that is perfectly trained. Furthermore, even though the
+Cube is a poor training set for this case (RF_c predicts diffusivities that are too low almost everywhere and, consequently, a poor
+
+FIGURE 6. Contour plots of mean temperature θ̄ in the center spanwise plane of the BR1 case. (a) shows the LES results, (b) shows the
+results of using a uniform Prandtl number, set at Prt = 0.85, and (c)-(e)
+show the results of using different ML fields for Prt . Isocontour lines of
+mean temperature are superimposed, at θ̄ = 0.2, 0.4, 0.6, 0.8.
+
+temperature field), the random forest trained with Cube, Skewed,
+and BR2 datasets (RF_csb2 shown in Fig. 6(e)) performs fairly
+well on this problem.
+Line plots provide more quantitative comparisons between
+distinct models and the LES results. Figure 7 shows vertical profiles of mean temperature in the BR1 case on the center spanwise
+plane, at two different streamwise locations. The black lines with
+circles show the temperature results of the LES, which is what
+the models are aiming to replicate. The problem with a fixed
+Prt is again evident: too high a diffusivity smooths the profile,
+overestimates values close to the wall, and shifts the temperature
+peak down. As expected, the predictions from RF_b1 match the
+LES data more closely, particularly towards the wall. However,
+the peak temperatures are now overpredicted, potentially due to
+underpredicted lateral spreading. In these plots, it is possible
+to see that the other models predict profiles similar to the one
+predicted by RF_b1, confirming their ability to generalize to the
+BR1 dataset. The exception is the model trained only on the Cube
+(RF_c), which predicts very poor mean temperature profiles due
+7
+
+Copyright c 2019 by ASME
+
+4.2
+
+Baseline geometry with BR = 2
+A similar analysis is performed on the second test set, in
+which the goal is to predict the mean temperature field in the BR2
+case. Figure 9 contains contour plots of mean temperature in the
+centerplane of the BR2 geometry and Fig. 10 contains vertical
+profiles of mean temperature. Figure 9(a) shows LES results,
+which again serve as the “ground truth” that the distinct turbulent
+heat flux models are trying to replicate. The difference between
+this flow and BR1 is evident: the jet penetrates further into the
+main stream due to its higher momentum, and almost no scalar
+makes it all the way down to the bottom wall. The result from
+the typical Prt = 0.85 model is shown in Fig. 9(b). Errors are
+small in most of the domain; the exception is close to the wall,
+right after injection. In the LES, very little mixing occurs there,
+but the fixed turbulent Prandtl number calculation predicts the
+coolant diffusing into that region.
+
+FIGURE 7. Plots showing θ̄ vs Y /D in the BR1 case at Z/D = 0 and
+two different streamwise locations: (a) at X/D = 2 and (b) at X/D = 5.
+
+to uniformly high Prt . This shows that training exclusively on
+the Cube dataset is not enough to predict acceptable results in
+the BR1 dataset.
+
+FIGURE 8. Spanwise-averaged adiabatic effectiveness in the BR1
+case. Averaging is performed between Z/D = −1 and Z/D = 1.
+
+The adiabatic effectiveness is a crucial quantity of interest in
+the film cooling literature, because it determines the ability of a
+certain configuration to shield the bottom wall from the high temperatures in the freestream. In the current problem setup, the adiabatic effectiveness is simply θ̄ evaluated at the wall (Y /D = 0),
+since the simulations use adiabatic boundary conditions. Figure 8 shows a comparison of the spanwise-averaged adiabatic effectiveness for all models. As suggested before, the fixed Prt
+model significantly overpredicts this quantity due to high turbulent heat flux in the vertical direction. The machine learning
+models, with the exception of RF_c, perform well. The adiabatic
+effectiveness they predict tracks the LES curve closely, including
+the sharp dip right after injection, due to the improved values of
+Prt close to the bottom wall.
+
+FIGURE 9. Contour plots of mean temperature θ̄ in the center spanwise plane of the BR2 case. (a) shows the LES results, (b) shows the
+results of using Prt = 0.85 everywhere, and (c)-(e) show the results of
+using different ML models for Prt . Isocontour lines of mean temperature are superimposed, at θ̄ = 0.2, 0.4, 0.6, 0.8
+
+8
+
+Copyright c 2019 by ASME
+
+using a 3D error metric. The same error metric proposed in Milani et al. [29] is used, consisting of a weighted average of the
+(i)
+absolute difference between the LES mean temperature θ̄LES and
+(i)
+the model predictions for the mean temperature θ̄ in each cell
+i. The volume of each cell V (i) is used as the weight. Formally,
+this metric is defined in Eq. 5.
+
+(i)
+
+∑i |θ̄ (i) − θ̄LES |V (i)
+error =
+∑i V (i)
+FIGURE 10. Profile of θ̄ vs Y /D in the BR2 case at Z/D = 0 and two
+different streamwise locations: (a) at X/D = 2 and (b) at X/D = 5.
+
+(5)
+
+Table 2 contains the error metric calculated in BR1 and BR2
+for distinct models. The summation of Eq. 5 is performed over
+all cells in three different regions of interest (Total, Injection, and
+Wall) which are described in the table caption.
+The values calculated for BR1 show that using a uniform Prt
+does not produce good results, particularly close to the wall. All
+different ML models improve on it, except for the one trained
+only on the Cube which produces very poor results. Most significant are the improvements in the near-wall region. However, as
+mentioned before, even the perfectly trained ML model (RF_b1)
+cannot reduce the errors as much as one might hope, which suggests a better model form would benefit turbulent heat flux predictions in this case.
+The numbers from the BR2 case also reinforce the qualitative conclusions. It is noteworthy how much reduction in error
+metric one can achieve by using the perfectly trained ML model,
+RF_b2, suggesting the GDH is appropriate for this case. However, none of the models which are attempting to generalize perform nearly as well, and almost all seem worse than the baseline
+
+When a perfectly trained ML model is applied, and the scalar
+equation is solved with the Prt field shown in Fig. 5(a), the mean
+temperature predictions are excellent, as shown in Fig. 9(c) and
+in the profiles of Fig. 10. This suggests that in this particular
+case, unlike in the BR1 case shown before, the model form of
+Eq. 2 is appropriate and all that is needed to model the turbulent
+heat flux well is to spatially adjust the value of Prt . One potential
+reason is the importance of anistropy in the turbulent transport.
+In the BR1 case, the jet stays closer to the wall, which acts to
+damp vertical eddies making turbulence more anisotropic. When
+the jet is farther from the wall, as in the BR2 case, spanwise and
+wall-normal transport are probably more similar, so the isotropic
+formulation of the GDH becomes a better approximation.
+Interestingly, a machine learning model that is only trained
+on the BR1 case performs poorly on the present case, as shown in
+Fig. 9(d) and in Fig. 10. The Prandtl number predicted is generally too high, which leads to low diffusivity values and incorrect
+mean temperature distributions. When the machine learning algorithm is trained on all cases except for BR2 (i.e., the RF_csb1
+model), the θ̄ field significantly improves compared to the one
+produced by the RF_b1 model. Most of the improvement comes
+from adding the Skewed case to the training set, since individually both the BR1 and the Cube cases are not sufficient to produce
+good results. However, the predictions of the RF_csb1 model
+are still noticeably worse than the temperature predicted by the
+perfectly trained model. This suggests that generalization is the
+bottleneck to obtain good results with an ML model in the BR2
+dataset. It is not sufficient to train the algorithm on the three other
+cases (Cube, Skewed, and BR1). One plausible hypothesis is that
+the BR2 case contains a stronger shear layer and sharper velocity
+gradients than any of the other cases, so the ML model is forced
+to extrapolate and thus produces an inadequate Prt field.
+
+TABLE 2. Error metric (×100) in BR1 and BR2 cases. Only cells
+where θ̄LES > 0.05 and Y > 0 are considered. Additionally, the Injection
+(Inj) region of interest requires X/D < 4 and the Wall region of interest
+requires Y /D < 0.1.
+
+BR1
+
+Model used
+
+4.3
+
+Error metric
+The previous qualitative analysis can be complemented by a
+more quantitative comparison of the different temperature fields
+9
+
+BR2
+
+Total
+
+Inj
+
+Wall
+
+Total
+
+Inj
+
+Wall
+
+Prt = 0.85
+
+2.96
+
+5.02
+
+6.27
+
+1.90
+
+6.17
+
+3.16
+
+RF_b1
+
+1.56
+
+3.33
+
+1.67
+
+4.18
+
+13.2
+
+4.92
+
+RF_b2
+
+2.12
+
+4.37
+
+1.56
+
+0.94
+
+2.08
+
+0.97
+
+RF_s
+
+2.67
+
+4.74
+
+2.68
+
+2.31
+
+9.41
+
+4.61
+
+RF_c
+
+7.66
+
+10.3
+
+4.46
+
+3.86
+
+11.4
+
+3.93
+
+RF_csb1
+
+n/a
+
+n/a
+
+n/a
+
+1.99
+
+7.78
+
+4.15
+
+RF_csb2
+
+2.48
+
+4.58
+
+2.98
+
+n/a
+
+n/a
+
+n/a
+
+Copyright c 2019 by ASME
+
+Prt = 0.85 model. This shows that the training set containing
+Cube, Skewed, and BR1 does not contain all the physical information needed to learn the physics relevant to the BR2 case.
+
+applied t-SNE visualization to high-dimensional data from turbulent flow simulations and were able to capture physically relevant
+differences between distinct flows.
+Before applying either technique, the features were normalized to have standard deviation of 1. This is done so that distances between points in the high-dimensional space are roughly
+equivalent in all directions, instead of being dominated by the
+features that vary across the broadest range. PCA was applied
+to all points in the two datasets (27 million points); t-SNE was
+only applied in cells located on the center spanwise plane of either dataset, downsampled randomly at 5% (totalling 27k points).
+The t-SNE algorithm has an important hyperparameter called
+perplexity, which corresponds roughly to the number of neighbors each point is expected to have [31]. We tested different
+values of perplexity and found that the resulting plots are sensitive to its choice, contradicting what is suggested in Maaten and
+Hinton [31]. For this type of data (subsampled points from fluid
+mechanics simulations), we recommend setting the perplexity to
+about 1-5% of the total number of points t-SNE is applied to. In
+the following results, perplexity is set to 1200.
+
+5
+
+VISUALIZATION
+One of the interesting conclusions from the previous sections is that a model trained on the BR2 case can generalize reasonably well to BR1, but a model trained on the BR1 case performs very poorly on BR2. We would like to understand when
+models trained on one flow will generalize to another flow. One
+reason why a model might fail to generalize is that it is being
+forced to extrapolate. If a test case contains mean flow features
+not found in the training set, then the model might be expected
+to perform poorly in such regions of extrapolation. To better understand whether the models are extrapolating, it would be useful to visualize the input parameter spaces for the BR1 and BR2
+cases. To achieve this, two different dimensionality reduction
+techniques are employed, namely Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (tSNE).
+As explained in section 2.1, each computational cell in a
+flow configuration is seen by the machine learning model as a
+19-dimensional point, in which the 19 entries form an invariant
+basis that depends on the mean velocity gradient, mean concentration gradient, eddy viscosity, and distance to the wall. These
+19 features φi are then mapped to the local Prt through a random
+forest. To qualitatively understand where cells coming from different flows are located in this 19-dimensional space, one common technique in the machine learning community is to apply
+dimensionality reduction. Each point (φ1 , φ2 , ..., φ19 ) is projected
+onto a 2-dimensional space with resulting coordinates (ξ1 , ξ2 ) so
+that they can be visualized in a plot. This operation invariably
+leads to information loss; different techniques try to minimize
+such losses in distinct ways.
+Principal Component Analysis (PCA) is a widely used
+dimensionality reduction technique [30], where the lowerdimensional coordinates are constructed as a linear combination
+of the original coordinates. The coefficients of this linear combination are chosen such as to maximize the variance along the new
+axes. The principal components, which form the axes ξ1 and ξ2
+in PCA, can be calculated efficiently using eigenvector analysis.
+On the other hand, the t-Distributed Stochastic Neighbor
+Embedding (t-SNE) proposed by Maaten and Hinton [31] is a
+more recent technique and a very popular one in the machine
+learning community. It creates a non-linear mapping between
+the original high-dimensional space and the lower-dimensional
+space that tries to preserve pairwise distance between points. It
+is significantly more computationally expensive because gradient
+descent must be used to minimize the cost function. However, it
+typically produces plots that maintain much of the cluster-based
+structure of the high-dimensional space. Recently, Wu et al. [32]
+
+FIGURE 11. Points from the BR1 and BR2 datasets mapped onto a 2dimensional space (ξ1 , ξ2 ) via (a) PCA and (b) t-SNE algorithms. Four
+areas (A,B,C,D) are marked with dashed polygons in the two plots, consisting of regions with BR2 points but almost no points from BR1.
+
+Figure 11 shows points from BR1 and BR2 in a lower dimensional space, after the application of PCA (Fig. 11(a)) and t-SNE
+(Fig. 11(b)). Interestingly, both figures tell a similar story: everywhere where BR1 points are located, points from BR2 can also
+be found. However, there are significant regions with BR2 points
+but no BR1 points. This supports the hypothesis that the points
+of the BR1 case occupy a region which is a strict subset of the region occupied by the BR2 points in the high-dimensional space.
+Therefore, ML models trained on BR2 are expected to generalize
+well on BR1, but the reverse is not true.
+Figure 11 also show four specific regions of the 2D plane
+10
+
+Copyright c 2019 by ASME
+
+and region C highlights the jet core from X/D = 3 to X/D = 9.
+Region D shows the bottom part of the jet further downstream,
+starting at about X/D = 7. In Figs. 5(a) and 5(b), it is again
+clear that regions B and C correspond to areas where RF_b1 is
+particularly bad at predicting adequate Prt values.
+
+(A, B, C, D) that contain BR2 points but almost no points from
+BR1. One of the drawbacks of PCA, which has been reported before (e.g. [32]), becomes clear: it tends to heavily cluster points,
+reducing its resolution to contrast datasets. Region A occupies
+most of the plot, but encompasses only about 3.5% of all points
+in the BR2 case. The remaining 96.5% seem to be located in areas well supported by the BR1 dataset. On the other hand, t-SNE
+tends to distribute points more evenly, and it also shows significant areas without any red points. Region B contains about 20%,
+region C contains about 16.5%, and region D contains about 8%
+of all BR2 points plotted.
+
+Finally, it is interesting to analyze areas in Fig. 12(b) outside
+of regions B, C, and D. These include a thin region close to the
+bottom wall along the full domain, and the bottom half of the
+jet right after injection (with Y /D < 0.5 and X/D < 6). These
+are areas where the prediction of RF_b1 is qualitatively better,
+as can be seen in Fig. 5(b): it correctly predicts low Prt in the
+thin strip above the bottom wall, and generally higher values of
+Prt right after injection when Y /D < 0.5. Overall, these results
+show that the dimensionality reduction techniques presented here
+are useful in identifying datasets and particular regions where
+generalization would and would not be expected.
+
+6
+
+CONCLUSION
+
+In this work, a machine learning model for turbulent heat
+flux was presented and its ability to generalize was investigated.
+The framework, which is an improved version of the one presented by Milani et al. [16], consists of using the GDH coupled
+with a random forest algorithm to prescribe a non-uniform turbulent Prandtl number. The RF is trained with high-fidelity simulations and is expected to improve mean temperature results in
+unseen film cooling flows, which was demonstrated in this paper.
+
+FIGURE 12. Center spanwise plane of the BR2 case with black
+lines corresponding to isocontours of LES mean temperature at θ̄ =
+0.2, 0.4, 0.6, 0.8. (a) shows points from region A (beige) in the PCA
+plot, and (b) shows points from regions B (red), C (yellow), and D (dark
+blue) in the t-SNE plot. Areas outside any of the dashed polygons in
+Fig. 11 are shown in light blue.
+
+Among other findings, the results shown here suggest that
+the simple GDH with a perfect Prt field improves predictions in
+some locations of the film cooling dataset with BR = 1, particularly close to the wall, but it is still a deficient model in others. However, when the blowing ratio is doubled to BR = 2, the
+GDH with an ideal Prt field produced excellent results everywhere. Also, using the different datasets available here produced
+a model that can generalize well to the BR1 case, but did not
+generalize well to the higher blowing ratio case, BR2. Two distinct dimensionality reduction techniques were used to visualize
+the BR1 and BR2 datasets in an attempt to explain this. The results from both of them, PCA and t-SNE, suggest that the points
+from the higher blowing ratio case occupy a region which is a
+superset of that occupied by the lower blowing ratio case in the
+high-dimensional feature space.
+
+Each marker in Fig. 11 illustrates the 2D representation of
+the 19 features extracted from each computational cell. A natural way to investigate these plots is to determine from where
+in the flow the regions of extrapolation (A, B, C, and D) originate. Figure 12 shows exactly this. It contains center spanwise
+planes from the BR2 dataset, and highlights the specific cells contained within regions A, B, C, and D. These are regions that seem
+poorly supported by the BR1 data, and thus flow locations where
+the random forest trained exclusively on the BR1 case is expected
+to generate poor results.
+Figure 12(a) evidences only sparse areas of the flow, mostly
+focused in the top shear layer and in the jet core around X/D = 5.
+Comparing the top shear layer in Figs. 5(a) and 5(b), it is clear
+that the Prt prediction of RF_b1 is indeed very poor there. Figure 12(b) contains more comprehensive results, that are also consistent with the predictions shown in Fig. 5. Region B encompasses most of the shear layer on the windward side of the jet
+
+In future work, the ML approach should be used with a more
+advanced, anisotropic model for turbulent heat flux. The results
+also suggest that an effective model for film cooling must be
+trained with datasets spanning different blowing ratios, going at
+least as high as the highest blowing ratio of the configuration
+of interest. Finally, the visualization techniques shown in Section 5 can be leveraged to identify potentially useful new training
+datasets for a particular target flow.
+11
+
+Copyright c 2019 by ASME
+
+ACKNOWLEDGMENT
+This research was generously supported by Honeywell
+Aerospace. In particular, we greatly benefited from discussions
+with Samir Rida, Khosro Molla Hosseini, and Ardeshir Riahi.
+
+[12] Bishop, C., 2006. Pattern Recognition and Machine Learning. Springer, New York, NY.
+[13] Ling, J., Kurzawski, A., and Templeton, J., 2016.
+“Reynolds Averaged Turbulence Modelling Using Deep
+Neural Networks with Embedded Invariance”. Journal of
+Fluid Mechanics, 807, pp. 155–166.
+[14] Sandberg, R., Tan, R., Weatheritt, J., Ooi, A., Haghiri,
+A., Michelassi, V., and Laskowski, G., 2018. “Applying
+Machine Learnt Explicit Algebraic Stress and Scalar Flux
+Models to a fundamental Trailing Edge Slot”. Journal of
+Turbomachinery, 140(10), p. 101008.
+[15] Singh, A. P., Medida, S., and Duraisamy, K., 2017.
+“Machine-Learning-Augmented Predictive Modeling of
+Turbulent Separated Flows Over Airfoils”. AIAA Journal,
+pp. 2215–2227.
+[16] Milani, P. M., Ling, J., Saez-Mischlich, G., Bodart, J.,
+and Eaton, J. K., 2018. “A Machine Learning Approach
+for Determining the Turbulent Diffusivity in Film Cooling
+Flows”. Journal of Turbomachinery, 140(2), p. 021006.
+[17] Ling, J., Jones, R., and Templeton, J., 2016. “Machine
+Learning Strategies for Systems with Invariance Properties”. Journal of Computational Physics, 318, pp. 22–35.
+[18] Shih, T.-H., Zhu, J., and Lumley, J. L., 1995. “A New
+Reynolds Stress Algebraic Equation Model”. Computer
+Methods in Applied Mechanics and Engineering, 125(1),
+pp. 287–302.
+[19] Ling, J., and Templeton, J., 2015. “Evaluation of Machine
+Learning Algorithms for Prediction of Regions of High
+Reynolds Averaged Navier Stokes Uncertainty”. Physics
+of Fluids, 27(8), p. 085103.
+[20] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V.,
+Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss,
+R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau,
+D., Brucher, M., Perrot, M., and Duchesnay, E., 2011.
+“Scikit-learn: Machine Learning in Python”. Journal of
+Machine Learning, 12, pp. 2825–2830.
+[21] Louppe, G., 2014. “Understanding Random Forests: From
+Theory to Practice”. arXiv preprint.
+[22] Bodart, J., Coletti, F., Bermejo-Moreno, I., and Eaton, J.,
+2013. “High-Fidelity Simulation of a Turbulent Inclined
+Jet in a Crossflow”. Center for Turbulence Research Annual
+Research Briefs, pp. 263–275.
+[23] Vreman, A., 2004. “An Eddy-Viscosity Subgrid-Scale
+Model for Turbulent Shear Flow: Algebraic Theory and
+Applications”. Physics of fluids, 16(10), pp. 3670–3681.
+[24] Milani, P. M., Gunady, I. E., Ching, D. S., Banko, A. J.,
+Elkins, C. J., and Eaton, J. K., 2019. “Enriching MRI Mean
+Flow Data of Inclined Jets in Crossflow with Large Eddy
+Simulations”. International Journal of Heat and Fluid
+Flow, 80, p. 108472.
+[25] Folkersma, M., and Bodart, J., 2018. “Large Eddy Simulation of an Asymmetric Jet in Crossflow”. In Direct and
+
+REFERENCES
+[1] Bogard, D. G., and Thole, K. A., 2006. “Gas Turbine
+Film Cooling”. Journal of Propulsion and Power, 22(2),
+pp. 249–270.
+[2] Nikparto, A., Rice, T., and Schobeiri, M. T., 2017. “Experimental And Numerical Investigation of Heat Transfer
+and Film Cooling Effectiveness of a Highly Loaded Turbine Blade Under Steady and Unsteady Wake Flow Condition”. In ASME Turbo Expo 2017: Turbomachinery technical conference and exposition, American Society of Mechanical Engineers, pp. V05CT19A029–V05CT19A029.
+[3] Kays, W. M., 1994. “Turbulent Prandtl Number - Where
+Are We?”. Journal of Heat Transfer, 116(2), pp. 284–295.
+[4] Kohli, A., and Bogard, D. G., 2005. “Turbulent Transport
+in Film Cooling Flows”. Journal of Heat Transfer, 127(5),
+pp. 513–520.
+[5] Muppidi, S., and Mahesh, K., 2008. “Direct Numerical
+Simulation of Passive Scalar Transport in Transverse Jets”.
+Journal of Fluid Mechanics, 598, pp. 335–360.
+[6] Schreivogel, P., Abram, C., Fond, B., Straußwald, M.,
+Beyrau, F., and Pfitzner, M., 2016. “Simultaneous kHzrate Temperature and Velocity Field Measurements in the
+Flow Emanating from Angled and Trenched Film Cooling
+Holes”. International Journal of Heat and Mass Transfer,
+103, pp. 390–400.
+[7] Oliver, T. A., Anderson, J. B., Bogard, D. G., Moser, R. D.,
+and Laskowski, G., 2017. “Implicit LES for Shaped-Hole
+Film Cooling Flow”. In ASME Turbo Expo 2017: Turbomachinery Technical Conference and Exposition, American Society of Mechanical Engineers, p. V05AT12A005.
+[8] Daly, B. J., and Harlow, F. H., 1970. “Transport Equations
+in Turbulence”. The Physics of Fluids, 13(11), pp. 2634–
+2649.
+[9] Abe, K., and Suga, K., 2001. “Towards the Development
+of a Reynolds-Averaged Algebraic Turbulent Scalar-Flux
+Model”. International Journal of Heat and Fluid Flow,
+22(1), pp. 19–29.
+[10] Ling, J., Ryan, K. J., Bodart, J., and Eaton, J. K., 2016.
+“Analysis of Turbulent Scalar Flux Models for a Discrete
+Hole Film Cooling Flow”. Journal of Turbomachinery,
+138(1), p. 011006.
+[11] Ryan, K. J., Bodart, J., Folkersma, M., Elkins, C. J., and
+Eaton, J. K., 2017. “Turbulent Scalar Mixing in a Skewed
+Jet in Crossflow: Experiments and Modeling”. Flow, Turbulence and Combustion, 98(3), pp. 781–801.
+12
+
+Copyright c 2019 by ASME
+
+[26]
+
+[27]
+
+[28]
+
+[29]
+
+[30]
+[31]
+
+[32]
+
+Large-Eddy Simulation X, Springer International Publishing, pp. 85–91.
+Rossi, R., Philips, D., and Iaccarino, G., 2010. “A Numerical Study of Scalar Dispersion Downstream of a WallMounted Cube Using Direct Simulations and Algebraic
+Flux Models”. International Journal of Heat and Fluid
+Flow, 31(5), pp. 805–819.
+Ling, J., Rossi, R., and Eaton, J. K., 2015. “Near Wall
+Modeling for Trailing Edge Slot Film Cooling”. Journal of
+Fluids Engineering, 137(2), p. 021103.
+Milani, P. M., and Eaton, J. K., 2018. “Magnetic Resonance
+Imaging, Optimization, and Machine Learning to Understand and Model Turbulent Mixing”. In 21st Australasian
+Fluid Mechanics Conference, Australasian Fluid Mechanics Society.
+Milani, P. M., Ling, J., and Eaton, J. K., 2019. “Physical Interpretation of Machine Learning Models Applied to
+Film Cooling Flows”. Journal of Turbomachinery, 141(1),
+p. 011004.
+Bro, R., and Smilde, A. K., 2014. “Principal Component
+Analysis”. Analytical Methods, 6(9), pp. 2812–2831.
+Maaten, L. v. d., and Hinton, G., 2008. “Visualizing Data
+Using t-SNE”. Journal of Machine Learning Research,
+9(Nov), pp. 2579–2605.
+Wu, J., Wang, J., Xiao, H., and Ling, J., 2017. “Visualization of High Dimensional Turbulence Simulation Data Using t-SNE”. In 19th AIAA Non-Deterministic Approaches
+Conference, American Institute of Aeronautics and Astronautics, p. 1770.
+
+13
+
+Copyright c 2019 by ASME
+
+

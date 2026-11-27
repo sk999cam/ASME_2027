@@ -1,0 +1,1143 @@
+R. B. Langtry
+e-mail: robin.langtry@ansys.com
+
+F. R. Menter
+e-mail: florian.menter@ansys.com
+ANSYS CFX Germany,
+12 Staudenfeldweg,
+Otterfing, Bavaria 83624,
+Germany
+
+S. R. Likki
+Department of Mechanical Engineering,
+University of Kentucky,
+216A RGAN Building,
+Lexington, KY 40502–0503
+e-mail: srinivas@engr.uky.edu
+
+Y. B. Suzen
+Department of Mechanical Engineering,
+North Dakota State University,
+Dolve Hall 111,
+P.O. Box 5285,
+Fargo, ND 58105
+e-mail: suzen@engr.uky.edu
+
+P. G. Huang
+Department of Mechanical Engineering,
+University of Kentucky,
+216A RGAN Building,
+Lexington, kY 40502-0503
+e-mail: ghuang@engr.uky.edu
+
+A Correlation-Based Transition
+Model Using Local Variables—
+Part II: Test Cases and Industrial
+Applications
+A new correlation-based transition model has been developed, which is built strictly on
+local variables. As a result, the transition model is compatible with modern computational fluid dynamics (CFD) methods using unstructured grids and massive parallel
+execution. The model is based on two transport equations, one for the intermittency and
+one for the transition onset criteria in terms of momentum thickness Reynolds number.
+The proposed transport equations do not attempt to model the physics of the transition
+process (unlike, e.g., turbulence models), but form a framework for the implementation of
+correlation-based models into general-purpose CFD methods. Part I of this paper
+(Menter, F. R., Langtry, R. B., Likki, S. R., Suzen, Y. B., Huang, P. G., and Völker, S.,
+2006, ASME J. Turbomach., 128(3), pp. 413–422) gives a detailed description of the
+mathematical formulation of the model and some of the basic test cases used for model
+validation. Part II (this part) details a significant number of test cases that have been
+used to validate the transition model for turbomachinery and aerodynamic applications,
+including the drag crisis of a cylinder, separation-induced transition on a circular leading edge, and natural transition on a wind turbine airfoil. Turbomachinery test cases
+include a highly loaded compressor cascade, a low-pressure turbine blade, a transonic
+turbine guide vane, a 3D annular compressor cascade, and unsteady transition due to
+wake impingement. In addition, predictions are shown for an actual industrial application, namely, a GE low-pressure turbine vane. In all cases, good agreement with the
+experiments could be achieved and the authors believe that the current model is a significant step forward in engineering transition modeling. 关DOI: 10.1115/1.2184353兴
+
+S. Völker
+General Electric Company,
+One Research Circle, ES-221,
+Niskayuna, NY 12309
+e-mail: voelker@crd.ge.com
+
+Introduction
+The location of the onset and extent of transition are of major
+importance in turbomachinery design applications, where the wall
+shear stress or wall heat transfer are of interest. In addition, blockage and loss, which are important criteria for assessing turbomachinery performance, are strongly affected by transition. Matters
+are further complicated by the fact that a number of fundamentally
+different transition mechanisms can be found in turbomachinery
+flows, including bypass transition, separation-induced transition,
+wake-induced transition, and shock-induced transition 关1兴.
+Turbomachinery blades typically operate at Reynolds numbers
+where the laminar boundary layer may extend significantly downstream from the leading edge. It has been observed that the boundary layers on the pressure side of turbine blades are often entirely
+laminar 关1兴. The transition process can also have a strong influContributed by the International Gas Turbine Institute 共IGTI兲 of ASME for publication in the JOURNAL OF TURBOMACHINERY. Manuscript received October 1, 2003;
+final manuscript received March 1, 2004. IGTI Review Chair: A. J. Strazisar. Paper
+presented at the International Gas Turbine and Aeroengine Congress and Exhibition,
+VIenna, Austria, June 13–17, 2004, Paper No. 2004-GT-53434.
+
+Journal of Turbomachinery
+
+ence on the separation behavior of boundary layers. For example,
+compressor performance can be affected by separation-induced
+transition, where the laminar boundary layer separates and after
+transitioning, reattaches fully turbulent downstream of the separation point 关2兴. Rotor-stator interactions are an example for wakeinduced transition, where the transition region of the downstream
+blade row becomes unsteady due to wake-passing effects 关3兴. In
+all of the above examples, a fully turbulent solution will overpredict the wall shear stress and heat transfer distributions. In addition, a fully turbulent solution will not predict blockage and loss
+correctly, which will lead to incorrect engine performance
+estimates.
+Despite its obvious importance for predicting turbomachinery
+flows, transition is usually not accounted for in Reynoldsaveraged Navier-Stokes 共RANS兲 methods using statistical turbulence models. If transition is accounted for, additional information
+has to be supplied in order to simulate the transition process. Most
+commonly, the additional information consists of experimental
+transition correlations. These correlations typically relate flow parameters like turbulence intensity and pressure gradient coefficients to the momentum thickness Reynolds number at which
+
+Copyright © 2006 by ASME
+
+JULY 2006, Vol. 128 / 423
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Table 1 Summary of all test case inlet conditions
+
+Case
+Pak-B
+cascade
+Pak-B
+cascade
+Pak-B
+cascade
+Low-Tu
+airfoil
+Zierke
+共PSU兲,
+−1.5 deg
+VKI MUR
+241
+VKI MUR
+116
+T3LB
+T3LC
+T3LD
+Drag crisis
+of a
+cylinder
+RGW
+T106
+cascade
+unsteady
+wake/blade
+interaction
+GE LPT
+
+U
+inlet
+共m/s兲
+
+FSTI 共%兲
+Inlet /
+L.E.
+
+4.7,
+7.05,
+9.4
+4.7,
+7.05,
+9.4
+4.7,
+7.05,
+9.4
+74
+
+0.08/ 0.08
+
+␳
+共kg/ m3兲
+
+␮
+共kg/ms兲
+
+1.225
+
+1.81⫻ 10−5
+
+1.225
+
+1.81⫻ 10−5
+
+1.225
+
+1.81⫻ 10−5
+
+1.0/ 0.02
+
+10,
+10,
+10
+6.5,
+9.75,
+13
+15,
+22.5,
+30
+1
+
+1.25
+
+1.84⫻ 10−5
+
+32.9
+
+0.18/ 0.18
+
+15.0
+
+1.2
+
+1.81⫻ 10−5
+
+61.8
+
+6.5/ 6.17
+
+1000.0
+
+2.69
+
+2.388⫻ 10−5
+
+61.8
+
+1.0/ 0.9
+
+11.0
+
+2.69
+
+2.388⫻ 10−5
+
+5
+5
+5
+
+0.64/ 0.63
+2.39/ 2.06
+5.64/ 5.34
+0.45/ 0.3
+
+1.09
+3.4
+18.92
+
+1.2
+1.2
+1.2
+1.2
+
+1.8⫻ 10−5
+1.8⫻ 10−5
+1.8⫻ 10−5
+1.8⫻ 10−5
+
+95.5
+7.2
+
+1.25/ 0.65
+0.1/ 0.1
+
+2
+1
+
+1.2
+1.2
+
+1.8⫻ 10−5
+1.87⫻ 10−5
+
+172
+
+5.0
+
+31
+
+1.53
+
+1.44⫻ 10−3
+
+2.35/ 1.6
+6.0/ 2.85
+
+transition will occur. However, current correlation-based transition
+models are incompatible with modern computational fluid dynamics 共CFD兲 methods as they rely on nonlocal variables, such as the
+momentum thickness Reynolds number, turbulence intensity at
+the edge of the boundary layer, or shape factors just to name a few
+关4,5兴. These quantities are not readily available in modern CFD
+codes, particularly when unstructured grids and scalable parallelization are used. In addition, current correlation based methods
+are inherently two-dimensional. Important effects, such as endwall boundary layers or leakage flows, cannot be included. On the
+other hand, correlation-based methods are very attractive, as they
+allow the inclusion of experimental evidence.
+The present paper describes a correlation-based transition
+model, which is built strictly on local variables and thereby compatible with modern CFD methods. It is based on transport equations for intermittency and momentum thickness Reynolds number. Part I of this paper 关6兴 gives a detailed description of the
+mathematical formulation of the model and some of the basic test
+cases used for model validation. Part II will focus on the application of the transition model to turbomachinery test cases. This
+includes two-dimensional 共2D兲 and three-dimensional 共3D兲 test
+cases as well as actual industrial problems.
+
+␮t / ␮
+
+energy in the freestream, as well as due to changes in the
+freestream velocity outside the boundary layer. This additional
+transport equation is an essential part of the model as it ties the
+empirical correlation to the onset criteria in the intermittency
+equation and allows the models use in general geometries and
+over multiple blades, without interaction from the user.
+The formulation of the intermittency equation has also been
+extended to account for the rapid onset of transition caused by
+separation of the laminar boundary layer. In addition, the model
+can be fully calibrated with internal or proprietary transition onset
+and transition length correlations. The correlations can also be
+extended to flows at low freestream turbulence intensity or to
+flows with cross-flow instability. The model formulation therefore
+offers a flexible environment for engineering transition predictions
+that is fully compatible with the infrastructure of modern CFD
+methods. The present transition model formulation is described
+very briefly for completeness, a detailed description can be found
+in the companion paper 关6兴.
+The transport equation for the intermittency ␥ reads
+
+⳵
+⳵共␳␥兲 ⳵共␳U j␥兲
+= P ␥1 − E ␥1 + P ␥2 − E ␥2 +
++
+⳵t
+⳵x j
+⳵x j
+
+424 / Vol. 128, JULY 2006
+
+␮+
+
+␮t ⳵␥
+␴ f ⳵x j
+
+共1兲
+
+Model Formulation
+In Part I 关6兴, a transport equation for the intermittency ␥, which
+can be used to trigger transition locally, has been described in
+detail. The intermittency function is coupled with the shear stress
+transport 共SST兲 turbulence model 关7兴. It is used to turn on the
+production term of the turbulent kinetic energy downstream of the
+transition point. In addition to the transport equation for the intermittency, a second transport equation is solved in terms of the
+transition onset momentum-thickness Reynolds number R̃e␪t. This
+is done in order to capture the nonlocal influence of the turbulence
+intensity, which changes due to the decay of the turbulence kinetic
+
+冋冉 冊 册
+
+The transition sources are defined as follows:
+P␥1 = Flength␳S关␥Fonset兴ca1
+
+共2兲
+
+E␥1 = ce1 P␥1␥
+
+共3兲
+
+where S is the strain rate magnitude. Flength is an empirical correlation that controls the length of the transition region. The
+destruction/relaminarization sources are defined as follows:
+P␥2 = ca2␳⍀␥Fturb
+
+共4兲
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 1 Contours of turbulence intensity Tu for the Zierke „PSU… compressor
+
+E␥2 = ce2 P␥2␥
+
+共5兲
+
+where ⍀ is the vorticity magnitude. The transition onset is controlled by the following functions:
+
+␳y S
+␮
+
+冉 冋冉
+
+␥sep = min s1 max
+
+冊 册
+
+冊
+
+Rev
+− 1,0 Freattach,5 F␪t
+2.193 Re␪c
+
+s1 = 8
+共13兲
+
+2
+
+ReV =
+
+共6兲
+
+Rev
+2.193 Re␪c
+
+Fonset 1 =
+
+共7兲
+
+4
+Fonset 2 = min关max共Fonset 1,Fonset
+1兲,2.0兴
+
+RT =
+
+␳k
+␮␻
+
+共9兲
+
+冋 冉 冊 册
+
+Fonset 3 = max 1 −
+
+共8兲
+
+RT
+2.5
+
+3
+
+,0
+
+Fonset = max共Fonset 2 − Fonset 3,0兲
+Fturb = e−共RT/4兲
+
+4
+
+共10兲
+共11兲
+
+ce2 = 50;
+
+ca1 = 0.5
+
+ca2 = 0.03;
+
+␴ f = 1.0
+
+The modification for separation-induced transition is defined below.
+Journal of Turbomachinery
+
+共14兲
+
+␥eff = max共␥, ␥sep兲
+
+共15兲
+
+The boundary condition for ␥ at a wall is zero normal flux while
+for an inlet ␥ is equal to 1.0.
+The transport equation for the transition momentum thickness
+Reynolds number R̃e␪t reads
+
+冋
+
+⳵共␳R̃e␪t兲 ⳵共␳U jR̃e␪t兲
+⳵R̃e␪t
+⳵
+= P ␪t +
+␴ ␪t共 ␮ + ␮ t兲
++
+⳵t
+⳵x j
+⳵x j
+⳵x j
+
+册
+
+共16兲
+
+The source term is defined as follows:
+
+␳
+P␪t = c␪t 共Re␪t − R̃e␪t兲共1.0 − F␪t兲
+t
+
+共12兲
+
+Re␪c is the critical Reynolds number where the intermittency first
+starts to increase in the boundary layer. This occurs upstream of
+the transition Reynolds number, R̃e␪t, and the difference between
+the two must be obtained from an empirical correlation. At the
+present time the Flength and Re␪c correlations are proprietary and
+are not given in this paper.
+The constants for the intermittency equation are
+ce1 = 1.0;
+
+4
+
+Freattach = e−共RT/15兲
+
+t=
+
+再 冋
+
+500␮
+␳U2
+
+F␪t = min max Fwakee−共y/␦兲 , 1.0 −
+
+␪BL =
+
+R̃e␪t␮
+␳U
+
+4
+
+␦BL =
+
+共17兲
+
+15
+␪BL
+2
+
+Re␻ =
+
+␳␻y 2
+␮
+
+共18兲
+
+冉
+
+␥ − 1/ce2
+1.0 − 1/ce2
+
+␦=
+
+冊册
+2
+
+50⍀y
+␦BL
+U
+
+冎
+
+,1.0
+
+共19兲
+共20兲
+
+共21兲
+
+JULY 2006, Vol. 128 / 425
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 2
+
+Cp distribution for the Zierke „PSU… compressor
+
+Fwake = e−关Re␻/共1E + 5兲兴
+
+2
+
+共22兲
+dU
+dU
+dU
+dU
+= 共u/U兲
++ 共v/U兲
++ 共w/U兲
+ds
+dx
+dy
+dz
+
+The model constants for the R̃e␪t equation are
+c␪t = 0.03;
+
+␴␪t = 10.0
+
+The boundary condition for R̃e␪t at a wall is zero flux. The
+boundary condition for R̃e␪t at an inlet should be calculated from
+the empirical correlation based on the inlet turbulence intensity.
+The empirical correlation is defined as
+Re␪t = 803.73关Tu + 0.6067兴−1.027F共␭␪,K兲
+F共␭␪,K兲 = 1 − 关− 10.32␭␪ − 89.47␭␪2 − 265.51␭␪3兴e−Tu/3.0,
+
+共23兲
+␭␪ 艋 0
+共24兲
+
+F共␭␪,K兲 = 1 + 关0.0962关K106兴 + 0.148关K106兴2 + 0.0141关K106兴3兴
+⫻共1 − e−Tu/1.5兲 + 0.556关1 − e关−23.9␭␪兴兴e−Tu/1.5,
+
+␭␪ ⬎ 0
+共25兲
+
+The empirical correlation is a function of Thwaites’ pressure gradient coefficient ␭␪ and the pressure gradient coefficient K
+␭␪ = 共␪2/v兲dU/ds
+
+共26兲
+
+K = 共v/U2兲dU/ds
+
+共27兲
+
+where dU / ds is the acceleration along in the streamwise direction
+U = 共u2 + v2 + w2兲1/2
+
+Fig. 3
+
+共29兲
+
+For numerical robustness, the acceleration parameters and the
+empirical correlation should be limited as follows:
+− 0.1 艋 ␭␪ 艋 0.1
+
+共30兲
+
+− 3 ⫻ 10−6 艋 K 艋 3 ⫻ 10−6
+
+共31兲
+
+Re␪t 艌 20
+
+共32兲
+
+It should also be stressed that the empirical correlation is used
+only in the source term 共Eq. 共17兲兲 of the transport equation for
+transition onset momentum thickness Reynolds number.
+The transition model interacts with the turbulence model as
+follows:
+
+冉
+
+⳵
+⳵
+⳵
+⳵k
+共␳u jk兲 = P̃k − D̃k +
+共 ␮ + ␴ k␮ t兲
+共␳k兲 +
+⳵t
+⳵x j
+⳵x j
+⳵x j
+
+冉
+
+冊
+
+共33兲
+
+Pk
+⳵
+⳵
+⳵
+⳵␻
+共␳u j␻兲 = ␣ − D␻ + Cd␻ +
+共 ␮ + ␴ k␮ t兲
+共␳␻兲 +
+⳵t
+⳵x j
+⳵x j
+⳵x j
+vt
+
+冊
+
+共34兲
+P̃k = ␥effPk
+
+共35兲
+
+共28兲
+
+Cf distribution for the Zierke „PSU… compressor
+
+426 / Vol. 128, JULY 2006
+
+Fig. 4 Heat transfer for the VKI MUR241 „FSTI= 6.0% … and
+MUR116 „FSTI= 1.0% … test cases
+
+Fig. 5 Skin friction Cf for the T3LB, T3LC, and T3LD test cases
+„freestream turbulence intensity= 0.63%, 2.39%, and 5.39%…
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 6 Contours of velocity „top… and intermittency „bottom… due to separation induced transition on a circular leading edge for the T3LC test case
+
+D̃k = min关max共␥eff,0.1兲,1.0兴Dk
+Ry =
+
+␳y 冑k
+␮
+
+共37兲
+8
+
+共38兲
+
+orig,F3兲
+
+共39兲
+
+F3 = e−共Ry/120兲
+F1 = max共F1
+
+共36兲
+
+where Pk and Dk are the original production and destruction terms
+for the SST model and F1 orig is the original SST blending function described in Menter 关2兴.
+In order to capture the laminar and transitional boundary layers
+correctly, the grid must have a y + of ⬃1. If the y + is too large 共i.e.,
+⬎5兲 than the transition onset location moves upstream with increasing y +. All simulations have been performed with a bounded
+second-order upwind biased discretization for the mean flow, turbulence, and transition equations.
+
+Results and Discussion
+The rest of the paper describes the numerical results for a wide
+variety of validation test cases, including the drag crisis of a cylinder 关8兴, separation-induced transition on a circular leading edge
+共T3L, 关9兴兲, and unsteady transition due to wake impingement
+共T106, 关3兴兲. In addition, the predicted transition onset location for
+an airfoil at very low freestream turbulence intensity is compared
+to experimental results and the XFOIL code that is often used to
+predict natural transition. Turbomachinery test cases include a
+highly loaded compressor cascade 共PSU, 关10兴兲, a low-pressure
+turbine blade 共Pak-B, 关4兴兲, a transonic turbine guide vane cascade
+共VKI MUR, 关11兴兲, and a 3D annular compressor cascade 共RGW,
+关12兴兲. As well, results are shown for an actual industrial application, namely, a GE low-pressure turbine 共LPT兲. All simulations
+Journal of Turbomachinery
+
+have been computed with CFX-5, except for the Pak-B and T106
+cases, which where computed with an in house N-S code developed by the University of Kentucky authors. A summary of the
+inlet conditions for all the test cases described in this paper is
+given in Table 1. Where possible, the inlet viscosity ratio was
+specified in order to match the experimentally measured decay
+rate of freestream turbulence intensity 共FSTI兲.
+Zierke & Deutsch Compressor Cascade. Contours of turbulence intensity 共Tu兲 for the Zierke 共PSU兲 compressor are shown in
+Fig. 1. On the suction side, transition occurs at the leading edge
+due to a small leading edge separation bubble. On the pressure
+side, transition occurs at about midchord. The pressure Cp and
+skin friction Cf distribution are shown in Figs. 2 and 3. There
+appears to be a significant amount of scatter in the experimental
+data; however, in principal, the transition model is predicting the
+major flow features correctly 共i.e., fully turbulent suction side,
+transition at midchord on the pressure side兲. One important issue
+to note is the effect of streamwise grid resolution on resolving the
+leading edge laminar separation and subsequent transition on the
+suction side. If the number of streamwise nodes clustered around
+the leading edge is too low, the model cannot resolve the rapid
+transition and a laminar boundary layer on the suction side is the
+result. For the present study, 60 streamwise nodes where used in
+between the leading edge and the x / C equal to 0.1 location.
+Von Karman Institute Turbine Cascade. The surface heat
+transfer for the VKI MUR 241 共FSTI= 6.0% 兲 and MUR 116
+共FSTI= 1.0% 兲 test cases is shown in Fig. 4. The strong acceleration on the suction side for the MUR 241 case keeps the flow
+laminar until a weak shock at midchord, whereas for the MUR
+116 case the flow is laminar until right before the trailing edge.
+Downstream of transition there appears to be a significant amount
+of error between the predicted turbulent heat transfer and the meaJULY 2006, Vol. 128 / 427
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 7 Drag crisis of a cylinder in cross-flow
+
+sure value. It is possible that this is the result of a Mach number
+effect on the transition length 关5兴. At present, no attempt has been
+made to account for this effect in the model. It can be incorporated
+in future correlations, if found consistently important.
+The pressure-side heat transfer is of particular interest for this
+case. For both cases, transition did not occur on the pressure side;
+however, the heat transfer was significantly increased for the high
+turbulence intensity case. It is believed that large freestream levels
+of turbulence can buffet the laminar boundary layer and increase
+the heat transfer and skin friction. From a modeling standpoint,
+the effect was caused by the large freestream viscosity ratio necessary for MUR 241 to keep the turbulence intensity from decaying below 6%, which is the freestream value quoted in the experiment 关11兴. The enhanced heat transfer on the pressure side was
+also present in the experiment and the effect appears to be
+physical.
+
+Fig. 8 Predicted instantaneous skin friction Cf for a cylinder
+in cross-flow at Reynolds numbers ReD of 100,000, 300,000,
+and 2,000,000
+
+effort, the current simulations with the transition model have been
+computed in unsteady mode on a 2D grid. Because of time constraints, the fully turbulent simulations have been obtained with
+symmetric steady-state simulations.
+The predicted drag coefficient for a varying Reynolds number
+is shown in Fig. 7. Although the agreement with experiments is
+not perfect, it appears that the transition model can, in principle,
+predict the appropriate Reynolds number range at which the sepa-
+
+Coupland Flat Plate. The T3L series of test cases are commonly used to validate a transition models ability to predict separation induced transition on a circular leading edge subjected to
+varying turbulence intensities. The results obtained with the
+present transition model are shown in Figs. 5 and 6 共note that no
+negative wall shear stresses could be measured in the experiments
+and these where manually set to zero based on the hotwire signal兲.
+In general, the predicted reattachment location is in reasonably
+good agreement with the location measured in the experiment.
+The model captured the size of the laminar separation bubble due
+to freestream turbulence intensities of 0.63% and 2.39%. For the
+freestream turbulence intensity of 5.39%, the predicted reattachment is too early; however, the error is difficult to quantify without an additional experimental point in the reattaching region.
+A contour plot of velocity 共top兲 and intermittency 共bottom兲 is
+shown in Fig 6. Near the wall in the viscous sublayer, the intermittency is always small because the viscosity ratio is small and
+as a result the destruction terms 共Eqs. 共4兲 and 共5兲兲 of the intermittency equation are active. This has not been found to have any
+effect on the turbulent solution. For this case, there is also a region
+at the outer boundary layer edge where the intermittency is approximately equal to 0.5. This is caused by the large laminar
+separation upstream of the reattachment point. As the turbulent
+boundary layer thickness increases this artifact disappears downstream.
+Cylinder in Cross-Flow. One of the most challenging applications for any turbulence closure level is the prediction of the drag
+crisis of a cylinder in crossflow 共see LES results of 关13兴兲. Even on
+a RANS level, this simulation would require a fully unsteady
+simulation and most likely even a partial resolution of the 3D
+turbulent structures in the wake. In order to reduce the numerical
+428 / Vol. 128, JULY 2006
+
+Fig. 9 Predicted transition location „x / C… and drag coefficient
+as a function of angle of attack for a wind turbine airfoil
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 10 Predicted blade loading for the Pak-B low-pressure turbine at various freestream turbulence intensities „FSTI… and
+Reynolds numbers
+
+ration on the cylinder switches from a laminar separation to a
+turbulent one. For the present simulations, only about 30 time
+steps per vortex shedding period have been used in the unsteady
+simulations. It is possible that smaller time steps are required to
+properly capture the drag coefficient. Instantaneous skin friction
+distributions as predicted by the transition model for various Reynolds numbers are shown in Fig. 8. The results are for three different flow regimes, demonstrating laminar separation, laminar
+separation with turbulent reattachment, and finally, transition before the separation point. Note that these effects are beyond most
+engineering transition models used today.
+Wind Turbine Airfoil. The testcase geometry is a 2D airfoil
+section, as typically used for GE wind-turbine blades. It operates
+in a low FSTI environment with a turbulence intensity of only
+around 0.02% at the leading edge, resulting in a natural transition
+process. As the correlations used in the current model asymptote
+properly to low-FSTI data, it is still possible to compute such
+cases. Transition locations versus angle of attack are shown in Fig.
+9共a兲. Wind tunnel results and XFOIL 共v6.8兲 predictions are plotted
+for comparison. The experimental data were obtained using a
+stethoscope method. In general, the transition model captures the
+dependence of the transition location on the angle of attack in
+good agreement with the data. Nevertheless, transition is predicted
+to occur slightly too far upstream for all angles of attack. One
+possible explanation for this behavior is that the transition model
+Journal of Turbomachinery
+
+in its current form—including the underlying correlations—was
+developed mainly for internal turbomachinery. As such, little attention was paid to turbulence length-scale effects, which are
+likely to play an important role in predicting transition for lowspeed external flows, such as wind turbine airfoils. Note that this
+issue can be addressed by enhancing the transition correlations for
+the current applications. Figure 9共b兲 shows the predicted drag coefficient as a function of angle of attack. Included are results from
+a transitional computation using the XFOIL code and from fully
+turbulent simulations. Clearly, the drag coefficient predictions
+from the transitional computation show significant improvements
+over the fully turbulent computation for all angles of attack.
+Pak-B Cascade. Huang et al. 关4兴 conducted experiments on the
+PAK-B blade cascade for a range of Reynolds numbers and turbulence intensities. Experiments were performed for Reynolds
+numbers of 50,000, 75,000, and 100,000 based on inlet velocity
+and axial chord length, with turbulence intensities of 0.08%,
+2.35%, and 6.0% 共which correspond to values of 0.08%, 1.6%,
+and 2.85% at the leading edge of the blade兲. The computed pressure coefficient distributions are compared to experimental data
+along with the fully turbulent computations in Fig. 10. In this
+figure, the comparisons are organized such that the horizontal axis
+denotes the Reynolds number, whereas the vertical axis corresponds to the freestream turbulence intensity. The most important
+feature of this testcase is the extent of the separation bubble on the
+JULY 2006, Vol. 128 / 429
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 11 Fully turbulent „top… and transitional „bottom… skin friction on the suction side of the 3D RGW compressor cascade
+compared to experimental oil flow visualization „middle, from
+Shulz and Galas †12‡, Institute of Jet Propulsion and Turbomachinery, RWTH Aachen University…
+
+suction side, characterized by the plateau in the pressure distribution. The size of the separation bubble is a complex function of
+the Re number and the FSTI value. The computations with the
+transition model compare well to the experimental data for all
+cases considered, illustrating the ability of the model to capture
+the effects of Reynolds number variations, FSTI, and flow separation on transition over a wide range of flow conditions.
+RGW Compressor Cascade. The next test case is the RGW
+annular compressor 关12兴. It is a fully three-dimensional flow, including sidewall boundary layers originating upstream of the
+blade. This flow topology poses a major challenge to standard
+430 / Vol. 128, JULY 2006
+
+Fig. 12 Predicted skin friction „Cf… for the 3D GE low-pressure
+stator guide vane
+
+correlation-based transition models, as complex logic would be
+required to distinguish between the different boundary layers 关2兴.
+Figure 11 shows a comparison of the simulations on the suction
+side of the blade with an experimental oil-flow picture. For comparison, a fully turbulent flow simulation is also included. It can
+be seen that the transition model captures the complex flow topology of the experiments in good qualitative agreement with the
+data. A comparison between the transition model and the fully
+turbulent simulation shows the strong influence of the laminar
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 14 Comparison of computed and experimental pressure
+coefficient distributions for T106 case
+
+it is not activated until after the separation occurs. The flow exhibits a complex interaction between the turbulent separation on
+the sidewalls and the location of the laminar separation line. It
+appears that the turbulent separation zones on the hub and especially on the shroud are overestimated in the simulation. This
+results in an acceleration of the core flow, which, in turn, could be
+the cause of the delay in the laminar separation, as it reduced the
+strength of the adverse pressure gradient at the center of the blade.
+
+Fig. 13 Convergence history for the GE low-pressure stator
+vane for a fully turbulent „top… and transitional „bottom…
+computation
+
+flow separation on the sidewall boundary layer separation. The
+flow separation on the shroud is significantly reduced by the displacement effect of the separation bubble in the transitional simulation. As a result, the loss coefficient Yp in the fully turbulent
+simulation of 0.19 is much higher than the experimental value of
+0.097. The simulation with the transition model gives a value of
+0.11 in much closer agreement with the experiment. The main
+difference between the simulations using the transition model and
+the experimental oil-flow lies in the reduced laminar separation
+zone observed in the simulations. It results from a downstream
+shift of the laminar separation line. Similar discrepancies have
+been observed by Thermann et al. 关2兴 using an extended Mayle 关1兴
+criterion for transition. The main reason for the delayed laminar
+separation does not necessarily come from the transition model, as
+
+GE Low Pressure Turbine Vane. This test case qualitatively
+investigates the behavior of the transition model in an actual 3D
+turbomachinery flow. In particular, the interaction of end-wall and
+vane boundary layers and the impact on the predicted transition
+location were of interest. Figure 12 shows wall-shear stress contours on the suction side of the vane and skin friction coefficients
+at various radial locations. The wall-shear contour plot 共Fig.
+12共b兲兲 indicates that away from the end walls, the suction side
+flow is laminar up to about 70% chord, where it transitions right
+before separating. Figure 12共c兲 shows the friction coefficient at
+50% span. For comparison, the friction coefficient from a fully
+turbulent computation is plotted as well. Figure 12共a兲 shows the
+
+Table 2 T106 cascade details
+Chord
+Blade stagger
+Cascade pitch
+Inlet flow angle
+Design exit flow angle
+Bar diameter
+Axial distance: bars to LE
+Flow coefficient 共Uaxial / Ubar兲
+
+Journal of Turbomachinery
+
+198 mm
+59.3 deg
+158 mm
+37.7 deg
+63.2 deg
+2.05 mm
+70 mm
+0.83
+
+Fig. 15 Computed phase-averaged skin friction coefficient
+distribution on the suction surface of T106 blade
+
+JULY 2006, Vol. 128 / 431
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+Fig. 16 Comparison of computed and experimental mean velocity profiles at various streamwise locations on the suction surface
+of T106 blade
+
+effect of the end-wall boundary layer on the predicted transition
+location. Skin friction coefficients are plotted for 95, 97, and 99%
+span. With increasing span, the vane boundary layer interacts
+more strongly with the end-wall boundary layer, which is fully
+turbulent. As a result, the transition model sees higher levels of
+turbulence intensity outside the vane boundary layer and transition
+432 / Vol. 128, JULY 2006
+
+is triggered further upstream.
+The convergence history for the fully turbulent and transitional
+computations is shown in Fig. 13. There is some additional effort
+required for the transitional computation because the laminar
+boundary layers must first be resolved before the turbulent boundary layer starts to develop downstream of transition. However,
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+overall the convergence with the transition model is very good.
+The transitional computation took ⬃17% more CPU time than the
+fully turbulent computation.
+Unsteady Wake/Blade Interaction on T106 Blade Cascade.
+A computational investigation of the effects of unsteady wake/
+blade interaction on transition and separation in low-pressure turbines has been performed by numerical simulations of recent experiments of Stieger et al. 关3兴. These experiments were conducted
+in order to investigate the effects of periodically passing wakes on
+laminar-to-turbulent transition and separation in low-pressure turbines. The test section involved a T106 turbine blade cascade
+subjected to wake passing from a moving bar wake generator. The
+flow conditions correspond to Rex = 91,077 based on chord and
+inlet velocity and FSTI= 0.1%. The details of the T106 cascade
+are summarized in Table 2.
+The computed pressure coefficient distributions compared to
+experiment are shown Fig. 14. Both the wake-free 共steady兲 computation and experiment are given along with the time-averaged
+pressure distributions from the unsteady experiments and computations. In the wake-free computation, the size of the predicted
+separation region is slightly larger than in the experiment. The
+time-averaged pressure distribution from unsteady experiments indicates that the laminar separation bubble on the suction side is
+completely suppressed due to the unsteady impinging wake. The
+computations predicted a partial suppression of the separation
+bubble as indicated from the pressure distribution shown in
+Fig. 14.
+The time variation of the skin friction coefficient on the suction
+surface of the blade is shown in Fig. 15. From this figure it is
+evident that the flow is separated for a large portion of time over
+the aft part of the suction surface. However, at a wake passing
+time 共t / T兲 of 0.5 early transition appears at the 70% chord location, which is approximately where the wake is located at that
+point in time. There also appears to be regions of reverse flow in
+the turbulent patch downstream of the transition location. Similar
+regions of reverse flow in the turbulent patch were also observed
+by Stieger et al. 关3兴 in the experiment using a particle image
+velocimetry method.
+The time-averaged velocity profiles at nine stations along the
+suction surface are compared to the experiment in Fig. 16. The
+simulations agree well with the experimental data except in the
+near-wall region of the last three stations where the computations
+indicate separated flow but the experiment indicates attached flow.
+Note that the current model already overpredicts the steady-state
+separation bubble. This might be the main reason why the unsteady simulations do not lead to a full time-averaged attached
+flow. It is possible that further adjustments to the separationinduced transition modification and to the diffusion coefficient
+共␴␪t兲 in the transition onset equation 共to better account for flow
+history effects兲 is required in order to improve the predictions for
+unsteady blade-wake interactions.
+
+Summary
+A new correlation-based transition model has been developed,
+which is strictly formulated with local variables and thereby compatible with modern CFD methods. It is based on transport equations for intermittency and transition momentum thickness Reynolds number. Part I of this paper 关6兴 gave a detailed description
+of the mathematical formulation of the model and some of the
+basic test cases used for model validation. Part II has validated the
+model for a number of turbomachinery and aerodynamic test
+cases. This includes transition in 2D and 3D test cases, an actual
+industrial turbine vane, and a turbine blade subjected to unsteady
+periodic impinging wakes. In all cases, the simulations agreed
+well with the experiments and the authors believe that the current
+model is a significant step forward in engineering transition modeling. The present model formulation is very likely a starting point
+for the inclusion of numerous additional effects and flow regimes
+Journal of Turbomachinery
+
+such as roughness, freestream turbulent length scale, streamline
+curvature, cross-flow transition, and Mach number effects.
+
+Acknowledgment
+The authors would like to acknowledge the support and technical contribution of Dr. William Solomon at GE Aircraft Engines.
+The model development and validation at ANSYS CFX was
+funded by GE Aircraft Engines and GE Global Research. The
+second and third authors from University of Kentucky are supported by NASA Glenn Research Center under Grant No. NCC3590 and followed by Grant No. NCC3-1040. Additional support to
+the University of Kentucky was provided through a research grant
+from GE Global Research.
+
+Nomenclature
+2
+C p ⫽ pressure coefficient, poinlet − p / 共0.5 ␳ Uref
+兲
+2
+C f ⫽ skin friction coefficient, ␶ / 共0.5␳Uref兲
+FSTI ⫽ freestream turbulence intensity 共percent兲,
+100共2k / 3兲1/2 / Uref
+K ⫽ turbulent kinetic energy
+K ⫽ flow acceleration parameter
+L ⫽ axial reference length
+P ⫽ local static pressure
+poinlet ⫽ inlet total pressure
+pooutlet ⫽ outlet total pressure
+Pdynoutlet ⫽ outlet dynamic pressure
+Rex ⫽ Reynolds number, ␳LUref / ␮
+Re␪ ⫽ momentum thickness Reynolds number,
+␳␪U0 / ␮
+Re␪t ⫽ transition onset momentum thickness Reynolds
+number 共based on freestream conditions兲,
+␳ ␪ tU 0 / ␮
+R̃e␪t ⫽ local transition onset momentum thickness
+Reynolds number 共obtained from a transport
+equation兲
+RT ⫽ viscosity ratio
+Ry ⫽ wall-distance based turbulent Reynolds number
+Rv ⫽ vorticity Reynolds number
+S ⫽ absolute value of strain rate, 共2SijSij兲1/2
+Sij ⫽ strain rate tensor, 0.5共⳵ui / ⳵x j + ⳵u j / ⳵xi兲
+Tu ⫽ turbulence intensity, 100共2k / 3兲1/2 / U
+U ⫽ local velocity
+Uo ⫽ local freestream velocity
+Uref ⫽ inlet reference velocity
+u⬘ ⫽ local fluctuating streamwise velocity
+x / C ⫽ axial distance over axial chord
+y ⫽ distance to nearest wall
+Yp ⫽ loss coefficient, 共poinlet − pooutlet兲 / pdynoutlet
+y + ⫽ distance in wall coordinates, ␳y ␮␶ / ␮
+␦ ⫽ boundary layer thickness
+␪ ⫽ momentum thickness
+␭␪ ⫽ pressure gradient parameter, 共␳␪2 / ␮兲共dU / ds兲
+␮ ⫽ molecular viscosity
+␮t ⫽ eddy viscosity
+␮␶ ⫽ friction velocity
+␳ ⫽ density
+␶ ⫽ wall shear stress
+⍀ ⫽ absolute value of vorticity, 共2⍀ij⍀ij兲1/2
+⍀ij ⫽ vorticity tensor, 0.5共⳵ui / ⳵x j − ⳵u j / ⳵xi兲
+␻ ⫽ specific turbulence dissipation rate
+
+Subscripts
+
+t ⫽ transition onset
+s ⫽ streamline
+JULY 2006, Vol. 128 / 433
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+References
+关1兴 Mayle, R. E., 共1991兲, “The Role of Laminar-Turbulent Transition in Gas Turbine Engines,” ASME J. Turbomach., 113, pp. 509–537.
+关2兴 Thermann, H., Müller, M., and Niehuis, R., 2001, “Numerical Simulation of
+the Boundary Layer Transition in Turbomachinery Flows,” ASME Paper No.
+2001-GT-0475.
+关3兴 Stieger, R., Hollis, D., and Hodson, H., 2003, “Unsteady Surface Pressures due
+to Wake Induced Transition in a Laminar Separation Bubble on a LP Turbine
+Cascade,” ASME Paper No. ASME-GT2003-38303.
+关4兴 Huang, J., Corke, T. C., and Thomas, F. O., 2003, “Plasma Actuators for
+Separation Control of Low Pressure Turbine Blades,” AIAA Paper No. AIAA2003-1027.
+关5兴 Steelant, J., and Dick, E., 2001, “Modeling of Laminar-Turbulent Transition
+for High Freestream Turbulence,” ASME J. Fluids Eng., 123, pp. 22–30.
+关6兴 Menter, F. R., Langtry, R. B., Likki, S. R., Suzen, Y. B., Huang, P. G., and
+Völker, S., 2004, “A Correlation Based Transition Model Using Local Variables Part I-Model Formulation,” Vienna, ASME Paper No. ASME-GT200453452.
+
+434 / Vol. 128, JULY 2006
+
+关7兴 Menter, F. R., 1994, “Two-Equation Eddy-Viscosity Turbulence Models for
+Engineering Applications,” AIAA J., 32共8兲, pp. 1598–1605.
+关8兴 Achenbach, E., 1968, “Distribution of Local Pressure and Skin Friction
+Around a Circular Cylinder in Cross-Flow up to Re= 5 ⫻ 106,” J. Fluid Mech.,
+34, pp. 648–654.
+关9兴 Coupland, J., “Separation and Transition Over a Semi-Circular Leading Edge:
+T3L Transition Cases,” Rolls-Royce Applied Science Laboratory Data, ERCOFTAC Transition Modeling Special Interest Group, http://
+transition.imse.unige.it/cases/
+关10兴 Zierke, W. C., and Deutsch, S., 1989, “The Measurement of Boundary Layers
+on a Compressor Blade in Cascade, Vols. 1 and 2,” NASA CR 185118.
+关11兴 Arts, T., Lambert de Rouvroit, M., and Rutherford, A. W., 1990, “AeroThermal Investigation of a Highly Loaded Transonic Linear Turbine Guide
+Vane Cascade,” von Karman Institute for Fluid Dynamics, Technical Note 174.
+关12兴 Schulz, H. D., and Gallus, H. D., 共1988兲, “Experimental Investigation of the
+Three-Dimensional Flow in an Annular Compressor Cascade,” ASME J. Turbomach., 110, pp. 467–474.
+关13兴 Wang, M., Catalano, P., and Iccarino, G., 2001, “Prediction of High Reynolds
+Number Flow Over a Circular Cylinder Using LES With Wall Modeling,”
+Center for Turbulence Annual Research Briefs.
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/12/2014 Terms of Use: http://asme.org/terms
+
+

@@ -1,0 +1,1189 @@
+Proceedings of ASME Turbo Expo 2024
+Turbomachinery Technical Conference and Exposition
+GT2024
+June 24-28, 2024, London, United Kingdom
+
+GT2024-124918
+
+Christopher J. Clark1, ∗ , Nicholas R. Atkins1 , Mark Stokes2 , Raul Vazquez2
+1
+
+Whittle Laboratory, University of Cambridge, Cambridge, UK
+2
+Rolls-Royce PLC, Derby, UK
+
+flow direction
+
+ABSTRACT
+
+All modern gas turbines, from a small business jet to a large
+civil engine, make use of film cooling within the HP turbine.
+Transition on the blade surfaces has a large impact on blade heat
+transfer and profile loss. Many studies have considered the role
+of freestream turbulence and surface roughness on transition, yet
+no systematic study of the role of film cooling on transition has
+been reported.
+This paper shows that film cooling is as potent at causing
+transition as roughness typically found on the suction surface
+of end-of-life engines, and more so than freestream turbulence.
+For the blades tested, film cooling induced transition begins at
+the rear of the suction surface, the transition point moving forward to the film cooling hole with a doubling in Reynolds number.
+Averaging the acceleration parameter over a fixed distance downstream of the cooling hole collapses the transitional behaviour
+for varied film ejection locations. A model is proposed to capture
+the Reynolds sensitivity of film cooling induced transition.
+The simultaneous presence of freestream turbulence and
+roughness as well as film cooling, are shown to enhance transition
+compared to any mechanism in isolation, despite the localised nature of the film cooling holes. It is likely that the combined effect
+of the mechanisms is maximised when each mechanism in isolation would result in transition at a similar Reynolds number.
+Therefore a method of mapping each transition mechanism in
+isolation is demonstrated to identify which mechanism is dominant, the proximity of other mechanisms and hence their likely
+enhancement of transition.
+By testing combinations of film cooling, roughness and
+freestream turbulence typical of a cooled HP rotor the transitional
+region is found to cover the range 300, 000 < 𝑅𝑒 𝑥 < 1, 000, 000,
+where transition will be primarily dependent on surface roughness and film cooling. Below 𝑅𝑒 𝑥 = 300, 000 transition is likely
+via a laminar separation bubble and above 𝑅𝑒 𝑥 = 1, 000, 000 the
+suction surface boundary layers will be fully turbulent. Large
+
+Secondary
+Flow
+
+Lam.
+
+Separation
+
+Film Cooled Region
+
+∗ Corresponding
+
+TE
+
+Turb.
+
+FIGURE 1: IR FLOW VISUALISATION OF SUCTION SIDE VIEWED
+FROM DOWNSTREAM. FILM COOLED TURBINE, R a /C x = 1 × 10 − 5
+T u 1 = 8%, FILM COOLED Mej /MTE = 0.8, Re x = 400, 000.
+
+civil engines sit within the top of the transitional range at cruise
+and smaller engines span the entire range between cruise and
+take-off conditions.
+Keywords: Turbines, Transition, Aerodynamics
+1. INTRODUCTION
+
+The transitional boundary layer behaviour within the HP
+turbine has implications for both aerodynamic loss and local heat
+loads. It is well accepted that natural transition rarely occurs in
+this environment with either transition via a laminar separation
+bubble or bypass transition being the most common routes to
+turbulence. Mayle [1] provided a review of transitional effects in
+gas turbines that covers the majority of work prior to 1991. From
+this review five transition mechanisms can be extracted that are
+relevant for the HP turbine:
+
+author: cjc95@cam.ac.uk
+
+1
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+TRANSITIONAL FLOWS WITHIN COOLED HP TURBINES
+
+1.
+2.
+3.
+4.
+5.
+
+Separated flow transition (via a laminar separation bubble)
+Film bypass transition
+Roughness bypass transition
+Turbulence bypass transition
+Reverse transition
+
+~ 9Cx
+
+1
+
+FIGURE 2: SCHEMATIC OF LINEAR CASCADE CROSS SECTION
+
+All data presented is from blading representative of current
+state-of-the-art HP turbine rotors. Most notably it is designed
+using aerodynamically driven design methods ensuring smooth
+acceleration and no un-necessary diffusion [7].
+The cascade features a variable pitch cassette system with
+either 5 or 6 blades depending on the pitch-to-chord. The aspect
+ratio, 𝐴𝑅 = 𝐻/𝐶 𝑥 , is 2.42, giving a 2D region of over 70% span.
+Figure 2 shows a schematic of the cascade cross section. Flow
+moves from left to right, passing an interchangeable turbulence
+grid before entering the blade cassette, which is inclined to the
+blade inlet angle. Periodicity of the cascade is obtained with truncated streamlines, labelled in Fig.2. The shape of these surfaces
+are generated using streamlines from within the passage extracted
+from 2D CFD of the blade row. The use of streamlines as the
+solid boundaries mimics an infinite cascade. Streamlines from
+within the passage are advantageous over the stagnation streamline as they avoid the diffusion up to the stagnation point, keeping
+boundary layers thin. This method was found to maintain the periodicity in exit Mach number to within ±0.3% across the central
+two passages.
+The blades are manufactured with an aluminium core and
+a polycarbonate suction surface. This composite construction
+avoids trailing edge deflection, whilst the low thermal conductivity of the polycarbonate enables IR imaging of recovery temperature. The two part construction also enables simplified manufacture of an internal plenum to feed the cooling holes.
+
+2. RESEARCH AIMS
+
+This paper aims to characterise the transitional behaviour of
+a typical HP rotor under engine representative freestream turbulence, surface roughness and film cooling. The three research
+questions that are answered are:
+1. Over which ranges of Reynolds number does transition
+change from that via a laminar separation to bypass transition
+for cooled HP turbine rotor blades with realistic roughness
+and turbulence levels?
+2. What is the behaviour of transition due to film cooling with
+Reynolds number and does it interact with both freestream
+turbulence and roughness?
+
+Film Cooling
+
+Laid back fan shaped cooling holes are investigated at a range
+of surface positions typical of the last row on a HP rotor suction
+surface. In engine this final row is limited to the early suction
+surface before Mach numbers become high, this is required to
+avoid significant mixing losses [8, 9] and excessive coolant flow
+rates for a given blowing ratio. The most downstream location
+tested ejects at an isentropic Mach number that is 93% of the
+trailing edge value, 𝑀ej /𝑀TE = 0.93, this being later than most
+films in engine.
+The coolant is fed to an internal plenum from both ends of
+the blade each metered individually via ISO standard venturis.
+All cooled data shown uses engine scaled cooling holes, matched
+velocity ratios and a temperature ratio 𝑇0,coolant /𝑇0,fs = 1.
+
+3. What is the relative importance of each transition mechanism
+across the range of engine typical Reynolds numbers?
+3. EXPERIMENTAL METHODS
+
+Experimental testing uses a variable density transonic linear
+cascade. All testing is undertaken at the design exit isentropic
+Mach number, the variable density is used to sweep the Reynolds
+number. A global Reynolds number based on exit conditions half
+a chord downstream and the axial chord, 𝐶 𝑥 , is used throughout.
+𝜌2𝑈2 𝐶 𝑥
+𝜇2
+
+2
+
+(1)
+
+2
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+Separated flow transition occurs in the shear layer of a separation bubble, such as downstream of a laminar separation, this
+mechanism being common in LP turbine blades [2]. The next
+3 mechanisms are all bypass transition as in each case a perturbation is provided, by the film ejection, roughness elements or
+freestream turbulence respectively, bypassing the initial stages of
+natural transition and directly producing turbulent spots. Film
+bypass is the most unique as the perturbations are discrete and
+localised on the blade surface. Reverse transition occurs due to
+streamwise acceleration, which above a certain level appears to
+damp perturbations returning the boundary layer to a laminar like
+state.
+Previous work has explored the effects of freestream turbulence and roughness, both in isolation and combination. Some
+experiments make use of flat plate tests with imposed pressure
+distributions [3, 4], others make use of low speed turbine profiles
+[5]. The studies of Stripf et al. [5] and Gramspacher et al. [4]
+demonstrate both the role of freestream turbulence and surface
+roughness as well as their combined effect when applied together.
+Work such as Teng et al. [6] have also evidenced laminar like behaviour downstream of a film cooling hole under accelerating
+flow. What is not available in the literature is a study that looks
+systematically at the transitional behaviour of a film cooled blade
+or the relative and combined impact of film cooling, roughness
+and freestream turbulence.
+
+𝑅𝑒 𝑥 =
+
+0.5Cx
+
+Cx
+
+recovery temperature, 𝑇rec .
+In high speed flows where
+𝑇0 > 𝑇rec > 𝑇 the recovery factor, and hence boundary layer
+state, can be visualised. In Eq. 2, 𝑀 is the local edge Mach
+number.
+)︃
+(︃
+𝛾−1 2
+(2)
+𝑀 , 𝑟lam ≈ 𝑃𝑟 1/2 , 𝑟turb ≈ 𝑃𝑟 1/3
+𝑇rec = 𝑇 1 + 𝑟
+2
+
+Surface Roughness
+
+The IR imaging is taken with a FLIR A615 camera, which
+has a thermal sensitivity of 0.05 ◦ C and an image resolution of
+640 × 480 pixels. Approximately 280 pixels are captured in the
+streamwise direction per blade, with both the central blades being
+captured. In this work no attempt is made to calculate the recovery
+temperature, the images and differences between them are used
+as a non-intrusive flow visualisation method, with only spatial
+quantification. Turbulent and laminar regions can be identified
+through changes between images at varied Reynolds numbers.
+Figure 1 shows an example IR image of a film cooled blade
+viewed axially from downstream, to its right is a schematic displaying the topology of the boundary layer states. On the left of
+the image the contours are dark, cold and laminar. Passing left to
+right there is a brief lightening as Mach numbers decrease post
+peak suction. This is followed by a dark stripe caused by the air in
+the laminar separation bubble approaching the static temperature
+of the passing flow. Reattachment causes a turbulent boundary
+layer and increased recovery factor, resulting in the light region
+extending to the trailing edge on the right of the image.
+
+TABLE 1: SURFACE ROUGHNESS TESTED
+
+𝑅 𝑎 /𝐶 𝑥
+
+𝑅sk
+
+𝑅ku
+
+𝑅dq ( ◦ )
+
+0.2 × 10−5
+2.9 × 10−5
+4.8 × 10−5
+8.1 × 10−5
+11.0 × 10−5
+
+0.1
+0.3
+0.0
+0.15
+0.16
+
+3.0
+3.0
+3.2
+3.2
+3.3
+
+30
+32
+32
+34
+35
+
+Freestream Turbulence
+
+Freestream turbulence varies by orders of magnitude within
+the HP turbine. At combustor exit 𝑇𝑢 > 10% is typical [10].
+Within the blade rows this value reduces due to both spatial decay and the acceleration of the bulk flow. Between rows the frame
+of reference change reduces the bulk velocity, increasing the turbulence intensity. At inlet to HP rotors, where the inlet Mach
+numbers are higher than the nozzle guide vane, inlet turbulence
+up to 𝑇𝑢 1 ≤ 8% is typical.
+Three levels of turbulence (3%, 6%, 8%) were generated using bar grids designed using the correlations of Roach [11]. These
+were located ∼ 9𝐶 𝑥 upstream of the cascade, the values of 𝑇𝑢 1
+quoted are those expected at the middle blade, these having been
+validated by hot-wire measurements at the appropriate distance.
+
+Boundary layer modelling
+
+Comparisons of transitional behaviour to existing models
+from the literature are made through boundary layer modelling.
+The midspan of the cascade is representative of 2D flow making
+it suitably modelled by a 1D boundary layer solver. In particular
+for this study it is the properties of the laminar boundary layer
+prior to transition that are of interest and hence Thwaites’ method
+is used [12] to make predictions of the boundary layer thickness
+and local momentum thickness Reynolds number 𝑅𝑒 𝜃 . When
+discussing the transitional behaviour it is often useful to recast
+the global Reynolds number in terms of the suction side length
+as in Eq. (3), this value being ∼ 2 times higher than 𝑅𝑒 𝑥 for the
+tested blade.
+
+Loss Traverses
+
+Loss measurements are taken behind the central two blades
+through pneumatic traverses at 0.5𝐶 𝑥 downstream of the trailing
+edge, labelled in Fig. 2. A 3-hole pneumatic probe with separate
+static sting is used, enabling full measurement of the midspan
+flowfield. The 3-hole probe has each hole stacked in the spanwise
+direction, to reduce the pitchwise probe size to ∼ 15% of the wake
+width at the traverse plane. The angled faces are at 45◦ from the
+oncoming flow.
+The loss values, 𝑌𝑝 , presented are mixed out to a pitchwise
+uniform condition under constant area mixing and thus capture
+any subsequent mixing of the wake. Where film cooling is present
+the loss is calculated using a control volume featuring two inlet
+streams; mainstream and coolant.
+
+𝑅𝑒𝐿 =
+
+𝜌TE𝑈TE 𝐿SS
+∝ 𝑅𝑒 𝑥
+𝜇TE
+
+(3)
+
+Useful scalings that will be used in later analysis are given in
+Eq. (4). The first is the expected scaling of the momentum thickness with global Reynolds number and the second the resulting
+relation between local and global Reynolds numbers for a laminar
+boundary layer.
+𝜃
+∝ 𝑅𝑒 𝐿−0.5 , 𝑅𝑒 𝜃 ∝ 𝑅𝑒𝐿0.5
+𝐿
+
+(4)
+
+4. EXPERIMENTAL RESULTS
+
+The experimental results are separated to study the role of
+each mechanism in isolation prior to investigating their combined
+effect.
+
+IR photography
+
+Visualisation of boundary layer state is achieved
+through a low conductivity surface which approaches the
+
+3
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+Roughness levels vary across engine life, around the aerofoil
+and depend on the route the aircraft runs. In this study surface roughness is generated via a controlled shot-blasting process
+with various medium, and measured with a profilometer. This approach is preferred to discrete roughness elements, as previously
+studied [4, 5], as the roughness topology was found to match
+better to real engine surfaces both new and over their lifetime.
+Table. 1 gives the metrics of the roughness applied to the
+suction surface of the blade during this study. These values
+were chosen to exceed the range expected on the suction surface
+for civil engines of various sizes, covering the entire range of
+expected behaviour.
+
+FIGURE 3: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS:
+
+Surface Roughness
+
+Figure 3 shows the loss data for the 5 roughness levels against
+𝑅𝑒 𝑥 , in each case the loss is normalised by that of the polished
+blade (𝑅 𝑎 /𝐶 𝑥 = 0.2 × 10−5 ) at 𝑅𝑒 𝑥 = 500, 000.
+In the absence of a route to bypass transition, a blade will generally achieve turbulent boundary layers via a laminar separation
+bubble. This is seen in Fig. 3 as the lower curve that all roughness
+collapse onto at sufficiently low Reynolds number. Fig. 4 shows
+accompanying 𝑇rec images across the Reynolds number range.
+For the 𝑅 𝑎 /𝐶 𝑥 = 0.2 × 10−5 curve, loss reduces at a decreasing rate as Reynolds number increases. Initially this gradient is
+close to the expected lapse rate for a laminar boundary layer, above
+𝑅𝑒 𝑥 = 600, 000 the gradient has exceeded that expected from a
+fully turbulent blade. This behaviour results from the shortening
+and upstream movement of the separation bubble increasing the
+turbulent fraction of the blade. This is visible in Fig. 4 where the
+
+Rex = 150,000
+
+L L
+
+Rex = 400,000
+
+(5)
+
+𝜃s 0.7 −0.3 𝑈s −0.3 𝜌s −0.3
+𝐿bubble
+𝑅𝑒 𝐿
+∝ 𝑅𝑒 𝐿−0.65
+∝
+𝐿SS
+𝐿SS
+𝑈TE
+𝜌TE
+
+(6)
+
+Thwaites’ method predicts a laminar separation at 68% surface length for the loading of this blade , shown by the blue
+dashed line in Fig. 4, this agrees well with the images when the
+bubble is short. At low Reynolds numbers the increased bubble
+size influences the loading, delaying diffusion and hence moving
+the separation location aft. As the bubble reduces in size, with
+increasing Reynolds number, its influence on the loading is reduced and the separation point moves upstream to that predicted.
+
+T u 1 = 3%, UNCOOLED (T u 1 = 8% FOR R a /C x = 11.1 × 10 − 5 )
+
+L L
+
+(𝑅𝑒 𝑥 ) s T = 𝑅𝑒 𝑥,T − 𝑅𝑒 𝑥,s = 700𝑅𝑒 0.7
+𝜃 ,s
+
+The extent of this curve for 𝑅 𝑎 /𝐶 𝑥 < 2.9 × 10−5 highlights
+that at low roughness, freestream turbulence and in absence of
+film cooling, transition can remain by laminar separation bubble
+to 𝑅𝑒 𝑥 = 1, 000, 000. Whilst this is unlikely in an engine it highlights the need for experiments in this regime to use appropriate
+roughness and turbulence.
+As roughness is increased the loss curves diverge from the
+smooth curve at progressively lower Reynolds numbers. After diverging from the smooth curve each features a period of slow loss
+increase with Reynolds number suggesting a gradual creep forward of transition ahead of the bubble location. This is followed
+by a rapid loss increase as transition moves forward covering the
+blade in turbulent flow. Finally, for the highest roughnesses the
+
+L L
+
+L L
+
+Rex = 700,000
+
+Rex = 400,000
+
+FIGURE 4: Trec OF AFT SUCTION SURFACE, T u = 8%, R a /C x =
+1.0 × 10 − 5 , UNCOOLED
+
+L L
+
+Rex = 500,000
+
+L L
+
+Rex = 600,000
+
+FIGURE 5: Trec OF AFT SUCTION SURFACE, T u = 8%, R a /C x =
+11 × 10 − 5 , UNCOOLED.
+
+4
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+dark vertical band caused by the relatively cold separation bubble
+is seen to both shorten and move upstream with 𝐿s /𝐿SS varying
+from 86% at 𝑅𝑒 𝑥 = 150, 000 to 68% at 𝑅𝑒 𝑥 = 700, 000. The
+shortening of bubble length, 𝐿bubble , is highlighted by the dashed
+white line at the estimated separation location and the dashed red
+line at the estimated reattachment. The cyan line estimates the
+spanwise penetration of secondary flows. Mayle [1] discusses the
+shortening of separation bubbles with local Reynolds number and
+gives the relation shown in Eq. (5). This equation is recast to give
+scaling for a fixed loading in terms of global Reynolds number in
+Eq. (6). Eq. (6) highlights the shown reduction in bubble length
+with global Reynolds number is to be expected.
+
+Uncooled
+
+TE
+
+FIGURE 7: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS:
+
+T u 1 = 8%, R a /C x = 1.0 × 10 − 5 , FILM COOLED
+
+Freestream Turbulence
+
+curve rolls over. At further increased Reynolds numbers this
+would be expected to follow a turbulent lapse rate and eventually
+become Reynolds independent as roughness dominates.
+
+Figure 6 shows the effect of freestream turbulence on loss for
+both a low and high roughness. With the low roughness increasing turbulence is seen to result in a gradual increase in loss with increasing freestream turbulence, this beginning at 𝑅𝑒 𝑥 = 800, 000
+for 𝑇𝑢 1 = 8%. This suggests that freestream turbulence, on a
+smooth blade, is unlikely to cause substantial transition below
+𝑅𝑒 𝑥 = 1, 000, 000. The higher roughness case sees transition
+promoted at a Reynolds number 15% lower at 𝑇𝑢 1 = 8% compared to 𝑇𝑢 1 = 3%.
+Both of these results agree well with the findings of Stripf et
+al. [5], who also saw freestream turbulence alone has little effect
+on transition but documented a combined effect of roughness and
+freestream turbulence. Their findings were at a Reynolds number
+based on inlet conditions and true chord of 𝑅𝑒 1 = 250, 000,
+estimating the stagger angle as 45◦ and exit angle as 70◦ , this
+would be equivalent to 𝑅𝑒 𝑥 = 500, 000 which is below where
+any substantial effect of freestream turbulence in isolation was
+found in this study.
+
+The rapid forward transition movement is visible in the 𝑇rec
+images in Fig. 5 for the highest roughness 𝑅 𝑎 /𝐶 𝑥 = 11 × 10−5 .
+At 𝑅𝑒 𝑥 = 400, 000 the boundary layers remain very similar to
+the low roughness case at the same Reynolds number in Fig. 4.
+A separation bubble exists but is shorter than the low roughness
+case, this results in the small loss increase at this Reynolds number. By 𝑅𝑒 𝑥 = 500, 000 turbulent streaks have formed along
+the span, the bubble has gone with turbulent flow moving upstream, the transition location denoted by the red dashed line. At
+𝑅𝑒 𝑥 = 600, 000 turbulent flow has reached the left of the image
+for much of the span, the blade now being mostly turbulent as
+reflected in the loss.
+Considering the range of roughnesses tested it is seen that
+below 𝑅𝑒 𝑥 = 300, 000 an uncooled blade is likely to transition
+via a laminar separation bubble even for roughness’s above those
+expected. For uncooled blades with roughness in the middle of
+those tested it may require 𝑅𝑒 𝑥 > 700, 000 for bypass transition
+to begin and above 𝑅𝑒 𝑥 > 1, 000, 000 for it to complete.
+
+Film Cooling
+
+Figure 7 shows loss data for a range of film cooling ejection
+locations as well as an uncooled blade. For each film cooling
+location at low Reynolds numbers the loss is parallel with the
+uncooled blade, with an offset due to the mixing losses of the
+coolant. As Reynolds number increases transition initiates and
+takes a further doubling in Reynolds number to move all the way
+to the cooling hole, similar to the effect of roughness.
+Figure 8 shows 𝑇rec images of the intermediate cooling location before and most of the way through transition. The cooled
+region is denoted by the dashed green lines. Prior to transition
+
+The final point of note is that at high levels of roughness
+the post transition loss is raised compared to a fully turbulent
+low roughness blade. For the highest levels of roughness a loss
+increase of ∼ 60% compared to the smooth blade is seen, when
+transition is induced by film cooling on a smooth blade the loss
+increase is ∼ 35%. This is likely the result of the increase in
+turbulent dissipation coefficient in the presence of high surface
+roughness.
+
+5
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+FIGURE 6: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS:
+UNCOOLED
+
+ej
+
+Uncooled
+
+a separation bubble is visible, unaffected by the presence of the
+films. After transition the bubble has closed and transition has
+moved forward along the surface.
+The effect of coolant position is seen in Fig. 7. Moving films downstream along the suction surface results in earlier transition. For the typical range of final row position
+tested this suggests that film induced transition onset is typical for 400, 000 < 𝑅𝑒 𝑥 < 600, 000 and transition completion
+for 600, 000 < 𝑅𝑒 𝑥 < 1, 000, 000. This suggests that for typical cooling locations a fully turbulent assumption is likely valid
+for 𝑅𝑒 𝑥 > 1, 000, 000, regardless of freestream turbulence or
+roughness.
+The final conclusion drawn from the data in Fig. 7 is the
+magnitude of the role of film bypass in isolation compared to
+roughness and freestream turbulence. The earliest ejection location studied results in transition at a similar Reynolds number to
+roughness of 𝑅 𝑎 /𝐶 𝑥 = 8.1 × 10−5 above that generally seen in
+engine. This implies that the modelling of film induced transition
+is at least of equal importance for HP turbines as that induced by
+surface roughness. This being discussed further in the second
+part of the paper.
+
+In reality a blade in engine will be exposed to all 3 transition
+sources simultaneously. Fig. 9 shows loss data for the intermediate film cooling location, 𝑇𝑢 1 = 8% and the upper and lower
+bounds of roughness tested. Cooled blades are denoted with
+square symbols, uncooled with circles.
+The shaded red region is highlighted as the range of transitional behaviour expected for this typically cooled HP rotor
+over the range of roughness tested. While further increases in
+roughness, well above those expected in engine, would result
+in transition at even lower Reynolds numbers, the presence of
+film cooling effectively bounds the highest Reynolds number at
+which transition is likely to begin and complete. Given the range
+of roughness tested extends those expected in engine it can be
+concluded that a typical range of 𝑅𝑒 𝑥 under which a HP rotor is
+undergoing transitional changes is 300, 000 < 𝑅𝑒 𝑥 < 1, 000, 000.
+The contemporary engine Reynolds ranges quoted by Mayle [1]
+are shown at the bottom of Fig. 9. They have been converted to
+L L
+
+Rex = 400,000
+
+𝑅𝑒 𝑥 assuming an aspect ratio 𝐴𝑅 = 1.5 and exit angle 𝛼2 = 70◦ .
+The smaller aeroengine range sits entirely within the transitional
+region. The larger engines are in the transitional region at cruise.
+This overlap with large engines is more likely at the intermediate levels of roughness tested, more typical of larger engines.
+It should be noted that most trends since Mayle’s paper, such
+as higher bypass ratio are pushing towards smaller cores, so the
+range of Reynolds number of interest for modern and future engines is likely at lower values.
+Overlaid on Fig. 9 are arrows highlighting the enhancement
+of transition of the combined case, compared to the rough uncooled blade and the cooled low roughness blade. In both cases
+the combined effect is greater than either in isolation. This additive behaviour is similar to that of roughness and freestream
+turbulence. However, this previously unreported finding suggests that despite the discrete nature of the film cooling it still
+interacts with the more global perturbations of the roughness.
+The final point of interest is the magnitude of the combination effects. At the highest roughness tested the additional effect
+of the coolant, blue arrow, is a reduction in transition onset 𝑅𝑒 𝑥
+of roughly 100,000 or 25% of the combined onset Reynolds number (400,000). In contrast the addition of the roughness to the
+cooled blade is a reduction in onset Reynolds number of roughly
+200,000, a more substantial 50% of the combined transition onset
+Reynolds number. As highlighted by Gramespacher et al. [4], it
+appears that if one transition source when considered in isolation
+is dominant, in Fig. 9 the high roughness, this results in transition
+at a substantially lower Reynolds number than the other two, the
+additive effect of the other two is reduced. By the same logic the
+maximum additive effect will result when all three mechanisms
+would in isolation induce transition at a similar Reynolds num-
+
+L L
+
+Rex = 700,000
+
+FIGURE 8: Trec OF AFT SUCTION SURFACE, T u = 8%, R a /C x =
+1 × 10 − 5 , FILM COOLED Mej /MTE = 0.8.
+
+6
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+FIGURE 9: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS:
+
+T u 1 = 8%, CIRCLES-UNCOOLED, SQUARES-COOLED Mej /MTE =
+0.8
+
+Multi-source Bypass
+
+ber. This highlights the usefulness of mapping the transitional
+behaviour of a blade from all three sources in isolation to modelling the combined behaviour of the blade, as discussed in the
+final part of the paper.
+
+1.6
+
+In the previous section it was shown that the role of film cooling in HP turbine transition is as significant as levels of roughness
+expected in engine and greater than that of free stream turbulence.
+However, it remains the least studied of the 3 transition sources.
+The data presented in Fig. 7 showed that film induced transition
+begins at a range of Reynolds numbers depending on the ejection
+location.
+The presence of laminar flow downstream of a cooling hole
+has previously been attributed to the process of reverse transition1 . Mayle proposes reverse transition is best predicted by the
+acceleration parameter, 𝐾, with values above 3×10−6 resulting in
+reverse transition. This variable can be expanded to understand
+the scaling with global Reynolds number, the result being an inverse dependence on blade Reynolds number for a given loading
+distribution.
+(︂ )︂
+(︃
+)︃ −2 (︃
+)︃ −1 (︃
+)︃ d 𝑈
+𝑈TE
+𝑈
+𝜌
+𝜇
+𝜆𝜃
+𝜈 𝑑𝑈
+(︂ )︂ =
+= 𝑅𝑒𝐿−1
+𝐾= 2
+𝑈TE
+𝜌TE
+𝜇TE d 𝐿
+𝑈 𝑑𝐿
+𝑅𝑒 𝜃 2
+𝐿SS
+(7)
+For each ejection location the value of 𝐾ej at the center of
+the film ejection hole, can be calculated and the data replotted,
+Fig. 10. Plotted as a dashed vertical line is the reverse transition
+threshold provided by Mayle, all three cooling schemes see their
+greatest rate of loss increase within 30% of this value. However, it
+is seen that film induced transition begins at values 𝐾ej = 4×10−6 ,
+greater than that proposed by Mayle. Also the transition location
+only reaches the hole, at the end of the loss increase, when 𝐾ej =
+2 × 10−6 , 30% lower than the reverse transition threshold.
+Considering the distribution of 𝐾 over the suction surface,
+shown in Fig.11 at 𝑅𝑒 𝑥 = 600, 000 and with the 3 ejection locations marked, it is visible that close to the cooling holes the value
+is changing rapidly. With any structures formed by the films taking a distance to dissipate, if at all, the value of 𝐾 is averaged over
+the 10% of surface length downstream of the hole. The variation
+of loss is shown against this averaged 𝐾ej in Fig.12. Averaging
+over the region downstream of the hole can be seen to improve
+the data collapse substantially, in particular it improves the early
+film, where the rate of change of 𝐾 is highest. The use of 𝐾ej
+also results in transition beginning to occur at 𝐾ej = 3 × 10−6 ,
+Mayle’s proposed value, although it is noted that the peak value
+at the hole is higher than this.
+Considering the shape of the curves in Fig. 12 it is of note that
+as Reynolds numbers are increased film induced transition occurs
+incrementally from the rear of the surface, implying either a late
+transition onset location or a long transitional distance. This is
+unlikely to be the result of the films thickening the boundary layer
+as prior to transition the loss, and hence suction side boundary
+
+1.4
+
+TE
+TE
+
+ej
+
+TE
+
+1.2
+
+1
+
+ej
+
+10 -6
+
+10 -5
+ej
+
+FIGURE 10: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS
+AGAINST Kej : T u 1 = 8%, R a /C x = 1.0 × 10 − 5 , FILM COOLED
+
+layer thickness, is only increased by ∼ 10% due to the mixing
+of the films. An increase in local Reynolds number 𝑅𝑒 𝜃 of
+10% is equivalent to an increase in 𝑅𝑒 𝑥 of approximately 20%.
+Considering the 𝑇𝑢 1 = 8% data in Fig. 6 this might be expected
+to result in transition beginning at 𝑅𝑒 𝑥 = 700, 000 by which point
+the transition due to all but the earliest film has reached the film
+cooling hole.
+Film bypass transition on the late suction surface is therefore
+likely to be due to structures, generated by the film cooling,
+persisting over the length of the suction surface. The magnitude
+of the persisting structures increases with Reynolds number, as 𝐾
+both at the hole and downstream of it decreases. At low Reynolds
+numbers these are not sufficient to result in transition until 𝑅𝑒 𝜃
+increases at the aft of the blade.
+Looking again at the images in Fig. 8 the right hand image at
+𝑅𝑒 𝑥 = 700, 000 shows structure persisting atleast to the laminar
+
+10-6
+
+8
+6
+4
+2
+0
+0
+
+1 We use the term reverse transition to be consistent with prior literature, but the
+film bypass transition mechanism or more importantly the lack of transition, may
+be better described as suppressed transition, rather than reversed.
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+L L
+
+1
+
+FIGURE 11: NUMERICAL DISTRIBUTION OF K OVER SUCTION
+SURFACE AT Re x = 600, 000, COOLING LOCATIONS SHOWN
+
+7
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+Uncooled
+
+5. FILM BYPASS TRANSITION
+
+ej
+ej
+
+1.4
+
+ej
+
+TE
+
+ej
+
+TE
+
+ej
+
+TE
+
+1.2
+
+1
+
+ej
+
+10 -6
+
+10 -5
+
+FIGURE 13: TRANSITION MAP OF TESTED BLADE SUCTION SURFACE
+
+ej
+FIGURE 12: EXPERIMENTAL MIXED OUT TOTAL PRESSURE LOSS
+AGAINST Kej : T u 1 = 8%, R a /C x = 1.0 × 10 − 5 , FILM COOLED
+
+This would be sufficient to capture the largest movements of transition and by limiting the model to this region, a linear variation
+would appear sufficient between the bounding values. Given the
+number of variables that determine a particular cooling scheme
+this model attempts to catch the physics seen in the current study
+at a level of fidelity appropriate to the data available.
+
+separation location (best viewed in digital copy), these are seen
+to travel over the laminar region at the left hand side of the image.
+The image at 𝑅𝑒 𝑥 = 400, 000 shows only the faintest suggestion of
+these structures. This mechanism makes it likely that the true 𝐾ej
+required to prevent any film bypass transition will be dependent
+on the hole size, blowing ratio, density ratio and distribution of
+subsequent acceleration along the blade surface. The data of
+Teng et al. [6] supports this as they showed the Nusselt number
+downstream of a film cooling row always returning to a laminar
+like value, avoiding transition, but at a distance that depended on
+blowing ratio.
+A second point of interest is that values of 𝐾ej and 𝐾ej lower
+than that proposed by Mayle are required to move transition completely to the hole. This implies that whilst values 𝐾 < 3 × 10−6
+are not sufficient to result in a complete reverse transition, they
+are sufficient to delay the forward transition process caused by
+film cooling.
+Finally, I consider the modelling of film bypass transition.
+The literature contains no models specifically for film cooling
+induced transition, the only offering being the reverse transition
+criteria provided by Mayle. The use of this threshold value would
+imply a jump in transition location to the film cooling hole at
+a given Reynolds number, whilst the data presented shows an
+upstream movement of transition over close to a doubling of
+Reynolds number. The onset of film induced transition at 𝐾ej =
+3 × 10−6 , suggests if an averaged value downstream of the hole is
+used this threshold is suitable for the beginning of film induced
+transition, however it will not capture the range of Reynolds
+numbers over which it evolves.
+Based on the current data an improvement would be a transition location that varies with 𝐾ej , such that:
+𝐿trans /𝐿SS = 𝐿lam,s /𝐿SS at 𝐾ej >= 3 × 10−6
+
+6. MAPPING MULTI-SOURCE TRANSITION
+
+It was shown that film induced transition also acts in a combined way with roughness and free stream turbulence. On the
+understanding that mechanisms provide the maximum combined
+effect if in isolation they would both provide a similar transitional
+behaviour, or that they would provide little effect if one were well
+in advance of the other, it is useful to track the independent effect
+of each over a blade surface for various Reynolds numbers.
+Figure 13 shows a "transition map" with axes of suction
+side surface fraction against global Reynolds number, in this
+case 𝑅𝑒 𝑥 . Plotted on it are lines of transition onset location for
+each of the three transition mechanisms in isolation, roughness,
+freestream turbulence and film cooling. The curves for roughness and freestream turbulence are generated using correlations
+from the literature. The curve for film cooling induced transition
+makes use of the previously proposed linear variation in transition
+location.
+There are many correlations for the role of freestream turbulence in transition, with the models of Mayle [1], Abu-Ghannam
+and Shaw [13] and Langtry and Menter [14] being popular examples. In the current study the correlation of Langtry and Menter
+is used. The local turbulence value is calculated as per the correlation. The importance of the use of local values is discussed by
+Praisner and Clark [15], who suggest a frozen turbulence model
+is acceptable for the suction side of an aerofoil. In this study it
+was found this overpredicted the role of freestream turbulence
+compared to the data, with better agreement adopting the relation
+proposed by Steelant [16].
+
+(8)
+
+𝑇𝑢/𝑇𝑢 1 = (𝑈/𝑈1 ) −1.5
+
+𝐿trans /𝐿SS = 𝐿ej /𝐿SS at 𝐾ej <= 1.5 × 10−6
+
+8
+
+(9)
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+Uncooled
+
+1.6
+
+The role of roughness was modelled via the correlation of
+Mayle given in Eq. (10). The use of sandgrain roughness is undesirable as it is known to be dependent on roughness topology [17].
+The roughness magnitude is converted to a sand-grain roughness
+using a value in the middle of the range found by Bons [18],
+𝑘s = 6𝑅 𝑎 . This model was found to give reasonable agreement
+with the behaviour seen.
+
+2. Transition due to film cooling is seen to initiate at low
+Reynolds numbers at the aft of the suction surface with
+transition moving forward with increasing Reynolds number. It is seen to require roughly a doubling in Reynolds
+number for this transition mechanism to move from the aft
+suction surface to the film hole. It is proposed that structures
+formed by the film cooling exist across the suction surface
+which at low Reynolds numbers can persist without causing
+transition until late on the surface. The behaviour with film
+ejection location is dictated by the average value of acceleration parameter in the region downstream of the cooling hole
+𝐾ej . A correlation based on 𝐾ej is proposed that captures the
+transition point movement with Reynolds number.
+
+(10)
+
+Generating such a map requires a single solution of the velocity profile using Thwaites’ method, this enabling both 𝜃/𝐶 𝑥
+and 𝑅𝑒 𝜃 to be calculated for a single 𝑅𝑒 𝑥 . Laminar scaling with
+the global Reynolds, 𝜃/𝐶 𝑥 ∝ 𝑅𝑒 −0.5
+and 𝑅𝑒 𝜃 ∝ 𝑅𝑒 0.5
+𝑥
+𝑥 enable
+direct computation of the 𝑅𝑒 𝑥 at which each transitional criteria
+is met for each surface location.
+The transition map in Fig. 13 shows the laminar separation
+location (blue), as predicted by Thwaites’, as well as the bubble
+length predicted using Eq. (6). Transition onset due to freestream
+turbulence (black) at the three levels tested are shown 𝑇𝑢 1 =
+3%, 6% and 8%. Transition onset due to roughness (green) is
+shown for 𝑅 𝑎 /𝐶 𝑥 = 4, 8 and 11×10−5 , this representing the upper
+half of roughness tested. Prediction of film induced transition
+(red) is made using the model proposed in Eq. (8) for the ejection
+locations tested.
+The individual behaviour of each mechanism matches well
+between the models and experimental data. Below 𝑅𝑒 𝑥 =
+300, 000 transition remains via laminar separation bubble. The
+minimal role of freestream turbulence in isolation is captured,
+showing it is limited to the rear of the surface below 𝑅𝑒 𝑥 =
+1, 000, 000. Film cooling is seen to have an impact similar to the
+highest two roughness levels tested.
+The use of such maps comes firstly in evaluating which mechanism is likely to be dominant, resulting in earliest transition, for
+differing configurations of roughness, freestream turbulence and
+cooling for a given Reynolds number. Secondly, it enables a
+comparison of the relative magnitudes of effects from the nondominant mechanisms. If they are similar to that of the primary
+mechanism, mutual transition enhancement will be larger than if
+the other mechanisms would not produce substantial transition in
+isolation.
+
+3. Transition resulting from film cooling works in a combined
+way with that caused by surface roughness, resulting in transition at a lower Reynolds number than either in isolation. It
+is proposed that maximum superposition of different mechanisms occurs when each in isolation would result in transition at a similar Reynolds number.
+4. To evaluate and compare the role of each mechanism in
+isolation a transition map is proposed plotting transition
+onset location as a fraction of surface length against global
+Reynolds number for multiple mechanisms simultaneously.
+ACKNOWLEDGMENTS
+
+Thanks to Frederic Goenaga and Haidong Li of Rolls-Royce
+Plc and John Coull of Oxford University for their input throughout
+this work. Credit for the initial design of the cascade goes to Max
+Hewkin-Smith previously of the Whittle Lab.
+NOMENCLATURE
+
+𝑅𝑒
+𝑇𝑢
+𝑅𝑎
+𝐶𝑥
+𝑀
+𝜌
+𝑈
+𝜇
+𝐻
+𝑇
+𝛾
+𝑃
+𝑃𝑟
+𝑟
+𝐿
+𝜃
+𝑆
+𝜈
+
+7. CONCLUSION
+
+An experimental study of bypass transition mechanisms on
+a representative HP turbine profile has been undertaken in a variable density linear cascade. The levels of freestream turbulence
+and surface roughness were varied over values typical of engine
+conditions. Film cooling was included and the ejection location moved over typical locations for the last row on a HP rotor.
+Conclusions are drawn that answer the previously noted research
+questions:
+1. For values of freestream turbulence, roughness and film
+cooling ejection location typical of a HP rotor, below
+𝑅𝑒 𝑥 = 300, 000 transition is likely via a laminar separation
+bubble. A typically film cooled blade is likely fully turbulent
+by 𝑅𝑒 𝑥 = 1, 000, 000 regardless of freestream turbulence or
+roughness levels. This upper bound is dependent on ejection
+
+9
+
+Reynolds number
+Turbulence intensity
+Arithmetic average of profile height variations
+Axial chord
+Mach number
+Density
+Velocity
+Dynamic viscosity
+Span
+Temperature
+Ratio of specific heats
+Pressure
+Prandlt number
+Recovery factor
+Surface distance
+Momentum thickness
+Surface fraction: 𝐿/𝐿SS
+Kinematic viscosity
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+𝑅𝑒 𝜃 ,t = 100 + 0.43 exp (7 − 0.77𝑘s /𝜃)
+
+location. In the range 300, 000 < 𝑅𝑒 𝑥 < 1, 000, 000 transition will occur primarily due to film cooling or high levels
+of surface roughness. This range encompasses the cruise
+point of large civil engines and the entire operating range of
+smaller aeroengines, which will likely cross the transitional
+landscape between take off and cruise.
+
+𝜆𝜃
+𝐾
+𝑘s
+𝑅sk
+𝑅ku
+𝑅dq
+𝑢′
+
+𝑃0,1 − 𝑃0,2
+𝑃0,1 −𝑃𝑠,2
+
+[6]
+
+[7]
+
+Total pressure loss coefficient
+
+Abbreviations
+AR
+Aspect ratio
+RANS Reynolds averaged Navier-Stokes
+𝛾 − 𝑅𝑒 𝜃 𝛾 − 𝑅𝑒 𝜃 transition model
+FST Free Stream Turbulence
+Superscripts and subscripts
+[] 𝑥
+Based on axial chord
+[] 1
+Upstream station
+[] 2
+Downstream station
+[]TE Trailing edge value
+[] 0
+Stagnation value
+[]coolant Coolant value
+[]fs
+Freestream value
+[]lam Laminar value
+[]bubble estimated bubble length
+[]t
+Transition onset value
+[]turb Turbulent value
+[]trans Transition end value
+[]rec Recovery value
+[]peak Peak value
+[]SS Suction side value
+[] 𝜃
+Based on local momentum thickness
+[] 𝐿
+Based on suction side length
+[]s
+At separation
+[]ej
+At ejection
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+REFERENCES
+
+[1] Mayle, Robert Edward. “The 1991 IGTI Scholar Lecture: The Role of Laminar-Turbulent Transition in Gas Turbine Engines.” Journal of Turbomachinery Vol. 113 No. 4
+(1991): pp. 509–536. DOI 10.1115/1.2929110.
+[2] Hodson, Howard P. and Howell, Robert J.
+“The
+role of transition in high-lift low-pressure turbines
+for aeroengines.”
+Progress in Aerospace Sciences
+Vol. 41 No. 6 (2005):
+pp. 419–454.
+DOI
+https://doi.org/10.1016/j.paerosci.2005.08.001.
+[3] Roberts, S. K. and Yaras, M. I. “Boundary-Layer Transition Affected by Surface Roughness and Free-Stream Turbulence.” Journal of Fluids Engineering Vol. 127 No. 3
+(2005): pp. 449–457. DOI 10.1115/1.1906266.
+[4] Gramespacher, Christoph, Stripf, Matthias and Bauer,
+Hans-Jörg. “The Influence of Deterministic Surface Roughness and Freestream Turbulence on Transitional Boundary
+Layers: Heat Transfer Distributions and a New Transition
+Onset Correlation.” Journal of Turbomachinery Vol. 144
+No. 4 (2021): p. 041001. DOI 10.1115/1.4052458.
+[5] Stripf, M., Schulz, A. and Wittig, S. “Surface Roughness
+Effects on External Heat Transfer of a HP Turbine Vane
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+10
+
+.” Journal of Turbomachinery Vol. 127 No. 1 (2005): pp.
+200–208. DOI 10.1115/1.1811101.
+Teng, Shuye, Sohn, Dong Kee and Han, Je-Chin. “Unsteady
+Wake Effect on Film Temperature and Effectiveness Distributions for a Gas Turbine Blade.” Turbo Expo: Power for
+Land, Sea, and Air. 1999. DOI 10.1115/99-GT-172.
+Clark, Christopher J. “A Step Towards an Intelligent Aerodynamic Design Process.” Turbo Expo: Power for Land,
+Sea, and Air. 2019. DOI 10.1115/GT2019-91637.
+Lim, Chia Hui, Pullan, Graham and Northall, John. “Estimating the Loss Associated With Film Cooling for a Turbine
+Stage.” Turbo Expo: Power for Land, Sea, and Air. 2010.
+DOI 10.1115/GT2010-22327.
+Ito, S., Eckert, E. R. G. and Goldstein, R. J. “Aerodynamic
+Loss in a Gas Turbine Stage with Film Cooling.” Journal of
+Engineering for Power Vol. 102 No. 4 (1980): pp. 964–970.
+DOI 10.1115/1.3230368.
+Folk, Masha, Miller, Robert J. and Coull, John D. “The
+Impact of Combustor Turbulence on Turbine Loss Mechanisms.” Journal of Turbomachinery Vol. 142 No. 9 (2020).
+DOI 10.1115/1.4047615.
+Roach, P.E. “The generation of nearly isotropic turbulence by means of grids.” International Journal of Heat
+and Fluid Flow Vol. 8 No. 2 (1987): pp. 82–92. DOI
+https://doi.org/10.1016/0142-727X(87)90001-4.
+Thwaites, B. “Approximate Calculation of the Laminar
+Boundary Layer.” Aeronautical Quarterly Vol. 1 No. 3
+(1949): p. 245–280. DOI 10.1017/S0001925900000184.
+Abu-Ghannam, B. J. and Shaw, R. “Natural Transition
+of Boundary Layers—The Effects of Turbulence, Pressure
+Gradient, and Flow History.” Journal of Mechanical Engineering Science Vol. 22 No. 5 (1980): pp. 213–228. DOI
+10.1243/JMES_JOUR_1980_022_043_02.
+Menter, F. R., Langtry, R. B., Likki, S. R., Suzen, Y. B.,
+Huang, P. G. and Völker, S. “A Correlation-Based Transition Model Using Local Variables—Part I: Model Formulation.” Journal of Turbomachinery (2004): pp. 413–422DOI
+10.1115/1.2184352.
+Praisner, T. J. and Clark, J. P. “Predicting Transition in
+Turbomachinery—Part I: A Review and New Model Development.” Journal of Turbomachinery Vol. 129 No. 1
+(2004): pp. 1–13. DOI 10.1115/1.2366513.
+Steelant, J. “The Use of a Turbulence Weighting Factor
+to Model By-Pass Transition.” Rodi, W. and Laurence, D.
+(eds.). Engineering Turbulence Modelling and Experiments
+4. Elsevier Science Ltd, Oxford (1999): pp. 577–586. DOI
+https://doi.org/10.1016/B978-008043328-8/50055-2.
+Goodhand, Martin N., Walton, Karl, Blunt, Liam, Lung,
+Hang W., Miller, Robert J. and Marsden, Reg. “The Limitations of “Ra” to Describe Surface Roughness.” Turbo Expo:
+Power for Land, Sea, and Air. 2015. DOI 10.1115/GT201543329.
+Bons, J. P. “A Review of Surface Roughness Effects in
+Gas Turbines.” Journal of Turbomachinery Vol. 132 No. 2
+(2010). DOI 10.1115/1.3066315.
+
+Copyright © 2024 by Rolls-Royce plc
+
+Downloaded from asmedigitalcollection.​asme.​org/​GT/​proceedings-pdf/​GT2024/​88063/​V12BT30A019/​7370997/​v12bt30a019-gt2024-124918.​pdf by Cambridge University user on 03 November 2026
+
+𝑌𝑝 =
+
+Thwaites’ acceleration parameter
+Mayle’s acceleration parameter
+Sandgrain
+roughness
+,
+Roughness skew
+Roughness kurtosis
+Roughness slope
+Unsteady velocity component
+
+

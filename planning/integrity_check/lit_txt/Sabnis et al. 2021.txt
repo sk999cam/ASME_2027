@@ -1,0 +1,1862 @@
+The Aeronautical Journal
+
+1
+
+Page 1 of 23. c The Author(s), 2020. Published by Cambridge University Press on behalf of Royal Aeronautical Society.
+
+Analysis and extension of the
+quadratic constitutive relation
+for RANS methods
+K. Sabnis
+ks648@cam.ac.uk
+H. Babinsky
+Department of Engineering
+University of Cambridge
+Cambridge
+United Kingdom
+P.R. Spalart∗
+Boeing Commercial Airplanes
+Seattle, WA
+United States
+D.S. Galbraith and J.A. Benek
+Air Force Research Laboratory
+Wright–Patterson Air Force Base
+Dayton, OH
+United States
+
+ABSTRACT
+The quadratic constitutive relation was proposed as an extension of minimal complexity to
+linear eddy-viscosity models in order to improve mean flow predictions by better estimating
+turbulent stress distributions. However, the successes of this modification have been relatively
+modest and are limited to improved calculations of flow along streamwise corners, which are
+influenced by weak secondary vortices. This paper revisits the quadratic constitutive relation
+in an attempt to explain its capabilities and deficiencies. The success in streamwise corner
+flows cannot be entirely explained by significant improvements in turbulent stress estimates
+in general, but is instead due to better prediction of the particular turbulent stress combinations which appear in the mean streamwise vorticity equation. As a consequence of this
+investigation, a new formulation of turbulent stress modification is proposed, which appears
+to better predict the turbulent stress distributions for a variety of flows: channel flow, equilibrium boundary layers, pipe flow, separated boundary layers, and square duct flow.
+∗
+
+Retired, Boeing Senior Technical Fellow
+.
+
+2
+
+The Aeronautical Journal
+
+NOMENCLATURE
+ccr1 , ccr2
+ccr3 , ccr4
+c̃cr3
+DNS
+h
+k
+LES
+LEVM
+p
+P
+QCR
+r
+RANS
+Reτ
+Reθ
+S ij
+S i∗j
+xi = {x, y, z}
+ub
+ui = {u, v, w}
+u0i = {u0 , v0 , w0 }
+uτ
+y+
+
+constant coefficients in conventional QCR
+additional constant coefficients in extended QCR
+effective additional constant coefficient (= ccr3 − ccr4 )
+direct numerical simulation
+half-height of channel/duct
+turbulent kinetic energy
+large-eddy simulation
+linear eddy-viscosity model
+pressure
+production of turbulent kinetic energy
+quadratic constitutive relation
+radius of pipe
+Reynolds-averaged Navier–Stokes
+friction Reynolds number
+Reynolds number based on boundary-layer momentum thickness
+stress tensor
+traceless stress tensor
+streamwise, wall-normal and spanwise spatial coordinate
+bulk streamwise velocity
+mean velocity in the {x, y, z} direction
+turbulent velocity fluctuation in the {x, y, z} direction
+friction velocity
+wall-normal coordinate in wall units
+
+Greek Symbol
+δ
+δi j
+δref
+
+µt
+ρ
+σ̃i j
+τi j
+τ̃i j n
+o
+ωi = ω x , ωy , ωz
+Ωi j
+
+boundary-layer thickness
+Kronecker delta
+flow thickness: channel half-height, boundary-layer thickness, pipe radius
+dissipation of turbulent kinetic energy
+eddy viscosity
+density
+
+
+rescaled estimate of the turbulent stress tensor = τ̃i j /µt
+turbulent stress tensor
+turbulent stress tensor estimated using an eddy-viscosity model
+mean vorticity component in the {x, y, z} direction
+vorticity tensor, with respect to an inertial reference frame
+
+1.0 Introduction
+Despite the availability of high-fidelity computational approaches such as large-eddy simulations (LES) and direct numerical simulations (DNS), the prohibitive cost of these approaches
+means that, for design purposes, Reynolds-averaged Navier–Stokes (RANS) methods remain
+ubiquitous in the aerospace industry. Practical applications in this industry often feature
+complex geometries, such as wing–body junctions and turbine blade–hub junctions, where
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+3
+
+anisotropies in the turbulent stress distributions are known to influence the mean flow (1) . In
+such applications, accurate calculations of the turbulent stresses are therefore paramount in
+order to reliably predict the overall flow field.
+RANS computations do not obtain the turbulent stresses directly but instead use a prescribed turbulence model to estimate the eddy viscosity, µt , from the mean flow data. An
+‘eddy-viscosity model’ is then used to evaluate an approximation the turbulent stresses from
+µt . Linear eddy-viscosity models (LEVMs) have remained popular due to their simplicity
+and low computational cost, as compared to more involved closure models, despite providing
+somewhat inaccurate turbulent stress estimates. For example, LEVMs result in a simple distribution of normal turbulent stresses, u0 u0 = v0 v0 = w0 w0 . This can be particularly problematic
+in the complex geometries often encountered in practical applications, where normal stress
+anisotropy is expected to influence the mean flow. As a result, LEVMs are unable to reliably
+predict the flow in jets, streamwise corners or separated boundary layers (2) .
+One approach to extend the capabilities of LEVMs with only a mild increase in complexity
+is to consider terms that are quadratic in the mean stress and vorticity tensors, when evaluating
+the turbulent stress tensor. Spalart developed this type of quadratic eddy-viscosity model,
+termed the quadratic constitutive relation (QCR), which still relates the eddy viscosity with
+the turbulent stresses using only properties of the mean flow rather than any variables specific
+to the turbulence model in use (3,4) .
+The key success of QCR has been the prediction of the flow in geometries featuring streamwise corners. Here, experiments and direct numerical simulations show the presence of a
+counter-rotating vortex pair. Whilst RANS computations using linear eddy-viscosity models
+do not capture these vortices, QCR is able to successfully predict the presence of a vortex
+pair in the corner flow (4,5) . The improvement in flow prediction has been shown to result
+in a better estimate of corner separation (6) , including shock-induced separation in transonic
+and supersonic flows (7) . However, even these predictions are limited in their accuracy (7,6) .
+Furthermore, when the constant ccr1 (which, in practice, is treated like a tuning parameter)
+exceeds the recommended value of 0.3, Leger et al. have noted the appearance of additional
+non-physical vortices (8) .
+More generally, with the exception of the successful prediction of large streamwise vortices
+in Couette flow (9) , the improvement in the computation of other complex flow fields has been
+somewhat modest. Of course, a perfect prediction of turbulent stresses for all types of flow
+is not attainable using an approach with a small number of calibration constants. However,
+the limited success in mean flow prediction suggests that the inclusion of QCR terms does not
+significantly improve estimates of turbulent stresses. In order to investigate the capabilities
+and limitations of QCR, this paper considers an extension with additional quadratic terms not
+included in the original definitions.
+The aim of the analysis is to investigate the capabilities of three eddy-viscosity models:
+an LEVM, conventional QCR and the proposed extension to QCR. RANS computations of a
+flow problem require a prescribed turbulence model and so the corresponding results would
+be dependent on the chosen turbulence model. Instead, the procedure adopted in this paper
+directly tests the eddy-viscosity models themselves. To do so, the impact of different eddyviscosity models on turbulent stress anisotropy is assessed by using accurate values of mean
+velocity and turbulent stresses from direct numerical simulations (DNS).
+For several flow fields, published DNS velocity statistics are used to determine the distribution of µt that would best relate the relevant turbulent stresses to the mean flow. This can be
+considered as the best-case scenario for an hypothetical RANS simulation using a ‘perfect’
+
+4
+
+The Aeronautical Journal
+
+Table 1
+Direct numerical simulations of incompressible flows analysed in this paper. Reτ
+is the friction Reynolds number and Reθ is the Reynolds number based on
+boundary-layer momentum thickness.
+
+Geometry
+
+Authors
+
+Reynolds number
+
+channel
+channel
+boundary layer
+boundary layer
+boundary layer a)
+pipe
+separated boundary layer
+square duct
+
+Bernardini, Pirozzoli, Orlandi (10)
+Hoyas, Jiménez (11)
+Sillero, Jiménez, Moser (12)
+Schlatter, Örlü et al. (13)
+Schlatter, Li et al. (14)
+El Khoury, Schlatter et al. (15)
+Coleman, Rumsey, Spalart (16) : case A
+Pirozzoli, Modesti et al. (17)
+
+Reτ = 180 – 4100
+Reτ = 2000
+Reθ = 6650
+Reθ = 2500
+Reθ = 4300
+Reτ = 1000
+Reθ = 1500
+Reτ = 1100
+
+a) This
+
+study was performed using well-resolved large eddy simulations.
+
+turbulence model for that particular flow, even if such a model does not exist in reality. From
+the DNS-obtained eddy viscosity, the turbulent stresses are predicted for each eddy-viscosity
+model under investigation and are then compared with the ‘correct’ stresses reported by DNS.
+This comparison provides an evaluation of how well the turbulent stresses, which can have a
+significant impact on the mean flow, are predicted by the various eddy-viscosity models.
+The particular DNS data sets used in this study are all incompressible flows at moderate
+Reynolds numbers, as detailed in Table 1. These flow fields include canonical cases – channel
+flow (10,11) , boundary layers (12,13,14) and pipe flow (15) – as well as more complex flows, such as
+the separated boundary layers (16) and square duct flow (17) . The profiles from these different
+flow families exhibit quite distinct turbulent stress distributions, especially away from the
+wall (18) , allowing a wide range of flow cases to be studied.
+Note that since RANS simulations may not exactly compute the correct mean flow, the
+adopted procedure does not quite equate to an assessment of how well an actual RANS calculation would predict the turbulent stresses. However, the validity of this process improves
+with increased accuracy of RANS simulations and the fundamental aim of RANS is to produce the correct mean flow, so this approach can still be considered instructive. Furthermore,
+the DNS-based analysis has the significant advantage that it is independent of any turbulence
+model and so provides a direct test of the eddy-viscosity models themselves.
+
+2.0 The quadratic constitutive relation (QCR)
+Linear eddy-viscosity models estimate the time-averaged turbulent stress tensor, τi j = −ρu0i u0j ,
+using the Boussinesq assumption:
+2
+τ̃i j = 2µt S i∗j − ρkδi j ,
+3
+
+(1)
+
+where τ̃i j is the estimated turbulent stress tensor and µt is the eddy viscosity. In this equation,
+the traceless stress tensor S i∗j = S i j − 1/3 ∂uk /∂xk δi j , with δi j denoting the Kronecker delta,
+
+
+and S i j = 1/2 ∂ui /∂x j + ∂u j /∂xi . The mean velocity components ui = {u, v, w} correspond
+to the spatial coordinates xi = {x, y, z} in the streamwise, wall-normal and spanwise directions,
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+5
+
+respectively. The density is given by ρ and k corresponds to the turbulent kinetic energy. Note
+that the second term, 2/3ρkδi j , is neglected in one-equation turbulence models, which have
+instead:
+τ̃i j = 2µt S i∗j .
+(2)
+There are three iterations of the quadratic constitutive relation, developed by Spalart. The
+original statement of the relation, QCR-2000 (3) , is defined by:
+h
+i
+4ccr1 µt
+Ωik S k∗ j − S ik∗ Ωk j ,
+(3)
+τ̃i j = 2µt S i∗j − √
+S kl S kl + Ωkl Ωkl
+
+
+where the vorticity tensor Ωi j = 1/2 ∂ui /∂x j − ∂u j /∂xi or, in applications with rotation or
+curvature, would be defined with respect to an inertial reference frame (19) . Note that since this
+modification uses only mean-flow properties, it can be applied to any single-equation or multiequation turbulence model that is based on a linear eddy-viscosity model. For turbulence
+models which provide the turbulent kinetic energy, k, the additional term 2/3ρkδi j can be
+included in the eddy-viscosity relation:
+h
+i 2
+4ccr1 µt
+τ̃i j = 2µt S i∗j − √
+(4)
+Ωik S k∗ j − S ik∗ Ωk j − ρkδi j .
+3
+S kl S kl + Ωkl Ωkl
+An extension to this framework, QCR-2013 (4) , was proposed for turbulence models which do
+not provide k. This formulation includes an additional term:
+q
+
+h
+i
+4ccr1 µt
+∗ ∗
+τ̃i j = 2µt S i∗j − √
+Ωik S k∗ j − S ik∗ Ωk j − ccr2 µt
+2S kl
+S kl δi j .
+(5)
+S kl S kl + Ωkl Ωkl
+The constants ccr1 and ccr2 were proposed as 0.3 and 2.5, respectively, after calibration
+in theh outer part
+of an equilibrium turbulent boundary layer (4) . The additional term,
+p ∗ ∗i
+ccr2 µt 2S kl S kl δi j , approximately accounts for the 2/3ρkδi j term in the Boussinesq equation (Equation 1), which had been omitted
+2iand 3.
+ in Equations
+i
+hp
+
+hp
+∗ ∗
+∗ ∗
+Note that this term contributes ∂/∂x j ccr2 µt 2S kl S kl δi j = ∂/∂xi ccr2 µt 2S kl
+S kl to
+the momentum equation. This is simply a gradient in the xi direction and so takes the same
+form as the pressure gradient term, ∂p/∂xi . Therefore, even if this term was not explicitly
+included, its effect would be implicitly incorporated in the pressure distribution, and so the
+term does not affect the mean velocity distribution. As a result, the inclusion of this particular
+term is not intended to directly improve prediction of the mean velocity field but instead allows
+the distribution of pressure and normal turbulent stresses to better match the true values.
+Similarly, the additional term in Equation 5 also provides a means to extend the linear eddyviscosity model for one-equation models (Equation 2) by introducing an estimated, non-zero
+turbulent kinetic energy:
+q
+
+∗ ∗
+τ̃i j = 2µt S i∗j − ccr2 µt
+2S kl
+S kl δi j .
+(6)
+A recent version of the model, termed QCR-2020, has been proposed by Rumsey et al. (20) .
+In this formulation, the constants, ccr1 and ccr2 , are no longer assumed to be spatially uniform
+but are replaced with equivalent coefficients containing wall-normal dependency, which vary
+from one value at the walls to a different one near the boundary-layer edge. Given the relative
+infancy of the QCR-2020 extension and its inherent added complexity, this paper instead focuses on QCR-2013, which has constant coefficient values and whose effect has been studied
+extensively (7,8,5,6) .
+
+6
+
+The Aeronautical Journal
+
+3.0 An extension to the quadratic constitutive relation
+The modest success of QCR in most flow fields suggests that the turbulent stress predictions
+need to be further improved. One possible approach is to revisit the expansion developed by
+Gatski and Speziale (21) , whose first two terms correspond to the linear term (Equation 2) and
+to the QCR-2000 quadratic term (Equation 3). To improve the estimate of turbulent stresses,
+it may therefore be beneficial to include additional terms in the eddy-viscosity model from
+the expansion.
+In fact, it is not necessary to immediately extend the eddy-viscosity model to cubic terms
+because there are two additional terms, not included in QCR-2013, which are quadratic in S
+and Ω and which satisfy the fundamental contraction (u0i u0i = k) and symmetry (u0i u0j = u0j u0i )
+properties (22,23) . If it is assumed that the scaling with µt , S and Ω of all these terms is the
+same as for the quadratic term in QCR-2013, we obtain:
+q
+
+h
+i
+4ccr1 µt
+∗ ∗
+Ωik S k∗ j − S ik∗ Ωk j −ccr2 µt
+2S kl
+τ̃i j = 2µt S i∗j − √
+S kl δi j
+S kl S kl + Ωkl Ωkl
+|
+{z
+}
+A
+"
+#
+4ccr3 µt
+1 ∗ ∗
+S ik∗ S k∗ j − S kl
+−√
+S kl δi j
+3
+S kl S kl + Ωkl Ωkl
+|
+{z
+}
+B
+"
+#
+1
+4ccr4 µt
+Ωik Ωk j + Ωkl Ωkl δi j .
++√
+3
+S kl S kl + Ωkl Ωkl
+|
+{z
+}
+
+(7)
+
+C
+
+For a parallel mean shear flow, u (y), where v = w = 0, the two new terms (B and C) are
+different to the original QCR-2000 quadratic term (A) but are identical to each other:
+
+1
+h
+i
+4ccr1 µt
+∂u
+
+A: − √
+Ωik S k∗ j − S ik∗ Ωk j = −2ccr1 µt 0
+∂y 0
+S kl S kl + Ωkl Ωkl
+
+0
+−1
+0
+
+
+"
+#
+1
+4ccr3 µt
+1
+∂u
+1
+
+∗ ∗
+B: − √
+S ik∗ S k∗ j − S kl
+S kl δi j = − ccr3 µt 0
+3
+3
+∂y 0
+S kl S kl + Ωkl Ωkl
+
+"
+#
+1
+4ccr4 µt
+1
+1
+∂u 
+Ωik Ωk j + Ωkl Ωkl δi j = − ccr4 µt 0
+C: + √
+3
+3
+∂y 0
+S kl S kl + Ωkl Ωkl
+
+
+0
+
+0 ,
+
+0
+
+
+0 
+
+0  ,
+
+−2
+
+0 0 
+
+1 0  .
+
+0 −2
+
+0
+1
+0
+
+(8)
+
+(9)
+
+(10)
+
+The conventional QCR term (A) was chosen because it increases u0 u0 and decreases w0 w0 such
+that u0 u0 > w0 w0 > v0 v0 , which is known to hold for parallel mean shear flows u (y), such as
+boundary layers (22) . However, the other quadratic terms (B and C) are of the same order in
+the expansion about S and Ω so these terms might be expected to have an influence of similar
+magnitude as term A.
+In general, as well as evaluating to identical expressions for a parallel mean shear flow,
+terms B and C also tend to the same expression as each other for any fully-developed flow
+where u  v, w. Whilst a long-term aim is to discriminate between these two terms, for now
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+7
+
+the problem is therefore simplified by considering instead:
+4ccr1 µt
+S kl S kl + Ωkl Ωkl
+4c̃cr3 µt
+− √
+S kl S kl + Ωkl Ωkl
+
+τ̃i j = 2µt S i∗j − √
+
+q
+
+h
+i
+∗ ∗
+Ωik S k∗ j − S ik∗ Ωk j − ccr2 µt
+2S kl
+S kl δi j
+#
+"
+1 ∗ ∗
+S ik∗ S k∗ j − S kl
+S kl δi j ,
+3
+
+(11)
+
+with c̃cr3 = ccr3 − ccr4 . Further simplification is achieved by assuming that ccr1 , ccr2 and c̃cr3
+are constant in space, rather than a function of the production-dissipation ratio, P/, or indeed
+some other relevant non-dimensional quantity.
+In order to calibrate the coefficients (ccr1 , ccr2 , c̃cr3 ), the DNS data from the parallel shear
+flows in Table 1 are used. These consist of channel flows (10,11) , boundary layers (12,13,14) and
+pipe flows (15) . For these parallel shear flows, the only turbulent stress component which
+affects the mean velocity, u (y), is the shear stress, τ xy . It is therefore possible to use the DNS
+data to determine the distribution of µt that would correctly relate the shear stress to the mean
+flow in a RANS simulation. In order to relate the mean flow to the turbulent stresses, the
+method of Spalart et al. is invoked (24) :
+µt =
+
+τ xy
+τi j S i j
+=
+.
+2S kl S kl ∂u/∂y
+
+(12)
+
+The extracted distribution of µt can then be used to determine the unknown calibration coefficients, ccr1 , ccr2 and c̃cr3 . By evaluating the diagonal terms of Equation 11 for a parallel mean
+shear flow, we obtain:
+ 
+
+ 
+τ xx 
+ 2 1 1/3  ccr1 
+∂u 
+ 
+ 
+(13)
+ τyy  = −µt −2 1 1/3  ccr2  ,
+∂y
+0 1 −2/3 c̃cr3
+τzz
+where τ xx , τyy and τzz correspond to the true normal stresses, which are extracted from DNS.
+Equation 13 is then inverted to find the values of ccr1 , ccr2 and c̃cr3 which give the correct
+normal stresses at each point,
+ 
+ccr1 
+ccr2  = − 1
+ 
+µt ∂u
+∂y
+c̃cr3
+
+
+ 2
+
+−2
+0
+
+1
+1
+1
+
+−1  
+1/3  τ xx 
+  
+1/3   τyy  .
+  
+τzz
+−2/3
+
+(14)
+
+This matrix equation directly determines the constants from the true mean flow and turbulent stresses, which are known from DNS. Equation 14 is then solved at each point for the
+canonical parallel shear flows described above.
+The values of the coefficients as a function of the wall-normal coordinate, y, are shown
+in Fig. 1 for the three different parallel mean shear flows. For channel flow and boundary
+layers, this figure includes data from more than one simulation, as listed in Table 1, in order to represent flows at different Reynolds numbers. Inspection of Fig. 1 suggests that the
+calibrated coefficients appear to be fairly uniform across much of the flow, and are similar between the different flow cases. This finding helps to justify the simplification of assigning the
+coefficients a single constant value rather than allowing them to vary with non-dimensional
+wall-normal coordinate. A reasonable value for these coefficients is obtained in three stages.
+First, the coefficient values between y/δref = 0.1 and 1 are averaged in each data set. The mean
+of these values is then calculated over the different Reynolds-number cases for each flow field.
+
+8
+
+The Aeronautical Journal
+a)
+
+b)
+
+c)
+
+1
+channel
+b. layer
+pipe
+y / δref
+
+0.5
+
+0
+0
+
+1
+2
+0
+1
+2
+0
+2
+4
+c̃cr3
+ccr1
+ccr2
+Figure 1. Calibration of a) ccr1 , b) ccr2 and c) c̃cr3 along the wall-normal direction, scaled by the flow thickness,
+δref . Flowfields: channel flow (—) (10,11) ; boundary layers (- -) (12,13,14) ; pipe flow (-·-) (15) .
+
+A final average is then performed over the three canonical flow fields to give calibrated constant coefficient values of ccr1 = 0.7, ccr2 = 2.5 and c̃cr3 = 0.8. This modified version of the
+conventional formulation is termed the ‘extended quadratic constitutive relation’, or extended
+QCR.
+
+3.1 Effect of eddy-viscosity model on turbulent stress estimates
+The effect on turbulent stress estimates of the different eddy-viscosity models, including extended QCR, is studied using the DNS flows listed in Table 1. The estimated turbulent stress
+distributions are obtained by evaluating the relevant eddy-viscosity model equation using the
+mean velocities provided by the DNS data and the eddy viscosity, µt , from Equation 12. The
+estimated turbulent stresses are then compared with the ‘true’ values from DNS.
+Prior to evaluating the capabilities of extended QCR, conventional eddy-viscosity models are assessed for the cases of channel flow, boundary layers and pipe flow. The turbulent stresses are estimated for: an LEVM which doesn’t account for turbulent kinetic energy
+(Equation 2); QCR-2000 (Equation 3); QCR-2013 (Equation 5); and an LEVM accounting for
+turbulent kinetic energy using the ccr2 term from QCR-2013 (Equation 6). Figure 2 shows how
+the estimated normal stresses (τ xx , τyy and τzz ) from each model compare to the distributions
+from DNS (10,12,15) . This comparison shows that an LEVM based on Equation 2 predicts all
+three normal stresses to be equal to zero everywhere, which is not an accurate representation
+of the true distribution.
+From Fig. 2, it is also evident that the ccr1 and ccr2 terms in QCR-2013 serve two different purposes. QCR-2000, which contains only the ccr1 term, better predicts the anisotropies
+between the turbulent stresses, capturing the fact that u0 u0 > v0 v0 > w0 w0 . However, the estimated stresses remain much smaller than the true values. On the other hand, the estimates
+from Equation 6, which contains only the ccr2 term, better estimate the size of the stresses but
+do not predict any variation between the different turbulent stresses. This observation suggests
+that the ccr1 term improves prediction of the anisotropy between the normal turbulent stresses
+while the ccr2 term improves the estimate of the magnitudes. QCR-2013, which contains
+both ccr1 and ccr2 terms, therefore benefits from both improvements and features significantly
+better turbulent stress estimates than the other models. However, even QCR-2013 exhibits
+noticeable deviations from the true stress distributions, motivating the need for an extended
+QCR.
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+i.
+
+ii.
+
+9
+
+iii.
+
+1
+
+a) channel flow
+
+y/h
+
+DNS
+LEVM
+LEVM + ccr2 term
+QCR-2000
+QCR-2013
+
+0.5
+
+0
+4100
+1000
+y+
+100
+25
+b) boundary layer
+
+y/δ
+
+1
+
+0.5
+
+0
+2500
+1000
+y+
+100
+
+10
+c) pipe flow
+
+y/r
+
+1
+
+0.5
+
+0
+1000
+
+y+
+
+100
+
+10
+5
+0
+
+2
+
+4
+
+6
+
+8
+
+-1
+
+0
+
+1
+
+2
+
+3
+
+0
+
+1
+
+2
+
+3
+
+u0 u0 / u2τ
+v0 v0 / u2τ
+w0 w0 / u2τ
+Figure 2. Effect of different turbulent stress approximations on estimating the normal turbulent stresses (i. u0 u0 ,
+ii. v0 v0 , iii. w0 w0 ), scaled by the friction velocity, uτ . The true stress from DNS (—) and estimated stress from an
+LEVM (Equation 2, -·-), an LEVM with the ccr2 term (Equation 6, -·-), QCR-2000 (Equation 3, - -) and QCR-2013
+(Equation 5, - -). Flowfields: a) channel flow (10) ; b) boundary layer (12) ; c) pipe flow (15) . In each case, the stress
+distributions are presented with the wall-normal coordinate in both outer units (y) and wall units (y+ ).
+
+10
+
+The Aeronautical Journal
+i.
+
+ii.
+
+iii.
+
+1
+
+a) channel flow
+
+y/h
+
+DNS
+QCR-2013
+extended QCR
+
+0.5
+
+0
+4100
+1000
+y+
+100
+25
+b) boundary layer
+
+y/δ
+
+1
+
+0.5
+
+0
+2500
+1000
+y+
+100
+
+10
+c) pipe flow
+
+y/r
+
+1
+
+0.5
+
+0
+1000
+
+y+
+
+100
+
+10
+5
+0
+
+2
+
+4
+
+6
+
+8
+
+0
+
+1
+
+2
+
+3
+
+0
+
+1
+
+2
+
+3
+
+u0 u0 / u2τ
+v0 v0 / u2τ
+w0 w0 / u2τ
+Figure 3. Effect of different turbulent stress approximations on estimating the normal turbulent stresses (i. u0 u0 ,
+ii. v0 v0 , iii. w0 w0 ), scaled by the friction velocity, uτ . The true stress from DNS (—) and estimated stress from
+QCR-2013 (Equation 5, - -) and extended QCR (Equation 11, —). Flowfields: a) channel flow (10) ; b) boundary
+layer (12) ; c) pipe flow (15) . In each case, the stress distributions are presented with the wall-normal coordinate
+in both outer units (y) and wall units (y+ ).
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+11
+
+A comparison of the turbulent stress estimates from QCR-2013 and extended QCR against
+the true DNS values is shown in Fig. 3. This figure shows that extended QCR predicts the
+turbulent stresses substantially better than QCR-2013. Note that these improvements are
+achieved with coefficient values that are neither spatially dependent nor flow specific. However, in the near-wall region both models struggle to accurately predict the stresses. This
+observation is particularly evident when the spatial coordinate is scaled in wall units, y+ .
+These plots show that extended QCR agrees reasonably well with the DNS data in the outer
+part of the flow but, below y+ ≈ 100 − 500, none of the eddy-viscosity models produce satisfactory estimates of the turbulent stresses. Nevertheless, even in this region, extended QCR
+still generally performs better than the other models.
+The poor predictions in the near-wall region can be attributed to the fact that extended QCR
+has been developed in free shear flows and does not take advantage of any information regarding the proximity of the wall. Capturing this wall-normal dependence remains a challenge for
+the future, perhaps using the approach of QCR-2020, which allows the values of coefficients to
+vary with wall-normal distance. It is worth noting, however, that even QCR-2020 has trouble
+reproducing, in particular, the sharp near-wall peak of τ xx at high Reynolds numbers (20) .
+In addition to evaluating the improvement in turbulent stress estimates by extended QCR for
+different flow fields, it is also useful to consider the effects of Reynolds number. This analysis
+is performed using the channel flow as an example, which was studied for Reτ = 4100 in
+Fig. 3a. However, DNS simulations were also conducted by Bernardini et al. for the same
+flow field at Reτ = 2050, 1000, 550, and 180. Figure 4 presents the turbulent stresses from the
+velocity statistics for these additional simulations, alongside the estimated distributions from
+QCR-2013 and extended QCR. This comparison shows that extended QCR provides a better
+estimate of the normal stresses than QCR-2013, not just at Reτ = 4100 where the coefficient
+values were calibrated, but for the entire Reynolds-number range, Reτ = 180 – 4100.
+A similar analysis to the parallel mean shear flows in Fig. 3 can also be extended to the
+more complex cases in Table 1, namely the separated boundary layer (16) and the flow in a
+square duct (17) . In contrast to the parallel shear flows from Fig. 3, the mean velocity in
+such flow fields (which have non-zero cross-flow and which vary in x or z) are no longer
+determined solely by τ xy . Therefore, it is not possible to use the eddy-viscosity distribution
+from Equation 12 to correctly relate shear stress with the mean flow. Instead, a different
+method is used to evaluate a relevant eddy-viscosity distribution, µt , which provides the best
+fit for a weighted balance of all six turbulent stress components:
+µt =
+
+τi j σ̃i j
+.
+σ̃kl σ̃kl
+
+(15)
+
+In this equation, τi j is the true turbulent stress tensor from DNS and σ̃i j = τ̃i j / µt , where the
+definition of τ̃i j is taken from Equation 5 or 11 for QCR-2013 and extended QCR, respectively.
+Note that τ̃i j is proportional to µt for all three definitions, and so σ̃i j is independent of µt .
+Figure 5 shows the estimated normal turbulent stresses (τ xx , τyy and τzz ) for these flows.
+This figure exhibits similar behaviour to that from the simpler flow cases (Fig. 3). In the outer
+part of the flow, extended QCR provides substantial improvements compared to QCR-2013.
+However, whilst the turbulent stresses appear to be reasonably predicted down to y+ = 10 for
+the separated boundary layer, neither of the eddy-viscosity models provide accurate estimates
+for the turbulent stresses in the near-wall region (y+ . 60) of the corner bisector for the
+square duct flow. This finding further highlights the importance of capturing the wall-normal
+dependency of the QCR coefficients in future improvements to the current model.
+
+12
+
+The Aeronautical Journal
+
+a) Reτ = 2050
+
+y/h
+
+i.
+
+ii.
+
+iii.
+
+1
+
+DNS
+QCR-2013
+extended QCR
+
+0.5
+
+0
+2050
+1000
+y+
+100
+25
+b) Reτ = 1000 1000
+
+y+
+100
+
+25
+c) Reτ = 550
+
+y+
+
+550
+
+100
+
+25
+d) Reτ = 180
+
+y/h
+
+1
+
+0.5
+
+0
+180
+100
+y+
+
+25
+0
+
+2
+
+4
+
+6
+
+8
+
+0
+
+1
+
+2
+
+3
+
+0
+
+1
+
+2
+
+3
+
+u0 u0 / u2τ
+v0 v0 / u2τ
+w0 w0 / u2τ
+Figure 4. Effect of Reynolds number on estimates of normal turbulent stresses (i. u0 u0 , ii. v0 v0 , iii. w0 w0 ), scaled
+by the friction velocity, uτ . The true stress from DNS (—) and estimated stress from QCR-2013 (Equation 5, - -)
+and extended QCR (Equation 11, —). Reynolds numbers: a) Reτ = 2050; b) Reτ = 1000; c) Reτ = 550; d) Reτ
+= 180 (10) . In each case, the stress distributions are presented with the wall-normal coordinate in wall units (y+ ),
+with the data in outer units (y) only included for cases a) and d) for brevity.
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+i.
+a) separated b.l.
+
+y/δ
+
+ii.
+
+13
+
+iii.
+
+1
+
+DNS
+QCR-2013
+extended QCR
+
+0.5
+
+0
+1000
+
+y+
+
+100
+
+10
+b) square duct
+
+y/
+
+1
+
+√
+2h
+
+0.5
+
+0
+1000
+
+y+
+100
+
+25
+
+0
+
+0.005
+u0 u0
+
+/
+
+u2b
+
+0.01
+
+0
+
+0.005
+v0 v0
+
+/
+
+u2b
+
+0.01
+
+0
+
+0.005
+w0 w0
+
+/
+
+0.01
+
+u2b
+
+Figure 5. Effect of different turbulent stress approximations on estimating the normal turbulent stresses (i. u0 u0 ,
+ii. v0 v0 , iii. w0 w0 ), scaled by the bulk velocity, ub . The true stress from DNS (—) and estimated stress from
+QCR-2013 (Equation 5, - -) and extended QCR (Equation 11, —). Flowfields: a) separated boundary layer (16) ;
+b) corner bisector of duct flow (17) . In each case, the stress distributions are presented with the wall-normal
+coordinate in both outer units (y) and wall units (y+ ).
+
+14
+
+The Aeronautical Journal
+
+Figures 3 and 5 therefore suggest that extended QCR improves the predictions of turbulent
+stresses, which might be expected to improve the calculation of mean flow fields. In order to
+test the effect on mean flow behaviour, it would be necessary to assess the accuracy of RANS
+simulations conducted using extended QCR. Such an assessment is outside the scope of the
+present paper but would be the ultimate test of the proposed quadratic eddy-viscosity model.
+
+4.0 Prediction of corner flows using QCR
+The analysis of DNS data in Figs. 3 and 5 has shown that QCR-2013 produces a somewhat
+inaccurate estimate of turbulent stresses. Nevertheless, conventional QCR appears to more
+accurately calculate the flow along corner geometries than the corresponding linear eddyviscosity models (4,5,7) . The successful prediction of stress-induced corner vortices using poor
+estimates of the turbulent stresses is somewhat counter-intuitive. In order to better understand
+this apparent contradiction, the turbulent stresses in corner flows are analysed more closely.
+
+4.1 Analysis of turbulent stresses
+Since corner flows are dominated by the presence of a counter-rotating pair of streamwise
+vortices (1) , we consider the mean streamwise vorticity equation:
+v
+
+!
+∂2
+∂ω x
+∂2
+∂u
+∂u
+∂ω x
++
+ωx
++w
+= ωy
++ ωz
++ν
+∂y
+∂z
+∂y
+∂z
+∂y2 ∂z2
+|
+{z
+} |
+{z
+}
+A
+
+B
+
+!
+
+∂2
+∂2  0 0 
+∂2  02
++
+−
+−v
+w
++
+v − w02 ,
+2
+2
+∂y∂z
+∂y
+∂z
+{z
+}
+|
+{z
+} |
+C
+
+(16)
+
+D
+
+where ω x , ωy and ωz are the vorticity components in the streamwise, wall-normal and spanwise directions, while ν is the kinematic viscosity of the flow. This equation shows the balance
+of the convection of vorticity (the left-hand side) with production and diffusion on the righthand side. Term A on the right-hand side corresponds to the generation of Prandtl vortices of
+the first kind, corresponding to a bending of vortex lines by the mean shear. The second term
+(B) represents the viscous diffusion of vorticity. The third and fourth terms (C and D) correspond to the production of Prandtl vortices of the second kind, which is related to turbulent
+stress anisotropy in the flow.
+The streamwise vortices which exist in corner flows are believed to be generated by mechanisms relating to Prandtl vortices of the second kind (1) , corresponding to terms C and D
+above. We therefore restrict our attention to these two terms, which are referred to as the
+‘shear stress term’ (term C) and the ‘normal stress term’ (term D). These two terms are evaluated using the turbulent stresses estimated using an LEVM, QCR-2013 and extended QCR,
+and are then compared with the equivalent ‘correct’ distribution calculated from the DNS
+turbulent stresses.
+For this analysis, we assume that in corner flows the streamwise velocities are much greater
+than any transverse velocity components (v ≈ w ≈ 0) and the flow is fully developed (∂u/∂x =
+0). For a linear eddy-viscosity model, defined by Equation 6, we find that τyz = 0 and τyy = τzz ,
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+15
+
+which gives:
+shear stress term :
+normal stress term :
+
+!
+1 ∂2
+∂2
+−
+τyz = 0 ,
+ρ ∂y2 ∂z2
+
+1 ∂2 
+τzz − τyy = 0 .
+ρ ∂y∂z
+
+(17)
+(18)
+
+Since the vorticity production terms equate to zero, RANS simulations with an LEVM are
+unable to generate the quasi-streamwise vortices which exist in corners, resulting in a poor
+prediction of these flows.
+The situation is different when quadratic modifications are introduced, however. Rather
+than repeating the entire analysis separately for QCR-2013 and extended QCR, both models
+can be studied simultaneously using Equation 11. As determined in Section 3.0, the proposed
+values of ccr1 = 0.7, ccr2 = 2.5 and c̃cr3 = 0.8 give extended QCR. On the other hand, QCR2013, which does not contain the c̃cr3 term, can be replicated by using Equation 11 with the
+coefficient combination ccr1 = 0.3, ccr2 = 2.5 and c̃cr3 = 0. Evaluating the relevant turbulent
+stress combinations for the shear stress term and the normal stress term in Eq. 16 for a corner
+flow, u (y, z), we find that:
+
+!2
+!2 
+(2ccr1 − c̃cr3 ) µt  ∂u
+∂u 
+−
+τzz − τyy = q    
+(19)
+ ,
+∂z
+∂y 
+∂u 2
+∂u 2
++
+∂y
+∂z
+"
+!
+!#
+(2ccr1 − c̃cr3 ) µt ∂u ∂u
+.
+(20)
+τyz = q   
+∂y ∂z
+∂u 2
+∂u 2
++
+∂y
+∂z
+These turbulent stress combinations only depend on the constant combination 2ccr1 − c̃cr3 . This
+suggests that the generation of streamwise vorticity depends only on the value of 2ccr1 − c̃cr3
+(i.e. some measure of the strength of the quadratic modification) rather than the individual
+contributions from the different terms. Therefore, while corner flows do show the importance
+of quadratic terms in turbulence modelling, they are poor at discriminating between them.
+The dependence of vorticity production on 2ccr1 − c̃cr3 suggests that, if the combined use
+of both (or all three) quadratic terms can generate accurate stresses, the streamwise vorticity
+in corner flows can be produced using just one of these terms, such as in conventional QCR.
+For this to be the case, it is necessary that the model which provides accurate stress estimates
+and conventional QCR both share a common value of 2ccr1 − c̃cr3 .
+Indeed, it is interesting to note that 2ccr1 − c̃cr3 = 0.6 both for QCR-2013 and for extended
+QCR. This suggests that vorticity production in corner flows is essentially equivalent between
+the two forms and provides an explanation for the success of conventional QCR in such flows
+despite somewhat poor turbulent stress prediction. An additional consequence of this finding
+is that extending QCR to its more general form is unlikely to detrimentally impact the key
+success of conventional QCR, i.e. the prediction of the mean flow along streamwise corners.
+
+4.2 Analysis of velocity statistics from DNS
+Data from relevant direct numerical simulations are used to illustrate the findings from Section 4.1. A fully-developed, incompressible square duct flow was computed by Pirozzoli et
+al. for a friction Reynolds number, Reτ = 1100 (17) . Figures 6a and 6b show the streamwise
+
+16
+
+The Aeronautical Journal
+u / ub
+
+a)
+0
+
+ω x h / ub
+2
+
+b)
+
+1.2
+
+0
+
+V−
+
+1.0
+y/h
+
+0.8
+-0.5
+
+0.6
+
+V+
+
+y/h
+-0.5
+
+1
+
+0
+
+0.4
+-1
+0.2
+-2
+-1
+0
+-0.5
+0
+-1
+-0.5
+0
+z/h
+z/h
+Figure 6. Direct numerical simulation of the flow in a quarter of a square duct (17) with half-height, h, and bulk
+velocity, ub : a) the mean streamwise velocity component, u, with the highlighted contour at u/ub = 1,
+representative of the boundary-layer edge shape; b) the mean streamwise vorticity, ω x . Contours of positive
+values are shown with solid lines and negative values are marked by dashed lines.
+-1
+-1
+
+velocity and vorticity distributions, respectively, for a quarter of the duct. As well as capturing
+the shear in the boundary layers, the vorticity distribution displays the pair of counter-rotating
+vortices (labelled V+ and V− ) either side of the corner bisector. The distorted boundary-layer
+shape, denoted by the dotted line in Fig. 6a, demonstrates how the vortices affect the streamwise velocity profile through momentum transfer between the core flow and the boundary
+layers.
+Figure 7a presents the turbulent stresses (τyz , τyy and τzz ) which appear in the streamwise
+vorticity equation (Equation 16), extracted directly from DNS. The turbulent shear stress, u0 v0 ,
+is negative along the corner bisector and is roughly zero on either side. The normal stresses
+are generally larger in magnitude than the shear stress, with v0 v0 concentrated towards the floor
+and w0 w0 towards the sidewall. These distributions are compared with equivalent estimates
+using Equations 6, 5 and 11, which correspond to an LEVM, QCR-2013 and extended QCR,
+respectively.
+A comparison of Fig. 7a with Fig. 7b shows that linear eddy-viscosity models cannot accurately predict the distribution of relevant turbulent stresses. When the QCR-2013 modification
+is used, there is an improvement in τyz (Fig. 7c-i), which now more closely reflects the distribution in Fig. 7a-i. However, the estimates of τyy (Fig. 7c-ii) and τzz (Fig. 7c-iii) are still
+inaccurate in both magnitude and topology. Figure 7d shows that extended QCR appears to
+provide a reasonable prediction of all three stresses, although the true stress distributions from
+Fig. 7a are still not perfectly replicated.
+As well as investigating the individual turbulent stresses, Fig. 8 shows the equivalent comparison for the stress combination τzz − τyy , which appears in the normal stress term of Equation 16. Linear eddy-viscosity models which obey Equation 6 assume that τyy = τzz , and so
+the difference between the two stress components evaluates to zero. Since this distribution
+would correspond to an empty plot, it is not shown in Fig. 8. More interestingly, Figs. 8b
+and 8c appear to be equivalent, which shows that QCR-2013 exactly emulates the estimates
+from extended QCR. This is a direct consequence of the finding in Section 4.1 that, for these
+quadratic modifications, τzz − τyy depends only on 2ccr1 − c̃cr3 . This coefficient combination
+evaluates to 0.6 for both QCR-2013 and extended QCR. For the same reason, the distribution
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+i.
+
+ii.
+
+17
+
+iii.
+
+0
+
+a)
+DNS
+
+y/h
+
+b)
+LEVM
+
+-1
+0
+
+y/h
+
+-1
+0
+
+c)
+QCR-2013
+
+y/h
+
+-1
+0
+
+d)
+extended QCR
+
+y/h
+
+-1
+-1
+
+0
+
+-1
+
+-0.003
+
+0
+u0 v0 / u2b
+
+0
+
+-1
+
+z/h
+
+z/h
+
+0.003
+
+0
+
+0.005
+v0 v0 / u2b
+
+0
+z/h
+
+0.01
+
+0
+
+0.005
+
+0.01
+
+w0 w0 / u2b
+
+Figure 7. Turbulent stresses relevant for streamwise vorticity production, in the square duct (17) : i. u0 v0 , ii. v0 v0 ,
+and iii. w0 w0 . These stresses are a) directly extracted from the DNS turbulence statistics, or are estimated
+using b) a linear eddy-viscosity model, c) QCR-2013, and d) extended QCR. Contours of positive values are
+shown with solid lines and negative values are marked by dashed lines.
+
+18
+
+The Aeronautical Journal
+
+a) DNS
+
+b) QCR-2013
+
+c) extended QCR
+
+(w0 w0 − v0 v0 ) / u2b
+0.01
+
+0
+
+y/h
+
+0
+
+-1
+
+-0.01
+-1
+
+0
+z/h
+
+-1
+
+0
+z/h
+
+-1
+
+0
+z/h
+
+Figure 8. Turbulent stress combination w0 w0 − v0 v0 , in the square duct (17) . These terms are a) directly extracted
+from the DNS turbulence statistics, or are estimated using b) QCR-2013 and c) extended QCR. Contours of
+positive values are shown with solid lines and negative values are marked by dashed lines. Note that the
+equivalent plot for an LEVM is blank and so has not been presented here.
+
+of τyz in Fig. 7c-i (QCR-2013) and Fig. 7d-i (extended QCR) appear to be equivalent.
+From the turbulent stress distributions, the shear stress and the normal stress terms from
+Equation 16 are evaluated, both individually and in combination (Fig. 9). Figure 9a presents
+these vorticity production terms for the DNS stress distributions. The overall vorticity production (Fig. 9a-iii) takes the form of one lobe each side of the corner bisector (P+ and P− ), with
+opposite sign. Both production terms affect these lobes, with the shear stress term contributing
+more towards the corner bisector and the normal stress term influencing the behaviour close
+to the walls.
+As expected from the analysis of the streamwise vorticity equation, the vorticity production terms for LEVMs evaluate to zero, so such models cannot produce streamwise vorticity
+using this mechanism. Since this distribution would produce an empty contour plot, it is not
+included in Fig. 9. The production terms for QCR-2013 (Fig. 9c) and extended QCR (Fig. 9d)
+produce very similar distributions to one another. This is a consequence of these two quadratic
+modifications displaying equivalent spatial distributions for the relevant turbulent stress combinations τyz (Figs. 7c-i and 7d-i) and τzz − τyy (Figs. 8b and 8c). Therefore, the following
+discussion does not distinguish between QCR-2013 and extended QCR.
+A closer analysis of Fig. 9 shows that the estimated vorticity production for QCR exhibits
+primary lobes of the correct sign. These are labelled P+1 and P−1 , corresponding to P+ and P−
+from Fig. 9a. This rough agreement in the structure, sign and magnitude of the production
+terms explains the improvement in simulation of corner flows when QCR is used.
+However, the topology of the production terms for the quadratic models do exhibit deviations from the ‘true’ DNS distribution. A direct comparison of Figs. 9b-i and 9c-i to Fig. 9a-i
+shows that QCR underestimates the contribution from the shear stress term. Instead, the primary lobes in the quadratic models (P1 ) are determined mainly from the normal stress term.
+As a result, the estimate of overall vorticity production by QCR (Figs. 9b-iii and 9c-iii) does
+not correspond well with the true distribution (Fig. 9a-iii). In particular, QCR predicts the P1
+lobes to be elongated close to the corner bisector whilst the true production distribution (P+
+and P− ) is concentrated towards the walls. This suggests that, whereas QCR is able to predict
+the presence of corner vortices and the resultant boundary-layer shape, the properties of the
+vortices (such as their position) may not quite correspond to those in the physical flow.
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+i. shear stress term
+
+19
+
+iii. shear stress term + normal stress term
+
+ii. normal stress term
+
+0
+
+a)
+DNS
+y/h
+
+P−
+P+
+
+b)
+QCR-2013
+
+-1
+0
+
+y/h
+
+P−1
+P+1
+-1
+0
+
+1
+
+c)
+extended QCR
+y/h
+
+0
+
+P−1
+P+1
+-1
+
+-1
+-1
+
+0
+z/h
+
+-1
+
+0
+
+-1
+
+z/h
+
+0
+z/h
+
+(17)
+Figure 9. The streamwise vorticity production terms from Equation
+16, in the square duct
+: i. shear stress
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+term h2 /u2b ∂2 /∂y2 − ∂2 ∂z2 −v0 w0 , ii. normal stress term h2 /u2b ∂2 /∂y∂z v02 − w02 , and iii. sum of shear
+stress term and normal stress term. These terms are a) directly extracted from the DNS turbulence statistics,
+or are estimated using b) QCR-2013 and c) extended QCR. Contours of positive values are shown with solid
+lines and negative values are marked by dashed lines. Note that the equivalent plot for an LEVM is blank and
+so has not been presented here.
+
+20
+
+The Aeronautical Journal
+
+a) shear stress term
+
+c) shear stress term + normal stress term
+1
+
+b) normal stress term
+
+0
+
+y/h
+
+P+2
+
+0
+
+P−1
+
+P+2
+
+P+1
+P−2
+
+-1
+
+P−2
+
+-1
+
+0
+
+-1
+
+0
+
+0
+
+z/h
+
+z/h
+
+-1
+
+-1
+z/h
+
+(17)
+Figure 10. The streamwise vorticity production terms from Equation
+16, in the square duct
+: a) shear stress
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+term h2 /u2b ∂2 /∂y2 − ∂2 ∂z2 −v0 w0 , b) normal stress term h2 /u2b ∂2 /∂y∂z v02 − w02 , and c) sum of shear
+
+stress term and normal stress term. These terms are obtained with ccr1 = 0.5, ccr2 = 2.5 and c̃cr3 = 0 in
+Equation 11. Contours of positive values are shown with solid lines and negative values are marked by dashed
+lines.
+
+Another reported limitation of QCR in corner flows occurs when simulations are run with
+ccr1 greater than the recommended value of 0.3, which may occur, for example, in an attempt
+to better match the mean flow. In such cases, additional non-physical vortices are generated (8) .
+To investigate this phenomenon further, the vorticity production terms are estimated for ccr1 =
+0.5 and c̃cr3 = 0, i.e. 2ccr1 − c̃cr3 = 1.0 rather than 0.6. The primary effect is to strengthen
+all the turbulent stresses and thus increase the overall vorticity production, shown in Fig. 10c.
+This figure also reveals the appearance of additional lobes away from the corner bisector,
+labelled P+2 and P−2 . These lobes are of opposite sign to the primary P1 lobes. The P2 lobes
+also appear in Fig. 10a, and so seem to be associated with the shear stress term in Equation 16.
+Note that weak analogues to these P2 lobes can be identified in Figs. 9b-iii and 9c-iii, where
+2ccr1 − c̃cr3 = 0.6. The lobes in Fig. 10, however, are strong enough to be prominent in the
+distribution of overall vorticity production. The presence of the P2 lobes may correspond to
+the non-physical vortices reported in RANS simulations of these geometries (8) .
+In this way, the appearance of the spurious vortices can be linked to the shear stress term in
+Equation 16 and, in turn, the inaccuracy of estimating the turbulent shear stress component,
+τyz . However, the dependence of the production terms only on the combination 2ccr1 − c̃cr3
+suggests that any simple quadratic modification would face similar issues with corner flow
+prediction. To overcome this, it is necessary to add complexity either by capturing the wallnormal dependence of the coefficients or by estimating the turbulent stresses using a different,
+more involved technique.
+
+5.0 Conclusions
+This paper revisits the quadratic constitutive relation, a modification to linear eddy-viscosity
+models. The analysis in this paper shows that the conventional form of QCR provides a
+definite improvement but does not, in general, compute the turbulent stresses very accurately,
+which may help to explain why its success in mean flow prediction for many flow fields has
+been limited.
+The improvements in computing the flow along streamwise corners reported by others are
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+21
+
+not due to a much better prediction of turbulent stresses in general. Instead, this success
+can be attributed to improved estimates of the particular turbulent stress combinations which
+appear in the mean streamwise vorticity equation. As a result, the topology and rough magnitudes of the vorticity production terms are in reasonable agreement with the true values from
+DNS, which explains why corner flow computations are improved. Nevertheless, the precise
+topology of the production terms deviates from the DNS distribution, particularly close to
+the walls, which suggests that the properties of the vortices (such as their position) may not
+quite correspond to those in the physical flow. In addition, the imperfect estimate of the shear
+stress term is observed to be the source of additional, non-physical vortices when the QCR
+coefficient, ccr1 , exceeds 0.3.
+An extension to QCR is proposed, which improves turbulent stress predictions over a wide
+range of canonical and more complex flows. For a small increase in complexity, with one
+additional quadratic modification term and associated coefficient compared to QCR, the turbulent stress estimates now match the true values from DNS more closely. The flow along
+streamwise corner geometries is one such example of a flow field where extended QCR predicts turbulent stresses with reasonable accuracy. It turns out that streamwise vorticity production in such flows depends only on the coefficient combination 2ccr1 − c̃cr3 rather than the
+precise values of each coefficient. The fact that both extended QCR and conventional QCR
+have 2ccr1 − c̃cr3 = 0.6 explains why conventional QCR can reliably predict the generation
+of corner vortices despite inaccurate turbulent stress estimates. This finding also implies that,
+whilst corner flow calculations are affected by the presence of quadratic terms in the eddyviscosity model, this flow field is not a suitable test case for comparing the capabilities of
+different quadratic models.
+Note that the proposed formulation of extended QCR is still not perfect, however. In particular, the stresses near the wall are still poorly predicted, demanding a closer study into the
+wall-normal dependence of this type of model. Nevertheless, the marked improvement in
+turbulent stress predictions is promising and provides compelling reasons to conduct RANS
+simulations with extended QCR. These computations would enable the effect of the proposed
+modification on mean flow calculations to be assessed. Such calculations would also permit evaluation of the numerical stability of this modification, and would test the existence of
+possible spurious vortices in a model where ccr1 = 0.7 greatly exceeds 0.3.
+
+ACKNOWLEDGEMENTS
+This material is based upon work supported by the US Air Force Office of Scientific Research
+under award FA9550–16–1–0430.
+
+REFERENCES
+1.
+
+Gessner, F.B. and Jones, J.B. On some aspects of fully-developed turbulent flow in
+rectangular channels. Journal of Fluid Mechanics, 23(4):689–713, 1965.
+
+2.
+
+Wilcox, D.C. et al. Turbulence modeling for CFD, volume 2. DCW Industries, CA,
+1998.
+
+3.
+
+Spalart, P.R. Strategies for turbulence modelling and simulations. International Journal
+of Heat and Fluid Flow, 21(3):252–263, 2000.
+
+22
+
+The Aeronautical Journal
+
+4.
+
+Mani, M., Babcock, D., Winkler, C., and Spalart, P.R. Predictions of a supersonic
+turbulent flow in a square duct. In 51st AIAA Aerospace Sciences Meeting, 2013-0860.
+
+5.
+
+Bisek, N.J. High-fidelity simulations of the UTSI Mach 2 test section. In 2018 AIAA
+Aerospace Sciences Meeting, 2018-1097.
+
+6.
+
+Rumsey, C.L., Carlson, J., and Ahmad, N. FUN3D Juncture Flow computations compared with experimental data. In AIAA Scitech 2019 Forum, 2019-0079.
+
+7.
+
+Dandois, J. Improvement of corner flow prediction using the quadratic constitutive relation. AIAA Journal, 52(12):2795–2806, 2014.
+
+8.
+
+Leger, T.J., Bisek, N.J., and Poggie, J. Supersonic corner flow predictions using the
+quadratic constitutive relation. AIAA Journal, 54(7):2077–2088, 2016.
+
+9.
+
+Spalart, P.R., Garbaruk, A., and Strelets, M. RANS solutions in Couette flow with
+streamwise vortices. International Journal of Heat and Fluid Flow, 49:128–134, 2014.
+
+10.
+
+Bernardini, M., Pirozzoli, S., and Orlandi, P. Velocity statistics in turbulent channel
+flow up to Reτ = 4000. Journal of Fluid Mechanics, 742:171–191, 2014.
+
+11.
+
+Hoyas, S. and Jiménez, J. Reynolds number effects on the Reynolds-stress budgets in
+turbulent channels. Physics of Fluids, 20(10):101511, 2008.
+
+12.
+
+Sillero, J.A., Jiménez, J., and Moser, R.D. One-point statistics for turbulent wallbounded flows at Reynolds numbers up to δ+ ≈ 2000. Physics of Fluids, 25(10):105102,
+2013.
+
+13.
+
+Schlatter, P., Örlü, R., Li, Q., Brethouwer, G., Fransson, J.H.M., Johansson, A.V.,
+Alfredsson, P.H., and Henningson, D.S. Turbulent boundary layers up to Reθ = 2500
+studied through simulation and experiment. Physics of Fluids, 21(5):051702, 2009.
+
+14.
+
+Schlatter, P., Li, Q., Brethouwer, G., Johansson, A.V., and Henningson, D.S. Simulations of spatially evolving turbulent boundary layers up to Reθ = 4300. International
+Journal of Heat and Fluid Flow, 31(3):251–261, 2010.
+
+15.
+
+El Khoury, G.K., Schlatter, P., Noorani, A., Fischer, P.F., Brethouwer, G., and Johansson, A.V. Direct numerical simulation of turbulent pipe flow at moderately high
+Reynolds numbers. Flow, Turbulence and Combustion, 91(3):475–495, 2013.
+
+16.
+
+Coleman, G.N., Rumsey, C.L., and Spalart, P.R. Numerical study of turbulent separation bubbles with varying pressure gradient and Reynolds number. Journal of Fluid
+Mechanics, 847:28–70, 2018.
+
+17.
+
+Pirozzoli, S., Modesti, D., Orlandi, P., and Grasso, F. Turbulence and secondary
+motions in square duct flow. Journal of Fluid Mechanics, 840:631–655, 2018.
+
+18.
+
+Monty, J.P., Hutchins, N., Ng, H.C.H., Marusic, I., and Chong, M.S. A comparison
+of turbulent pipe, channel and boundary layer flows. Journal of Fluid Mechanics, 632:
+431–442, 2009.
+
+19.
+
+Shur, M.L., Strelets, M.K., Travin, A.K., and Spalart, P.R. Turbulence modeling in
+rotating and curved channels: assessing the Spalart–Shur correction. AIAA Journal, 38
+(5):784–792, 2000.
+
+20.
+
+Rumsey, C.L., Carlson, J.R., Pulliam, T.H., and Spalart, P.R. Improvements to the
+quadratic constitutive relation based on NASA Juncture Flow data. AIAA Journal, 58
+(10):4374–4384, 2020.
+
+Sabnis et al.
+
+Analysis of the Quadratic Constitutive Relation
+
+23
+
+21.
+
+Gatski, T.B. and Speziale, C.G. On explicit algebraic stress models for complex turbulent flows. Journal of Fluid Mechanics, 254:59–78, 1993.
+
+22.
+
+Pope, S. B. Turbulent flows. IOP Publishing, 2001.
+
+23.
+
+Pope, S.B. A more general effective-viscosity hypothesis. Journal of Fluid Mechanics,
+72(2):331–340, 1975.
+
+24.
+
+Spalart, P.R., Shur, M.L., Strelets, M.K., and Travin, A.K. Direct simulation and
+RANS modelling of a vortex generator flow. Flow, Turbulence and Combustion, 95
+(2-3):335–350, 2015.
+
+

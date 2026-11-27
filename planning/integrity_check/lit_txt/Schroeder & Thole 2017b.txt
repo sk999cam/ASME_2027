@@ -1,0 +1,1438 @@
+Robert P. Schroeder1
+Department of Mechanical
+and Nuclear Engineering,
+The Pennsylvania State University,
+University Park, PA 16802
+e-mail: rschroeder@sargentlundy.com
+
+Karen A. Thole
+Department of Mechanical
+and Nuclear Engineering,
+The Pennsylvania State University,
+University Park, PA 16802
+e-mail: kthole@psu.edu
+
+Effect of In-Hole Roughness
+on Film Cooling From a
+Shaped Hole
+While much is known about how macrogeometry of shaped holes affects their ability to
+successfully cool gas turbine components, little is known about the influence of surface
+roughness on cooling hole interior walls. For this study, a baseline-shaped hole was
+tested with various configurations of in-hole roughness. Adiabatic effectiveness measurements at blowing ratios up to 3 showed that the in-hole roughness caused decreased adiabatic effectiveness relative to smooth holes. Decreases in area-averaged effectiveness
+grew more severe with larger roughness size and with higher blowing ratios for a given
+roughness. Decreases of more than 60% were measured at a blowing ratio of 3 for the
+largest roughness values. Thermal field and flowfield measurements showed that in-hole
+roughness caused increased velocity of core flow through the hole, which increased the
+jet penetration height and turbulence intensity resulting in an increased mixing between
+the coolant and the mainstream. Effectiveness reductions due to roughness were also
+observed when roughness was isolated to only the diffused outlet of holes, and when the
+mainstream was highly turbulent. [DOI: 10.1115/1.4034847]
+
+Introduction
+Film cooling is a critical technology for maintaining acceptable
+metal temperatures along the hot gas path in gas turbines. Shaped
+holes are commonly used instead of cylindrical holes, due to the
+diffused outlet of shaped holes, which slows coolant jets and
+laterally spreads coolant over the vulnerable surfaces. Many
+attributes influence the performance of shaped holes, including
+inclination angle, hole length, expansion angles of the diffused
+outlet, pitchwise spacing, coverage ratio, area ratio, and breakout
+shape, not to mention the influence of coolant blowing ratio and
+flow conditions outside the hole [1]. Several studies have examined the sensitivity of shaped hole performance to variation of
+these parameters [2–7].
+Not yet addressed in the literature is the influence of surface
+roughness along the interior walls of film cooling holes, despite
+the fact that in-hole roughness varies with the manufacturing
+method. Laser drilling, traditionally used for cylindrical holes and
+increasingly used in trepanning-fashion for shaped holes [8], is
+regarded to deliver nonsmooth surfaces. Details in the literature
+are sparse, although Bunker [8] has described laser drilling as producing in-hole roughness levels severe enough to preclude
+diameter measurement with pin gauges, resulting in a hole diameter tolerance of 610%. If one assumes this tolerance to be the
+result of a Gaussian distribution (62r) of in-hole roughness
+heights, the tolerance would translate to a roughness of
+Ra/D ¼ 0.020. By contrast, electrode discharge machining (EDM)
+can produce smoother shaped holes, for instance delivering inhole surface roughness of Ra/D ¼ 0.0025 [8]. Water jet drilling is
+another method that can similarly produce “very clean and
+tailored” shaped holes [8].
+Roughness is equally a consideration in the laboratory environment. Film cooling geometries are often scaled-up and manufactured in foam for wind tunnel experiments, with little
+documentation of in-hole surface roughness. As will be shown in
+this study, in-hole roughness can have significant effect on film
+
+1
+Present address: Sargent and Lundy, Chicago, IL 60603.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received August 16,
+2016; final manuscript received September 1, 2016; published online November 16,
+2016. Editor: Kenneth Hall.
+
+Journal of Turbomachinery
+
+cooling performance and therefore is worthy of consideration by
+experimentalists and designers.
+
+Previous Studies
+Few studies in the open literature investigate the influence of
+roughness inside film cooling holes. Some authors have noted
+potential benefit from large-scale “rifling” in film cooling holes.
+Thurman et al. [9] tested cylindrical holes with and without rifled
+grooves of groove depth 0.2D at blowing ratios ranging from
+M ¼ 1.0–2.5. They observed higher laterally averaged effectiveness with axially oriented grooved holes than for nongrooved
+axial and compound-angle holes. Rifling in film cooling holes is
+also mentioned in patents by Tibbott and Harrogate [10] and
+Strock and Lutjen [11]. Absent from the literature are studies on
+the effect of irregular in-hole roughness, especially roughness of
+size typical to industrial and aero engines 0.002 < Ra/D < 0.02.
+The present study provides a foundation for addressing this
+need in the literature. Measurements of adiabatic effectiveness,
+flowfields, and thermal fields are presented for shaped
+holes with a variety of in-hole roughness configurations up to size
+Ra/D ¼ 0.02. The external surface was kept aerodynamically
+smooth for all tests. The in-hole roughness was distributed across
+hole metering sections and/or diffused outlets.
+
+Experimental Facility
+The closed-loop wind tunnel shown in Fig. 1 was used for film
+cooling experiments. Test conditions and experimental methods
+matched those of prior studies in the facility [12–14]. Mainstream
+air was driven by an in-line centrifugal fan such that the mainstream velocity in the test section was 10 m/s. Mainstream
+temperature was maintained at 295 K by a chilled water heat
+exchanger and a bank of electric heaters.
+Film cooling measurements were made for a single-row of five
+shaped holes located on the flat plate comprising the floor of the
+test section. Mainstream air entered the test section by flowing
+through a 6:1 contraction and then passed over the boundary layer
+suction slot and the plate leading edge. The suction slot removed
+the boundary layer from the contraction floor, thus, starting the
+boundary layer afresh at the plate leading edge. A boundary layer
+trip at x/D ¼ 33 then initiated transition of the boundary layer to
+
+C 2017 by ASME
+Copyright V
+
+MARCH 2017, Vol. 139 / 031004-1
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+Table 1
+
+Boundary layer characteristics
+
+Tu1
+
+d2/D
+
+H
+
+Red2
+
+cf/cf,0
+
+0.5%
+13.2%
+
+0.14
+0.12
+
+1.45
+1.38
+
+670
+580
+
+1.0
+1.19
+
+Table 2 Geometric parameters of the shaped hole
+P/D
+a
+bfwd, blat
+
+6
+30 deg
+7 deg
+
+Lm/D
+Llat/D, Lfwd/D
+Area ratio, AR
+
+2.5
+3.5
+2.5
+
+characterization of the mainstream and approach boundary layers
+used D ¼ 7.75 mm.
+
+Roughness Creation and Characterization
+Fig. 1 Schematic of the film cooling wind tunnel
+
+a turbulent state. At the shaped hole location, the boundary layer
+was fully turbulent, as shown in previously reported flowfield
+measurements [13].
+Without any turbulence grid in place upstream of the holes,
+freestream turbulence intensity at x/D ¼ 2 was Tu1 ¼ 0.5%.
+Tests were performed at this low freestream turbulence condition
+and also at a high freestream turbulence condition of
+Tu1 ¼ 13.2%. The high freestream turbulence was obtained using
+a grid of vertical bars upstream of the holes. Bar diameter was
+b ¼ 38 mm, and bars were spaced apart 2b center-to-center. This
+turbulence grid was installed upstream of the holes at x/b ¼ 14.
+Length scale of the high freestream turbulence was measured with
+hotwire to be Kx ¼ 5.2D at the shaped hole trailing edge. The
+mainstream approach boundary layer was characterized at
+x/D ¼ 2 for both low and high freestream turbulence conditions.
+Characteristics of the boundary layers are given in Table 1.
+An auxiliary closed loop was used to supply coolant flow to the
+row of shaped holes, as shown at the bottom of Fig. 1. Air used
+for the coolant was removed from the wind tunnel far upstream of
+the test section with a hermetically sealed blower. The coolant air
+was chilled with liquid nitrogen in a heat exchanger and then
+flowed through a Venturi flowmeter to the coolant plenum, where
+fine screens ensured uniform approach flow to entrances of the
+five shaped holes. The coolant-to-mainstream density ratio used in
+this study was DR ¼ 1.5. To prevent undesired buildup of frost
+during experiments, air in the closed loop of the wind tunnel was
+dried prior to experiments by circulating it through a desiccant
+vent dryer. Also, during experiments the tunnel was kept positively pressurized with nitrogen gas.
+The shaped holes used in this study were those introduced by
+Schroeder and Thole [12]. The holes had a cylindrical metering
+section that expanded at 7 deg angles in the forward and two lateral directions to form the diffused outlet. Exit-to-inlet area ratio
+was AR ¼ 2.5. Full specification of this geometry, including
+computer-aided design files, is publicly available for download at
+the authors’ website2. Table 2 shows geometric parameters for the
+hole and Fig. 2 illustrates the hole geometry.
+All shaped holes for this study were machined in polystyrene
+that formed the flat plate floor of the test section. The low thermal
+conductivity of polystyrene, k ¼ 0.029 W/mK, made it ideal for
+adiabatic effectiveness and thermal field measurements. Nominal
+metering diameter was D ¼ 7.75 mm for all the shaped holes
+except the “slightly rough hole” specimen which had metering
+diameter of D ¼ 8.47 mm. Normalized values given above for
+2
+
+http://www.mne.psu.edu/psuturbine
+
+031004-2 / Vol. 139, MARCH 2017
+
+A three-axis computer numeric control (CNC) mill was used to
+cut the shaped holes in polystyrene. Separate operations on the
+CNC mill were used to cut metering sections and diffused outlets
+of the holes. By increasing the feed rate and decreasing the spindle speed, greater roughness was produced on the in-hole surfaces.
+Note that roughness elements were rigid; visual checks confirmed
+that roughness elements did not vibrate due to airflow through the
+holes. It was recognized that roughness elements extending
+inward from hole walls acted to reduce cross-sectional area, so
+small offsets were used in the CNC programming with the intent
+of maintaining equal cross-sectional area between smooth and
+rough specimens. After machining was completed, hole entrance
+and breakout dimensions were checked with calipers and found to
+be within 5% of the design intent. The only exception was the
+major axis of hole inlets in the “rough diffuser hole” specimen
+which was up to 9% larger than nominal.
+After all wind tunnel experiments were completed, in-hole
+roughness was quantified by cutting each specimen apart and
+measuring surface heights with an optical profilometer. The
+regions scanned included both the metering section and diffused
+outlets of holes, indicated by bold line segments in the symmetry
+plane view of Fig. 2. The profilometer featured a 1024  1024
+pixel camera and various objective lenses. For measurements in
+the present study, lateral resolution was 0.0002D per pixel and
+vertical height uncertainty was 60.001D. For occasional pixels
+that were too dark to report a height (always less than 22% of the
+scan), surface heights were Laplace interpolated. Between maps
+before and after interpolation, Ra was found to change less than
+12%.
+Surface maps were built by stitching together adjacent
+1024  1024 pixel scans. To ensure roughness was measured over
+large-enough areas, each stitched map was divided into four equal
+sections and Ra of each section was compared to Ra of the overall
+map. Maximum disagreement was observed with the “rough hole”
+specimen, where Ra of quadrants disagreed by up to 0.007D from
+Ra of their overall stitched map.
+As shown in Table 3, film cooling tests were performed on four
+specimens of in-hole roughness. The first three specimens
+
+Fig. 2 Geometry of the shaped hole
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+Table 3 In-hole roughness specimens
+Specimen name
+Smooth hole
+Slightly rough hole
+Rough hole
+Rough diffuser hole
+
+Range of Ra/D
+0.003–0.004
+0.006–0.009
+0.017–0.020
+0.016–0.021
+
+represented a progression of increasing roughness size throughout
+the holes, while the fourth specimen (rough diffuser hole) had
+smooth metering sections but roughness similar to that of “rough
+hole” in the diffused outlets of holes. The “smooth hole” specimen
+was that used in previous studies [12–14] and its performance
+served as a baseline for comparison.
+Table 3 includes centerline average roughness (Ra) measured
+for each specimen, normalized by the hole metering diameter.
+Roughness was calculated from optical profilometry surface maps
+such as those shown in Fig. 3. For the first three specimens, the
+stated ranges of roughness include Ra/D measured in both the
+metering sections and diffused outlets of holes, while Ra/D for the
+rough diffuser holes represents roughness only in diffused outlets
+of holes. Roughness in metering sections of the rough diffuser
+holes was Ra/D ¼ 0.003, similar to roughness in the smooth holes.
+
+Experimental Methods and Uncertainty
+Measurements were made of adiabatic effectiveness, flowfields,
+and thermal fields to provide a comprehensive understanding of
+in-hole roughness effects. Adiabatic effectiveness (g) was determined by measuring temperatures of the polystyrene plate surface
+through use of an infrared camera. The camera viewed the test
+plate by looking downward through a ZnSe window installed flush
+with the test section ceiling. Temperatures were accurately determined through direct calibration of camera output to temperatures
+measured by thermocouples on the test plate surface, similar to as
+done by Eberly and Thole [15]. The calibration was applied to
+time-average infrared images to determine adiabatic wall temperature, Taw. Freestream and coolant temperatures both were
+
+Fig. 3 Three-dimensional maps of roughness in metering sections of the (a) smooth hole and (b) rough hole configurations.
+Note that overall form of the surface has been removed, as
+done for roughness calculation.
+
+Journal of Turbomachinery
+
+averages, each taken from multiple thermocouples in the respective locations (mainstream, and in plenum 2.5D below film cooling hole entrances).
+Thermal fields (h) were measured in three planes: the centerline
+x–y plane, and two y–z crossplanes located at x/D ¼ 4 and 10.
+Measurements were made using a specially designed fine-wire
+thermocouple rake. Diameter of thermocouple wires was
+0.05 mm, and diameter of sensing junctions was approximately
+0.12 mm. Heat leaks were minimized based on a conductive
+analysis of thermocouple lead wires and the supporting rake
+structure. Error in thermocouple readings due to heat leak was
+estimated to be less than |Dh| ¼ 0.05, based on numerical simulations of a 1D thermocouple model. Thermal field temperatures
+were the average of at least 36,000 samples taken over at least
+30 s, ensuring converged values of time-mean h.
+Flowfields were measured in the centerline x–y plane using
+particle image velocimetry (PIV). For tracer particles, the
+mainstream and coolant were seeded equally with di-ethyl-hexylsebecat (DEHS) droplets that followed the flow due to their low
+Stokes number (maximum Stk ¼ 0.010). Particles in the centerline
+plane were illuminated with a dual-head Nd:YLF laser and image
+pairs of the particles were captured with a high-speed CMOS
+camera. Image pairs were taken at 4 kHz at image size of
+1024  256 pixels. Time mean flowfields were calculated by averaging over 8000 image pairs acquired over a period of 2 s. Based
+on the mainstream velocity, the 2 s corresponded to more than
+240 flow crossings of the PIV field of view. Velocities were calculated from image pairs using commercial PIV software [16] with a
+multipass scheme of interrogation windows that ended with final
+window size of 16  16 pixels and 75% overlap. This final
+window size corresponded to 0.18D  0.18D since spatial resolution was 11.6 pixels/mm. In the course of the velocity calculations, background subtraction, intensity normalization, and
+universal outlier detection were implemented as previously
+reported by Schroeder and Thole [13].
+Uncertainty analyses were performed for the measurements.
+Uncertainties were propagated with the partial derivative method
+described by Figliola and Beasley [17]. Values reported are for a
+95% confidence interval. Regarding test conditions, the density
+ratio of 1.5 had a maximum uncertainty of 60.04. For blowing
+ratio, the uncertainty was dominated by bias uncertainty of the
+Venturi flowmeter and also variation during thermal field measurements. For M ¼ 1.5, the maximum uncertainty in blowing ratio
+was 66.5%.
+For adiabatic effectiveness, uncertainty was driven by uncertainty in the coolant temperature and plate surface temperature.
+Adiabatic effectiveness uncertainty was calculated to be
+dg ¼ 60.025. Analogously, major contributors to thermal field
+uncertainty were the uncertainties in coolant temperature and
+temperature measured by the thermocouple rake, along with
+estimated heat leak down the thermocouple wires. For a moderate
+thermocouple-rake heat leak error of Dh ¼ 0.035, maximum
+uncertainty was calculated to be dh ¼ 60.048.
+Uncertainties for PIV flowfield measurements in the centerline
+plane were determined through consideration of both bias and
+precision uncertainty. Bias uncertainty was based on an assumed
+60.15 pixel displacement uncertainty, yielding a velocity bias
+uncertainty of 61.9% of U1. Precision uncertainty was estimated
+for U and V based on repeatability tests and was combined with
+the bias uncertainty to determine overall uncertainty. Overall
+uncertainty was estimated to be 64.5% for U and 62.5% for V,
+given as percentages of U1. Repeat tests were also used to
+estimate precision uncertainties of rms velocity components,
+determined to be 64% for both u0 and v0 , with percentages based
+on maximum magnitudes respectively observed for u0 and v0 .
+
+Results and Discussion
+This paper focuses on how in-hole roughness affects performance of a shaped film cooling hole. First, the effect of roughness
+MARCH 2017, Vol. 139 / 031004-3
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+20% lower than for the smooth holes. Contours of adiabatic
+effectiveness for the M ¼ 1.0 cases (not shown for brevity)
+revealed that decreased effectiveness with the rough holes was
+due to narrower g patterns and slightly lower centerline
+effectiveness.
+Greater differences between roughness configurations were
+seen at higher blowing ratios of M ¼ 1.5 and 3.0. Adiabatic
+effectiveness contours for these cases and other studied are shown
+in Figs. 5(a)–5(h). While, for brevity, only the middle hole in the
+row is shown, all roughness configurations tested had good holeto-hole periodicity except the rough holes. To ensure representative
+values are presented even for the rough holes, the laterally and
+area-averaged values throughout this study are the average taken
+over the middle three holes in the row of five.
+The M ¼ 1.5 cases are compared by examining Figs. 5(a)–5(c)
+which correspond, respectively, to the smooth, slightly rough, and
+rough holes. Most striking is the large decrease in effectiveness of
+the rough hole as compared to the two smoother configurations.
+The coolant pattern downstream of the rough hole was narrower
+and had lower centerline effectiveness than occurred with the
+other two holes having lower roughness levels.
+Effectiveness differences at M ¼ 1.5 are quantified by laterally
+averaged effectiveness shown in Fig. 6. The slightly rough holes
+had effectiveness only slightly less than that of the smooth holes.
+In contrast, the rough holes experienced decreases in laterally
+averaged effectiveness exceeding 45%, relative to the smooth
+holes. It is interesting to note that near the hole the effectiveness
+values were similar between all roughness levels, but farther
+downstream the effectiveness values diverged from that of the
+smooth hole.
+The most severe decreases in effectiveness occurred at M ¼ 3.0.
+As seen in contours of Figs. 5(e)–5(g), centerline effectiveness
+progressively decreased with increasing roughness size. Coolant
+patterns also narrowed with increasing roughness size, especially
+for the rough hole.
+Laterally averaged effectiveness for M ¼ 3.0 is shown in Fig. 7.
+Effectiveness for each roughness configuration was lower at this
+blowing ratio than the corresponding cases at M ¼ 1.5 in Fig. 6.
+At M ¼ 3, a greater difference occurred between the smooth and
+slightly rough holes (Dg  0.03) than occurred at lower blowing
+ratio. Between the smooth and rough holes, the absolute decrease
+in g was about the same as at M ¼ 1.5. However, this decrease on
+a percentage basis was worse than at M ¼ 1.5 (65% decrease as
+compared to 45%) since effectiveness of the smooth holes was
+lower at M ¼ 3 than at M ¼ 1.5.
+
+Fig. 4 Laterally averaged adiabatic effectiveness at M 5 1.0 for
+configurations with increasing size of in-hole roughness
+
+size is investigated through adiabatic effectiveness results at
+blowing ratios ranging from 1  M  3. Thermal and flow field
+measurements are used to illuminate physical mechanisms behind
+the roughness effects, especially at the blowing ratio of M ¼ 3,
+where in-hole roughness had greatest effect. Then, subsequent
+sections address the effect of roughness isolated to only the hole
+diffuser, and address the combined effect of elevated freestream
+turbulence and in-hole roughness.
+Effect of Increasing Roughness Size. Adiabatic effectiveness
+was measured and compared among the different in-hole roughness configurations to investigate the effects of in-hole roughness.
+Except where noted in the paper section on high freestream turbulence, all tests were at low freestream turbulence intensity of
+Tu1 ¼ 0.5%.
+To investigate the effect of increasing size of in-hole roughness,
+adiabatic effectiveness was compared between the smooth hole,
+slightly rough hole, and rough hole specimens. For the blowing
+ratio of M ¼ 1.0, Fig. 4 shows laterally averaged adiabatic effectiveness of those three roughness configurations. Only in-hole
+roughness of the largest size, that of the rough holes, caused a
+change in laterally averaged effectiveness at this blowing ratio. At
+low x/D, laterally averaged effectiveness of the rough holes was
+
+0
+
+0
+
+5
+
+10
+
+0.1
+
+15
+
+0.2
+
+20
+
+0.3
+
+25
+
+0.4
+
+30
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+(a)
+
+(e)
+
+(b)
+
+(f)
+
+(c)
+
+(g)
+
+(d)
+35
+
+0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+(h)
+35
+
+Fig. 5 Contours of adiabatic effectiveness for (a) smooth holes, M 5 1.5; (b) slightly rough
+holes, M 5 1.5; (c) rough holes, M 5 1.5; (d) rough diffuser holes, M 5 1.5 and (e) smooth holes,
+M 5 3.0; (f) slightly rough holes, M 5 3.0; (g) rough holes, M 5 3.0; and (h) rough diffuser holes,
+M 5 3.0. Center hole in the row of five is shown.
+
+031004-4 / Vol. 139, MARCH 2017
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+Fig. 6 Laterally averaged adiabatic effectiveness at M 5 1.5 for
+different in-hole roughness configurations
+
+Trends over the whole range of blowing ratios are depicted
+with area-averaged effectiveness plotted in Fig. 8. Area-averaging
+was done over the region 3D to 35D downstream of the trailing
+edge of shaped holes. Effectiveness increased with blowing ratio
+up to M ¼ 1.5, with further increases in blowing ratio leading to
+narrower effectiveness contours on the surface, and thereby lower
+area-averaged effectiveness. Narrower g patterns at high blowing
+ratio for the baseline case of smooth holes were due to a stronger
+counter-rotating vortex pair (CRVP) at higher blowing ratios [13],
+accompanied with increased jet penetration [14]. Figure 8 shows
+that slightly rough holes followed the baseline trend at M ¼ 0.5
+and 1.0, but developed lower effectiveness than smooth holes at
+higher blowing ratios. Rough holes showed performance significantly worse than even slightly rough holes. Area-averaged
+effectiveness for rough holes was 17%, 45%, and 61% lower than
+the smooth hole performance at blowing ratios of M ¼ 1, 1.5, and
+3, respectively.
+Thermal Field and Flowfield Measurements. Thermal field
+and flowfield measurements were made to investigate the
+mechanism by which in-hole roughness caused reduced effectiveness. In Figs. 9(a) and 9(b), thermal fields for M ¼ 3 are compared
+in the crossplane at x/D ¼ 4, which was only 1.6D downstream of
+the hole trailing edge. Also shown are surface adiabatic effectiveness contours leading up to the x/D ¼ 4 plane. At x/D ¼ 4, Fig.
+9(b) shows that the jet exiting the rough hole extended higher
+above the wall and had less lateral spreading than the jet from the
+smooth hole shown in Fig. 9(a). These differences are consistent
+with the idea that in-hole roughness caused thicker boundary
+
+Fig. 8 Area-averaged effectiveness for configurations having
+increasing size of in-hole roughness, plotted as a function of
+blowing ratio
+
+layers along the interior walls of the shaped hole, causing a higher
+velocity jet core. It is also interesting to note that thermal field
+contours for the jet exiting the smooth hole are more consistent
+with a kidney-shaped cross section as compared to the contours
+for the jet exiting the rough hole. The shape of h contours at
+x/D ¼ 4 is consistent with the fact that there was a stronger jet
+core for the rough hole as compared to the smooth hole.
+Figures 10(a) and 10(b) show thermal field contours for the
+same cases in the crossplane farther downstream at x/D ¼ 10,
+which was 7.6D downstream of the hole trailing edge. Surface
+effectiveness contours leading up to the crossplane are again
+shown. Figure 10(a) shows that the jet exiting the smooth hole
+had spread to a width of nearly 4D out of the 6D pitch between
+holes. By contrast, the jet exiting the rough hole in Fig. 10(b)
+exhibited less spreading and had less of a kidney shape than the
+(a)
+
+3
+
+(b)
+
+2
+1
+
+1
+
+0.9
+
+0
+4
+
+0.8
+
+3
+
+0.6
+
+0.7
+0.5
+
+2
+
+0.4
+
+1
+
+0.3
+0.2
+
+0
+
+0.1
+-1
+-2
+-2
+
+Fig. 7 Laterally averaged adiabatic effectiveness at M 5 3.0 for
+different in-hole roughness configurations
+
+Journal of Turbomachinery
+
+0
+-1
+
+0
+
+1
+
+2 -2
+
+-1
+
+0
+
+1
+
+2
+
+Fig. 9 Contours of h in the x/D 5 4 crossplane and contours of
+g on the wall (y/D 5 0) at M 5 3.0, for the (a) smooth hole and (b)
+rough hole. To show detail, only the pitchwise range z/D 5 22 to
+2 is shown.
+
+MARCH 2017, Vol. 139 / 031004-5
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+(a)
+
+(b)
+
+3
+
+0
+
+1
+0.9
+
+2
+
+0.8
+
+1
+
+0.3
+
+7
+-2
+
+0
+
+2 -2
+
+1
+
+-1
+
+0
+
+1
+
+0
+
+2
+
+jet from the smooth hole. Also note that thermal field contours
+indicate the jet core from the rough hole was off the wall, whereas
+the jet core for the smooth hole was on the wall.
+Thermal fields in the centerline plane for the same M ¼ 3 cases
+are given in Figs. 11(a) and 11(b). Centerline contours show that
+the jet core from the rough hole penetrated higher into the mainstream than the jet core from the smooth hole, indicating that the
+maximum cooling potential was not available to cool the wall for
+the rough hole case. Thermal fields also show that the jet from the
+rough hole was diluted more quickly than the jet from the smooth
+hole (compare extent of the h ¼ 0.5 contour levels). As discussed
+below with flowfields, this greater dilution for the rough hole case
+was attributed to higher turbulence intensity in the jet near the
+hole breakout.
+Mean and turbulent flowfields in the centerline plane for the
+same M ¼ 3 cases are shown in Figs. 12(a), 12(b), 13(a), and
+13(b). Mean streamwise velocity plotted in Figs. 12(a) and 12(b)
+shows higher penetration of the jet from the rough hole as compared to the jet from the smooth hole, which is consistent with the
+thermal fields. Figures 13(a) and 13(b) likewise show higher penetration with the rough hole and also show higher turbulence intensity inside the jet, as compared to the smooth hole case. Near the
+rough hole breakout, turbulence intensities exceeded 44%,
+whereas for the smooth hole the peak turbulence was 35%. The
+higher turbulence intensity at the hole breakout for the rough hole
+case contributed to increased dilution of coolant.
+To illuminate the phenomena by which in-hole roughness
+caused decreased effectiveness, flowfields just outside the hole
+outlet were examined for both smooth and rough holes at blowing
+
+4
+
+y/D
+
+-1
+
+0
+
+1
+
+2
+
+3
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+0
+-2
+
+-1
+
+0
+
+1
+
+2
+
+3
+x/D
+
+4
+
+4
+
+6
+
+8
+
+10
+
+12
+
+5
+
+6
+
+14
+
+16
+
+18
+
+20
+
+22
+
+24
+
+26
+
+28
+
+4
+
+1
+
+2
+
+0.8
+
+0
+30
+4
+
+0.6
+
+2
+2
+
+6
+
+7
+
+8
+
+0
+
+7
+
+8
+
+0
+
+ratios ranging from M ¼ 1–3. While not shown for brevity, for
+rough holes the values of peak mean velocity and peak turbulence
+intensity in the jet increased monotonically with blowing ratio,
+similar to the behavior seen with smooth holes [13]. Greater
+difference between smooth and rough hole behavior was seen
+with penetration angle of flow leaving the diffused outlet. Figure
+14 shows profiles of penetration angle (u) of mean velocities
+along a horizontal line just above the wall, at y/D ¼ 0.4. For reference, note that flow parallel to the ceiling and floor of the diffused
+outlet would have penetration angles of 30 deg and 23 deg,
+respectively. Penetration angles along the y/D ¼ 0.4 line were
+smaller than those values of the hole geometry, remaining below
+u ¼ 15 deg for all cases.
+Tracing downstream, all eight cases showed similar position for
+the windward edge of the jet as indicated by the sharp increase in
+penetration angle from u  1 deg of the approaching boundary
+layer shown in Fig. 14. For the smooth hole cases at blowing
+ratios up to M ¼ 2, the penetration angle increased from u  1 deg
+up to a local peak, then plateaued for the region directly above the
+hole breakout, then exhibited a second local peak penetration
+angle near the hole trailing edge of x/D ¼ 2.4, and finally
+decreased downstream to approach the wall inclination of 0 deg.
+Penetration angles for the smooth hole M ¼ 3 jet were similar,
+except instead of plateauing over the breakout they exhibited a
+local minimum above the middle of the breakout.
+For these smooth hole cases the two peaks in the penetration
+angle, shown in Fig. 14, corresponded to how flow exiting along
+windward and leeward surfaces of the diffused outlet followed the
+inclination of those surfaces. Slightly lower penetration angles
+over the middle of the hole breakout corresponded with coolant
+inclined slightly more in the downstream direction relative to the
+hole interior walls. The extra downstream inclination was due to
+secondary flow in the center of the diffused outlet, which
+
+(b)
+
+0
+
+5
+
+1
+
+2
+0
+-2
+
+4
+
+2
+
+(a)
+
+0
+
+1.6
+2
+
+2
+0
+-2
+4
+
+1.4
+
+Fig. 12 Mean velocity vectors and contours of mean streamwise velocity in the centerline plane at DR 5 1.5, M 5 3.0 for the
+(a) smooth hole and (b) rough hole
+
+Fig. 10 Contours of h in the x/D 5 10 crossplane and contours
+of g on the wall (y/D 5 0) at M 5 3.0, for the (a) smooth hole and
+(b) rough hole. To show detail, only the pitchwise range z/
+D 5 22 to 2 is shown.
+
+y/D
+
+1.2
+
+(b)
+
+2
+
+0.1
+-1
+
+1
+
+y/D
+1
+
+0.2
+
+8
+
+0.8
+
+1
+
+0
+-2
+
+0.5
+
+9
+
+0.6
+
+(a)
+
+2
+
+0.6
+0.4
+
+0.4
+
+y/D
+1
+
+0.7
+
+0
+10
+
+0.2
+
+14
+x/D
+
+16
+
+18
+
+20
+
+22
+
+24
+
+26
+
+28
+
+0
+30
+
+0.4
+0.2
+0
+
+Fig. 11 Thermal field contours at M 5 3.0 in the z/D 5 0 centerline plane for the (a) smooth
+hole and (b) rough hole
+
+031004-6 / Vol. 139, MARCH 2017
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+0
+
+4
+
+8
+
+12
+
+16
+
+20
+
+24
+
+28
+
+32
+
+36
+
+40
+
+44
+
+2 (a)
+
+2
+
+y/D
+1
+0
+-2
+
+1
+-1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+2 (b)
+
+2
+
+y/D
+1
+0
+-2
+
+0
+
+1
+-1
+
+0
+
+1
+
+2
+
+3
+x/D
+
+4
+
+5
+
+6
+
+7
+
+8
+
+0
+
+Fig. 13 Contours of turbulence intensity in the centerline
+plane at DR 5 1.5, M 5 3.0 for the (a) smooth hole and (b) rough
+hole
+
+circulated such that coolant in the centerline plane moved from
+the windward wall toward the leeward wall of the outlet. This secondary flow was significantly stronger for the M ¼ 3 case, as
+evidenced by the local minimum in penetration angle over the
+middle of the breakout. Stronger secondary flow at M ¼ 3 was to
+be expected, since this blowing ratio was 50% higher than the
+next highest blowing ratio tested, M ¼ 2. Note also that penetration angles downstream of the x/D ¼ 2.4 trailing edge were higher
+for the M ¼ 3 case than for the other smooth hole cases, due to the
+external CRVP that developed downstream of the hole and was
+strongest for the M ¼ 3 case [13].
+For the rough hole, penetration angles shown in Fig. 14 had the
+same values as that of the smooth hole at the jet leading edge, but
+then greatly increased toward the leeward side of the hole breakout, reaching almost u ¼ 15 deg over the latter part of the hole
+breakout (0 < x/D < 2.4). Increases in the peak penetration angle
+occurred with increases in blowing ratio for the rough hole. Larger
+in-hole roughness caused thicker boundary layers along hole interior walls than occurred with the smooth hole, resulting in narrower and faster core flow through the hole. This core flow caused
+higher penetration angle of injection and caused absence of plateaued regions that were seen in u profiles for the smooth hole.
+The constricted core flow also attenuated secondary flow in the
+hole, although secondary flow was not eliminated. Notice that, for
+the M ¼ 3 jet from the rough hole, a local minimum penetration
+angle again occurred over the breakout, albeit less pronounced
+than in the smooth hole case.
+
+Fig. 14 Penetration angle of time-mean velocities along
+y/D 5 0.4 in the centerline plane for smooth holes and rough
+holes, M 5 1.0–3.0
+
+Journal of Turbomachinery
+
+Overall, the thermal field and flowfield measurements show
+that in-hole roughness primarily affected film cooling performance by causing thicker boundary layers along hole walls, which
+led to faster core flow relative to that of a smooth hole at the same
+blowing ratio. Attendant with the faster core flow was higher penetration of coolant into the mainstream where it did not cool the
+wall, as well as increased turbulence intensity that diluted coolant
+with the mainstream.
+Effect of Diffused Outlet Roughness. Besides the effect of
+roughness size, the influence of roughness location within the hole
+was investigated. Adiabatic effectiveness was measured for the
+rough diffuser hole described in Table 3, whereby roughness levels were similar to the rough hole geometry.
+Contours of adiabatic effectiveness for the rough diffuser hole
+at M ¼ 1.5 and 3.0 are given above in Figs. 5(d) and 5(h), respectively. For the M ¼ 1.5 case, adiabatic effectiveness performance
+was between that of slightly rough holes (Fig. 5(b)) and rough
+holes (Fig. 5(c)), both in terms of centerline effectiveness and
+lateral spreading of coolant. Figure 6 compares M ¼ 1.5 laterally
+averaged effectiveness of the rough diffuser holes to the other
+roughness configurations. Laterally averaged effectiveness of
+rough diffuser holes was slightly closer to that of slightly rough
+holes than to that of rough holes.
+At M ¼ 3 the rough diffuser hole had lower performance than at
+M ¼ 1.5, as shown by contours of adiabatic effectiveness in
+Fig. 5(h). Adiabatic effectiveness of the rough diffuser hole was
+close to that of the rough hole (Fig. 5(g)). In terms of laterally
+averaged effectiveness, Fig. 7 shows identical performance
+between the rough diffuser hole and rough hole configurations at
+M ¼ 3. The identical performance at M ¼ 3 indicates that the
+shaped hole diffuser plays a major role in determining coolant
+mixing at high blowing ratios but not necessarily at low blowing
+ratios.
+Area-averaged adiabatic effectiveness is compared among all
+the roughness configurations in Fig. 15. At the blowing ratio of
+M ¼ 1.5, in-hole roughness caused g decreases as great as 45%,
+seen for the rough hole configuration. For the rough diffuser hole
+configuration the g reduction was half this magnitude at 22%. The
+situation was different at M ¼ 3, where all roughness cases
+showed a greater percent decrease from smooth-hole g , as compared to the analogous g decreases at M ¼ 1.5. Slightly rough
+holes had g 21% less than the smooth holes, while the two
+roughest specimens both showed g decreases of 61%.
+The area-averaged results show that in-hole roughness becomes
+increasingly influential with higher blowing ratios and can
+decrease film cooling effectiveness by a factor of two or more. At
+M ¼ 3, the reductions in effectiveness suggest that roughness in
+the diffused outlet has strong influence on boundary layers and
+core flow through the shaped hole.
+Roughness Effects at High Freestream Turbulence. As discussed above, in-hole roughness was found to cause decreased
+adiabatic effectiveness principally due to increased dilution of the
+coolant jet and higher penetration into the mainstream. Often
+more-representative of actual engine conditions is high freestream
+turbulence, which causes increased dispersion of coolant. Adiabatic effectiveness was measured for smooth holes and for rough
+diffuser holes at Tu1 ¼ 13.2% to determine whether in-hole
+roughness effects were important at high freestream turbulence
+conditions.
+Contours of adiabatic effectiveness with high freestream
+turbulence intensity are shown in Figs. 16(a) and 16(b) for the
+two roughness configurations at M ¼ 3. By comparing back to the
+low freestream turbulence cases in Figs. 5(e) and 5(h), it is evident
+that freestream turbulence caused lower centerline effectiveness
+and increased lateral spreading of coolant toward the midpitches.
+Similar to the low freestream turbulence cases, effectiveness for
+the rough diffuser hole was still lower than that of the smooth
+MARCH 2017, Vol. 139 / 031004-7
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+Fig. 15 Area-averaged effectiveness for different in-hole
+roughness configurations. Percent change from smooth hole
+effectiveness is listed.
+
+freestream turbulence, a similar reduction to that of the low freestream turbulence case was observed at M ¼ 1.5: rough diffuser
+holes showed a 29% decrease in g relative to smooth holes at the
+same condition. For M ¼ 3 and Tu1 ¼ 13.2%, the reduction in
+effectiveness due to rough outlets was large at 46%, yet was less
+severe than the reduction of 61% observed for M ¼ 3 at low freestream turbulence intensity.
+For smooth holes, Schroeder and Thole [13] previously noted
+that laterally averaged effectiveness is less sensitive to freestream
+turbulence as the blowing ratio increases. At higher blowing ratios,
+the coolant jet core with lowest temperatures is above the wall and,
+as such, freestream turbulence can help spread this coolant toward
+the wall. This trend was similarly observed with the rough diffuser
+holes, as seen in Fig. 17. For the rough diffuser hole, the high freestream turbulence was actually beneficial at M ¼ 3, causing a 50%
+increase in g relative to the Tu1 ¼ 0.5% performance (compare
+the two striped bars for M ¼ 3.0). Beneficial spreading at M ¼ 3 by
+the Tu1 ¼ 13.2% turbulence was also a reason for the less-severe
+g reduction due to rough outlets, as compared to the reduction
+occurring with low freestream turbulence.
+
+Conclusions
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+(a)
+
+(b)
+
+0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+35
+
+Fig. 16 Contours of adiabatic effectiveness at M 5 3.0 with
+high freestream turbulence intensity for the (a) smooth holes
+and (b) rough diffuser holes
+
+hole at Tu1 ¼ 13.2%. Even at the midpitch, effectiveness values
+for the rough diffuser hole were often one contour level lower
+(Dg ¼ 0.05) than those with the smooth hole.
+The detrimental effect of in-hole roughness is quantified for
+low and high freestream turbulence conditions in the bar graph of
+Fig. 17. Data for both M ¼ 1.5 and 3 are shown. At high
+
+Fig. 17 Area-averaged effectiveness at low and high freestream turbulence intensities for smooth holes and rough diffuser holes. Percent change from smooth hole effectiveness is
+listed.
+
+031004-8 / Vol. 139, MARCH 2017
+
+Film cooling performance was characterized for shaped holes
+with different levels of roughness along interior walls of the hole.
+Measurements of the roughness showed that ranges tested were
+representative of those thought to exist in shaped holes in engine
+hardware.
+Adiabatic effectiveness measurements showed that in-hole
+roughness can severely decrease effectiveness, with more
+detrimental effects occurring with larger roughness sizes. For the
+largest roughness size tested, area-averaged effectiveness
+decreased over 60% due to in-hole roughness at the high blowing
+ratio tested. This percent decrease in effectiveness was larger than
+the percent decrease observed just for smooth holes with blowing
+ratio increases, which highlights that in-hole roughness is just as
+important a consideration as blowing ratio.
+The influence of in-hole roughness itself was a function of the
+blowing ratio, with more severe decreases in effectiveness occurring at larger blowing ratios. Such behavior was even observed for
+holes with roughness only in the diffused outlet, with effectiveness reduction from this roughness being much greater at the
+higher blowing ratio of M ¼ 3.
+The heightened influence of roughness observed with
+increasing roughness size and observed with increasing blowing
+ratio was consistent with roughness influence being dependent on
+size of the viscous sublayer. Roughness elements were influential
+when they protruded beyond the viscous sublayer of turbulent
+boundary layers developing inside the hole. With larger roughness
+size, roughness elements were more likely to have heights greater
+than the viscous sublayer thickness. Likewise, increasing the coolant flowrate (blowing ratio) generally promoted thinner in-hole
+boundary layers and thereby increased the ratio of roughness size
+to boundary layer thickness. For in-hole roughness types used in
+this study, which had a spectrum of roughness heights due to the
+irregular pattern of roughness, more of the roughness elements
+protruded beyond the viscous sublayer at high blowing ratio than
+at low blowing ratio.
+Thermal field and flowfield measurements revealed that in-hole
+roughness caused thicker boundary layers along hole interior
+walls, which resulted in a faster jet core flow with correspondingly
+higher penetration angles as compared to a smooth hole at the
+same blowing ratio. Faster core velocity also led to higher turbulence intensity in the jet and therefore increased mixing between
+the coolant and the mainstream, reducing adiabatic effectiveness.
+High freestream turbulence of 13.2% altered the distribution of
+coolant downstream of the shaped holes but did not eliminate the
+effect of in-hole roughness. At high blowing ratio, roughness isolated to the diffused outlet caused large reductions in effectiveness
+relative to smooth interior holes.
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+Acknowledgment
+Support for this study was provided by the NASA Aeronautics
+Scholarship Program under grant number NNX14AE97H. The
+authors are grateful for this support and would like to thank James
+Heidmann and Mark Celestina at NASA for their guidance. The
+authors would also like to thank machinist Phil Irwin for careful
+machining of the cooling holes.
+
+eff ¼
+exit ¼
+fwd ¼
+inlet ¼
+lat ¼
+m¼
+p¼
+1¼
+
+effective, based on area at hole exit plane
+exit plane of the film cooling hole, per Fig. 2
+forward expansion of shaped hole
+inlet plane of the film cooling hole, per Fig. 2
+lateral expansion of shaped hole (half-angle)
+metering section
+seeding particle (DEHS droplet)
+mainstream
+
+Nomenclature
+A¼
+AR ¼
+b¼
+cf ¼
+cf,0 ¼
+CRVP ¼
+dp ¼
+D¼
+DR ¼
+EDM ¼
+H¼
+k¼
+L¼
+m_ c ¼
+M¼
+P¼
+PIV ¼
+Ra ¼
+Re ¼
+Stk ¼
+T¼
+Tu1 ¼
+Uc ¼
+U1 ¼
+u,v ¼
+x,y,z ¼
+
+hole cross-sectional area
+area ratio, Aexit/Ainlet
+diameter of turbulence grid bars
+skin friction coefficient, measured experimentally
+flat plate correlation cf,
+0.036Red20.3 (for Red2 < 3000) [18]
+counter-rotating vortex pair
+diameter of seeding particle
+diameter of film cooling holes
+density ratio, qc/q1
+electrode discharge machining
+boundary layer shape factor
+thermal conductivity
+hole length
+coolant mass flow rate
+blowing ratio, qcUc/q1U1 ¼ (m_ c /Ac)/q1U1
+lateral distance between holes, pitch
+particle image velocimetry
+centerline average roughness height
+Reynolds number (Red2 ¼ d2U1/ 1)
+Stokes number, qpdp2Uc/18qD ¼ (qpdp2/18q)/(D/Uc)
+qﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+temperature
+freestream turbulence intensity, ðu0 21 þ v0 21 =2=U1 Þ
+coolant area-average velocity in metering section
+mainstream mean velocity
+x- and y-velocities
+position, from origin at hole centerline breakout
+
+Greek Symbols
+a¼
+b¼
+d2 ¼
+g¼
+h¼
+Kx ¼
+¼
+q¼
+r¼
+u¼
+
+hole injection angle
+expansion angle for diffused outlet
+boundary layer momentum thickness
+local adiabatic effectiveness, (T1  Taw)/(T1  Tc)
+nondimensional fluid temperature, (T1  T)/(T1  Tc)
+integral length scale of freestream turbulence
+kinematic viscosity
+fluid density
+standard deviation
+mean velocity penetration angle, arctan (V/U)
+
+Subscripts
+aw ¼ adiabatic wall
+c ¼ coolant, at hole inlet
+
+Journal of Turbomachinery
+
+Superscripts
+0
+¼ fluctuating/rms value
+– ¼ laterally averaged
+= ¼ area-averaged (over x/D ¼ 5.4–37.4)
+
+References
+[1] Bogard, D. G., and Thole, K. A., 2006, “Gas Turbine Film Cooling,” J. Propul.
+Power, 22(2), pp. 249–270.
+[2] Kohli, A., and Bogard, D. G., 1999, “Effects of Hole Shape on Film Cooling
+With Large Angle Injection,” ASME Paper No. 99-GT-165.
+[3] Gritsch, M., Colban, W., Sch€ar, H., and D€
+obbeling, K., 2005, “Effect of Hole
+Geometry on the Thermal Performance of Fan-Shaped Film Cooling Holes,”
+ASME J. Turbomach., 127(4), pp. 718–725.
+[4] Saumweber, C., and Schulz, A., 2012, “Effect of Geometry Variations on the
+Cooling Performance of Fan-Shaped Cooling Holes,” ASME J. Turbomach.,
+134(6), p. 061008.
+[5] Saumweber, C., and Schulz, A., 2008, “Comparison of the Cooling Performance of Cylindrical and Fan-Shaped Cooling Holes With Special
+Emphasis on the Effect of Internal Coolant Cross-Flow,” ASME Paper No.
+GT2008-51036.
+[6] Haven, B. A., Yamagata, D. K., Kurosaka, M., Yamawaki, S., and Maya, T.,
+1997, “Anti-Kidney Pair of Vortices in Shaped Holes and Their Influence on
+Film Cooling Effectiveness,” ASME Paper No. 97-GT-45.
+[7] Heneka, C., Schulz, A., Bauer, H., Heselhaus, A., and Crawford, M. E., 2012,
+“Film Cooling Performance of Sharp Edged Diffuser Holes With Lateral
+Inclination,” ASME J. Turbomach., 134(4), p. 041015.
+[8] Bunker, R. S., 2009, “The Effects of Manufacturing Tolerances on Gas Turbine
+Cooling,” ASME J. Turbomach., 131(4), p. 041018.
+[9] Thurman, D., Poinsatte, P., Ameri, A., Culley, D., Raghu, S., and Shyam, V.,
+2015, “Investigation of Spiral and Sweeping Holes,” ASME J. Turbomach.,
+138(9), p. 091007.
+[10] Tibbott, I., and Harrogate, I. W. R., 2010, “Cooling Arrangement,” U.S. Patent
+Application Publication U.S. 2010/0119377 A1.
+[11] Strock, C. W., and Lutjen, P. M., 2012, “Counter-Vortex Film Cooling Hole
+Design,” U.S. Patent No. 8,128,366 B2.
+[12] Schroeder, R. P., and Thole, K. A., 2014, “Adiabatic Effectiveness Measurements
+for a Baseline Shaped Film Cooling Hole,” ASME Paper No. GT2014-25992.
+[13] Schroeder, R. P., and Thole, K. A., 2016, “Effect of High Freestream Turbulence on Flowfields of Shaped Film Cooling Holes,” ASME J. Turbomach.,
+138(9), p. 091001.
+[14] Schroeder, R. P., and Thole, K. A., 2016, “Thermal Field Measurements for a
+Shaped Hole at Low and High Freestream Turbulence Intensity,” ASME J. Turbomach. (in press).
+[15] Eberly, M. K., and Thole, K. A., 2014, “Time-Resolved Film Cooling Flows at
+High and Low Density Ratios,” ASME J. Turbomach., 136(6), p. 061003.
+[16] LaVision, 2014, “Product Manual for DaVis 8.2.1.48998: FlowMaster,” LaVision
+GmbH, G€
+ottingen, Germany, Item No. 1105011-4.
+[17] Figliola, R. S., and Beasley, D. E., 2006, Theory and Design for Mechanical
+Measurements, Wiley, Hoboken, NJ.
+[18] Bogard, D. G., and Thole, K. A., 1998, “Wall-Bounded Turbulent Flows,” CRC
+Handbook of Fluid Dynamics, CRC Press, Boca Raton, FL, pp. 13.49–13.63.
+
+MARCH 2017, Vol. 139 / 031004-9
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/935869/ on 02/13/2017 Terms of Use: http://www.asme.org/ab
+
+

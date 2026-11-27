@@ -1,0 +1,2391 @@
+Accepted Manuscript
+A Framework to Develop Data-Driven Turbulence Models for Flows with Organised
+Unsteadiness
+
+Chitrarth Lav, Richard D. Sandberg, Jimmy Philip
+
+PII:
+DOI:
+Reference:
+
+S0021-9991(19)30047-6
+https://doi.org/10.1016/j.jcp.2019.01.022
+YJCPH 8457
+
+To appear in:
+
+Journal of Computational Physics
+
+Received date:
+Revised date:
+Accepted date:
+
+8 October 2018
+29 January 2019
+29 January 2019
+
+Please cite this article in press as: C. Lav et al., A Framework to Develop Data-Driven Turbulence Models for Flows with Organised
+Unsteadiness, J. Comput. Phys. (2019), https://doi.org/10.1016/j.jcp.2019.01.022
+
+This is a PDF file of an unedited manuscript that has been accepted for publication. As a service to our customers we are providing
+this early version of the manuscript. The manuscript will undergo copyediting, typesetting, and review of the resulting proof before it is
+published in its final form. Please note that during the production process errors may be discovered which could affect the content, and all
+legal disclaimers that apply to the journal pertain.
+
+Highlights
+•
+•
+•
+•
+•
+
+A novel machine-learnt framework for flows with organised unsteadiness
+Turbulence closure developed from DNS data for the stochastic part of the anisotropy
+Gene-Expression Programming used to develop mathematical expression for anisotropy
+Developed model reveals turbulence diffusion needs to be significantly reduced
+Closures used in URANS and PANS show significant improvement of results for a wake
+
+Journal of Computational Physics (2019)
+
+Contents lists available at ScienceDirect
+
+Journal of Computational Physics
+journal homepage: www.elsevier.com/locate/jcp
+
+A Framework to Develop Data-Driven Turbulence Models for Flows with
+Organised Unsteadiness
+Chitrarth Lava,∗, Richard D. Sandberga,1 , Jimmy Philipa
+a Department
+
+of Mechanical Engineering, University of Melbourne, Parkville, Victoria 3010, Australia
+
+ARTICLE INFO
+
+ABSTRACT
+
+Article history:
+
+Turbulence modelling development has received a boost in recent years through
+assimilation of machine learning methods and increasing availability of highﬁdelity datasets. This paper presents an approach that develops turbulence
+models for ﬂows exhibiting organised unsteadiness. The novel framework
+consists of three parts. First, using triple decomposition, the high-ﬁdelity
+data is split into organised motion and stochastic turbulence. A data-driven
+approach is then used to develop a closure only for the stochastic part of turbulence. Finally, unsteady calculations are conducted, which resolve the organised structures and model the unresolved turbulence using the developed
+bespoke turbulence closure. A case study of a wake with vortex shedding behind a normal ﬂat plate, at a Reynolds number of 2,000, based on plate height
+and freestream velocity, is considered to demonstrate the method. The approach shows signiﬁcant improvement in mean velocity and Reynold stress
+proﬁles compared with standard turbulence models.
+c 2019 Elsevier Inc. All rights reserved.
+
+
+1. Introduction
+1.1. Unsteady ﬂows and their prediction
+Most ﬂows encountered in engineering applications are unsteady and the importance of their accurate prediction
+cannot be overemphasised. A subset of these ﬂows includes those that exhibit some form of organised unsteadiness.
+This organised unsteadiness often manifests itself through large-scale coherent structures. Existence of coherent structures has been known for more than three decades, yet there is still little consensus over a holistic deﬁnition. One
+possible attempt at deﬁning them is that they are a “large-scale turbulent ﬂuid mass with a phase-correlated vorticity
+over its spatial extent, i.e. underlying the three-dimensional random vorticity ﬂuctuations characterising turbulence,
+there is an organised component of the vorticity which is phase correlated over the extent of the structure” [1]. This
+means that the organised component is embedded inside a randomly distributed ﬁeld; however, the coherent structures
+∗ Corresponding
+
+author:
+e-mail: chitrarth.lav@gmail.com (Chitrarth Lav)
+1 richard.sandberg@unimelb.edu.au
+
+2
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+associated with this component are not easily identiﬁed or characterised [2]. To simplify the identiﬁcation and characterisation process, a smaller subset can thus be considered, wherein the organised unsteadiness is deterministic in
+nature. Examples include vortex shedding behind a bluﬀ body, external ﬂuid forcing and unsteadiness due to motion
+of turbine/compressor blades.
+Prediction of unsteady ﬂows for industrial applications still relies heavily on Reynolds-Averaged Navier Stokes
+(RANS) simulations. However, a review by Tucker [3] found that RANS as a tool for simulating unsteady turbomachinery ﬂows has a catalogue of poor predictions. The most notable of these failures is in predicting separated ﬂows,
+such as those behind a bluﬀ body. Tucker [4] cites several studies, including those of Franke & Rodi [5], Johansson et
+al. [6], Durbin [7] and Przulj & Younis [8], which observed these prediction issues. Growing computational resources
+have allowed use of high-ﬁdelity (HiFi) simulations, such as Direct Numerical Simulations (DNS), but these calculations remain too expensive for industrial design analyses, and are mostly restricted to relatively simple geometries
+and low to moderate Reynolds numbers (Re). An alternative are scale-resolving simulations (SRS) which use cut-oﬀ
+ﬁlters to resolve and model parts of the turbulence spectrum, such as Large Eddy Simulations (LES), Detached Eddy
+Simulations (DES) and Partially Averaged Navier-Stokes (PANS). As the name suggests, these simulations resolve a
+portion of the turbulent length scales, and as a result are a good compromise between the computational demand of
+a DNS and the lack of consideration of coherent structure inﬂuence of a RANS [2]. Of these, PANS is of particular
+interest because it serves as a bridging method that spans the range of resolved scales, from all scales (DNS) to no
+scales (RANS) [9]. First introduced by Girimaji & Abdol-Hammid [10], PANS has found use in multiple areas of
+research over the years such as the lid-driven cavity ﬂow [11, 12], ﬂow past square and circular cylinders [13, 14, 15]
+and wall bounded ﬂows [16, 17, 18]. The drawback of RANS modelling of not accounting for the coherent structures
+can thus be overcome by using PANS. However, PANS by itself is not a suﬃcient tool for improved prediction as it
+still relies on the same turbulence closures as RANS.
+A recent 2030 CFD Vision report highlighted concerns of the aerospace industry that turbulence modelling eﬀorts
+have reached a plateau [19]. These concerns can be attributed to the state of current turbulence models, which are old
+compared with the increasing computational power and recent advances in CFD technology, particularly in the areas
+of solution ﬁdelity and speed [20]. Bringing machine learning into the centrefold for advancing turbulence model
+development is the logical next step. Furthermore, combining SRS such as PANS with these new turbulence models
+could propel the unsteady ﬂow prediction eﬀorts forward.
+1.2. Machine learning as a tool
+One of the most widely used turbulence closure for RANS calculations is the Boussinesq approximation [21],
+where the modelled anisotropy tensor (amod
+i j ) is related linearly to the traceless mean strain rate tensor (S i j = 0.5(∂U i /∂x j +
+∂U j /∂xi )) through the eddy viscosity (νt ) and turbulence kinetic energy (TKE, k):
+νt
+amod
+= − S i j,
+ij
+k
+
+(1)
+
+This model for the anisotropy can be used to obtain the modelled Reynolds stress (τmod
+i j ), through:
+τmod
+=
+ij
+
+2
+kδi j − 2νt S i j .
+3
+
+(2)
+
+Numerous studies using this closure have reported diﬀerences in the quantities of interest such as the mean velocity
+and Reynolds stress proﬁles compared with experimental and HiFi data [22, 23, 24, 25, 26, 27]. To better understand
+the reason for diﬀerences, the validity of the Boussinesq hypothesis was, for example, tested by Schmitt [28] through
+computing the alignment of the modelled anisotropy tensor with the reference one given by
+f mod
+are
+i j a ji
+
+ρRS = 
+,
+f re f mod mod
+are
+mn anm a pq aqp
+
+(3)
+
+τi j δi j
+− .
+(4)
+2k
+3
+The alignment ρRS is deﬁned as the normalised inner product between the anisotropy tensor from the reference
+database (Eqn. 4) and that from the closure model. Values for both these tensors are obtained from the reference
+f
+are
+ij =
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+3
+
+database. A completely valid model would exhibit perfect alignment with a value of 1.0, while models that are orthogonal would have a value of 0.0 and models with a value of -1.0 are oppositely aligned. For testing the Boussinesq
+approximation, amod
+i j is obtained from Eqn. (1). It was found that this universally used closure was not valid for most
+simple ﬂows [28]. A natural extension then, to the linear approximation hypothesis, is a non-linear approximation hypothesis. Numerous attempts have been made to develop non-linear constitutive relationships between the anisotropy
+and tensor basis functions and scalar invariants with moderate success [29, 30, 31].
+However, with the recent abundance of HiFi datasets, research into extracting useful information from them to
+develop better non-linear closures has taken centrestage [32]. These studies rely on data-driven machine learning
+algorithms to obtain the information and generate models, such as those of Duraisamy [32] or Tracey et al. [20].
+One such approach of interest is that of Weatheritt & Sandberg [33, 34], which uses Gene Expression Programming
+(GEP) to develop non-linear closures for the anisotropy tensor. The non-linear relationship obtained through GEP is
+= f (Vi1j , Vi3j , Vi3j , I1 , I2 ) .
+a function of tensor basis (Vinj ) and scalar invariant functions (In ) i.e. amod
+ij
+S ij
+,
+I1 = S mn S nm ,
+ω
+S ik Ωk j − Ωik S k j
+Vi2j =
+,
+ω
+1
+S ik S k j − 3 δi j S mn S nm
+Vi3j =
+.
+ω
+Vi1j =
+
+I2 = Ωmn Ωnm ,
+
+(5)
+
+Here, S i j = 0.5(∂Ui /∂x j + ∂U j /∂xi ), Ωi j = 0.5(∂Ui /∂x j − ∂U j /∂xi ), ω = /k are the mean strain rate, mean rotation
+rate and speciﬁc dissipation rate, respectively. k refers to the turbulent kinetic energy while  to the dissipation. For
+a more detailed discussion of the machine learning process, the reader is referred to Weatheritt & Sandberg [33]. A
+brief explanation of this process will be outlined in Section 2.3. Throughout this text, the words “training” and GEP
+refer to the machine learning process.
+In this study, a proof-of-concept is oﬀered that is built upon the machine learning algorithm of Weatheritt &
+Sandberg [33], extending the application to ﬂows that exhibit organised unsteadiness. Section 2 presents the three
+prongs of the approach and explains how they interlink with one another to produce a novel technique for unsteady
+ﬂow prediction. Section 3 applies this approach via a case study and discusses other areas of applications and it’s
+limitations.
+2. Conceptual approach
+2.1. Segregation of length scales
+The idea of length scale segregation, in the context of deterministic unsteadiness, is not new, and was ﬁrst considered by Hussain & Reynolds [35, 36]. It states that a given ﬂow variable such as velocity could be decomposed
+into a time independent mean, stochastic unsteadiness and deterministic unsteadiness (Eqn. (6)). Combining these
+two types of unsteadiness gives rise to the well known Reynolds decomposition while their individual representation
+is known as triple decomposition.
+u(x, t) + u (x, t).
+u(x, t) = u(x) + u (x, t) = u(x) + 
+
+(6)
+
+where u represents the time-independent mean, the stochastic component (u ) represents the random part of turbulence
+while the deterministic component (
+u) represents the organised wave motion whose frequencies one knows or can
+extract easily. Because these organised motions have particular frequencies, the term “periodic” would be used
+interchangeably to represent this component. The Reynolds stress tensor (as well as the turbulence kinetic energy
+and the anisotropy tensor) can be decomposed using the result from Eqn. (6) as follows:
+τi j = ui uj ,
+ui + ui )(
+u j + uj ),
+= (
+ui
+u j + ui uj ,
+=
+=
+τi j + τi j .
+
+(7)
+
+4
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+The ﬁrst term above can be considered as a “periodic” Reynolds stress while the second term can be considered
+as a “turbulent” Reynolds stress. It can be seen that the total Reynolds stress is a sum of these two stresses. The
+“periodic” component is the result of organised wave motion on the ﬂow ﬁeld while the “turbulent” component is
+the result of the stochastic unsteadiness. Since these organised motions are usually limited in bandwidth to a small
+number of frequencies, it might be possible to segregate the length scales associated with the organised motion and
+turbulence. Assuming such a split is possible, one can study the impact of each component separately, which may
+assist in developing better turbulence models. An example of such a split is shown in detail in Section 3, where vortex
+shedding from the wake of a bluﬀ body is responsible for the organised motion.
+2.2. Resolution of length scales
+A RANS calculation models all length scales, which for unsteady ﬂows results in poor predictions. Improved
+prediction can be sought if scales not contributing to turbulence were resolved instead of being modelled. Following
+the segregation of scales, the “periodic” scales can be resolved through a PANS calculation. The underlying equations
+involved in PANS are quite similar to those used in RANS. The diﬀerence between the two stems from the modiﬁed
+turbulence equations, such as the k −  or k − ω equations. For this study, the standard k − ω SST model [37] is used
+as a baseline for comparison and modiﬁcation, as it is widely used in industrial calculations. PANS has been adopted
+over other SRS for this study due to the availability of explicit cut-oﬀ parameters fk and fω , deﬁned as,
+fk =
+
+ku
+;
+k
+
+fω =
+
+ωu
+.
+ω
+
+(8)
+
+The subscript u represents unresolved/modelled quantities. The cut-oﬀ fω can be further simpliﬁed to:
+ωu u k
+,
+=
+ω
+ ku
+f
+1
+=
+= .
+fk
+fk
+
+fω =
+
+(9)
+
+Here, the ratio f is set to 1.0 which signiﬁes all dissipation must be modelled. This is a valid choice since
+dissipation is a small scale phenomenon and resolving it would amount to conducting a HiFi simulation, which is not
+the aim of this approach.
+With the correct choice of fk as an input parameter, the PANS equations can resolve the length scales associated
+with organised motion. Recent research [15] has identiﬁed with this idea, demonstrating the extent of resolution of
+coherent structures, associated with vortex shedding, with diﬀerent spatially constant values of fk . However, to resolve
+only the relevant length scales, fk must vary spatially instead, which is permissible since its time scale of change is
+smaller than those of turbulence quantities [17]. The spatially varying fk ﬁeld (referred to as fk∗ to diﬀerentiate from
+the commonly used fk in literature) can be extracted from the HiFi dataset once a decomposition has been performed
+according to Eqn. (7). Comparing the spatially varying “periodic” and “turbulent” TKE from the HiFi dataset to
+the resolved and unresolved TKE contributions from PANS, the “periodic” component should be equivalent to the
+resolved contribution and the “turbulent” component to the modelled/unresolved contribution. This means ku = k ,
+so
+k
+fk∗ =
+.
+(10)
+k
+
+2.3. Modelling of unresolved length scales
+As mentioned in Section 1.2, the standard closure used in RANS modelling is the Boussinesq approximation (Eqn.
+2), where the TKE is obtained through solving the k equation, in conjunction with the equation for ω in the case of
+using the k − ω SST model [37]:
+∂k
+∂k 
+∂ 
+∂k
+νt σk
+,
++ Uj
+= Pk − β∗ kω +
+∂t
+∂x j
+∂x j
+∂x j
+∂ω
+∂ω
+∂ω 
+1 ∂k ∂ω
+∂ 
++ Uj
+= αS 2 − βω2 +
+.
+νt σ ω
++ 2(1 − F1 )σω2
+∂t
+∂x j
+∂x j
+∂x j
+ω ∂xi ∂xi
+
+(11)
+(12)
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+5
+
+Triple Decomposition
+Split the anisotropy tensor
+by removing vortex shedding frequency through either FFT/iFFT or POD
+
+Start
+High Fidelity Data:
+τi j
+τ
+ai j = ki j − 23 δi j
+Anisotropy tensor is extracted from DNS dataset
+and used for training.
+
+ai j
+
+ai j = 
+ai j + ai j
+GEP:
+Machine learning approach
+regresses the anisotopy
+tensor to obtain the
+closure model
+
+ai j
+
+aixj
+
+URANS/PANS Trained
+
+RANS Trained
+
+TKE Ratio from
+HiFi dataset:
+
+fk∗ = kk
+
+τRANS
+= 23 kδi j − 2νt S i j + 2kaixjf
+ij
+
+τURANS
+= 23 kδi j − 2νt S i j + 2kaixtj
+ij
+
+Turbulence closure model accounts for all length scales
+including scales associated
+with vortex shedding.
+
+τiPANS
+= 23 ku δi j − 2νu S i j + 2ku aixtj
+j
+Turbulence closure model represents stochastic length scales for
+both URANS/PANS. PANS explicitly resolves vortex shedding
+scales using fk∗ .
+
+Fig. 1: Schematic of model training for steady (following red arrows) and unsteady ﬂows (following blue arrows)
+
+Solving these equations for k and ω then allows construction of the turbulent eddy viscosity, as required by the
+Boussinesq approximation in Eqn. (1):
+a1 k
+.
+max(a1 ω, S F2 )
+
+νt =
+The terms F1 , F2 and CDkω are deﬁned as:
+
+√
+k 500ν 4σω2 k
+F1 = tanh min max ∗ , 2 ,
+β ωy y ω CDkω y2
+√
+
+2 k 500ν 2
+,
+F2 = tanh max ∗ , 2
+β ωy y ω
+
+1 ∂k ∂ω
+CDkω = max 2σω2
+, 10−10 .
+ω ∂xi ∂xi
+
+
+
+
+4
+
+,
+
+while the model coeﬃcients (say Φ) are obtained by blending the coeﬃcients of the k −  and k − ω models using: Φ =
+Φ1 F1 +(1−F1 )Φ2 . Thus, the coeﬃcients α, β, σk and σω are blends of (α1 = 5/9, α2 = 0.44), (β1 = 3/40,
+β2 = 0.0828),
+(σk1 = 0.85, σk2 = 1.0) and (σω1 = 0.5, σω2 = 0.856) respectively, while β∗ = 0.09, a1 = 0.31. S = 2S i j S i j refers
+to the mean strain rate, y is the distance to the nearest wall and Pk to the production of the modelled TKE:
+Pk = τi j
+
+∂Ui
+.
+∂x j
+
+(13)
+
+This model in its current form (k − ω SST with the Boussinesq closure) is responsible for modelling all the length
+scales in the ﬂow, and has been shown in literature to be a poor form of representation of turbulence [21, 28]. To
+improve upon the modelling, the machine learning approach of Weatheritt & Sandberg [33] uses HiFi datasets to
+
+6
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+regress the anisotropy tensor and obtain a new closure model instead of the linear Boussinesq model for the anisotropy.
+The regression undertaken by the algorithm assumes no particular functional form for the anisotropy closure model.
+Instead, an initial population of models is generated randomly, with the algorithm driving towards a ﬁnal model by
+minimising the error between the reference and model anisotropies:
+J(amod
+ij ) =
+
+3
+N
+1 
+f
+mod 2
+wi j (are
+i j − ai j ) .
+N n=1 i=1 j≤i
+
+(14)
+
+Here, J refers to the cost function and wi j are weighting functions, set in this study to 0.25 i.e. w11 = w22 = w33 =
+w12 = 0.25, while N refers to the number of grid points used from the reference dataset to ﬁt the model. This number
+depends on the spatial domain chosen for the training and the grid resolution in the chosen domain. The algorithm
+begins a ﬁltering process, analogous to the survival-of-the-ﬁttest approach, by rejecting models that have high error
+values. The surviving models are then genetically mutated by incrementally and randomly changing the coeﬃcients
+of the tensor basis functions, providing a mutated population of models. Successive iterations of the algorithm result
+in populations with decreasing error values, with the ﬁnal model selected from the last iteration with the lowest error
+value. The GEP is not a deterministic algorithm, i.e., the ﬁnal model obtained is dependent on the initial population,
+amongst other factors. To oﬀset bias, the algorithm is executed multiple times with diﬀerent initialisations and the ﬁnal
+model chosen is an ensemble average of the models that occur most frequently. This can be obtained by statistically
+representing the obtained models on a histogram. An example of the use of the histogram for model selection will be
+shown in Sec. 3.5.
+The GEP implementation described above has been used extensively for RANS model development [33, 34, 38,
+f
+xf
+39], where the “full” anisotropy tensor (are
+i j ) was used to produce a model (ai j ) for the extra anisotropy which is then
+added to the modiﬁed Boussinesq approximation as a new closure:
+=
+τRANS
+ij
+
+2
+kδi j − 2νt S i j + 2kaixjf .
+3
+
+(15)
+
+To conduct a RANS calculation with a trained model, the Reynolds stress was constructed from Eqn. (15), with the
+. For steady RANS calculations,
+production term in Eqn. (13) being modiﬁed as well, using the expression for τRANS
+ij
+the trained closure above has shown improvements in the prediction of the mean ﬂow statistics [33, 34, 39]. In this
+paper, for the ﬁrst time, the GEP algorithm is being evaluated for and applied to unsteady RANS (URANS) calculations. In that context, we propose a modiﬁcation to the turbulence closure in Eqn. (15). As explained previously,
+f
+this closure has been obtained from the “full” reference anisotropy tensor (are
+i j ), which uses all the length scales,
+
+ . A URANS calculation of an inherently unsteady
+including the contribution from the deterministic ones, i.e. a
+i j
+re f
+
+ﬂow usually captures the large-scale low-frequency unsteadiness. So, using the closure in Eqn. (15) would amount to
+accounting for these deterministic scales twice: once via the closure and once via the resolution of scales. The new
+
+approach proposed here, develops a turbulence closure (aixtj ) using only the reference stochastic anisotropy, i.e. ai j  ,
+re f
+
+while the URANS equations capture the deterministic unsteadiness. The resulting turbulence closure from such an
+endeavour is given by:
+2
+τURANS
+= kδi j − 2νt S i j + 2kaixtj .
+(16)
+ij
+3
+As done in the case of RANS, the Reynolds stress term in Eqn. (13) is now replaced with τURANS
+. While the new
+ij
+turbulence closure (Eqn. (16)) is a true representation of the stochastic unsteadiness, the same cannot be said about
+the resolution of the deterministic unsteadiness in the URANS sense. To obtain the true determinstic representation,
+the turbulence equations for URANS require modiﬁcation to their equivalent PANS counterparts, i.e, a modiﬁcation
+of the existing k − ω SST model to the ku − ωu SST model. This allows the modiﬁed equations to explicitly solve for
+the unresolved (modelled) ﬁelds i.e., ku , ωu instead of k, ω. The total ﬁelds can be reconstructed using the ratios fk
+and fω and the unresolved ﬁelds ku , ωu from Eqn. (8). Using the correct value of these ratios can specify the level of
+resolution acheived. For the deterministic scales, the extracted ratio fk∗ in Eqn. (10) is the correct choice.
+The equations for the ku − ωu SST model are given by Eqns. (17), (18), where the ratio fω has been replaced with
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+7
+
+NRCBC
+ICBC
+PBC
+h
+Lz
+y
+
+y
+x
+
+z
+
+(a)
+
+(b)
+
+Fig. 2: (a) Schematic of the domain for the DNS calculation, with the boundary conditions (b) Contours of the Q-criterion for the DNS calculation
+
+the deﬁnition in Eqn. (9):
+∂ku
+∂ku
++ Uj
+= Pku − β∗ ku ωu +
+∂t
+∂x j
+Pk
+∂ωu
+ku
+∂ωu
++ Uj
+= α u − αβ∗
+∂t
+∂x j
+νu
+νu
+
+∂ωu
+∂
++
+νu σωu
+∂x j
+∂x j
+
+
+∂ku
+∂
+νu σku
+,
+∂x j
+∂x j
+ku
+− αβ∗ fk∗ + β fk∗ ωu ωu
+νu
++ 2(1 − F1 )σω2
+
+1
+fk∗ 2 ωu
+
+∂ku ∂ωu
+.
+∂xi ∂xi
+
+(17)
+
+(18)
+
+The ﬁrst and second terms to the right hand side in the ωu equation have been modiﬁed following the corrections as
+in the formulations of Pereira et al. [40, 15]. In these equations, νu , σku and σωu are given by:
+νu =
+
+a1 ku
+,
+max(a1 ωu , S F2 )
+
+σku =
+
+σk
+,
+fk∗ 2
+
+σωu =
+
+σω
+.
+fk∗ 2
+
+Through these modiﬁcations, the resulting closure is given by:
+τiPANS
+=
+j
+
+2
+ku δi j − 2νu S i j + 2ku aixtj .
+3
+
+(19)
+
+and the unresolved production term Pku using the above closure is expressed as:
+Pku = τiPANS
+j
+
+∂Ui
+.
+∂x j
+
+(20)
+
+Figure 1 shows a schematic that summarises the three approaches described above. The red arrows show the path
+taken in the training process for steady ﬂows [33] and what resulting term needs to be implementated in a RANS
+solver, while the blue arrows show the novel training process, including the new term that needs to be implemented
+into a URANS and a PANS solver. This novel training process, it’s subsequent implementation and use as a calculation
+tool is termed as the Data-driven Stochastic Closure Simulation (DSCS), owing to the data-driven turbulence closure
+developed using the stochastic length scales. The calculations performed with the machine-learnt closures will be
+referred to as trained calculations (T) while the baseline calculations utilising the Boussinesq approximation will be
+referred to as untrained calculations (UT).
+3. Case study
+3.1. Reference Dataset
+The test case considered for demonstration for the new approach is that of a ﬂat plate normal to the ﬂow, which
+acts as a wake generating body (WGB). A schematic of the geometry is shown in Figure 2a. The ﬂow is near incompressible (Mach ∼ 0.3) at Re = 2,000, based on the plate height and freestream velocity. The wake generated is
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+8
+
+x =30
+
+x =10
+DNS
+U-UT
+P-UT
+
+10
+
+y
+
+x =50
+
+DNS
+U-UT
+P-UT
+
+DNS
+U-UT
+P-UT
+
+0
+
+−10
+−0.5
+
+0
+
+0.5
+u1
+
+1
+
+1.5
+
+0.4
+
+0.6
+
+0.8
+u1
+
+1
+
+1.2
+
+0.6
+
+0.8
+
+1
+u1
+
+Fig. 3: Mean velocity proﬁles at 3 diﬀerent streamwise locations for the untrained calculations. U: URANS, P: PANS, UT: Untrained
+
+allowed to evolve in a zero pressure gradient environment. A DNS is conducted for this case to generate the highﬁdelity dataset. The calculation is performed using HiPSTAR, which is a structured ﬁnite diﬀerence compressible
+Navier-Stokes solver employing a fourth-order accurate stencil for spatial discretisation and a fourth-order accurate
+Runge-Kutta fourth order scheme for temporal discretisation [41]. Due to the compressible nature of the code, characteristic boundary conditions, as proposed by Kim & Lee [42, 43], are employed to prevent spurious reﬂections from
+the inﬂow/outﬂow boundaries. The outﬂow boundaries are set to the Non-Reﬂecting Characteristic (NRCBC) while
+the inﬂow boundary is set to the Integrated Characteristic (ICBC). The outﬂow boundary is also coupled with a zonal
+boundary condition, which acts as a sponge to damp out any reﬂections back into the domain [44]. The spanwise
+direction is solved in Fourier space to reduce computational eﬀort and as such the spanwise boundaries are periodic.
+A grid resolution of 1, 056 × 600 points in the x − y plane with 64 Fourier modes (or equivalently 130 points) in
+the span wide direction was found to be suﬃciently well resolved, for a plate of dimensions 1.0 × 0.16 units with a
+spanwise extent (Lz ) of 8.0 units. The spanwise extent was chosen after a domain convergence study was conducted
+and was found to be larger than the extents chosen by other HiFi numerical studies [45, 46]. The domain in the x − y
+plane extends from -15.0 to 85.0 units in the x and -50.0 to 50.0 in the y directions. Grid convergence tests were
+conducted on the conﬁguration to ensure resolution of the smallest length scales in the ﬂow. This was ascertained
+from the TKE equation budget terms, by comparing the sum of budgets from all the terms except the dissipation to
+the dissipation budget. It was found that the diﬀerence between the two quantities was negligible, giving conﬁdence
+in the DNS resolution.
+An instantaneous snapshot of this calculation is presented in Figure 2b which shows the Q-criterion [47]. It can
+be clearly seen that the ﬂow is highly three dimensional and close to the WGB, the ﬂow exhibits large coherent
+structures which undergo complete breakdown as the ﬂow moves further downstream. Since the training algorithm
+requires the anisotropy tensor from the high-ﬁdelity dataset, spanwise-averaged mean statistics were collected from
+the DNS, following a time-convergence test. The ﬁnal data collected spanned 600 time units, which corresponds to
+over 6 ﬂow-through times for the given domain. The test case was also simulated using the WALE [48] LES model,
+with a grid resolution of 672 × 456 in the x − y plane and 64 Fourier modes. This calculation was performed to
+compare the computational costs associated with the diﬀerent calculations undertaken in this study, outlined later in
+Table 1.
+3.2. Baseline
+Next, a URANS calculation was performed using the standard k − ω SST model in OpenFOAM to assess the
+diﬀerences with the DNS results. It also serves as a baseline to compare the modiﬁed closure results with. The
+domain extents in the x − y plane were the same as those for the DNS. Two diﬀerent in-plane (x − y) grid resolutions
+were considered, 1,056 × 600 and 672 × 456, which correspond to the DNS and LES resolutions. Both two and
+
+1.2
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+(a)
+
+9
+
+(b)
+
+Fig. 4: Q-criterion isosurfaces coloured by the spanwise vorticity for (a) URANS UT (b) PANS UT
+
+three-dimensional calculations were then conducted where it was observed that the diﬀerences in the mean proﬁles
+for the two-dimensional and three-dimensional simulations were insigniﬁcant. This ﬁnding is not surprising and has
+been observed in other wake ﬂow calculations [49] for this Re, on account of no spanwise variation. This is also
+evident from the Q-criterion for the three-dimensional URANS calculation in Figure 4a. The spanwise extent for the
+study was limited to 4 units, matching other three-dimensional URANS wake ﬂow studies [50, 51].
+Figure 3 shows the grid independent mean velocity proﬁles for the baseline URANS, i.e, the untrained URANS
+(using the Boussinesq approximation), at three diﬀerent streamwise locations downstream of the WGB for the 672 ×
+456 grid. These results indicate that the baseline model fails to correctly predict the wake evolution, even for a simple
+zero pressure gradient wake ﬂow. Other parameters such as the Reynolds stress, wake half-width and wake velocity
+deﬁcit were overpredicted as well, but are not shown here. There are two schools of reasoning that can account for
+this overprediction: insuﬃcient turbulent diﬀusion and excess turbulent diﬀusion. Both lines of reasoning, though
+contradictory, are equally valid, depending on the proportion of modelling to resolving. From a RANS perspective,
+where all length scales are modelled, more diﬀusion added to the closure would correct the overprediction. If a
+proportion of the length scales is to be resolved, lower turbulent diﬀusion can correct the overprediction as the resolved
+scales would provide a more realistic representation of the Reynolds stresses. This is similar to an LES, which has less
+modelled turbulent diﬀusion, through a smaller eddy viscosity. In other words, the more length scales are resolved,
+the smaller the turbulence viscosity needs to be. As will be shown later, the novel approach improves prediction by
+choosing the latter line of reasoning.
+3.3. Triple Decomposition
+As discussed in Section 2.1, the segregation of the length scales is performed here using triple decomposition.
+The ﬂow is shown to exhibit vortex shedding and as such the vortex shedding frequency is expected to be the scale
+responsible for the organised wave motion. The vortex shedding corresponds to a Strouhal Number (St) of 0.145,
+which is most pronounced in the DNS energy spectra at the location (x, y) = (10, 2) in Figure 5a. The ﬁgure also shows
+that the shedding frequency is not present at locations further downstream, indicating breakdown of the coherent
+vortices.
+Dynamic mode decomposition (DMD) [52] can be used to verify this as well using a section of the ﬂow ﬁeld
+downstream of the WGB. Following the mean statistics collection, the DNS was run further to collect instantaneous
+data (containing the three velocity components). 400 time samples were collected at an interval of 0.5 time units (over
+2 ﬂow-through times) such that 29 vortex shedding cycles at a frequency of 0.145 were recorded. Each DMD mode
+from the collected data corresponds to a ﬁxed frequency and these frequencies (or modes) can be organised according
+to the normalised energy content (||Φ||), as shown in Figure 5b, where only the positive frequencies are shown. As can
+be seen, the mode corresponding to the frequency of 0.145 has the largest energy content. The collected instantaneous
+time samples are also used to perform a proper orthogonal decomposition (POD) [53], since the ﬁrst 2 POD modes
+are known to be responsible for vortex shedding [54, 55].
+A spatial comparison of the ﬁrst POD mode and the DMD mode corresponding to the vortex shedding frequency
+is shown in Figure 6. It can be seen that the two modes are spatially alike, which is in agreement with the known
+literature cited above. With the point of split identiﬁed, the Reynolds stress tensor can be split according to Eqn.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+10
+
+E11
+
+10−1
+
+1
+
+10−3
+
+0.8
+
+10−5
+
+  0.6
+Φ
+
+10
+
+−7
+
+10
+
+−9
+
+1
+
+0.6
+
+0.4
+
+(10,2)
+(30,2)
+(50,2)
+(70,2)
+-5/3
+
+10−2
+
+0.8
+
+0.13 0.14 0.15 0.16
+0.2
+
+10−1
+
+100
+St
+
+101
+
+0
+
+102
+
+0
+
+0.2
+
+0.4
+
+0.8
+
+0.6
+
+1
+
+f
+(b)
+
+(a)
+
+Fig. 5: (a) Turbulence energy spectra at 4 diﬀerent probe locations (b) energy content in DMD modes v/s the frequencies of each mode.
+
+(7). Two diﬀerent approaches are used here: FFT and POD. This is done to verify the split stresses from two diﬀerent
+methods and also gives an idea about the processing time between them. In the FFT approach, each grid point’s
+velocity time series was transformed to the frequency space where the Fourier coeﬃcients were multiplied with a
+Gaussian distribution centered around the vortex shedding frequency ( fvs )
+
+−( f − fvs )2
+H( f ) = exp
+.
+(21)
+2σ2
+σ represents the extent of frequencies retained by the Gaussian, taken here to be 8 frequencies on either side of fvs
+spanning 6σ. This series was then inverse transformed to the time domain. A Gaussian distribution was chosen
+instead of an ideal ﬁlter centered at fvs to prevent ringing. This time series is a representation of instantaneous 
+ui .
+u j would provide 
+τi j .
+Consequent spanwise and time averaging of the instantaneous ﬁeld 
+ui
+
+DMD
+
+POD
+
+10
+
+10
+
+5
+
+5
+
+0
+
+0
+
+−5
+
+−5
+
+−10
+
+6
+
+−0.0012
+
+8
+
+10
+
+−0.0006
+
+12
+
+14
+
+0.0000
+
+Φ 42u = 0 1453
+,f
+
+.
+
+16
+
+0.0006
+
+18
+
+20
+
+0.0012
+
+−10
+
+6
+
+−0.0016
+
+8
+
+10
+
+−0.0008
+
+12
+
+0.0000
+
+Φ 1u
+
+14
+
+16
+
+0.0008
+
+18
+
+20
+
+0.0016
+
+Fig. 6: Spatial mode (x − y plane) Φ for u1 component, corresponding to the vortex shedding mode from DMD and ﬁrst mode from POD.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+11
+
+FFT
+
+POD
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+−2
+
+−2
+
+−4
+
+−4
+6
+
+0.000
+
+8
+
+0.008
+
+10
+
+0.016
+
+12
+
+0.024
+
+14
+
+0.032
+
+16
+
+0.040
+
+18
+
+0.048
+
+0.056
+
+20
+
+0.064
+
+6
+
+0.000
+
+8
+
+0.008
+
+10
+
+0.016
+
+0.024
+
+τ11
+
+14
+
+0.032
+
+16
+
+0.040
+
+18
+
+0.048
+
+0.056
+
+20
+
+0.064
+
+τ11
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+−2
+
+−2
+
+−4
+
+−4
+6
+
+8
+
+10
+
+12
+
+14
+
+−0.020 −0.015 −0.010 −0.005 0.000
+
+16
+
+0.005
+
+18
+
+0.010
+
+0.015
+
+20
+
+0.020
+
+6
+
+8
+
+10
+
+12
+
+14
+
+−0.020 −0.015 −0.010 −0.005 0.000
+
+τ12
+
+16
+
+0.005
+
+18
+
+0.010
+
+0.015
+
+20
+
+0.020
+
+τ12
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+−2
+
+−2
+
+−4
+
+−4
+6
+
+0.000
+
+8
+
+0.015
+
+10
+
+0.030
+
+12
+
+14
+
+0.045
+
+16
+
+0.060
+
+18
+
+0.075
+
+20
+
+0.090
+
+6
+
+0.000
+
+8
+
+0.015
+
+10
+
+0.030
+
+τ22
+
+12
+
+14
+
+0.045
+
+16
+
+0.060
+
+18
+
+0.075
+
+20
+
+0.090
+
+τ22
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+−2
+
+−2
+
+−4
+
+−4
+6
+
+0.000
+
+12
+
+8
+
+0.008
+
+10
+
+0.016
+
+12
+
+0.024
+
+14
+
+0.032
+
+τ33
+
+16
+
+0.040
+
+18
+
+0.048
+
+20
+
+0.056
+
+6
+
+0.000
+
+8
+
+0.008
+
+10
+
+0.016
+
+12
+
+0.024
+
+14
+
+0.032
+
+τ33
+
+Fig. 7: Comparison of spatial (x − y plane) τ
+i j ﬁeld obtained through FFT and POD approaches.
+
+16
+
+0.040
+
+18
+
+0.048
+
+20
+
+0.056
+
+12
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+τi j can be obtained either by subtracting the Gaussian distribution from Fourier coeﬃcients and doing the same
+as above or by subtracting the 
+τi j ﬁeld from the time averaged τi j ﬁeld collected separately. The latter option is
+chosen for processing because the τi j ﬁeld is collected over a larger number of ﬂow-through times, i.e, 6, whereas the
+FFT processing is done on data collected over a shorter number of ﬂow-through times, i.e., 2. The 
+τi j ﬁeld can be
+created using this shorter time period since we have a suﬃcient number of vortex shedding cycles (∼29) to average
+the information.
+In the POD approach, the ﬁrst two POD modes are used to reconstruct the instantaneous velocity, which is again
+a representation of 
+ui . Figure 7 shows the spatial distribution of the “turbulent” Reynolds stresses obtained by the two
+approaches considered. It can be seen that both approaches produce remarkably similar distribution of the stochastic
+turbulence ﬁelds. There are some subtle diﬀerences in the absolute values, particularly closer to the WGB, but there
+is good overall agreement. The diﬀerences can be attributed to the choice of the Gaussian distribution in the FFT
+approach and the ﬁrst 2 modes in the POD approach. The Gaussian distribution included contribution from other
+frequencies while the POD modes also include multiple frequencies. This is also true for the periodic ﬁelds, which
+have not been shown here to avoid redundancy. The processing times between the two methods showed that the FFT
+approach was signiﬁcantly faster on a single compute node compared with the POD approach (∼ 5 − 10 minutes
+as opposed to ∼ 3 hours). In the FFT approach, each grid point’s time series is subjected to the transformation
+independently whereas in the POD approach, all grid points are assembled in a matrix and undergo a Singular Value
+Decomposition, which is more time consuming. Consequently, the FFT approach could realise even faster processing
+times by simply parallelising the distribution of grid points across multiple compute nodes.
+3.4. Selective Scale Resolution
+The next step after splitting the ﬁeld is to obtain the spatially varying fk∗ ﬁeld. As was discussed in Section 2.2,
+∗
+fk in our approach is obtained from the DNS dataset by computing k /k, rather than being dependent on the grid
+resolution of the SRS as is the case for the standard PANS [9]. The resulting ﬁeld (labelled fk∗ ) is given in Figure
+8. It can be observed from the ﬁgure that the values of fk∗ are smaller than 1.0 closer to the WGB and progressively
+increase on moving further downstream. This is in line with the observation of breakdown of coherent structures
+further downstream, signifying increased presence of turbulence. The ﬁgure shows only a clipped region because
+beyond x = 20.0, the values of fk∗ are quite close to 1.0. This is readily veriﬁed from the energy spectra for locations
+beyond x = 20.0 in Figure 5a, which shows the lack of a peak associated with the vortex shedding frequency. It
+must be pointed out that this distribution indicates the spatial value of fk∗ at a given location irrespective of the grid
+resolution at that spatial location. However, when running a PANS calculation with this fk∗ , it is essential to have a
+grid that can support this spatial distribution, else, the resolution of scales would introduce errors. Figure 8 also shows
+the distribution of fk obtained from the baseline URANS calculation, which provides an indication of the values of fk∗
+the given RANS grid can support [10]
+2/3
+1
+fk ≥ 
+(22)
+Δ .
+k Cμ
+Here, Δ is the grid cell dimension, chosen to be the maximum cell edge length and Cμ = 0.09. The values for k
+and  are the mean values taken from the baseline URANS calculation. The ﬁgure shows that the chosen grid (672
+× 456 grid) is suﬃciently well resolved in the wake region to run the fk∗ values obtained from the DNS dataset.
+Relying explicity on the deﬁnition in Eqn. (22) to assess grid quality for a PANS calculation is not recommended
+though, rather, a separate grid independence study. As will be discussed later, the baseline URANS has a signiﬁcant
+overprediction in the TKE, particularly close to the WGB, which can skew the value of fk . A grid independence study
+with a ﬁxed spatial distribution of fk , such as with our fk∗ is a better choice to assess grid quality since any further
+grid reﬁnements from the optimal grid would not result in more resolution than is allowed by fk∗ . All PANS studies
+use either a constant value of fk or a ﬁeld that is grid dependent through Eqn. (22), whereas this study sets apart the
+use of PANS through resolving selective scales, obtained from a HiFi dataset. For the given grid, the fk∗ ﬁeld is fed
+to the turbulence equations for ku and ωu (Eqns. (17), (18)) as an input. The fk∗ ﬁeld dictates the proportion of length
+scales to be modelled v/s resolved. The unsteady RANS calculations can be run using fk∗ = 1.0 since doing so will
+recover the original turbulence equations (11), (12). The PANS calculations were run in two and three dimensions
+as well, using the grid resolutions as the URANS calculation in Section 3.2, since resolving of scales is expected
+to produce three-dimensional structures, as observed in other wake ﬂow studies [14, 18]. For the three-dimensional
+calculations, a spanwise extent of 4 units was chosen, with resolutions of 16 and 32 points. The Q-criterion for the
+three-dimensional ﬁeld (Figure 4b) shows a lack of spanwise instabilities, which would’ve produced a breakdown
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+13
+
+Fig. 8: fk∗ ﬁeld obtained from the triple decomposition split of the TKE. fk ﬁeld obtained from the k − ω SST model by Eqn. (22)
+
+of the visible rollers. As a result, the proﬁles for the two and three-dimensional calculations show an insigniﬁcant
+diﬀerence in the mean proﬁles (not shown here). Comparing with the other PANS studies, it can be pointed out that
+the resolution of the scales observed there are due to the extremely low values of fk adopted, i.e. ∼ 0.1-0.2, whereas
+the lowest value of fk∗ in the calculations conducted here was 0.44, which does not produce the expected behaviour. As
+will be seen in the next section, the Boussinesq approximation is responsible for adding excess diﬀusion, damping out
+any instabilities that could’ve lead to a three-dimensional ﬁeld. This can be explained by considering the total eddy
+viscosity (νt ) and unresolved eddy viscosity (νu ) which are related as νu = fk∗ 2 νt . For a given νt , reducing fk∗ reduces
+the diﬀusion in the PANS equations quadratically. In relative terms, if the reduction is not signiﬁcant, resolution of
+length scales to the desired extent is not achieved and the insuﬃciently reduced diﬀusion causes an overprediction
+of the ﬂow properties. This is observed in the mean velocity plots for the untrained PANS case (Figure 3). Thus,
+modiﬁcation of the closure approximation is needed to have the correct balance of scale resolving and modelling.
+3.5. Machine Learnt Turbulence Closures
+Utilizing the machine learning approach of Weatheritt & Sandberg [33], new closures are developed from the DNS
+dataset. Previous work has shown that the obtained closure can depend on the extent of the spatial domain chosen
+[33, 34]. The purpose of this work is not to conduct a sensitivity study of the training region but to bring attention to a
+Full
+
+Turbulent
+
+20
+
+40
+
+15
+
+30
+
+10
+
+20
+
+5
+
+10
+
+0
+1.25
+
+1.26
+
+1.27
+1.28
+error
+
+1.29
+·10−2
+
+1.3
+
+0
+1.1
+
+1.12
+
+1.14
+error
+
+1.16
+·10−2
+
+Fig. 9: Histogram of 50 full and turbulent anisotropy models. Red: model from arithmetic average of models lying within most frequently occuring
+bracket. Black: ﬁtness of the Boussinesq approximation model. The lines represent the ﬁtness value and not the frequency.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+14
+
+15
+
+15
+
+15
+
+10
+
+10
+
+10
+
+5
+
+5
+
+5
+
+0
+
+0
+
+0
+
+−5
+
+−5
+
+−5
+
+−10
+
+−10
+
+−10
+
+−15
+5
+
+10
+
+−0.8
+
+15
+
+−0.4
+
+20
+
+0.0
+
+ρRS (−Vij1 )
+
+25
+
+0.4
+
+30
+
+0.8
+
+−15
+5
+
+10
+
+−0.8
+
+15
+
+−0.4
+
+20
+
+0.0
+
+25
+
+0.4
+
+ρRS (aijxf − Vij1 )
+
+30
+
+−15
+5
+
+0.8
+
+10
+
+−0.8
+
+15
+
+−0.4
+
+20
+
+0.0
+
+25
+
+0.4
+
+ρRS (aijxt − Vij1 )
+
+30
+
+0.8
+
+Fig. 10: Alignment plots (x − y plane) for the Boussinesq approximation, “full” anisotropy model and “turbulent” anisotropy model. The term in
+the brackets corresponds to amod
+i j in Eqn. (3).
+
+novel form of training for unsteady ﬂows. Hence, only one domain is considered for this case study, which spans 5.0 to
+65.0 units downstream of the WGB in the x direction and -20.0 to 20.0 units in the y direction. This domain is chosen
+because it contains the wake in y, is downstream of the mean recirculation bubble (located ∼2.2 units downstream) and
+includes a range of length scales from large ones close to the WGB to small ones far downstream. Two closures are
+developed for this domain, one using the “full” anisotropy tensor and the other using only the “turbulent” anisotropy
+tensor. In order to do that, the GEP algorithm is run 50 times with diﬀerent intialisations for each case and the ﬁtness
+values for each run are plotted as a histogram in Figure 9. This ﬁgure shows the frequency of the commonly occurring
+models according to their ﬁtness values. Each GEP run is characterised by a diﬀerent initialised models that have
+been generated randomly, which provides the machine learning algorithm diﬀerent start points as it attempts to drive
+towards an optimised model. The resulting models from the 50 runs are not too dissimilar in the ﬁtness values and the
+coeﬃcients of the tensor basis functions (Eqn. (5)).
+The ﬁnal closure models for each case are obtained by taking the arithmetic average of all the models that fall
+within the highest frequency bracket for each case i.e. models within the ﬁtness range of [0.012612, 0.012685] for
+the full anisotropy and [0.011129, 0.011184] for the “turbulent” anisotropy (Eqns. (23), (24)). The superscripts f, t
+represent models for full and turbulent cases, also shown in Figure 9.
+aixjf = 0.872Vi1j + (0.0037 + 0.00053I1 − 0.00028I2 )Vi2j + 0.032Vi3j .
+
+(23)
+
+aixtj = 0.869Vi1j + 0.003Vi2j + (0.008 − 0.000034I2 )Vi3j .
+
+(24)
+
+The two models show that the dominant tensor basis function is Vi1j , which corresponds to the mean strain rate
+(Eqn. (5)). This tensor basis function is responsible for diﬀusion, with large negative coeﬃcients providing more
+diﬀusion. The standard Boussinesq approximation has a coeﬃcient of -1.0 (−νt S i j /k = −S i j /ω = −Vi1j for the k − ω
+SST model) and has a worse ﬁtness value than the averaged models. Since these models are added to the Eqns.
+(16),(19), which contain the Boussinesq approximation, the eﬀective coeﬃcients for Vi1j are -0.128 and -0.131 for the
+“full” and “turbulent” anisotropies. This shows that for both the cases, the actual diﬀusion is much smaller (∼8 times)
+than when using the Boussinesq approximation.
+is replaced by
+An assessment of the alignment for the models can be made by using Eqn. (3) whereby amod
+ij
+aixjf − Vi1j and aixtj − Vi1j for the “full” and “turbulent” anisotropies (see Figure 10). The alignment for the Boussinesq
+1
+approximation is also shown in Figure 10, where amod
+i j is replaced by −Vi j . This ﬁgure shows that for regions beyond
+x = 20.0, the Boussinesq approximation is well aligned with the anisotropy. This is understandable since the ﬂow
+considered exhibits free shear, for which the approximation was developed [56]. However, for x < 20.0, the Boussinesq approximation doesn’t do as well, with values successively decreasing further upstream. The GEP training
+process shows an improvement in the alignment for the “full” anisotropy case, with better alignment values upstream.
+However, the alignment values of 0.7-0.8 in the regions x = 5.0 − 15.0 can aﬀect the solution. Comparing this to the
+“turbulent” anisotropy alignment, there is a much better distribution for x < 20.0, which shows that a calculation with
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+15
+
+(a)
+
+(b)
+
+Fig. 11: Q-criterion isosurfaces coloured by the spanwise vorticity for (a) URANS T (b) PANS T
+
+the proposed approach would result in better prediction of the mean ﬂow statistics. The orthogonal alignment in the
+freestream in all the plots is not a signiﬁcant issue, given there are no gradients in the freestream.
+Based on these a priori results, the “turbulent” closure was implemented in the PANS turbulence solver for an a
+posteriori analysis. It must be pointed out that even though the models obtained when training for “full” anisotropy
+tensor or for the “turbulent” anisotropy tensor are similar, unsteady calculations are performed using only the “turbulent” anisotropy model, for the reason discussed in Section 2.3. Calculations were once more performed in both
+two and three-dimensions. For the trained calculation with fk = 1.0 everywhere (also referred to as URANS trained),
+there were signiﬁcant diﬀerences observed between the two and three-dimensional results. The Q-criterion plot in
+Figure 11a shows presence of some three-dimensional structures, through the breakdown of the spanwise rollers. This
+three-dimensionality shows signiﬁcant diﬀerences in the mean velocity proﬁles, as shown in Figure 12 for the two
+and three-dimensional calculations. The low diﬀusion from the model results in an overprediction of proﬁles in two
+dimensions but an underprediction in three dimensions, which highlights the point discussed in Section 3.2. In two
+dimensions, resolution of any length scale is not possible and only modelling must represent the mean quantities. A
+low diﬀusion coeﬃcient in this context would cause an overprediction of the proﬁles. The same diﬀusion coeﬃcient
+in three dimensions, however, provides room for resolution, which would result in better mean ﬂow proﬁles. However,
+further improvements can be sought by specifying the scales that need resolving.
+For the trained calculation with the fk∗ distribution (referred to as PANS trained) calculation, spanwise instabilities
+were observed along with resolution and breakdown of structures (see Figure 11b). Since the trained calculations
+x =30
+
+x =10
+
+10
+
+y
+
+U-UT
+U-T 2D
+U-T 3D
+
+x =50
+
+U-UT
+U-T 2D
+U-T 3D
+
+U-UT
+U-T 2D
+U-T 3D
+
+0
+
+−10
+−0.5
+
+0
+
+0.5
+u1
+
+1
+
+1.5
+
+0
+
+1
+
+0.5
+u1
+
+1.5
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+u1
+
+Fig. 12: Two v/s three dimensional comparison for the URANS trained case. Also shown is the baseline URANS untrained result for reference.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+16
+
+x =10
+
+x =10
+
+10
+
+y
+
+672 × 456 × 16
+672 × 456 × 32
+1056 × 600 × 40
+
+0
+
+−10
+−0.5
+
+0
+
+0.5
+u1
+
+1
+
+1.5 −3
+
+−2
+
+−1
+
+0
+τ12
+
+1
+
+2
+
+3
+
+·10−2
+
+Fig. 13: Grid dependence study for PANS Trained case at x = 10.0.
+
+exhibited a higher proportion of three-dimensional structures, compared with the untrained calculations performed so
+far, a grid independence test was conducted by comparing the results using three diﬀerent grids: 672 × 456 × 16,
+672 × 456 × 32 and 1056 × 600 × 40. A grid dependence study is particularly important for the trained PANS case
+since additional length scales are being resolved and it is important to ensure the grid is capable of supporting such
+scales. It was discussed in Section 3.4 that the scales being resolved are pre-determined though a ﬁxed spatial fk∗ ; as
+such, grid reﬁnements beyond the optimal resolution should, in principle, produce no change in the mean statistics.
+Figure 13 shows the comparison of the three diﬀerent grids considered for the mean velocity and mean shear stress
+at x = 10.0. The plots show that the grid 672 × 456 × 32 is an optimum resolution and further reﬁnement does not
+change the mean ﬂow, which supports the statement made about the fk∗ ﬁeld and how it is diﬀerent from the standard
+fk used in other PANS studies. This suggests the model is robust to diﬀerent resolutions once the optimal resolution
+is reached, i.e. adapts itself. Using this grid resolution, all other OpenFOAM calculations were conducted and the
+mean statistics are plotted against the DNS result (see Figure 14).
+The grid independent results show the trained calcuations perform signiﬁcantly better than the baseline URANS.
+There is a remarkable all round improvement in all the mean ﬂow statistics, which is a strong statement in support
+of using machine learning for developing better turbulence closures. Between the two trained calculations, the PANS
+trained does slightly better than the URANS trained, which can be attributed to the low diﬀusion coeﬃcient allowing
+a resolution of a proportion of length scales and the fk∗ ﬁeld dictating the amount of scales needing resolving. Perhaps,
+better proﬁles to highlight the diﬀerence between these two calcuations are the centerline velocity and TKE proﬁles
+(Figure 15).
+The trained PANS does better at capturing the recirculation bubble and also has better prediction further downstream. This improvement can be explained by considering how the total Reynolds stresses are obtained through the
+two approaches. Figure 16 shows the split of the resolved and modelled components of the shear stress and TKE
+proﬁles. The actual stress can be obatined by summing the modelled and resolved contributions, which was shown in
+Figure 14. Results are shown for only one streamwise location (x = 30.0) since the trends dicussed here are observed
+at other locations as well.
+The PANS trained case shows a smaller proportion of modelling compared with the URANS trained case. For the
+normal stresses (and the TKE), the ratio of modelling to resolving is > 1.0 for URANS trained and < 1.0 for PANS
+trained. However, for the shear stress, the ratio is < 1.0 for both cases, which would explain the signiﬁcantly better
+proﬁles URANS trained generates compared to the baseline. The additional improvement obtained with PANS can be
+seen by comparing the actual values of the ratios. In case of the TKE, the ratio, for instance at the centerline, is 0.62
+and 1.17 for the PANS and URANS trained cases, respectively. In the shear stress, at the location with the maximum
+magnitudes, the ratios were found to be 0.17 and 0.49 for the PANS and URANS trained cases respectively. This
+shows that the proposed method of the PANS trained calculation is better at resolving more scales on the same grid,
+which inﬂuences the quality of the solution.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+x =10
+
+4
+
+2
+
+2
+
+0
+
+0
+
+0
+
+−2
+
+−2
+
+−2
+
+−4
+
+−4
+
+−4
+
+−0.5
+
+y
+
+x =50
+
+4
+
+2
+y
+
+x =30
+
+DNS
+U-UT
+P-UT
+U-T
+P-T
+
+4
+
+17
+
+0
+
+1
+
+0.5
+u1
+
+1.5
+
+0.4
+
+0.8
+u1
+
+0.6
+
+1
+
+1.2
+
+0.6
+
+4
+
+4
+
+2
+
+2
+
+2
+
+0
+
+0
+
+0
+
+−2
+
+−2
+
+−2
+
+−4
+
+−4
+
+−4
+
+−2
+
+0
+τ12
+
+2
+
+4
+·10
+
+−2
+
+−1
+
+0
+τ12
+
+−2
+
+1
+
+2
+·10
+
+−1
+
+4
+
+4
+
+2
+
+2
+
+2
+
+0
+
+0
+
+0
+
+−2
+
+−2
+
+−2
+
+−4
+
+−4
+
+−4
+
+5 · 10−2
+
+0.1
+k
+
+0.15
+
+0
+
+2
+
+4
+k
+
+−0.5
+
+−2
+
+4
+
+0
+
+1
+
+1.2
+
+u1
+
+4
+
+−4
+
+0.8
+
+6
+·10−2
+
+0
+
+0
+τ12
+
+1
+
+1
+
+0.5
+·10
+
+−2
+
+2
+k
+
+3
+·10−2
+
+Fig. 14: Mean velocity, shear and turbulence kinetic energy proﬁles at 3 diﬀerent locations. U: URANS, P: PANS, UT: Untrained, T: Trained
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+18
+
+1
+1.4
+1.2
+0.5
+
+DNS
+U-UT
+U-T
+P-T
+0.1
+
+1
+0
+u1
+
+k
+
+0
+
+−0.5
+
+−1
+
+5
+
+10
+
+0.8
+
+−0.2
+
+0.6
+
+−0.4
+
+0.4
+
+−0.6
+15
+x
+
+8 · 10−2
+6 · 10−2
+4 · 10−2
+2 · 10−2
+0
+10
+
+12
+
+14
+
+16
+
+18
+
+20
+
+0.2
+1
+20
+
+2
+25
+
+3
+
+0
+
+30
+
+5
+
+10
+
+15
+x
+
+20
+
+25
+
+30
+
+Fig. 15: Mean velocity and turbulence kinetic energy proﬁles at the centerline. U: URANS, P: PANS, UT: Untrained, T: Trained
+
+With the results obtained, it is also important to identify the computational cost associated with these calculations.
+The juxtaposition of the computational costs incurred for the diﬀerent calculations is shown in Table 1. Direct comparison of the cost of the new URANS and PANS approaches implemented in OpenFOAM with the reference simulations
+using HiPSTAR is not appropriate, since HiPSTAR is a high-ﬁdelity code, purpose-built for optimised running. A
+more representative cost reduction factor is obtained by comparing with an OpenFOAM LES. This calculation was
+undertaken to match the HiPSTAR LES in terms of the grid resolution and time step, however, the calculation was
+not performed to a time-converged solution, instead to estimate the wall time of one ﬂow-through time, which was
+then extrapolated to the same time interval as the PANS convergence. The extrapolated core-hours shows a reduction
+of 69.4 times using the proposed approach. Note, however, that the OpenFOAM LES does not guarantee the same
+level of agreement with the DNS due to the more dissipative numerical scheme. Thus, an accurate LES conducted
+in OpenFOAM might be of even higher cost and the reduction of cost with the proposed PANS-trained approach
+even more signiﬁcant. This shows that the proposed approach is a signiﬁcantly cheaper scale resolving alternative
+providing high predictive accuracy.
+
+y
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+−2
+
+−2
+
+−4
+
+−4
+0
+
+0.5
+
+1
+
+1.5
+k
+
+2
+
+2.5
+·10−2
+
+3
+
+−6
+
+DNS
+U-T M
+U-T R
+P-T M
+P-T R
+−4
+
+−2
+
+τ12
+
+0
+
+2
+
+4
+·10−3
+
+Fig. 16: Mean shear and turbulence kinetic energy proﬁles at x = 30.0. U: URANS, P: PANS, T: Trained, M: Modelled, R: Resolved
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+Simulation Type
+DNS
+LES
+LES
+URANS/PANS
+URANS/PANS
+
+Code
+HiPSTAR
+HiPSTAR
+OpenFOAM
+OpenFOAM
+OpenFOAM
+
+Grid Size
+1056 × 600 × 130
+672 × 456 × 130
+672 × 456 × 128
+672 × 456 × 1
+672 × 456 × 32
+
+Cores
+2640
+576
+576
+240
+240
+
+19
+
+Hours
+17.5
+13.5
+212
+4
+7.3
+
+Core-Hours
+46,200
+7,760
+122,112
+960
+1,760
+
+Table 1: Computational expense for the diﬀerent calculations undertaken. The hours represent the time taken for a time-converged solution.
+
+4. Limitations
+With the successful demonstration of the proof-of-concept, it is important to consider the limitations of this approach and whether those can be addressed. It is straight-forward to see that this method is dependent on the availability of a high-ﬁdelity dataset, which is not the norm in most scenarios. However, this study was presented as an
+extension to the work of Weatheritt & Sandberg [33], which also has a dependence on high-ﬁdelity data. Besides,
+the current crop of turbulence closures and turbulence model coeﬃcients were obtained through calibration with past
+data, both numerical and experimental. And, as outlined in Duraisamy [32], the purpose of data-driven turbulence
+modelling is to improve not only the prediction capabilities of RANS models, but also our understanding of the
+physics the non-linear turbulence closure provides. The case study adopted in this work is a prime example of that,
+where the balance between fk∗ and reduced diﬀusion leads to better prediction. The understanding of the physics
+unearthed by the diﬀerent calculations undertaken provides us with a framework that should be adopted in the future
+for ﬂows that exhibit similar behaviour, which brings us to the next advantage of data-driven turbulence modelling.
+The algorithm produces a tangible equation that gets added to the modelled Reynolds stress equation, resulting in
+models that are easily re-usable on other similar ﬂows, such as ﬂows with similar geometries, or similar Re ranges.
+This is because the model, once implemented, can be run as any other model and the solver does not need access to
+the training data or the training framework. Research on re-usability of the developed models has shown promise with
+comparable improvements on other similar cases [57]. This oﬀers conﬁdence that the method adopted here should
+also demonstrate improvements. This is currently under investigation and would be included in future studies.
+Conclusions
+A new method, Data-driven Stochastic Closure Simulation (DSCS), was presented to improve the prediction accuracy of URANS-type calculations for turbulent ﬂows containing organised unsteadiness. This new method achieves
+improvement by resolving the length scales that are responsible for the organised unsteadiness, and modelling the remaining length scales. Crucially, the modelling is based on a bespoke non-linear turbulence closure, obtained through
+a machine-learning algorithm.
+A case study, of a normal ﬂat plate at Re = 2,000, was considered to demonstrate the applicability of the method
+as a proof-of-concept. A baseline URANS of the case study showed an overprediction in the mean proﬁles of the
+streamwise velocity component and of the Reynolds stresses. For the new method, three diﬀerent techniques (DMD,
+POD and FFT) were contrasted to segregate the vortex shedding length scales and ensure the correct decomposition
+of the ﬂow ﬁeld. It was found that the FFT approach was signiﬁcantly faster than the other two techniques, while
+essentially producing the same results. Having separated the large-scale unsteadiness, to be resolved, from the total
+turbulent ﬂow ﬁeld, an explicit ratio ( fk∗ ) was extracted from the high-ﬁdelity dataset, the spatial distribution of
+which dictates the amount of the “turbulent”, or stochastic length scales that require modelling. In the near wake
+(x = 1.0 − 20.0), the values of fk∗ were smaller than the values further downstream, which indicated a signiﬁcant
+proportion of length scales associated with vortex shedding (∼ 20 − 60%) in this region.
+A non-linear turbulence closure could then be developed based on the “turbulent” part of the DNS anisotropy.
+Using this model closure for URANS calculations of the same Re = 2,000 wake showed a signiﬁcant improvement
+in the mean ﬂow statistics compared with the baseline URANS. The developed closure features a signiﬁcantly reduced diﬀusion coeﬃcient of the linear term, which when conducting CFD calculations results in less damping of
+instabilities and hence in more structures being present. Further improvements were obtained when the length scale
+resolution was explicitly deﬁned using fk∗ . This was achieved by converting the turbulence equations of URANS to
+
+20
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+PANS, where the parameter fk∗ serves as a cut-oﬀ ﬁlter between modelling and resolving. The improvements in the
+results in the case of the PANS with the non-linear closure calculation over the URANS with the non-linear closure
+was due to the extra resolution of length scales, on account of the ﬁlter fk∗ .
+Since this approach is a modiﬁcation of the machine-learning process for steady ﬂows, there is a dependence
+of the method on the availability of a high-ﬁdelity dataset. However, the closure obtained with this method can be
+reused for similar ﬂow conﬁgurations (i.e. ﬂows with similar geometries and/or Reynolds numbers). This has been
+demonstrated successfully in the case of steady ﬂows [33, 34, 39] and is currently under investigation for the current
+case study.
+Acknowledgments
+This work was supported by resources provided by the Pawsey Supercomputing Centre with funding from the
+Australian Government and the Government of Western Australia.
+References
+[1] A. K. M. F. Hussain, Coherent structures - reality and myth, Phys. Fluids 26 (1983) 2816.
+[2] J.-p. Bonnet, J. Delville, Review of Coherent Structures in Turbulent Free Shear Flows and Their Possible Inﬂuence on Computational
+Methods, Flow, Turbul. Combust. 66 (2001) 333–353.
+[3] P. G. Tucker, Computation of unsteady turbomachinery ﬂows: Part 2-LES and hybrids, Prog. Aerosp. Sci. 47 (2011) 546–569.
+[4] P. G. Tucker, Computation of Unsteady Internal Flows, 16, 1 ed., Kluwer Academic Publishers, 2001.
+[5] R. Franke, W. Rodi, Calculation of vortex shedding past a square cylinder with various turbulence models, in: Turbul. Shear Flows 8,
+Springer, 1993, pp. 189–204.
+[6] S. H. Johansson, L. Davidson, E. Olsson, Numerical simulation of vortex shedding past triangular cylinders at high Reynolds number using
+a k-epsilon turbulence model, Int. J. Numer. Methods Fluids 16 (1993) 859–878.
+[7] P. A. Durbin, Separated ﬂow computations with the k-epsilon-v-squared model, AIAA J. 33 (1995) 659–664.
+[8] V. Przulj, B. A. Younis, Some aspects of the prediction of turbulent vortex shedding, in: Fluids Eng. Conf., Publ by ASME, 1993.
+[9] S. S. Girimaji, Partially-Averaged Navier-Stokes Model for Turbulence: A Reynolds-Averaged Navier-Stokes to Direct Numerical Simulation
+Bridging Method, J. Appl. Mech. 73 (2006) 413.
+[10] S. S. Girimaji, K. Abdol-Hamid, Partially-Averaged Navier Stokes Model for Turbulence: Implementation and Validation, in: 43rd AIAA
+Aerosp. Sci. Meet. Exhib., January, 2005, pp. 1–14. URL: http://arc.aiaa.org/doi/abs/10.2514/6.2005-502. doi:10.2514/6.
+2005-502.
+[11] B. Akula, P. Roy, P. Razi, S. Anderson, S. S. Girimaji, Partially-Averaged Navier-Stokes (PANS) Simulations of Lid-Driven Cavity Flow—
+Part 1: Comparison with URANS and LES, in: Prog. Hybrid RANS-LES Model., volume 130, 2015, pp. 359–369. URL: http://link.
+springer.com/10.1007/978-3-642-31818-4. doi:10.1007/978-3-642-31818-4.
+[12] P. Razi, V. Venugopal, S. Jagannathan, Partially-Averaged Navier-Stokes (PANS) Simulations of Lid-Driven Cavity Flow—Part II: Flow
+Structures, in: Prog. Hybrid RANS-LES Model., volume 130, 2015, pp. 421–430. URL: http://link.springer.com/10.1007/
+978-3-642-31818-4. doi:10.1007/978-3-642-31818-4.
+[13] D. Luo, C. Yan, H. Liu, R. Zhao, Comparative assessment of PANS and DES for simulation of ﬂow past a circular cylinder, J. Wind Eng.
+Ind. Aerodyn. 134 (2014) 65–77.
+[14] P. Ranjan, A. Dewan, Partially Averaged Navier Stokes simulation of turbulent heat transfer from a square cylinder, Int. J. Heat Mass Transf.
+89 (2015) 251–266.
+[15] F. S. Pereira, G. Vaz, L. Eca, S. S. Girimaji, Simulation of the ﬂow around a circular cylinder at Re=3900 with Partially-Averaged NavierStokes equations, Int. J. Heat Fluid Flow 69 (2018) 234–246.
+[16] B. Basara, S. Krajnovic, S. S. Girimaji, PANS vs. LES for computations of the ﬂow around a 3D bluﬀ body, in: Proc. ERCOFTAC 7th Int.
+Symp., volume 2-3, Cyprus, 2008, pp. 548–554.
+[17] B. Basara, S. Krajnovic, S. S. Girimaji, Z. Pavlovic, Near-Wall Formulation of the Partially Averaged Navier Stokes Turbulence Model,
+AIAA J. 49 (2011) 2627–2636.
+[18] S. Lakshmipathy, V. Togiti, Assessment of alternative formulations for the speciﬁc-dissipation rate in RANS and variable-resolution turbulence models, in: 20th AIAA Comput. Fluid Dyn. Conf., 2011, pp. 1–20. URL: http://arc.aiaa.org/doi/abs/10.2514/6.
+2011-3978. doi:10.2514/6.2011-3978.
+[19] J. Slotnick, A. Khodadoust, J. Alonso, D. Darmofal, W. Gropp, E. Lurie, D. Mavriplis, CFD Vision 2030 Study: A Path to Revolutionary
+Computational Aerosciences, Technical Report March, NASA, Langley Research Center, Hampton, Virginia, 2014. URL: http://ntrs.
+nasa.gov/search.jsp?R=20140003093. doi:10.1017/CBO9781107415324.004.
+[20] B. D. Tracey, K. Duraisamy, J. J. Alonso, A Machine Learning Strategy to Assist Turbulence Model Development, 53rd AIAA Aerosp. Sci.
+Meet. (2015) 1–23.
+[21] D. Wilcox, Turbulence modeling for CFD, volume 93, 2 ed., Canada, 1998.
+[22] M. J. Tummers, D. M. Passchier, R. A. W. M. Henkes, Experimental investigation of an adverse pressure gradient wake and comparison with
+calculations, Exp. Therm. Fluid Sci. 14 (1997) 17–24.
+[23] R. Hoﬀenberg, J. Sullivan, Measurement and simulation of wake deceleration, 36th AIAA Aerosp. Sci. Meet. Exhib. (1998) 1–10.
+[24] J. R. Carlson, N. Duquesne, C. L. Rumsey, T. B. Gatski, Computation of turbulent wake ﬂows in variable pressure gradient, Comput. Fluids
+30 (2001) 161–187.
+
+C. Lav et al / Journal of Computational Physics (2019)
+
+21
+
+[25] M. J. Tummers, K. Hanjalić, D. M. Passchier, R. A. W. M. Henkes, Computations of a turbulent wake in a strong adverse pressure gradient,
+Int. J. Heat Fluid Flow 28 (2007) 418–428.
+[26] J. D. Denton, Some Limitations of Turbomachinery CFD, ASME Turbo Expo 2010 Power Land, Sea Air (2010) 1–11.
+[27] R. Pichler, J. Kopriva, G. Laskowski, V. Michelassi, R. D. Sandberg, Highly Resolved LES of a Linear HPT Vane Cascade Using Structured
+and Unstructured Codes, Turbomach. Tech. Conf. Expo. GT2016 (2016) 1–10.
+[28] F. G. Schmitt, About Boussinesq’s turbulent viscosity hypothesis: historical remarks and a direct evaluation of its validity, Comptes Rendus
+- Mec. 335 (2007) 617–627.
+[29] S. B. Pope, A more general eﬀective-viscosity hypothesis, J. Fluid Mech. 72 (1975) 331–340.
+[30] W. Rodi, A new algebraic relation for calculating the Reynolds stresses, in: Gesellschaft Angew. Math. und Mech. Work. Paris Fr., volume 56,
+1976.
+[31] S. Wallin, A. V. Johansson, An explicit algebraic Reynolds stress model for incompressible and compressible turbulent ﬂows, J. Fluid Mech.
+403 (2000) 89–132.
+[32] K. Duraisamy, G. Iaccarino, H. Xiao, Turbulence Modeling in the Age of Data, Annu. Rev. Fluid Mech. (2018) 1–23.
+[33] J. Weatheritt, R. D. Sandberg, A novel evolutionary algorithm applied to algebraic modiﬁcations of the RANS stress-strain relationship, J.
+Comput. Phys. 325 (2016) 22–37.
+[34] J. Weatheritt, R. D. Sandberg, G. Laskowski, V. Michelassi, Machine Learning For Turbulence Model Development Using A High-Fidelity
+HPT Cascase Simulation, in: Turbomach. Tech. Conf. Expo. GT2017-63497, Charlotte, North Carolina, USA, 2017, pp. 1–12.
+[35] A. K. M. F. Hussain, W. C. Reynolds, The mechanics of an organized wave in turbulent shear ﬂow, J. Fluid Mech. 41 (1970) 241–258.
+[36] W. C. Reynolds, A. K. M. F. Hussain, The mechanics of an organized wave in turbulent shear ﬂow. Part 3. Theoretical models and comparisons
+with experiments, J. Fluid Mech. 54 (1972) 263–288.
+[37] F. R. Menter, M. Kuntz, R. Langtry, Ten years of industrial experience with the SST turbulence model, Turbul. Heat Mass Transf. 4 (2003)
+625–632.
+[38] J. Weatheritt, R. D. Sandberg, J. Ling, G. Saez, J. Bodart, A Comparative Study of Contrasting Machine Learning Frameworks Applied to
+RANS Modeling of Jets in Crossﬂow, in: Turbomach. Tech. Conf. Expo. GT2017-63403, Charlotte, North Carolina, USA, 2017, pp. 1–12.
+URL: http://dx.doi.org/10.1115/GT2017-63403.
+[39] R. D. Sandberg, R. Tan, J. Weatheritt, A. Ooi, A. Haghiri, V. Michelassi, G. Laskowski, Applying Machine Learnt Explicit Algebraic Stress
+and Scalar Flux Models To a Fundamental Trailing Edge Slot, J. Turbomach. 140 (2018) 1–13.
+[40] F. Pereira, G. Vaz, L. Eca, An assessment of Scale-Resolving Simulation models for the ﬂow around a circular cylinder, Turbul. Mass Heat
+Transf. 8 (2015) 1–17.
+[41] R. D. Sandberg, V. Michelassi, R. Pichler, L.-w. Chen, R. Johnstone, Compressible direct numerical simulation of low-pressure turbines:
+part I - methodology, J. Turbomach. 137 (2015) 051011–1–10.
+[42] J. W. Kim, D. J. Lee, Generalized Characteristic Boundary Conditions for Computational Aeroacoustics, AIAA J. 38 (2000) 2040–2049.
+[43] J. W. Kim, D. J. Lee, Generalized Characteristic Boundary Conditions for Computational Aeroacoustics, Part 2, AIAA J. 42 (2004) 47–57.
+[44] R. D. Sandberg, N. D. Sandham, Nonreﬂecting Zonal Characteristic Boundary Condition for Direct Numerical Simulation of Aerodynamic
+Sound, AIAA J. 44 (2006) 402–405.
+[45] V. D. Narasimhamurthy, H. I. Andersson, Numerical simulation of the turbulent wake behind a normal ﬂat plate, Int. J. Heat Fluid Flow 30
+(2009) 1037–1043.
+[46] A. Hemmati, D. H. Wood, R. J. Martinuzzi, Characteristics of distinct ﬂow regimes in the wake of an inﬁnite span normal thin ﬂat plate, Int.
+J. Heat Fluid Flow 62 (2016) 423–436.
+[47] J. Jeong, F. Hussain, On the identiﬁcation of a vortex, J. Fluid Mech. 285 (1995) 69–94.
+[48] F. Nicoud, F. Ducros, Subgrid-Scale Stress Modelling Based on the Square of the Velocity Gradient Tensor, Flow, Turbul. Combust. 62
+(1999) 183–200.
+[49] C. Mannini, A. Šoda, G. Schewe, Unsteady RANS modelling of ﬂow past a rectangular cylinder: Investigation of Reynolds number eﬀects,
+Comput. Fluids 39 (2010) 1609–1624.
+[50] W. Rodi, Comparison of LES and RANS calculations of the ﬂow around bluﬀ bodies, J. Wind Eng. Ind. Aerodyn. 69-71 (1997) 55–75.
+[51] W. Wienken, J. Stiller, A. Keller, A method to predict cavitation inception using large-eddy simulation and its application to the ﬂow past a
+square cylinder, J. Fluids Eng. 128 (2006) 316–325.
+[52] P. J. Schmid, Dynamic mode decomposition of numerical and experimental data, J. Fluid Mech. 656 (2010) 5–28.
+[53] G. Berkooz, P. Holmes, J. L. Lumley, The Proper Orthogonal Decomposition in the Analysis of Turbulent Flows, Annu. Rev. Fluid Mech.
+25 (1993) 539–575.
+[54] R. Perrin, M. Braza, E. Cid, S. Cazin, A. Barthet, A. Sevrain, C. Mockett, F. Thiele, Obtaining phase averaged turbulence properties in the
+near wake of a circular cylinder at high Reynolds number using POD, Exp. Fluids 43 (2007) 341–355.
+[55] Q. Zhang, Y. Liu, S. Wang, The identiﬁcation of coherent structures using proper orthogonal decomposition and dynamic mode decomposition, J. Fluids Struct. 49 (2014) 53–72.
+[56] L. Michael, Statistical turbulence modelling for ﬂuid dynamics-demystiﬁed: an introductory text for graduate engineering students, World
+Scientiﬁc, 2015.
+[57] J. Weatheritt, R. D. Sandberg, The development of algebraic stress models using a novel evolutionary algorithm, Int. J. Heat Fluid Flow 68
+(2017) 298–318.
+
+

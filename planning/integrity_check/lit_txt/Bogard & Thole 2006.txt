@@ -1,0 +1,2206 @@
+JOURNAL OF PROPULSION AND POWER
+Vol. 22, No. 2, March–April 2006
+
+Gas Turbine Film Cooling
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+D. G. Bogard
+University of Texas, Austin, Texas 78712-0292
+and
+K. A. Thole
+Virginia Polytechnic Institute and State University, Blacksburg, Virginia 24060
+The durability of gas turbine engines is strongly dependent on the component temperatures. For the combustor
+and turbine airfoils and endwalls, film cooling is used extensively to reduce component temperatures. Film cooling
+is a cooling method used in virtually all of today’s aircraft turbine engines and in many power-generation turbine
+engines and yet has very difficult phenomena to predict. The interaction of jets-in-crossflow, which is representative
+of film cooling, results in a shear layer that leads to mixing and a decay in the cooling performance along a
+surface. This interaction is highly dependent on the jet-to-crossflow mass and momentum flux ratios. Film-cooling
+performance is difficult to predict because of the inherent complex flowfields along the airfoil component surfaces
+in turbine engines. Film cooling is applied to nearly all of the external surfaces associated with the airfoils that are
+exposed to the hot combustion gasses such as the leading edges, main bodies, blade tips, and endwalls. In a review of
+the literature, it was found that there are strong effects of freestream turbulence, surface curvature, and hole shape
+on the performance of film cooling. Film cooling is reviewed through a discussion of the analyses methodologies, a
+physical description, and the various influences on film-cooling performance.
+
+Nomenclature
+cp
+d
+h
+I
+K
+k
+M
+Ma
+M∗
+P
+q 
+Re
+Rek
+S
+s
+T
+Tu
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+U
+u rms
+uτ
+Vr
+x
+qr
+η
+θ
+f
+ν
+ρ
+φ
+
+specific heat of gas
+film-cooling hole diameter
+heat transfer coefficient
+momentum flux ratio, Eq. (11)
+pressure gradient parameter, Eq. (12)
+thermal conductivity
+blowing ratio using local velocity
+Mach number
+blowing ratio using approach velocity
+hole spacing measured normal to streamwise direction
+heat flux
+Reynolds number
+Roughness Reynolds number, u τ k/ν
+distance along the vane surface
+equivalent slot width
+temperature
+freestream turbulence intensity, Eq. (13)
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+streamwise velocity
+rms of fluctuating U velocity component
+friction velocity
+velocity ratio, Eq. (13)
+distance downstream of the hole exit
+net heat flux reduction, Eq. (4)
+film effectiveness
+normalized temperature, Eq. (7)
+turbulence integral length scale
+kinematic viscosity
+density
+overall cooling effectiveness, Eq. (6)
+
+Subscripts
+
+aw
+c
+f
+max
+
+=
+=
+=
+=
+
+adiabatic wall
+coolant
+with film cooling
+maximum
+
+Dr. David Bogard is a Professor of Mechanical Engineering at the University of Texas at Austin, and holds the John E. Kasch Fellow in Engineering.
+He received his B.S. and M.S. degrees in mechanical engineering from Oklahoma State University, and his Ph.D. from Purdue University. He has
+served on the faculty at the University of Texas since 1982. Dr. Bogard has been active in gas turbine cooling research since 1986, and has published
+over 100 peer-reviewed papers. He was awarded the ASME Heat Transfer Committee Best Paper Award in 1990 and 2003, and is a fellow of the
+ASME.
+
+Dr. Karen Thole holds the William S. Cross Professorship of Mechanical Engineering at Virginia Polytechnic Institute and State University. She
+received her B.S. and M.S. degrees in mechanical engineering from the University of Illinois, and a Ph.D. from the University of Texas at Austin. She
+spent two years as a postdoctoral researcher at the Institute for Thermal Turbomachinery at the University of Karslruhe in Germany and in 1994 she
+accepted a faculty position at the University of Wisconsin-Madison. In 1999, she became a faculty member in the Mechanical Engineering Department
+at Virginia Polytechnic Institute and State University where she was promoted to professor in 2003. She received the National Science Foundation
+CAREER Award in 1996, which was directed at developing a better understanding of gas turbine heat transfer. Dr. Thole’s areas of expertise are
+heat transfer and fluid mechanics specializing in turbulent boundary layers, convective heat transfer, and high freestream turbulence effects. She has
+published more than 80 peer-reviewed papers and has advised over 30 graduate theses.
+c 2005 by the American Institute of Aeronautics and Astronautics, Inc. All
+Received 5 June 2005; accepted for publication 31 August 2005. Copyright 
+rights reserved. Copies of this paper may be made for personal or internal use, on condition that the copier pay the $10.00 per-copy fee to the Copyright
+Clearance Center, Inc., 222 Rosewood Drive, Danvers, MA 01923; include the code 0748-4658/06 $10.00 in correspondence with the CCC.
+249
+
+250
+
+BOGARD AND THOLE
+
+ref
+w
+∞
+
+= reference
+= wall
+= freestream conditions
+
+I.
+
+Introduction
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+G
+
+AS turbine engines have become an integral part of our daily
+lives because we rely on them to propel aircraft, tanks, and
+large naval ships and provide electrical power. Since 1929 when Sir
+Frank Whittle first applied for a patent on his turbojet engine, complex technologies have been developed to advance turbine engines
+to meet the needs of our energy-thirsty world. One of the developments that has been emphasized for gas turbine engines is material
+and cooling technologies to allow high gas temperatures to enter
+the first rotor. The reason for this emphasis is that durability, thermal efficiencies, and power output are a direct function of the inlet
+temperatures to the turbine rotor.
+Since 1960, the cooling methods used for turbine airfoils have
+allowed gas temperatures entering the turbine to be higher than
+the allowable metal temperatures of the airfoils. Early on, simple
+convective cooling schemes using high-pressure bleed air from the
+compressor were used on the internal side of the airfoils. In the 1970s
+a new cooling technology was introduced to the engine whereby
+this bleed air was exhausted from the internal convective passages
+through small holes drilled into the airfoil surfaces (Fig. 1). Holes
+rather than porous surfaces or slots are typically used to maintain
+structural rigidity given the large stresses experienced by blades and
+vanes. This technology is referred to as film cooling, and in today’s
+engines, it is applied to all regions of the airfoils, particularly in the
+first and second stages of the turbine.
+Advanced military engines now have turbine inlet temperatures
+in excess of 1600◦ C, which can be achieved by using 20–30% of the
+total flow through engine to cool turbine components. Land-based
+turbines also operate at high turbine inlet temperatures, which are
+in excess of 1400◦ C. Here, too, film cooling is one technology used
+
+for turbine airfoils. In the operating range for land-based turbines,
+improvements in cooling performance that lead to a reduction of
+airfoil temperatures by just 25◦ C can increase part life by a factor
+of two; or, rather than increasing the part life, engine designers can
+choose to reduce the required coolant flow. Reducing the required
+coolant flow would result in the same airfoil temperature but improve
+on the turbine efficiency, resulting in lower fuel costs for the same
+power output.
+Because film cooling is such an important cooling technology
+for the durability of gas turbines, this paper presents a summary
+of past research in the area of film cooling. The ultimate goal in
+applying film cooling is to reduce airfoil temperatures; however,
+only a small portion of the turbine flow bled from the compressor can
+be used as coolant before degrading the overall system performance
+of the engine. Reducing airfoil temperatures through the use of film
+cooling is accomplished by decreasing the local fluid temperature
+next to the airfoil surface and making use of convective cooling as
+the flow passes through the film-cooling holes placed in the airfoil
+surface.
+
+II.
+
+Film-Cooling Analysis Methods
+
+The total cost to replace a single first vane is on the order of thousands to tens of thousands of dollars, of which a significant fraction
+is required to manufacture or repair film-cooling holes in the vane.
+The actual cost of manufacturing the film-cooling holes is dependent
+on what method is chosen. Generally, holes are placed in the surface
+of an airfoil by either laser drilling or electrodischarge machining
+(EDM). Machining holes using EDM provides more flexibility in
+terms of hole shape and hole placement, but the cost is significantly
+higher than laser drilling the holes. Being able to predict local airfoil
+temperatures is not only important because of the costs incurred to
+manufacture the cooling holes, but also from the costs incurred for
+an airfoil failure. Generally, airfoils must be replaced or repaired
+in an engine because regions such as the leading or trailing edges
+have burned away while the main body of the airfoil remains intact.
+Because it is the local variations in metal temperatures that lead to
+requiring the replacements of airfoils, it is particularly important
+that models based on the flow physics of the relevant parameters be
+used to predict local airfoil temperatures.
+Overall the goal in turbine cooling is to reduce airfoil temperatures because it is the higher metal temperatures that lead to reduced
+life for the components. Turbine airfoil metal temperatures are a result of internal cooling as well as external film cooling. Generally
+the approach taken by researchers and turbine designers is to assess
+separately the merits of internal cooling and external cooling. Because the topic of this particular review paper is film cooling used for
+external cooling purposes, the assessment method for film cooling
+will be described.
+Decreasing the local fluid temperature next to the airfoil surface
+reduces the driving potential for heat transfer to occur. Whereas heat
+transfer takes place through conduction from the air to the metal,
+it is modeled with a mechanistic equation using a convective heat
+transfer coefficient, such as
+q  = h(Tref − Tw )
+
+Fig. 1
+
+Fig. 2
+
+Film-cooled turbine vane (from Friedrichs et al.77 ).
+
+(1)
+
+However, the appropriate reference temperature Tref in Eq. (1) is
+not obvious because the film-cooling process involves two temperatures, as shown in Fig. 2. These two temperatures are the coolant
+
+Schematics of typical film cooling configuration, three temperature potentials for film-cooled surface (right-hand side from Gritsch et al.44 ).
+
+251
+
+BOGARD AND THOLE
+
+temperature Tc and the freestream temperature T∞ . As the coolant
+mixes with the hot freestream fluid, the local fluid temperature varies
+greatly downstream of the film-cooling injection location. Moreover, the momentum and heat transport in the boundary layer along
+the airfoil is altered by the coolant injection. If T∞ is used as the
+reference temperature, then h will be a function of the flowfield and
+the temperature of the coolant. To obtain a heat transfer coefficient
+for film-cooling flow that is independent of the coolant temperature, Tref should be the driving temperature of the fluid above the
+surface regardless of the coolant temperature. Because the adiabatic
+wall temperature Taw is the fluid temperature immediately above
+the surface for an adiabatic surface, this is expected to be a good
+reference temperature for this driving potential. Consequently, the
+heat transfer coefficient with film cooling, h f , is defined as follows:
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+q f = h f (Taw − Tw )
+
+(2)
+
+It is important to remember that the adiabatic wall temperature and
+the local convective heat transfer vary widely over the airfoil surface
+given the discrete nature of the film-cooling holes.
+One of the most important driving variables, as seen by Eq. (2),
+in predicting the airfoil temperatures is the adiabatic wall temperature, which is representative of the fluid temperature just above the
+surface. As such, most of the literature characterizing film-cooling
+performance is reported through a nondimensional film effectiveness (also referred to as adiabatic effectiveness) defined as
+η = (T∞ − Taw )/(T∞ − Tc,exit )
+
+(3)
+
+where Tc,exit is the coolant temperature at the coolant hole exit. It is
+necessary to evaluate the adiabatic wall temperature as a nondimensional variable so that it can be related to temperatures that would
+occur at engine conditions. As will become apparent throughout
+this paper, film effectiveness values highly depend on a number of
+variables such as cooling jet-to-mainstream ratios of density, velocity, mass flux, and momentum flux, as well as mainstream flowfield
+effects such as pressure gradients, curvature, freestream turbulence,
+and others. Moreover, the shape of the cooling hole also affects the
+overall film-cooling performance.
+Generally, when a cooling jet is injected into a mainstream flow,
+the shear layers between the coolant jet and/or the wake behind the
+jet generate higher levels of turbulence within the boundary layer.1
+These higher levels of turbulence increase the coolant mixing with
+the hotter surrounding fluid and increase the local convective heat
+transfer coefficients. As such, the expected heat transfer coefficients
+for a film-cooled boundary layer are generally higher than that for
+a non-film-cooled boundary layer. Whereas the increase in h due
+to film cooling is generally not large, with the exception of filmcooled leading edges, it is an effect that should be considered when
+predicting airfoil temperatures.
+To evaluate the total benefit of film cooling and whether or not
+to place a film-cooling hole in a particular location on an airfoil,
+the net benefit needs to be assessed relative to the manufacturing or
+replacement costs of the part. A simple relationship can be used to
+indicate the net reduction in the heat flux qr to the airfoil surface
+through the following:
+qr = 1 −
+
+q f
+q0
+
+=1−
+
+hf
+qr = 1 −
+h0
+
+Fig. 3
+
+
+
+h f (Taw − Tw )
+h 0 (T∞ − Tw )
+
+(4)
+
+1−η
+φ
+
+(5)
+
+
+
+The net reduction relates the heat transfer that would have occurred
+on the airfoil with no film cooling, q0 , relative to that with film
+cooling, q f , where h 0 is the heat transfer coefficient for the flow
+without coolant injection. Also, φ is a nondimensional parameter
+for actual metal temperature of the airfoil defined as follows:
+φ = (T∞ − Tm )/(T∞ − Tci )
+
+(6)
+
+where Tm is the metal temperature for the actual temperature and
+Tci is the coolant temperature in the internal channels before the
+coolant enters the film-cooling holes. The nondimensional parameter φ is also referred to as the overall effectiveness because the metal
+temperature for the actual, high-conductivity airfoil is dependent on
+external and internal cooling. Note that there can be a distinct difference between Tci used in Eq. (6) and Tc,exit used in Eq. (3) because
+of the heating of the coolant as it passes through the film-cooling
+holes.
+There are several methods, including both steady state and transient, that are commonly used to measure h f and η, which are the
+two variables reported most in the literature. Transient methods
+generally presume a one-dimensional conduction to a semi-infinite
+solid to determine the heat transfer coefficients and film effectiveness from the rate of change of the surface temperature. Steady-state
+methods generally set up different surface boundary conditions to
+quantify the variables. Film effectiveness can be measured using
+thermal techniques using a cooled or heated jet, or mass transfer
+techniques in which the concentration of a foreign gas is measured.
+For the thermal techniques, the adiabatic wall temperature is measured using a low thermal conductivity material to minimize any
+conductive heat transfer to the surface. For the heat transfer coefficients with film cooling, h f , the surface boundary condition has
+a constant heat flux generated by some type of resistive heater. Although much of the past literature is limited in terms of spatial
+resolution, advanced measurement techniques such infrared cameras and liquid crystals allow highly resolved data to characterize
+local heat transfer coefficients and effectiveness values. For more
+information on various measurement methods, one can refer to the
+information given by Han et al.2
+
+III.
+
+Physical Description and Prediction
+of Film Cooling
+
+Ideally, coolant ejected to the surface of airfoils for film cooling
+would remain attached to the surface of the airfoil and would not
+disperse to the mainstream. This would provide a gas temperature
+at the surface of the airfoil equal to the coolant temperature at the
+exit for the hole, that is, η = 1, and would minimize heat transfer
+from the gas to the wall. However, in reality the coolant mixes with
+the mainstream, generally quite rapidly. The dispersion of coolant
+after it exits a typical film-cooling hole is demonstrated by Fig. 3,
+which shows measurements of the temperature along the centerline
+of a coolant jet exiting a hole inclined at 35 deg to the surface. The
+temperature contours are presented as normalized θ contours, where
+θ is defined as
+θ = (T∞ − T )/(T∞ − Tc )
+
+(7)
+
+Note that at the surface the definition of θ is equivalent to η so
+that these θ contours also show the η distribution along the surface.
+Decreasing θ values downstream of the hole represent a measure of
+the mixing of the coolant jet with the mainstream, that is, a θ value
+of 0.2 indicates a mixture of 20% original coolant fluid and 80%
+mainstream fluid. Much of the design of film cooling for turbine
+
+Thermal profiles of coolant jet, decay of the normalized temperature θ downstream of hole.
+
+252
+
+BOGARD AND THOLE
+
+Table 1
+
+Factors affecting film-cooling performance
+
+Coolant/mainstream
+conditions
+
+Hole geometry
+and configuration
+
+Airfoil
+geometry
+
+Mass flux ratioa
+Momentum flux ratioa
+
+Shape of the holea
+Injection angle and
+compound angle
+of the coolant holea
+
+Mainstream turbulencea
+
+Spacing between
+holes, P/d
+Length of the hole, l/d
+Spacing between rows
+of holes and number
+of rows
+
+Hole location
+Leading edge
+Main body
+Blade tip
+Endwall
+Surface curvaturea
+
+Coolant density ratio
+Approach boundary layer
+
+Surface roughness
+
+Mainstream Mach number
+Unsteady mainstream flow
+Rotation
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+a
+
+a)
+
+Factors that have a significant effect on predictability of film-cooling performance.
+
+airfoils involves the prediction of the η distribution downstream of
+the coolant holes. This is complicated by the many factors that affect
+the film cooling film effectiveness as listed in Table 1.
+There are six factors in Table 1 denoted with a superscript that
+are factors that have a significant effect on film-cooling performance. Each of these factors is not necessarily independent of the
+other factors, and so every combination of these factors can potentially change the film-cooling performance. Consequently, there is
+an extremely large number of operating conditions that need to be
+considered—hence, the inherent difficulty in predicting film-cooling
+performance.
+The bulk of experimental investigations of film cooling have been
+done with flat surface test plates, and so this configuration will be
+used as a baseline. Early studies of film cooling used slots of various
+configurations to introduce the coolant to the surface.3 Although
+slots are not representative of the discrete holes used in practical
+film-cooling configurations, slot cooling studies provide a useful
+reference. A slot introduces coolant in a uniform sheet that has
+less mixing with the overflowing mainstream than occurs with discrete coolant jets originating from a row of holes. Consequently, the
+slot provides an ideal performance that may be used as a basis of
+comparison.
+Laterally averaged film effectiveness η̄ for coolant injection with
+a slot inclined at 30 deg to the surface was measured by Teekaram
+et al.4 These measurements included a range of coolant mass flux
+ratios (commonly referred to as blowing ratios) of M = 0.1–0.7,
+where M is defined as follows:
+M = ρc Uc /ρ∞ U∞
+
+(8)
+
+Results from their study, replotted in Fig. 4a, show that for slot
+injection η = 1.0 immediately downstream of the slot, but decays
+farther downstream. The decay rate of η was observed to be inversely
+proportional to the blowing ratio, which led to using x/Ms as a correlation parameter for film effectiveness from a slot. The collapse of
+the film effectiveness performance when using the x/Ms parameter
+is demonstrated in Fig. 4b. These results showing the scaling of η
+with x/Ms give important insights into the film-cooling process.
+Recognize that total mass flow of coolant per unit span is proportional to Ms, and so the distance for η to decay to a certain level is
+proportional to the total mass flow of the coolant.
+The scaling of η with x/Ms for slot injection is further validated
+with results presented in Fig. 5, which includes the film effectiveness results of Teekaram et al.4 and Papell.5 The measurements of
+Papell presented in Fig. 5 are for slot injection with a 45-deg injection angle with blowing ratios that ranged from M = 0.16 to 3.7.
+The downstream decay for these two studies were similar and were
+consistent with the following correlation for slot injection proposed
+by Hartnett et al.6 :
+η = 16.9(x/Ms)−0.8
+
+b)
+Fig. 4 Comparison of laterally averaged film effectiveness for slot injection using data from Teekaram et al.4 ; function of a) streamwise
+distance from injection location and b) x/Ms scaling.
+
+(9)
+
+Also shown in Fig. 5 is the laterally averaged film effectiveness η̄
+for film cooling from a single row of holes.7,8 To present these data
+
+Fig. 5 Comparison of laterally averaged film effectiveness values for
+slot compared to row of cooling holes: , holes, Pederson et al.,7
+0 < M < 0.5; , holes, Pederson et al.,7 0.5 < M < 1.0; , holes, Pederson et al.,7 1 < M < 1.5; , holes, Pederson et al.,7 1.5 < M < 2.0; , holes,
+Baldauf et al.,8 0 < M < 0.5; , holes, Baldauf et al.,8 0.5 < M < 1.0; ,
+holes, Baldauf et al.,8 1 < M < 1.5; , holes, Baldauf et al.,8 2 < M; ,
+slot, Papell,5 0 < M < 0.5; , slot, Papell,5 0.5 < M < 1.0; , slot, Papell,5
+1.0 < M < 1.5; , slot, Papell,5 1.5 < M < 2.0; , slot, Papell,5 2.0 < M; ,
+slot, Teekaram et al.,4 0 < M < 0.5; , slot, Teekaram et al.,4 0.5 < M < 1.0;
+——, slot correlation; and — —, hole correlation.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+BOGARD AND THOLE
+
+Fig. 6
+
+253
+
+Spatial distribution of film effectiveness for varying blowing ratios (from Baldauf et al.9 ).
+
+for coolant injection from a row of holes, an equivalent slot width
+se is defined as follows:
+se = Ahole /P
+
+(10)
+
+where P is the pitch between holes. With this definition, the total
+mass flow of coolant per unit span for the row of holes is equivalent to
+that for a slot of the same equivalent width. For a single row of holes,
+η̄ values are significantly lower than for the slot. There are two primary reasons for this: decreased coverage of the surface by coolant
+and increased dispersion of the coolant. Immediately downstream
+of the coolant holes, the surface covered by coolant has a width approximately equal to the hole diameter. If the film effectiveness in
+this region is maximum, that is, η = 1, and is zero between coolant
+holes, the laterally averaged film effectiveness will have a maximum
+of η̄max = 1/(P/d). For P/d = 3, this corresponds to η̄max = 0.33,
+which is consistent with the observed maximum η̄ level.
+As the coolant moves downstream of the hole, it spreads laterally,
+resulting in more complete coverage of the surface. The distribution
+of the coolant is evident in the contours of η presented by Baldauf
+et al.9 shown in Fig. 6. The contours of η in Fig. 6 are for a row of
+holes with spacing between holes of P/d = 3. For M < 0.85, some
+coolant has spread across the full span, but there are still strong
+lateral variations in η until x/d > 25. However, the η levels produced
+by the row of holes for x/d > 25 are still significantly lower than that
+produced by a slot. This may be attributed to the greater dispersion
+of the discrete coolant jets due to the greater contact area with the
+mainstream and due to vortices generated by the interaction of the
+coolant jet with the mainstream.
+The contours of η in Fig. 6 show that a peak level in η occurs at
+some distance downstream of the coolant hole ranging from 0.5D
+to 8D depending on the blowing ratio. This occurs because discrete
+coolant jets have a tendency of separating from the surface downstream of the hole exit and reattaching farther downstream. This is
+a very important characteristic of coolant jets that results in a large
+decrease in film effectiveness at higher blowing ratios. Coolant jet
+separation and reattachment was studied by Thole et al.10 for coolant
+jets exiting from a row of holes inclined at 35 deg relative the surface and oriented in the streamwise direction. In this study, thermal
+profiles of the coolant jets were measured along the centerline of
+the jets to determine the distribution of coolant above the surface.
+An important consideration in this study was whether the separation
+
+characteristics of the coolant jets scaled with the mass flux ratio M,
+the velocity ratio Vr , or the momentum flux ratio I . This was accomplished by evaluating the separation characteristics of coolant jets
+with density ratios (DRs) varying from DR = 1.2 to 2.0. Three distinct regimes were identified, fully attached coolant jets, as shown
+in Fig. 7a; coolant jets that detached then reattached, Fig. 7b; and
+coolant jets that were fully detached, Fig. 7c. The coolant jet separation characteristics were found to scale with momentum flux ratio
+I . This is understandable because the dynamics of the force of the
+mainstream impacting the coolant jet and causing it to turn toward
+the wall would be expected to be primarily a function of the momentum of the coolant jet relative to the momentum of the mainstream.
+The coolant jets were found to remain attached to the surface for
+I < 0.4 and were fully detached for I > 0.8. For 0.4 < I < 0.8, the
+coolant jets initially detached but soon reattached to the surface.
+In the following discussion of film-cooling film effectiveness, the
+performance is generally evaluated in terms of laterally averaged
+film effectiveness, that is, η̄. Because of the high thermal conductivity of the metal airfoils, surface temperature variations are much
+less than the lateral variation in adiabatic surface temperatures. Consequently, the ultimate effect of the coolant is well represented by
+laterally average values.11 However, in some cases it is important
+to examine the spatial distribution of film effectiveness, particularly
+when deducing physical mechanisms, or when evaluating computational predictions.
+The effect of coolant jet separation on the film effectiveness performance of a row of coolant holes is evident from the distributions of η̄ obtained by Baldauf et al.8 and presented in Figs. 8a and
+8b. Distributions of η̄ for varying M are presented in Fig. 8a as
+a function of the x/d distance downstream of the hole. For blowing ratios increasing from M = 0.2 to M = 0.6, there is an increase
+in the overall level of η̄. However, as blowing ratio is increased
+to M > 0.6, the peak level of η̄ decreases. This is a consequence
+of the core of the coolant jet lifting slightly off the surface. Even
+though the peak values of η̄ decrease for M > 0.6, the levels of η̄
+beyond x/d = 20 continue to increase for increasing blowing ratio for M ≤ 1.0. Over this range of blowing ratios, the tendency of
+coolant jet separation to reduce η̄ is offset by the increase in η̄ caused
+by increasing coolant mass flow. Eventually the separation effects
+dominate, and for M > 1.0, the level of η̄ decreases over the full
+length measured.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+254
+
+BOGARD AND THOLE
+
+Fig. 7 Thermal field profiles along centerline of coolant jets; a) fully attached jet, b) detached and reattached jet, and c) fully detached jet (data from
+Thole et al.10 ).
+
+Figure 8b shows the η̄ distributions relative to the x/Mse scale.
+For M ≤ 1.0 (I ≤ 0.57), the η̄ curves collapse to similar curves indicating that the η̄ distributions scale with x/Mse when the coolant
+jets do not significantly separate from the surface. As the blowing
+ratio increases to M > 1.0 (I > 0.57), there is a continual decrease
+in η̄ with increasing M. Hence η̄ distributions do not scale with
+x/Mse when the coolant jets begin to detach.
+
+IV.
+
+Scaling of Film-Cooling Performance
+with Varying DR
+
+In gas turbine operation, absolute coolant temperatures are typically about one-half that of the mainstream temperature. Consequently, typical coolant-to-freestream DRs are DR ≈ 2. However,
+because this DR is difficult to simulate in many experimental facilities, many studies of film cooling have been done with much lower
+DRs, even with coolant densities less than the mainstream densities.
+Therefore, evaluating the effect of DR on film-cooling performance
+is important.
+When using a low DR coolant in laboratory studies, matching
+performance results to engine conditions at high DR can potentially
+be done by matching either the mass flux ratio M, or the momentum
+flux ratio I , or the velocity ratio Vr . The I and Vr ratios are defined
+as follows:
+
+
+
+2
+I = ρc Uc2 ρ∞ U∞
+,
+
+Vr = Uc /U∞
+
+a)
+
+(11)
+
+The mass flux ratio scales the thermal transport capacity of the
+coolant because the convective transport is proportional to c p ρUc .
+The momentum flux ratio scales the dynamics of the interaction of
+the mainstream with the exiting coolant jet because the impact pressure of the mainstream on the coolant jet causes the coolant jet to
+turn toward the wall. The turning of the coolant jet is a major factor in
+the cooling performance. If the coolant jet is not turned sufficiently
+to remain attached to the surface, the bulk of the coolant will be
+contained in a separated coolant jet and will provide very little cooling of the surface. The velocity ratio scales the shear layer between
+the coolant jet and the mainstream and, hence, scales the turbulence
+production. When testing with a DR that does not match engine
+conditions, only one of these scaling parameters can be matched to
+the engine condition.
+
+b)
+Fig. 8 Distributions of η̄ for varying blowing ratios presented as function of a) streamwise distance x/d and b) x/Mse parameter (Figs. 2b and
+7a, Baldauf et al.8 ).
+
+255
+
+BOGARD AND THOLE
+
+a)
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+a)
+
+b)
+Fig. 9 Comparisons of laterally averaged film effectiveness for different DRs in showerhead region of vane for a) Tu = 0.5% and b) Tu = 20%
+(from Cutbirth and Bogard13 ).
+
+A number of studies have been conducted to evaluate the effects
+of coolant DR on film effectiveness performance including Pederson
+et al.,7 Baldauf et al.,8 and Sinha et al.12 These studies were conducted using flat surface, zero pressure gradient test facilities with
+a single row of coolant holes inclined 35 deg to the surface and
+oriented in the mainstream flow direction. These studies showed
+that, although there are distinct differences between low and high
+DR coolant jet performance, the film effectiveness performance was
+similar when selecting the appropriate scaling parameter. At very
+low blowing ratio, M = 0.2, Pederson et al.7 found that η̄ was essentially the same for coolant DRs ranging from DR = 0.8 to 4. At this
+low blowing ratio, the coolant jets were well attached for all DRs
+and therefore, the film effectiveness performance was dependent on
+M. At higher blowing ratios, Pederson et al. found better film effectiveness for higher DR coolant jets operating at the same M. This is
+due to the lower density coolant jets having higher momentum ratios
+and, hence, a tendency to separate from the surface. Baldauf et al.8
+compared film effectiveness for coolant DR = 1.2 and 1.8 over a
+range of blowing ratios from M = 0.2 to 2.5. The distributions of
+η̄ were similar for both DRs, but the DR = 1.8 coolant had a peak
+film effectiveness of η̄ = 0.38, whereas for DR = 1.2 the peak was
+η̄ = 0.32. This may be attributed to better lateral distribution of the
+high-density coolant as noted by Sinha et al.12
+Scaling of film effectiveness performance on simulated turbine
+airfoils was investigated by Cutbirth and Bogard13 for the showerhead and pressure side of a vane, and by Ethridge et al.14 for the suction side of a vane. Showerhead cooling for low and high mainstream
+turbulence levels, T u = 0.5% and 20% respectively, was studied by
+Cutbirth and Bogard13 for coolant DR = 1.2 and 1.8. They found
+that film effectiveness for low and high mainstream turbulence levels were most similar when compared at similar M ∗ , where M ∗ is
+the blowing ratio defined using the airfoil approach velocity, rather
+than the local velocity. However, as shown in Fig. 9, at some blowing ratios the film effectiveness was 10–20% lower for the low DR
+
+b)
+Fig. 10 Comparisons of laterally averaged film effectiveness for different DRs on pressure side of vane for a) Tu = 0.5% and b) Tu = 20%
+(from Cutbirth and Bogard13 ).
+
+coolant. On the pressure side of the vane, Cutbirth and Bogard used
+a row of compound angle holes with injection angles of 30 deg with
+respect to the surface and 45 deg with respect to the mainstream flow
+direction. As shown in Fig. 10a, for mainstream turbulence levels
+of T u = 0.5%, there was good correspondence in film effectiveness
+for the two DRs for position x/d = −28, which corresponded to
+2d downstream of the coolant holes, when compared at similar I .
+However, at x/d = −34, the DR = 1.2 coolant had a distinctly lower
+η̄. For mainstream turbulence levels of T u = 20%, very similar film
+effectiveness was obtained from the high and low DR coolant when
+matching I as shown in Fig. 10b.
+Evaluation of the coolant DR effect on heat transfer coefficients
+for film-cooling injection is particularly important because of the
+many studies that have used unit DR coolant when making measurements of the heat transfer coefficients. There are only a few studies
+in which the effects of low and high DR coolant on the heat transfer
+coefficient have been compared. In a recent study by Baldauf et al.,15
+tests were conducted with a flat surface using coolant DR = 1.2 and
+1.8 over a range of blowing ratios from M = 0.2 to 2.5. As in most
+heat transfer tests, cooling was downstream of the coolant holes.
+Results for these heat transfer tests were presented in terms of the
+augmentation of the heat transfer coefficients with film cooling, h f ,
+relative to the heat transfer coefficients without film cooling, h 0 , that
+is, as h f / h 0 ratios. For blowing ratios M < 1.0, the augmentation
+of heat transfer coefficients was less than 10% and was similar for
+DR = 1.2 and 1.8. For M > 1.4, the augmentation for the low DR
+coolant was slightly larger than for the large DR coolant.
+
+V.
+
+Cooling Hole Geometry and Configuration
+
+As indicated in Table 1, the shape of the coolant hole and angle of
+injection have a significant effect on film-cooling performance. Most
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+256
+
+BOGARD AND THOLE
+
+coolant holes are angled at 25–35 deg to the surface, which promotes
+keeping the coolant jets attached to the surface and is a manufacturing limit. In some cases, however, steeper angles of injection are
+used that sometimes result from manufacturing or geometrical constraints. The surface angle of the holes may be oriented with the
+mainstream flow direction, or inclined at some angle with respect
+to the mainstream flow direction. Coolant holes that are directed at
+a nonzero angle from the mainstream flow direction are generally
+referred to as compound angle holes. (See Fig. 2 for the definition
+of the compound angle.) Typically, 90-deg compound angle holes,
+meaning the injection direction is perpendicular to the mainstream
+flow angle, are used on the leading edges of vanes and blades. These
+leading-edge holes are sometimes referred to as radial holes because
+coolant is injected in the radial direction along a turbine airfoil that
+resides in a disk. Distinct improvements in film effectiveness are
+obtained when using shaped holes, which have a diffusing expansion at the exit of the hole. The diffusing exit of the coolant holes
+distributes the coolant over a broader area and reduces the coolant
+exit velocity, which reduces the tendency of the jet to separate from
+the surface even at high blowing ratios. Spacing between holes in a
+row and interaction between closely spaced rows are configuration
+variables that affect film-cooling performance. These geometric and
+configuration variables are described in detail next.
+A.
+
+Cooling Hole Spacing
+
+Typical spacing, or pitch P, between coolant holes in the lateral
+direction for a row of holes is three hole diameters, but spacing between holes as much as eight hole diameters can be used. As the hole
+spacing is decreased, there is greater coverage by the coolant, that is,
+the percentage area of surface covered by coolant increases. Also, for
+a given mass flow rate from each hole, with decreased hole spacing
+the mass flow per unit span increases. When coolant holes are spaced
+widely apart, each coolant jet essentially acts independently. In this
+case, the performance by a row of holes can be predicted by a superposition of the performance of a single hole. However, with closer
+spacing between holes, the mainstream interaction with the coolant
+jets is altered because there is more resistance to the mainstream
+flow between the coolant jets. Consequently, when evaluating the
+effect of hole spacing on film-cooling performance, it is important
+to recognize whether the spacing is far enough so that the jets act
+independently.
+Film effectiveness for holes spaced at P/d = 3 and 6 was studied
+by Schmidt et al.16 using holes angled 35 deg to the surface and
+oriented with compound angles of 0 and 60 deg to the mainstream.
+Results from this study showed that the film effectiveness levels for a
+
+hole spacing of P/d = 3 was twice that for P/d = 6, that is, that film
+effectiveness for P/d = 3 was predictable from a superposition of
+film effectiveness for P/d = 6. Consequently, these results showed
+that, for a spacing between coolant holes as small as P/d = 3, the
+coolant jets were performing as independent jets. These results were
+consistent with the later study by Baldauf et al.,8 who tested hole
+spacings of P/d = 2, 3, and 5. However, Baldauf et al.8 found that
+for M > 1.2 the hole spacing of P/d = 2 had increasing film effectiveness levels with increasing M, whereas spacings of P/d = 3 and
+5 had decreasing levels of film effectiveness. The decreasing film
+effectiveness for P/d = 3 and 5 is attributable to coolant jet separation. Evidently, for P/d = 2, the adjacent jets are close enough
+that they begin to form a continuous blockage of the mainstream
+similar to slot injection. This suppresses the tendency for jet separation. Consequently, for M > 1.0, the P/d = 2 configuration has
+a much higher film effectiveness than would be expected based on
+superposition of the P/d = 3 or P/d = 5 film effectiveness.
+A similar result for higher blowing ratios is evident in the results
+of Foster and Lampard,17 who used a row of holes angled normal
+to the surface and with spacings of P/d = 1.5, 2.5, 3.75, and 5.
+Although no quantitative comparisons were made for the smallest
+spacing of P/d = 1.5, contour plots of film effectiveness show that
+the coolant jets had coalesced to form a continuous coolant film.
+Furthermore, for P/d ≥ 2.5 and M = 0.5, the decrease in film effectiveness with increase in hole spacing appears consistent with
+superposition (although they do not mention this).
+B.
+
+Double Rows of Holes
+
+Sometimes two closely spaced rows of coolant holes in the
+streamwise direction are used for turbine airfoil cooling. By the use
+of two rows of holes, increased coolant coverage is achieved while
+maintaining structural strength. Furthermore, for higher blowing
+ratios, two closely spaced rows of holes provide greater film effectiveness than would be expected based on a superposition of the
+performance of a single row of holes. This was demonstrated by
+the measurements of Han and Mehendale,18 who compared performance using a single row of holes and two rows of holes spaced
+2.5d with spacing between holes of P/d = 2.5. Holes in the tworow configuration were staggered. All holes had an injection angle
+of 35 deg relative to the surface and were aligned with mainstream
+flow direction. To highlight the improved performance for two rows
+of injection compared to the expected values based on superposition
+of the single-row injection, the results of Han and Mehendale18 are
+replotted in Fig. 11. (Note that Han and Mehendale18 presented local
+values of η at three spanwise positions; these data were averaged
+
+Fig. 11 Evaluation of film effectiveness for two rows injection as compared with superposition of single row injection (data from Han and
+Mehendale18 ).
+
+BOGARD AND THOLE
+
+to estimate η̄ values used in Fig. 11.) In Fig. 11, the η̄ values for
+the single row of holes is multiplied by two to show the expected
+value based on superposition. Comparisons of η̄ values for a single
+row multiplied by a factor of two with η̄ values for two rows show
+there is very similar performance for the lowest blowing ratio of
+M = 0.2. Consequently, the performance for two rows of holes is
+consistent with the expected performance based on superposition of
+one row of holes for this case, indicating that the two rows do not
+interact with each other. However, for M ≥ 0.5, the two rows have
+distinctly higher η̄ than would be predicted by superposition using
+results from a single row, with as much as a 60% increase in η̄ for
+the M = 1.0 case. This improved performance can be attributed to
+interaction between the two rows of holes causing a more cohesive
+coolant film that is less susceptible to dispersion by the mainstream.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+C.
+
+a)
+
+Full Coverage Configurations
+
+Full coverage cooling incorporates multiple rows of coolant holes
+located over the entire area that is to be cooled. This technique is
+often used for combustor cooling. Investigations of full coverage
+configurations have been done with row spacing from 3d (Ref. 19)
+to 14d (Ref. 20), typically with normal injection from holes, although Sasaki et al.21 studied 45-deg injection. An investigation of
+full coverage cooling with large DR coolant and high mainstream
+turbulence levels was conducted by Harrington et al.22 to determine whether film effectiveness for full coverage film cooling is
+predictable using superposition of film effectiveness from a single
+row of holes. For a range of momentum flux ratios from I = 0.04 to
+0.59, they found that the film effectiveness reached a maximum level
+after four to eight rows, depending on blowing ratio, and this asymptotic level was about 15% lower than the superposition prediction.
+Maximum film effectiveness was η = 0.30. Using the same coolant
+hole configuration, Kelly and Bogard23 found that the heat transfer
+coefficient was increased by about 25% by the full coverage injection for high mainstream turbulence conditions, and this increase
+was relatively constant for the full length of the full coverage test
+plate. Maximum net heat flux reduction of qr = 0.35 to 0.40 was
+found for full coverage film cooling.
+D. Cooling Hole Angle Effects: Streamwise Oriented
+with Different Surface Angles
+
+As already discussed, coolant holes are generally oriented with
+relatively shallow angles to the surface, but in some cases, much
+steeper injection angles are used. Studies of the effect of the hole
+injection angle on film effectiveness on flat surfaces generally have
+found that a small reduction occurs in film effectiveness as the injection angle increases. For increasing injection angle, there is a greater
+tendency for coolant jet separation, which causes lower film effectiveness. Kohli and Bogard24 compared the performance of coolant
+holes with injection angles of 35 and 55 deg and found a decrease
+film effectiveness for the 55-deg holes of 10 and 30% for momentum flux ratios of I = 0.16 and 0.63, respectively. (These results
+are presented in terms of I because this is expected to be the scaling parameter for jet separation.) Hole injection angles of 35 and
+90 deg were tested by Foster and Lampard,17 and slightly decreased
+film effectiveness was found for the 90-deg holes at M = 0.5, but
+improved performance was found for the 90-deg holes for a high
+blowing ratio of M = 1.4. Similar results were found by Baldauf
+et al.,8 who compared holes with 30-, 60-, and 90-deg injection angles. Their results showed about a 30% decrease in peak η̄ values
+for lower blowing ratios for 90-deg injection compared to 30-deg
+injection. For higher blowing ratios, M > 1.2, there was as much
+as 60% increase in η̄, but at these high blowing ratios, performance
+was poor. The increased film effectiveness for 90-deg holes at higher
+blowing ratios was attributed to more interaction with adjacent jets
+for 90-deg holes compared to 30-deg holes.
+E.
+
+257
+
+Cooling Hole Angle Effects: Compound Angle Injection
+
+Often coolant holes are oriented in a direction oblique to the
+mainstream direction, that is, with a compound injection angle. This
+orientation presents a greater coverage area downstream of the hole
+
+b)
+Fig. 12 Film effectiveness for 0- and 60-deg compound angle hole:
+a) streamwise distribution of laterally averaged cooling effectiveness
+and b) spatially averaged film effectiveness for varying momentum flux
+ratios (data from Schmidt et al.16 ).
+
+and presents a broader jet profile to the mainstream passing over
+the coolant jet. Consequently, this orientation is expected to have
+better film effectiveness, but also causes a greater increase in the
+heat transfer coefficient. Because these are counteracting effects, it
+is important to evaluate the ultimate performance of the compound
+injection in terms of the net heat flux reduction.
+The performance of compound injection coolant holes was evaluated by Schmidt et al.16 and Sen et al.25 for coolant holes with a
+35-deg injection angle with the surface and oriented 0 and 60 deg
+with respect to the mainstream flow direction. As shown in Fig. 12a,
+the 60-deg compound angle hole gave only a small increase in η̄ for
+a momentum flux ratio of I = 0.25, but essentially doubled η̄ for
+a momentum flux ratio of I = 0.98. The good performance for the
+60-deg compound angle holes is evident in Fig. 12b, showing film
+effectiveness spatially averaged over the range 3 ≤ x/d ≤ 15. The
+performance of 0-deg compound angle (coolant injected parallel
+with the flow) holes drops rapidly for I ≥ 0.5 due to coolant jet separation, but the 60-deg compound angle holes have good performance
+for momentum flux as high as I = 4. The heat transfer coefficients
+relative to the no-blowing heat transfer coefficients h f / h 0 and the
+resulting net heat flux reduction qr were measured for these filmcooling configurations by Sen et al.25 As shown in Fig. 13a, the
+heat transfer coefficients with 60-deg compound angle holes were
+about 15% higher than for 0-deg compound angle holes. The larger
+heat transfer coefficients for the compound angle injection results
+from an interaction between the mainstream and the angled coolant
+jet that causes a strong vertical flow on the opposite side of the
+coolant jet. Comparisons of net heat flux reduction, qr for the 0and 60-deg compound angle holes are presented in Fig. 13b. These
+results show similar values of qr for the 0- and 60-deg compound
+angle holes, indicating that the improved film effectiveness for the
+60-deg compound angle holes is offset by the increased heat transfer
+coefficients.
+The compound angle results just discussed were for low mainstream turbulence levels. A later study by Schmidt and Bogard26
+examined 0- and 90-deg compound angle holes with mainstream
+
+258
+
+BOGARD AND THOLE
+
+Fig. 14 Schematics of different
+cooling hole shapes (from
+Saumweber et al.27 ).
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+a)
+
+b)
+Fig. 13 Comparison of 0- and 60-deg compound angle holes: a) spatially averaged heat transfer augmentations and b) spatially averaged
+net heat flux reduction as functions of jet momentum flux ratios (data
+from Sen et al.25 ).
+
+turbulence levels of T u = 0.5% and 17%. Although similar results
+were obtained for low mainstream turbulence, for T u = 17% the
+film effectiveness for 0- and 90-deg compound angle holes were
+essentially the same for momentum flux ratios as high as I = 2. The
+90-deg compound angle holes still caused an increase in heat transfer
+coefficients, and so the net heat flux reduction for 90-deg compound
+angle holes was significantly less than for the 0-deg compound angle
+holes.
+F.
+
+Shaped Holes with Streamwise Orientation
+
+Improved film cooling performance is obtained if the coolant hole
+is “shaped” toward the exit of the hole with an expansion that diffuses the flow exiting the hole. Examples of hole shapes tested by
+Saumweber et al.27 are shown in Fig. 14. Expansion of the hole exit
+decelerates the coolant jet resulting in a lower momentum flux and,
+consequently, less tendency for the coolant jet to separate. Furthermore, the lateral expansion presents a broader jet to the mainstream
+so that the mainstream has a greater impact on the jet and more effectively turns the jet toward the wall. The improved performance in
+terms of film effectiveness for shaped holes is shown by the results
+of Saumweber et al.27 that are reproduced in Fig. 15. Saumweber
+et al. used streamwise-oriented holes with a 30-deg injection angle
+and spacing between holes of P/d = 4. A coolant DR = 1.7 was
+used with mainstream turbulence levels ranging from T u = 3.6 to
+11%. As shown in Fig. 15, the spatially averaged η̄¯ (averaged from
+x/d = 2 to 22) for blowing ratios from M = 0.5 to 2.5 shows much
+greater film effectiveness for shaped holes compared to cylindrical
+holes. With increasing blowing ratio, the shaped hole has increasing film effectiveness, whereas the cylindrical hole drops sharply.
+The decreasing film effectiveness for the cylindrical hole is due to
+separation of the coolant jet, and so these results indicate that this
+shaped hole is very effective in reducing the coolant jet separation.
+Saumweber et al.27 found that the “laidback fanshaped” hole (shown
+
+Fig. 15 Comparison of spatially averaged film effectiveness for cylindrical holes and shaped holes (data from Saumweber et al.27 ).
+
+in Fig. 14) had essentially the same performance as the “fanshaped”
+hole indicating that the additional streamwise expansion of the hole
+resulted in no additional benefit.
+The effects of the shaped hole coolant injection on increasing heat
+transfer coefficients were also measured by Saumweber et al.27 In
+some cases, shaped holes were found to have similar heat transfer
+coefficients as for cylindrical holes, but for the highest blowing ratios
+with T u = 11%, the shaped holes had 50% greater heat transfer
+coefficient than for the cylindrical holes. The detrimental effects
+of this increase in heat transfer coefficients somewhat offset the
+improved film effectiveness performance.
+Given the significantly improved performance of the shaped
+holes, it is important to recognize the cost of manufacturing when
+comparing cylindrical and shaped holes. Because of the complexity
+of forming shaped holes, manufacturing turbine airfoils with shaped
+holes is considerably more expensive than cylindrical holes. In many
+cases, this additional cost is not warranted, and cylindrical holes are
+used.
+
+259
+
+BOGARD AND THOLE
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+G.
+
+Shaped Holes with Compound Angle Injection
+
+Studies of film-cooling performance of shaped holes were performed by Schmidt et al.16 and Sen et al.25 investigating a 60-deg
+compound angle with 35-deg injection angle relative to the surface. Comparisons were made with cylindrical holes oriented in the
+streamwise direction and cylindrical holes with 60-deg compound
+angle injection. The shaped hole had a 15-deg expansion in the direction of the hole orientation. Spatially averaged film effectiveness determined over a range from x/d = 3 to 15 showed 30 to 60% higher
+film effectiveness for shaped holes compared to the cylindrical 60deg compound angle holes. However, at the moderate momentum
+flux ratio of I = 1.0, the shaped holes had 25% higher spatially averaged heat transfer coefficients so that the net heat flux reduction
+for the shaped holes was similar to that for the cylindrical holes. At
+the high momentum flux ratio of I = 3.9, the shaped holes had significantly greater net heat flux reduction than the cylindrical holes.
+Shaped holes with a compound angle of 35 deg were studied by
+Dittmar et al.28 using a test facility that simulated the suction side
+of a turbine vane. The shaped holes had a lateral expansion giving
+a factor of three increase in exit area. The film effectiveness, heat
+transfer coefficients, and net heat flux reduction performances were
+compared to shaped holes oriented with 0-deg compound angle and
+with double rows of cylindrical holes and double rows of discrete
+slots. The film effectiveness performances for 35-deg compound
+angle holes were similar to the 0-deg compound holes and generally
+superior to the double rows of cylindrical holes and short slots.
+However, the shaped holes caused larger increases in heat transfer
+coefficients, resulting net heat flux reduction that were generally less
+than for the round holes. Dittmar et al.23 speculated that separation
+within the diffuser part of the shaped hole might have generated
+increased turbulence leading to higher heat transfer coefficients.
+
+VI.
+
+hole diameter ratios of less than 0.2, the film effectiveness levels
+remained unchanged.
+B.
+
+Wall Curvature Effects
+
+Inherent curvature of a turbine airfoil causes the flow around the
+airfoil to experience both convex and concave effects. Flow around
+the leading edge and near-suction surface experiences severe convex curvature, whereas flow along the pressure surface generally
+experiences concave curvature. An inherent characteristic of flow
+around curved walls is a pressure gradient normal to the streamlines.
+When a jet is injected along a curved wall, the normal pressure gradient for a convex wall causes the jet to curve toward the wall. If the
+jet momentum is less than the mainstream, the radius of curvature of
+the jet will be less than the wall radius of curvature, and the coolant
+jet will be pressed to the surface. However, if the jet momentum is
+greater than the mainstream, the radius of curvature of the jet will be
+larger than the wall curvature, and the jet will move away from the
+wall. For concave surfaces, the normal pressure gradient is opposite
+to that for convex surfaces, so that the concave surface has the opposite effect on the coolant jets. Furthermore, Taylor–Görtler vortices
+resulting from flow instabilities developing on concave walls can
+additionally influence the film-cooling performance.
+As would be expected from these curvature effects, for lowmomentum flux ratios, injection along a convex surface improves
+film effectiveness, whereas along a concave surface film effectiveness decreases.34,35 The results of Ito et al.,34 shown in Figs. 16,
+demonstrated the greater film effectiveness for convex walls when
+M ≤ 1, but the better film effectiveness for concave walls when
+M ≥ 1.5. A direct comparison of convex, flat, and concave walls,
+presented in Fig. 17 (from Ito et al.34 ) for M = 0.5, shows that film
+effectiveness for convex walls can be as much as 80% larger than
+over flat walls.
+
+Mainstream and Surface Effects on Film Cooling
+
+When film-cooling performance on an actual airfoil is considered,
+there are a number of mainstream and surface variables that influence the cooling performance. These variables include the approach
+boundary layer, surface curvature, pressure gradients, freestream
+turbulence, unsteady wakes, rotation, Mach number, and surface
+roughness. There are numerous film-cooling experiments that have
+evaluated these effects on the performance of film cooling, which
+have mostly been comprised of flat plate studies looking at individual effects. These studies, which will be summarized in this section,
+have provided much insight into how some of these variables can
+have dominating effects on airfoil film cooling.
+A.
+
+Boundary-Layer Thickness Effects
+
+Because boundary-layer characteristics range from laminar to turbulent, and from relatively thin to thick along an airfoil, film-cooling
+injection is subjected to a range of approach flow conditions. Filmcooling holes for many gas turbine vane and blade applications are
+on the order of a fraction of a millimeter, while the boundary-layer
+thickness can range from zero (at the leading edge) to a millimeter. Injecting film-coolant thickens the boundary layer such that the
+downstream coolant injection can be affected.
+Kadotani and Goldstein29 summarized previous work30−32 on the
+effects of boundary-layer thickness on film cooling for a fully turbulent boundary layer as follows: There is a large effect on the centerline film effectiveness levels with larger boundary-layer thicknesses
+resulting in lower effectiveness, there is a larger effect on film effectiveness for thinner rather than thicker boundary-layer displacements, and there is a larger effect on film effectiveness when the
+momentum flux ratio is such that the jet penetration distance is on
+the order of the boundary-layer thickness. Most of these effects
+were found on centerline film effectiveness levels in the near-hole
+region. Although there were apparent effects on the centerline values, the work of Kadotani and Goldstein indicated essentially no
+effect of boundary-layer thickness on the lateral averaged values
+of film effectiveness. By the use of thinner boundary layers that are
+more consistent with those found on a turbine airfoil, measurements
+performed by Liess33 indicated that for displacement thickness to
+
+a)
+
+b)
+Fig. 16 Comparisons of laterally averaged film effectiveness for a) convex wall and b) concave wall, DR = 0.95 (figures from Ito et al.34 ).
+
+260
+
+BOGARD AND THOLE
+
+size of the turbulent eddies can differ. Turbulence levels are quantified in terms of velocity fluctuations (rms levels) divided by the
+magnitude of the mean velocity,
+T u = u rms /U
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+Fig. 17 Comparisons of laterally averaged film effectiveness for a) convex wall and b) concave wall (figures from Ito et al.34 ).
+C.
+
+Pressure Gradient Effects
+
+Because curvature effects are inherent along turbine airfoils, so
+are pressure gradient effects ranging from favorable to adverse. The
+parameter that is commonly used to describe the severity of the
+pressure gradient is the acceleration parameter K defined as follows:
+
+
+
+K =
+
+ν
+U2
+
+
+
+dU
+ds
+
+(12)
+
+where positive values indicate favorable pressure gradients and negative values indicate adverse pressure gradients. Pressure gradients that have been used to test the effects of film cooling range
+from K = 2.6 × 10−6 by Teekaram et al.36 to K = −0.58 × 10−6 by
+Brown and Saluja.37 For reference, turbulent boundary layers relaminarize when there is a favorable pressure gradient greater than
+K ≈ 3 × 10−6 . To isolate curvature effects from pressure gradient
+effects, tests such as those in Refs. 36 and 37 have been conducted
+using flat plate facilities with pressure gradients imposed on the
+flow by a curved opposite wall. Effects of pressure gradients on the
+film effectiveness found in the literature are contradictory. Teekaram
+et al.36 found that a favorable pressure gradient of K = 2.6 × 10−6
+at the injection point improved film effectiveness slightly (∼10%),
+whereas a K = −0.2 × 10−6 pressure gradient decreased film effectiveness slightly. In contrast to this, Brown and Saluja37 found that an
+adverse pressure gradient of K = −0.58 × 10−6 caused over 100%
+increase in film effectiveness, whereas a K = 1.1 × 10−6 pressure
+gradient decreased film effectiveness by as much as 50%. Liess,33 using favorable pressure gradients of K = 1 × 10−6 to 2.5 × 10−6 also
+found decreased film effectiveness at lower blowing ratios, M < 0.6,
+but essentially no effect for higher blowing ratios. (Note that the K
+values were not given in Ref. 33; these values were calculated using
+data in the paper.) These differences might be attributable to having different approach boundary-layer flows (although information
+about the approach boundary layer is not provided in Ref. 36), or
+due to different variations of pressure gradient downstream of the
+coolant holes.
+The discussed studies23,36,37 were conducted using small DR
+coolant, that is, 0.8 < DR < 1.2. Effects of a favorable pressure gradient of film effectiveness with a high DR coolant of DR = 1.6 were
+measured by Schmidt and Bogard.38 Using a pressure gradient of
+K = 1.5 × 10−6 at the injection location, and blowing ratios ranging
+from M = 0.4 to 1.5, Schmidt and Bogard found that only a slight
+increase film effectiveness near the hole for M ≤ 1.0 and no effect
+for M > 1.0.
+D.
+
+High Freestream Turbulence Effects
+
+One of the most dominating effects on film-cooling performance
+that is relevant to gas turbine operations is that of freestream turbulence. The source of this freestream turbulence is the combustor
+upstream of the turbine. Depending on whether the turbine is meant
+for aero- or power-generation applications, the turbulence level and
+
+(13)
+
+Simulation of the mainstream turbulence characteristics for turbine
+sections also requires appropriate length scales for the turbulence.
+Typically the turbulence length scales are quantified using measurements of the integral length scale, which is a measure of the scale
+of the largest turbulent eddies.
+Most studies of high freestream turbulence reported in the literature have been limited to levels of 8%, which may be representative
+for industrial turbines. In most laboratory studies, these turbulence
+levels are generated using a biplanar grid whereby the eddies are on
+the order of the size of the bars within the grid. Early studies addressing the effects of freestream turbulence on film cooling were
+reported by Launder and York39 and Kadotani and Goldstein29,40,41
+in which they studied turbulence levels ranging from 3 to 8% with
+integral length scales of the order 13 d at the cooling hole injection
+location. Kadotani and Goldstein found that at lower blowing ratios there was as much as a 15% decrease in film effectiveness,
+whereas at high blowing ratios there was a slight increase in film
+effectiveness.
+More representative turbulence levels for aeroengines and some
+land-based turbine designs are nominally 20% with turbulence integral length scales on the order of the dilution holes in the upstream
+combustor. In many combustor designs, the dilution jets are injected
+at relatively high momentum flux ratios (∼50) through injection
+holes in the combustor liner that have diameters 10–20 times larger
+than the airfoil film-cooling holes. This large difference in scales
+(film-cooling hole to dilution hole diameters) indicate that the appropriate ratios of turbulence length scale to film-cooling hole diameters should be large.
+One of the first reported studies with turbulence levels higher than
+grid-generated turbulence was that of Jumper et al.,42 which had a
+turbulence level of nearly 17%. As might be expected, their flat plate
+film-cooling results indicated a more rapid decay in film effectiveness at high turbulence relative to the low turbulence case. Interestingly, their results indicated that near the cooling hole the effect of
+high freestream was negligible on the film effectiveness levels.
+In the described studies,39−42 low DR coolants were used. The
+significant effects of high mainstream turbulence levels were shown
+in the film cooling study by Schmidt and Bogard43 using a realistic DR = 2 for the coolant. In this study, film effectiveness and
+heat transfer coefficients were measured for freestream turbulence
+levels of 0.3, 10, and 17%, with turbulence integral length scale
+of  f = 3d for the high turbulence conditions. For T u = 0.3%, the
+momentum flux ratio for maximum film effectiveness was I = 0.2,
+similar to many previous studies with low freestream turbulence.
+At this momentum flux ratio, the high freestream turbulence levels of T u = 10 and 17% caused over a factor of two decrease in
+film effectiveness near the hole and essentially η = 0 for x/d > 20.
+Furthermore, this study showed that the optimum momentum flux
+ratio for the high freestream turbulence conditions was I = 1.1, that
+is, almost an order of magnitude larger than for the low freestream
+turbulence condition. Although the coolant jets would be expected
+to be detached for this very high momentum flux ratio, the additional dispersion of the jet caused by the high freestream turbulence
+transports coolant back to the surface.
+E.
+
+Mach Number Effects
+
+In general, there are a relatively limited number of film-cooling
+investigations at supersonic conditions published in the literature.
+This is particularly the case when attempting to do an exact comparison between low- and high-speed conditions with Mach number
+being the isolated effect that is being addressed. It is difficult to do a
+one-to-one comparison because most facilities are designed to either
+operate at high- or low-speed conditions, but not both. Moreover,
+attempt to do an accurate assessment of Mach number should be
+done on a flat plate to remove other effects discussed earlier, such
+as curvature and pressure gradients.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+BOGARD AND THOLE
+
+Gritsch et al.44 studied the effects of external Mach numbers
+of 0.3, 0.6, and 1.2 on film cooling for single cooling holes that
+were cylindrical, expanded in the spanwise direction, and fully expanded. Their results showed little effect of Mach number on measured film effectiveness levels for the shaped cooling holes. For the
+cylindrical hole, however, they saw an improved cooling performance at Mach 1.2 for blowing ratios of 0.5 and 1. They attributed
+this improved performance to the shock structure, which they have
+hypothesized has a tendency to turn the ejected jet toward the
+surface.
+Similar results were obtained by by Liess,33 who performed film
+effectiveness measurements for a row of coolant holes with mainstream Mach numbers of Ma = 0.3, 0.6, and 0.9. These experiments
+showed that the variation in Mach number had no effect on film effectiveness.
+In a test conducted by Juhany et al.,45 the injectant and freestream
+were at matched pressure, and shock waves in both the freestream
+and the injected coolant flow were produced to adjust the flow to the
+same orientation angle. A leading separation shock, an expansion
+wave, and a recompression shock were observed through schlieren
+optics. The effect of weak shock waves on the adiabatic wall temperature was found to be insignificant.
+F.
+
+Unsteady Flow Effects
+
+Main flow unsteadiness is distinctly different from that of
+freestream turbulence in that unsteadiness refers to a periodicity
+to the flow rather than a randomness that is a characteristic of turbulence. This unsteadiness in a turbine environment generally arises
+on rotor blades where the film-cooling jets experience a variation
+in the mainstream flow as the blades pass through the wakes of the
+upstream vanes. These variations in turn cause a variation in the
+pressure field external to the film-cooling jet, resulting in a modulation of the film-cooling jets.
+Similar to other studies, Bons et al.46 simulated the modulation
+due to the vane wake passing through the use of speakers placed
+in the coolant supply plenum such that film-cooling inlet pressures
+oscillated rather than the freestream pressure. Their results indicated
+a large reduction in the film effectiveness values measured at the
+jet centerline for all frequencies they simulated. The reduction in
+centerline effectiveness was more severe at the lower blowing ratios
+relative to the higher blowing ratios where, at a blowing ratio of
+M = 1.5, there was essentially no effect of the pulsations.
+Similar results were reported by Seo et al.,47 although they simulated the effect by pulsing the mainstream through the use of a
+damper placed at the exit of the wind tunnel. Their results also indicated a larger decrease in effectiveness at relatively low blowing
+ratios, M = 0.5, and at short hole length to diameter ratios, 1.6. In
+contrast, at a high blowing ratio, M = 1, their results actually showed
+a a slight improvement in effectiveness with the short cooling hole
+length.
+G.
+
+Rotating Rig Tests
+
+Measurements of film-cooling performance on a rotating blade
+requires a sophisticated rotating test rig with a full stage, that is, an
+inlet nozzle guide vane and a rotor. Because of the complexity and
+expense of such test rigs, there have been very few studies. Furthermore, to evaluate how rotation affects film-cooling performance,
+the film-cooling performance for the rotating blade should be compared to a stationary cascade blade in which all other conditions
+have been kept the same. Considering the complex flowfield in the
+rotating rig test, including the vane wakes, a reasonable comparison
+is very difficult. Film cooling with a rotating rig was experimentally
+investigated by Dring et al.,48 Abhari and Epstein,49 and Takeishi
+et al.50 ; in each case, comparisons to stationary blade configurations
+were attempted.
+A large-scale, low-speed, rotating rig was used by Dring et al.48
+when testing a rotating blade, but only a single film cooling hole
+on the suctions side and a single hole on the pressure side of the
+blade were used. Results were compared to the cascade results from
+Ito et al.,34 which was a separate test program. Consequently, no
+attempt was made to match the airfoil geometry, film-cooling hole
+
+261
+
+configurations, nor the flow conditions. Despite the fact that the
+rotating and stationary blades were not well matched, the authors
+found similar results for the film effectiveness on the suction side
+of the blade and small differences on the pressure side.
+Abhari and Epstein49 used a short-duration blowdown tunnel to
+test a nozzle guide vane and rotor stage. The rotor had two rows of
+coolant holes on the suction surface and three rows on the pressure
+surface. Time-resolved measurements of heat flux were made at
+discrete locations without and with film cooling. Results were compared to the results of Rigby et al.,51 who tested the same rotor airfoil
+with the same film-cooling configuration in a stationary cascade facility. However, there were considerable differences in the operating
+conditions for the rotating tests of Abhari and Epstein49 and the stationary tests of Rigby et al.51 In the rotating tests, coolant was ejected
+from the upstream nozzle guide vane and all rows of coolant holes
+were operational simultaneously, whereas for the stationary cascade
+tests the upstream vane row was simulated by rotating bars and only
+one row of coolant holes was operated in a test. Both rotating and
+stationary tests showed little change in the heat flux on the pressure
+side of the blade with coolant injection. On the suction side of the
+blade the rotating results showed a greater decrease in heat flux.
+Both a stationary cascade and a rotating rig were used by Takeishi
+et al.50 to study the effects of rotation on film cooling of a turbine
+rotor. The rotor had three rows of holes in the leading-edge showerhead, two rows on the pressure side and a single row on the suction
+side (but no data were obtained from the pressure-side row of holes
+for the rotating rig). The cascade model was 6.6 times the scale of
+the rotating model with the same airfoil geometry and film-cooling
+hole configuration. However, the cascade facility did not emulate
+the wakes from upstream vanes that would have occurred for the
+rotating rig, and matching of the mainstream turbulence levels approaching the rotors was not discussed. Nevertheless, when operating the showerhead alone and the suction side row of holes alone,
+the film effectiveness for the cascade and the rotating blade were
+very similar.
+From these various studies, one can conclude that the effect that
+rotation has on film-cooling performance is not well established,
+although the indications are that there is little effect. Perhaps more
+important, when the film-cooling performance of the few rotating
+rig tests in the open literature are examined and an attempt is made
+to correlate the results with stationary laboratory tests, it becomes
+clear that the complexity of the flowfield in the actual turbine makes
+comparisons with laboratory tests very difficult. Similarly, when
+the various laboratory-generated databases are used in engine designs, although they provide valuable insight about the film-cooling
+performance, they generally cannot be expected to provide precise
+predictions of performance, because the databases are not generated
+in the same highly complex flowfields that occur in the engine.
+H.
+
+Surface Roughness
+
+Studies of film-cooling performance are done predominantly with
+smooth surfaces, which are representative of turbine airfoils when
+new. However, during operation of the turbine engine, airfoil surfaces will generally become rough due to deposition, spallation, and
+erosion.52,53 A rougher airfoil surface will potentially lead to early
+boundary-layer transition, thickening of the boundary layer, and increased turbulent mixing in the boundary layer. These changes due to
+surface roughness will generally lead to reduced film effectiveness,
+although for high blowing ratios, an increase in film effectiveness
+can result. Increased surface roughness often significantly increases
+heat transfer coefficients.
+Surface roughness effects on film effectiveness for film cooling
+using a row of holes on a flat surface were studied by Goldstein
+et al.54 and Schmidt et al.55 Schmidt el al.55 also measured changes
+in heat transfer coefficient due to coolant injection with a rough
+surface. For the Schmidt et al. study, the roughness consisted of an
+array of conical elements with a maximum roughness element height
+of 0.4d corresponding to an equivalent sand grain roughness of
+Rek ≈ 100. Roughness downstream of the coolant holes was found
+to have a small effect on laterally averaged film effectiveness, that
+is, less than 10% decrease for low momentum ratios and less than
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+262
+
+BOGARD AND THOLE
+
+5% increase for high momentum flux ratios. Although roughness
+caused a 50% increase in heat transfer coefficient, coolant injection
+did not cause a significant change in heat transfer coefficient except
+within 10d of the hole, where less than a 10% decrease occurred at
+low momentum flux ratio and less than a 10% increase occurred for
+high momentum flux ratio.
+Roughness effects on the suction side of a simulated vane were
+investigated by Bogard et al.56 and Rutledge et al.57 Roughness
+upstream and downstream of a row of cylindrical holes was investigated independently, using an array of conical elements 0.25d in
+height. This roughness configuration was estimated to have an equivalent sand grain roughness Reynolds number of Rek ≈ 50 based on
+the boundary-layer flow approaching the coolant holes. At low blowing ratios, M ≈ 0.3, roughness upstream of the coolant holes caused
+as much as 25% reduction in spatially averaged film effectiveness.
+However, at high blowing ratios, M > 1.0, roughness upstream and
+downstream of the coolant holes caused an increase in film effectiveness. Roughness essentially doubled the heat transfer coefficients
+on the suction side of the vane, and film injection did not cause a
+further increase or decrease of the heat transfer coefficients. Consequently, the net heat flux reduction with the rough surface was due
+to the film effectiveness of the film cooling.
+
+VII.
+
+Airfoils and Endwalls
+
+Film cooling on vanes and blades generally involves a dense array
+of coolant holes around the leading edge, referred to as a showerhead, and more widely spaced rows of coolant holes around the main
+body of the airfoil. Sometimes coolant is also introduced at the tip
+of blades. Furthermore, arrays of coolant holes are used on the endwalls. Each of these regions has unique film cooling characteristics
+that are described next.
+A.
+
+Holes were oriented radially with an injection angle of 25 deg with
+respect to the surface, and the pitch between holes was 5.5d. A
+coolant DR = 1.8 was used, and blowing ratios up to M = 2.9 were
+tested. Also shown in Fig. 18 is a flow visualization of the coolant
+distribution around the leading edge of the vane. Coolant in the
+showerhead region is projected to a large distance from the surface,
+extending as much as 5d from the surface even at relatively low
+blowing ratios. This is due to the lack of a crossflow along the
+stagnation line that would tend to turn the coolant jets toward of the
+surface and to the deceleration of the mainstream as it approaches
+the surface. Flow visualization images (Fig. 19) and thermal field
+images by Cutbirth and Bogard55 showed that coolant jets along the
+stagnation line separate from the surface even at low blowing ratios.
+Unlike film cooling of flat surfaces, the film effectiveness continued
+to increase with increasing blowing ratio, as shown in Fig. 20 for a
+position immediately downstream of the showerhead. The lack of
+an optimum blowing ratio may be attributed to the separation of the
+coolant jet even at low blowing ratios.
+Showerhead blowing effects on heat transfer coefficients were
+investigated by Ames62 using a simulated vane with five rows of
+holes in the showerhead spaced 3.8d apart. Coolant holes were oriented radially with an injection angle of 20 deg with respect to
+the surface, and the pitch between holes was 6.4d. For high mainstream turbulence conditions, the heat transfer coefficients immediately downstream of the showerhead increase about 20% with
+showerhead blowing relative to a no-blowing baseline.
+A number of different film cooling configurations for blade leading edges have been tested including a varying number of rows
+of holes, inclination angle of the holes, and hole shape. Many
+
+Leading Edges
+
+For vanes and blades, the leading edge generally is subjected to
+the largest heat loads due the large heat transfer coefficients along
+the stagnation line. Consequently, film cooling of the leading edge
+is often accomplished using several closely spaced rows of coolant
+holes. This array of holes around the leading edge is referred to as the
+showerhead and generally consists of six to eight rows of holes for
+vanes and three to five rows of holes for blades. Holes are typically
+aligned radially, that is, normal to the mainstream direction, with
+injection angles relative to the surface ranging from 20 to 45 deg.
+Film effectiveness measurements within and downstream of the
+showerhead of a simulated vane were made by Polanka et al.,58
+Witteveld et al.,59 and Cutbirth and Bogard60,61 under conditions
+of low and high mainstream turbulence levels. The simulated vane
+tested in these studies, shown schematically in Fig. 18, had six
+rows of coolant holes, spaced 3.3d apart, in the showerhead region.
+Fig. 19 Flow visualization of coolant flow along stagnation line,
+∗ = 0.5, 1.0, and 1.5 with
+coolant jet separation for blowing ratios of Msh
+Tu = 0.5% (figure from Cutbirth and Bogard60 ).
+
+Fig. 18 Flow visualization of coolant flow in the showerhead region
+∗ = 1.5 (figure from Cutbirth and Bogard61 ).
+for blowing ratio Msh
+
+Fig. 20 Laterally averaged film effectiveness within (x/d = −5) and immediately downstream (x/d = −5) of showerhead region of film-cooled
+vane with Tu = 20% (figure from Cutbirth and Bogard60 ).
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+BOGARD AND THOLE
+
+simulation of the blade leading edge have been done with cylindrical or semicylindrical models. A four-row configuration, with rows
+positioned at ±15 and ±40 deg from the stagnation line was tested
+by Mehendale and Han63 to determine the film effectiveness, heat
+transfer coefficients, and net heat flux reduction. Coolant holes in
+their model were aligned radially with a 30-deg injection angle relative to the surface. Spacing between holes in a row was P/d = 3.
+Film effectiveness, determined using about a coolant DR = 0.92,
+was maximum for a blowing ratio of M = 0.8 with just a slight decrease for the highest blowing ratio tested, M = 1.2. Laterally averaged film effectiveness levels were nominally η̄ = 0.4 downstream
+of the first row of holes and η̄ = 0.55 downstream of the second
+row of holes. Coolant injection caused the heat transfer coefficients
+downstream of both rows of holes to more than double. Despite the
+very large increase in heat transfer coefficient, there was a large net
+heat flux reduction because of the high level of film effectiveness.
+A five-row configuration, with rows at 0, ±20, and ±40 deg was
+tested by Reiss and Bölcs64 to determine film effectiveness, heat
+transfer coefficients, and net heat flux reduction over a range of
+blowing ratios from M = 0.6 to 1.5. The focus of this study was to
+compare the relative performance of cylindrical and shaped holes
+with two different expansion configurations, laid back and laterally
+expanded. The holes had an injection angle of nominally 45 deg
+relative to the surface, and spacing between holes in each row was
+P/d = 3.7. In general the laid back shaped holes, with an average
+film effectiveness of η̄ = 0.4–0.5, had better film effectiveness than
+the cylindrical holes and the laterally expanded shaped holes. All
+holes induced a large increase in heat transfer coefficients, over a
+factor of two in some cases, for all blowing ratios. Maximum net
+heat flux reduction was obtained using the laid back shaped holes
+at a blowing ratio of M = 1.0.
+In contrast to these studies of blade leading-edge cooling in which
+an optimum blowing ratio of nominally M = 1.0 was found, Albert
+et al.65 found film-cooling film effectiveness continued to improve
+with increasing blowing ratio up to the highest blowing ratio of
+M = 4.0. Albert et al. used a three-row configuration with laid back
+shaped holes oriented radially, an injection angle of 20 deg, and a
+spacing between holes of P/d = 7.6. Heat transfer coefficients and
+net heat flux reduction for the same configuration were measured
+by Mouzon et al.11 for blowing ratios ranging from M = 1.0 to 2.5.
+Results from this study,11 presented in Fig. 21, showed significant
+increases in film effectiveness levels and heat transfer coefficients
+with increasing blowing ratio. Even though the highest blowing ratio
+of M = 2.5 had the largest heat transfer coefficients, the maximum
+net heat flux reduction (Fig. 21c) occurred at this blowing ratio.
+B.
+
+Turbine Blade Tips
+
+Heat transfer coefficients along the tip of a turbine blade are some
+of the highest values found when comparing the various surfaces
+associated with a turbine airfoil. As such, improving the thermal
+environment along the blade tip is generally accomplished through
+impingement cooling and film cooling. In designing a film-cooling
+pattern for a blade tip, there are a number of locations and hole
+shapes through which film cooling can be introduced for the tip.
+The placement of the holes can be on the blade tip itself or on
+the pressure surface of the blade. Generally, the cooling holes are
+placed closer to the pressure surface, either on the tip or on the blade,
+because the crossflow driving the tip flows from the pressure to the
+suction surface aids in spreading the coolant across the tip surface.
+The advantage of putting the cooling holes along the pressure side
+of the blade is this ensures that coolant passes across the blade tip
+corner where high oxidation rates typically occur, as one observes
+when examining used parts. If the blowing from the holes is too
+high, however, it can result in either the coolant blowing off of the
+airfoil and along the pressure surface rather than passing through
+the tip gap, or can impact the outer shroud rather than attach to the
+blade tip.
+Alternatively, placing the holes on the tip results in the corner of
+the blade tip along the pressure side to have no cooling available. It is
+also possible that, in blowing too hard, the coolant is more effective
+at cooling the outer shroud than the blade tip itself. For either hole
+
+263
+
+placement, consideration must also be given to the actual size of
+the tip gap with generally results indicating that better cooling can
+be achieved at smaller tip gaps. The reason for the better cooling at
+smaller tip gaps arises from the fact that more of the coolant fills
+the entire gap as opposed to a large gap where there is a larger mass
+flow of the hot fluid to mix out the coolant in the gap. Moreover,
+with a large tip gap, there is a higher chance that the coolant will
+impinge on the outer shroud only to convect along the outer shroud
+rather than along the blade tip.
+In a review paper on tip heat transfer, Bunker66 states that for a
+blade tip there has been very little film-cooling research reported
+in the literature even though film cooling is widely used. Blowing
+from the tip has been considered by Kim and Metzger,67 Kim et al.,68
+Kwak and Han,69,70 Ahn et al.,71 Christophel et al.,72 Acharya et al.,73
+and Hohlfeld et al.74
+Kim et al.68 present a summary of the experimental work that
+Metzger performed on tip blowing, as shown in Fig. 22. In addition to concluding that there is only a weak effect of the relative
+motion between a simulated blade and shroud on tip heat transfer
+coefficient, they stated that there is a strong dependency of film effectiveness on the shape of the hole and injection locations. Four
+hole configurations were discussed by Kim et al.,68 which included
+the following: discrete slots located along the blade tip, round holes
+located along the blade tip, angled slots positioned along the pressure side, and round holes located within the cavity of a squealer tip.
+The studies reported by Kim et al.68 were performed in a channel
+that simulated a tip gap, but a blade with its associated flowfield was
+not simulated. When the discrete slots were compared to the holes,
+as shown in Fig. 23, their data indicated a substantial increase in film
+effectiveness using the discrete slots for all blowing ratios tested.
+Injection from the pressure-side holes provided cooling levels of
+similar magnitude to the holes placed on the tip.
+Kwak and Han69,70 reported measurements for varying tip gaps
+with cooling holes placed along the camber line for a flat and a
+squealer tip geometry. They found a substantial improvement in
+effectiveness with the addition of a squealer tip. The coolant circulated within the squealer tip cavity providing a better distribution
+of the coolant along much of the tip compared with no squealer
+cases. Only along parts of the suction side was the film effectiveness poor. They found that, for the flat tip, good cooling was provided to the trailing edge resulting from the accumulation of coolant
+that exited in this area. In a later study from the same group, Ahn
+et al.71 found that, for the same coolant mass flow, injection from
+either the pressure side or the combined pressure side and tip was
+highly sensitive to the tip gap with higher film effectiveness achieved
+at smaller tip gaps. Their results also indicated a more uniform
+coolant coverage for the case of a squealer blade tip relative to a flat
+tip.
+Measurements reported by Christophel et al.,72 in which filmcooling holes were placed along the pressure side of the blade,
+indicated that the cooling performance was significantly better for a
+small tip gap than for a large tip gap, as shown in Fig. 24. Their results
+did indicate that the cooling pattern was streaky in nature with very
+little spreading as the coolant convected across the tip. The results
+for the small tip gap indicated that the coolant was swept farther
+downstream of the hole before entering the tip gap for higher coolant
+flows, particularly those holes in the leading-edge region. In fact,
+computational predictions and measured effectiveness levels for the
+same flow conditions indicated that the jets exited into the pressureside passage following the pressure side of the blade until the trailing
+edge of the blade, at which point the coolant entered the tip gap. For
+high local momentum flux ratios of the jets, the coolant did appear to
+cool the blade tip, which was different from that of the large tip gap.
+For a large tip gap, their data indicated that the film effectiveness
+levels decreased, or remained relatively constant, as the coolant flow
+was increased. As the coolant flow was increased, the jets impacted
+and cooled the outer shroud of the large tip gap rather than the blade
+tip.
+Predictions for varying tip gap sizes by Acharya et al.73 indicated that film-cooling injection alters the nature of the leakage
+vortex. High film effectiveness and low heat transfer coefficients
+
+264
+
+BOGARD AND THOLE
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+a)
+
+b)
+
+c)
+
+Fig. 21 Film-cooling performance for simulated blade leading edge with three rows of holes; mainstream turbulence Tu = 10%, stagnation line
+coolant holes at x/d = 0: a) laterally averaged film effectiveness, b) laterally averaged heat transfer coefficient augmentation, and c) laterally averaged
+net heat transfer reduction (figures from Mouzon et al.11 ).
+
+were predicted along the coolant trajectory with the lateral spreading of the coolant jets being quite small for all cases. Acharya et al.73
+studied various leakage-reduction strategies of blades tip to reduce
+the leakage flow and heat transfer. They found, similar to the findings of Kwak and Han,69,70 that a single suction-side squealer tip
+is the best configuration to reduce the heat transfer and leakage
+flow. Computational results by Hohlfeld et al.74 indicated that, as
+the blowing ratio is increased for a large tip gap, the tip cooling
+
+increased only slightly while the cooling to the shroud increased
+significantly. With an increased tip gap, the coolant was able to provide better downstream film effectiveness through increased mixing. For the smallest tip gap, the coolant was shown to impinge directly on the surface of the shroud leading to high film effectiveness
+at the impingement point. As the gap size increased, their predictions indicated that the coolant jets were unable to penetrate to the
+shroud.
+
+265
+
+BOGARD AND THOLE
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+a)
+
+b)
+
+Fig. 22
+C.
+
+Tip cooling geometries tested by Kim et al.68
+
+Airfoil Endwalls
+
+Endwall regions are another location associated with a turbine
+airfoil that is relatively difficult to cool because of the complex
+nature of the flowfield. Secondary flows, in the form of a leading
+edge and passage vortex, cause much of the coolant injected through
+the cooling holes to be swept off of the endwall surface. There have
+been a number of studies documenting endwall film cooling and a
+number of studies documenting cooling from the leakage gap at the
+turbine–combustor junction. Coolant flow from leakage gaps that
+are either between the combustor and first vane or between vanes
+and blades can significantly contribute to cooling the endwalls and
+can affect the secondary flow pattern.
+Detailed endwall film cooling results have been conducted by
+Friedrichs et al.75−77 with measured results from two geometries
+from these studies shown in Fig. 25.75,76 The results of their first
+study,75 which were all surface measurements or visualization, indicated a strong influence of the secondary flows on the film cooling
+and an influence of the film cooling on the secondary flows. Their
+data showed that the angle at which the coolant leaves the hole did
+not dictate the coolant trajectory except near the hole exit. Furthermore, the endwall crossflow was altered so that the crossflow was
+turned toward the inviscid streamlines, which was caused by the
+film-cooling injection.
+A few studies have measured endwall heat transfer as a result
+of injection from a two-dimensional, flush slot just upstream of the
+vane. Blair78 measured film effectiveness levels and heat transfer
+coefficients for a range of blowing ratios through a flush slot placed
+just upstream of the leading edges of his single passage channel. One
+of the key findings was that the endwall film effectiveness distributions showed extreme variations across the vane gap with much of
+the coolant being swept across the endwall toward the suction-side
+corner. Granser and Schulenberg79 reported similar film effectiveness results in that higher values occurred near the suction side of
+the vane. Colban et al.80,81 also showed results for a geometry with
+a slot, but rather than flush, it was a backward-facing step. Above
+the step, there was upstream coolant from simulated film-cooling
+
+c)
+Fig. 23 Comparison of film effectiveness levels of geometries in Fig. 22
+for a simulated tip region using injection from a) discrete slot, b) round
+hole, and c) pressure-side flared hole (figures from Kim et al.68 ).
+
+Fig. 24 Contours of film effectiveness for film-cooled tips from pressure side holes for small (left) and large (right) tip gap, both using
+0.68% coolant flow measured relative to passage flow (from Christophel
+et al.72 ).
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+266
+
+BOGARD AND THOLE
+
+Fig. 25
+
+Film effectiveness levels for two different film-cooling hole patterns for endwall as presented by Friedrichs et al.75,76
+
+holes, whereas under the step, there was relatively little coolant exiting the slot. Colban et al.80,81 reported results that indicated the
+presence of a tertiary vortex that developed in the vane passage due
+to a peaked total pressure profile in the near-wall region. For all of
+the conditions simulated, the effectiveness contours indicated the
+coolant from the slot was swept toward the suction surface.
+A series of experiments have been reported for various injection
+schemes upstream of a nozzle guide vane with a contoured endwall
+by Burd and Simon,82 Burd et al.,83 and Oke et al.84,85 In the studies presented by Burd and Simon,82 Burd et al.,83 and Oke et al.,84
+coolant was injected from an interrupted, flush slot that was inclined at 45 deg just upstream of their vane. Similar to others, they
+found that most of the slot coolant was directed toward the suction
+side at low slot flow conditions. As they increased the percentage
+of slot flow to 3.2% of the exit flow, their measurements indicated
+better coverage occurred between the airfoils. Similarly, Zhang and
+Moon86 tested a two-row film-cooling configuration upstream of
+a contoured endwall. Upstream of these two rows of film-cooling
+holes was placed either a flush wall or a backward-facing step. In
+making direct comparisons between these two configurations, measured effectiveness levels were reduced considerably in the case
+of the backward-facing step configuration. They attributed these reduced effectiveness levels to the increased secondary flows that were
+present.
+The only studies to have combined an upstream slot with filmcooling holes in the passage of the vane were those of Kost and
+Nicklas,87 Nicklas,88 and Knost and Thole.89,90 One of the most interesting results from the Kost and Nicklas82 and Nicklas83 studies
+was that they found that, for the slot flow alone, which was 1.3% of
+the passage mass flow, the horseshoe vortex became more intense.
+This increase in intensity resulted in the slot coolant being moved
+off of the endwall surface and heat transfer coefficients that were
+over three times that measured for no slot flow injection. They attributed the strengthening of the horseshoe vortex to the fact that for
+the no slot injection the boundary layer was already separated with
+fluid being turned away from the endwall at the injection location.
+Given that the slot had a normal component of velocity, injection
+at this location promoted the separation and enhanced the vortex.
+Their film effectiveness measurements indicated higher values near
+the suction side of the vane due to the slot coolant migration. In the
+studies presented by Knost and Thole,89,90 the predicted and measured results indicated the presence of a warm ring on the endwall
+around the vane where no coolant was present despite the combined slot cooling and film cooling, as shown in Fig. 26. As one can
+
+Fig. 26 Measured film effectiveness levels for 0.5% slot and 0.5% filmcooling flow, flow percentages measured relative to passage flow and
+predicted streamlines in near-wall region (from Knost and Thole90 ).
+
+see from these results, the film-cooling jet trajectories closely follow the near-wall streamlines in most regions. Their computational
+fluid dynamics (CFD) predictions in the near-wall region showed
+distinct differences that were dependent on the amount of slot flow
+exiting the upstream slot. Moreover, their studies indicated a difficulty in cooling the juncture between the pressure side of the
+vane and the endwall, as well as the leading-edge region of the
+vane.
+
+VIII.
+
+CFD Predictions
+
+Whether it be from stationary cascade or from engine rig filmcooling experiments, the costs and time commitments to achieve
+quality measurements are extensive. As such, there has been and
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+BOGARD AND THOLE
+
+continues to be a strong desire to predict accurately the performance
+of new film-cooling schemes through CFD. There is a wealth of commercially available CFD packages available to researchers and engine designers that make the usage of such tools plausible for better
+understanding the performance of film cooling in a range of environments. As one might deduce, however, accurate film-cooling predictions are highly dependent on the calculation of the mixing that
+occurs with the crossflow. As such, the accuracy of the predictions is
+highly dependent on the turbulence model used in the near-wall region. Unlike heat transfer predictions, where the temperature gradient at the wall must be accurately predicted, predictions of adiabatic
+wall temperatures require accurate predictions of the jet trajectory
+and spreading given the temperature gradient at the wall is zero.
+Several approaches have been presented in the literature for predicting the film effectiveness levels for film cooling. The most common approach to date is to use the Reynolds-averaged Navier–Stokes
+(RANS) equations with some type of turbulence model. Higherorder modeling, such as large eddy simulations and direct numerical
+simulations, are limited by computer power for realistic Reynolds
+numbers for film-cooling applications. For RANS-type calculations,
+two-equation eddy-viscosity models, such as k–ε or k–ω or a second moment closure scheme, such as a Reynolds stress model, are
+commonly used, each requiring some type of wall treatment. More
+accurate predictions, in some instances, are achieved using a second
+moment closure scheme relative to an eddy-viscosity model, but it
+is at the expense of increased computational time and equation stiffness. For the wall treatment, two approaches have commonly been
+used: wall function models or two-layer models. Whereas wall function models presume that the flow follows the log law near the wall,
+the two-layer model eliminates the use of wall functions and divides
+the flow into a viscosity-affected region and a fully turbulent region.
+Whereas the spreading of the coolant is commonly mispredicted,
+lateral averages of film effectiveness are predicted relatively well for
+the case where the film-cooling jet is attached to the downstream
+surface. This was first illustrated by the first paper reporting a full
+three-dimensional CFD prediction of a film-cooling jet, given by
+Leylek and Zerkle.91 Although their first paper showed an overprediction of the cooling when the jet was attached, their predictions
+indicated a decay in the film effectiveness similar to that measured.
+Further refinements in the representation of the cooling hole geometry, grid generation, and discretization illustrated the importance
+of these factors as even better predictions were achieved for an attached jet case.92 Comparisons of predicted and measured centerline
+and laterally averaged effectiveness levels are given in Fig. 27 for a
+simple round cooling hole placed in a flat plate for M = 0.5. Predictions are shown in Fig. 27 by two independent research groups,92,93
+with each using the same CFD code including a two-equation k–ε
+turbulence model and wall functions. Experiments were conducted
+by Sinha et al.,12 Pedersen et al.,7 and Schmidt et al.16 Whereas
+Fig. 27b shows a relatively good comparison of the measured and
+predicted values for the laterally averaged values, Fig. 27a shows
+that there is an overprediction of the effectiveness levels at the jet
+centerline. Although it is not shown here, the overprediction of the
+centerline values is compensated by an underprediction of the jet
+spreading, which results in reasonably predicted laterally averaged
+values of effectiveness.
+The most difficult situation for a CFD model to predict accurately is for a case where the cooling jet is separated from the wall.
+Unsuccessful attempts in predicting film effectiveness levels using
+a number of turbulence models for a separated jet were shown by
+Ferguson et al.94 The turbulence models evaluated include the standard k–ε with wall functions (KE–WF) and with nonequilibrium
+wall functions (KE–NE), the renormalization group (RNG) k–ε
+model with WF (RNG–WF) and with NE (RNG–NE), Reynolds
+stress model with WF (RSM–WF) and with NE (RSM–NE), and
+a k–ε model with a two-layer zonal model. These results showed
+essentially the same prediction with all turbulence models using
+WF, but a better prediction when using the two-layer zonal model.
+Walters and Leylek95 also found better predictions with the twolayer zonal model compared to WF as shown in Fig. 28, showing
+the centerline film effectiveness levels for a simple cylindrical hole
+
+267
+
+a)
+
+b)
+Fig. 27 Measured and predicted film effectiveness levels for round
+film-cooling hole at M = 0.5 for a) jet centerline and b) laterally averaged
+values (from Kohli and Thole93 ).
+
+Fig. 28 Comparison of centerline film effectiveness levels for number
+of turbulence models for M = 1 with round film-cooling hole on a flat
+plate (figure from Walters and Leylek95 ).
+
+at a M = 1. However, both predictions were considerably higher
+than the experiment.
+As with film-cooling experiments, more recent CFD studies have
+moved toward predicting film effectiveness on an actual airfoil geometry. As one would expect, the difficulties are compounded by
+the fact that airfoil curvature and pressure gradients both have a
+profound effect on the film effectiveness. Moreover, depending on
+where the jets are located, particularly on the suction side of the
+airfoil, the curvature effects can lead to jet separation even at low
+blowing ratios. Buck et al.,96 Walters et al.,97 Ferguson et al.,98 and
+McGrath et al.99 reported on a combined experimental and computational study for a number of different film-cooling hole shapes
+that were simulated on curved surfaces representing airfoil pressure and suction surfaces. They used a two-layer zonal model in
+conjunction with the RNG k–ε turbulence model. Given that many
+
+268
+
+BOGARD AND THOLE
+
+of the hole geometries were intended to have an attached jet, the
+comparisons between the experimental results and computational
+results generally showed agreement.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+IX.
+
+Summary
+
+As described in the preceding sections, gas turbine airfoil film
+cooling is influenced by a wide range of variables. The dominant
+film-cooling configuration used for cooling turbine airfoils and endwalls is rows of discrete coolant holes, and this configuration has
+been the primary focus of this review. Particular emphasis was
+placed on identifying which variables have a significant effect and
+which do not. In each case, we have tried to provide an explanation
+for the effect on the film-cooling performance based on the physical
+description of the interaction between coolant jets and mainstream.
+Film-cooling performance is quantified using the film effectiveness, heat transfer coefficients, and net heat flux reduction. A full
+understanding of the performance requires all three of these parameters. In many cases, the film effectiveness dominates, and many
+studies focus on this measure alone. However, in some cases the
+improved film effectiveness is offset by increases in heat transfer
+coefficient, which leads to poorer net heat flux reduction. One example of this is compound angle injection, which provides distinctly
+improved film effectiveness but ultimately provides a net heat flux
+reduction that is equal to or poorer than that for streamwise oriented
+holes.
+When evaluating the effects of the many variables that affect
+film cooling performance, most studies have used relatively simple
+laboratory test models to isolate the effects of different variables.
+Although this is appropriate to obtain an understanding of the basic physics of the effects of different variables, one should not lose
+sight of the complicated nature of the actual operating environment
+for the turbine airfoils. For example, most studies of film-cooling
+performance used facilities that had relative low mainstream turbulence levels, particularly before 1996. As noted in the section on high
+freestream turbulence effects, the optimum momentum flux ratio for
+coolant jets is an order of magnitude larger when subjected to high
+freestream turbulence levels compared to low freestream turbulence
+levels. Consequently, many of the results found under conditions of
+low freestream turbulence have to be reevaluated when considering
+actual turbine operating conditions.
+Ultimately the film-cooling performance is closely linked to
+whether the coolant jet has separated from the surface. For nominal conditions of a flat surface, low freestream turbulence, and
+cylindrical holes, the film-cooling performance is reasonably predictable with empirical correlations. However, surface curvature,
+high freestream turbulence, and shaping of the hole exit can greatly
+change film-cooling performance by significantly affecting the
+blowing ratio at which the coolant jet separates. Although this review has given indications of how large these effects can be, at this
+time there are insufficient data to characterize fully the effects of
+curvature, freestream turbulence level and length scale, and hole
+shape. CFD predictions, though very useful in providing insight in
+the spatial details of the film-cooling process, are also limited by
+the very complex flow conditions that occur for film cooling, particularly when the coolant jets begin to separate. Consequently, the
+film-cooling performance for actual turbine conditions is often difficult to predict precisely, and this remains a major constraint in the
+design for the durability of the turbine section.
+
+References
+1 Pietryzk,
+
+J. R., Bogard, D. G., and Crawford, M. E., “Effects of Density
+Ratio on the Hydrodynamics of Film Cooling,” Journal of Turbomachinery,
+Vol. 112, No. 3, 1990, pp. 437–450.
+2 Han, J. C., Dutta, S., and Ekkad, S. V., Gas Turbine Heat Transfer and
+Cooling Technology, Taylor and Francis, New York, 2000.
+3 Goldstein, R. J., “Film Cooling,” Advances in Heat Transfer, Vol. 7,
+1971, pp. 321–380.
+4 Teekaram, A., Forth, C., and Jones, T., “The Use of Foreign Gas to
+Simulate the Effects of Density Ratios in Film Cooling,” Journal of Turbomachinery, Vol. 111, 1989, pp. 57–62.
+
+5 Papell, S. S., “Effect on Gaseous Film Cooling of Coolant Injection
+Through Angled Slots and Normal Holes,” NASA Rept. NASA-TN-D-299,
+Oct. 1960.
+6 Hartnett, J. P., Birkebak, R. C., and Eckert, E. R. G., “Velocity Distributions, Temperature Distributions, Effectiveness, and Heat Transfer for
+Air Injected Through a Tangential Slot into a Turbulent Boundary Layer,”
+Journal of Heat Transfer, Vol. 83, Aug. 1961, pp. 283–306.
+7 Pedersen, D. R., Eckert, E., and Goldstein, R., “Film Cooling with Large
+Density Differences Between the Mainstream and the Secondary Fluid Measured by the Heat-Mass Transfer Analogy,” Journal of Heat Transfer, Vol. 99,
+1977, pp. 620–627.
+8 Baldauf, S., Scheurlen, M., Schulz, A., and Wittig, S., “Correlation of
+Film-Cooling Effectiveness from Thermographic Measurements at Enginelike Conditions,” Journal of Turbomachinery, Vol. 124, 2002, pp. 686–698.
+9 Baldauf, S., Schulz, A., and Wittig, S., “High-Resolution Measurements
+of Local Effectiveness from Discrete Hole Film Cooling,” Journal of Turbomachinery, Vol. 123, 2001, pp. 758–765.
+10 Thole, K. A., Sinha, A., Bogard, D. G., and Crawford, M. E., “Mean
+Temperature Measurements of Jets with a Crossflow for Gas Turbine Film
+Cooling Application,” Rotating Machinery Transport Phenomena, edited by
+J. H. Kim and W. J. Yang, Hemisphere, New York, 1992, pp. 69–85.
+11 Mouzon, B. D., Terrell, E. J., Albert, J. E., and Bogard, D. G., “Net
+Heat Flux Reduction and Overall Effectiveness for a Turbine Blade Leading
+Edge,” American Society of Mechanical Engineers, ASME Paper GT200569002, 2005.
+12 Sinha, A., Bogard, D., and Crawford, M., “Film Cooling Effectiveness
+Downstream of a Single Row of Holes with Variable Density Ratio,” Journal
+of Turbomachinery, Vol. 113, 1991, pp. 442–449.
+13 Cutbirth, J., and Bogard, D., “Effects of Coolant Density Ratio on
+Film Cooling,” American Society of Mechanical Engineers, ASME Paper
+GT2003-38582, 2003.
+14 Ethridge, M., Cutbirth, J., and Bogard, D., “Scaling of Performance for
+Varying Density Ratio Coolants on an Airfoil with Strong Curvature and
+Pressure Gradients Effects,” Journal of Turbomachinery, Vol. 123, 2001,
+pp. 1–7.
+15 Baldauf, S., Scheurlen, M., Schulz, A., and Wittig, S., “Heat Flux Reduction From Film Cooling and Correlation of Heat Transfer Coefficients
+From Thermographic Measurements at Enginelike Conditions,” Journal of
+Turbomachinery, Vol. 124, 2002, pp. 699–709.
+16 Schmidt, D., Sen, B., and Bogard, D., “Film Cooling with Compound Angle Holes: Adiabatic Effectiveness,” Journal of Turbomachinery,
+Vol. 118, 1996, pp. 807–813.
+17 Foster, N. W., and Lampard, D., “The Flow and Film Cooling Effectiveness Following Injection Through a Row of Holes,” Journal of Engineering
+for Power, Vol. 102, 1980, pp. 584–588.
+18 Han, J. C., and Mehendale, A. B., “Flat-Plate Film Cooling with Steam
+Injection Through One Row and Two Rows of Inclined Holes,” Journal of
+Turbomachinery, Vol. 108, 1986, pp. 137–144.
+19 Cho, H. H., and Goldstein, R. J., “Heat (Mass) Transfer and Film Cooling Effectiveness with Injection Through Discrete Holes: Part II-On the Exposed Surface,” Journal of Turbomachinery, Vol. 117, 1995, pp. 451–460.
+20 Mayle, R. E., and Camarata, F. J., “Multihole Cooling Film Effectiveness and Heat Transfer,” Journal of Heat Transfer, Vol. 97, 1975,
+pp. 534–538.
+21 Sasaki, M., Takahara, K., Kumagai, T., and Hamano, M., “Film Cooling
+Effectiveness for Injection from Multirow Holes,” Journal of Engineering
+for Power, Vol. 101, 1979, pp. 101–108.
+22 Harrington, M., McWaters, M., Bogard, D. G., Lemmon, C., and Thole,
+K., “Full Coverage Film Cooling with Short Normal Injection Holes,” Journal of Turbomachinery, Vol. 123, 2001, pp. 798–805.
+23 Kelly, G. B., and Bogard, D. G., “An Investigation of the Heat Transfer
+for Full Coverage Film Cooling,” American Society of Mechanical Engineers, ASME Paper GT2003-38716, 2003.
+24 Kohli, A., and Bogard, D., “Adiabatic Effectiveness, Thermal Fields,
+and Velocity Fields for Film Cooling with Large Angle Injection,” Journal
+of Turbomachinery, Vol. 119, 1997, pp. 352–358.
+25 Sen, B., Schmidt, D., and Bogard, D., “Film Cooling with Compound
+Angle Holes: Heat Transfer,” Journal of Turbomachinery, Vol. 118, 1996,
+pp. 800–806.
+26 Schmidt, D. L., and Bogard, D. G., “Effects of Free-Stream Turbulence and Surface Roughness on Laterally Injected Film Cooling,” Proceedings of the 32nd National Heat Transfer Conference, HTD-Vol. 350,
+Vol. 12, American Society of Mechanical Engineers, New York, 1997,
+pp. 233–244.
+27 Saumweber, C., Schulz, A., and Wittig, S., “Free-Stream Turbulence
+Effects on Film Cooling with Shaped Holes,” Journal of Turbomachinery,
+Vol. 125, 2003, pp. 65–73.
+28 Dittmar, J., Schulz, A., and Wittig, S., “Assessment of Various Film
+Cooling Configurations Including Shaped and Compound Angle Holes
+Based on Large Scale Experiments,” Journal of Turbomachinery, Vol. 125,
+2003, pp. 57–64.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+BOGARD AND THOLE
+29 Kadotani, K., and Goldstein, R., “Effect of Mainstream Variables on Jets
+Issuing from a Row of Inclined Round Holes,” Transaction of the American
+Society of Mechanical Engineers, Vol. 101, 1979, pp. 298–304.
+30 Goldstein, R., Eckert, E., Eriksen, V., and Ramsey, J., “Film Cooling
+Following Injection Through Inclined Circular Tubes,” Israel Journal of
+Technology, Vol. 8, No. 1-2, 1970, pp. 145–154.
+31 Goldstein, R., Eckert, E., and Ramsey, J., “Film Cooling with Injection
+Through a Circular Hole,” NASA CR-54604, May 1968.
+32 Eriksen, V. L., and Goldstein, R., “Heat Transfer and Film Cooling Following Injection Through Inclined Circular Tubes,” Journal of Heat Transfer, Vol. 96, No. 1, 1974, pp. 239–245.
+33 Liess, C., “Experimental Investigation of Film Cooling with Injection
+from a Row of Holes for the Application to Gas Turbine Blades,” Journal of
+Engineering for Power, Vol. 97, 1975, pp. 21–27.
+34 Ito, S., Goldstein, R., and Eckert, E., “Film Cooling of a Gas Turbine
+Blade,” Journal of Engineering for Power, Vol. 100, 1978, pp. 476–481.
+35 Schwarz, S., Goldstein, R., and Eckert, E., “The Influence of Curvature
+on Film Cooling Performance,” Journal of Turbomacherinery, Vol. 112,
+1990, pp. 472–478.
+36 Teekaram, A., Forth, C., and Jones, R., “Film Cooling in the Presence
+of Mainstream Pressure Gradients,” Journal of Turbomachinery, Vol. 113,
+1991, pp. 484–492.
+37 Brown, A., and Saluja, C. L., “Film Cooling from a Single Hole and a
+Row of Holes of Variable Pitch to Diameter Ratio,” International Journal of
+Heat and Mass Transfer, Vol. 22, 1979, pp. 525–533.
+38 Schmidt, D. L., and Bogard, D. G., “Pressure Gradient Effects on Film
+Cooling,” American Society of Mechanical Engineers, ASME Paper 95-GT18, 1995.
+39 Launder, B., and York, J., “Discrete-hole Cooling in the Presence of Free
+Stream Turbulence and Strong Favorable Pressure Gradient,” International
+Journal of Heat and Mass Transfer, Vol. 17, 1974, pp. 1403–1409.
+40 Kadotani, K., and Goldstein, R., “On the Nature of Jets Entering a Turbulent Flow Part A—Jet-Mainstream Interaction,” Journal of Engineering
+for Power, Vol. 101, 1979, pp. 466–470.
+41 Kadotani, K., and Goldstein, R., “On the Nature of Jets Entering a
+Turbulent Flow Part B—Film Cooling Performance,” Journal of Engineering
+for Power, Vol. 101, 1979, pp. 466–470.
+42 Jumper, G., Elrod, W., and Rivir, R., “Film Cooling Effectiveness
+in High Turbulence Flow,” Journal of Turbomachinery, Vol. 113, 1991,
+pp. 479–483.
+43 Schmidt, D. L., and Bogard, D. G., “Effects of Free-Stream Turbulence
+and Surface Roughness on Film Cooling,” American Society of Mechanical
+Engineers, ASME Paper 96-GT-462, 1996.
+44 Gritsch, M., Schulz, A., and Wittig, S., “Adiabatic Wall Effectiveness
+Measurements of Film-Cooling Holes with Expanded Exits,” Journal of
+Turbomachinery, Vol. 120, 1998, pp. 549–556.
+45 Juhany, K. A., Hunt, M. L., and Sivo, J. M., “Influence of Injectant
+Mach Number and Temperature on Supersonic Film Cooling,” Journal of
+Thermophysics and Heat Transfer, Vol. 8, No. 1, 1994, pp. 59–67.
+46 Bons, J., Rivir, R., MacArthur, C., and Pestian, D., “The Effect of Unsteadiness on Film Cooling Effectiveness,” AIAA Paper 95-0306, 1995.
+47 Seo, H. J., Lee, J. S., and Ligrani, P. M., “The Effect Injection Hole
+Length on Film Cooling with Bulk Flow Pulsations,” International. Journal
+of Heat and Mass Transfer, Vol. 41, No. 22, 1998, pp. 3515–3528.
+48 Dring, R., Blair, M., and Joslyn, H., “An Experimental Investigation of
+Film Cooling on a Turbine Rotor Blade,” Journal of Engineering for Power,
+Vol. 102, 1980, pp. 81–87.
+49 Abhari, R., and Epstein, A., “An Experimental Study of Film Cooling in
+a Rotating Transonic Turbine,” Journal of Turbomachinery, Vol. 116, 1994,
+pp. 63–70.
+50 Takeishi, K., Matsuura, M., Aoki, S., and Sato, T., “An Experimental
+Study of Heat Transfer and Film Cooling on Low Aspect Ratio Turbine
+Nozzles,” Journal of Turbomachinery, Vol. 112, 1990, pp. 488–496.
+51 Rigby, M. J., Johnson, A. B., and Oldfield, M. L. G., “Gas Turbine Rotor
+Blade Film Cooling With and Without Simulated NGV Shock Waves and
+Wakes,” American Society of Mechanical Engineers, ASME Paper 90-GT78, 1990.
+52 Bons, J. P., Taylor, R., McClain, S., and Rivir, R. B., “The Many Faces
+of Turbine Surface Roughness,” Journal of Turbomachinery, Vol. 123, 2001,
+pp. 739–748.
+53 Bogard, D. G., Schmidt, D. L., and Tabbita, M., “Characterization and
+Laboratory Simulation of Turbine Airfoil Surface Roughness and Associated
+Heat Transfer,” Journal of Turbomachinery, Vol. 120, 1998, pp. 337–342.
+54 Goldstein, R. J., Eckert, E. R. G., Chiang, H. D., and Elovic, E., “Effect
+of Surface Roughness on Film Cooling Performance,” Journal of Engineering for Gas Turbines and Power, Vol. 107, 1985, pp. 111–116.
+55 Schmidt, D. L., Sen, B., and Bogard, D. G., “Effects of Surface Roughness on Film Cooling,” American Society of Mechanical Engineers, ASME
+Paper 96-GT-299, 1996.
+
+269
+
+56 Bogard, D. G., Snook, D., and Kohli, A., “Rough Surface Effects on
+Film Cooling of the Suction Side Surface of a Turbine Vane,” American
+Society of Mechanical Engineers, ASME Paper EMECE2003-42061, 2003.
+57 Rutledge, J. L., Robertson, D., and Bogard, D. G., “Degradation of
+Film Cooling Performance on a Turbine Vane Suction Side Due to Surface Roughness,” American Society of Mechanical Engineers, ASME Paper
+GT2005-69045, 2005.
+58 Polanka, M. D., Witteveld, V. C., and Bogard, D. G., “Film Cooling
+Effectiveness in the Showerhead Region of a Gas Turbine Vane Part I: Stagnation Region and Near Pressure Side,” American Society of Mechanical
+Engineers, ASME Paper 99-GT-048, 1999.
+59 Witteveld, V. C., Polanka, M. D., and Bogard, D. G., “Film Cooling
+Effectiveness in the Showerhead Region of a Gas Turbine Vane Part II:
+Stagnation Region and Near Suction Side,” American Society of Mechanical
+Engineers, ASME Paper 99-GT-049, 1999.
+60 Cutbirth, J. M., and Bogard, D. G., “Thermal Field and Flow Visualization Within the Stagnation Region of a Film Cooled Turbine Vane,” Journal
+of Turbomachinery, Vol. 124, 2002, pp. 200–206.
+61 Cutbirth, J. M., and Bogard, D. G., “Evaluation of Pressure Side Film
+Cooling with Flow and Thermal Field Measurements, Part I: Showerhead
+Effects,” Journal of Turbomachinery, Vol. 124, 2002, pp. 670–677.
+62 Ames, F. E., “Aspects of Vane Film Cooling with High Turbulence—
+Part I: Heat Transfer,” Journal of Turbomachinery, Vol. 120, 1998,
+pp. 768–776.
+63 Mehendale, A. B., and Han, J. C., “Influence of High Mainstream Turbulence on Leading Edge Film Cooling Heat Transfer,” Journal of Turbomachinery, Vol. 114, 1992, pp. 707–715.
+64 Reiss, H., and Bölcs, A., “Experimental Study of Showerhead Cooling
+on a Cylinder Comparing Several Configurations Using Cylindrical and
+Shaped Holes,” Journal of Turbomachinery, Vol. 122, 2000, pp. 161–169.
+65 Albert, J. E., Cunha, F., and Bogard, D. G., “Adiabatic and Overall
+Effectiveness for a Film Cooled Blade,” American Society of Mechanical
+Engineers, ASME Paper GT2004-53998, 2004.
+66 Bunker, R. S., “A Review of Turbine Blade Tip Heat Transfer,” Annals
+of the New York Academy of Sciences, Vol. 934, New York Academy of
+Sciences, New York, 2001, pp. 64–79.
+67 Kim, Y. W., and Metzger, D. E., “Heat Transfer and Effectiveness
+on Film Cooled Turbine Blade Tip Models,” Journal of Turbomachinery,
+Vol. 117, 1995, pp. 12–21.
+68 Kim, Y. W., Downs, J. P., Soechting, F. O., Abdel-Messeh, W., Steuber, G., and Tanrikut, S., “A Summary of the Cooled Turbine Blade Tip
+Heat Transfer and Film Effectiveness Investigations Performed by Dr. D. E.
+Metzger,” Journal of Turbomachinery, Vol. 117, 1995, pp. 1–11.
+69 Kwak, J. S., and Han, J. C., “Heat Transfer Coefficient and Film-Cooling
+Effectiveness on a Gas Turbine Blade Tip,” American Society of Mechanical
+Engineers, ASME Paper GT2002-30194, 2002.
+70 Kwak, J. S., and Han, J. C., “Heat Transfer Coefficient and Film-Cooling
+Effectiveness on the Squealer Tip of a Gas Turbine Blade,” American Society
+of Mechanical Engineers, ASME Paper GT2002-30555, 2002.
+71 Ahn, J., Mhetras, S., and Han, J. C., “Film-Cooling Effectiveness on a
+Gas Turbine Blade Tip Using Pressure Sensitive Paint,” American Society
+of Mechanical Engineers, ASME Paper GT2004-53249, 2004.
+72 Christophel, J. R., Thole, K., and Cunha, F., “Cooling the Tip of a
+Turbine Blade Using Pressure Side Holes—Part 1: Film Effectiveness Measurements,” Journal of Turbomachinery, Vol. 127, 2005, pp. 270–277.
+73 Acharya, S., Yang, H., Ekkad, S. V., Prakash, C., and Bunker, R., “Numerical Simulation of Film Cooling Holes on the Tip of a Gas Turbine Blade,”
+American Society of Mechanical Engineers, ASME Paper GT-2002-30553,
+2002.
+74 Hohlfeld, E. M., Christophel, J. R., Couch, E. L., and Thole, K. A.,
+“Predictions of Cooling from Dirt Purge Holes Along the Tip of a Turbine
+Blade,” American Society of Mechanical Engineers, ASME Paper GT200338251, 2003.
+75 Friedrichs, S., Hodson, H. P., and Dawes, W. N., “Distribution of FilmCooling Effectiveness on a Turbine Endwall Measured Using the Ammonia and Diazo Technique,” Journal of Turbomachinery, Vol. 118, 1996,
+pp. 613–621.
+76 Friedrichs, S., Hodson, H. P., and Dawes, W. N., “Aerodynamic Aspects of Endwall Film-Cooling,” Journal of Turbomachinery, Vol. 119, 1997,
+pp. 786–793.
+77 Friedrichs, S., Hodson, H. P., and Dawes, W. N., “The Design of an Improved Endwall Film-Cooling Configuration,” Journal of Turbomachinery,
+Vol. 121, 1999, pp. 772–780.
+78 Blair, M. F., “An Experimental Study of Heat Transfer and Film Cooling
+on Large-Scale Turbine Endwalls,” Journal of Heat Transfer, Nov. 1974,
+pp. 524–529.
+79 Granser, D., and Schulenberg, T., “Prediction and Measurement of Film
+Cooling Effectiveness for a First-Stage Turbine Vane Shroud,” American
+Society of Mechanical Engineers, ASME Paper 90-GT-95, 1990.
+
+Downloaded by UNIVERSITY OF ARIZONA on June 13, 2014 | http://arc.aiaa.org | DOI: 10.2514/1.18034
+
+270
+
+BOGARD AND THOLE
+
+80 Colban, W. F., Thole, K. A., and Zess, G., “Combustor–Turbine Interface Studies: Part 1: Endwall Measurements,” Journal of Turbomachinery,
+Vol. 125, 2002, pp. 193–202.
+81 Colban, W. F., Lethander, A. T., Thole, K. A., and Zess, G., “Combustor–
+Turbine Interface Studies: Part 2: Flow and Thermal Field Measurements,”
+Journal of Turbomachinery, Vol. 125, 2002, pp. 203–209.
+82 Burd, S. W., and Simon, T. W., “Effects of Slot Bleed Injection over
+a Contoured Endwall on Nozzle Guide Vane Cooling Performance: Part I:
+Flow Field Measurements,” American Society of Mechanical Engineers,
+ASME Paper 2000-GT-199, 2000.
+83 Burd, S. W., Satterness, C. J., and Simon, T. W., “Effects of Slot Bleed
+Injection over a Contoured Endwall on Nozzle Guide Vane Cooling Performance: Part II: Thermal Measurements,” American Society of Mechanical
+Engineers, ASME Paper 2000-GT-200, 2000.
+84 Oke, R., Simon, T., Burd, S. W., and Vahlberg, R., “Measurements
+in a Turbine Cascade Over a Contoured Endwall: Discrete Hole Injection
+of Bleed Flow,” American Society of Mechanical Engineers, ASME Paper
+2000-GT-214, 2000.
+85 Oke, R., Simon, T., Shih, T., Zhu, B., Lin, Y. L., and Chyu, M., “Measurements Over a Film-Cooled, Contoured Endwall with Various Coolant
+Injection Rates,” American Society of Mechanical Engineers, ASME Paper
+2001-GT-140, 2001.
+86 Zhang, L., and Moon, H. K., “Turbine Nozzle Endwall Inlet Film
+Cooling—The Effect of a Back-Facing Step,” American Society of Mechanical Engineers, ASME Paper GT-2003-38319, 2003.
+87 Kost, F., and Nicklas, M., “Film-Cooled Turbine Endwall in a Transonic
+Flow Field: Part I—Aerodynamic Measurements,” Journal of Turbomachinery, Vol. 123, 2001, pp. 709–719.
+88 Nicklas, M., “Film-Cooled Turbine Endwall in a Transonic
+Flow Field: Part II—Heat Transfer and Film-Cooling Effectiveness Measurements,” Journal of Turbomachinery, Vol. 123, 2001,
+pp. 720–729.
+89 Knost, D. K., and Thole, K. A., “Computational Predictions of Endwall Film-Cooling for a First Stage Vane,” American Society of Mechanical
+Engineers, ASME Paper GT-2003-38252, 2003.
+
+90 Knost, D. G., and Thole, K. A., “Adiabatic Effectiveness Measurements of Endwall Film-Cooling for a First Stage Vane,” American Society
+of Mechanical Engineers, ASME Paper GT2004-52236, Journal of Turbomachinery, Vol. 127, 2004.
+91 Leylek, J. H., and Zerkle, R. D., “Discrete-Jet Film Cooling: A Comparison of Computational Results with Experiments,” Journal of Turbomachinery, Vol. 116, 1994, pp. 358–368.
+92 Walters, D. K., and Leylek, J. H., “A Systematic Computational Methodology Applied to a Three-Dimensional Film-Cooling Flowfield,” Journal of
+Turbomachinery, Vol. 119, 1997, pp. 777–785.
+93 Kohli, A., and Thole, K. A., “A CFD Investigation on the Effect of Entrance Flow Conditions in Discrete Film Cooling Holes,” 32nd National Heat
+Transfer Conference, Vol. 12, American Society of Mechanical Engineers,
+New York, 1997, pp. 223–232.
+94 Ferguson, J., Walters, D., and Leylek, J., “Performance of Turbulence
+Models and Near-Wall Treatments in Discrete Jet Film Cooling Simulations,” American Society of Mechanical Engineers, ASME Paper 98-GT438, 1998.
+95 Walters, D., and Leylek, J., “A Detailed Analysis of Film-Cooling
+Physics: Part I—Streamwise Injection with Cylindrical Holes,” Journal of
+Turbomachinery, Vol. 122, 2000, pp. 102–112.
+96 Buck, F. A., Walters, D., Ferguson, J., McGrath, E., and Leylek, J., “Film
+Cooling on a Modern HP Turbine Blade Part I: Experimental and Computational Methodology and Validation,” American Society of Mechanical
+Engineers, ASME Paper GT2002-30470, 2002.
+97 Walters, D. K., Leylek, J. H., and Buck, F. A., “Film Cooling on a Modern HP Turbine Blade Part II: Compound Angle Round Holes,” American
+Society of Mechanical Engineers, ASME Paper GT2002-30613, 2002.
+98 Ferguson, J. D., Leylek, J. H., and Buck, F. A., “Film Cooling on a
+Modern HP Turbine Blade Part III: Axial Shaped Holes,” American Society
+of Mechanical Engineers, ASME Paper GT2002-30522, 2002.
+99 McGrath, E. L., Leylek, J. H., and Buck, F. A., “Film Cooling on
+a Modern HP Turbine Blade Part IV: Compound Angle Shaped Holes,”
+American Society of Mechanical Engineers, ASME Paper GT2002-30521,
+2002.
+
+

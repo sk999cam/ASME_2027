@@ -1,0 +1,687 @@
+Analysis of Turbulent Scalar Flux
+Models for a Discrete Hole Film
+Cooling Flow
+
+Julia Ling1
+Mechanical Engineering Department,
+Stanford University,
+Stanford, CA 94305
+e-mail: julial@stanford.edu
+
+Kevin J. Ryan
+Mechanical Engineering Department,
+Stanford University,
+Stanford, CA 94305
+
+Algebraic closures for the turbulent scalar fluxes were evaluated for a discrete hole film
+cooling geometry using the results from a high-fidelity large eddy simulation (LES). Several models for the turbulent scalar fluxes exist, including the widely used gradient diffusion hypothesis (GDH), the generalized GDH (GGDH), and the higher-order GDH
+(HOGGDH). By analyzing the results from the LES, it was possible to isolate the error
+due to these turbulent mixing models. Distributions of the turbulent diffusivity, turbulent
+viscosity, and turbulent Prandtl number were extracted from the LES results. It was
+shown that the turbulent Prandtl number varies significantly spatially, undermining the
+applicability of the Reynolds analogy for this flow. The LES velocity field and Reynolds
+stresses were fed into a Reynolds-averaged Navier–Stokes (RANS) solver to calculate the
+fluid temperature distribution. This analysis revealed in which regions of the flow various
+modeling assumptions were invalid and what effect those assumptions had on the
+predicted temperature distribution. [DOI: 10.1115/1.4031698]
+
+Julien Bodart
+ISAE,
+University of Toulouse,
+Toulouse 31400, France
+
+John K. Eaton
+Mechanical Engineering Department,
+Stanford University,
+Stanford, CA 94305
+
+1
+
+Introduction
+
+In order to determine the performance of a film cooling configuration, RANS solvers must calculate the fluid temperature distribution. These solvers require a closure for the turbulent scalar flux
+term, u0i h0 , which represents the transport of heat by turbulent fluctuations. A variety of closure schemes exist, the most widely used
+of which is the GDH. This model represents the turbulent scalar
+fluxes as shown in the following equation:
+u0i h0 GDH ¼ at
+
+dh
+dxi
+
+(1)
+
+ui is the ith component of velocity and overbars indicate a time average. h ¼ ðT  Tmain Þ=ðTcool  Tmain Þ is the nondimensional temperature, where Tmain is the main flow inlet temperature and Tcool
+is the coolant temperature. The turbulent diffusivity at is usually
+calculated through the Reynolds analogy with a fixed turbulent
+Prandtl number as at ¼ t =Prt , where  t is the eddy viscosity.
+GDH relies on several assumptions. As Corrsin [1] noted, GDH
+is only applicable in regions where the local scalar gradient is representative of the average gradient over the turbulent length scale.
+Therefore, in regions where the curvature of the temperature
+distribution changes significantly over the turbulent length scale,
+gradient transport is not an appropriate model.
+Furthermore, using a fixed Prt to calculate the turbulent diffusivity from the eddy viscosity depends on the validity of the Reynolds analogy between turbulent momentum and scalar transport.
+Typically, a default value of Prt ¼ 0.85 is prescribed based on the
+value for a flat plate boundary layer. However, studies by Ling
+et al. [2] in a slot film cooling configuration and by He et al. [3]
+for discrete hole film cooling showed that the adiabatic effectiveness results were sensitive to the value of Prt used, and that more
+accurate results were provided by significantly lower values
+(0.2–0.45) of Prt.
+Other studies have suggested that allowing spatial variation in
+Prt may enable improved predictive accuracy. Kohli and Bogard
+[4] performed experiments that showed that Prt varied
+1
+
+J. Ling is currently at Sandia National Labs.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received August 20,
+2015; final manuscript received September 8, 2015; published online October 21,
+2015. Editor: Kenneth C. Hall.
+
+Journal of Turbomachinery
+
+significantly (by a factor of 4) spatially in their film cooling configuration. Lakehal [5] analyzed direct numerical simulation
+(DNS) results for channel flow and flat plate boundary layer flow
+and showed that Prt changed significantly in the viscous sublayer,
+and proposed a model for film cooling flows that accounted for
+this spatial variation in Prt. Liu et al. [6,7] investigated the effect
+of the prescribed Prt on the film cooling effectiveness and proposed a model which incorporated spanwise variation in Prt. They
+reported improved thermal predictions with this laterally varying
+Prt model.
+Another key simplification of the GDH is that it assumes that
+the turbulent diffusivity is isotropic. Kaszeta and Simon [8] measured the Reynolds stresses in a configuration with a row of film
+cooling holes and reported significant anisotropy in the eddy viscosity. This result suggests that it may be appropriate to use anisotropic models for the turbulent scalar fluxes in film cooling flows.
+Several such models have been proposed. Bergeles et al. [9] proposed a simple correction that includes anisotropy in the near wall
+region for film cooling flows. Lakehal [5] and Liu et al. [6] implemented this correction and reported improved adiabatic effectiveness predictions in their film cooling flows.
+The GGDH of Daly and Harlow [10], shown in Eq. (2), incorporates anisotropy by including dependence on the individual
+Reynolds stress components. In this equation, CGGDH is a model
+parameter that replaces the turbulent Prandtl number and s is the
+turbulent time scale, commonly taken to be k=e
+u0i h0 GGDH ¼ CGGDH su0i u0j
+
+dh
+dxj
+
+(2)
+
+HOGGDH of Abe and Suga [11] was developed to more accurately predict the streamwise component of the scalar fluxes by
+using quadratic products of the Reynolds stresses, as shown in the
+following equation:
+s
+dh
+u0i h0 HOGGDH ¼ CHOGGDH u0i u0k u0k u0j
+k
+dxj
+
+(3)
+
+These higher-order algebraic closures have the potential to be
+more accurate than the GDH, since they incorporate anisotropy
+into their predictions, but the accuracy of the anisotropy predictions is dependent on the accuracy of the Reynolds stress predictions. These models must either be paired with an algebraic stress
+
+C 2016 by ASME
+Copyright V
+
+JANUARY 2016, Vol. 138 / 011006-1
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+model or a Reynolds stress transport model (RSTM) for the flow.
+Such models often result in poor convergence, more stringent grid
+quality requirements, and increased computational cost. It is therefore only worth using GGDH or HOGGDH if they give significantly improved predictions.
+Gorle et al. [12,13] investigated a flow with scalar injection by
+a jet in supersonic crossflow and compared RANS results using
+GDH, GGDH, and HOGGDH to the LES results. In this flow,
+none of the RANS models accurately predicted the scalar concentration distribution. However, it was not clear if this deficiency
+was due to the insufficiency of the scalar flux models, or to inaccuracies in the predicted Reynolds stresses, which were calculated
+through the k-x shear stress transport model. Since this model
+does not predict anisotropy in the Reynolds stresses, it may have
+been ill-suited to evaluate the benefits of using an anisotropic turbulent scalar flux model.
+Xueying et al. [14] implemented an anisotropic algebraic eddy
+viscosity model paired with a scalar flux model based on the
+HOGGDH. They reported improved predictions for the adiabatic
+effectiveness in a discrete hole film cooling configuration. RajabiZargarabadi and Bazdidi-Tehrani [15] ran an RSTM with both
+GDH and GGDH and showed that the GGDH gave improved predictions in comparison to GDH. Azzi and Lakehal [16] tested an
+anisotropic model based on the GGDH for a film cooling flow and
+showed improved lateral spreading predictions in comparison to
+isotropic models. These studies agree that anisotropic algebraic
+closures for the scalar fluxes can give significantly improved film
+cooling effectiveness predictions. However, in all these studies,
+analysis of the turbulent scalar flux predictions was clouded by
+errors in the predicted Reynolds stresses. While the RSTMs can
+often predict more accurate Reynolds stress fields than simple
+two-equation models, they still have uncertainty in these predictions, which would propagate through to the scalar flux predictions. It would therefore be useful to analyze the turbulent scalar
+fluxes and temperature distribution predicted by various models
+when the correct Reynolds stresses and mean velocity field are
+known.
+In this paper, results from a high-fidelity LES of a discrete hole
+film cooling flow performed by Bodart et al. [17] are used to evaluate GDH, GGDH, and HOGGDH without the compounding
+effects of errors in the Reynolds stresses and velocity field. These
+LES results have been validated extensively [17] against the experimental results of Coletti et al. [18,19] and have been shown to
+be in excellent agreement with the experimental data. The simulations provide all three components of the turbulent scalar fluxes
+and all six of the Reynolds stresses throughout the threedimensional computational domain. Such extensive results would
+have been impossible to obtain experimentally. Furthermore, the
+subgrid turbulent diffusivity and viscosity were an order of magnitude less than the molecular diffusivity and viscosity throughout
+the jet region [17], indicating that the LES subgrid model had
+only a negligible impact on the simulation results. Therefore, this
+paper will treat these LES results as data against which to compare the algebraic scalar flux model predictions. The objective of
+this paper is to use the LES results to isolate the effects of the turbulent scalar flux models in order to determine in which regions
+of the flow various RANS modeling assumptions are invalid and
+what effect those assumptions have on the predicted temperature
+distribution.
+
+2
+
+Flow Configuration
+
+The flow configuration is shown schematically in Fig. 1(a). It
+consists of a square test channel 8.62 D across, where D is the
+injection hole diameter. There is a single film cooling hole, angled
+30 deg from horizontal, fed from a rectangular plenum underneath
+the channel.
+The Reynolds number based on the hole diameter and bulkaveraged main flow velocity was 3000. The flow was in the
+incompressible regime and the density ratio was 1.0, such that the
+011006-2 / Vol. 138, JANUARY 2016
+
+Fig. 1 Schematic of flow configuration. (a) Flow configuration
+with contours of 
+h. Coolant plenum and injection hole shown. (b)
+Comparison of LES and experimental results in near-injection
+region. Color contours of h shown on the channel center-plane,
+as measured by Coletti et al. Corresponding isocontour lines
+from LES shown in black. (c) RANS domain. Zoomed-in section
+of mesh shown in region near hole exit. Isosurface of 
+h 5 0.01
+also shown for reference.
+
+fluid temperature could be treated as a passive scalar. Therefore, h
+can also be thought of as the coolant concentration. The velocity
+ratio between the coolant flow and main flow was 1.0.
+A detailed explanation of the computational setup for the LES
+can be found in Ref. [17]. The LES was performed using
+CharLESx, a nominally second order, unstructured, finite-volume
+solver of the compressible Navier Stokes equations, developed at
+the Center for Turbulence Research at Stanford University. The
+Vreman subgrid scale model was used in conjunction with a fixed
+subgrid turbulent Schmidt number of 0.9. The computational domain was highly resolved, consisting of 52  106 hexahedral cells.
+A posteriori analysis showed that the subgrid turbulent viscosity
+and turbulent diffusivity were an order of magnitude lower than
+the molecular viscosity and diffusivity throughout most of the domain. This analysis demonstrated that the LES resolved most of
+the energy containing scales.
+Bodart et al. [17] validated the LES results against experimental
+results collected by Coletti et al. [18,19]. In order to parameterize
+and validate the synthetic turbulence injected at the inflow of the
+LES, Coletti et al. measured the Reynolds stresses and mean velocity using particle image velocimetry in three streamwise planes
+upstream of injection. Excellent agreement between these experimental results and the LES results at the same planes validated the
+turbulent inflow conditions used in the LES. Furthermore, Coletti
+et al. measured the full 3D mean coolant concentration distribution and the full 3D three-component mean velocity field using
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+magnetic resonance imaging techniques. Bodart et al. [17] performed detailed comparisons of the LES results and the experimental data for the mean scalar distribution and the mean velocity
+field, both in the hole and in the test channel. Figure 1(b) shows
+contours of h on the channel center-plane as measured experimentally by Coletti et al. [18,19], overlaid with isocontour lines from
+the LES results. This comparison demonstrates the close agreement between the LES and experimental results. These LES
+results are therefore considered well-validated and will be used as
+a reference against which to compare the various RANS scalar
+flux models throughout the rest of this paper.
+
+3
+
+RANS Computational Methods
+
+The RANS domain is shown in Fig. 1(c). It comprises the full
+channel cross section from x ¼ 3D to x ¼ þ34D, where the
+streamwise coordinate x is measured from the hole center. The
+RANS domain did not include the film cooling plenum or the
+angled hole since the coolant concentration in those regions was
+100%. Figure 1(c) also includes a 1% isosurface of h showing that
+the domain boundaries are well beyond the region of interest.
+The RANS solver was only used to solve the Reynolds averaged advection diffusion equation for the fluid temperature distribution, not the RANS equations themselves. The LES results for
+the mean velocity field and the Reynolds stresses were interpolated onto the RANS mesh.
+A boundary condition of h ¼ 1:0 was imposed at the hole exit.
+This boundary condition is consistent with the LES and experimental results, which showed no main flow ingestion into the
+hole. While the LES domain included the hole and plenum in
+order to calculate the velocity field, these regions could be
+excluded from the RANS calculations of the temperature distribution, since h ¼ 1:0 everywhere in the hole and plenum. The main
+flow inlet was set 3 D upstream of the hole center, where a boundary condition of h ¼ 0:0 was prescribed, since no coolant is
+expected to flow upstream. On the side, top, and bottom walls, an
+adiabatic condition was prescribed. A Neumann condition of zero
+streamwise gradient was specified at the outlet, 34 D downstream
+of the hole center.
+The mesh consisted of 4.7  106 hexahedral cells. A boundary
+layer mesh was used on the bottom wall with the first cell located
+at yþ  2. A section of this mesh is shown in Fig. 1(c). Second
+order upwind discretization was used in the thermal transport
+equation. At convergence, the residuals were less than 107 .
+Three different algebraic closures for the turbulent scalar fluxes
+were applied: GDH, GGDH, and HOGGDH. The calculations with
+GGDH diverged, so the predicted temperature distribution is only
+available using GDH and HOGGDH. Direct assessment of the
+GGDH predictions for the turbulent scalar fluxes was still possible.
+
+4
+
+Results
+
+4.1 Extracting at, m t, and Prt From LES Results. In the
+LES, the large-scale turbulence structures are time-resolved and
+the associated turbulent scalar fluxes do not require a closure.
+Therefore, at and  t are not calculated directly in LES. However,
+it is possible to extract isotropic values of the turbulent diffusivity
+and turbulent viscosity from the LES results, and use those to calculate a spatially varying turbulent Prandtl number [20], as shown
+in Eqs. (4)–(6). In Eq. (4), Sij is the mean strain rate tensor
+
+t;LES
+
+2
+u0i u0j Sij þ kdij Sij
+3
+¼
+2Skl Skl
+
+(4)
+
+dh
+dx
+¼   i
+dh dh
+dxj dxj
+
+(5)
+
+u0i h0
+
+at;LES
+
+Journal of Turbomachinery
+
+Prt;LES ¼
+
+t;LES
+at;LES
+
+(6)
+
+As shown in Eq. (4), the isotropic turbulent viscosity is calculated from the LES results by performing a weighted average of
+the turbulent viscosity that would yield each component of the
+LES Reynolds stresses, given the known mean strain rate tensor.
+The weighting is based on the strain rate tensor components. Similarly, in Eq. (5), the isotropic turbulent diffusivity is given by the
+weighted average of the diffusivity in each direction, where the
+weights are the thermal gradients. This weighting makes sense
+because according to GDH, the effect of the turbulence on the scalar mixing in a given direction is directly proportional to the scalar
+gradient in that direction.
+Figure 2 shows the contours of t;LES ; at;LES and Prt;LES in
+streamwise slices spaced 4D apart. In these plots, at;LES and t;LES
+are normalized by the bulk-averaged main flow velocity Ub and
+the hole diameter D. The contours are cut off for h < 0:01. Furthermore, the contours of at;LES and Prt;LES are blanked in regions
+where Djrhj < 0:1, since at;LES and Prt;LES are not well-defined
+in regions where the thermal gradient goes to zero.
+If the Reynolds analogy were true, the contours of at;LES would
+match those of t;LES , such that Prt;LES would be constant in space.
+As shown in Fig. 2, the Reynolds analogy breaks down in many
+regions of the flow, particularly near injection, where Prt;LES
+decreases to values near 0.2. This breakdown in the Reynolds
+analogy could be due to the strongly localized change in fluid temperature near injection. In this region, Corrsin’s [1] condition for
+the gradient transport being applicable could be violated, since the
+turbulent length scale could be of the same order as the distance
+over which the curvature of the temperature distribution changes.
+Based on this analysis, it seems likely that GDH with a fixed Prt
+will not be able to correctly predict the turbulent mixing in the
+near-injection region (x=D < 4).
+The turbulent Prandtl number also decreases significantly in the
+near wall region, for yþ < 15. This result is consistent with that of
+Lakehal [5], who reported a sharp drop in Prt in the viscous sublayer. Ling et al. [2,20] also reported lower values of Prt in the
+near wall region of their slot film cooling configuration. While
+both the turbulent viscosity and turbulent diffusivity go to zero at
+the wall due to the no-slip and no-penetration boundary conditions, Ling et al. showed that the turbulent mixing in the near wall
+region can still play a key role in the film cooling performance.
+4.2 Comparison of GDH, GGDH, and HOGGDH Predictions of the Turbulent Scalar Fluxes. It is possible to take the
+LES results for the velocity field, temperature distribution, and
+Reynolds stresses and plug these directly into the GDH, GGDH,
+and HOGGDH models, as shown in Eqs. (1)–(3). The predicted
+turbulent scalar fluxes can then be compared to the LES results to
+determine how accurate the predictions from each model are.
+One way to compare these three models is by analyzing the
+direction of the predicted turbulent scalar flux vector. This can be
+investigated by calculating the angle / between the predicted turbulent scalar fluxes and the LES fluxes. A model that correctly
+predicts the scalar flux anisotropy would yield an angle / ¼ 0,
+and a model that predicts scalar fluxes in the exact opposite direction would yield / ¼ p. This analysis has the benefit of being independent of the time scale formulation for s and the values of the
+model coefficients Prt, CGGDH, and CHOGGDH, since those act only
+as scale factors and will not affect /.
+Figure 3 shows contours of / from GDH, GGDH, and
+HOGGDH. Once again, the contours have been cut off in regions
+where h < 0:01 or Djrhj < 0:1. As can be seen in Fig. 3, none of
+the models correctly predict the scalar flux anisotropy everywhere
+in the flow. However, the GDH predictions show values of / near
+p=3 (60 deg) for large regions of the flow near the top of the jet,
+particularly for x=D > 8. Incorrect modeling in this shear flow
+region could have a significant impact on how RANS predicts the
+JANUARY 2016, Vol. 138 / 011006-3
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+Fig. 2 Contours of m t;LES =ðUb DÞ; at;LES =ðUb DÞ, and Prt;LES in streamwise slices spaced 4D
+hj<0:1. Isosurapart. The contours of at;LES =ðUb DÞ and Prt ;LES are blanked in regions where Dj$
+face of 
+h 5 0:01 shown for reference. (a) m t;LES =ðUb DÞ. (b) at;LES =ðUb DÞ.
+
+mixing between the coolant flow and the main flow. Both GGDH
+and HOGGDH have improved predictions of the scalar flux anisotropy near the top of the jet. However, all three models struggle
+in the near wall region. This region of the flow is critical to correctly predicting the adiabatic film cooling effectiveness and heat
+transfer coefficient.
+4.3 RANS Predictions Using the LES Velocity Field.
+RANS calculations were run using the LES velocity field and
+Reynolds stresses and implementing either GDH or HOGGDH as
+the closure for the turbulent scalar fluxes. For GDH, the turbulent
+diffusivity was prescribed in one of two ways: (i) with at calculated using a fixed Prt and t;LES or (ii) using the at;LES extracted
+from the LES results. In the latter case, at;LES was constrained to
+be strictly positive to aid in convergence. This model will show
+
+the error incurred by restricting the turbulent diffusivity to be
+isotropic.
+HOGGDH requires a turbulent time scale s. Usually, s ¼ k=e is
+used, but since the LES does not provide the turbulent dissipation
+rate e, a different time scale definition was required. For these calculations, s was defined as s ¼ 1=jjSij jj. Furthermore, values were
+needed for the model coefficient CHOGGDH. In the channel flow
+calculation of Abe and Suga [11], they showed that
+CHOGGDH ¼ 0.6 was a reasonable value for this coefficient. From
+the LES results, a value for CHOGGDH can also be extracted by calculating what value would give the correct magnitude for the turbulent scalar flux vector. This optimal value was averaged over
+the entire three-dimensional region for which h > 0:01, yielding a
+mean value of CHOGGDH ¼ 1.5. Since this value differed significantly from the value suggested by Abe and Suga, both values of
+the coefficient were tested. The difference between these values
+
+Fig. 3 Contours of /, the angle between the turbulent scalar fluxes predicted using algebraic
+closures and the LES turbulent scalar fluxes. Units are in radians. The slices are spaced 4d
+apart, and are blanked in regions where 
+h < 0:01 or Dj$
+hj< 0:1 . Isosurface of 
+h50:01 shown for
+reference. (a) GDH; (b) GGDH; and (c) HOGGDH.
+
+011006-4 / Vol. 138, JANUARY 2016
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+Table 1 Turbulent scalar flux models for RANS
+Case no.
+1
+2
+3
+4
+5
+
+Model
+
+Parameter value
+
+GDH
+GDH
+GDH
+HOGGDH
+HOGGDH
+
+at ¼ at;LES
+Prt ¼ 0.85
+Prt ¼ 0.6
+CHOGGDH ¼ 0.6
+CHOGGDH ¼ 1.5
+
+for CHOGGDH could be due to the different time scale formulation
+used in this study.
+Similarly, an optimal value of Prt could be extracted from the
+LES data by averaging Prt;LES over the region with h > 0:01. This
+process yielded Prt ¼ 0.6. Therefore, GDH was run with both
+Prt ¼ 0:6 and Prt ¼ 0.85, the latter being the default value for Prt.
+In all, five RANS cases were run. These cases are summarized in
+Table 1.
+Figure 4 shows contours of h as calculated using RANS and
+LES. None of the RANS cases exactly match the LES results, particularly in the near wall region, where all of the RANS results
+overestimate h near the centerline. Case 1, which uses the distribution of at;LES extracted from the LES results, has overall the
+closest match to LES. This similarity makes sense, since this
+model has the most information from LES—its only assumption
+is that the turbulent diffusivity is isotropic and positive. It does
+not represent a practical model that could be used in a general
+RANS case for which LES results are not available—it serves
+only to demonstrate how good GDH could be if it had all the right
+
+information. Even in this case, the RANS results are not perfect.
+The peak value of h in the jet core is overpredicted in the farther
+downstream region (x=D > 12). This overprediction could be due
+to the fact that the turbulent diffusivity is not isotropic in that
+region. An examination of / in Fig. 3(a) shows that the isotropic
+assumption is not accurate for large portions of the jet in the far
+downstream region.
+In Cases 2 and 3, which rely on a fixed Prt, h is overpredicted
+in the near-injection region. This inaccuracy makes sense since it
+was previously shown, in Fig. 2(c), that Prt should decrease significantly in this region.
+In Case 4, HOGGDH with CHOGGDH ¼ 0.6 underestimated the
+turbulent mixing. Using CHOGGDH ¼ 1.5, in Case 5, gave more
+accurate predictions, but the shape of the h distribution still differed from the LES results. This model gave the most accurate
+predictions for h in the jet core in the far downstream region.
+A key quantity for film cooling applications is the adiabatic
+effectiveness, defined as g ¼ ðTaw  Tmain Þ=ðTcool  Tmain Þ, where
+Taw is the adiabatic wall temperature and g is given by the value
+of h at the wall. Contours of g are shown in Fig. 5 for the LES and
+RANS results.
+As shown in Fig. 5, all of the RANS models overestimate the
+adiabatic effectiveness on the centerline. Even in Case 1, using
+the LES at;LES , the adiabatic effectiveness is overpredicted. This
+result suggests that gradient transport is not an accurate model for
+this flow. Bodart et al. [17] reported countergradient diffusion in
+the region immediately downstream of injection. Since Case 1 restricted at to be positive in order to promote convergence, countergradient diffusion could be responsible for the difference between
+the RANS and LES results.
+
+Fig. 4 Contours of 
+h in streamwise slices spaced 4d apart from LES and RANS. Isosurface of
+ 5 0:01 shown for reference. (a) LES. (b) Case 1: GDH with at 5 at;LES . (c) Case 2: GDH with
+h
+Prt 5 0.85. (d) Case 3: GDH with Prt 5 0.6$. (e) Case 4: HOGGDH with CHODDGH 5 0.6$. (f) Case
+5: HOGGDH with CHODDGH 5 1.5.
+
+Journal of Turbomachinery
+
+JANUARY 2016, Vol. 138 / 011006-5
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+shows that Case 1 has the closest match to the LES results. It also
+shows that the tuned HOGGDH (Case 5) does better than the
+tuned GDH with a fixed Prt (Case 3). However, tuning the coefficients makes a much bigger difference than switching from GDH
+to HOGGDH, as can be seen by comparing Case 2 to Case 3, or
+Case 4 to Case 5. These results suggest that it is not worth switching to HOGGDH unless it is possible to tune the model coefficient
+CHOGGDH. While HOGGDH may give a better prediction of the
+scalar flux anisotropy, the magnitude may be far from correct
+without tuning CHOGGDH.
+
+5
+
+Fig. 5 Contours of g on the bottom wall. The region depicted
+extends 30D downstream of injection, and 2D on either side of
+the centerline. (a) LES. (b) Case 1: GDH with at 5 at;LES . (c) Case
+2: GDH with Prt 5 0.85. (d) Case 3: GDH with Prt 5 0.6. (e) Case
+4: HOGGDH with CHOGGDH 5 0.6. (f) Case 5: HOGGDH with
+CHOGGDH 5 1.5.
+
+Figure 5 also shows that the GDH with a fixed Prt (Cases 2 and
+3) tends to underestimate the spanwise spread of the coolant along
+the bottom wall. HOGGDH with CHOGGDH ¼ 1:5 (Case 5) gives
+improved predictions of the spanwise variation in g. This result is
+consistent with those of Lakehal [5], Azzi and Lakehal [16], and
+Xueying et al. [14]. In all three cases, increases in the predicted
+lateral spreading and improved accuracy were reported when anisotropic models were implemented for the turbulent scalar fluxes.
+
+4.4 Quantification of Model Error. In order to quantitatively compare the model predictions in these five cases, it is useful to employ a cost function, E. This cost function is defined as
+E¼
+
+1X
+jhRANS;i  hLES;i j
+n i
+
+(7)
+
+In Eq. (7), the sum is over all the points for which hLES > 0:01,
+and n is the number of points within that region. E therefore represents the average error magnitude over the region where the coolant concentration is greater than 1%. This cost function is similar
+to that presented by Ling et al. [21]. It enables the quantitative
+comparison of three-dimensional distributions.
+The cost function was calculated for all five RANS cases, and
+the results are shown in Table 2. The cost function evaluation
+Table 2 Cost function evaluation for different turbulent scalar
+flux models
+Case no.
+1
+2
+3
+4
+5
+
+011006-6 / Vol. 138, JANUARY 2016
+
+Conclusions
+
+Three algebraic closures for the turbulent scalar fluxes were
+evaluated for a film cooling configuration using high-fidelity LES
+results. Distributions of the turbulent diffusivity, turbulent viscosity, and turbulent Prandtl number were extracted from the LES
+and analyzed. These results showed that the Reynolds analogy
+breaks down and significantly lower values of the turbulent
+Prandtl number are required near injection and near the bottom
+wall.
+The GDH, GGDH, and HOGGDH predictions of the scalar flux
+anisotropy were then investigated by calculating the angle
+between the modeled scalar fluxes and the LES scalar fluxes.
+GGDH and HOGGDH had more accurate predictions of the scalar
+flux anisotropy near the top of the jet, but all three models had
+high error in the near wall region at the bottom of the jet.
+The LES velocity field and Reynolds stresses were fed into an
+RANS solver for the temperature distribution, using GDH and
+HOGGDH as scalar flux closures. Tuned model coefficients were
+extracted from the LES and the model performance was compared
+both with the default values of the coefficients as well as with the
+tuned values. It was shown that all models overpredicted the centerline adiabatic effectiveness downstream of injection.
+HOGGDH with a tuned model coefficient provided the best predictions of the lateral spread of the coolant jet.
+By evaluating a quantitative cost function, it was possible to
+compare the three-dimensional temperature distributions predicted by the various RANS turbulent scalar flux models. This
+comparison revealed that tuning the model coefficients had a
+more significant impact on the temperature distribution predictions than changing from GDH to HOGGDH.
+Based on these results, it is recommended that, whenever possible, model coefficients should be tuned using an LES, DNS, or
+experiment from a similar flow. In the case that it is not possible
+to tune the model coefficients, it seems as if upgrading to
+HOGGDH from GDH may not be worth the extra challenge in
+implementing a RSTM and gaining convergence.
+
+E
+0.013
+0.034
+0.023
+0.031
+0.020
+
+Acknowledgment
+J. Ling was funded through an NSF graduate research fellowship at the time that this work was undertaken. K. J. Ryan and the
+LES work of J. Bodart are funded by Honeywell Corporation.
+
+Nomenclature
+CGGDH ¼
+CHOGGDH ¼
+GGDH ¼
+HOGGDH ¼
+Prt ¼
+Taw ¼
+Tcool ¼
+Tmain ¼
+ui ¼
+Ub ¼
+at ¼
+
+model coefficient for GGDH model
+model coefficient for HOGGDH model
+generalized gradient diffusion hypothesis
+higher-order generalized gradient diffusion
+hypothesis
+turbulent Prandtl number
+adiabatic wall temperature
+temperature at the coolant inlet
+temperature at the main flow inlet
+ith component of velocity
+bulk-averaged main flow velocity
+turbulent diffusivity
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+g ¼ adiabatic effectiveness
+h ¼ nondimensional temperature,
+ðT  Tmain Þ=ðTcool  Tmain Þ
+ ¼ molecular viscosity
+ t ¼ eddy viscosity
+s ¼ turbulent time scale
+/ ¼ angle between predicted turbulent scalar fluxes and
+LES turbulent scalar fluxes
+
+References
+[1] Corrsin, S., 1974, “Limitations of Gradient Transport Models in Random Walks
+and in Turbulence,” Adv. Geophys., 18, pp. 25–60.
+[2] Ling, J., Elkins, C., and Eaton, J., 2014, “Optimal Turbulent Schmidt Number
+for RANS Modeling of Trailing Edge Slot Film Cooling,” ASME J. Eng. Gas
+Turbines Power, 137(7), p. 072605.
+[3] He, G., Guo, Y., and Hsu, A., 1999, “The Effect of Schmidt Number of Turbulent Scalar Mixing in a Jet-in-Crossflow,” Int. J. Heat Mass Transfer, 42(20),
+pp. 3727–3738.
+[4] Kohli, A., and Bogard, D., 2005, “Turbulent Transport in Film Cooling Flows,”
+ASME J. Heat Transfer, 127(5), pp. 513–520.
+[5] Lakehal, D., 2002, “Near-Wall Modeling of Turbulent Convective Heat Transport in Film Cooling of Turbine Blades With the Aid of Direct Numerical Simulation Data,” ASME J. Turbomach., 124(3), pp. 485–498.
+[6] Liu, C., Zhu, H., and Bai, J., 2008, “Effect of Turbulent Prandtl Number on the
+Computation of Film Cooling Effectiveness,” Int. J. Heat Mass Transfer, 51,
+pp. 6208–6218.
+[7] Liu, C., Zhu, H., and Bai, J., 2011, “New Development of the Turbulent Prandtl
+Number Models for the Computation of Film Cooling Effectiveness,” Int. J.
+Heat Mass Transfer, 54(4), pp. 874–886.
+[8] Kaszeta, R., and Simon, T., 2000, “Measurement of Eddy Diffusivity of
+Momentum in Film Cooling Flows With Streamwise Injection,” ASME J.
+Turbomach., 122(1), pp. 178–183.
+[9] Bergeles, G., Gosman, A., and Launder, B., 1978, “The Turbulent Jet in a Cross
+Stream at Low Injection Rates: A Three-Dimensional Numerical Treatment,”
+Numer. Heat Transfer, 1(2), pp. 217–242.
+
+Journal of Turbomachinery
+
+[10] Daly, B., and Harlow, F., 1970, “Transport Equations in Turbulence,” Phys.
+Fluids, 13(11), pp. 2634–2649.
+[11] Abe, K., and Suga, K., 2001, “Towards the Development of a ReynoldsAveraged Algebraic Turbulent Scalar-Flux Model,” J. Heat Fluid Flow, 22(1),
+pp. 19–29.
+[12] Gorle, C., Emory, M., and Iaccarino, G., 2011, “Epistemic Uncertainty Quantification of RANS Modeling for an Underexpanded Jet in a Supersonic Crossflow,” CTR Annual Research Briefs, Center for Turbulence Research, Stanford
+University, Stanford, CA.
+[13] Gorle, C., Emory, M., and Iaccarino, G., 2012, “RANS Modeling of Turbulent
+Mixing for a Jet in Supersonic Crossflow: Model Evaluation and Uncertainty
+Quantification,” Seventh International Symposium on Turbulence, Heat and
+Mass Transfer (THMT-12), Palermo, Italy, Sept. 24–27.
+[14] Xueying, L., Yanmin, Q., Jing, R., and Hongde, J., 2013, “Algebraic Anisotropic Turbulence Modeling of Compound Angled Film Cooling Validated by
+PIV and PSP Measurements,” ASME Paper No. GT2013-994662.
+[15] Rajabi-Zargarabadi, M., and Bazdidi-Tehrani, F., 2010, “Implicit Algebraic
+Model for Predicting Turbulent Heat Flux,” Int. J. Numer. Methods Fluids,
+64(5), pp. 517–531.
+[16] Azzi, A., and Lakehal, D., 2002, “Perspectives in Modeling Film Cooling of
+Turbine Blades by Transcending Conventional Two-Equation Turbulence
+Models,” ASME J. Turbomach., 124(3), pp. 472–484.
+[17] Bodart, J., Coletti, F., Moreno, I. B., and Eaton, J., 2013, High-Fidelity Simulation of a Turbulent Inclined Jet in a Crossflow, CTR Annual Research Briefs,
+Center for Turbulence Research, Stanford University, Stanford, CA.
+[18] Coletti, F., Elkins, C., and Eaton, J., 2012, “Experimental Investigation of
+Turbulent Flow and Scalar Transport in a Inclined Jet in Crossflow,” 7th
+International Symposium on Turbulence, Heat and Mass Seventh International
+Symposium on Turbulence, Heat and Mass Transfer (THMT-12), Palermo,
+Italy, Sept. 24–27.
+[19] Coletti, F., Benson, M., Ling, J., Elkins, C., and Eaton, J., 2013, “Turbulent
+Transport in an Inclined Jet in Crossflow,” Int. J. Heat Fluid Flow, 43, pp.
+149–160.
+[20] Ling, J., Rossi, R., and Eaton, J., 2015, “Near Wall Modeling for Trailing Edge
+Slot Film Cooling,” ASME J. Fluids Eng., 137(2), p. 021103.
+[21] Ling, J., Coletti, F., Yapa, S., and Eaton, J., 2013, “Experimentally Informed
+Optimization of Turbulent Diffusivity for a Discrete Hole Film Cooling
+Geometry,” Int. J. Heat Fluid Flow, 44, pp. 348–357.
+
+JANUARY 2016, Vol. 138 / 011006-7
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/934788/ on 02/16/2017 Terms of Use: http://www.asme.org/ab
+
+

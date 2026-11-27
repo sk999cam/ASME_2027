@@ -1,0 +1,1335 @@
+International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+Contents lists available at ScienceDirect
+
+International Journal of Heat and Mass Transfer
+journal homepage: www.elsevier.com/locate/ijhmt
+
+New development of the turbulent Prandtl number models for the computation
+of ﬁlm cooling effectiveness
+Cun-liang Liu ⇑, Hui-ren Zhu, Jiang-tao Bai
+School of Power and Energy, Northwestern Polytechnical Univ., Xi’an 710072, China
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 29 June 2009
+Received in revised form 13 October 2010
+Accepted 15 October 2010
+Available online 8 November 2010
+Keywords:
+Turbulent Prandtl number model
+Film cooling effectiveness
+Computation accuracy
+Characteristic quantity
+Isotropic turbulence model
+
+a b s t r a c t
+This paper presents the new development on the turbulent Prandtl number distribution models which
+are used to improve the computation accuracy of ﬁlm cooling effectiveness distribution in the frame
+of the isotropic turbulence models. In the new developed turbulent Prandtl number distribution models,
+the turbulent Prandtl number varies with some characteristic quantity of the ﬁlm cooling to make the
+models applicable for more ﬁlm cooling cases effectively. A new VTG-Prt model is developed for the computation of ﬁlm cooling cases in which the wall is mainly inﬂuenced by the mixing layer region between
+the jet core and the mainstream. The Prt value in this model varies with dimensionless temperature gradient which is suggested to be the characteristic quantity of the mixing layer region. The VTG-Prt model
+has been used in the computations of long cylindrical hole ﬁlm cooling, short cylindrical hole ﬁlm cooling,
+compound angle cylindrical hole ﬁlm cooling and expansion shaped hole ﬁlm cooling in the present
+paper. And it is validated to be an effective and easy way to obtain accurate ﬁlm cooling effectiveness
+distributions for this kind of ﬁlm cooling. But for the kind of ﬁlm cooling, in which the wall is mainly
+inﬂuenced by the jet core region and the inﬂuence of heat diffusion in the mixing layer region on the cooling effectiveness is very small, the VTG-Prt model is disabled. Another turbulent Prandtl number distribution model, named VT-Prt model, is developed for this kind of ﬁlm cooling in the present paper. The
+Prt value in this model varies with dimensionless temperature which is suggested to be the characteristic
+quantity of the jet core region. Good agreement between the computed and measured results is obtained
+through the use of VT-Prt model in the computation of converging slot hole ﬁlm cooling.
+Crown Copyright Ó 2010 Published by Elsevier Ltd. All rights reserved.
+
+1. Introduction
+The desire for higher overall efﬁciency and higher power output
+in gas turbines render the need for increase in turbine entry temperatures. This places severe demands on the components working
+in high temperature environment, such as turbine rotors and
+vanes. The turbine blades cannot withstand these temperatures.
+Consequently, cooling of gas turbine components is inevitable,
+and ﬁlm cooling is widely used as an effective means to maintain
+component temperatures at acceptable levels.
+Nowadays numerical simulation on ﬁlm cooling investigation is
+getting more and more important, because of its low-cost,
+labor-saved and complete-data characteristics. However, turbulence models employed in ﬁlm cooling calculations in general do
+not go beyond the isotropic two-equation scope, while turbulence in ﬁlm-cooling ﬂows is considerably anisotropic [1]. Hoda
+and Acharya [2] explored seven representative two-equation
+
+⇑ Corresponding author. Tel.: +86 29 88486075.
+E-mail address: liucunliang@gmail.com (C.-l. Liu).
+
+turbulence models for a jet in crossﬂow. The results showed that
+the spanwise shear stress is signiﬁcantly under-predicted by the
+two-equation models. And it is likely responsible for the typical
+underestimation of the lateral spreading and mixing of the coolant jet by the two-equation models. Two advanced four-equation
+turbulence models, which were introduced by Medic and Durbin
+[3] and suggested to be better suited for turbine heat transfer
+applications, have been examined in detail by Jones et al. [4]
+for ﬂat plate ﬁlm cooling. Unfortunately, the cooling effectiveness results with the four-equation models do not show any
+improvements with respect to the k–e model. The reason is also
+due to that these four-equation models are isotropic turbulence
+models and cannot describe the anisotropic characteristics of
+ﬁlm cooling turbulence precisely. To improve the accuracy of
+the numerical simulation of ﬁlm cooling, researchers have paid
+much effort on the turbulence models which can account for
+the anisotropic turbulence ﬁeld. There are mainly two ways.
+One way is to use anisotropic corrections for eddy diffusivity
+and secondary stresses proposed by Lakehal et al. [5] and further
+developed by Azzi and Lakehal [6] and Bacci and Facchini [7].
+This approach is based on a two-layer approach that combined
+
+0017-9310/$ - see front matter Crown Copyright Ó 2010 Published by Elsevier Ltd. All rights reserved.
+doi:10.1016/j.ijheatmasstransfer.2010.10.015
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+875
+
+Nomenclature
+CA
+D
+k
+M
+Prt
+Pr
+Rey
+T
+T*
+U
+x
+y
+yn
+y+
+z
+z*
+
+compound angle of ﬁlm hole
+ﬁlm cooling hole diameter
+turbulent kinetic energy
+blowing ratio (=qcUc/qgUg)
+turbulent Prandtl number (=lt/qCt)
+molecular Prandtl number (=l/qC)
+pﬃﬃﬃ
+near-wall turbulent Reynolds number ð¼ qyn k=lÞ
+temperature
+dimensionless temperature (=T/(Tc  Tg))
+velocity
+streamwise coordinate
+normal coordinate
+normal wall distance
+pﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+dimensionless wall distance (=qyn sw =q=l)
+spanwise coordinate
+dimensionless spanwise coordinate (=z/D)
+
+an anisotropic one-equation model in near-wall region with an
+isotropic k–e model in the outer region. Comparison with the
+measurement results showed that the computation accuracy
+was improved greatly by this new version approach. The other
+way is based on the idea that the large scale unsteadiness in the ﬁlm
+cooling ﬁeld dictates the nature of the turbulence anisotropic. The
+typical approach is the large eddy simulation (LES) technique. Hoda
+et al. [8], Tyagi and Acharya [9] and Peet and Lele [10] have used LES
+to study the ﬁlm cooling. Detailed and accurate results of ﬂow ﬁeld
+have been obtained. Kapadia et al. [11] implemented a hybrid LES/
+RANS approach, detached eddy simulation (DES), on a ﬂat plate ﬁlm
+cooling test case. They found improved prediction of cooling
+effectiveness due to the ability to resolve unsteadiness. Holloway
+
+Greek symbols
+streamwise angle of ﬁlm hole
+b
+divergence angle of ﬁlm hole
+g
+ﬁlm cooling effectiveness (=(Taw  Tg)/(Tc  Tg))
+q
+density
+l
+molecular viscosity
+lt
+turbulent viscosity
+sw
+wall friction
+C
+molecular heat diffusivity
+Ct
+turbulent heat diffusivity
+H
+dimensionless temperature (=(T  Tg)/(Tc  Tg))
+
+a
+
+Subscripts
+aw
+adiabatic wall
+c
+jet
+g
+mainstream
+
+et al. [12] achieved improved prediction of fundamental physics
+and cooling effectiveness by implementing a new unsteady,
+RANS-based turbulence model.
+Although the isotropic turbulence models have the inherent
+drawbacks for ﬁlm cooling simulation, their features, such as
+easy-implemented and time-saved and available packages in commercial CFD codes, still make them be the common choices in
+industry. So it is of great interest to the industry to ﬁnd an easyimplemented and effective way to improve the prediction accuracy
+of ﬁlm cooling in the frame of the isotropic turbulence models. And
+assigning proper value or distribution of Prt for ﬁlm cooling ﬂow
+ﬁeld is a promising way for this purpose in authors’ opinion. The
+turbulent heat diffusivity Ct is expressed as lt/qPrt. Turbulent
+
+Fig. 1. Geometries of the numerical models.
+
+876
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+Prandtl number Prt is an important parameter for the prediction of
+cooling effectiveness because its value affects the accuracy of heat
+diffusion directly. Kays [13] suggested a value of 0.85 for Prt which
+is the same as the Prt value in the boundary layer ‘‘log’’ region. This
+value is often employed in the ﬁlm cooling computation. But the
+ﬁlm cooling ﬂow ﬁeld includes not only the boundary layer, but
+also the mixing layer (or the shear layer). One major difference between these regions and the inner core of boundary layer is the value of Prt. According to the studies of Mayer and Divoky’s [14],
+Wygnanski and Fiedler [15], Fiedler [16], Townsend [17], Chambers and Antonia [18], Chidambaram et al. [19] and Henze [20],
+the value of Prt in the shear layer is in the range of 0.3–0.8. For ﬁlm
+cooling ﬂow ﬁeld, Kohli and Bogard [21] reported some information of Prt in the mixing layer region and the jet region. Although
+the information was not very plenty, it still showed that the value
+of Prt was different from the usually used value around 0.9.
+On the base of Azzi et al. [6], Lakehal [22] considered the Prt
+distribution in the inner core of boundary layer and made the computed effectiveness spanwise distribution more close to the
+measurement. Good agreement with the experimental data was
+obtained by using the turbulent Prandtl number correction in the
+four-equation turbulence model in Jones et al. [4]. Liu et al. [23]
+extended the idea of Lakehal [22] and paid attention to the value
+of Prt in the mixing layer region of ﬁlm cooling. In the frame of
+the isotropic two-equation turbulence model, Liu et al. [23] studied
+the effect of turbulent Prandtl number in the ﬂow ﬁeld outside the
+near-wall region on the computational results of cylindrical hole’s
+cooling effectiveness distribution. The results show that the variation of turbulent Prandtl number had great inﬂuence on the computational results. Liu et al. [23] also introduced a turbulent
+Prandtl number distribution model named laterally varying turbulent Prandtl number (LV-Prt) model in which the turbulent Prandtl
+number is dependent on lateral location and blowing ratio. Computation accuracy is improved by this LV-Prt model when using
+isotropic two-equation turbulence model.
+
+Fig. 3. Temperature contours and velocity vectors at cross-ﬂow plane.
+
+Fig. 2. Mesh details in the hole and the region near the test wall.
+
+877
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+Prandtl number distribution models are introduced in the present
+paper. The new developed models could be applied in more cases
+easily and effectively.
+
+Table 1
+Advised data at key points for VTG-Prt model.
+|oT*/oz*|
+f(|oT*/oz*|)
+
+1/10
+0.83
+
+61/40
+0.85
+
+2/15
+0.65
+
+1/5
+0.5
+
+2/5
+0.4
+
+2/3
+0.38
+
+P2
+0.35
+
+2. Computational approach
+According to the analysis in Liu et al. [23], the LV-Prt model
+introduced in that paper is effective in the computation of simple
+angle cylindrical hole ﬁlm cooling. But that turbulent Prandtl number distribution model with respect to lateral location and blowing
+ratio has some inherent drawbacks. Firstly, the LV-Prt model only
+includes the spanwise distribution of the turbulent Prandtl
+number. The variations of the turbulent Prandtl number in the
+streamwise direction and the normal direction are not taken into
+account. Secondly, in the LV-Prt model, the distribution of the turbulent Prandtl number is symmetrical to the z/D = 0 plane which is
+the lateral center plane of the ﬁlm hole. When the ﬁlm hole is only
+streamwise oriented and the ﬂow ﬁeld and the temperature ﬁeld
+are symmetrical to the lateral center plane of the ﬁlm hole, the
+LV-Prt model is workable. In the case that the ﬂow/temperature
+ﬁeld of ﬁlm cooling is not symmetrical, such as the ﬁlm cooling
+of hole with compound angle orientation, the LV-Prt model cannot
+be applied. Thirdly, in the LV-Prt model, the turbulent Prandtl number value is dependent on the lateral position which is not the
+characteristic quantity of the ﬁlm cooling. The above three reasons
+restrict the application of the LV-Prt model. To further accomplish
+the idea of assigning proper value or distribution of Prt to the ﬁlm
+cooling ﬂow ﬁeld introduced by Liu et al. [23], two new turbulent
+
+2.1. Geometries of the numerical models and boundary conditions
+Five different ﬁlm cooling cases with different geometry conﬁgurations of ﬁlm hole, which were experimentally investigated in
+Goldstein et al. [24], Sinha et al. [25], Goldstein and Jin [26], Bai
+et al. [27] and Liu et al. [28], respectively, were selected as the test
+cases in the present paper.
+Goldstein et al. [24] measured the ﬁlm cooling effectiveness
+downstream of a long cylindrical hole inclined at 35° in the
+streamwise direction. In his work, the ﬂow ﬁeld quality and the
+measurement instruments were carefully veriﬁed and calibrated.
+The data in Goldstein et al. [24] are of great reliability and were
+employed as the benchmark to validate the calculation in Liu
+et al. [23]. In the present paper, the data in Goldstein et al. [24]
+are also employed as the benchmark data. And computations
+under three blowing ratios (M = 0.5, 1, 1.5) which are the same
+as those in Liu et al. [23] are carried out. Detailed descriptions
+about the computational geometry and the boundary conditions
+can be found in Liu et al. [23].
+Sinha et al. [25] measured the ﬁlm cooling effectiveness of a single cylindrical hole row which inclined streamwise with angle of
+35° and lateral spacing of 3D and length-to-diameter ratio 1.75D
+
+0.9
+
+0.9
+Exp, x/D=2.5
+Prt=0.85, x/D=2.5
+Prt=LV_Prt, x/D=2.5
+Prt=VTG_Prt, x/D=2.5
+
+0.8
+0.7
+
+Exp, x/D=5
+Prt=0.85, x/D=5
+Prt=LV_Prt, x/D=5
+Prt=VTG_Prt, x/D=5
+
+0.8
+0.7
+0.6
+
+0.5
+
+0.5
+
+η
+
+η
+
+0.6
+
+0.4
+
+0.4
+
+0.3
+
+0.3
+
+0.2
+
+0.2
+
+0.1
+
+0.1
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+0
+
+1.2
+
+0
+
+0.2
+
+0.4
+
+z/D
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+z/D
+0.9
+
+0.9
+Exp, x/D=10
+Prt=0.85, x/D=10
+Prt=LV_Prt, x/D=10
+Prt=VTG_Prt, x/D=10
+
+0.8
+0.7
+
+Exp, x/D=25
+Prt=0.85, x/D=25
+Prt=LV_Prt, x/D=25
+Prt=VTG_Prt, x/D=25
+
+0.8
+0.7
+0.6
+
+0.5
+
+0.5
+
+η
+
+η
+
+0.6
+
+0.4
+
+0.4
+
+0.3
+
+0.3
+
+0.2
+
+0.2
+
+0.1
+
+0.1
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+z/D
+
+0.8
+
+1
+
+1.2
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+z/D
+
+Fig. 4. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Goldstein et al. [24] under M = 0.5.
+
+878
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+on ﬂat plate model. Computation is performed in this paper under
+the same blowing ratio (M = 0.5) with qc/qg = 2 as Liu et al. [23] for
+the test case of Sinha et al. [25]. Detailed descriptions about the
+computational geometry and the boundary conditions can be
+found in Liu et al. [23].
+Goldstein et al. [26] measured the ﬁlm cooling effectiveness distributions of a row of cylindrical holes with compound angle orientation. In Goldstein et al. [26], one row of 12 holes of 6.35 mm
+diameter is rotated 45° from the direction of mainstream in the lateral direction and inclined at 35° with respect to test section surface with a 3D hole spacing. The injection plate is 22.9 mm thick,
+providing a hole length of 6.3D. The computational geometry,
+which is built according to the size of experimental model in Goldstein et al. [26], is illustrated in Fig. 1(a). In Fig. 1(a), the conﬁguration of the compound hole is also shown. The streamwise angle of
+the hole a = 35° and the compound angle CA = 45°. In the present
+work, computations are carried out for three blowing ratios:
+M = 0.5, M = 1 and M = 2. Flow parameters are set to agree with
+the experiment: mainstream inlet velocity Ug = 13.5 m/s, mainstream temperature Tg = 298 K, jet temperature Tc = 313 K. The
+mass-ﬂux inlet boundary condition is set at the inlet surface of
+the jet plenum and the value of mass ﬂux is computed based on
+the values of Ug, M, qg and qc. Inlet turbulent intensities of the
+mainstream and the jet are 0.7% and 2%, respectively. Perfect gas
+equation is applied in the calculation of the ﬂow densities. Symmetry conditions are imposed on the midspan planes between two
+neighboring holes at z/D = 1.5 and z/D = 1.5. The thermal boundary condition on the tested wall is adiabatic.
+
+Bai et al. [27] and Liu et al. [28] measured the ﬁlm cooling effectiveness distributions of a row of double-fan shaped holes and console holes respectively using the same experimental facilities. The
+computational geometries of Bai et al. [27] and Liu et al. [28] are
+illustrated in Fig. 1(b) and (c), respectively. The conﬁgurations of
+the double-fan shaped hole and console hole are also shown in
+Fig. 1(b) and (c). The diameter D of the cylindrical section of double-fan shaped hole is the same as the diameter D of the console
+hole entry which is 10 mm. The streamwise angle of the doublefan shaped hole a is 45°, and the divergence angle b is the same
+for the hole entry and the hole exit with a value 15° producing
+an width 1.5D. The double-fan shaped hole pitch is 3D. The streamwise angle of the console hole a is 35°, and the divergence angle b
+is 11°, and the hole exit length l and width w are 3D and 0.3D,
+respectively. The console hole pitch is 3.5D. Detailed description
+about the double-fan shaped hole and console hole can be found
+in Bai et al. [27] and Liu et al. [28]. Two blowing ratios (M = 1, 2)
+are computed in this paper for the two test cases. Because the ﬂow
+conditions are the same for the two experimental works, the
+boundary conditions are the same for the two computational test
+cases. The mainstream inlet conditions: Ug = 17 m/s, Tg = 310 K,
+and Tu = 2.2%. Mass-ﬂux inlet boundary condition is set at the inlet
+surface of the jet plenum with Tc = 330 K and Tu = 5%, and the value
+of mass ﬂux is computed based on the values of Ug, M, qg and qc.
+Perfect gas equation is also applied in the calculation of the ﬂow
+densities. Symmetry conditions are imposed on the z/D = 0 plane
+through the middle of the hole, and the midspan plane between
+two neighboring holes at z/D = 1.5 for the double-fan shaped hole
+
+0.6
+
+0.6
+
+Exp, x/D=2.5
+Prt=0.85, x/D=2.5
+Prt=LV_Prt, x/D=2.5
+Prt=VTG_Prt, x/D=2.5
+
+0.5
+
+0.4
+
+0.4
+
+0.3
+
+0.3
+
+η
+
+η
+
+0.5
+
+0.2
+
+0.2
+
+0.1
+
+0.1
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+Exp, x/D=5
+Prt=0.85, x/D=5
+Prt=LV_Prt, x/D=5
+Prt=VTG_Prt, x/D=5
+
+0
+
+1.2
+
+0
+
+0.2
+
+0.4
+
+z/D
+0.6
+
+1
+
+1.2
+
+0.4
+
+0.4
+
+0.3
+
+0.3
+
+0.2
+
+0.2
+
+0.1
+
+0.1
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+z/D
+
+0.8
+
+1
+
+Exp, x/D=25
+Prt=0.85, x/D=25
+Prt=LV_Prt, x/D=25
+Prt=VTG_Prt, x/D=25
+
+0.5
+
+η
+
+η
+
+0.8
+
+0.6
+Exp, x/D=10
+Prt=0.85, x/D=10
+Prt=LV_Prt, x/D=10
+Prt=VTG_Prt, x/D=10
+
+0.5
+
+0
+
+0.6
+
+z/D
+
+1.2
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+z/D
+
+Fig. 5. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Goldstein et al. [24] under M = 1.
+
+879
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+numerical model and at z/D = 1.75 for the console hole numerical
+model. Adiabatic wall conditions are also set on the walls.
+2.2. Governing equations and turbulence model
+The conservative form of the three-dimensional steady state
+compressible ﬂow Reynolds-averaged Navier–Stokes equations
+can be written as
+
+@
+ðquk Þ ¼ 0
+@xk
+
+
+
+
+@
+@p
+@
+@u
+@ui @uj
+2
+ dij qk
+ðqui uj Þ ¼ 
+þ
+l i þ lt
+þ
+@xj
+@xi @xj
+3
+@xj
+@xj @xi
+"
+ #
+@
+@
+l lt @T
+ðquj TÞ ¼
+þ
+@xj
+@xj
+Pr Prt @xj
+
+ð1Þ
+ð2Þ
+ð3Þ
+
+ the pressure, T
+where ui represents averaged velocity component, p
+the averaged temperature, dij the Kronecker delta. lt is the turbulent viscosity computed with turbulence model equations.
+In the present paper realizable k–e model of Shih et al. [29] is
+used to compute the ﬂow ﬁeld outside the viscosity-affected
+near-wall region (Rey < 200). This model satisﬁes the so-called
+realizability constraints for the Reynolds stresses, speciﬁcally
+requiring positivity of the Reynolds stresses and satisfaction of
+Schwarz’s inequality for the shear stresses. Many researchers
+[30,31] employed this model and showed that it performed better
+with two-layer approach than the other turbulence models such as
+the standard k–e model and SST k–x model.
+0.25
+
+The two-layer approach is essentially that the whole ﬂow
+domain is divided into a viscosity-affected region (Rey < 200,
+including laminar sublayer, buffer region and logarithmic region)
+and a fully-turbulent region. In the fully-turbulent region the realizable k–e model is employed. And in the viscosity-affected region
+an isotropic one-equation model which can resolve the viscosityaffected region including laminar sublayer is employed. In the
+one-equation model, the eddy viscosity is made proportional to a
+velocity scale and a length scale ‘l . The distribution of ‘l is
+prescribed algebraically while the velocity scale is determined by
+solving the k-equation. The dissipation rate e appearing as sink
+term in the k-equation is related to k and a dissipation length scale
+‘e which is also prescribed algebraically. The one equation model
+[32,33] employed here reads:
+
+pﬃﬃﬃ
+
+lt ¼ C l q k‘l ; ‘l ¼ yn C ‘ ð1  eRey =Al Þ
+e ¼ k3=2 =‘e ; ‘e ¼ yn C ‘ ð1  eRey =Ae Þ
+
+C ‘ ¼ jC 3=4
+l ; Al ¼ 70; Ae ¼ 2C ell ; C l ¼ 0:09;
+
+A body-ﬁtted multi-block grid is used in this study to allow the
+highest quality in all regions with the fewest number of cells. In
+this way, the computational domain can be partitioned into several
+subsections: cooling hole, the jet plenum and the other three in the
+mainstream channel (Fig. 1). Each section is meshed with an
+
+Exp, x/D=5
+Prt=0.85, x/D=5
+Prt=LV_Prt, x/D=5
+Prt=VTG_Prt, x/D=5
+
+0.2
+
+η
+
+η
+
+0.15
+
+0.1
+
+0.1
+
+0.05
+
+0.05
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+0
+
+1.2
+
+0
+
+0.2
+
+0.4
+
+z/D
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+z/D
+
+0.25
+
+0.25
+Exp, x/D=10
+Prt=0.85, x/D=10
+Prt=LV_Prt, x/D=10
+Prt=VTG_Prt, x/D=10
+
+0.2
+
+Exp, x/D=25
+Prt=0.85, x/D=25
+Prt=LV_Prt, x/D=25
+Prt=VTG_Prt, x/D=25
+
+0.2
+
+0.15
+
+η
+
+η
+
+0.15
+
+0.1
+
+0.1
+
+0.05
+
+0.05
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+z/D
+
+0.8
+
+1
+
+1.2
+
+ð6Þ
+
+2.3. Grids
+
+0.25
+
+0.15
+
+ð5Þ
+
+where j is Von Karman constant.
+
+Exp, x/D=2.5
+Prt=0.85, x/D=2.5
+Prt=LV_Prt, x/D=2.5
+Prt=VTG_Prt, x/D=2.5
+
+0.2
+
+ð4Þ
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+z/D
+
+Fig. 6. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Goldstein et al. [24] under M = 1.5.
+
+880
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+appropriate topology. In order to resolve the mean velocity, mean
+temperature, heat ﬂux and turbulent quantities in the viscosity-affected near-wall region (Rey < 200) accurately, the y+ values at the
+test wall neighboring-cells are maintained in the order of 1 and at
+least 10 grid points are placed in this region. After a series of tests
+and adjustments the ﬁnal adopted grids for all the computational
+models are obtained. Grid information about the computational
+models of Goldstein et al. [24] and Sinha et al. [25] can be referred
+to Liu et al. [23]. The node numbers for the other three computational models in x, y and z directions of the mainstream channel,
+hole and jet plenum are as following: 240  80  36, 80  40
+ 70, 60  40  18 for the computational model of Goldstein
+et al. [26]; and 250  80  30, 42  75  60, 60  32  16 for the
+computational model of Bai et al. [27]; and 250  80  30,
+30  110  40, 60  32  16 for the computational model of Liu
+et al. [28]. Finer meshes only result in negligible changes, which
+are less than 1%, in the calculation of centerline ﬁlm cooling effectiveness downstream of the ﬁlm hole for all the computational
+models. Fig. 2 shows some mesh details in the hole and the nearwall region.
+
+2.4. Computational method
+The governing equations are solved by a three-dimensional
+ﬁnite-volume method for arbitrary nonorthogonal grids. The discretization scheme for all the transport equations’ convection
+terms is QUICK scheme which is of third order precision. The diffusive ﬂuxes are approximated using the central-difference scheme.
+
+The velocity–pressure coupling is achieved by using the wellknown SIMPLEC algorithm. All the difference equations are solved
+sequentially with the implicit procedure algorithm. And the convergence in all cases is determined based on a drop in normalized
+mass and momentum residuals by four orders of magnitude (104)
+at least and the mass-weighted average temperature in the crosssection at the streamwise position x/D = 10 changes less than 0.1%
+with increasing iterations. The algebraic multi-grid method is
+employed to speed up the converging process.
+
+3. Results and discussion
+3.1. VTG-Prt model
+As introduced in Section 1, the LV-Prt model has some inherent
+drawbacks which restrict the application of the model. In this section a new turbulent Prandtl number distribution model named
+VTG-Prt model which can overcome the problems of the LV-Prt
+model is introduced based on the idea that identifying the important region by some characteristic quantity of the ﬁlm cooling ﬁeld.
+Fig. 3(a) shows the typical temperature contours on the crossﬂow plane of cylindrical hole ﬁlm cooling. From Fig. 3(a) we know
+that the mixing layer region between mainstream and jet core has
+major inﬂuence on the wall than the other regions for the cylindrical hole ﬁlm cooling. For this kind of ﬁlm cooling, in which the wall
+is mainly inﬂuenced by the mixing layer region, the turbulent Prandtl number distribution in the mixing layer region should be considered for the ﬁrst part. The new turbulent Prandtl number
+
+Fig. 7. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Sinha et al. [25] under M = 0.5.
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+881
+
+Fig. 8. Temperature contours at cross-ﬂow planes computed by different turbulent Prandtl number models for model of Goldstein et al. [26] under M = 0.5.
+
+Fig. 9. Comparison between computed and measured distributions of local ﬁlm
+cooling effectiveness for model of Goldstein et al. [26] under M = 0.5.
+
+Fig. 10. Comparison between computed and measured distributions of local ﬁlm
+cooling effectiveness for model of Goldstein et al. [26] under M = 1.
+
+882
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+distribution model based on this idea should make the turbulent
+Prandtl number vary in the mixing layer and independent on the
+spatial coordinates. The key point to achieve this is to identify
+the mixing layer from the ﬂow/temperature ﬁeld through the characteristic quantity of the mixing layer. From Fig. 3(a) we can ﬁnd
+that the most notable character of the mixing layer is that the temperature gradient in this region is relatively large. So the temperature gradient is used as the characteristic quantity of the mixing
+layer region of ﬁlm cooling. In the new turbulent Prandtl number
+distribution model, the turbulent Prandtl number varies with the
+temperature gradient. And that is why the name of the new model
+is VTG-Prt model (varying with temperature gradient-Prt model).
+The form of the VTG-Prt model is as following:
+
+  
+
+@T 
+Prt ¼ f     CðMÞ  CðMÞ
+@z
+
+Fig. 11. Comparison between computed and measured distributions of local ﬁlm
+cooling effectiveness for model of Goldstein et al. [26] under M = 2.
+
+ð7Þ
+
+where T* = T/(Tc  Tg), z* = z/D, D is the ﬁlm hole diameter; C(M) is
+the correction coefﬁcient under blowing ratio M: C(M) = 1.2 when
+M = 1, C(M) = 1 when M = 0.5 and M = 1.5, C(M) = 0.9 when M = 2;
+f(|oT*/oz*|) is the function of Prt with respect to the dimensionless
+temperature gradient in the spanwise direction |oT*/oz*|. Advised
+data of f(|oT*/oz*|) at some key points are listed in Table 1. The values of the parameters in VTG-Prt model are developed by series of
+adjustment (called numerical experiment) with the cooling effectiveness data in Goldstein et al. [24] as the benchmark data. We
+can see that from Table 1 the larger the |oT*/oz*| is, the smaller
+the Prt is. That is because the ﬂow mixing and the turbulent heat
+diffusion in the region with large temperature gradient are very
+complicated and intense, the Prt in this region should be small.
+
+Fig. 12. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Bai et al. [27] under M = 1.
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+Linear interpolation or polynomial ﬁt can be used to calculate the
+Prt value at other |oT*/oz*| and C(M).
+Figs. 4–6 show the computed and measured spanwise cooling
+effectiveness distribution results of ﬁlm cooling in Goldstein
+et al. [24] under three blowing ratios, respectively. Three turbulent
+Prandtl number models: Prt = 0.85, LV-Prt model from Liu et al.
+[23], VTG-Prt model, were used and compared. From the ﬁgures
+we can know that the VTG-Prt model produces almost the same
+computational results with the LV-Prt model. Their results have
+much better agreement with the experimental results than the
+Prt = 0.85. However, due to the fact that the turbulent Prandtl number value in the VTG-Prt model is just dependent on the temperature gradient which is the characteristic quantity of the mixing
+layer, the VTG-Prt model should be applicable for more cases easily
+and effectively. We will verify this in the following sections.
+3.2. Computational results of ﬁlm cooling from short simple-angle
+cylindrical hole
+The experimental model used in Goldstein et al. [24] just had a
+single hole and the hole length was much longer than that in the
+modern gas turbine airfoil. So a more realistic model with a shorter
+hole length, a plenum, and a row of holes, should be calculated
+with the new VTG-Prt model. The model of Sinha et al. [25] is just
+ﬁt for this need. Fig. 7 shows the computed and measured spanwise cooling effectiveness distribution results of ﬁlm cooling in
+Sinha et al. [25] under M = 0.5. The three turbulent Prandtl number
+models: Prt = 0.85, LV-Prt model from Liu et al. [23], VTG-Prt model,
+were also used and compared. From the ﬁgures we know that the
+computational results of VTG-Prt model are also almost the same
+
+883
+
+as those of LV-Prt model, and have much better agreement with
+the experimental results than the Prt = 0.85. This indicates that
+the VTG-Prt model is applicable for the computation of ﬁlm cooling
+from short ﬁlm hole, and has the same applicability as the LV-Prt
+model at least.
+3.3. Computational results of ﬁlm cooling from compound angle
+cylindrical hole
+Fig. 8(a) and (c) shows the temperature contours obtained by
+numerical simulation on the cross-ﬂow planes of compound angle
+hole ﬁlm cooling with Prt = 0.85 model. The temperature ﬁeld is
+severely unsymmetrical. As we mentioned in Section 3.1, the
+LV-Prt model cannot be applied in such case that the ﬂow/temperature ﬁeld of ﬁlm cooling is not symmetrical. However, the new
+VTG-Prt model is applicable for such case because the mixing layer
+can be identiﬁed by the temperature gradient and assigned with
+proper turbulent Prandtl number distribution no matter the temperature ﬁeld is symmetrical or not. The comparisons between
+the temperature contours in Fig. 8 computed by Prt = 0.85 and
+VTG-Prt model indicates that the heat diffusion from the jet center
+region to the peripheral is enhanced. The dimensionless temperature H = (T  Tg)/(Tc  Tg) is reduced in the jet center region and increased in the lateral region. Fig. 9 shows the computed and
+measured distributions of local ﬁlm cooling effectiveness for model
+of Goldstein et al. [26] under M = 0.5. Comparison between the
+computed and measured results shows that the Prt = 0.85 overpredicts the cooling effectiveness value in the high effectiveness region which is near the jet center region, and underpredicts the
+cooling effectiveness value in the low effectiveness region which
+
+Fig. 13. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Bai et al. [27] under M = 2.
+
+884
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+is in the midspan region between adjacent jets. The VTG-Prt model
+improves the agreement between the computational results and
+the measurement results very much, especially in the high
+effectiveness region, though slight discrepancy still exists in the
+midspan region between adjacent jets.
+Figs. 10 and 11 show the computed and measured distributions
+of local ﬁlm cooling effectiveness for model of Goldstein et al. [26]
+under M = 1 and M = 2, respectively. Similar with the results of
+simple angle cylindrical hole ﬁlm cooling shown in the above
+two sections, the effect of VTG-Prt model needs to be further improved in the midspan region between adjacent jets where the
+cooling effectiveness is low. However, comparisons between the
+computed and measured results in the two ﬁgures show that the
+VTG-Prt model does notably improve the computation accuracy
+of ﬁlm cooling effectiveness distribution relative to the Prt = 0.85.
+The VTG-Prt model enhances the heat diffusion in the lateral direction and enlarges the ﬁlm-inﬂuencing area. The results in this section show that the VTG-Prt model is applicable for the computation
+of ﬁlm cooling from compound angle hole.
+
+3.4. Computational results of ﬁlm cooling from double-fan shaped hole
+According to the analysis in Bai et al. [27], the ﬂow ﬁeld and the
+temperature ﬁeld of double-fan shaped hole ﬁlm cooling are similar with those of cylindrical hole. So in this paper, we also apply the
+VTG-Prt model in the computation of the double-fan shaped hole’s
+cooling effectiveness distribution. Figs. 12 and 13 show the computed and measured spanwise distributions of local ﬁlm cooling
+
+effectiveness for model of Bai et al. [27] under M = 1 and M = 2,
+respectively. Under small blowing ratio, Prt = 0.85 underpredicts
+the cooling effectiveness in the whole spanwise region except at
+the centerline point for the upstream region, x/D < 10 at least.
+The application of the VTG-Prt model improves the computational
+results notably for the upstream region by promoting the heat diffusion, especially in the lateral side. However, there is still some
+deviations in the spanwise region around the centerline at the
+small x/D positions. In the downstream region, x/D > 20 at least,
+Prt = 0.85 underpredicts the cooling effectiveness in the lateral region, but overpredicts the cooling effectiveness in the region
+around centerline. The application of VTG-Prt model improves
+the predictions in the lateral region notably and brings the computational results very close to the measurement. However, it has little effect on the prediction in the region around the centerline.
+Under large blowing ratio, Prt = 0.85 underpredicts the cooling
+effectiveness value and the ﬁlm-inﬂuencing area in both the
+streamwise and the spanwise direction. It indicates that the value
+of 0.85 is too large for the turbulent Prandtl number. The application of the VTG-Prt model improves the computational results
+notably in the downstream region, x/D > 20 at least. The computational results of VTG-Prt model are almost identical with the measurement. But in the upstream region, the cooling effectiveness in
+the region around the centerline is overpredicted badly. Although
+the predictions at some positions are not very satisfactory, the
+VTG-Prt model, in the main, does improve the computational accuracy. The VTG-Prt model is also applicable for the ﬁlm cooling of
+expansion shaped holes in which the wall is mainly inﬂuenced
+by the mixing layer region.
+
+Fig. 14. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Liu et al. [28] under M = 1.
+
+885
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+3.5. Computational results of ﬁlm cooling from console hole and VT-Prt
+model
+Converging slot hole (console) introduced by Sargison et al. [34]
+is a kind of revolutionary shaped hole with very high cooling effectiveness. Liu et al. [28] obtained detailed cooling effectiveness distributions of the console hole using transient liquid crystal
+measurement technique. The VTG-Prt model is also applied in the
+computation of ﬁlm cooling effectiveness distributions of console
+hole. Figs. 14 and 15 show the computed and measured distributions of local ﬁlm cooling effectiveness for model of Liu et al.
+[28] under M = 1 and M = 2, respectively. Different from the computational results shown in the above sections, the VTG-Prt model
+almost fails completely in the computation of console hole ﬁlm
+cooling. There is no obvious difference between the results of
+VTG-Prt model and Prt = 0.85. And the difference between computation and measurement is large: the computed value is lower in
+the upstream region and higher in the downstream region.
+The reason for the failure of the VTG-Prt model is that the wall is
+mainly covered by the jet core region in the converging slot hole
+ﬁlm cooling (see Fig. 3(b)) and the inﬂuence of heat diffusion in
+the mixing layer on the cooling effectiveness is very small. For this
+kind of ﬁlm cooling in which the ﬁlm attaches on the wall very well
+and the heat diffusion in the jet core region plays major inﬂuence
+on the cooling effectiveness distribution, temperature gradient
+which cannot indentify the jet core region is not a proper characteristic quantity for the turbulent Prandtl number distribution
+model. The dimensionless temperature H = (T  Tg)/(Tc  Tg) is
+suggested to be the characteristic quantity for this kind of ﬁlm
+
+cooling to build new turbulent Prandtl number distribution model.
+In this model, the value of Prt varies with dimensionless temperature, so it’s named as VT-Prt model. The form of the VT-Prt model is
+as following:
+
+Prt ¼ f ðH; MÞ
+
+ð8Þ
+
+where H = (T  Tg)/(Tc  Tg), M  qcUc/qgUg; f(H, M) is the function
+of Prt with respect to the dimensionless temperature H and blowing ratio M. Advised data of f(H, M) at some key points is listed in
+Table 2. The values of the parameters in VT-Prt model are developed
+by series of adjustment (called numerical experiment) with the
+cooling effectiveness data in Liu et al. [28] as the benchmark data.
+Linear interpolation or polynomial ﬁt can be used to calculate the
+Prt value at the positions out of the table. The computational results
+by the VT-Prt model are also shown in Figs. 14 and 15. Although in
+the upstream, x/D < 10, there is still obvious deviation between the
+computation and the measurement in the midspan region between
+adjacent jets, the computed results of the VT-Prt model agree very
+well with the experimental results for both blowing ratios in most
+of the region, especially in the downstream.
+
+Table 2
+Advised data at key points for VT-Prt model.
+
+H
+
+60.1
+
+0.15
+
+0.3
+
+0.4
+
+0.7
+
+0.8
+
+P1
+
+f(H, M = 0.7)
+f(H, M = 1)
+f(H, M = 1.4)
+f(H, M = 2)
+
+0.15
+0.15
+0.15
+0.15
+
+0.9
+0.45
+0.45
+0.5
+
+1
+0.5
+0.5
+0.55
+
+1.1
+0.55
+0.55
+0.6
+
+1
+1
+1
+1
+
+1.5
+3
+3
+1.5
+
+2
+4
+4
+2
+
+Fig. 15. Comparison between computed and measured spanwise distributions of local ﬁlm cooling effectiveness for model of Liu et al. [28] under M = 2.
+
+886
+
+C.-l. Liu et al. / International Journal of Heat and Mass Transfer 54 (2011) 874–886
+
+4. Conclusion
+The aim of the work in the present paper is to further accomplish the idea to improve the computation accuracy of ﬁlm cooling
+effectiveness in the frame of the isotropic turbulence models by
+developing turbulent Prandtl number distribution models. To
+make the turbulent Prandtl number distribution models general
+and applicable for more different ﬁlm cooling cases effectively,
+the turbulent Prandtl number should be dependent on some characteristic quantity of the ﬁlm cooling.
+For the kind of ﬁlm cooling, in which the wall is mainly inﬂuenced by the mixing layer region between the jet and the mainstream, the heat diffusion in the mixing layer region has great
+inﬂuence on the cooling effectiveness distribution and a new
+VTG-Prt model is developed for the cooling effectiveness computation of such ﬁlm cooling cases. The Prt value in this model varies
+with dimensionless temperature gradient which is suggested and
+used in the present paper to identify the mixing layer region and
+to be the characteristic quantity of the mixing layer region for this
+turbulent Prandtl number distribution model. Through the applications of the VTG-Prt model in the long cylindrical hole ﬁlm cooling,
+short cylindrical hole ﬁlm cooling, compound angle cylindrical hole
+ﬁlm cooling and expansion shaped hole ﬁlm cooling, the VTG-Prt
+model is validated to be an effective and easy way to improve the
+computation accuracy of ﬁlm cooling effectiveness distribution in
+the frame of isotropic turbulence model for this kind of ﬁlm cooling.
+But the VTG-Prt model is disabled for such kind of ﬁlm cooling,
+in which the ﬁlm is very thin and attaches on the wall very well,
+and the heat diffusion in the jet core region plays major inﬂuence
+on the cooling effectiveness distribution, such as the console hole
+ﬁlm cooling. For such ﬁlm cooling case, the dimensionless temperature is suggested to be the characteristic quantity of the jet core
+region for this kind of ﬁlm cooling to build new turbulent Prandtl
+number distribution model: VT-Prt model. In this model, the value
+of Prt varies with dimensionless temperature. Good agreement
+between the computational results and experimental results is
+obtained through the use of VT-Prt model in the test case of console
+hole ﬁlm cooling.
+
+Acknowledgement
+This work is sponsored by the National Basic Research Program
+of China (China 973 Program) under number of 2007CB707701.
+
+References
+[1] R.W. Kaszeta, T.W. Simon, Measurement of eddy diffusivity of momentum in
+ﬁlm cooling ﬂows with streamwise injection, ASME J. Turbomach. 122 (2000)
+178–183.
+[2] A. Hoda, S. Acharya, Predictions of a ﬁlm cooling jet in crossﬂow with different
+turbulence models, ASME J. Turbomach. 122 (2000) 558–569.
+[3] G. Medic, P.A. Durbin, Toward improved prediction of heat transfer on ﬁlm
+cooled turbine blades, ASME J. Turbomach. 124 (2002) 193–199.
+[4] R. Jones, S. Acharya, A. Harvey, Improved turbulence modeling of ﬁlm cooling
+ﬂow and heat transfer over turbine blades, in: B. Sunden, M. Faghri (Eds.),
+Modeling and Simulation of Turbulent Heat Transfer, WIT Press, 2005, pp.
+113–146 (Chapter 4).
+
+[5] D. Lakehal, G. Theodoridis, W. Rodi, Computation of ﬁlm cooling of a ﬂat plate
+by lateral injection from a row of holes, Int. J. Heat Fluid Flow 19 (1998) 418–
+430.
+[6] A. Azzi, D. Lakehal, Perspectives in modeling ﬁlm cooling of turbine blades by
+transcending conventional two-equation turbulence models, ASME J.
+Turbomach. 124 (2002) 472–484.
+[7] A. Bacci, B. Facchini, Turbulence Modeling for the Numerical Simulation of Film
+and Effusion Cooling Flows, ASME Paper GT 2007-27182, 2007.
+[8] A. Hoda, S. Acharya, M. Tyagi, Reynolds Stress Transport Model Predictions and
+Large Eddy Simulations for Film Coolant Jet in Crossﬂow, ASME Paper 2000GT-249, 2000.
+[9] M. Tyagi, S. Acharya, Large eddy simulation of ﬁlm cooling ﬂow from an
+inclined cylindrical jet, ASME J. Turbomach. 125 (2003) 734–742.
+[10] Y. Peet, S.K. Lele, Near Field of Film Cooling Jet Issued into a Flat Plate Boundary
+Layer: LES Study, ASME Paper GT 2008-50420, 2008.
+[11] S. Kapadia, S. Roy, J.D. Heidmann, First hybrid turbulence modeling for turbine
+blade cooling, AIAA J. Thermophys. 118 (2004) 154–156.
+[12] D.S. Holloway, D.K. Walters, J.H. Leylek, Computational Study of Jet in
+Crossﬂow and Film Cooling Using a New Unsteady-Based Turbulence Model,
+ASME Paper GT 2005-68155, 2005.
+[13] W.M. Kays, Turbulent Prandtl number – where we are?, J Heat Transfer 116
+(1994) 284–295.
+[14] E. Mayer, D. Divoky, Correlation of intermittency with preferential transport of
+heat and chemical species in turbulent shear ﬂows, AIAA J. 4 (1966) 1995–
+2000.
+[15] I. Wygnanski, H.E. Fiedler, The two-dimensional mixing region, J. Fluid Mech.
+41 (1970) 327–361.
+[16] H.E. Fiedler, Transport of heat across a plane turbulent mixing layer, Adv.
+Geophys. 18 (1974) 93–109.
+[17] A.A. Townsend, The Structure of Turbulent Shear Flow, second ed., Cambridge
+University Press, Cambridge, 1976.
+[18] A.J. Chambers, R.A. Antonia, Turbulent Prandtl number and spectral
+characteristics of a turbulent mixing layer, Int. J. Heat Mass Transfer 28
+(1985) 1461–1468.
+[19] N. Chidambaram, S.M. Dash, D.C. Kenzakowski, Scalar variance transport in the
+turbulence modeling of propulsive jets, J. Propul. Power 17 (2001) 79–84.
+[20] J.O. Henze, Turbulence, McGraw-Hill, New York, 1975 (pp. 534–545).
+[21] A. Kohli, D.G. Bogard, Turbulent transport in ﬁlm cooling ﬂows, ASME J. Heat
+Transfer 127 (2005) 513–520.
+[22] D. Lakehal, Near-wall modeling of turbulent convective heat transport in ﬁlm
+cooling of turbine blades with the aid of direct numerical simulation data,
+ASME J. Turbomach. 124 (2002) 485–498.
+[23] Cun-Liang Liu, Hui-Ren Zhu, Jiang-Tao Bai, Effect of turbulent Prandtl number
+on the computation of ﬁlm-cooling effectiveness, Int. J. Heat Mass Transfer 51
+(2008) 6208–6218.
+[24] R.J. Goldstein, E.R.G. Eckert, J.W. Ramsey, Film cooling with injection through
+holes: adiabatic wall temperature downstream of a circular hole, J. Eng. Power
+90 (1968) 384–395.
+[25] A.K. Sinha, D.G. Bogard, M.E. Crawford, Film cooling effectiveness downstream
+of a single row of holes with variable density ratio, ASME J. Turbomach. 113
+(1991) 442–449.
+[26] R.J. Goldstein, P. Jin, Film cooling downstream of a row of discrete holes with
+compound angle, ASME J. Turbomach. 123 (2001) 222–230.
+[27] Jiang-Tao Bai, Hui-Ren Zhu, Cun-Liang Liu, Film Cooling Characteristic of
+Double-fan-shaped Film Cooling Holes, ASME Paper GT 2009-59318, 2009.
+[28] Cun-Liang Liu, Hui-Ren Zhu, Jiang-Tao Bai, Du-Chun Xu, Experimental research
+on the thermal performance of converging slot holes with different divergence
+angles, Exp. Therm. Fluid Sci. 33 (2009) 808–817.
+[29] T.H. Shih, W.W. Liou, A. Shabbir, Z. Yang, J. Zhu, A new k–e eddy-viscosity
+model for high Reynolds number turbulent ﬂows-model development and
+validation, Comput. Fluids 24 (1995) 227–238.
+[30] Mahmood Silieti, Alain J. Kassab, Eduardo Divo, Film Cooling Effectiveness
+from a Single Scaled-up Fan-shaped Hole—A CFD Simulation of Adiabatic and
+Conjugate Heat Transfer Models, ASME Paper GT 2005-68431, 2005.
+[31] D.K. Walters, J.H. Leylek, Impact of ﬁlm-cooling jets on turbine aerodynamic
+losses, ASME J. Turbomach. 122 (2000) 537–545.
+[32] M. Wolfstein, The velocity and temperature distribution of one-dimensional
+ﬂow with turbulence augmentation and pressure gradient, Int. J. Heat Mass
+Transfer 12 (1969) 301–318.
+[33] H.C. Chen, V.C. Patel, Near-wall turbulence models for complex ﬂows including
+separation, AIAA J. 26 (6) (1988) 641–648.
+[34] J.E. Sargison, S.M. Guo, M.L.G. Oldﬁeld, G.D. Lock, A converging slot hole ﬁlmcooling geometry. Part 1: Low-speed ﬂat-plate heat transfer and loss, ASME J.
+Turbomach. 124 (2002) 453–460.
+
+

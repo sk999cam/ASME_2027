@@ -1,0 +1,1018 @@
+Proceedings of FEDSM2006
+2006 ASME Joint U.S.-European Fluids Engineering Summer Meeting
+July 17-20, 2006, Miami, FL, USA
+
+FEDSM2006-98282
+LARGE EDDY SIMULATION OF FILM COOLING FLOW ABOVE A FLAT PLATE
+FROM INCLINED CYLINDRICAL HOLES
+
+Ioulia V. Iourokina
+Department of Aeronautics and Astronautics
+Stanford University
+Stanford, California 94305
+Email: iouroki@stanford.edu
+
+Sanjiva K. Lele
+Department of Aeronautics and Astronautics
+Stanford University
+Stanford, California 94305
+Email: lele@stanford.edu
+
+ABSTRACT
+Large Eddy Simulation of a realistic film cooling configuration is performed, consisting of a large plenum feeding a periodic array of short film cooling holes with length to diameter ratio L/d = 3.5. Film cooling jets are issued at 35 degrees
+into the turbulent crossflow boundary layer above the flat surface. Time-averaged flowfield is analyzed to reveal steady and
+unsteady structures occurring as a result of plenum-jet-crossflow
+interactions. Among these structures are the flow separation inside the film-hole, reverse flow zone right behind the jet injection
+and the counter-rotating vortex pair in the wake of the jet. All of
+these structures influence the wall temperature distribution and
+have a negative effect on film cooling effectiveness.
+
+portant observations of the researchers was strong dependence of
+the film cooling flow on the geometry of the film-hole as well as
+the supply plenum. Simon et al. [1] studied the effect of the film
+hole length-to diameter ratio. Leylek et al. [2, 3] investigated the
+effect of shaping of film holes. Peterson and Plesniak [4] showed
+the influence of the direction of the flow in the supply channel.
+The conclusion follows is that in order to predict the film cooling
+flow with reasonable accuracy, one has to incorporate the exact
+geometry of the film-holes and the supply plenum in the simulations, and not substitute the cooling gas injection with some
+artificial boundary conditions.
+It is possible to list several computational studies of film
+cooling flows, where the exact geometry of the film-holes and
+the plenum was incorporated [2, 3, 5]. However, all these studies
+used the time-averaged (so called Reynolds-averaged) NavierStokes equations (RANS method). RANS simulations capture
+only the averaged flow variables and thus use relatively coarse
+mesh. It is a practical and commonly used method for simulating flows over complex geometries. However, due to the limited
+capability of RANS turbulence models, it does not provide an
+accurate prediction of flows with complex turbulent structures,
+as film cooling flows. Large Eddy Simulation (LES) can resolve
+time-dependent turbulence structures directly and only requires a
+model for the subgrid-scale terms, which are more universal and
+easier to model. Numerical simulations of film cooling flows using LES have also been attempted recently [6, 7]. These studies
+even incorporated the film hole into the simulations. But, typically, unrealistically long delivery tubes were used and inflow
+parabolic profile was supplied at the beginning of the delivery
+
+INTRODUCTION
+The first stage of the turbine blade experiences a harsh thermal environment. The flows exiting the combustion chamber is
+at high temperatures exceeding the melting point of the turbine
+blade material and is highly turbulent. In order to avoid the detrimental effect of contact between hot gases and blade surface,
+cooling measures are employed, film cooling being one of them.
+However, since film cooling implies taking some gas out of the
+compressor, a compromise must be found between the overall
+engine efficiency and reliability to handle the thermal stresses.
+Accurate numerical simulations of this problem can help in identifying beneficial approaches to film cooling design.
+There have been numerous attempts to study film cooling
+problem both experimentally and computationally. Among im1
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+tube, instead of modeling the supply plenum. As it was shown
+by some researchers [8, 9], the connection between the plenum
+and the film-hole causes the flow to separate from the downstream wall of the film-hole and create a blockage effect, which
+pushes majority of the film-hole flow to exit into the crossflow
+from the upstream portion of the hole. This effect is especially
+pronounced when the hole is inclined. To capture these effects it
+is necessary to capture the full geometry.
+Large Eddy Simulations of a film cooling flow above the
+flat surface are presented in this paper. The simulations model
+the exact geometry of film cooling experiments of Pietrzyk et
+al. [10]. It includes large sink-type delivery plenum, periodic array of 11 short film cooling holes with length-to diameter ratio
+of L/d = 3.5 and the crossflow section. Results of the simulations are analyzed and compared with the experimental data of
+Pietrzyk et al. [10].
+
+Figure 1. SAMPLE COMPUTATIONAL DOMAIN FOR THE CALCULATION OF FILM COOLING GEOMETRY.
+
+solved numerically is the low Mach number approximation
+of the Navier-Stokes equations written in conservative form
+in cylindrical coordinates. Velocity components are staggered
+with respect to density and other scalars in both space and
+time [14]. Second order central difference scheme is used for the
+integration of momentum equations, while QUICK scheme [15]
+is employed for scalar advection to avoid the formation of
+spatial oscillations. Second-order Crank-Nickolson scheme with
+sub-iterations is used for time advancement. Advection and
+diffusion terms in radial and azimuthal directions are treated
+implicitly. Poisson equation for pressure is solved with the
+multigrid method. For more details, the reader is referred to
+Ref. 13.
+
+NUMERICAL METHOD
+Numerical method specially developed for this problem consists of coupled simulations using multiple computational codes.
+A fully compressible LES code is used in the area above the flat
+plate, while a low Mach number LES code is employed in the
+plenum and film holes. The motivation for using different codes
+comes from the essential difference of the nature of the flow in
+these different regions. The flat surface, which is being cooled,
+models the turbine blade surface, and compressibility effects are
+important for the flow above the turbine blade. In the plenum, on
+the other hand, compressibility effects are not only unimportant,
+but the actual Mach number is so low, that use of the compressible code in that region would significantly slow down the computations. Low Mach number code would therefore be a logical
+choice for the plenum/film-hole region. The two computational
+codes are described below.
+
+Both codes are written in LES formulation with dynamic
+Smagorinsky eddy-viscosity model [16] used for the treatment
+of subgrid-scale terms.
+Combining the Codes
+The major challenge in combining compressible and low
+Mach number codes together is to specify an accurate and stable way of supplying the variables across the interfaces. In the
+present method, we use overlapping grids, where computational
+domain of one code has an area of overlap with the domain of
+another code. A sample computational domain, which includes
+the region above the leading edge of a turbine blade, and a film
+hole with a plenum, is shown in figure 1. Compressible code domain corresponds to the region exterior to the turbine blade and
+shown as striped in figure 1. Low Mach number code domain
+corresponds to a plenum and film hole in figure 1.
+Only one boundary of the compressible code domain intersects the low Mach number code domain. This boundary is part
+of the turbine blade surface, and the intersection occurs at the
+place, where cooling gas is injected. Variables from the low
+Mach number code should be supplied to the compressible code
+at this location, which is schematically shown by the arrow 1
+in figure 1. Boundaries of the low Mach number code domain
+
+Compressible Code
+Compressible code which is used in the region above the
+flat plate was developed by Z.Xiong [11]. Compressible NavierStokes equations in primitive variables are solved numerically
+using implicit time integration with an approximately-factorized
+difference scheme. The spatial discretization is achieved by
+mapping the body-fitted mesh coordinates from physical space
+(x, y, z) to the uniform computational space (ξ, η, ζ). Fourthorder accurate central-difference scheme is used for first - and
+second- derivatives in the computational space. Details of the numerical implementation of the compressible code can be found
+in Ref. 12.
+Low Mach Number Code
+Low Mach number code which is used in the plenum
+and film holes is due to C. Pierce [13]. The set of equations
+2
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+which intersect the compressible code domain are shown in bold
+lines in figure 1. These are ”free” boundaries of the low Mach
+number code domain, since they are not part of film hole walls.
+Variables from the compressible code should be supplied to the
+low Mach number code at these boundaries, which is schematically shown by arrows 2 in figure 1.
+
+Table 1.
+
+δ∗i, f c /d
+
+θi, f c /d
+
+Reθi, f c
+
+0.52
+
+0.089
+
+0.059
+
+946
+
+CROSSFLOW BOUNDARY LAYER CHARACTERISTICS.
+
+Other choices for specifying boundary conditions at the
+”free” boundaries of the low Mach number code domain are possible, for example, Dirichlet boundary conditions for the Poisson
+equation, normal derivatives for velocities instead of velocities
+itself. However, the method described above proved to work the
+best.
+We use bilinear interpolation to interpolate values both from
+compressible to low Mach number code and from low Mach
+number to compressible code. Since the low Mach number code
+has a second-order accurate space discretization, increasing the
+order of interpolation beyond the second order does not lead to
+any further advantage.
+The current method has been thoroughly tested on both
+steady and unsteady problems and shows good performance,
+which is documented in [17].
+
+Variables Supplied From the Low Mach Number
+Code to the Compressible Code Variables, which are
+solved for in the compressible code, are {ρ, u, v, w, T }. All these
+variables should be specified at the location of cooling gas injection. Various ways of specifying these variables have been tested
+(the details of the test cases are described in [17]). However, the
+best performance was achieved by interpolating all of the variables {ρ, u, v, w, T } from the low Mach number code.
+Variables Supplied From the Compressible Code to
+the Low Mach Number Code In the low Mach number
+code boundary conditions are required for the following variables. Momentum equations need values of three components
+of velocity {u, v, w} at the boundaries. Scalar transport equation
+requires specification of a scalar (temperature) at the boundary.
+Density is obtained from temperature through the equation of
+state, therefore, no boundary conditions for density is required.
+{u, v, w, T } are interpolated from compressible code at the ”free”
+boundaries of low Mach number code domain (boundary surfaces of low Mach number code domain intersecting compressible code domain). The same procedure is applied regardless of
+whether the ”free” boundary corresponds to an inflow or outflow.
+In addition, we need boundary conditions for pressure for
+solving the Poisson equation. In the low Mach number approximation only the second order pressure P(2) (~x,t) enters the equations of motion (see, for example, Ref. 18). It is decoupled from
+density and temperature fluctuations and determined by the constraint on the divergence of velocity, much like the pressure in incompressible equations. Zeroth-order pressure P(0) (t) plays the
+role of the global thermodynamic pressure and enters the equation of state. Pressure field obtained in compressible equations is
+Pcompr (~x,t) = P(0) (t) + P(2) (~x,t). Taking gradient of P we have
+∇P(~x,t) = ∇P(2) (~x,t).
+In the present method, we solve the Poisson equation with
+Neumann boundary conditions for P(2) . We specify the value
+(2)
+of derivative ∂P∂~n in the direction normal to the boundary sur-
+
+FILM COOLING SIMULATIONS
+Setup of the Problem
+The geometry of the problem corresponds to the film cooling experiments of Pietrzyk et al. [10]. All geometrical scales
+in the problem are non-dimensionalized by the diameter of the
+film-hole d. Large cylindrical plenum with the height 20 d and
+radius 10.526 d feeds 11 cylindrical holes with length-to diameter ratio L/d = 3.5. Film cooling holes are spaced uniformly in
+spanwise direction with the pitch 3 d. Film-holes are inclined at
+35 degrees with respect to the flat surface. Experiments of [10]
+are incompressible, so small value of Mach number M = 0.15 is
+used here for the compressible code.
+Characteristics of the crossflow boundary layer in the absence of the cooling gas injection at x/d = −2 are summarized
+in Table 1. Here δi, f c , δ∗i, f c and θi, f c denote 99%, displacement
+and momentum boundary layer thicknesses at the inflow boundary of the film cooling domain, respectively. Reθi, f c = U∞ θi, f c /ν
+is the Reynolds number based on the free-stream velocity and
+θi, f c . These characteristics correspond to a turbulent boundary
+layer. To specify realistic turbulent inflow for film cooling simulations, a separate Large Eddy Simulation of turbulent boundary
+layer is performed to create a database, which is then fed as inflow boundary conditions into the main simulations. LES of turbulent boundary layer is accomplished with the use of rescalingrecycling technique of [19] and compressibility correction proposed by [20], slightly relaxed due to the small value of Mach
+number in the preset case. Details of the simulations can be
+found in [21].
+
+compr
+
+face. We interpolate ∂P∂~n = ∂P ∂~n from the gradients of the
+compressible pressure field at the ”free” boundaries of low Mach
+number code domain intersecting the compressible code domain.
+Zeroth-order pressure P(0) is then added to the calculated field of
+P(2) in order to set the right value of the total static pressure. We
+find the value of P(0) by matching Pcompr = P(0) + P(2) at one
+specific location in the region of overlap.
+(2)
+
+δi, f c /d
+
+3
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Computational domain for the compressible code is the
+box with dimensions 7.5 d × 2 d × 3 d. The cooled surface is a
+flat plate spanning the range x/d = (−2; 5.5), where the point
+(x/d = 0, y/d = 0) is located on the wall at the leading edge of
+the jet. Because of the elliptical shape of the hole, the trailing
+edge is located at x/d = 1.74. The grid with 128 × 128 × 128
+nodes is used in the simulations. Hyperbolic-tangent stretching
+is utilized in wall-normal direction to cluster points in the wall
+boundary layer. Uniform grid is used in streamwise and spanwise directions due to the occurrence of high-intensity fluctuations at any location after the cooling gas injection. The plenum
+and the film hole use 256 × 128 × 64 and 128 × 64 × 64 grid
+points respectively. Only one hole is simulated here, however,
+periodic boundary conditions in spanwise direction make it similar to the periodic array of holes. Overlap regions exist between
+both plenum and a film hole and between a film hole and a compressible domain. Plenum is coupled to the film hole by the same
+coupling procedure as described above, but applied to two low
+Mach number codes. x − z view of the computational domain
+used in the simulations is shown in figure 2.
+Uniform velocity profile is specified at the entrance into the
+plenum, giving the velocity ratio V R = U j /U∞ = 0.64, where U j
+is the jet velocity and U∞ is the crossflow free-stream velocity.
+Density ratio DR = ρ j /ρ∞ = 0.95 is used in the present simulations. The rest of the boundaries of the plenum and the pipe
+correspond to either walls with no-slip and adiabatic boundary
+conditions or boundaries of the overlapping region, where interface boundary conditions are set. For the compressible code domain we use no-slip adiabatic boundary conditions for the wall,
+interface conditions in the region of the jet injection, uniform
+free-stream at the top and parabolized Navier-Stokes equations
+at the outflow. Turbulent boundary layer profile taken from an
+auxiliary LES simulations is specified at the inflow.
+
+5
+
+0
+
+Y
+
+-5
+
+-15
+
+-20
+
+-15
+
+D = −σd (ξ, η, z, t) ∆ ξ
+
+4∂
+
+4U
+
+∂ ξ4
+
++∆η
+
+4∂
+
+4U
+
+∂ η4
+
++∆z
+
+4∂
+
+4U
+
+∂ z4
+
+¶
+
+-10
+
+-5
+
+X
+
+0
+
+5
+
+10
+
+Figure 2. X − Z VIEW OF THE COMPUTATIONAL DOMAIN FOR LES
+OF FILM COOLING.
+
+where U = {ρ, u, v, w, T }T is the vector of flow variables and
+σd (ξ, η, z, t) is the coefficient, which controls the amount of the
+added dissipation. The regions, where high wave number components are generated and artificial dissipation is required, are
+not fixed in space and time, but depend on the local state of the
+flow. To make sure that the model removes the energy above
+the Nyquist wavenumber without corrupting the remaining flow,
+a special form for the coefficient σd (ξ, η, z, t) is proposed, proportional to the high-order derivatives of the local strain rate. It
+imparts spectral-like behavior to the model, thus eliminating the
+need for ad hoc limiters to reduce the value of the coefficient σd
+in smooth regions. The formulation used in the current method is
+based on the ideas of the hyperviscosity model proposed by Cook
+et al. [22, 23] and hyperdiffusivity model of Fiorina et al. [24].
+In multiple dimensions, the coefficient σd can be written as
+
+Artificial Dissipation
+Numerical method for the compressible code uses fourthorder central difference discretization for spatial terms. Because of its symmetric stencil, central-difference scheme is nondissipative, unlike numerical schemes with biased stencils, such
+as upwind schemes. The lack of numerical dissipation can result
+in numerical instability due to the generation of unresolved high
+wave number components by nonlinear flow interactions. This
+effect is especially severe when the gradients of the flow parameters are high, as it occurs in the places of shear between the
+injected jet and the crossflow. In order to damp these unresolved
+components, a fourth-order artificial dissipation is introduced by
+adding the following term to the right-hand side of Navier-Stokes
+equations
+µ
+
+-10
+
+σd (ξ, η, z, t) = εd ∆r+1 |∇r S|,
+
+(2)
+
+where εd is the model constant, ∆ = (∆ ξ ∆ η ∆ z)1/3 is the local grid spacing, S = (Si j Si j )1/2 is the magnitude of the rate of
+strain tensor and ∇r is the polyharmonic operator which defines
+a sequence of Laplacians. For example, r = 2 corresponds to
+
+, (1)
+4
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+15
+
+a single Laplacian ∇2 S, r = 4 leads to the biharmonic operator
+∇4 S = ∇2 (∇2 S) and so on. The overbar ( f ) denotes a truncatedGaussian filter, defined as
+f (x) =
+
+Z L
+
+−L
+
+¡
+¢
+G |x − x0 |; L f (x0 ) d 3 x0 ,
+
+-3 -2.4 -1.8 -1.2 -0.6 0
+
+(3)
+
+e−6 x
+
+−L e
+
+−6 x0 2 /L2 d 3 x0
+
+y/d
+
+0 2 /L2
+
+, L = 4 ∆.
+
+3
+
+1
+
+where
+G(x0 ; L) = R L
+
+0.6 1.2 1.8 2.4
+
+2
+
+(4)
+
+0
+
+-1
+
+This filter eliminates cusps introduced by the absolute value operator in (2), which, in turn, ensures that the value of σd is positive, and the added terms (1) perform stabilizing function. In the
+present work, (4) is approximated along each grid line as
+
+-2
+
+-1
+
+3091
+1997
+3565
+f j + 12,960
+( f j−1 + f j+1 ) + 25,920
+( f j−2 + f j+2 )
+f j = 10,368
+(5)
+149
+107
++ 12,960 ( f j−3 + f j+3 ) + 103,680 ( f j−4 + f j+4 )
+
+0
+
+1
+
+x/d
+
+2
+
+3
+
+Figure 3. INSTANTANEOUS TRANSVERSE VORTICITY, ωz d/U∞ , in
+x − y CENTERPLANE FOR THE PIPE AND CROSSFLOW.
+
+with modified stencil at the boundaries and periodicity in zdirection. The transfer function associated with this filter closely
+matches a Gaussian. The value r = 2 is used in the present simulations, εd = 0.025 is set for the model coefficient.
+
+is relatively undisturbed and persists till the jet meets with the
+crossflow. It then bends into the crossflow direction and breaks
+into the rolling vortices with positive transverse vorticity marking the upper shear layer between the jet and the crossflow, where
+it interacts with the negative crossflow boundary layer vorticity.
+Region of high both positive and negative vorticity marking the
+zone with the high level of turbulence is observed in the region
+right behind the jet and in the jet wake above the wall.
+Instantaneous flowfield is highly irregular and the smallscale turbulent structures dominate the quasi-steady coherent
+vortices, when both the jet and the approaching crossflow are
+initially turbulent. Therefore, it is more instructive to look at the
+time-averaged quantities to investigate the flow dynamics. Timeaveraged streamlines in the x − y centerplane are shown in figure
+√ 4. The contours of the magnitude of time-averaged velocity
+ũ 2 + ṽ 2 + w̃ 2 are also plotted, where ˜ denotes Favre-averaged
+quantities. The zone of the reversed flow is observed right after
+the jet injection. It is marked by the node point in the streamline pattern in the x − y centerplane. This node point coincides
+with the minimum of the mean velocity magnitude, as seen in
+figure 4. The region of reversed flow is also noticeable at the instantaneous streamlines pattern, see [21]. The fact that it persists
+in the time-averaged flowfield indicates that it is a steady structure of the flow. It is formed by the fluid wrapping around the
+jet and being tacked into its wake by the region of low pressure
+behind the jet. It is the common feature of jet-in-crossflow and is
+documented by many researchers.
+We plot the magnitude of the mean velocity at the centerplane along the horizontal lines y/d = 0 and y/d = 0.04 in fig-
+
+RESULTS AND DISCUSSION
+As it was hypothesized in experiments [10], confirmed in
+RANS simulations [8, 25] and further investigated in [21], rather
+complex flowfield with high levels of turbulence is created within
+the film cooling hole for the present cooling configuration. The
+effect of plenum-pipe interaction can be visualized by looking
+at instantaneous vorticity field. Instantaneous transverse vorticity ωz d/U∞ in x − y centerplane is plotted in figure 3 for the
+pipe and the crossflow. At the downstream corner of the plenumpipe connection, the flow undergoes a sharp 135 degree turning,
+carrying the large negative vorticity into the pipe. This is consistent with the clockwise rotation of the fluid particles bending around this corner. One can identify the trajectory of the
+fluid after it turns around the downstream plenum corner by the
+clearly marked strip of the negative vorticity inside the pipe. Not
+being able to make the sharp turn, the flow separates from the
+downstream wall and is carried towards the middle of the pipe.
+This separated fluid is brought back towards the downstream wall
+by the circular motion in the planes perpendicular to the pipe
+axis, which is documented in [21] with the help of instantaneous
+streamlines. Both positive and negative vorticity exists in this
+recirculation zone, marking the region of high-turbulence produced by the flow separation. The boundary layer on the upstream side of the wall identified by the strip of positive vorticity
+5
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1
+2
+
+Velocity magnitude
+
+1
+
+0.5
+
+0
+
+-0.5
+
+0.05 0.25 0.45 0.65 0.85 1.05
+0.5
+
+1
+
+1.5
+
+x/d
+
+2
+
+2.5
+
+0.4
+
+0.2
+
+-1
+0
+
+0.6
+
+3
+
+0
+
+Figure 4. TIME-AVERAGED STREAMLINES SUPERIMPOSED
+ON
+√ THE CONTOURS OF THE MEAN VELOCITY MAGNITUDE
+ũ 2 + ṽ 2 + w̃ 2 , x − y CENTERPLANE.
+
+-2
+
+0
+
+2
+
+4
+
+6
+
+x/d
+Figure 5.
+
+MAGNITUDE OF THE MEAN VELOCITY ALONG THE HOR-
+
+IZONTAL LINES y/d
+
+ure 5. The y/d = 0.04 line passes through the node point in the
+streamline pattern marking the center of the reversed flow zone.
+The region of minimum velocity right after the jet injection corresponding to the recirculating flow is seen for y/d = 0.04 plot.
+Looking at y/d = 0 plot, one can see that the jet exit velocity
+profile is non-uniform, with two distinct peaks - one on either
+side of the hole centerline. The leading peak is probably due to
+the separation inside the pipe, which mitigates the migration of
+the higher-momentum jet fluid towards the upstream wall. The
+trailing peak is most likely caused by the negative streamwise
+pressure gradient at the jet exit plane due to the crossflow blockage, forcing the jet to squeeze out of the downstream corner. The
+gap in the velocity magnitude in the center of the jet cross-section
+and its increase towards the periphery can also be identified by
+looking at the top view of the cross-section shown in figure 6.
+It is qualitatively similar to the plot of [2] for the velocity ratio
+V R = 0.5, however with some quantitative differences due to a
+higher velocity ratio of V R = 0.64 in the present study. It is worth
+noting that the contours of the instantaneous velocity in [21] look
+slightly different than that of the time-averaged. As it was already mentioned, the instantaneous flowfield is highly fluctuating and can not reflect the trends of the instantaneous flow.
+Perhaps, the most attention from the researchers studying
+dynamics of jets in a crossflow has been on the counter-rotating
+vortex pair (CRVP), which is an inherent feature of jet-crossflow
+interaction. To determine an existence of CRVP in the present
+case, where inclined jets are issued from the short holes fed by a
+large sink-type delivery plenum, we look at the time-averaged
+streamlines superimposed on the contours of the normalized
+mean pressure in figure 7. Three streamwise cross-sections are
+shown: x/d = 2.075, x/d = 3.55 and x/d = 5, x/d = 2.075
+
+= 0 and y/d = 0.04, x − y CENTERPLANE.
+
+3
+
+z/d
+
+0.58
+0.74
+
+2
+
+60.1
+0.20.42 0.9
+0.7
+4
+
+0.58
+
+y/d
+
+y/d=0
+y/d=0.04
+
+0.8
+
+1.5
+
+0.7
+
+4
+
+0.9
+6
+0.1 0.42
+0.10.2
+
+1
+
+0.1 0.26 0.42 0.58 0.74 0.9
+
+0
+
+-1
+0
+
+x/d
+
+2
+
+Figure 6. VELOCITY MAGNITUDE CONTOURS IN THE JET EXIT
+PLANE. THE TOP VIEW OF THE JET CROSS-SECTION.
+
+passing through the node point in the streamline pattern of figure 4. The centers of CRVP generally coincide with the location
+of the pressure minimum, supporting the hypothesis of Muppidi
+et al. [26] that the mechanism responsible for the formation of
+CRVP is the global deformation of the jet cross-section driven
+by the pressure forces, rather than the reorientation of vorticity.
+The reorientation of either in-hole or jet shear layer vorticity definitely contributes to the strength of CRVP, but not causes its
+formation. The CRVP moves away from the wall as it convects
+6
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Sinha, •
+
+Sinha, 4
+LES
+
+DR
+
+VR
+
+BL
+
+I
+
+1.2
+
+0.42
+
+0.5
+
+0.208
+
+1.2
+
+0.5
+
+0.6
+
+0.3
+
+0.95
+
+0.5
+
+0.475
+
+0.2375
+
+3.5
+3
+2.5
+
+31.75
+31.72
+31.69
+31.66
+31.63
+31.6
+
+2
+
+z/d
+
+Table 2. REGIME PARAMETERS FOR LES AND MEASUREMENTS
+OF SINHA ET AL.
+
+1.5
+1
+0.5
+0
+
+downstream, in line with the vertical growth of the jet wake.
+-1
+
+The documented features of the jet-crossflow interaction,
+such as reverse flow zone behind the jet and CRVP effect the
+distribution of the surface temperature. The crossflow fluid being involved in this recirculated motion is tucked beneath the
+jet and causes the wall temperature to increase. Strong CRVP
+vortices lift the cold jet away from the wall, decreasing the film
+cooling effectiveness. Film cooling effectiveness is defined as
+η = (Tw − T∞ )/(T j − T∞ ), where Tw is the adiabatic wall temperature and T j and T∞ are the temperatures of the jet and a crossflow, respectively. To perform comparison with the cooling effectiveness measurements of Sinha et al. [27], we performed additional LES run with V R = 0.5 (as opposed to V R = 0.64 used
+to document the flowfield in the above discussion), to match the
+V R = 0.5 case of [27]. The comparison is shown in figure 8. Although we do match the velocity ratio for the experimental data
+shown with triangles, there are other important parameters describing the film cooling process, like density ratio DR, blowing
+ratio BL = ρ j U j /ρ∞ U∞ and momentum ratio I = ρ j U j2 /ρ∞ U∞2 .
+The value of these four parameters for our LES and for measurements of Sinha et al. indicated by bullets and triangles are
+summarized in table 2. It is shown in [27] that the film cooling effectiveness data is best collapsed with the momentum ratio.
+The simulated momentum ratio lies between the two experimental values. Present simulations document the region of sharp decrease in effectiveness due to the jet lift off observed in Sinha, 4,
+but the cooling effectiveness recovers to the higher value, matching more the value of the Sinha, •, and the recovery seems to happen faster. It might be due to the fact that the reverse flow zone,
+although exists, spreads less distance in streamwise direction for
+the current regime. It is worth mentioning the main advantage
+of LES versus RANS techniques when applied to film cooling
+flows in the context of the film cooling effectiveness. The main
+problem of RANS is the inability to resolve the reverse flow zone
+behind the jet and the jet lift off, resulting in higher centerline effectiveness than the documented experimental values for all the
+regimes (see [2, 8]). The current LES is definitely capable of
+resolving this zone and does not overpedict the centerline effectiveness.
+
+-0.5
+
+0
+
+0.5
+
+1
+
+y/d
+
+1.5
+
+2
+
+2.5
+
+3
+
+3.5
+3
+2.5
+
+31.75
+31.74
+31.73
+31.72
+31.71
+31.7
+
+z/d
+
+2
+1.5
+1
+0.5
+0
+-1
+
+-0.5
+
+0
+
+0.5
+
+1
+
+y/d
+
+1.5
+
+2
+
+2.5
+
+3
+
+3.5
+3
+2.5
+
+31.75
+31.74
+31.73
+31.72
+31.71
+31.7
+
+z/d
+
+2
+1.5
+1
+0.5
+0
+-1
+
+-0.5
+
+0
+
+0.5
+
+1
+
+y/d
+
+1.5
+
+2
+
+2.5
+
+3
+
+Figure 7. TIME-AVERAGED STREAMLINES SUPERIMPOSED ON
+THE CONTOURS OF NORMALIZED MEAN PRESSURE. TOP FIGURE:
+
+x/d = 2.075, MIDDLE: x/d = 3.55 , BOTTOM: x/d = 5
+7
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+1
+
+[2] Walters, D. K., and Leylek, J. H., 2000. “A detailed analysis
+of film-cooling physics: Part i - streamwise injection with
+cylindrical holes”. Transactions of the ASME. The Journal
+of Turbomachinery, 122, Jan., pp. 102–112.
+[3] Hyams, D. G., and Leylek, J. H., 2000. “A detailed analysis
+of film-cooling physics: Part iii - streamwise injection with
+shaped holes”. Transactions of the ASME. The Journal of
+Turbomachinery, 122, Jan., pp. 122–132.
+[4] Peterson, S. D., and Plesniak, M. W., 2004. “Evolution of
+jets emanating from short holes into crossflow”. Journal of
+Fluid Mechanics, 503, pp. 57–91.
+[5] Bohn, D., Becker, V., and Kusterer, K., 2000. “Threedimensional flow analysis of turbine balde cascades with
+leading-edge ejection”. Journal of Propulsion and Power,
+16(1), Jan., pp. 49–56.
+[6] Tyagi, M., and Acharya, S., 2003. “Large eddy simulation of film cooling flow from an inclined cylindrical jet”.
+Transactions of the ASME. The Journal of Turbomachinery,
+125(4), Oct., pp. 734–742.
+[7] Liu, K., and Pletcher, R., 2005. Large eddy simulation of
+discrete-hole film cooling in a flat plate turbulent boundary
+layer. AIAA Paper 2005–4944, June. In 35th AIAA Fluid
+Dynamics Conference and Exhibit.
+[8] Leylek, J. H., and Zerkle, R., 1994. “Discrete-jet film cooling: A comparison of computational results with experiments”. Transactions of the ASME. The Journal of Turbomachinery, 116, July, pp. 358–368.
+[9] Medic, G., and Durbin, P. A., 2002. “Toward improved
+film cooling prediction”. Transactions of the ASME. The
+Journal of Turbomachinery, 124, Apr., pp. 193–199.
+[10] Pietrzyk, J. R., Bogard, D. G., and Crawford, M. E., 1989.
+“Hydrodynamic measurements of jets in crossflow for gas
+turbine film cooling applications”. Transactions of the
+ASME. The Journal of Turbomachinery, 111, Apr., pp. 139–
+145.
+[11] Xiong, Z., and Lele, S. K., 2001. Numerical study of leading edge heat transfer under free-stream turbulence. AIAA
+Paper 2001–1016, Jan. In 39th AIAA Aerospace Sciences
+Meeting and Exhibit.
+[12] Xiong, Z., 2004. Stagnation point flow and heat transfer
+under free-stream turbulence. Ph.d. thesis, Aug. Deparment
+of Mechanical Engineering, Stanford University.
+[13] Pierce, C. D., 2001. Progress-variable approach for large
+eddy simulaiton of turbulent combustion. Ph.d. thesis, June.
+Deparment of Mechanical Engineering, Stanford University.
+[14] Harlow, F. H., and Welch, J. E., 1965. “Numerical calculation of time-dependent viscous incompressible flow”.
+Physics of Fluids, 8, pp. 2182–2189.
+[15] Leonard, B. P., 1979. “A stable and accurate convective
+modelling procedure based on quadratic upstream interpolation”. Computational Methods in Applied Mechanics and
+
+Centerline Effectiveness
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+0
+-4
+Figure 8.
+
+0
+
+4
+x/d
+
+8
+
+12
+
+CENTERLINE FILM COOLING EFFECTIVENESS. ——–,
+
+current LES; •, Sinha et al. V R = 0.42; 4, Sinha et al. V R = 0.5;
+
+CONCLUSIONS
+The experimental set-up of Pietrzyk et al. [10] is modeled
+numerically, using Large Eddy Simulation technique. Timeaveraged flowfield is analyzed in order to identify quasi-steady
+coherent structures of the flow. Among these structures are: the
+separated flow inside the film hole, reverse flow zone right after
+the jet injection and counter-rotating vortex pair. These structures are important in understanding film cooling physics, since
+they effect the distribution of the surface temperature, and, as a
+result, the cooling performance parameters, such as film cooling
+effectiveness. Comparison of the computed centerline effectiveness with the experimental data shows favorable agreement and
+confirms the superiority of LES versus RANS in predicting the
+thermal field of film cooling flows.
+ACKNOWLEDGMENT
+This work is supported by the Advanced Simulation and
+Computing (ASC) program of the Department of Energy. The
+compressible code was developed with AFOSR support under
+grant No. F94620-01-1-0138. Computer time is provided by
+ARL and ERDC High-Performance Supercomputer Centers at
+the Department of Defense. We would like to thank Dr. Bogard
+for providing the experimental database for comparison.
+REFERENCES
+[1] Burd, S. W., Kaszeta, R. W., and Simon, T. W., 1998. “Measurements in film cooling flows: Hole l/d and turbulence
+intensity effects”. Transactions of the ASME. The Journal
+of Turbomachinery, 120, Oct., pp. 791–798.
+8
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Engineering, 19, pp. 59–98.
+[16] Germano, M., Piomelli, U., Moin, P., and Cabot, W. H.,
+1991. “A dynamic subgrid-scale eddy viscosity model”.
+Physics of Fluids, A3, pp. 1760–1765.
+[17] Iourokina, I. V., and Lele, S. K., 2005. Towards largy eddy
+simulation of film-cooling flows on a model turbine blade
+leading edge. AIAA Paper 2005–0670, Jan. In 43rd AIAA
+Aerospace Sciences Meeting and Exhibit.
+[18] Müller, B., 1999. “Low Mach number asymptotics of the
+navier-stokes equations and numerical implicatons”. In
+30th Computational Fluid Dynamics, von Karman Institute
+for Fluid Dynamics, Lecture Series 1999–03, pp. 821–831.
+[19] Lund, T. S., Wu, X., and Squires, K. D., 1998. “Generation
+of turbulent inflow data for spatially-developing bounday
+layer simulations”. Journal of Computational Physics, 140,
+pp. 233–258.
+[20] Xu, S., and Martin, M. P., 2004. “Asessment of inflow
+boundary conditions for compressible turbulent boundary
+layers”. Physics of Fluids, 16(7), July, pp. 2623–2639.
+[21] Iourokina, I. V., and Lele, S. K., 2006. Largy eddy simulation of film-cooling above the flat surface with a large
+plenum and short exit holes. AIAA Paper 2006–1102, Jan.
+In 44th AIAA Aerospace Sciences Meeting and Exhibit.
+[22] Cook, A. W., and Cabot, W. H., 2004. “A high-wavenumber
+viscosity for high-resolution numerical methods”. Journal
+of Computational Physics, 195, pp. 594–601.
+[23] Cook, A. W., and Cabot, W. H., 2005. “Hyperviscosity for
+shock-trubulent interactions”. Journal of Computational
+Physics, 203, pp. 379–385.
+[24] Fiorina, B., and Lele, S. K., 2005. “An artificial nonlinear diffusivity method for supersonic reacting flows with
+shocks”. Journal of Computational Physics, Submitted for
+publication.
+[25] Walters, D. K., and Leylek, J. H., 1997. “A systematic
+computational methodology applied to a three-dimensional
+film-cooling flowfield”. Transactions of the ASME. The
+Journal of Turbomachinery, 119, Oct., pp. 777–785.
+[26] Muppidi, S., and Mahesh, K., 2006. Passive scalar mixing
+in jets in crossflow. AIAA Paper 2006–1098, Jan. In 44th
+AIAA Aerospace Sciences Meeting and Exhibit.
+[27] Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991.
+“Film-cooling effectiveness downstream of a single row
+of holes with variable density ratio”. Transactions of the
+ASME. The Journal of Turbomachinery, 113, July, pp. 442–
+449.
+
+9
+
+c 2006 by ASME
+Copyright °
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/24/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

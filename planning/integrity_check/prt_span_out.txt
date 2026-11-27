@@ -1,0 +1,68 @@
+/home/sk999/Documents/ASME_2027/figures/code/fig_prt_classic_span.py:241: RuntimeWarning: invalid value encountered in divide
+  al_b = -sb[2] / sb[3]                                           # alpha_R per delete-one sample
+/home/sk999/Documents/ASME_2027/figures/code/fig_prt_classic_span.py:243: RuntimeWarning: invalid value encountered in divide
+  nu_b = -sb[0] / sb[1]                                           # nu_R per delete-one sample
+/home/sk999/Documents/ASME_2027/figures/code/fig_prt_classic_span.py:228: RuntimeWarning: invalid value encountered in divide
+  return (t[0] / t[1]) / (t[2] / t[3]), flags(gok, nu, al, zrow), nu, al
+figsize 7.5 x 2.48 in, axes 6.30 x 1.97 in, z stretch 2
+lowest resolved z+: {'near film': 2.5, 'far film': 13.4}
+[savefig suppressed] /home/sk999/Documents/ASME_2027/figures/fig_prt_classic_span.png
+saved /home/sk999/Documents/ASME_2027/figures/fig_prt_classic_span.png
+grey share (not defined or not resolved, x/D -2..20, z/D 0..3): 0.524 of the plotted area
+grid: 239 x cells (0.070-0.129 D, median 0.100) by 163 z levels; empty cells 0; min points per cell 474; well-defined area share 0.494 raw, 0.495 after island removal
+grey shares of the drawn area:
+  all, x/D -2..20: area 65.621 D^2; undefined (gradient test) 0.505; |Pr_t| < 2 SE 0.321; denominator sign change 0.055; union 0.524; extra to undefined: SE-only 0.012, sign-only 0.000, either 0.018
+  drawn range x/D 4..20: area 47.737 D^2; undefined (gradient test) 0.418; |Pr_t| < 2 SE 0.295; denominator sign change 0.051; union 0.442; extra to undefined: SE-only 0.015, sign-only 0.000, either 0.024
+  far-film near-wall strip x/D 10-20, z/D < 0.2: area 2.039 D^2; undefined (gradient test) 0.129; |Pr_t| < 2 SE 0.450; denominator sign change 0.224; union 0.460; extra to undefined: SE-only 0.172, sign-only 0.005, either 0.331
+  near-film near-wall strip x/D 4-10, z/D < 0.2: area 1.222 D^2; undefined (gradient test) 0.121; |Pr_t| < 2 SE 0.325; denominator sign change 0.096; union 0.418; extra to undefined: SE-only 0.219, sign-only 0.004, either 0.298
+  far film x/D 10-20, z/D >= 0.2: area 27.814 D^2; undefined (gradient test) 0.383; |Pr_t| < 2 SE 0.228; denominator sign change 0.038; union 0.384; extra to undefined: SE-only 0.001, sign-only 0.000, either 0.001
+  near film x/D 4-10, z/D >= 0.2: area 16.662 D^2; undefined (gradient test) 0.533; |Pr_t| < 2 SE 0.387; denominator sign change 0.048; union 0.538; extra to undefined: SE-only 0.005, sign-only 0.000, either 0.005
+median SE of Pr_t, strip x/D 10-20, z/D < 0.2, defined cells: 0.332
+Pr_t median [10-90 %] over defined cells (old: K_OLD; new: area-weighted, defined = gradient test; resolved = also SE and sign):
+  x/D 4-10, z/D >= 0.3: old 0.585 [0.167, 0.724] (n 1783); new defined 0.585 [0.169, 0.723] (n 4478); new resolved 0.585 [0.168, 0.723] (n 4415)
+  x/D 10-20, z/D >= 0.3: old 0.724 [0.367, 0.831] (n 4021); new defined 0.726 [0.367, 0.835] (n 10722); new resolved 0.726 [0.367, 0.835] (n 10686)
+  strip x/D 4-20, z/D < 0.2: old 0.825 [0.051, 2.324] (n 641); new defined 0.833 [-1.543, 2.098] (n 4797); new resolved 0.819 [0.465, 1.038] (n 2849)
+volume-summed Pr_t, z/D >= 0.3, all native mesh bins (compare 0.300, 0.225, 0.454 of the earlier map):
+  jet x/D 0-3: Pr_t 0.125
+  near film x/D 3-10: Pr_t 0.226
+  far film x/D 10-20: Pr_t 0.450
+island removal: pieces below 0.1 D^2 (cell 0.004 D^2); removed 2
+  undefined hole: area 0.014 D^2 at x/D 8.35, z/D 0.32
+  undefined hole: area 0.037 D^2 at x/D 15.18, z/D 0.06
+wall units (span- and x-averaged mean wall shear, b010):
+  near film x/D 3-10: <tau_w> 14.52 Pa, <rho_w> 0.9834 kg/m3, nu_w 2.386e-04 m2/s, u_tau 3.842 m/s, mean C_f 0.00450, l_nu = nu/u_tau 62.1 um = 0.00801 D
+   z+ for z/D 0.02 0.05 0.1 0.2 0.5 1.0: 2.5 6.2 12.5 25.0 62.4 124.8
+   flagged (span): none
+   flagged (centre), z/D <= 0.5: 0.02 0.04  -> z+ 2.5-5.0
+   z/D 0.02-0.10: nu_R=-A/B, alpha_R=-C/E (span): 0.02: 1.29e-05/1.82e-04 0.04: 7.62e-05/3.53e-04 0.06: 1.78e-04/4.48e-04 0.08: 2.82e-04/4.60e-04 0.10: 3.92e-04/4.87e-04
+   Pr_t span / centre at z+ 10, 30, 100: 10: 0.62 / 1.53 | 30: 0.30 / 0.55 | 100: 0.48 / 0.39
+  far film x/D 10-20: <tau_w> 17.81 Pa, <rho_w> 0.9583 kg/m3, nu_w 2.490e-04 m2/s, u_tau 4.311 m/s, mean C_f 0.00622, l_nu = nu/u_tau 57.8 um = 0.00745 D
+   z+ for z/D 0.02 0.05 0.1 0.2 0.5 1.0: 2.7 6.7 13.4 26.8 67.1 134.2
+   flagged (span), z/D <= 0.5: 0.02 0.04 0.06 0.08  -> z+ 2.7-10.7
+   flagged (centre), z/D <= 0.5: 0.02 0.04  -> z+ 2.7-5.4
+   z/D 0.02-0.10: nu_R=-A/B, alpha_R=-C/E (span): 0.02: 8.49e-06/9.55e-07 0.04: 5.97e-05/-1.13e-05 0.06: 1.63e-04/-1.87e-05 0.08: 2.99e-04/1.92e-04 0.10: 4.82e-04/4.91e-04
+   Pr_t span / centre at z+ 10, 30, 100: 10: -1.26 / 0.92 | 30: 0.88 / 0.57 | 100: 0.40 / 0.61
+jackknife (delete-one, n = 10) Pr_t span-averaged, SE; band drawn is +-2 SE
+  near film x/D 3-10: z/D, z+, Pr_t, SE
+    z/D 0.10  z+   12.5  Pr_t 0.805  SE 0.212  flagged False
+    z/D 0.20  z+   25.0  Pr_t 0.389  SE 0.052  flagged False
+    z/D 0.30  z+   37.4  Pr_t 0.179  SE 0.010  flagged False
+    z/D 0.50  z+   62.4  Pr_t 0.123  SE 0.006  flagged False
+    z/D 0.24  z+   29.9  Pr_t 0.300  SE 0.025  flagged False
+    z/D 0.80  z+   99.8  Pr_t 0.482  SE 0.015  flagged False
+  far film x/D 10-20: z/D, z+, Pr_t, SE
+    z/D 0.10  z+   13.4  Pr_t 0.982  SE 0.175  flagged False
+    z/D 0.20  z+   26.8  Pr_t 0.887  SE 0.095  flagged False
+    z/D 0.30  z+   40.3  Pr_t 0.829  SE 0.093  flagged False
+    z/D 0.50  z+   67.1  Pr_t 0.461  SE 0.039  flagged False
+    z/D 0.22  z+   29.5  Pr_t 0.883  SE 0.095  flagged False
+    z/D 0.74  z+   99.3  Pr_t 0.401  SE 0.029  flagged False
+counter-gradient, far film (alpha_R = -C/E, full record; negative in n of 10 delete-one samples):
+    z/D 0.02  z+  2.68  alpha_R 9.548e-07  SE 9.29e-06  n(alpha_R<0) 4/10  flagged True
+    z/D 0.04  z+  5.37  alpha_R -1.133e-05  SE 2.34e-05  n(alpha_R<0) 9/10  flagged True
+    z/D 0.06  z+  8.05  alpha_R -1.865e-05  SE 4.71e-05  n(alpha_R<0) 8/10  flagged True
+    z/D 0.08  z+ 10.73  alpha_R 1.924e-04  SE 7.37e-05  n(alpha_R<0) 0/10  flagged True
+sign/fc check, all bins z/D >= 0.3:
+  jet x/D 0-3: Pr_t 0.120
+  near film x/D 3-10: Pr_t 0.221
+  far film x/D 10-20: Pr_t 0.447

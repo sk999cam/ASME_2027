@@ -1,0 +1,791 @@
+Christian Saumweber
+e-mail: Christian.Saumweber
+@its.uni-karlsruhe.de
+
+Achmed Schulz
+Sigmar Wittig
+Lehrstuhl und Institut für Thermische
+Strömungsmaschinen,
+Universität Karlsruhe (T.H.),
+Karlsruhe, Germany
+
+Free-Stream Turbulence Effects
+on Film Cooling With Shaped
+Holes
+A comprehensive set of generic experiments has been conducted to investigate the effect of
+elevated free-stream turbulence on film cooling performance of shaped holes. A row of
+three cylindrical holes as a reference case, and two rows of holes with expanded exits, a
+fanshaped (expanded in lateral direction), and a laidback fanshaped hole (expanded in
+lateral and streamwise direction) have been employed. With an external (hot gas) Mach
+number of M a m ⫽ 0.3 operating conditions are varied in terms of free-stream turbulence
+intensity (up to 11%), integral length scale at constant turbulence intensity (up to 3.5 hole
+inlet diameters), and blowing ratio. The temperature ratio is fixed at 0.59 leading to an
+enginelike density ratio of 1.7. The results indicate that shaped and cylindrical holes
+exhibit very different reactions to elevated free-stream turbulence levels. For cylindrical
+holes film cooling effectiveness is reduced with increased turbulence level at low blowing
+ratios whereas a small gain in effectiveness can be observed at high blowing ratios. For
+shaped holes, increased turbulence intensity is detrimental even for the largest blowing
+ratio 共 M ⫽ 2.5兲 . In comparison to the impact of turbulence intensity the effect of varying
+the integral length scale is found to be of minor importance. Finally, the effect of elevated
+free-stream turbulence in terms of heat transfer coefficients was found to be much more
+pronounced for the shaped holes. 关DOI: 10.1115/1.1515336兴
+
+Introduction
+Todays trend in gas turbine design is towards increasing pressure ratios, higher turbine inlet temperatures to increase cycle efficiency, and less turbine stages. Therefore, the thermal and mechanical loads on the components exposed to the hot gas—
+particularly the turbine blades—are increased as well, which
+necessitates extremely efficient cooling configurations. State-ofthe-art film-cooling schemes with shaped holes of various geometry are employed in advanced high-pressure turbines. To achieve
+maximum benefit from the expended cooling air accurate information on the impacts of all quantities that affect film-cooling
+performance is required. Among others, turbulence intensity is
+one such parameter of major importance.
+At the exit of a gas turbine combustor turbulence levels can
+range from 7 to 20% 关1兴 and vary widely with combustor geometry. Goebel et al. 关2兴 measured turbulence profiles and swirl velocity downstream of a small-scale combustor. They found, that
+combustion decreased the turbulence level in case of a high swirl
+nozzle and that turbulence levels are almost not affected by combustion in case of a low swirl nozzle. The turbulence levels without combustion ranged from 8 –12% in most of the combustor exit
+area and increased towards the edge up to 20%. Combustor exit
+turbulence level is the inlet turbulence boundary condition for the
+first stage vane along which the free-stream turbulence intensity
+will be further reduced due to strong acceleration inside the vane
+passage. Therefore, free-stream turbulence levels in the range of
+8 –12% appear to be reasonable for the investigation of turbulence
+intensity effects on film cooling when the area around the leading
+edge is excluded, where free-stream turbulence intensity might be
+larger.
+Since the majority of film cooling investigations have been performed with low turbulence intensity conditions, in recent years
+several studies have been conducted that particularly address the
+effect of increased turbulence level on film-cooling performance.
+Contributed by the International Gas Turbine Institute and presented at the International Gas Turbine and Aeroengine Congress and Exhibition, Amsterdam, The
+Netherlands, June 3– 6, 2002. Manuscript received by the IGTI, September 27, 2001.
+Paper No. 2002-GT-30170. Review Chair: E. Benvenuti.
+
+Journal of Turbomachinery
+
+In the following, a brief review on experimental investigations
+related to this topic will be given, whereas only generic test facilities are considered that exclude additional effects of acceleration and surface curvature.
+Kadotani and Goldstein 关3,4兴 investigated the effect of mainstream turbulence intensity ranging from 0.3 to 20.6% and the
+impact of small integral length scales between 0.06 and 0.33 filmcooling hole diameters. They used a row of cylindrical holes inclined 35 deg with respect to the mainstream, and a length to
+diameter (L/D) ratio of 62. The density ratio ␳ c / ␳ m was 0.95 for
+all tests. At low blowing ratios a decrease of centerline effectiveness was found at elevated turbulence intensity whereas for high
+blowing ratios centerline effectiveness increased with turbulence
+intensity due to enhanced mixing of coolant with mainstream air
+and smaller penetration of the jets into the hot gas flow. The
+laterally averaged effectiveness showed a similar but less pronounced tendency with varying turbulence level. Furthermore, for
+low turbulence intensity it was found that the lateral distribution
+of effectiveness becomes more uniform with increasing length
+scale.
+Jumper et al. 关5兴 examined the mechanisms that influence filmcooling effectiveness for turbulence intensities in the range of 14
+to 17% and compared their data to results acquired with low freestream turbulence conditions. Coolant was injected at low density
+ratio conditions into a wall jet flow through a row of cylindrical
+holes inclined 30 deg with respect to the mainstream and a hole
+length of 6 diameters. The turbulence levels of 14 –17% resulted
+in pronounced reductions of film cooling effectiveness and the
+effective cooling film length. The range of optimum blowing
+ratios was found to be much broader and shifted towards larger values of M for flow conditions with increased turbulence
+intensity.
+Bons et al. 关6兴 presented film cooling effectiveness data for
+free-stream turbulence intensities up to 17.4% downstream a row
+of cylindrical holes inclined 35 deg with an L/D-ratio of 3.5. The
+facility was run with a density ratio of ␳ c / ␳ m ⫽0.95 for all tests.
+At elevated levels of free-stream turbulence film cooling effectiveness was decreased by up to 70% in regions immediately
+downstream of the hole exit for low to moderate blowing ratios.
+
+Copyright © 2003 by ASME
+
+JANUARY 2003, Vol. 125 Õ 65
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+However, between the holes the high free-stream turbulence produced a 50–100% gain in film cooling effectiveness at the same
+time due to accelerated spanwise diffusion of coolant resulting in
+an earlier merger of jets from adjacent holes.
+Schmidt and Bogard 关7兴 studied free-stream turbulence intensity effects on film cooling in the range of 0.3 to 17%. They used
+a row of cylindrical film cooling holes inclined at 30 deg with
+respect to the free-stream and a hole length of 6 hole diameters.
+Film cooling effectiveness tests were conducted with a density
+ratio of ␳ c / ␳ m ⫽2.0 whereas heat transfer measurements were
+conducted at a density ratio of 1.0. The results indicate a significantly decreased adiabatic effectiveness by up to 50% close to the
+hole for high turbulence levels and low to moderate momentum
+flux ratios. At large momentum flux ratios high free-stream turbulence conditions lead to an increase in adiabatic effectiveness. The
+greater dispersion of the coolant caused by the high free-stream
+turbulence results in less detachment of the jet and a movement of
+coolant back to the surface. Furthermore no significant differences
+in effectiveness occurred when the turbulence intensity was increased from 10 to 17%.
+A row of 35 deg inclined cylindrical holes with a pitch to diameter ratio of 3 was employed by Drost and Bölcs 关8兴 to study
+film cooling effectiveness and heat transfer for two turbulence
+levels and two hot gas Mach numbers. An enginelike density ratio
+of 1.6 was established using foreign gas ejection. Similar to the
+findings mentioned before the elevated turbulence intensity resulted in a decrease of effectiveness for low to moderate blowing
+ratios whereas at high blowing ratios effectiveness was increased
+due to better dispersion of the detached jets.
+Kohli and Bogard 关9兴 used a high frequency response temperature sensor to study the dispersion of coolant jets for two different
+turbulence levels 共0.5 and 20%兲. Cylindrical holes inclined 35 deg
+with respect to the mainstream were used to eject coolant at a
+momentum flux ratio of I⫽0.156 and a density ratio of ␳ c / ␳ m
+⫽1.05. The results indicate that the process of coolant dispersion
+is completely different at low and high free-stream turbulence
+intensity conditions. For low main-flow turbulence levels the
+shear layer between mainstream and coolant jet generates strong
+intermittent flow structures that cause mixing of coolant and
+main-flow. In case of high free-stream turbulence main-flow fluid
+penetrates through the core of the coolant jet towards the wall,
+causing rapid mixing of coolant and main-flow and a pronounced
+degradation of the jet.
+Hot wire anemometer measurements at a density ratio of
+␳ c / ␳ m ⫽1 were undertaken by Burd et al. 关10兴 in order to study
+the flow field downstream of film cooling holes with different
+L/D-ratios. A row of cylindrical holes inclined at 35 deg with
+respect to the mainstream was investigated at two turbulence levels of 0.5 and 12%. The L/D-ratio was varied from 2.3 to 7. With
+low free-stream turbulence and short holes the coolant is ejected
+farther from the wall and spreads more into the spanwise direction
+than with a long hole. The pronounced differences in the flowfield
+between long and short hole ejection diminish when high turbulence levels prevail in the hot gas. The authors conclude that the
+L/D-ratio has to be taken into account additionally when turbulence intensity effects on film cooling are to be investigated.
+The study by Burd et al. 关10兴 implies, that in general the geometry of the film-cooling hole plays an important role when freestream turbulence effects on film cooling are considered. The authors state that short and long-hole injection produce
+fundamentally different velocity profiles at the hole exit which
+will result in a different interaction of coolant and mainstream.
+However, the same is true about the shape of the hole exit, which
+has not been considered in previous investigations on free-stream
+turbulence effects and which as well is the reason for vastly different velocity profiles. It can, therefore, be expected that shaped
+holes are sensitive to elevated hot gas turbulence levels in a manner different from cylindrical holes. The purpose of the present
+study is to quantify these differences and to provide a data-set for
+66 Õ Vol. 125, JANUARY 2003
+
+film cooling with shaped holes at elevated free-stream turbulence
+conditions, which is up to now not available in the open literature.
+
+Experimental Facility and Test Conditions
+The present investigation is carried out in a continuous flow
+wind tunnel at the Institut für Thermische Strömungsmaschinen
+共ITS兲, University of Karlsruhe. The film-cooling test rig consists
+of a primary loop representing the external flow and a secondary
+loop representing the internal flow of an airfoil. Pressure, temperature and crossflow velocity in both loops can be set independently. Primary and secondary loop can be oriented to each other
+with arbitrary angles, constituting flow conditions typically found
+in turbine vanes or blades, respectively 共see Fig. 1兲. At the bottom
+side of the primary loop an interchangeable test plate is assembled
+carrying the film-cooling hole specimen. A boundary layer bleed
+at the entry of the hot gas wind tunnel facilitates to control the
+boundary layer thickness. More details on the experimental facility are given in 关11兴.
+Turbulence grids of various geometry can be placed in front of
+the hot gas part at different streamwise positions. Hence, it is
+possible within a certain range to control turbulence intensity and
+length scale at the ejection location by varying the distance and
+the bar size of the turbulence grid simultaneously. Turbulence
+intensity decay with streamwise length and development of dissipation length scale is quantified using a DANTEC© LDV system.
+A 2-D fiber flow probe equipped with a 400 mm transmitting lens
+together with a 150-mm focal length receiver unit are operated in
+forward scatter mode. Data processing is achieved using two
+DANTEC© Enhanced Burst Signal Analyzers. The measured turbulence intensity, decay shows very good agreement with correlations given in the literature 关12,13兴. In terms of dissipation
+length scale, satisfying agreement of experimental data and correlations 关13兴 is observed as well.
+The tests are carried out using hole inserts with a row of three
+scaled up film-cooling holes with an inclination angle of 30 deg.
+Three types of hole geometry are tested. They comprise a cylindrical hole and two holes with an expanded exit portion 共fanshaped hole and laidback fan-shaped hole, see Fig. 2兲. The diameter of the cylindrical hole and the diameter of the cylindrical inlet
+portion of the shaped holes is 5 mm. Both shaped holes are expanded in lateral direction with an angle of 14 deg resulting in a
+hole width of 15 mm at the hole exit. The laidback fan-shaped
+hole has an additional forward expansion of 15 deg which increases the hole length at the exit to 20 mm. The exit-to-entry area
+ratio of the fanshaped and the laidback fanshaped hole is 3.0 and
+3.1, respectively. The length-to-diameter ratio L/D is 6, the pitchto-diameter ratio is kept constant at 4. Entry and exit of the holes
+are sharp edged. The interior surfaces are aerodynamically
+smooth. Each hole geometry is tested with three different freestream turbulence intensities (Tu⫽3.5, 7.5, and 11%兲. For each
+turbulence intensity five different blowing ratios are established. A
+complete set of the operating conditions is given in Table 1.
+
+Fig. 1 Test section
+
+Transactions of the ASME
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+Fig. 3 Principal arrangement for heat transfer tests
+
+␩ aw ⫽
+
+T rec,m ⫺T aw
+T rec,m ⫺T tc
+
+(2)
+
+To measure adiabatic film cooling effectiveness it is required to
+establish thermal boundary conditions as close as possible to adiabatic. The test plate used for these experiments is made of the high
+temperature thermoplastic material TECAPEEK which has a low
+thermal conductivity of 0.3 W/共mK兲 and a maximum operating
+temperature of about 570 K.
+The superposition approach of film cooling 关14 –20兴 is used in
+order to determine the local heat transfer coefficients
+h 共 ␪ 兲 ⫽h f • 共 1⫺ ␩ aw ␪ 兲
+with
+
+Fig. 2 Hole geometry tested
+
+␪⫽
+The first quantity of interest is the discharge coefficient C D ,
+which is used to quantify the throughflow losses of film-cooling
+holes. It is defined as the ratio of actual and ideal mass flow rate
+through the hole. The ideal mass flow rate is calculated assuming
+an isentropic, one-dimensional expansion from the total pressure
+in the coolant plenum to the hot gas static pressure at the hole exit
+C D⫽
+p tc
+
+冉 冊 冑
+pm
+
+p tc
+
+␬ ⫹1/2␬
+
+ṁ c
+2␬
+
+共 ␬ ⫺1 兲 RT tc
+
+冉冉 冊
+p tc
+
+␬ ⫺1/␬
+
+pm
+
+⫺1
+
+冊
+
+␲
+4
+
+D2
+(1)
+
+For the expanded holes the discharge coefficient is based on the
+cylindrical cross section at the hole inlet. This makes it more
+convenient to evaluate the effect of expanding the hole exit since
+the discharge coefficients can be directly compared to those of the
+cylindrical holes.
+The second quantity of interest is the adiabatic film-cooling
+effectiveness, which is defined by
+
+Table 1 Operating conditions
+
+Journal of Turbomachinery
+
+(3)
+
+T tc ⫺T rec,m
+T w ⫺T rec,m
+
+(4)
+
+In general, to acquire the linear relation between h and ␪ of Eq.
+共3兲, two measurements of h at two different ␪ have to be performed. The first data set is given by the film-cooling effectiveness measurements. For a given flow field data points at h⫽0 and
+␪ ⫽ ␪ aw ⫽1/␩ are generated. The second data set has to be acquired with a dimensionless temperature different from 1/␩ but at
+the same flow conditions as for the film cooling effectiveness
+tests, particularly the same temperature ratio. For that reason ␪ is
+varied by varying the wall temperature only. The test plate used
+for these experiments is machined out of titanium-aluminum with
+a thermal conductivity of 7.2 W/共mK兲 at ambient temperature,
+which increases up to 8.5 W/共mK兲 at a temperature of 470 K. The
+temperature-dependence of the thermal conductivity is taken into
+account by a subsequent finite element 共FE兲 analysis. To enhance
+the heat flux through the test plate internal water cooling is applied. A simplified sketch of the setup is shown in Fig. 3.
+For both, film-cooling effectiveness and heat transfer tests, surface temperature mappings on the test plates are acquired by an
+infrared camera system 共AGEMA 900兲, that has proven its accuracy and reliability in previous studies 关21,22兴. The infrared camera provides a two-dimensional distribution of temperatures that is
+digitized into an array of 272 times 136 pixels. According to the
+optical setup used in the experiments, this results in a spatial
+resolution of 0.8 mm times 0.8 mm per pixel. The hot gas surface
+of each test plate is covered by a black paint with a well-known
+emissivity of 0.95. Seven 0.5 mm NiCr-Ni-thermocouples are embedded flush with the surface in order to in-situ calibrate the infrared camera readings 关23兴. The temperatures on the back surface
+of each test plate are monitored by further 12 NiCr-Ni thermocouples. The measured temperatures are interpolated onto a FE
+mesh of the respective test plate 共Fig. 4兲. The FE model extends
+half a pitch to either side of the symmetry plane to the midspan
+between the center hole and each adjacent hole. A steady-state
+thermal analysis is performed in order to calculate the threedimensional heat flux distribution of the test plate. The surface
+temperatures of the film cooling effectiveness tests together with
+JANUARY 2003, Vol. 125 Õ 67
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+Fig. 4 Finite element mesh of the low thermal conductivity
+test plate
+
+the respective heat flux distribution from the FE analysis allow to
+perform a correction for remnant heat fluxes and to calculate the
+adiabatic wall temperature. The surface temperature distribution
+of the heat transfer test together with the heat flux distribution of
+the respective FE calculation is employed to calculate the heat
+transfer coefficients with film cooling. They are used together
+with the two-dimensional distribution of the adiabatic filmcooling effectiveness to extrapolate the temperature-independent
+heat transfer coefficient with film cooling h f according to Eq. 共3兲.
+
+Experimental Uncertainties
+Uncertainties are estimated according to the procedure proposed by Kline and McClintock 关24兴. Mach number is kept constant within ⫾1.6%. Uncertainty in setting the blowing ratio is
+⫾2%. Density ratio uncertainty is ⫾1.7%. The uncertainty in the
+values of C D is found to be less than 2% in most of the cases
+considered, increasing up to 4.5% for very low pressure ratios.
+Based on an accuracy of ⫾0.5 K for the temperature measurement, the uncertainty in adiabatic effectiveness amounts to ⫾4%
+and heat transfer coefficient uncertainty to ⫾15%.
+
+Results
+Discharge coefficients for the three hole shapes are presented in
+Fig. 5. The measurements have been conducted with four different
+turbulence levels, whereas each geometry was tested with five
+different pressure ratios. For the turbulence levels 7.5 and 3.6%
+the integral length scale was kept constant at 2.7D. At a turbulence level of 5.1% the integral length scale was varied from 2.1
+to 3.5D.
+The discharge coefficients for a given operating condition are
+largest for the laidback fan-shaped holes and smallest for the cylindrical holes. The discharge coefficients of the fan-shaped holes
+are in general slightly lower than those of the laidback fan-shaped
+holes which might result from the smaller area ratio A exit /A inlet
+共3.0 vs 3.1兲. For the cylindrical holes there is obviously no dependence of the discharge coefficient neither on turbulence level nor
+on turbulence length scale. All runs pretty much collapse on the
+same curve. For fan-shaped and laidback fan-shaped holes the
+differences from one test series to the next are larger than for the
+cylindrical holes. However, since the deviations are still quite
+small and since there is no uniform tendency, it might as well be
+concluded that neither the turbulence level nor the length scale
+does have significant impact on the discharge coefficients for fanshaped and laidback fan-shaped holes.
+In order to validate the measurement procedure of the aerothermal tests, adiabatic effectiveness data is compared to results of
+previous studies for cylindrical holes in Fig. 6. Centerline data is
+used rather than laterally averaged data because hole pitches differ
+significantly. Since the investigations have been conducted with
+different density ratios, centerline effectiveness is plotted versus
+momentum flux ratio instead of blowing ratio. Despite the fact,
+that only reasonable match of experimental conditions and ejec68 Õ Vol. 125, JANUARY 2003
+
+Fig. 5 Discharge coefficient C D versus pressure ratio p tc Õ p m
+
+tion configuration can be obtained, the data agree well with the
+results from Bons et al. 关6兴 and Schmidt and Bogard 关7兴.
+Figure 7共a兲 shows local values of the adiabatic film cooling
+effectiveness for the cylindrical holes. At low blowing ratios
+
+Fig. 6 Comparison of centerline effectiveness with published
+data, cylindrical holes
+
+Transactions of the ASME
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+Fig. 7 Local adiabatic film-cooling effectiveness—„a… cylindrical holes, „b… fan-shaped holes, „c… laidback fan-shaped holes
+
+(M ⫽0.5) a continuous decrease in effectiveness is observed in
+the near hole region when free-stream turbulence intensity is
+raised from 3.6 to 7.5%, and finally 11%. Centerline effectiveness
+is reduced by up to 30% close to the hole and up to 40% further
+downstream. The strong decrease in centerline effectiveness is
+partially compensated by an improved lateral spreading of coolant
+at higher turbulence levels. At high blowing ratios (M ⫽1.5) an
+increase of free-stream turbulence intensity from 3.6 to 7.5% at
+constant length scale actually leads to minor benefits in terms of
+effectiveness which are amplified by the improved lateral distribution of coolant. Additionally, the plots indicate a reduced
+tendency of the jets to detach from the surface. Further downstream effectiveness levels are quite the same for both turbulence
+intensities. A further increase of turbulence intensity to 11% at
+high blowing ratios again leads to a reduction of centerline
+effectiveness.
+The fan-shaped holes exhibit a characteristic different from the
+cylindrical holes. Figure 7共b兲 shows, that film-cooling effectiveness is reduced for all blowing ratios when the turbulence level is
+increased from 3.6 to 7.5%, and finally 11%. The gain in effectiveness at larger blowing ratios caused by increased turbulence
+intensity, that has been observed for the cylindrical holes, is not
+visible for the fan-shaped holes. This phenomenon might be explained by the fact that the effectiveness increase for the cylindrical holes is—as previously mentioned—mainly due to enhanced
+mixing which forces more coolant back towards the wall in regions, in which the jet would exhibit lift-off at lower turbulence
+levels. Additionally, higher turbulence levels improve the lateral
+distribution of coolant for the cylindrical holes. In case of the
+fanshaped holes there is obviously no tendency to detach at low
+Journal of Turbomachinery
+
+turbulence levels even for the highest blowing ratio of M ⫽2.5. As
+a result of the lateral expansion of the hole exit, the lateral distribution of coolant is already excellent for the tight pitch (pitch
+⫽4D) considered in this study. Therefore, there is no potential to
+improve the spreading of coolant in lateral direction. In other
+words, both mechanisms that might cause a gain in effectiveness
+for the cylindrical holes are ineffective for the fan-shaped holes.
+Consequently, elevated free-stream turbulence intensity can only
+result in reduced film-cooling effectiveness for all blowing ratios
+investigated due to stronger mixing within the shear layer of coolant and hot gas.
+The laidback fan-shaped holes perform quite similar to the fanshaped holes, as can be seen from the contour plots of Fig. 7共c兲.
+Film-cooling effectiveness is reduced with increasing turbulence
+intensity for all blowing ratios tested. The fact, that film-cooling
+effectiveness of the laidback fan-shaped holes is lower than for
+the fan-shaped holes is partially caused by the shift of the ejection
+location with respect to the nominal origin of the coordinate system. The distance of the point, at which the hole axis intersects the
+hot gas surface, to the holes trailing edge, where the origin of the
+coordinate system is located, is 3D in case of the laidback fanshaped holes and only 1D in case of the cylindrical and the fanshaped holes 共compare Fig. 3兲. When taking this shift of two hole
+diameters into account it can be seen that the performance of the
+two shaped holes is fairly the same.
+In Fig. 8 laterally averaged film-cooling effectiveness distributions downstream the cylindrical holes are presented. Lateral averaging was performed over one hole pitch downstream the center
+hole of the row. The plot clearly indicates the different reactions
+of the cylindrical holes to elevated turbulence intensity at low and
+JANUARY 2003, Vol. 125 Õ 69
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+Fig. 8 Laterally averaged effectiveness; cylindrical hole
+
+Fig. 10 Laterally averaged effectiveness; fan-shaped hole
+
+high blowing ratios. Whereas at low blowing ratios laterally averaged effectiveness is reduced by up to 25%, increased turbulence
+intensity leads to a gain at high blowing ratios, though on a very
+poor overall level. The characteristic of the cylindrical holes at
+elevated free-stream turbulence levels might be summarized by
+Fig. 9, which shows the adiabatic film-cooling effectiveness averaged over an area of one pitch in width and 20 hole diameters in
+streamwise length. In order to exclude an impact of the length
+scale, only the cases with the same integral length scale are plotted. At low blowing ratios the low turbulence case indicates superior performance whereas at high blowing ratios increased turbulence levels lead to a gain in effectiveness. Furthermore, this
+figure shows that the optimum blowing ratio in both cases is
+around M ⫽0.75. However, since the shape of the effectiveness
+versus blowing ratio curve is less steep for the higher turbulence
+level, it might be suspected that a deviation from the optimum
+blowing ratio results in a less significant reduction of effectiveness
+at elevated turbulence intensity. Furthermore, it seems reasonable
+to assume that the optimum is shifted towards a slightly higher
+blowing ratio in case of elevated turbulence levels. The ‘‘resolution’’ in terms of blowing ratio though is too coarse to show this in
+Fig. 9. In general it can be stated that the results obtained for
+cylindrical holes confirm and are in accordance with the findings
+of previous studies 关3– 8兴.
+Laterally averaged effectiveness distributions downstream the
+fan-shaped holes are presented in Fig. 10. Figure 11 shows the
+corresponding spatial averages. As already mentioned when discussing the local effectiveness distributions, increased turbulence
+intensity lowers laterally averaged effectiveness for all blowing
+ratios tested. However, at larger blowing ratios the effect is less
+
+significant. Furthermore Fig. 10 indicates that increasing blowing
+ratio with fanshaped holes in general leads to increased effectiveness for the range of blowing ratios considered in this study- a
+behavior that is typical for shaped holes.
+By comparing Fig. 12 with Fig. 10 and Fig. 13 with Fig. 11 the
+very similar performance of laidback fan-shaped and fan-shaped
+holes becomes evident. Particularly at high blowing ratios, laterally averaged values of effectiveness are fairly the same for both
+shaped holes. As for the fan-shaped holes, the impact of increased
+free-stream turbulence is detrimental for all blowing ratios, but
+becomes less pronounced at high blowing ratios.
+
+Fig. 11 Spatially averaged effectiveness; fan-shaped hole
+
+Fig. 9 Spatially averaged effectiveness; cylindrical hole
+
+70 Õ Vol. 125, JANUARY 2003
+
+Fig. 12 Laterally averaged effectiveness; laidback fan-shaped
+hole
+
+Transactions of the ASME
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+Fig. 13 Spatially averaged effectiveness; laidback fan-shaped
+hole
+
+Fig. 15 Laterally averaged heat transfer coefficient ratio; cylindrical hole
+
+An attempt has been made to quantify the effect of integral
+length scale on film-cooling effectiveness. Additional tests at constant turbulence intensity of 5.1% with two different length scales
+of 2.1D and 3.5D have been performed. From two-dimensional
+distributions of film-cooling effectiveness, which are not shown,
+an improvement of lateral spreading and slightly increased centerline effectiveness close to the hole could be observed. Both effects
+together lead to a higher laterally averaged effectiveness for the
+case with larger length scale, which is visible in Fig. 14. As compared to the impact of turbulence intensity though, the effect of
+changing the integral length scale from 2.1D to 3.5D is rather
+small.
+The results of the heat transfer measurements are presented in
+terms of laterally averaged heat transfer coefficients with film
+cooling, h f , normalized with a laterally averaged baseline heat
+transfer coefficient for the flat plate, h 0 . The laterally averaged
+baseline heat transfer coefficients h 0 have been derived from additional measurements without film cooling. A dummy insert
+without holes instead of the film-cooling hole specimen was used
+for these tests in order to avoid disturbances caused by the holes,
+that can significantly affect the near wall aerodynamics. The baseline heat transfer coefficients were compared to a correlation for a
+flat plate with unheated starting length given by Kays and Crawford 关25兴. For the low turbulence case (Tu⫽3.6%) satisfying
+agreement of correlation and measured data with maximum deviations of about 10% was found. For conditions with elevated freestream turbulence levels strong increases of the heat transfer coefficient in comparison to the correlation can be expected
+according to the literature 关26,27兴. The data for the baseline heat
+
+transfer coefficients at highest free-stream turbulence intensity indicated raises up to 40% as compared to the low turbulence intensity data.
+In Fig. 15 the laterally averaged heat transfer coefficient ratios
+for the cylindrical holes are shown. For the case with low freestream turbulence intensity the heat load increases with blowing
+ratio. For all blowing ratios a maximum could be detected by
+about 19D streamwise distance from the ejection location. 20D
+downstream the heat transfer enhancement ranges between 6% for
+the lowest blowing ratio of M ⫽0.5 and 21% for the largest blowing ratio of M ⫽1.5. Raising the turbulence level to 11% clearly
+results in a decreased sensitivity of the heat transfer coefficients to
+a change in blowing ratio. Furthermore, close to the holes the heat
+transfer coefficient ratio is increased and no maximum at a certain
+streamwise position can be detected. Instead, heat load for a given
+blowing ratio is pretty much on a constant level up to 20D distance from the ejection location.
+For the fan-shaped holes the heat transfer coefficient ratios exhibit a completely different characteristic and show a much stronger dependency on free-stream turbulence level, see Fig. 16. In
+contrast to the cylindrical holes, a raise of the turbulence intensity
+from 3.6 to 11% obviously enlarges the spread between the cases
+with different blowing ratio. An increase of the blowing ratio
+leads to higher heat transfer coefficients for both turbulence levels
+but the maximum heat load is located closer to the hole exit in
+case of high free-stream turbulence intensity. Similar to the results
+of the cylindrical holes, the heat transfer coefficient ratios close to
+the holes are larger for the high turbulence level.
+
+Fig. 14 Laterally averaged effectiveness; cylindrical hole
+
+Journal of Turbomachinery
+
+Fig. 16 Laterally averaged heat transfer coefficient ratio; fanshaped hole
+
+JANUARY 2003, Vol. 125 Õ 71
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+•
+
+Fig. 17 Laterally averaged heat transfer coefficient ratio; laidback fan-shaped hole
+
+In terms of heat transfer coefficient ratio the similarity of laidback fanshaped and fanshaped holes again becomes apparent,
+compare Fig. 16 with Fig. 17. In general the heat transfer coefficient ratios of both shaped holes show a much stronger dependency on free-stream turbulence level. Furthermore, the impact of
+blowing ratio is much more pronounced for the shaped holes,
+which exhibit much stronger impacts on the heat transfer than the
+cylindrical holes. This phenomenon might be explained by the
+fact, that the surface area, in which the hot gas flow is ‘‘disturbed’’
+by the presence of coolant is far larger for the shaped holes than
+for the cylindrical holes. In fact, for the—in terms of shaped
+holes—tight pitch considered in the present study, the lateral distribution of coolant is so excellent, that no part of the surface is
+exposed to hot gas only 共see Fig. 7兲. This, however, implies that
+there is no region on the surface in which the hot gas flow is not
+altered by coolant. Additionally, it might be hypothesized, that the
+jets from shaped holes are narrowed by neighboring jets in case of
+a pitch-to-diameter ratio of P/D⫽4. Since the spread of coolant
+in lateral direction is obstructed, the interaction with the hot gas
+has to be intensified. Coolant vortices cannot expand in lateral
+direction such as in case of larger pitches which results in a
+smaller scale of the vortices and consequently an increase of vorticity that finally enhances the heat load. For the cylindrical holes
+on the other hand, a pitch-to-diameter ratio of 4 is relatively large.
+Figure 7 shows that close to the holes (x/D⬍8) there is no interaction between the jets at all. Most data presented in the literature
+has been acquired with a smaller pitch of P/D⫽3 and additionally slightly steeper ejection angles 共e.g., 关关8兴, 关28 –30兴兴兲. Therefore, it can be expected for the present study that the heat transfer
+coefficients downstream of the cylindrical holes are on a lower
+level in comparison to most data in the open literature.
+
+Conclusions
+An experimental study has been performed to investigate the
+impact of various hot gas turbulence conditions on film-cooling
+performance of shaped holes in comparison to simple cylindrical
+holes. The key findings might be summarized as follows:
+• Pressure losses quantified by means of discharge coefficients
+are not significantly affected by changes of turbulence level
+and integral length scale.
+• For cylindrical holes, elevated free-stream turbulence intensity lowers adiabatic film-cooling effectiveness at small to
+moderate blowing ratios. Reductions up to 40% for local effectiveness and 25% for laterally averaged effectiveness are
+found when the turbulence intensity is raised from 3.6 to
+11%. In accordance to previous studies, at high blowing ra72 Õ Vol. 125, JANUARY 2003
+
+•
+
+•
+
+•
+
+tios, a gain in effectiveness is observed which results from an
+improved lateral spreading of coolant and a diminished tendency to detach from the surface.
+At low turbulence levels both shaped holes do not show any
+indication to detach even at the highest blowing ratio. Therefore, the high turbulence intensity can only result in a stronger exhaustion of coolant due to intensified mixing with the
+hot gas. Because of the laterally expanded hole exit and the
+tight pitch considered in this study, coolant jets from both
+shaped holes interact with each other immediately downstream of the ejection location and form a closed cooling
+film. For that reason, the lateral spreading of coolant can not
+be improved by elevated free-stream turbulence intensity.
+Consequently, the effect of increased turbulence level is detrimental at all blowing ratios for the shaped holes. Laterally
+averaged effectiveness is reduced up to 30% when the turbulence intensity is increased from 3.6 to 11%. The effect is
+more pronounced at smaller blowing ratios.
+As compared to the effect of elevated free-stream turbulence
+intensity, the impact of increasing the integral length scale
+from 2.1 to 3.5D at constant turbulence intensity of 5.1% is
+not very pronounced.
+For cylindrical holes, the heat transfer data indicate a reduced
+sensitivity with respect to the blowing ratio when turbulence
+intensity is raised. For the shaped holes the opposite is true.
+The impact of blowing ratio becomes more significant at
+higher free-stream turbulence levels.
+Both shaped holes show a very similar characteristic. No superior performance due to an additional layback is observed.
+
+Acknowledgments
+This study was partly funded by the European Union through
+grant by the BRITE EURAM program ‘‘Turbine Aero-Thermal
+External Flows’’ under Contract No. BRPR-CT97-0519.
+
+Nomenclature
+CD
+D
+h( ␪ )
+hf
+h0
+L
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+M
+Ma
+ṁ c
+pm
+p tc
+R
+ReD
+T aw
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+T rec,m
+T tc
+Tu
+␬
+␪
+␳c
+␳m
+
+␩ aw
+
+discharge coefficient
+film-cooling hole diameter
+heat transfer coefficient according to Eq. 共3兲
+heat transfer coefficient with film cooling
+heat transfer coefficient without film cooling
+film-cooling hole length measured along centerline,
+integral length scale
+blowing ratio
+Mach number
+mass flow rate through film-cooling hole
+static pressure hot gas
+total pressure coolant
+gas constant
+Reynolds number based on hole diameter
+adiabatic wall temperature
+recovery temperature hot gas
+total temperature coolant
+turbulence intensity
+ratio of specific heats
+dimensionless temperature ratio 共Eq. 共4兲兲
+coolant density
+hot gas density
+adiabatic film-cooling effectiveness
+
+References
+关1兴 Ames, F. E., 1998, ‘‘Aspects of Vane Film Cooling with High Turbulence: Part
+I—Heat Transfer,’’ ASME J. Turbomach., 120, pp. 768 –776.
+关2兴 Goebel, S. G., Abuaf, N., Lovett, J. A., and Lee, C.-P., 1993, ‘‘Measurements
+of Combustor Velocity and Turbulence Profiles,’’ ASME Paper No. 93-GT228.
+关3兴 Kadotani, K., and Goldstein, R. J., 1979, ‘‘On the Nature of Jets Entering a
+Turbulent Flow Part A—Jet-Mainstream Interaction,’’ ASME J. Eng. Power,
+101, pp. 459– 465.
+关4兴 Kadotani, K., and Goldstein, R. J., 1979, ‘‘On the Nature of Jets Entering a
+
+Transactions of the ASME
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+关5兴
+关6兴
+关7兴
+关8兴
+关9兴
+关10兴
+关11兴
+关12兴
+关13兴
+关14兴
+关15兴
+关16兴
+关17兴
+关18兴
+
+Turbulent Flow Part B—Film Cooling Performance,’’ ASME J. Eng. Power,
+101, pp. 466 – 470.
+Jumper, G. W., Elrod, W. C., and Rivir, R. B., 1991, ‘‘Film Cooling Effectiveness in High Turbulence Flow,’’ ASME J. Turbomach., 113, pp. 479– 483.
+Bons, J. P., MacArthur, C. D., and Rivir, R. B., 1996, ‘‘The Effect of High
+Free-Stream Turbulence on Film Cooling Effectiveness,’’ ASME J. Turbomach., 118, pp. 814 – 825.
+Schmidt, D. L., and Bogard, D. G., 1996, ‘‘Effects of Free-Stream Turbulence
+and Surface Roughness on Film Cooling,’’ ASME Paper No 96-GT-462.
+Drost, U., and Bölcs, A., 1997, ‘‘Utilization of the Transient Liquid Crystal
+Technique for Film Cooling Effectiveness and Heat Transfer Investigations on
+a Flat Plate and a Turbine Airfoil,’’ ASME Paper No. 97-GT-26.
+Kohli, A., and Bogard, D. G., 1998, ‘‘Effects of Very High Free-Stream Turbulence on the Jet-Mainstream Interaction in a Film Cooling Flow,’’ ASME J.
+Turbomach., 120, pp. 785–790.
+Burd, S. W., Kaszeta, R. W., and Simon, T. W., 1998, ‘‘Measurements in Film
+Cooling Flows: Hole L/D and Turbulence Intensity Effects,’’ ASME J. Turbomach., 120, pp. 791–797.
+Wittig S., Schulz A., Gritsch M., and Thole K. A., 1996, ‘‘Transonic FilmCooling Investigations: Effects of Hole Shapes and Orientations,’’ ASME Paper 96-GT-222.
+Baines, W. D., and Peterson, E. G., 1951, ‘‘An Investigation of Flow Through
+Screens,’’ Trans. ASME, July, pp. 467– 480.
+Roach, P. E., 1987, ‘‘The Generation of Nearly Isotropic Turbulence by Means
+of Grids,’’ Heat Fluid Flow, 8共2兲, pp. 82–92.
+Metzger, D. E., Carper, H. J., and Swank, L. R., 1968, ‘‘Heat Transfer with
+Film Cooling near Nontangential Injection Slots,’’ ASME J. Eng. Power, 90,
+pp. 157–163.
+Metzger, D. E., and Fletcher, D. D., 1971, ‘‘Evaluation of Heat Transfer for
+Film-Cooled Turbine Components,’’ J. Aircr., 8, pp. 33–38.
+Metzger, D. E., Takeuchi, D. I., and Kuenstler, P. A., 1973, ‘‘Effectiveness and
+Heat Transfer With Full-Coverage Film Cooling,’’ ASME J. Eng. Power, 95,
+pp. 181–184.
+Choe, H., Kays, W. M., and Moffat, R. J., 1974, ‘‘The Superposition Approach
+to Film Cooling,’’ ASME Paper No 74-WA/HT-27.
+Eckert, E. R. G., 1984, ‘‘Analysis of Film Cooling and Full Coverage Film
+
+Journal of Turbomachinery
+
+关19兴
+关20兴
+关21兴
+关22兴
+关23兴
+关24兴
+关25兴
+关26兴
+关27兴
+关28兴
+关29兴
+关30兴
+
+Cooling of Gas Turbine Blades,’’ ASME J. Eng. Gas Turbines Power, 106, pp.
+207–213.
+Forth, C. J. P., Loftus, P. J., and Jones, T. V., 1985, ‘‘The Effect of Density
+Ratio on the Film Cooling of a Flat Plate,’’ Heat Transfer and Cooling in Gas
+Turbines, AGARD-CP-390. Paper 10.
+Teekaram, A. J. H., Forth, C. J. P., and Jones, T. V., 1989, ‘‘The Use of Foreign
+Gas to Simulate the Effects of Density Ratios in Film Cooling,’’ ASME J.
+Turbomach., 111, pp. 57– 62.
+Gritsch, M., Schulz, A., and Wittig, S., 1998, ‘‘Adiabatic Wall Effectiveness
+Measurements of Film-Cooling Holes with Expanded Exits,’’ ASME J. Turbomach., 120, pp. 568 –574.
+Baldauf, S., Schulz, A., and Wittig, S., 2001, ‘‘High Resolution Measurements
+of Local Effectiveness by Discrete Hole Film Cooling,’’ ASME J. Turbomach.,
+123, pp. 758 –765.
+Martiny, M., Schiele, R., Gritsch, M., Schulz, A., and Wittig, S., 1996. ‘‘In Situ
+Calibration for Quantitative Infrared Thermography,’’ QIRT ’96 Eurotherm
+Seminar No. 50.
+Kline, S. J., and McClintock, F. A., 1953, ‘‘Describing Uncertainties in Single
+Sample Experiments,’’ Mech. Eng. 共Am. Soc. Mech. Eng.兲, 75, pp. 3– 8.
+Kays, W. M., and Crawford, M. E., 1980, Convective Heat and Mass Transfer,
+McGraw Hill, New York, NY.
+Blair, M. F., 1983, ‘‘Influence of Free-stream Turbulence on Turbulent Boundary Layer Heat Transfer. Part I and II,’’ ASME J. Heat Transfer, 105, pp.
+33– 47.
+Moffat, R. J., and Maciejewski, P. K., 1985, ‘‘Heat Transfer with Very High
+Free-stream Turbulence,’’ Proceedings of HOST Conference, NASA Conf.
+Publ. 2405, NASA LeRC, pp. 203–215.
+Hay, N., Lampard, D., and Saluja, C. L., 1985, ‘‘Effects of Cooling Films on
+the Heat Transfer Coefficient on a Flat Plate with Zero Mainstream Pressure
+Gradient,’’ ASME J. Eng. Gas Turbines Power, 107, pp. 105–110.
+Makki, Y. H., and Jakubowski, G. S., 1986, ‘‘An Experimental Study of Film
+Cooling from Diffused Trapezoidal Shaped Holes,’’ AIAA Pap., 86 –1326.
+Ammari, H. D., Hay, N., and Lampard, D., 1990, ‘‘The Effect of Density Ratio
+on the Heat Transfer Coefficient from a Film-Cooled Flat Plate,’’ ASME J.
+Turbomach., 112, pp. 444 – 450.
+
+JANUARY 2003, Vol. 125 Õ 73
+
+Downloaded 21 Feb 2013 to 128.118.88.48. Redistribution subject to ASME license or copyright; see http://www.asme.org/terms/Terms_Use.cfm
+
+

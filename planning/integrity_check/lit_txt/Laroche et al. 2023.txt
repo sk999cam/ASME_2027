@@ -1,0 +1,1142 @@
+Towards an Improved Description of Film-Cooling Heat
+Transfer Through Anisotropic RANS Modeling: A Combined
+LES/RANS Contribution
+Emmanuel Laroche, Dorian Dupuy, Florent Duchaine, Laurent Gicquel
+
+To cite this version:
+Emmanuel Laroche, Dorian Dupuy, Florent Duchaine, Laurent Gicquel. Towards an Improved Description
+of Film-Cooling Heat Transfer Through Anisotropic RANS Modeling: A Combined LES/RANS Contribution.
+ASME Turbo Expo 2023, Jun 2023, Boston, United States. pp.GT2023-101447, ⟨10.1115/GT2023-101447⟩. ⟨hal04254082⟩
+
+HAL Id: hal-04254082
+https://hal.science/hal-04254082v1
+Submitted on 23 Oct 2023
+
+HAL is a multi-disciplinary open access archive
+for the deposit and dissemination of scientific research documents, whether they are published or not.
+The documents may come from teaching and research
+institutions in France or abroad, or from public or private research centers.
+
+L’archive ouverte pluridisciplinaire HAL, est destinée au dépôt et à la diffusion de documents scientifiques de niveau recherche, publiés ou non, émanant
+des établissements d’enseignement et de recherche
+français ou étrangers, des laboratoires publics ou
+privés.
+
+HAL Authorization
+
+TOWARDS AN IMPROVED DESCRIPTION OF FILM-COOLING HEAT TRANSFER THROUGH ANISOTROPIC RANS
+MODELING: A COMBINED LES/RANS CONTRIBUTION
+Emmanuel Laroche1, ∗ , Dorian Dupuy2 , Florent Duchaine2 , Laurent Gicquel2, ∗
+1
+
+ONERA/DMPE, Université de Toulouse, F-31055 Toulouse, France
+2
+CERFACS, Toulouse, France
+
+ABSTRACT
+
+Modeling
+
+This study focuses on the physics and the modeling of the
+heat transfer taking place within the Penn State 777 shaped hole
+flow configuration. To do so, a dedicated Large-Eddy Simulation conducted with the AVBP solver is carried out and shows
+good reproduction of the main flow characteristics observed in
+terms of features and adiabatic effectiveness. This simulation is
+then more deeply analyzed to conduct an a priori evaluation of
+the most current heat flux assumptions used in RANS modeling,
+being the Prandtl analogy and the Daly Harlow hypothesis. Results obtained for this shaped hole configuration confirm previous
+ones obtained for cylindrical holes, showing the deficiencies of
+classical RANS models. In particular, it is shown that the equivalent Turbulent Prandtl number usually fixed at 0.9 is here largely
+overestimated. The most representative value is indeed around
+0.5 in most regions of interest. It is also showed that the diffusion process is not the same in all directions, namely the wall
+normal and transverse directions turbulent diffusion processes
+differ. A Reynolds–Stress model simulation using the Elliptic
+Blending Reynolds–Stress Model developed by Manceau is then
+conducted, combined with different advanced heat flux models.
+With this new and more advanced model, obtained results show
+major improvements compared to state of the art RANS simulation using the k-𝜔 SST along with the Prandtl analogy. In
+particular, the centerline and the lateral effectiveness profiles are
+considerably enhanced, exhibiting a more representative lateral
+spreading. The respective contributions issued by the improved
+Reynolds–stress description and the heat flux models are eventually analyzed. A modified model for the heat flux formulation
+is hence suggested in an attempt to provide extra improvement
+compared to Daly-Harlow formulation. In conclusion, this work
+strongly advocates for the use of anisotropic models either for
+turbulent stress modeling or turbulent heat flux modeling for the
+description of film cooling phenomena at stake.
+Keywords:
+∗ Corresponding
+
+NOMENCLATURE
+
+Roman letters
+𝐷
+film cooling diameter [m]
+𝑞⃗
+heat flux vector [W m−2 ]
+𝑛⃗
+wall normal vector
+𝑢𝜏
+friction velocity [m s−1 ]
+Greek letters
+𝛼
+thermal diffusivity [m2 s−1 ]
+𝜆
+thermal conductivity [W m−1 K−1 ]
+𝜈
+kinematic viscosity [m2 s−1 ]
+𝛼𝑡
+turbulent diffusivity [m2 s−1 ]
+𝜈𝑡
+eddy viscosity [m2 s−1 ]
+𝜏
+turbulent time scale [s]
+Dimensionless groups
+BR
+blowing Ratio, 𝜌 𝑐 𝑈𝑐 /𝜌∞𝑈∞
+DR
+density Ratio, 𝜌 𝑐 /𝜌∞
+VR
+velocity Ratio, 𝑈𝑐 /𝑈∞
+Pr
+Prandtl number, 𝜈/𝛼
+𝑃𝑟 𝑡
+turbulent Prandtl number, 𝜈𝑡 /𝛼𝑡
+𝜃
+non-dimensional Temperature (𝑇 − 𝑇∞ )/(𝑇𝑐 − 𝑇∞ )
+𝜂
+adiabatic effectiveness (𝑇𝑎𝑑 − 𝑇∞ )/(𝑇𝑐 − 𝑇∞ )
+Superscripts and subscripts
+i
+ith vector component
+ad
+adiabatic value
+c
+coolant value
+∞
+free stream value
+1. INTRODUCTION
+
+In the last decades, modern gas turbine efficiency has been
+achieved by the increase of gas turbine temperature at which such
+engines operate. As a consequence, the hot gases exiting the combustion chamber now exhibit temperature levels largely exceeding existing material melting points. The turbine has therefore to
+be cooled to guarantee its structural integrity and an acceptable
+
+Film cooling, Large-Eddy Simulation, RANS
+author: emmanuel.laroche@onera.fr
+
+1
+
+life duration. An overview of the techniques used to optimize
+the cooling strategy can be found for instance in Bunker [1] or
+Dutta [2]. A major option relies on film cooling where cold gases
+extracted at the compressor level circulate inside the blade before
+being ejected through small holes at its surface to generate an
+insulating layer. The geometry of the holes as well as their shape
+needs thus to be optimized to maximize the coverage provided by
+such a film. Numerous experimental or numerical studies have
+considered the characterization and modeling of film cooling behavior and it has been shown to strongly depend on the geometry
+but also on a number of flow parameters such as the Velocity Ratio
+(VR), the Blowing Ratio (BR), or the Density Ratio (DR). Dedicated syntheses are provided by Bogard and Thole [3] or Dutta [2].
+In this context, Computational Fluid Dynamics (CFD) has been
+used to analyze and predict film cooling for at least thirty years.
+Pioneering works by Demuren et al. [4], Leylek and Zerkle [5]
+and Walters and Leylek [6] analyzed the main flow characteristics
+and the coupling between the coolant issued from the hole and
+the mainstream. Note that overall, the underlying physics is based
+on the one encountered for a jet in crossflow configuration. After
+hole ejection, the flow and the thermal mixing is dominated by
+the presence of a pair of counter-rotating vortices, which drive
+the turbulent mixing. This topology is associated with high levels
+of turbulence, characterized by a strongly anisotropic structure.
+Those early predictions revealed the poor estimations provided
+by RANS techniques to evaluate parameters such as the adiabatic
+or cooling effectiveness. In particular, the lateral spreading of the
+film was shown to be largely underestimated by RANS models,
+whereas the centerline effectiveness was usually overestimated.
+The explanation for such an incorrect behavior relies in the eddy
+viscosity assumption mostly used for RANS models. To increase
+the lateral spreading, Bergeles et al. [7] suggested to take into
+account the anisotropy of the flow by applying a correction to the
+eddy diffusivity in the lateral directions. The anisotropy correction was based on the one encountered in a pipe flow. Lakehal et
+al. generalized this work by using an explicit algebraic Reynolds–
+Stress model, combined with a modified turbulent Prandtl number
+near the wall and showed a significant improvement of temperature predictions [8, 9] on a flat plate configuration. However,
+the lateral spreading was still underestimated on a blade test case.
+Differential Reynolds–Stress Transport Models (DRSM) are a
+natural extension of the preceding strategies. Those models do
+not rely on an equilibrium assumption, but can suffer more from
+numerical convergence issues, an increased CPU cost, and different grid requirements. However, Most [10] showed the potential
+interest of such models for a multi-hole cooling configuration. In
+particular, the velocity field appeared in better agreement. His
+conclusions were confirmed by Rouina [11], on a fan shaped hole
+configuration, where a DRSM showed superior performance for
+the prediction of the adiabatic effectiveness maps, for BR of 1
+and 2. More recently, Paysant [12] successfully applied two versions of DRSM models to describe the trajectory and mixing of
+a 400°C hot jet in an ambient crossflow. Compared to a k-𝜔
+SST model, the mixing of the counter-rotating vortices is largely
+increased, leading to a significantly enhanced temperature prediction. In parallel to these RANS estimations, LES were conducted
+and showed a satisfactory agreement with experimental data as
+
+shown by Stratton [13]. The generated databases were then analyzed, to further investigate the turbulent characteristics of the
+flow. Stratton and Shih [14] showed in particular that the turbulent stress and strain fields are aligned far from the wall, but their
+misalignment cannot be neglected near the wall, leading to large
+discrepancies.
+Concerning heat transfer modeling, the most widely used
+model is the Gradient Diffusion Hypothesis (GDH) where the
+transport of heat by turbulent fluctuations 𝑢 𝑖′𝑇 ′ is taken to be
+proportional to the temperature gradient:
+𝑢 𝑖′𝑇 ′ = −𝛼𝑡
+
+𝜕𝑇¯
+.
+𝜕𝑥 𝑖
+
+(1)
+
+The turbulent thermal diffusivity 𝛼𝑡 is here evaluated using the
+Reynolds analogy, through the use of a constant turbulent Prandtl
+number hypothesis:
+𝜈𝑡
+𝛼𝑡 =
+.
+(2)
+𝑃𝑟 𝑡
+Typical values of this Prandtl number approach 0.85, which is the
+average value representative of a turbulent boundary layer. However, Kohli et al. [15] conducted experimental characterizations
+and observed large variations of this turbulent Prandtl number,
+with values going from 0.5 to 2. As an attempt to generalize this
+observation, Liu et al. [16] suggested a model where the turbulent
+Prandtl number varies with a dimensionless temperature gradient. As mentioned before, Lakehal [9] advocated the need for a
+specific near-wall model for 𝑃𝑟 𝑡 . More recently, Ling et al. [17]
+or Stratton et al. [14] analyzed LES data to evaluate the different
+turbulent heat flux closures validity. They also revealed that the
+heat flux vector and the temperature gradients can be strongly
+misaligned. This discrepancy with the GDH model is all the
+more present in the near wall region. Ling et al. [17] extended
+this analysis to the Generalized Gradient Diffusion Hypothesis
+(GGDH also known as Daly-Harlow [18]) as well as to the High
+Order GGDH (HOGGDH) advocated by Suga [19]. For the DalyHarlow flux model, the heat flux is not necessarily aligned with
+the temperature gradient, and if one accepts that the turbulent
+time scale 𝜏 and 𝐶𝐺𝐺𝐷𝐻 , a model constant, play a role which is
+analogous to the turbulent Prandtl number, then
+𝑢 𝑖′𝑇 ′GGDH = −𝐶GGDH 𝜏 𝑢 𝑖′ 𝑢𝑗′
+
+𝜕𝑇¯
+𝜕𝑥𝑗
+
+(3)
+
+The HOGGDH formulation by Suga [19] extends the Daly Harlow
+model, in particular for a better estimation of longitudinal fluxes,
+including quadratic products of Reynolds stresses:
+𝑢 𝑖′𝑇 ′HOGGDH = −𝐶HOGGDH
+
+𝜏 ′ ′ ′ ′ 𝜕𝑇¯
+𝑢𝑢 𝑢 𝑢
+.
+𝑘 𝑖 𝑘 𝑘 𝑗 𝜕𝑥𝑗
+
+(4)
+
+According to Ling [17], even the use of those more elaborated
+models does not provide a satisfactory evaluation of the heat
+fluxes, and at least a recalibration of the constants is required.
+Doing so, the best prediction is obtained with a recalibrated HOGGDH model.
+Note that most of the conclusions above were obtained for
+cylindrical holes, and to the best of our knowledge were not confirmed for the more and more popular shaped holes. These holes
+
+2
+
+with a momentum thickness Reynolds number of 730. Namely,
+
+generally include a diffused outlet, which modifies the mixing between the coolant and mainstream. Schroeder et al. [20] provide
+a comparative study of different geometries of shaped holes. For
+high momentum flux ratio values, the dynamics of the counterrotative vortices is affected by the diffused outlet, leading to a
+better coverage of the protected surface. A reference geometry,
+known as the 777 hole is also defined in [20]. The question
+then arises of the validity of the aforementioned conclusions for
+shaped holes.
+In the present work, LES results for the 777 geometry are
+used to meet two objectives. The first is to assess the validity
+of heat flux assumptions for a row of shaped holes, through an
+a priori analysis of the LES fields. Then, the second and major
+objective is to evaluate the potential of a state of the art DRSM
+model to estimate the cooling effectiveness of such a configuration, in comparison to an industrial state of the art model. This
+DRSM model is eventually combined with different heat flux assumptions and models to quantify the improvements brought by
+the respective dynamic and heat transfer contributions.
+
+𝑢inlet
+
++
+⎧
+⎪
+⎪ 𝑢𝜏 𝑦
+⎨
+⎪
+= 𝑢∞ (︂
+)︂
+⎪
+⎪
+⎪ 𝑢𝜏 1 log 𝑦 + + 𝐶 +
+𝜅
+⎩
+
+if log 𝑦 + ≥ 𝜅 (𝑦 + − 𝐶 + ),
+if 𝑦 + ≥ exp (𝜅 (𝑢∞ /𝑢𝜏 − 𝐶 + )),
+otherwise,
+
+(5)
+with 𝜅 = 0.41, 𝐶 + = 5.2, 𝑦 + = 𝑦𝑢𝜏 /𝜈, 𝑢𝜏 = 0.513 m/s and
+𝑢∞ = 10.17 m/s. At the inlet of the plenum, stagnation pressure
+and stagnation temperature are imposed to create a pressure potential consistent with the target blowing ratio and density ratio,
+using the characteristic boundary condition of Odier et al. [22].
+A constant pressure is imposed at the outlet using the characteristic boundary condition of Poinsot and Lele [23]. A symmetric
+boundary condition is used on the side boundaries, setting the
+normal velocity and the normal gradients of velocity, temperature and pressure to zero. This is appropriate because the jet does
+not reach the side boundaries. The top boundary of the main
+channel uses a similar boundary condition, which sets the normal
+velocity and the normal conductive heat flux to zero. The LES
+is a wall-resolved simulation and accordingly a no-slip adiabatic
+boundary condition is used for the walls.
+The simulation is performed using the hybrid flow solver
+AVBP [25]. In the LES, the fluid is modeled as a continuum that
+obeys the ideal gas equation of state and the compressible LES
+equations, without body force or heat source:
+
+2. FLOW CONFIGURATION
+
+The 777 pattern was defined by Shroeder and Thole in [20]
+and its characteristics can be visualized in Figure 1. The name
+originates from the 7◦ expansion in all directions for the diffuser
+part. The film cooling array is made of five shaped holes, with a
+metering diameter of 𝐷 = 7.75 mm. The retained configuration
+corresponds to a low freestream intensity 𝑇𝑢∞ = 0.5%. In terms
+of main characteristics ratios, the studied case is defined by a
+Blowing Ratio (BR) and a Density Ratio (DR) of 1.5. The
+freestream velocity and temperature are 𝑈∞ = 10.17 m.s−1 , and
+𝑇∞ = 295 K. The coolant temperature is 198 K. The approach
+boundary layer characteristics were measured upstream the hole
+by Laser Doppler Velocimetry for 𝑥/𝐷 = −4.7 and are provided
+in Table 1. The origin is located at the intersection of the metering
+section axis and the surface of the plate. The mass flow rate in
+the plenum is controlled to guarantee the appropriate blowing
+ratio and conditioning screens guarantee a uniform flow and a
+low turbulence level. Additional details are provided in [20].
+
+𝜕 𝜌 𝜕 𝜌𝑢𝑗
++
+= 0,
+𝜕𝑡
+𝜕𝑥𝑗
+𝜕 𝜌𝑢 𝑖 𝜕 𝜌𝑢 𝑖 𝑢𝑗
+𝜕𝑃 𝜕𝜎𝑖 𝑗
++
+=−
++
+,
+𝜕𝑡
+𝜕𝑥𝑗
+𝜕𝑥 𝑖
+𝜕𝑥𝑗
+𝜕𝑞𝑗 𝜕𝑢𝑗 𝑃 𝜕𝑢𝑗 𝜎𝑖 𝑗
+𝜕 𝜌𝐸 𝜕 𝜌𝑢𝑗 𝐻
++
+=−
+−
++
+,
+𝜕𝑡
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝜕𝑥𝑗
+𝑃 = 𝑟 𝜌𝑇,
+
+(6)
+(7)
+(8)
+(9)
+
+with 𝑡 the time, 𝑃 the pressure, 𝜌 the fluid density, 𝑥 𝑖 the 𝑖-th
+
+3. REFERENCE LES RESULTS
+
+The computational domain of the LES, represented in Figure 2, includes a main channel, a 777 hole and a coolant plenum.
+The size of the main channel is 45𝐷 × 13𝐷 × 6𝐷. The size of the
+plenum is 19𝐷 ×13𝐷 ×6𝐷. At the inlet of the main flow, velocity
+and temperature are prescribed using the non-reflecting boundary
+condition of Daviller et al. [21]. The inlet velocity 𝑢inlet follows a
+piecewise law of the wall that aims to represent a boundary layer
+
+Tu
+0.5 %
+
+𝜃/𝐷
+0.14
+
+H
+1.45
+
+𝑅𝑒Θ
+670
+
+𝑢𝜏
+0.5 𝑚.𝑠 −1
+FIGURE 1:
+TO [20].
+
+TABLE 1: UPSTREAM BOUNDARY LAYER CHARACTERISTICS.
+
+3
+
+BASELINE SHAPED HOLE DESIGN ACCORDING
+
+Cartesian coordinate, 𝑢 𝑖 the 𝑖-th component of the fluid velocity, 𝐸 the total energy per unit mass and 𝐻 = 𝐸 + 𝑃/𝜌 the
+total enthalpy per unit mass. The shear-stress tensor 𝜎𝑖 𝑗 is
+dev
+given by 𝜎𝑖 𝑗 = (𝜇 + 𝜇WALE ) 𝑆𝑖dev
+𝑗 , with 𝑆 𝑖 𝑗 = (1/2) (𝜕𝑢 𝑖 /𝜕𝑥𝑗 +
+𝜕𝑢𝑗 /𝜕𝑥𝑖 ) − (1/3) (𝜕𝑢 𝑘 /𝜕𝑥 𝑘 )𝛿𝑖 𝑗 the deviatoric rate of deformation tensor. This expression includes a molecular stress, computed assuming a Newtonian fluid under Stokes’ hypothesis,
+and a subgrid-scale stress, computed assuming an eddy-viscosity
+subgrid-scale model [26]. Sutherland’s law [27] is used for the
+dynamic molecular viscosity 𝜇 and the WALE model [28] for the
+subgrid-scale viscosity. The conductive heat flux 𝑞𝑗 is given by
+𝑞𝑗 = −(𝜆 + 𝜆WALE )𝜕𝑇/𝜕𝑥𝑗 , with 𝑇 the fluid temperature. The
+thermal conductivity and subgrid-scale conductivity are respectively computed assuming a constant molecular Prandtl number
+𝑃𝑟 and a constant subgrid-scale Prandtl number 𝑃𝑟sgs = 0.6,
+namely 𝜆 = 𝐶 𝑝 𝜇/𝑃𝑟, and 𝜆WALE = 𝐶 𝑝 𝜇WALE /𝑃𝑟sgs , where the
+the tabulated data of Stull and Prophet [29] are used to compute
+the isobaric heat capacity 𝐶 𝑝 . The system of LES equations
+(6)–(9) is resolved numerically using a finite-element method
+in a cell-vertex formulation [30]. Convection is discretized using a two-step Taylor–Galerkin scheme with third-order accuracy
+in space and time [31]. Diffusion is discretized using a centered second-order scheme. The simulation is performed on an
+unstructured tetrahedral mesh containing 31.8 · 106 cells. The
+height of the first cell off the wall ranges from 𝑦 + = 4 to 16, as
+represented in figure 5. The cell size is similar in the streamwise and spanwise directions, as the mesh is locally isotropic. A
+simulation with a coarser mesh containing 22.4 · 106 cells is also
+performed for validation purpose. The coarser mesh has a similar
+first-height very near to the wall but is up to 50% coarser near
+𝑥/𝐷 = 15 (figure 5)
+The LES has been presented and validated in Dupuy et
+al. [32]. The adiabatic effectiveness on the plate is compared
+to the experiments of Schroeder and Thole [24] in Figure 3. The
+profiles obtained with the present and coarser meshes are very
+similar, which indicates that the results are not too sensitive to the
+mesh resolution. Furthermore, the numerical and experimental
+thermal footprint of the jet are overall in good agreement. How-
+
+45D
+13D
+
+FIGURE 3: MEAN ADIABATIC EFFECTIVENESS ON THE PLATE.
+LEFT: EXPERIMENTAL DATA OF SCHROEDER AND THOLE [24].
+RIGHT: PRESENT LES.
+
+ever, the centerline profile of adiabatic effectiveness is slightly
+higher in the LES than in the experiments (Figure 4). This can be
+explained by two contributions. First, the jet is not perfectly symmetric in the experiments and deviates slightly to the right with
+respect to the centerline plane (Figure 6). Second, in the LES,
+the adiabatic effectiveness tends to zero outside the direct volume
+of influence of the jet. For 𝑍/𝐷 = ±3 the effectiveness is zero
+for the LES, whereas it does not vanish in the experimental data
+(Figure 6). Simon et al. [33] have shown that this discrepancy can
+be explained by the conductive heat transfer within the plate, not
+reproduced by the adiabatic wall boundary condition of the simulation. Note also that to investigate dynamic Reynolds–stress
+models, taking into account heat conduction within the plate
+would not be relevant. Therefore, no further attempt has been
+made to reduce this discrepancy between LES and experiment.
+The LES will support the analysis conducted below. In
+particular, the relationship between the counter-rotating vortices
+present after injection and the evolution of the temperature field
+will be emphasized. Figure 7 identifies the evolution of those
+vortices between 𝑋/𝐷 = 5 and 𝑋/𝐷 = 10. Near the injection,
+the mixing is first driven by the inner pair of vortices and its
+intensity. The intensity of those vortices gradually diminishes
+compared to the secondary vortices present on the jet sides. The
+temperature evolution is thus driven by the interaction between
+those structures.
+
+6D
+
+MAIN CHANNEL
+
+HOLE
+
+WALLS
+
+PLENUM
+
+13D
+
+4. A PRIORI EVALUATION OF HEAT FLUX MODELS
+
+6D
+
+LES calculations provide time resolved solutions but do not
+directly evaluate the RANS turbulent viscosity or diffusivity as
+mentioned above. However, and as already mentioned by Ling et
+al. [17] or Stratton et al. [14], their evaluation is feasible based on
+
+19D
+FIGURE 2: COMPUTATIONAL DOMAIN.
+
+4
+
+Schroeder & Thole
+Present LES
+Coarser mesh
+
+0.8
+0.6
+0.4
+0.2
+
+0
+
+10
+
+20
+
+30
+
+x/D
+
+40
+
+0.5
+0.4
+0.3
+0.2
+0.1
+3
+
+FIGURE 4: STREAMWISE PROFILE OF ADIABATIC EFFECTIVENESS ON THE PLATE FOR THE CENTERLINE z = 0.
+
+y+
+
+0.6
+
+0.0
+
+0.0
+
+20
+
+Schroeder & Thole
+Present LES
+Coarser mesh
+
+0.7
+
+Adiabatic effectiveness
+
+Adiabatic effectiveness
+
+1.0
+
+2
+
+1
+
+0
+
+z/D
+
+1
+
+2
+
+3
+
+FIGURE 6: SPANWISE PROFILE OF ADIABATIC EFFECTIVENESS
+ON THE PLATE AT x /D =8.
+
+Present LES
+Coarser mesh
+
+10
+0
+0.0
+
+2.5
+
+5.0
+
+7.5
+
+10.0
+
+12.5
+
+x/D
+
+15.0
+
+17.5
+
+20.0
+
+FIGURE 5: STREAMWISE PROFILE OF THE HEIGHT OF THE FIRST
+CELL IN WALL UNITS ON THE PLATE FOR THE CENTERLINE z = 0.
+
+averaged characteristics of the mainstream and of the associated
+RMS fields. As mentioned before, turbulent heat transfer is most
+often not isotropic and a natural extension of Equation 1 would
+be to consider a directional diffusivity 𝛼𝑡 ,𝑖 as the ratio of the heat
+flux to temperature gradient component per direction,
+𝑢 𝑖′𝑇 ′ = −𝛼𝑡 ,𝑖
+
+𝜕𝑇
+.
+𝜕𝑥 𝑖
+
+(10)
+
+Those directional coefficients allow to characterize the directional sensitivity of the heat transfer diffusion. However, for
+simplification purposes, Ling et al. [17] and Stratton et al. [14]
+advocate the use of isotropized coefficients for turbulent eddy and
+thermal diffusivities. Those coefficients correspond to a weighted
+average of the directional coefficients. For eddy viscosity, this
+corresponds to a weighted average of the Reynolds stresses, with
+a weight corresponding to the compressible strain,
+𝜈𝑡 ,EQ =
+
+−𝑢 𝑖′ 𝑢𝑗′ 𝑆𝑖 𝑗 + 32 𝑘𝛿𝑖 𝑗 𝑆𝑖 𝑗
+
+.
+
+2𝑆 𝑘𝑙 𝑆 𝑘𝑙
+
+(11)
+
+For the equivalent thermal diffusivity, the expression reads,
+𝛼𝑡 ,EQ =
+
+𝜕𝑇
+−𝑢 𝑖′𝑇 ′ 𝜕𝑥
+𝑖
+𝜕𝑇¯ 𝜕𝑇¯
+𝜕𝑥𝑗 𝜕𝑥𝑗
+
+.
+
+FIGURE 7: DIMENSIONLESS TEMPERATURE AND VELOCITY VECTORS FOR X/D=5 (TOP) AND X/D=10 (BOTTOM).
+
+(12)
+
+The equivalent turbulent Prandtl number can then be examined
+considering,
+𝜈𝑡 ,EQ
+𝑃𝑟 𝑡 ,EQ =
+.
+(13)
+𝛼𝑡 ,EQ
+
+The same kind of derivation can be generalized to the GGDH
+and HOGGDH models. For the GGDH approach, an equivalent
+
+5
+
+FIGURE 8: SPATIAL EVOLUTION OF THE CONSTANTS, TOP : P r t , CENT. : C GGD H , BOT. CH O GGH , X /D =2.5, 5, 10, 15, 20, 30 AND 40.
+
+where 𝐶𝜇 = 0.09. Figure 8 represents the evolution of obtained
+coefficients downstream the injection hole. For the analysis, seven
+slices located along the film development are retained as representative of the overall behavior. For these visualisations, the
+regions where the nondimensional temperature 𝜃 is under 0.01
+are blanked for clarity and precision reasons. Indeed below this
+value, which corresponds to regions of minimal gradients, the
+isotropized coefficient calculation is not visible. The wall temperature is represented in parallel so that the jet evolution clearly
+appears. Considering the GDH hypothesis, the obtained 𝑃𝑟 𝑡 distribution reveals that its equivalent value is clearly far from being
+constant in a slice, but also along the jet trajectory. Immediately
+downstream the injection, for 𝑋/𝐷 = 2.5, 𝑃𝑟 𝑡 is seen not to exceed 0.5 in the most part of the slice, at the exception of the near
+centerline region. Moreover, retrieved values for 𝑃𝑟 𝑡 are lower
+in the lateral shear layers corresponding to jet/mainstrean interaction, reaching instead levels below 0.2. An averaging process
+provides a value around 0.3, taking into account zones where
+𝑃𝑟 𝑡 is below 0.2. Considering slices further downstream, the
+
+coefficient can be estimated using,
+𝐶𝐺𝐺𝐷𝐻 = −
+
+𝜕𝑇
+𝑢 𝑖′𝑇 ′ 𝜏𝑢 𝑖′ 𝑢𝑗′ 𝜕𝑥
+𝑗
+
+(14)
+
+.
+𝜕𝑇
+𝜕𝑇
+𝜏𝑢 𝑖′ 𝑢𝑗′ 𝜕𝑥
+𝜏𝑢 𝑖′ 𝑢𝑗′ 𝜕𝑥
+𝑗
+𝑗
+
+Similarly, for the HOGGDH model, an equivalent constant can
+be derived, following the expression,
+𝐶𝐻𝑂𝐺𝐺𝐷𝐻 = −
+
+𝜕𝑇
+𝑢 𝑖′𝑇 ′ 𝜏𝑢 𝑖′ 𝑢 ′𝑘 𝑢 ′𝑘 𝑢𝑗′ 𝜕𝑥
+𝑗
+
+.
+𝜕𝑇
+𝜕𝑇
+𝜏𝑢 𝑖′ 𝑢 ′𝑘 𝑢 ′𝑘 𝑢𝑗′ 𝜕𝑥
+𝜏𝑢 𝑖′ 𝑢 ′𝑘 𝑢 ′𝑘 𝑢𝑗′ 𝜕𝑥
+𝑗
+𝑗
+
+(15)
+
+Note that those expressions require the estimation of a characteristic turbulent time scale 𝜏. The LES not providing the turbulent
+dissipation 𝜖, Ling et al. [17] suggest to use the inverse of the mean
+strain, with 𝜏 = 1/||𝑆𝑖 𝑗 ||. However, in the RANS framework the
+difference between this time scale, and the local turbulent time
+scale 𝜏 = 𝑘/𝜖 can be large. 𝜏 was instead estimated writing,
+𝜈𝑡 ,EQ = 𝐶𝜇 𝑘𝜏,
+
+(16)
+
+6
+
+average value of 𝑃𝑟 𝑡 gradually increases with the 𝑥 location. For
+𝑋/𝐷 = 40, 𝑃𝑟 𝑡 reaches 0.8 in the above- centerline region, never
+exceeding 0.5 on the sides. The heat diffusion is therefore drastically underestimated by the usual value of 0.85 − 0.9 in most part
+of the flow, which explains the relative poor performance of GDH
+models reported in the litterature. This appears to be particularly
+true near the injection region. An extra analysis performed on
+the respective directional contributions confirmed that low values
+coincide mainly with an underestimated turbulent heat diffusion
+in the spanwise direction. This observation also applies to the
+insufficient lateral spreading generally observed in the litterature
+for isotropic RANS model calculations.
+Considering the 𝐶𝐺𝐺𝐷𝐻 distribution results in the same kind
+of observations when it comes to its spatial dependency. However,
+and except for the slice located at 𝑥/𝐷 = 2.5, the Daly Harlow
+coefficient reaches rapidly the widespread value of 0.3. This
+value is indeed maintained in all slices, at least in the central part
+of the jet and in the crossflow inteaction region. This observation
+is however not valid near the lateral boundaries of the jet, as well
+as in the near wall region, where it is well above 1. This analysis
+therefore advocates for the use of the Daly Harlow model, but also
+exhibits its limits in critical regions, where further corrections are
+required.
+The analysis of 𝐶𝐻𝑂𝐺𝐺𝐷𝐻 shows a similar evolution compared to 𝐶𝐺𝐺𝐷𝐻 . The coefficient distribution is fairly self-similar
+from one slice to another. In the core of the jet, above the centerline, the value is typically around 0.3 − 0.4, to be compared with
+the widespread used 0.6 value. However, this more elaborate
+model fails to predict accurately the heat flux on the edges of the
+jet, as well as in the near wall region.
+From those maps, it clearly appears that a GDH hypothesis fails to represent the complex flow features involved. Even
+the more elaborate GGDH and HOGGDH only partly reproduce
+the gradient/heat flux misalignment, in particular near the walls.
+Similar conclusions had been formulated by Stratton [13] for the
+GDH, and by Ling et al. [17] for higher order models. However,
+those conclusions were appropriate only for cylindrical holes and
+the present study allows a generalization to shaped hole geometries. The conclusions on the Reynolds stress vs strain and heat
+flux vs temperature gradients distributions being on this case very
+similar to the above mentioned studies [13] [17], no extra analysis
+is presented here.
+From those considerations, we suggest to introduce a modified GGDH model. The idea is to distinguish the behavior in the
+wall normal and lateral directions. In the wall normal direction,
+𝐶𝐺𝐺𝐷𝐻 was calibrated to describe the average heat transfer in
+the boundary layer as stated by [19]. Its value can be considered
+constant in most parts of the boundary layer, except near the wall.
+This is a true hypothesis but only for the wall normal component.
+The heat transfer in the axial direction is indeed largely underestimated. We therefore suggest to introduce a directional treatment
+considering,
+𝑢 𝑖′𝑇 ′GGDH = −𝐶GGDH,𝑖 𝑗 𝜏 𝑢 𝑖′ 𝑢𝑗′
+
+𝜕𝑇¯
+,
+𝜕𝑥𝑗
+
+FIGURE 9: MESH OVERVIEW IN THE INJECTION REGION, TEMPERATURE CONTOURS
+
+The corresponding model is named thereafter ’modified GGDH’
+model. Note that it should not be seen as a general model, but
+as a first attempt to introduce an adapted treatment for lateral
+diffusion.
+A more accurate prediction of film cooling heat transfer is
+indeed expected using anisotropic heat flux models. However,
+such models require a relevant evaluation of the Reynolds stresses,
+which excludes the use of eddy viscosity models. Instead, the
+Differential Reynolds–Stress Model (DRSM) by Manceau [34] is
+assumed to provide a satisfactory evaluation of those stresses. The
+objective is then to quantify the potential improvement brought
+by such an advanced modeling, but also to identify the respective
+contributions of the Reynolds stress and heat flux models, for the
+Penn State configuration.
+5. RANS SIMULATIONS
+
+For the following, the RANS simulations are carried out using ONERA’s in house CEDRE® multi-physics platform. This
+platform is dedicated to both research and industrial applications,
+in the field of energetics and propulsion. The software architecture is based on a multi-domain, multi-solver approach and reads
+any general unstructured grid. Each physical system is computed
+through a dedicated solver: gas phase, dispersed phase, heat transfer in solids and radiation. Here, only the Navier-Stokes solver
+called CHARME is used. Details about the CEDRE platform can
+be found in [35].
+The domain extension is half the one of Figure 2. Indeed,
+in case of an axial injection, and for a steady state computation,
+a symmetry condition can be prescribed on the jet center plane.
+The inlet boundary corresponds to the LDV measurement plane
+for 𝑋/𝐷 = −4.7. A uniform atmospheric pressure is prescribed
+at the outlet boundary condition, which appears to be a reasonable
+assumption considering the 40𝐷 distance between jet injection
+and outlet. Two different turbulent models are compared for the
+
+(17)
+
+with,
+𝐶GGDH,𝑖 𝑗 = 0.5 − 𝑛𝑖 𝑛𝑗 .
+
+(18)
+
+7
+
+[39] or the Hellsten Explicit Algebraic Reynolds Stress Model
+[40] could have been considered. The first one modifies the
+evaluation of turbulent viscosity, considering the local strain rate.
+The second one generalizes Boussinesq hypothesis and partially
+takes the turbulent anisotropy into account. However, Sing et
+al [41] showed that, if the 𝑘 − 𝜀 realizable model can bring an
+improvement compared to the 𝑘 − 𝜔 SST, it does not enhance
+the lateral spreading description. This is due to the absence of
+anisotropy evaluation. Coming to Hellsten model, Paysant et al
+[12] evidenced that an algebraic description of anisotropy is not
+enough to describe the jet in crossflow interaction. This is why
+we decided to limit ourselves to the two models cited above.
+A preliminary calculation is performed to provide the turbulent quantities in the inlet boundary layer. In the plenum, the
+surface mass flow rate is prescribed through the blowing ratio,
+and is approximately 0.118 kg.s−1 .m−2 . This guarantees that
+there is the same mass flow rate in the LES and RANS simulations. Considering meshing issues, two successive grid levels
+were evaluated. The hole region is particularly refined with at
+least 50 cells in the exit section of the diffuser. The grids are
+made of tetrahedra in the volume, and prismatic cells near the
+wall. An overview of the coarse mesh is given by Figure 9. The
+fine mesh is made of 16.4 Million cells, whereas the coarse mesh
+only uses 5.25 Million elements. The difference in terms of wall
+temperature does not exceed 2% locally, and the coarse mesh was
+judged satisfactory. Coming to CPU cost, due to implicit time
+integration, the CPU time per iteration for EBRSM is 3 times
+higher compared to SST. Additional iterations are also required
+for convergence, which makes the EBRSM calculation four times
+more expensive.
+Figure 10 represents the adiabatic effectiveness maps obtained for the different models, starting from 𝑘 −𝜔 SST and going
+to the EBRSM+HOGGDH approach. Compared to experiment
+and LES, the 𝑘 −𝜔 SST results confirm the usual behavior for such
+flows, i.e. an overestimated effectiveness on the centerline, and an
+underestimated one for spanwise diffusion. The predicted cooling jet influence is more limited to the centerline in the 𝑘 − 𝜔 SST
+simulation. The laterally averaged effectiveness then mixes zones
+of overestimated and underestimated values, with the possibility
+of a reasonable averaged value, although poor local agreement
+is present. The use of EBRSM introduces a much more intense
+mixing between the jet and the mainstream. The lateral diffusion
+is enhanced, leading to an effectiveness decrease on the centerline, and a better one in the spanwise direction. The introduction
+of an advanced heat flux model intensifies this trend, leading to
+results in close agreement with experiment and LES. The modifications of the secondary vortices structures for 𝑋/𝐷 = 20 can
+be visualized on Figure 11. For this rather downstream station,
+the reference LES simulation exhibits an outer vortex which is
+intense, contrary to the SST simulation. For the EBRSM simulation, even if the vortex location is too close to the centerline, its
+counter-clockwise rotation is adequately predicted.
+To better assess the relative performances of the different
+models, Figure 12 details the centerline effectiveness distributions
+for the different models. As already mentioned before, Simon et
+al. [33] have shown that conductive effects not taken into account
+in the RANS and LES simulations are responsible for the most
+
+(a) Exp.
+
+(b) LES
+
+(c) SST
+
+(d) EBRSM+GDH
+
+(e) EBRSM+GGDH
+
+(f) EBRSM+GGDH mod
+
+(g) EBRSM+HOGGDH
+
+FIGURE 10: ADIABATIC EFFECTIVENESS MAPS FOR THE DIFFERENT MODELS
+
+evaluation of Reynolds Stresses, namely the 𝑘 − 𝜔 SST model by
+Menter [36], and the Elliptic Blending Reynolds–Stress model
+by Manceau. The 𝑘 − 𝜔 SST model represents the industrial
+state of the art, whereas the EBRSM can be considered as a
+state of the art research RSM. It combines a classical DRSM far
+from the wall, a SSG redistribution term and an elliptic model
+near the wall. The elliptic approach, originally introduced by
+Durbin [37], under the elliptic relaxation form recently evolved
+into the concept of elliptic blending [38], where the wall blockage
+is modeled through a wall sensitive parameter 𝛼. This allows
+a more robust computational behavior, and avoids the use of
+ad-hoc near wall functions. Details about the EBRSM can be
+found in [34]. Considering possible intermediate estimates,
+models such as the 𝑘 − 𝜀 realizable model suggested by Shih
+
+8
+
+FIGURE 11: SPATIAL DISTRIBUTION OF THE SECONDARY VORTICES AND DIMENSIONLESS TEMPERATURE FOR X/D=20 : LES (LEFT), SST
+(CENTER), EBRSM+GGDHMOD (RIGHT).
+
+part of the discrepancy between LES and experiment. Therefore,
+RANS results are to be compared more to the LES evaluation
+than to experimental results, both of them assuming adiabatic
+boundary conditions.
+Considering the 𝑘 − 𝜔 SST results, the centerline effectiveness overestimates the experimental value by approximately 25%,
+after 𝑋/𝐷 = 10. This corresponds to a containment of the vortices in the central region after injection. The use of EBRSM
+allows to reduce this error by nearly 50%. This is ensured through
+a better modeling of the kidney-shaped vortices, and the associated anisotropy effects. In particular, Paysant [12] showed that
+the intensity of the vortices is reduced using such a model, which
+favors better mixing of the jet with the mainstream.
+Considering the GGDH and HOGGDH models additionally
+reduces the centerline effectiveness by respectively 8 and 12 %,
+strongly reducing the discrepancy with LES results. The modified GGDH provides the more accurate prediction, through the
+additional spanwise diffusion embedded in the model.
+Those results show that an enhanced description of the
+Reynolds Stress provides a decisive contribution to the wall heat
+transfer temperature distribution. The turbulent heat flux should
+be regarded as an additional contribution, requiring itself an appropriate modeling of the Reynolds Stresses.
+To go further in the understanding of model behaviors, the
+centerline distributions have to be completed by an analysis on
+the spanwise temperature distribution. Figure 13 represents the
+effectiveness distribution for 𝑋/𝐷 = 20. The experimental map
+not being exactly symmetrical, values for 𝑧 < 0 are superposed
+on values obtained for 𝑧 > 0, considering the absolute value of
+the spanwise coordinate, which explains the dispersion of the
+corresponding symbols. The 𝑘 − 𝜔 SST distribution is clearly
+far from representing the temperature structure accurately. In
+the centerline region, the effectiveness is overestimated by 20 %
+compared to LES results, whereas for 𝑍/𝐷 > 1, the simulated
+distribution largely underestimates the LES profile, by more than
+20 % up to 𝑍/𝐷 = 2. Even if the laterally averaged effectiveness
+can be considered as satisfactory, the obtained SST distribution
+
+FIGURE 12: CENTERLINE EFFECTIVENESS DISTRIBUTION : COMPARISON OF THE DIFFERENT APPROACHES
+
+is in reality exhibiting large deficiencies.
+Using EBRSM for the evaluation of the Reynolds Stresses
+not only improves the centerline level, but also provides a more
+satisfactory spanwise distribution. The better description of kidney shaped vortices increases the lateral turbulent mixing. This
+enhanced diffusion modifies the temperature description in between 𝑍/𝐷 = 1 and 𝑍/𝐷 = 2, but also carries out a decrease
+of the centerline temperature. The modifications introduced by
+the heat flux model are also represented in Figure 13. The best
+estimation is provided by the modified GGDH model. However,
+GGDH appears as a good and fairly simple first compromise to
+model complex heat phenomena.
+An additional remark can be made on turbulent diffusion
+modeling. As mentioned in paragraph 4, the equivalent 𝐶𝐺𝐺𝐷𝐻
+
+9
+
+provement to the results, moreover not exhibiting any robustness
+issues. Perspectives include detailed comparisons of the dynamic
+and temperature distributions in the volume to confirm those wall
+observations. Other operating points are also to be considered to
+confirm the improved behavior of advanced models, in particular
+for higher blowing ratios. Those conclusions hold for the 777
+configuration and generalize previous ones obtained for cylindrical holes. They strongly advocate for the use of anisotropic
+models for the description of film cooling phenomena at stake.
+In particular the use of the DRSM model is really recommended
+to go beyond the current industrial state of the art.
+ACKNOWLEDGMENTS
+
+This work was granted access to the computer resources
+of CINES and TGCC under the allocation 2019-A0062A06074
+made by GENCI. D. Dupuy has been funded by the RTRA-STAE
+foundation (Réseau thématique de recherche avancée Sciences et
+technologies pour l’aéronautique et l’espace).
+REFERENCES
+
+FIGURE 13: SPANWISE EFFECTIVENESS DISTRIBUTION : COMPARISON OF THE DIFFERENT APPROACHES
+
+[1] Bunker, Ronald S. “Evolution of Turbine Cooling.” 2017.
+[2] Dutta, S., Han, J.-C. and Ekkad, S. Gas Turbine Heat
+Transfer and Cooling Technology (2nd edition). CRC Press,
+(2012).
+[3] Bogard, D. G. and Thole, K. A. “Gas Turbine Film Cooling.”
+Journal of Propulsion and Power Vol. 22 No. 2 (2006): pp.
+249–270.
+[4] Demuren, A. O., Rodi, W. and Schonung, B. “Systematic
+Study of Film Cooling With a Three-Dimensional Calculation Procedure.” Journal of Turbomachinery Vol. 108 No. 1
+(1986): pp. 124–130.
+[5] Leylek, J. H. and Zerkle, R. D. “Discrete-Jet Film Cooling: A Comparison of Computational Results With Experiments.” Journal of Turbomachinery Vol. 116 No. 3 (1994):
+pp. 358–368.
+[6] Walters, D.K. and Leylek, J.H. “A Systematic Computational Methodology Applied to a Three-Dimensional FilmCooling Flowfield.” Journal of Turbomachinery Vol. 119
+No. 4 (1997): pp. 777–785.
+[7] Bergeles, G. et al. “The Turbulent jet in a crossstream at low
+injection rates: a three-dimensional numerical treatment.”
+Numerical Heat Transfer Vol. 1 No. 2 (1978): pp. 217–242.
+[8] Azzi, A. and Lakehal, D. “Perspectives in Modeling Film
+Cooling of Turbine Blades by Transcending Conventional
+Two-Equation Turbulence Models .” Journal of Turbomachinery Vol. 124 No. 3 (2002): pp. 472–484.
+[9] Lakehal, Djamel. “Near-Wall Modeling of Turbulent Convective Heat Transport in Film Cooling of Turbine Blades
+With the Aid of Direct Numerical Simulation Data .” Journal of Turbomachinery Vol. 124 No. 3 (2002): pp. 485–498.
+[10] Most, A. “Etude numérique et expérimentale des écoulements pariétaux avec transfert de masse à travers une paroi
+multi-perforée.” Ph.D. Thesis, Universite de Pau Pays de
+l’Adour, Pau. 2007.
+[11] Rouina, S., Ravelli, S. and Barigozzi, G. “Combined Experimental and CFD Investigation of Flat Plate Film Cooling
+
+or 𝐶𝐻𝑂𝐺𝐺𝐷𝐻 variations are particularly visible in the lateral
+boundaries of the jet, i.e. for 𝑍/𝐷 between 1.5 and 2. Even
+for the modified GGDH, Figure 13 shows that the temperature
+diffusion modeling should be improved in this region, to minimize
+the discrepancy with reference results. That could be achieved
+with a variable diffusion coefficient for the heat flux, but also for
+the turbulent variables. However, the question then arises of the
+dependency of those coefficients, and to which flow features to
+select as potential candidates.
+6. CONCLUSION
+
+The Penn State 777 shaped hole configuration was studied
+combining a Large-Eddy Simulation with RANS calculations
+conducted in parallel. The Large-Eddy Simulation exhibited
+a good agreement with experimental results and discrepancies
+could be largely explained by conduction effects present on the
+mock-up and neglected in the calculation. The LES reference
+results were then used to investigate the validity of advanced turbulent heat flux models on such a configuration. This analysis
+confirmed the inability of eddy diffusivity models to represent
+heat transfer adequately. More specifically, an equivalent turbulent Prandtl number was derived and its value in the central region
+was shown to be around 0.5. The GGDH and HOGGDH models
+were more appropriate, and the embedded constants showed less
+variations, compared to the turbulent Prandtl number. In parallel,
+calculations carried out with a state of the art Reynolds–Stress
+Model confirmed the major improvement brought by the use of
+a full anisotropic model. Compared to the 𝑘 − 𝜔 SST reference,
+the wall temperature description is largely enhanced, not only on
+the centerline, but in the spanwise directions as well. This improvement is due to a better representation of the kidney-shaped
+vortices typical of a jet in crossflow interaction, and whose magnitude is usually overestimated by eddy viscosity models.The
+use of a GGDH or HOGGDH model brings an additional im-
+
+10
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+through Fan Shaped Holes.” International Journal of Turbomachinery Propulsion and Power Vol. 4 No. 2 (2019).
+Paysant, Laroche E. Millan P., R. and Buet, P. “RANS
+Modelling of a High-Temperature Jet in a Cold Crossflow:
+from Eddy Viscosity Models to Advanced Anisotropic Approaches.” AIAA Scitech 2021 Forum. 2021.
+Stratton, Zachary T. and Shih, Tom I-P. “Effects of Density
+and Blowing Ratios on the Turbulent Structure and Effectiveness of Film Cooling.” Journal of Turbomachinery Vol.
+140 No. 10 (2018).
+Stratton, Zachary T. and Shih, Tom I-P. “Identifying Weaknesses in Eddy-Viscosity Models for Predicting Film Cooling via Large-Eddy Simulations.” Journal of Propulsion
+and Power Vol. 35 No. 3 (2019): pp. 583–594.
+Kohli, Atul and Bogard, David G. “Turbulent Transport in
+Film Cooling Flows .” Journal of Heat Transfer Vol. 127
+No. 5 (2005): pp. 513–520.
+Liu, Zhu-H.R., C.L. and Bai, J.T. “New development of
+the turbulent Prandtl number models for the computation of
+film cooling effectiveness.” International Journal of Heat
+and Mass Transfer Vol. 54 No. 4 (2011): pp. 874–886.
+Ling, Julia, Ryan, Kevin J., Bodart, Julien and Eaton,
+John K. “Analysis of Turbulent Scalar Flux Models for
+a Discrete Hole Film Cooling Flow.” Journal of Turbomachinery Vol. 138 No. 1 (2015).
+Daly, Bart J. and Harlow, Francis H. “Transport Equations
+in Turbulence.” The Physics of Fluids Vol. 13 No. 11 (1970):
+pp. 2634–2649.
+Abe, K. and Suga, K. “Towards the development of a
+Reynolds-averaged algebraic turbulent scalar-flux model.”
+International Journal of Heat and Fluid Flow Vol. 22 No. 1
+(2001): pp. 19–29.
+Schroeder, R.P. “Influence of in-hole roughness and high
+freestream turbulence on film cooling from a shaped hole.”
+Ph.D. Thesis, The Pennsylvania State university, Rochester,
+NY. 2015.
+Daviller, G., Oztarlik, G. and Poinsot, T. “A generalized non-reflecting inlet boundary condition for steady and
+forced compressible flows with injection of vortical and
+acoustic waves.” Computers & Fluids Vol. 190 (2019): pp.
+503–513.
+Odier, N., Sanjosé, M., Gicquel, L., Poinsot, T., Moreau, S.
+and Duchaine, F. “A characteristic inlet boundary condition
+for compressible, turbulent, multispecies turbomachinery
+flows.” Computers & Fluids Vol. 178 (2019): pp. 41–55.
+Poinsot, T. J. and Lele, S. K. “Boundary conditions for
+direct simulations of compressible viscous flows.” Journal
+of computational physics Vol. 101 No. 1 (1992): pp. 104–
+129.
+Schroeder, R. and Thole, K. “Adiabatic effectiveness measurements for a baseline shaped film cooling hole.” ASME
+Turbo Expo: pp. GT2014–25992. 2014. American Society
+of Mechanical Engineers.
+Schönfeld, T. and Rudgyard, M. “Steady and unsteady flow
+simulations using the hybrid flow solver AVBP.” AIAA
+journal Vol. 37 No. 11 (1999): pp. 1378–1385.
+
+[26] Sagaut, P. Large eddy simulation for incompressible flows:
+an introduction. Springer Science & Business Media
+(2006).
+[27] Sutherland, W. “The viscosity of gases and molecular
+force.” The London, Edinburgh, and Dublin Philosophical
+Magazine and Journal of Science Vol. 36 No. 223 (1893):
+pp. 507–531.
+[28] Nicoud, F. and Ducros, F. “Subgrid-Scale Stress Modelling
+Based on the Square of the Velocity Gradient Tensor.” Flow,
+Turbulence and Combustion Vol. 62 No. 3 (1999): pp. 183–
+200.
+[29] Stull, D. R. and Prophet, H. “JANAF thermochemical tables, 2nd edition.” Technical Report No. NSRDS-NBS 37.
+US National Bureau of Standards. 1971.
+[30] Ni, R.-H. “A multiple grid scheme for solving the Euler
+equations.” 5th Computational Fluid Dynamics Conference: p. 1025. 1981.
+[31] Colin, O. and Rudgyard, M. “Development of high-order
+Taylor–Galerkin schemes for LES.” Journal of Computational Physics Vol. 162 No. 2 (2000): pp. 338–371.
+[32] Dupuy, D., Perrot, A., Odier, N., Gicquel, L. Y. M. and
+Duchaine, F. “Boundary-condition models of film-cooling
+holes for large-eddy simulation of turbine vanes.” International Journal of Heat and Mass Transfer Vol. 166 (2021):
+p. 120763.
+[33] Simon, M., Gautier, S., Vanoli, E. and Auzillon, P.
+“Aerothermal Simulations Comparisons of a Shaped-Hole
+Film Cooling Flow.” ASME Turbo Expo 2019. 2019.
+[34] Manceau, R. “Recent progress in the development of the
+Elliptic Blending Reynolds-stress model.” International
+Journal of Heat and Fluid Flow Vol. 51 (2015): pp. 195–
+220.
+[35] Refloch, A., Courbet, B., Murrone, A., Villedieu, P., Laurent, C., Gilbank, P., Troyes, J., Tessé, L., Chaineray, G.,
+Dargaud, J.B., Quémerais, E. and Vuillot, F. “CEDRE software.” Aerospace Lab No. 2 (2011).
+[36] Menter, F. R. “Two-equation eddy-viscosity turbulence
+models for engineering applications.” AIAA Journal Vol. 32
+No. 8 (1994): pp. 1598–1605.
+[37] Durbin, P.A. “Near-wall turbulence closure modeling without “damping functions.” Theoret. Comput. Fluid Dynamics
+No. 3 (1991): pp. 11–13.
+[38] Manceau, R. and Hanjalić, K. “Elliptic blending model: A
+new near-wall Reynolds-stress turbulence closure.” Physics
+of Fluids Vol. 14 No. 2 (2002): p. 744 – 754.
+[39] Shih, T.S. et al. “A new k- eddy viscosity model for
+high reynolds number turbulent flows.” Computers Fluids Vol. 24 No. 3 (1995): pp. 227–238.
+[40] Hellsten, Antti. “New Advanced k-w Turbulence Model
+for High-Lift Aerodynamics.” AIAA Journal Vol. 43 No. 9
+(2005): pp. 1857–1869.
+[41] Singh, Kuldeep, Premachandran, B. and Ravi, M.R. “Experimental and numerical studies on film cooling with reverse/backward coolant injection.” International Journal of
+Thermal Sciences Vol. 111 (2017): pp. 390–408.
+,
+
+11
+
+

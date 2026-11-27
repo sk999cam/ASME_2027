@@ -1,0 +1,939 @@
+Pedro M. Milani1
+Mechanical Engineering Department,
+Stanford University,
+Stanford, CA 94305
+e-mail: pmmilani@stanford.edu
+
+Julia Ling2
+Thermal/Fluid Science and Engineering,
+Sandia National Laboratories,
+Livermore, CA 94551
+
+ISAE-SUPAERO,
+University of Toulouse,
+Toulouse 31400, France
+
+Julien Bodart
+ISAE-SUPAERO,
+University of Toulouse,
+Toulouse 31400, France
+
+In film cooling flows, it is important to know the temperature distribution resulting from
+the interaction between a hot main flow and a cooler jet. However, current Reynoldsaveraged Navier–Stokes (RANS) models yield poor temperature predictions. A novel
+approach for RANS modeling of the turbulent heat flux is proposed, in which the simple
+gradient diffusion hypothesis (GDH) is assumed and a machine learning (ML) algorithm
+is used to infer an improved turbulent diffusivity field. This approach is implemented
+using three distinct data sets: two are used to train the model and the third is used for
+validation. The results show that the proposed method produces significant improvement
+compared to the common RANS closure, especially in the prediction of film cooling effectiveness. [DOI: 10.1115/1.4038275]
+
+John K. Eaton
+Mechanical Engineering Department,
+Stanford University,
+Stanford, CA 94305
+
+1
+
+Introduction
+
+Film cooling is a widely used technique to control the thermal
+stresses and increase the lifespan of gas turbine blades [1]. For
+design purposes, Reynolds-averaged Navier–Stokes (RANS) simulations are often used to solve for the temperature field in these
+flows, which can be used to determine the film cooling performance and blade metal temperature distribution. Past studies have
+shown that RANS models struggle to accurately solve for the
+velocity and temperature fields in film cooling configurations
+[2,3]. There has been considerable effort in closure strategies for
+the momentum equation: for example, Hoda and Acharya tested
+seven different models [2]. However, previous work has shown
+that the largest source of error in film cooling predictions is the
+model for the turbulent heat flux [4]. Therefore, the present work
+focuses solely on RANS models for the temperature equation,
+which reduces to the passive scalar equation in the case of a nonbuoyant flow.
+The simplest model to close the turbulent transport term in the
+RANS scalar equation is the gradient diffusion hypothesis (GDH),
+which is shown in the following equation:
+u0i h0 ¼ at
+
+@h
+@xi
+
+(1)
+
+ui represents the velocity in the ith direction and h ¼ ðT  T1 Þ=
+ðTcool  T1 Þ is the dimensionless temperature, with T1 being the
+inlet temperature and Tcool being the coolant temperature. Primed
+quantities indicate turbulent fluctuations and overbars indicate time
+average. The turbulent diffusivity at is a spatially varying scalar
+function. The standard practice in commercial codes is to calculate
+the eddy viscosity field  t in the momentum equations and use a
+
+1
+
+Corresponding author.
+Currently at Citrine Informatics.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received August 22,
+2017; final manuscript received September 23, 2017; published online December 6,
+2017. Editor: Kenneth Hall.
+2
+
+Journal of Turbomachinery
+
+fixed turbulent Prandtl number to find the at field, usually Prt ¼
+t =at ¼ 0:85 [5].
+Previous work has shown that this approach is not sufficient for
+film cooling flows [3,6–9]. He et al. [6] performed RANS simulations in a normal jet in crossflow and recommended a turbulent
+Schmidt number Sct ¼ 0:2 to better match experimental results, a
+value considerably lower than 0.85 (in the current paper, Sct and
+Prt are considered indistinguishable because temperature is
+assumed to behave as a passive scalar). Lakehal [7] obtained
+improved results for the temperature field in a film cooling geometry after considering an anisotropic diffusivity and a spatially
+varying Prt. The experimental measurements of Kohli and Bogard
+[8] suggested that Prt varied between 0.5 and 2 in an inclined jet
+in crossflow. Liu et al. [9] showed that the film cooling effectiveness prediction is sensitive to the choice of Prt and that allowing
+spanwise variations in Prt improved results. Coletti et al. [3] used
+magnetic resonance imaging (MRI) data and concluded that  t
+and at vary spatially according to different trends, so their ratio is
+not uniform.
+There are more complex algebraic closures of the scalar equation as alternatives to the simple GDH. The generalized gradient
+diffusion hypothesis of Daly and Harlow [10] and the higher order
+generalized gradient diffusion hypothesis of Abe and Suga [11]
+are two commonly cited examples. Ling et al. [12] studied these
+closures in the context of a discrete hole film cooling geometry
+and found that they indeed yield slightly more accurate turbulent
+transport than the GDH. However, they concluded that tuning
+model parameters in simpler models produces greater improvements than switching model form. In fact, their most accurate
+results were obtained when the GDH was used in conjunction
+with a turbulent diffusivity field extracted from a high-fidelity
+large eddy simulation (LES) [12]. Inspired by those results, the
+present paper seeks to use the simple GDH of Eq. (1) with a
+machine learning (ML) methodology to select a more appropriate
+at field.
+Machine learning consists of a broad class of algorithms that
+process large amounts of data and extract patterns from them in
+order to make informed decisions in uncertain situations.
+Recently, the rapid increase in computational capability has led to
+
+C 2018 by ASME
+Copyright V
+
+FEBRUARY 2018, Vol. 140 / 021006-1
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+Gonzalo Saez-Mischlich
+
+A Machine Learning Approach
+for Determining the Turbulent
+Diffusivity in Film Cooling Flows
+
+2
+
+Fig. 1 Schematic of the baseline geometry. Figure shows contours of h at the center spanwise plane as calculated by the
+LES. The plenum that feeds the jet was in the simulation
+domain but is not shown.
+
+expected to be perfectly symmetric about z ¼ 0. An adiabatic
+boundary condition is prescribed at all the walls.
+The LES of this configuration was performed by Bodart et al.
+[19] using CharLESx, a second-order, unstructured, finite volume
+solver developed at Stanford University, Stanford, CA. For the
+subgrid scales, it employs the Vreman model in the momentum
+equation and the GDH with Sct ¼ 0:9 in the scalar equation. A
+posteriori analysis showed that the subgrid viscosity and diffusivity are an order of magnitude lower than their molecular counterparts, which demonstrates that the effect of the subgrid model on
+the mean field is negligible. The authors thoroughly validated the
+simulation results against MRI data. In a near injection region
+(X=D < 7 and h > 0:05), the absolute error between the LES and
+the experimentally measured mean scalar field was less than 10%
+in over 87% of the volume. In the same region, the mean streamwise velocity field agreement was within 10% of U in over 79%
+of the volume; the reader can find more details in Ref. [19].
+
+Computational Data Sets
+
+To apply the machine learning framework, computational data
+sets of three different geometries are used: a baseline inclined jet
+in crossflow, a skewed inclined jet in crossflow, and a wallmounted cube in crossflow. In all cases, a well-validated highfidelity simulation is available in conjunction with a RANS
+simulation that uses the standard realizable k  e model in the
+momentum equation and the GDH with Prt ¼ 0:85 in the scalar
+equation. Throughout this paper, buoyancy and molecular diffusion are neglected, so the analogy between temperature and a passive scalar is used. Therefore, the scalar field will be treated as the
+dimensionless temperature h and the turbulent Schmidt and
+Prandtl numbers are indistinguishable. The three cases are
+summarized in Table 1 and further described in Secs. 2.1–2.3.
+2.1 Baseline Inclined Jet in Crossflow. A schematic of the
+baseline jet in crossflow geometry can be seen in Fig. 1. It consists
+of a single circular cooling hole of diameter D injecting into a
+square channel of side 8:62D. The origin of the coordinate system
+is located at the center of the hole, such that the bottom wall is at
+y ¼ 0. The hole is inclined 30 deg with respect to the y-axis and is
+not angled with respect to the x-axis (the latter differentiates it
+from the skewed case). The Reynolds number based on the channel bulk velocity and hole diameter is ReD ¼ 3000. The flow is
+incompressible and the velocity ratio between the bulk main flow
+velocity and the bulk hole velocity is BR ¼ 1. The cooling flow
+comes from a plenum underneath the channel and has a prescribed
+concentration of a scalar contaminant. Since the plenum is fed
+sideways (through the z-direction), the resulting flow is not
+Table 1 Summary of the data sets
+Case
+Baseline
+Skewed
+Cube
+
+Description and references
+
+Re
+
+Inclined jet in crossflow [3,19]
+Skewed inclined jet in crossflow [20]
+Wall-mounted cube in crossflow [21]
+
+3000
+5800
+5000
+
+021006-2 / Vol. 140, FEBRUARY 2018
+
+Fig. 2 Skewed geometry: (a) is from Folkersma [20] and contains a wall-normal plane showing the skewed hole and a spanwise plane showing dimensions and the plenum (the latter
+image is also valid for the baseline case); (b) shows the mesh
+used in the RANS simulation at the wall around the injection
+hole
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+a surge in the availability of large data sets from fluid mechanics
+simulations. In turn, this sparked interest in using machine
+learning techniques in the context of turbulence modeling
+[13–18]. Tracey et al. [13] used machine learning algorithms to
+improve RANS models and obtain error bounds in a turbulent
+combustion and nonequilibrium boundary layer simulations.
+Tracey et al. [14] and Duraisamy et al. [15] applied machine
+learning algorithms to generate functional forms of turbulence
+models. Ling and Templeton [16] evaluated different machine
+learning algorithms applied to the problem of predicting regions
+where RANS simulations yield uncertain results. Ling et al.
+[17,18] predicted the Reynolds stress anisotropy in a jet in crossflow geometry using machine learning and also solved for the
+RANS velocity field using such anisotropy. Although the research
+mentioned is still in an early phase, all the authors concluded that
+machine learning seems a promising technique to inform turbulence modeling.
+In this paper, a supervised learning algorithm is applied in an
+attempt to improve the RANS results of the scalar transport equation, particularly in film cooling geometries. The objective is to
+predict an improved at field that can be used with Eq. (1). A total
+of three data sets are used, in which both RANS and high-fidelity
+simulations are available. The high-fidelity data are used to calibrate the machine learning model and to assess the model performance. Section 2 describes these data sets. Section 3 explains
+the machine learning approach. Section 4 presents the results of
+this study, both in terms of diffusivity and in terms of the scalar
+field. Finally, Sec. 5 contains the conclusions and next steps for
+this research.
+
+The RANS simulation of this configuration was performed by
+Coletti et al. [3] using the software FLUENT. The first cell above the
+wall was located at yþ < 1 and they confirmed grid-independent
+convergence. More information can be found in Ref. [3].
+
+2.3 Wall-Mounted Cube in Crossflow. Figure 3 shows a
+schematic of the wall-mounted cube in crossflow. A cube of side
+H is attached to the wall and acts as an obstacle for the incoming
+flow. The Reynolds number based on H and the freestream velocity is ReH ¼ 5000. The no-slip boundary condition for the velocity field is imposed at the wall and cube surface, and a passive
+scalar is released from a circular source centered on the top face
+of the cube. A direct numerical simulation (DNS) and a RANS
+simulation of this geometry were performed by Rossi et al. [21].
+Their DNS was validated against experimental data: the mean and
+root-mean-squared of velocity were compared to hot-wire anemometer data, and the scalar concentration was compared to gas
+chromatograph data, and they found good agreement. More information about the configuration and the simulations can be found
+in Ref. [21].
+
+3
+
+Fig. 3 Schematic of the cube geometry with contours of h as
+calculated by the DNS at the center spanwise plane
+
+These are called the training data. In the present work, the parameter that the algorithm tries to predict is the turbulent diffusivity at
+each cell in the computational domain and the features are RANS
+variables at that cell.
+3.1 Features. The features used to predict a cell’s turbulent
+diffusivity are exclusively local flow quantities that are calculated
+in a k  e RANS simulation. This is because the objective of the
+present approach is to improve RANS predictions in configurations for which high-fidelity data are not available. The features
+chosen are quantities upon which the turbulent diffusivity might
+depend: the RANS mean velocity gradient (ru), the RANS mean
+scalar gradient as calculated by the fixed Prt ¼ 0:85 model (rh),
+the distance to the nearest wall (d), and the eddy viscosity calculated by the k  e model ( t). Note that if the fixed Prt model were
+sufficient, the only RANS variable upon which at would depend is
+ t. By adding other RANS variables, the algorithm is given more
+information about the local velocity and concentration fields and
+then “learns” how to use it.
+The specific features mentioned in the previous paragraph were
+chosen as a generalization of existing higher order models (such as
+the generalized gradient diffusion hypothesis and higher order generalized gradient diffusion hypothesis), since these calculate the turbulent scalar flux based on the entries of ru and rh. The distance
+to the wall d was added because it is expected that the presence of a
+surface can significantly affect the turbulent transport in ways that
+might not be captured by the mean gradients. The random forest
+(RF) algorithm used in this work and described in Sec. 3.3 has been
+shown to be robust to uninformative features [16,22]. This means
+that if some of the chosen features are not important in predicting
+the outcome, the performance is not significantly impacted. In the
+present paper, no in-depth investigation was performed to determine the effect of using different feature sets. Such investigation
+could be an interesting topic for future work.
+The raw RANS variables mentioned before need to be processed before they are used in the machine learning framework to
+ensure the model is dimensionally consistent and produces a Galilean invariant turbulent diffusivity. To guarantee the former, the
+features are nondimensionalized by the following local scales: ru
+is divided by ðk=eÞ, as suggested
+pﬃﬃby
+ﬃ Pope [23], rh is divided by
+ðk3=2 =eÞ, d is divided by ð= kÞ, which creates a turbulence
+Reynolds number, and  t is divided by . k and e are the kinetic
+energy and dissipation values predicted by the RANS equations,
+and  is the fluid’s kinematic viscosity. The resulting turbulent
+diffusivity at is nondimensionalized by the global scale UD, where
+U and D are the relevant velocity and length scales of the problem. Other possible nondimensional forms were tried, but the
+ones reported yielded the best overall results.
+
+Machine Learning Approach
+
+The proposed framework for RANS modeling consists of using
+a supervised learning algorithm to infer the turbulent diffusivity
+field at. Supervised learning is a subset of machine learning algorithms in which the objective is to predict the value of a parameter
+given some information about the problem (the features). The
+model has to be calibrated with examples in which the correct values for both the target parameter and the features are known.
+Journal of Turbomachinery
+
+Table 2 Features used to train the model
+trðS2 Þ
+2
+
+trðS3 Þ
+2
+
+trðR SRS Þ
+T
+
+w RSw
+wT R2 SRw
+
+T
+
+trðR2 Þ
+T
+
+w w
+
+w Sw
+
+T
+
+T
+
+2
+
+w RS w
+wT RS2 R2 w
+
+2
+
+w SRS w
+d
+
+trðR2 SÞ
+
+trðR2 S2 Þ
+
+T 2
+
+wT R 2 w
+
+w S w
+T
+
+2
+
+w R Sw
+t
+
+wT R2 S2 w
+
+FEBRUARY 2018, Vol. 140 / 021006-3
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+2.2 Skewed Inclined Jet in Crossflow. A schematic of this
+configuration can be found in Fig. 2(a). The skewed jet in crossflow geometry is very similar to the baseline case described in
+Sec. 2.1, except that the circular cooling hole is inclined 30 deg
+both with respect to the y-direction and the x-direction. The channel is also wider in the spanwise direction (8.62D  17.3D). The
+skew creates a qualitatively distinct mean velocity field: while the
+baseline case contains a counter-rotating vortex pair downstream
+of injection, the secondary flow in the skewed case is dominated
+by a single vortex [4,20]. The Reynolds number based on the
+main flow bulk velocity and hole diameter is ReD ¼ 5800 and the
+blowing ratio is BR ¼ 1. The skewed hole is fed from a plenum
+and contains a prescribed scalar concentration, and the walls are
+adiabatic.
+The LES of this geometry was performed by Folkersma [20]. It
+was a nominally compressible simulation, but since the Mach
+number was low (approximately 0.2), the density variations were
+negligible. It also used the CharLESx solver and a posteriori
+results showed that subgrid scale contribution to the turbulent
+transport was negligible. Their results were also extensively validated against MRI data. In a near injection region (X=D < 7 and
+h > 0:05), the absolute error between the LES and the experimentally measured mean scalar was less than 10% in over 81% of the
+volume. In the same region, the mean streamwise velocity field
+agreement was within 10% of U in over 92% of the volume. More
+details can be found in Ref. [20].
+The RANS simulation of this geometry was performed in the
+scope of the present paper using the software FLUENT. The simulation domain spanned 60D in the streamwise direction, divided
+evenly before and after the injection point, to minimize the influence of inlet and outlet boundary conditions. At the channel inlet,
+a turbulent velocity profile was picked to best match the LES
+velocity from Ref. [20]. A slip condition was applied at the top
+wall, and no-slip was applied at all the other walls. A similar
+mesh to the one used in the baseline RANS was used in this simulation, and it can be seen in Fig. 2(b). The results were considered
+converged when the continuity residuals were below 2.5  102
+and the other residuals were below 106.
+
+3.2 Extracting the LES Turbulent Diffusivity. To calibrate
+the model, training data in which the turbulent diffusivity is
+known are needed. High-fidelity, time-resolved simulations are
+used for this purpose. From the mean concentration gradient and
+turbulent transport term, which are directly available in a DNS or
+LES, the turbulent diffusivity can be inferred by assuming that the
+GDH of Eq. (1) holds, according to the following equation:
+@h
+@xi
+¼
+@h @h
+@xj @xj
+u0i h0
+
+at;LES
+
+(2)
+
+where at;LES is the turbulent diffusivity inferred from the highfidelity simulation (either DNS or LES) and the terms on the
+right-hand side are the statistics calculated from the high-fidelity
+simulation at that cell. Equation (2) assumes that there is an isotropic turbulent diffusivity that relates the mean gradient and the
+turbulent transport. This assumption is not necessarily valid and
+would still cause model form error. However, Ling et al. [12]
+showed that using at;LES in a RANS simulation dramatically
+increased the accuracy of the results. So, at;LES as calculated by
+Eq. (2) is considered to be the correct value that is used to train
+the machine learning model.
+3.3 Algorithm. There are several supervised learning algorithms that can be applied to the problem of predicting a continuous variable such as the turbulent diffusivity. These include
+support vector regressors, decision trees, and neural networks.
+Bishop [26] provides a good introduction on the subject. Ling and
+Templeton [16] tested different algorithms applied to turbulence
+modeling and concluded that RF had the “best combination of
+good performance and easy implementation.” Random forests are
+capable of nonlinear decision boundaries and are robust against
+overfitting and against the inclusion of nonimportant features.
+Also, preprocessing to force the data to fall within a specified
+range is not required, as it is for some other algorithms. Finally,
+RFs are relatively inexpensive to train when compared with neural
+
+Fig. 4 Example binary decision tree of height 2. To decide on
+the value of at for any set of features, the rules are followed
+starting from the top until a leaf is reached.
+
+021006-4 / Vol. 140, FEBRUARY 2018
+
+networks [16]. Therefore, to demonstrate the framework proposed
+in the present work, the random forest algorithm is employed.
+Random forests consist of an ensemble of binary decision trees
+[27]. A diagram with an example binary decision tree is shown in
+Fig. 4. It consists of a collection of rules (a feature with an associated threshold) that are used to classify an example. When a prediction is needed for a set of features, the decision tree follows its
+rules starting from the top (the root) until it reaches an endpoint
+(the leaves), where a value is assigned. To construct a binary decision tree from a set of training examples, typically a greedy
+algorithm is used to assign rules that maximize the local information gain sequentially to each node, starting from the root.
+In a random forest, each decision tree is constructed by taking a
+random sample, with replacement, of all the training examples
+(a process called “bagging”). In the training stage, each tree used
+all available features to recursively determine the optimal splitting
+thresholds for the branches based on minimizing the variance
+across child nodes. The overall prediction of the RF is an average
+of the predictions of each individual tree. A single tree can be
+prone to overfitting, but constructing an ensemble is done to minimize this problem while retaining good accuracy. More information on random forests can be found in Ref. [22].
+The main hyperparameter that must be chosen is the number of
+trees in the ensemble, Ntrees. Usually, a larger ensemble of trees
+provides more accuracy and lower variance between realizations.
+However, there are diminishing returns as the size of the forest
+grows. Since the computational cost for training and making predictions scales linearly with Ntrees, there is a trade-off between
+computational cost and accuracy. A convergence study was performed to determine a good number of trees for this particular
+application. For different values of Ntrees, a RF was trained on the
+skewed and cube data sets and used to predict the turbulent diffusivity in the baseline case (see more details in Sec. 4). Since each
+realization of the algorithm is different (because decision trees are
+built with a random subset of the data), this process was repeated
+30 times for each value of Ntrees, and an error metric was calculated according to Eq. (3). Figure 5 shows the mean and standard
+deviation of this metric across the 30 trials. Based on these results,
+a value of Ntrees ¼ 1000 was chosen because it provides high
+accuracy, while the very low standard deviation suggests that different instances will predict very similar outcomes. In the remainder of the paper, Ntrees ¼ 1000 is used.
+
+4
+
+Results
+
+To demonstrate the proposed machine learning approach, the
+skewed and the cube data sets are used for training the RF, which
+in turn is tested on the baseline data set. The machine learning
+routines were coded in Python using the Scikit-learn open source
+library [28]. The high-fidelity data sets and the extracted turbulent
+diffusivity are linearly interpolated onto the respective RANS
+meshes. The features are calculated and the cells of the skewed
+and cube data sets are simultaneously used to calibrate the random
+forest model. Not all points are used: only the cells where the
+two-norm of the dimensionless mean scalar gradient from both
+the DNS/LES and RANS is larger than 105 are used for training
+and testing. This is because in regions of low gradient, Eq. (2)
+could yield near singular results and the GDH would predict negligible scalar transport anyway. Also, two small regions in the LES
+of the skewed case (one close to injection and one near the outlet)
+had poorly converged values of u0i h0 , which caused the extracted
+at;LES to be orders of magnitude higher than what was observed in
+the rest of the flow. These two regions were removed from the
+training set to eliminate the error introduced by these noisy labels.
+Overall, around 250 k cells in the cube case and 400 k cells in the
+skewed case are used for training, and the algorithm is tested on
+around 475 k cells of the baseline case.
+Running on a desktop computer, with one core and 32GB of
+RAM, it took 6.7 h to train a RF with Ntrees ¼ 1000, K ¼ 19
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+Since the output of the machine learning algorithm should be a
+Galilean invariant scalar, Ling et al. [24] suggest that this property
+be enforced by preprocessing the features and extracting an invariant basis. The idea behind this is to add physical meaning to the
+predictions: if the same flow were studied under a different coordinate system, the raw RANS variables would change, but the
+predicted at should not. Therefore, a polynomial basis that is
+invariant to coordinate transformations is extracted from the
+dimensionless velocity gradient tensor and the dimensionless scalar gradient vector as described in Smith [25]. This set of invariant
+scalars is then used together with the dimensionless forms of d
+and  t as the features fed into the supervised learning algorithm,
+for a total of 19 features. If S and R are the symmetric and antisymmetric components of ru, and w is a vector (in this case,
+w ¼ rh), then the features are shown in Table 2. More information on how they are obtained can be found in Ref. [24].
+
+features, and M ¼ 650k training examples. However, this is a
+fixed cost because the model needs to be calibrated just once and
+then it can be applied across different simulations. The prediction
+step is considerably cheaper: predicting the diffusivity in 475 k
+cells, once the algorithm was trained, took around 1 min on the
+same desktop computer. In the current framework, this step needs
+to be performed just once per RANS simulation, so the computational cost of prediction is negligible. Louppe [22] shows that in
+the average case, training a random forest has complexity
+OðNtrees  K  M  log2 MÞ, while testing has a complexity OðNtrees 
+log MÞ per prediction. Here, log indicates a base-2 logarithm, K is
+the number of features, and M is the number of training cells that
+were used to build the forest. These scalings allow one to estimate
+the computational cost of this approach in a different scenario.
+Also, it is important to note that the random forest algorithm is
+embarrassingly parallel, since it consists of an ensemble algorithm.
+4.1 Turbulent Diffusivity Prediction. Figure 6 shows contours of the nondimensionalized turbulent diffusivity in the baseline inclined jet in crossflow test set, including the prediction from
+
+For each turbulent diffusivity field (at;RANS and at;ML ), the error
+can be calculated by Eq. (3). The sum is evaluated for all cells in
+
+Fig. 6 Contours of nondimensional turbulent diffusivity field at /(UD) in the baseline geometry. The figures on the left are a
+spanwise plane at the center of the channel, z/D 5 0. The figures on the right show streamwise planes at x /D 5 2. The plots are
+blanked in regions in which the dimensionless mean scalar gradient calculated by the RANS or by the LES data sets is smaller
+than 1025 . Lines show isocontours of at 5 0: (a) is the field extracted from the LES using Eq. (2); (b) is the RANS diffusivity calculated via a fixed Prt 5 0:85; and (c) is the field that the ML algorithm predicts.
+
+Journal of Turbomachinery
+
+FEBRUARY 2018, Vol. 140 / 021006-5
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 5 Mean and standard deviation of the error in the predicted diffusivity field versus the number of trees in the RF. The
+x-axis is displayed on a log-scale.
+
+the machine learning algorithm after it was trained on the skewed
+and cube cases. In Fig. 6(a), the turbulent diffusivity extracted
+from the baseline LES according to Eq. (2) is shown. This is the
+field that the machine learning algorithm is trying to replicate.
+One interesting feature is that it contains areas where at;LES is negative, which implies that these are regions of counter gradient
+transport. This behavior hints that underlying assumptions of the
+GDH, such as turbulent length scales being smaller than the length
+scales over which the mean temperature changes [29], are not
+valid in those regions.
+Figure 6(b) shows the turbulent diffusivity field that typical
+RANS codes would use, given by at;RANS ¼ ðCl k2 =eÞ=Prt , with
+Cl ¼ 0:09 and Prt ¼ 0:85. Comparing this field to Fig. 6(a) helps
+explain the problems that such codes have in solving for h. It is
+clear that in the region close to injection (especially for x=D < 2)
+and in a layer underneath the jet (y/D around 0.5), the fixed Prt
+model greatly overestimates the turbulent diffusivity, resulting in
+inaccurate scalar fields predictions.
+Figure 6(c) presents the turbulent diffusivity field that was
+calculated by the random forest, at;ML . Note that there are still differences between this field and the one shown in Fig. 6(a). For
+example, the RF fails to predict the regions of negative diffusivity.
+However, it shows significant improvement over the RANS diffusivity field close to injection and around the jet, regions where the
+fixed Prt model was particularly inappropriate.
+For quantitative comparison between the fields in Figs. 6(b) and
+6(c), one can define an integral error metric. A possible choice is
+the sum of the error magnitudes in each cell normalized by the
+sum of the magnitudes of the LES diffusivity, as shown in the following equation:
+P
+jat  at;LES j
+(3)
+errora ¼ P
+jat;LES j
+
+the RANS mesh of the baseline case where the two-norm of the
+dimensionless mean scalar gradient from the LES and RANS is
+larger than 105 . By this metric, the RANS diffusivity has an error
+of 1.21, while the machine learning diffusivity achieves 0.59, an
+improvement of over 50%. The error is still relatively high, but
+since the improvement is concentrated in regions of the flow with
+high gradients, such as near injection and close to the wall, using
+at;ML to solve the scalar equation could conceivably generate significant improvements.
+
+Note that with a known mean velocity field and turbulent diffusivity, Eq. (4) can be directly solved for the dimensionless mean
+temperature field. To test the potential of the machine learning
+approach, Eq. (4) is solved in the baseline geometry using the
+RANS velocity field and each of the three turbulent diffusivity
+fields shown in Fig. 6. The RANS velocity does not exactly match
+the true velocity field from the LES [3]. But, in an arbitrary geometry in which RANS predictions are desired, a high-fidelity velocity field typically would not be available and the RANS velocity
+field might be the only option. Thus, to simulate the predictive
+capabilities in this scenario, the RANS velocity field is chosen.
+The diffusivity fields were marginally preprocessed before being
+used in the equation. The LES and ML diffusivities were made
+non-negative to guarantee convergence and a moderate positive
+value (at =ðUDÞ ¼ 0:01) was assigned for the blanked region of
+Fig. 6 in all three cases. The latter is done because the LES diffusivity field was not extracted and the machine learning algorithm
+was not applied in regions of low mean temperature gradient.
+Note that the value of at in those regions is not important because
+the GDH applied there would predict negligible turbulent transport regardless.
+Equation (4) is solved using an in-house code with a uniform and
+structured mesh. It uses a finite volume method with second-order
+central differencing for the diffusion term and first-order upwinding
+for the convective term. The resolutions in the streamwise and
+spanwise direction are similar to the ones in the RANS simulation
+of Coletti et al. [3] (dx=D ¼ dz=D ¼ 0:1), and the wall-normal
+resolution was picked to match theirs at y=D ¼ 1 (dy=D ¼ 0:05).
+This results in the first cell above the wall being at approximately
+yþ ¼ 10. Despite its simple numerical methods and coarse mesh,
+this solver was picked because of the ease of prescribing a velocity
+and turbulent diffusivity fields. The grid is still sufficient to resolve
+the main features of the mean velocity and temperature, so the
+results are useful to determine whether the machine learning algorithm can improve the temperature predictions.
+The method described earlier is used to solve the RAAD equation and the results are shown in Fig. 7. Figure 7(a) shows the
+LES scalar field from Bodart et al. [19]. This is assumed to be the
+correct mean temperature field and is used to assess the other three
+calculations. Figures 7(b)–7(d) present results of the RAAD equation solved with the three different turbulent diffusivity fields.
+021006-6 / Vol. 140, FEBRUARY 2018
+
+errorh ¼
+
+1X
+jh  h LES j
+N
+
+(5)
+
+where the sum is performed over all cells in a particular region of
+interest, N is the number of cells in that region of interest, and
+h LES is the LES mean temperature in that cell.
+Table 3 shows the error calculated according to Eq. (5) in three
+distinct regions of interest of the baseline geometry, with their
+respective definitions. The errors are not high in absolute terms
+because the cells are uniformly spaced and the regions of interest
+include portions, where h is low, so any reasonable RANS closure
+would get results similar to the LES field. However, the numbers
+on Table 3 can still be assessed relative to each other. As Fig. 7
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+4.2 Forward Propagation. The current machine learning
+framework is designed to predict a turbulent diffusivity field.
+However, the ultimate goal is to improve the predictions of the
+mean temperature field h. Therefore, the best way to assess the
+performance of the RF prediction shown in Fig. 6(c) is to use that
+field in a RANS code and compare its temperature prediction
+against the LES results. This is the forward propagation step.
+Since the passive scalar assumption is used, the continuity and
+momentum equations do not need to be solved again; it is enough
+to take their results as a prescribed mean velocity field to be used
+in the scalar equation. Assuming the mean fields are steady, using
+the GDH of Eq. (1) to close the turbulent transport term, and
+neglecting molecular diffusion produces the Reynolds-averaged
+advection–diffusion (RAAD) equation shown in the following:
+!
+@  
+@
+@h
+ui h ¼
+at
+(4)
+@xi
+@xi
+@xi
+
+Comparing the LES field of Fig. 7(a) with the field calculated
+using at;RANS in Fig. 7(b) demonstrates the difficulties that fixed
+Prt models have in film cooling geometries. In reality, at BR ¼ 1,
+the jet separates after injection and the temperature field stays
+concentrated within it, in a characteristic kidney shape observed
+in the right frame of Fig. 7(a). This causes a low adiabatic effectiveness at around x=D ¼ 2. However, the diffusivity obtained
+from Prt ¼ 0:85 is too high close to injection and between the jet
+and the wall, as observed in Fig. 6(b). This diffuses the temperature toward the wall too quickly, which causes the simulation to
+overestimate the adiabatic effectiveness and fail to predict the kidney shape at x=D ¼ 2.
+Figure 7(c) is the result of using the turbulent diffusivity field
+extracted directly from the high-fidelity LES of the baseline
+geometry. Here, using the wrong turbulent diffusivity field is
+eliminated as a source of error; the discrepancies between Figs.
+7(a) and 7(c) are caused from model form error, from using the
+RANS velocity field, and from numerical discretization. As
+expected, it yields improved results when compared to the field
+solved for using the RANS diffusivity field. The adiabatic effectiveness, for example, is qualitatively closer to the correct one:
+particularly, it captures the jet separation and a region of low
+effectiveness immediately downstream of injection.
+The results of Fig. 7(d) show the temperature field calculated
+from the turbulent diffusivity field inferred by the machine learning
+algorithm, at;ML . It shows remarkable improvement over the RANS
+diffusivity field. The adiabatic effectiveness is considerably more
+accurate, and the separation region at around x=D ¼ 2 is well captured. The kidney shape of the temperature field at x=D ¼ 2 is not
+as clearly resolved as in Fig. 7(a), but it is much closer than what
+was inferred from the Prt ¼ 0:85 calculation. Surprisingly, some of
+the qualitative features mentioned above are better captured in Fig.
+7(d) than in Fig. 7(c). This is probably due to errors in the ML diffusivity field negating part of the other sources of error in the simulation mentioned in the previous paragraph and causing a more
+appropriate temperature field in certain regions.
+The plot of Fig. 8 shows the variation of the spanwise-averaged
+adiabatic effectiveness along the streamwise direction in the baseline case. This consists of the dimensionless temperature field h
+evaluated at the first cell above the wall, then averaged from
+Z=D ¼ 0:75 to Z=D ¼ 0:75. The results obtained from solving
+Eq. (4) with the typical RANS and ML diffusivity fields are compared to the LES results of Bodart et al. [19]. As it was previously
+seen in Fig. 7, solving the RAAD equation with the machine
+learning diffusivity field drastically improves the adiabatic effectiveness prediction over the fixed Prt model used in commercial
+RANS codes. In the ML line, the low scalar concentration at
+around X=D ¼ 2 is captured much better (even though the lowest
+point is shifted downstream and the recovery was overestimated)
+and the behavior at X=D > 10 is also significantly more accurate
+than in the fixed Prt model.
+For quantitative comparison, an integral error metric is defined
+to assess the difference between each field and the LES field. It
+consists of an average of the magnitude of the difference between
+the temperature calculated and the LES temperature at each cell
+and is shown in the equation below
+
+Table 3 Error in h Calculated using distinct at fields
+Region of interest
+
+RANS
+LES
+ML
+
+Total
+x/D: 1 to 19
+y/D: 0 to 1.75
+z/D: 0.75 to 0.75
+
+Injection
+x/D: 1 to 4
+y/D: 0 to 1.75
+z/D: 0.75 to 0.75
+
+Wall
+x/D: 1 to 19
+y/D: 0 to 0.1
+z/D: 0.75 to 0.75
+
+0.0277
+0.0204
+0.0231
+
+0.0470
+0.0314
+0.0339
+
+0.0566
+0.0214
+0.0223
+
+RANS field. Combined with the qualitative improvements seen in
+Fig. 7, this shows that machine learning approaches have potential
+to significantly improve RANS turbulence closures.
+Fig. 8 Spanwise-averaged adiabatic effectiveness in the baseline case
+
+5
+
+suggested, both the LES and ML diffusivities produce improvements over the RANS diffusivity calculated with Prt ¼ 0:85, with
+the LES diffusivity producing higher gains than the ML field as
+expected. In the most critical regions of interest, the improvements are more noticeable and the difference between LES and
+ML diffusivity fields is relatively smaller. In the injection region,
+the ML diffusivity produced almost 30% improvement, while in
+the wall region it produced over 60% improvement over the
+
+A machine learning approach to improve turbulent mixing
+models was proposed, with special interest to film cooling geometries. The method consists of using a closure with a simple form
+for the turbulent heat flux, the gradient diffusion hypothesis, and
+then using a supervised learning algorithm to better determine the
+parameter of this model, the turbulent diffusivity at. This approach
+was demonstrated using three data sets: a baseline jet in crossflow,
+a skewed jet in crossflow, and a wall-mounted cube in crossflow.
+The last two were used to train the machine learning model, while
+
+Journal of Turbomachinery
+
+Conclusion
+
+FEBRUARY 2018, Vol. 140 / 021006-7
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+Fig. 7 Mean dimensionless temperature field in the baseline geometry. The left panels show wall-normal planes at the wall
+(y /D 5 0), which are equivalent to adiabatic effectiveness. The right panels show streamwise planes at x /D 5 2. Contour lines
+are shown at h 5 0:75; 0:5; 0:25. (a) has the LES field from Bodart et al. [19], and (b)–(d) contain the mean scalar field calculated
+using Eq. (4) with different turbulent diffusivity fields.
+
+Acknowledgment
+Pedro M. Milani was supported by a Stanford School of Engineering Fellowship. Julia Ling was supported by the Laboratory
+Directed Research and Development program at Sandia National
+Laboratories, a multi-program laboratory managed and operated
+by Sandia Corporation, a wholly owned subsidiary of Lockheed
+Martin Corporation, for the U.S. Department of Energy’s National
+Nuclear Security Administration under Contract No. DE-AC0494AL85000. SAND2016-11832 C.
+
+Nomenclature
+BR ¼
+d¼
+D¼
+H¼
+k¼
+Prt ¼
+trðÞ ¼
+ui ¼
+U¼
+
+blowing ratio in a jet in crossflow configuration
+distance to the nearest wall
+hole diameter in the jet in crossflow geometries
+cube height in the cube in crossflow geometry
+turbulent kinetic energy
+turbulent Prandtl number t =at
+the trace of a tensor
+ith component of the velocity
+velocity scale (either bulk velocity or freestream
+velocity)
+ ¼ fluid kinematic viscosity
+at ¼ turbulent diffusivity
+at;LES ¼ diffusivity extracted from the high-fidelity simulation
+
+021006-8 / Vol. 140, FEBRUARY 2018
+
+at;ML ¼
+at;RANS ¼
+e¼
+h¼
+t ¼
+
+diffusivity predicted by the machine learning algorithm
+diffusivity predicted by the fixed Prt ¼ 0:85 model
+turbulent dissipation rate
+dimensionless temperature ðT  T1 Þ=ðTcool  T1 Þ
+eddy viscosity calculated by RANS, Cl k2 =e
+
+References
+[1] Bogard, D., and Thole, K., 2006, “Gas Turbine Film Cooling,” J. Propul.
+Power, 22(2), pp. 249–270.
+[2] Hoda, A., and Acharya, S., 2000, “Predictions of a Film Coolant Jet in
+Crossflow With Different Turbulence Models,” ASME J. Turbomach., 122(3),
+pp. 558–569.
+[3] Coletti, F., Benson, M., Ling, J., Elkins, C., and Eaton, J., 2013, “Turbulent
+Transport in an Inclined Jet in Crossflow,” Int. J. Heat Mass Transfer, 43, pp.
+149–160.
+[4] Ryan, K., Bodart, J., Folkersma, M., Elkins, C. J., and Eaton, J. K., 2017,
+“Turbulent Scalar Mixing in a Skewed Jet in Crossflow: Experiments and
+Modeling,” Flow Turbul. Combust., 98(3), pp. 781–801.
+[5] Kays, W., 1994, “Turbulent Prandtl Number—Where Are We?,” ASME J. Heat
+Transfer, 116(2), pp. 284–295.
+[6] He, G., Guo, Y., and Hsu, A., 1999, “The Effect of Schmidt Number on
+Turbulent Scalar Mixing in a Jet-in-Crossflow,” Int. J. Heat Mass Transfer,
+42(20), pp. 3727–3738.
+[7] Lakehal, D., 2002, “Near-Wall Modeling of Turbulent Convective Heat
+Transport in Film Cooling of Turbine Blades With the Aid of Direct Numerical
+Simulation Data,” ASME J. Turbomach., 124(3), pp. 485–498.
+[8] Kohli, A., and Bogard, D., 2005, “Turbulent Transport in Film Cooling Flows,”
+ASME J. Heat Transfer, 127(5), pp. 513–520.
+[9] Liu, C., Zhu, H., and Bai, J., 2008, “Effect of Turbulent Prandtl Number on the
+Computation of Film-Cooling Effectiveness,” Int. J. Heat Mass Transfer,
+51(25–26), pp. 6208–6218.
+[10] Daly, B., and Harlow, F., 1970, “Transport Equations in Turbulence,” Phys.
+Fluids, 13(11), pp. 2634–2649.
+[11] Abe, K., and Suga, K., 2001, “Towards the Development of a ReynoldsAveraged Algebraic Turbulent Scalar-Flux Model,” Int. J. Heat Fluid Flow,
+22(1), pp. 19–29.
+[12] Ling, J., Ryan, K., Bodart, J., and Eaton, J., 2016, “Analysis of Turbulent Scalar
+Flux Models for a Discrete Hole Film Cooling Flow,” ASME J. Turbomach.,
+138(1), p. 011006.
+[13] Tracey, B., Duraisamy, K., and Alonso, J., 2013, “Application of Supervised
+Learning to Quantify Uncertainties in Turbulence and Combustion Modeling,”
+AIAA Paper No. 2013-0259.
+[14] Tracey, B., Duraisamy, K., and Alonso, J., 2015, “A Machine Learning Strategy
+to Assist Turbulence Model Development,” AIAA Paper No. 2015-1287.
+[15] Duraisamy, K., Zhang, Z., and Singh, A., 2015, “New Approaches in
+Turbulence and Transition Modeling Using Data-Driven Techniques,” AIAA
+Paper No. AIAA 2015-1284.
+[16] Ling, J., and Templeton, J., 2015, “Evaluation of Machine Learning Algorithms
+for Prediction of Regions of High Reynolds Averaged Navier Stokes
+Uncertainty,” Phys. Fluids, 27(8), p. 085103.
+[17] Ling, J., Ruiz, A., Lacaze, G., and Oefelein, J., 2016, “Uncertainty Analysis
+and Data-Driven Model Advances for a Jet-in-Crossflow,” ASME J. Turbomach., 139(2), p. 021008.
+[18] Ling, J., Kurzawski, A., and Templeton, J., 2016, “Reynolds Averaged Turbulence Modelling Using Deep Neural Networks With Embedded Invariance,” J.
+Fluid Mech., 807, pp. 155–166.
+[19] Bodart, J., Coletti, F., Bermejo-Moreno, I., and Eaton, J., 2013, High-Fidelity
+Simulation of a Turbulent Inclined Jet in a Crossflow, CTR Annual Research
+Briefs, Center for Turbulence Research, Stanford University, Stanford, CA.
+[20] Folkersma, M., 2015, “Large Eddy Simulation of an Asymmetric Jet in Crossflow,” M.Sc. thesis, Tampere University of Technology, Tampere, Finland.
+[21] Rossi, R., Philips, D., and Iaccarino, G., 2010, “A Numerical Study of Scalar
+Dispersion Downstream of a Wall-Mounted Cube Using Direct Simulations and
+Algebraic Flux Models,” Int. J. Heat Fluid Flow, 31(5), pp. 805–819.
+[22] Louppe, G., 2014, “Understanding Random Forests,” Ph.D. thesis, University
+of Liege, Liege, Belgium.
+[23] Pope, S., 1975, “A More General Effective-Viscosity Hypothesis,” J. Fluid
+Mech., 72, pp. 331–340.
+[24] Ling, J., Jones, R., and Templeton, J., 2016, “Machine Learning Strategies for
+Systems With Invariance Properties,” J. Comput. Phys., 318, pp. 22–35.
+[25] Smith, G., 1965, “On Isotropic Integrity Bases,” Archive Rational Mech. Anal.,
+18(4), pp. 282–292.
+[26] Bishop, C., 2007, Pattern Recognition and Machine Learning, Springer, New
+York.
+[27] Breiman, L., 2001, “Random Forests,” Mach. Learn., 45(1), pp. 5–32.
+[28] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O.,
+Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos,
+A., Cournapeau, D., Brucher, M., Perrot, M., and Duchesnay, E., 2011, “ScikitLearn: Machine Learning in Python,” J. Mach. Learn., 12, pp. 2825–2830.
+[29] Corrsin, S., 1975, “Limitations of Gradient Transport Models in Random Walks
+and in Turbulence,” Adv. Geophys., 18(Pt. A), pp. 25–60.
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​140/​2/​021006/​6408208/​turbo_140_02_021006.​pdf by Cambridge University user on 23 November 2026
+
+the baseline case was used to test it. Calculations of the temperature field using the machine learning diffusivity showed significant qualitative and quantitative improvements over the usual
+Prt ¼ 0:85 closure. In particular, predictions of the temperature at
+the wall (the adiabatic effectiveness) were remarkably better.
+While the typical RANS model was shown to drastically overestimate the centerline effectiveness, the data-driven model generated
+accurate adiabatic effectiveness predictions. These results give
+hope that such data driven models could enable robust film cooling design optimization driven by predictive simulations.
+The proposed framework is general in scope and could also be
+applied to build data-driven closures in other configurations. The
+machine learning model can be trained in a few geometries where
+high-fidelity data for velocity and concentration exist (like the
+three data sets presented in this paper) and then applied to predict
+the turbulent diffusivity in a related geometry. A RANS k  e simulation of a given geometry is needed to produce the features for
+the supervised learning algorithm, which would then output a
+predicted turbulent diffusivity field for that geometry. Finally, a
+second RANS simulation would need to be performed to solve for
+the temperature field, with the constraint that it should use the
+turbulent diffusivity field produced by the machine learning
+algorithm to close the temperature equation.
+Future work includes training and testing this turbulent diffusivity model across a broader set of film cooling flows and even
+other classes of turbulent flows. This poses the question of how
+closely related flows used as training sets need to be to the target
+flow to guarantee improved answers. In the present work, attempts
+were made to train only on the cube and only on the skewed data
+sets and then test on the baseline case; the former produced worse
+results than the Prt ¼ 0:85 closure, while the latter produced temperatures virtually as accurate as the ones presented in Sec. 4.
+This hints that training data sets must indeed contain similar flow
+features as the cases where predictions are sought if good results
+are desired. Also, more complex closures can be used in conjunction with machine learning: the move to an anisotropic diffusivity
+could produce significant improvement. Finally, a careful study to
+understand how the machine learning algorithm utilizes the features to make decisions could reveal important physics underlying
+turbulent mixing, which, in turn, could inspire the development of
+new physics-based models.
+
+

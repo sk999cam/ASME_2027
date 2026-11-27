@@ -1,0 +1,929 @@
+Guillaume Bidan
+e-mail: gbidan3@lsu.edu
+
+Clementine Vézier
+e-mail: clemvezier@gmail.com
+
+Dimitris E. Nikitopoulos
+e-mail: medimi@lsu.edu
+Turbine Innovation and Energy Research
+(TIER) Center
+Mechanical Engineering Department,
+Louisiana State University,
+Baton Rouge, LA 70803
+
+Study of Unforced and
+Modulated Film-Cooling
+Jets Using Proper Orthogonal
+Decomposition—Part I:
+Unforced Jets
+The effects of jet flow-rate modulation were investigated in the case of a 35 deg inclined
+jet in cross-flow over a flat plate using Mie scattering visualizations, time-resolved flow
+rate records, and large eddy simulations (LES). An unforced jet study was conducted
+over a wide range of blowing ratios to provide a baseline for comparison to the pulsed
+results. The two distinct and well known steady jet regimes (attached jet with high film
+cooling performance for BR < 0.4 and detached jet with poor film cooling performance
+for BR > 1.0) were related to the dynamics of characteristic vortical structures,
+significant in the transition from one regime to the other. Similarity of the inclined jet
+results with a past vertical jet study are also put in perspective when comparing wall
+adiabatic effectiveness results. 3D proper orthogonal decomposition (3D-POD) was
+performed on LES results of an unforced case at BR ¼ 0.15 to provide an analysis of
+dominant modes in the velocity and temperature fields. Error calculations on the
+reconstructed fields provided an estimation of the number of modes necessary to obtain
+satisfactory reconstruction while revealing some of the shortcomings associated with
+POD. [DOI: 10.1115/1.4006599]
+
+Introduction
+An overshoot of as little as 2% of blade critical temperature can
+lead to a decrease in the part lifetime of as much as 50%. This
+simple fact makes blade and vane cooling, and in particular film
+cooling, an essential feature of modern gas turbine and jet
+engines. Film cooling systems involve arrays of jets located at the
+surface of the part to be cooled and supplied through internal
+cooling channels by cooler air diverted from the compressor. A
+decrease in the overall amount of air necessary to maintain a
+certain part temperature could result in lower emissions and/or
+higher performance (e.g., see Ref. [1]).
+Multiple attempts at improving film cooling systems have been
+made following different approaches mostly oriented toward jet
+hole geometry optimization. State-of-the-art film cooling systems
+involve complex hole geometries with multiple expansion angles
+and a review of the significant work and advances on shaping of
+film cooling holes can be found in [2,3]. One of the major drawbacks of passive systems is found in their lack of adaptability as
+evidenced in the work of Refs. [4–7] on the effects of cross-flow
+unsteadiness on film cooling jets. These studies showed that bulk
+cross-flow pulsations can have a catastrophic effect on cooling
+performance due to passive jet pulsation, though already detached
+jets can benefit from unsteadiness. Actively controlled film cooling systems using pulsed jets in cross-flow could provide adaptable jet exit conditions while mitigating the detrimental effects of
+cross-flow fluctuations.
+Acoustically excited or fully modulated jets in cross-flow have
+been primarily investigated for mixing enhancement purposes,
+which is detrimental and therefore undesirable for film cooling. In
+Refs. [8,9] modulated jets showed dramatic improvements over
+their unforced state counter-parts in terms of penetration and mixContributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received October 6,
+2011; final manuscript received October 29, 2011; published online November 8,
+2012. Editor: David Wisler.
+
+Journal of Turbomachinery
+
+ing rate and, more interestingly for film cooling purposes, spread.
+However, most of these studies were carried out at blowing ratios
+well beyond the range encountered in most film applications. The
+first heat transfer measurements for forced film cooling jets were
+carried out by Ref. [10] using a shower head model with a single
+cylindrical jet with compound angle and without cross-flow modulation. Their results showed that over the range of considered
+forcing parameters, the forced jets could provide overall higher
+adiabatic effectiveness with matching heat transfer coefficients
+over comparable unforced jets. Shortly after, Refs. [11,12] investigated the effects of full modulation of a row of 5 jets over a flat
+plate on adiabatic effectiveness and heat transfer performance in a
+steady cross-flow and found that almost all of the forced jet configurations provided lower performance over their unforced
+counter-parts. In Ref. [13], using the same setup coupled with a
+spoked wheel wake generator, an attempt at counter-balancing
+large scale cross-flow perturbations lead to the conclusion that
+forced jets did not provide amelioration of the film cooling
+performance.
+In view of these conflicting results, a simplified flow system
+involving a single partly modulated jet in cross-flow over a flat
+plate in laminar cross-flow conditions was studied by Ref. [14],
+focusing on the flow features generated in low blowing ratio
+forced jets and their impact on film cooling performance. An
+increase in coverage was observed for a period of time after the
+jet onset while the effects of cross-flow ingestion at the decrease
+in blowing ratio significantly affected performance.
+The current study carries over the work presented in Ref. [14] to
+a more application-relevant geometry of a 35 deg inclined modulated jet over a flat plate using reactive Mie scattering visualizations
+complemented by large eddy simulations (LES) with inlet conditions based on experimentally acquired time resolved jet flow-rate
+measurements to provide details on the flow and temperature field
+in the near-field of the jet. 3D proper orthogonal decomposition
+(3D-POD) of the velocity and temperature fields is carried out to
+extract statistically relevant information and provide an estimate of
+
+C 2013 by ASME
+Copyright V
+
+MARCH 2013, Vol. 135 / 021037-1
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 1
+
+Experimental setup
+
+the number of modes necessary to reconstruct realistic flow and
+temperature fields for future development of reduced order models.
+This study is presented in two parts, of which the first one deals
+with the baseline results obtained in unforced conditions. In the
+first section the different jet regimes are characterized while in the
+second section, the baseline film cooling results are presented.
+Finally, in the last section, an unforced is analyzed using
+3D-POD. Part II [15] of the study presents the results obtained
+with the forced jets and offers interpretations in the perspective of
+the unforced results when appropriate.
+
+Experimental and Numerical Setup
+The experiments were conducted in an open loop wind tunnel,
+a schematic of which is presented in Fig. 1, with a 3 m long test
+section and a 0.9 m  0.6 m cross section. Optical access was
+available through a pair of transparent acrylic walls constituting
+the top and one of the sidewalls of the test section, respectively,
+allowing visualizations in planes parallel to the bottom wall (X-Y)
+and along the jet symmetry plane (X-Z). The flow in the test
+section was laminar (free stream turbulence intensity < 0.5%),
+with a boundary layer Reynolds number at the jet level of
+Red ¼ U1.d/ ¼ 1,710. In this more fundamental study aimed at
+the observation of the vortical structures generated under pulsed
+conditions, the choice of laminar boundary layer was made in
+order to limit the number of factors affecting the jet behavior.
+The jet exited from a 25.4 mm round tube mounted flush to the
+bottom wall at an angle of 35 deg with respect to the cross-flow
+direction and zero compound angle. The air supply for the jet was
+provided by an industrial compressor, dried, and regulated at
+1.4 bar. An in-house seeding system injected water and titanium
+tetrachloride (TiCl4) vapors at two locations inside the jet pipe to
+generate titanium dioxide (TiO2) particles used as a tracer for Mie
+scattering visualizations in the experiments.
+The tube length to diameter ratio effects have been substantially
+studied by Refs. [16–18], for instance, and reveal that longer feeding tubes lead to better performance than shorter ones by decoupling the blade internal channel flow from the external flow and
+preventing the jetting of the coolant. A threshold has been
+observed in a previous study [18], where performance is constant
+for L/Dj > 7. Therefore, the jet pipe was set to 12Dj to also allow
+for flow development, reduction of perturbations introduced by
+the seeding system, and allow for homogenous seed mixing.
+Laser sheet reactive Mie scattering visualizations, hotwire anemometry, and time resolved flow-rate measurement were the principal methods used during experiments and were handled through
+A/D converters to allow synchronized acquisition and actuation.
+Flow-rate records were acquired at 1 kHz.
+Numerical simulations were carried out in parallel to the
+experiments to provide additional information on the vortical
+structures formed under unforced and forced conditions. FluentTM
+was used to simulate the unsteady, turbulent flow through an
+incompressible large eddy simulation (LES) model directly using
+021037-2 / Vol. 135, MARCH 2013
+
+Fig. 2 LES domain and applied boundary conditions
+
+a dynamic Smagorinsky sub-grid scale model. Figure 2 shows the
+simulated domain and boundary conditions consisting of a rectangular box representing a part of the wind tunnel test section used
+in the experiments and part of the jet feeding tube.
+The computational domain was 18Dj long (x-direction), 8Dj
+wide (y-direction), and 6Dj tall (z-direction), respectively, discretized into 160  100  90 hexahedral cells, while the pipe feeding
+the jet was taken 8Dj long, discretized by 2000 nodes in the crosssection, and 120 nodes in the axial direction. Overall the mesh
+used was structured and counted 1.6  106 s cells. The jet exit center was located 6Dj downstream from the domain inlet. The first
+cells in contact with the walls were approximately 0.02Dj tall,
+yielding average yþ values of order of one thus reaching the viscous sub-layer and allowing direct solving of the wall shear stress
+from laminar stress-strain relationship, without using wall functions. Velocity characteristics and boundary layer profiles for the
+inlet of the computational domain were obtained from hotwire
+measurements performed in the wind tunnel as summarized in
+Table 1. The numerical solver used was pressure based with second order accuracy in time and space. The time steps used ranged
+from 5  105 s at BR ¼ 1.2-5  104 s at BR ¼ 0.15 in order to
+be under the minimum Kolmogorov time scale in the domain.
+Several thousands of iterations were necessary to obtain statistically relevant data accounting for more than 50h of computation
+for each case on high performance computing platforms under the
+Louisiana Optical Network Initiative (LONI) at Louisiana State
+University (IBM Power5 þ at 1.9 GHz), using an average of 24
+processors per run. At the inlet of the jet pipe, uniform velocity
+profile was set to equal the volumetric flow rate of the experiment.
+The jet and cross flow fluids were maintained at constant temperature of, respectively, 300 and 330 K, not affecting the velocity
+field.
+A series of constant temperature anemometry measurements
+were performed at blowing ratios of BR ¼ 0.150 and BR ¼ 1.0, at
+four different streamwise locations (Xj ¼ 0, 2, 5, 9) and are presented in Fig. 3 along with extracted corresponding simulation
+results. Overall the LES results compare reasonably well with the
+experimental measurements at all streamwise locations and for
+both blowing ratio cases with the exception of the measurement at
+BR ¼ 1.0 and Xj ¼ 2 where the LES results somewhat under predict the velocity. These results, along with the qualitatively good
+agreement between experimental and numerical visualizations
+shown in the next sections provide good confidence in the LES
+results obtained for the purposes of this study.
+
+Table 1
+
+Inlet boundary layer characteristics at Xj 5 2 6, Yj 5 0
+
+U1
+
+d/Dj
+
+d*/Dj
+
+h/Dj
+
+H
+
+1.6 m.s 1
+
+0.630
+
+0.172
+
+0.077
+
+2.23
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 3 Experimental (symbols) and LES (solid line) time averaged streamwise velocity profiles at (a) BR 5 0.150, (b) BR 5 1.0
+at Xj 5 0, 2, 5, and 9
+
+Fig. 4 Experimental Mie scattering visualizations in the plane
+Yj 5 0 at (a) BR 5 0.15; (b) BR 5 0.4; (c) BR 5 0.75; (d) BR 5 1.1
+
+Results and Discussion
+In steady state experiments the jet was studied using reactive
+and fully reacted Mie scattering visualizations. Selected cases at
+BR ¼ 0.15, 0.3, 0.4, 0.75, 1.0, and 1.2 were simulated using LES.
+Jet Regimes. In the same way as the vertical jet in cross-flow
+described in Ref. [14], several unforced jet regimes were
+observed. At low blowing ratios under 0.4 the jet was fully
+attached to the wall while at blowing ratios above 1.0, the jet was
+completely detached. At intermediate blowing ratios, the jet
+exhibited vortical structures from both types of regimes.
+The attached jet is the most relevant configuration to film cooling and shows strong similarities with the vertical jet configuration. The dominant shear layer vortical structures consist of
+interlocked hairpin vortices observed in the experimental sideviews of Fig. 4(a) as well as the LES results of Fig. 7 (below) at
+BR ¼ 0.15. These vortices are developing as the result of a
+Helmholtz-type instability in the jet shear layers and have been
+observed in previous studies such as Ref. [19]. In the experimental
+case at BR ¼ 0.15, the instability seems to develop faster in the
+upper shear layer which is where the initial rollup occurs first.
+Eventually both upper and lower shear layers merge a few diameters downstream of the jet exit and the hairpin vortex is fully
+formed.
+As the blowing ratio is increased, a coupling between upper
+and lower shear layers fluctuations occurs so that eventually at
+BR ¼ 0.4, both shear layers exhibit distinct rollups, each corresponding to a hairpin vortex, merging as they are convected
+downstream as evidenced in Fig. 4(b). As seen in Fig. 5 and
+Fig. 7, the shear layer vortical structures have a strong influence
+on the wall temperature field as they carry most of the coolant
+fluid from the jet while generating a velocity field responsible for
+entraining cross-flow fluid into the wall region. The dynamics of
+the hairpin vortices are comparable to those observed for the vertical jet and are dictated by cross-flow convection as well as
+mutual, self, and mirrored induction with respect to the bottom
+wall. While the convection caries the structures downstream, the
+mutual induction of one leg onto the other creates a positive vertical velocity component entraining the hairpin legs away from the
+wall. In the meantime, the induction from the mirrored image of
+the legs with respect to the bottom wall generates a spanwise
+motion toward the symmetry plane (Yj ¼ 0) pushing the legs toward each other and consequently reinforcing the induced upward
+motion as the distance between the vortex cores is decreased.
+Journal of Turbomachinery
+
+Fig. 5 Laplacian of the pressure iso-surfaces at BR 5 0.300
+from LES and instantaneous wall temperature
+
+Similarly, the mirrored induction on the head of the hairpin vortices as well as the self-induction of the curved vortex line result in
+a backward/upward motion for the hairpin head. As a result of
+those combined inductions, the hairpin vortices and the coolant
+are carried away from the wall within a few jet diameters downstream of the jet exit thus breaking the film coverage and entraining cross-flow fluid near the wall. As the blowing ratio is
+increased, the hairpin vortices legs gain in strength and tend to
+detach earlier from the wall and entraining more cross-flow fluid
+near the bottom surface. This is observed in the reactive Mie scattering visualizations of Fig. 6, where at BR ¼ 0.15 (Fig. 6(a)) the
+legs of the hairpin vortices lift-off between Xj ¼ 3 and Xj ¼ 4,
+whereas at BR ¼ 0.75 (Fig. 6(b)) the legs are completely detached
+beyond Xj ¼ 1. As the legs detach, a significant amount of reacted
+seed can be observed underneath the jet core, resulting from the
+mixing of jet seeded fluid and moist cross-flow fluid; thus entrainment. Figures 7(a)–7(d) show the impact of the hairpin vortices
+lift-off and consequent cross-flow entrainment on the adiabatic
+wall temperature.
+Directly downstream of the jet exit in Fig. 4(a), as well as
+Fig. 6(a), a region of reacted seed evidences the characteristic
+recirculation region encountered in the attached jet configuration.
+This region, principally supplied by jet fluid, is also observed in
+the LES results and corresponds in Figs. 7(a) and 7(c) to an area
+of lower temperatures encompassed by the hairpin vortices legs.
+Upstream of the jet exit, the horseshoe vortex appears to be absent
+from the side visualizations of Fig. 4(a) at the lowest blowing
+ratios, as well as from the LES results of Fig. 7(a), although a pair
+MARCH 2013, Vol. 135 / 021037-3
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 6 Experimental Mie scattering visualizations on a plane inclined at 230 deg with respect to the Y-Z plane for
+(a) BR 5 0.15; (b) BR 5 0.75
+
+of streamwise vortices coherent with the horseshoe vortex develops on the sides of the jet without connecting upstream in the
+usual horseshoe U-shape. These streamwise vortices are also identifiable in the experimental visualizations of Fig. 6(a) on each side
+of the jet as they carry reacted particles. The absence of a full
+horseshoe vortex was already documented in previous studies,
+such as [19] and [20] in cases where the cross-flow blockage due
+to the presence of the jet was weak, which is clearly the case here
+at such low blowing ratios and with an inclined jet. Yet the presence of the jet forces a cross-flow deflection and generates a spanwise velocity gradient in the vertical direction at the origins of the
+side vortices near the jet exit. In Fig. 5 the streamlines show that
+jet fluid exits very close to the wall and on the sides of the jet and
+provides significant wall coverage as seen in the temperature
+contours of Figs. 7(a) and 7(c). As the blowing ratio increases, so
+does the jet blockage, so that at BR ¼ 0.4 in Fig. 4(b) (tail-less
+arrow) and 7(c), a complete horseshoe rollup is formed ahead of
+the jet and carries jet fluid. Further downstream, longitudinal
+streamwise vortices develop on each side of the hairpin vortices
+which combined with the previously mentioned side vortices
+appear as a set of X patterned structures laying near the bottom
+wall. These were also observed in the vertical jet configuration of
+Ref. [14] and were dominant in the far field. One of the main differences between the two configurations is the absence of flow
+
+separation and stable upper shear layer rollup inside the jet pipe of
+the inclined jet. The interaction between the inner vortex and the
+horseshoe vortex in the 90 deg injection configuration was responsible for significant coolant entrainment in the upstream region of
+the jet exit, not observed in the current 35 deg configuration.
+As the blowing ratio is increased beyond BR ¼ 0.4, rollups with
+negative spanwise vorticity start to form in the upper shear layer
+as seen in the experiments in Fig. 4(c), as well as in the LES
+results of Fig. 7(f) for BR ¼ 0.75. Overall, downstream of the jet
+exit, rollups with positive spanwise vorticity still develop in the
+upper shear layer; thus the dominant vortical structures remain as
+hairpin vortices. However, as mentioned earlier, the increased
+vorticity in the legs and initial vertical momentum at the jet exit
+triggers significant lift-off, directly impacting the film cooling
+coverage as seen in Fig. 7(e). Organized motion taking the form
+of two counter-rotating vortices underneath the jet core appear to
+develop as the large rollups of Fig. 6(b) suggest. At BR ¼ 0.75,
+where the fluctuation levels are significantly higher than the lower
+blowing ratio cases, multiple scales of shear layer structures
+develop at the jet/cross-flow interface as seen in Fig. 6(b) where
+smaller kidney/anti-kidney vortices develop along with the larger
+scale counter-rotating pair. Such multiplicity of the shear layer
+structures have been previously documented by Ref. [21], for
+instance. It should be noted that the side vortices observed at
+
+Fig. 7 Laplacian of the pressure iso-surfaces from LES colored with spanwise vorticity
+contours (black: negative, white: positive) at (a),(b) BR 5 0.15; (c),(d) BR 5 0.4; (e),(f)
+BR 5 0.75; (g),(h) BR 5 1.2 and instantaneous temperature contours in the planes Zj 5 0
+(left) and Yj 5 0 (right)
+
+021037-4 / Vol. 135, MARCH 2013
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 8 Wall adiabatic effectiveness contours from LES at (a) BR 5 0.15; (b) BR 5 0.3; (c)
+BR 5 0.4; (d) BR 5 0.75; (e) BR 5 1.0; (f) BR 5 1.2
+
+lower blowing ratios are still present at BR ¼ 0.75 as seen in
+Fig. 7(e) with apparently stronger coherence.
+For BR  1, the jet exhibits the principal jet in cross-flow structures extensively documented at high BR values for the vertical
+jet (see Refs. [22,23]). Rollups of negative spanwise vorticity are
+consistently formed in the upper shear layer as evidenced in
+Figs. 4(d) and 7(g), as well as tornado-like wake vortices located
+below the jet core carrying jet fluid since they are seeded by particles. A complete, yet rather short, horseshoe vortex is observed
+in the LES results of Fig. 7(g), although not in the experimental
+visualizations due to the absence of seed, indicating that the horseshoe vortex does not entrain jet fluid.
+Film Cooling Performance. Quantitative information was
+extracted from the numerical simulations to provide a performance benchmark to the forced results and was also compared to
+the vertical jet results. Figure 8 presents time-averaged wall adiabatic effectiveness for the inclined jet. At BR ¼ 0.15 (Fig. 8(a)),
+the area of high adiabatic effectiveness directly downstream of the
+jet exit corresponds to the recirculation region enclosed by the
+legs of the successive hairpin vortices. As mentioned previously,
+significant cooling is brought to the wall by jet fluid exiting on the
+sides of the jet, which will further downstream generate the side
+vortices. As the blowing ratio is increased, the side-vortices
+become more coherent and tend to lift off the wall closer to the jet
+exit evidenced by the pair of traces along the jet core. From
+BR ¼ 0.15 to BR ¼ 0.4 a relative increase in spread is observed
+for Xj  7 due to the beneficial effect of the side vortices and their
+favorable velocity field. As the jet enters the transition regime
+(0.4 < BR  0.9), the wall coverage downstream of the hole is
+degraded though more homogeneous, and becomes marginal in
+the detached configurations where the jet wake is the only region
+showing a decrease in temperature.
+Figure 9 presents downstream spanwise averaged adiabatic
+effectiveness as well as centerline adiabatic effectiveness and
+comparable results from the vertical jet. In Fig. 9(a), directly
+downstream of the jet exit (Xj < 6), the case at BR ¼ 0.15 performs better due to the presence of the steady recirculation region
+fed by jet fluid. However, further downstream (Xj > 6) the case at
+BR ¼ 0.3 provides increased adiabatic effectiveness due to the
+increased coolant flow rate and spread over the case BR ¼ 0.15.
+As the blowing ratio increases beyond 0.3, the spanwise averaged
+performance of the inclined jet decreases continuously. The centerline results for the inclined jet in Fig. 9(b) show similar trends.
+The local decrease in gcenterline observed for BR  0.3 directly
+downstream of the jet exit is due to early lift-off of the shear layer
+vortices, allowing cross-flow penetration in the vicinity of the jet
+exit. For BR  0.3, the inclined jet shows greater spanwise averaged as well as centerline adiabatic effectiveness compared to the
+Journal of Turbomachinery
+
+Fig. 9 (a) Spanwise averaged adiabatic effectiveness and (b)
+centerline adiabatic effectiveness from LES for the inclined jet
+(solid line, filled symbols) and the vertical jet (open symbols)
+
+vertical jet. However, the inclined jet performance is degraded
+beyond BR ¼ 0.3 which was not the case for the vertical jet the
+performance which continued to increase up to BR ¼ 0.415. Thus
+at BR ¼ 0.4 the vertical jet exhibits greater gspan values than the
+inclined configuration. At higher blowing ratios (BR  0.75), the
+inclined jet performs better than the vertical jet as it is well known
+to do. The gcenterline trends show that the inclined jet always provides greater centerline effectiveness over the vertical jet. This
+indicates that the overall better performance of the vertical jet at
+BR ¼ 0.4 comes mainly from a greater spanwise spread of the
+coverage (see Ref. [14]).
+Figure 10 presents area-averaged adiabatic effectiveness and
+coverage coefficient (wall area over which the adiabatic effectiveness is at a value above a set threshold normalized by jet exit
+area) for both inclined and vertical jets, giving a single figure
+global performance index at every blowing ratio. The garea trend
+of Fig. 10(a) for the inclined jet exhibits a constant decrease in
+performance past BR ¼ 0.3 with a slight improvement from
+BR ¼ 0.15 to BR ¼ 0.3. This result is consistent with the previous
+observations on gspan. According to Fig. 8(a), the improvement
+from BR ¼ 0.15 to BR ¼ 0.3 corresponds to an increase in g values beyond Xj ¼ 5. A local maximum is expected to exist between
+BR ¼ 0.15 and BR ¼ 0.3 which is rather low for an inclined jet
+configuration and is explained by the use of laminar cross-flow
+conditions. The comparison with the vertical jet results shows that
+MARCH 2013, Vol. 135 / 021037-5
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+better performance than the vertical one, and is not taken into
+account in the results of Fig. 10. Also, it was explained in Ref.
+[14] that the sudden decrease in performance in the 90 deg injection configuration was attributed to a destabilization of the inner
+vortex formed inside the jet tube, extremely sensitive to both
+cross-flow and jet inlet conditions. Hence, it is expected that outside the laminar cross-flow boundary layer conditions used in this
+study, the transition could happen significantly sooner in the vertical jet while not affecting the inclined jet as much leading to a better performance of the latter.
+
+Fig. 10 (a) Area averaged adiabatic effectiveness for the
+inclined jet (solid line) and the vertical jet (dashed line) and (b)
+coverage coefficient for thresholds g 5 0.1, 0.2, 0.3, 0.5
+
+the expected performance degradation as the blowing ratio
+increases is less abrupt in the inclined configuration than in the
+vertical setup. Interestingly, the vertical jet performs better at
+BR ¼ 0.415 with an area averaged adiabatic effectiveness of 0.225
+within the considered field of view ( 1.2 < Xj < 12). The coverage coefficient trends in Fig. 10(b) confirm the above mentioned
+results with a consistent decrease in performance from BR ¼ 0.3
+for the inclined jet. The comparison with the vertical jet shows
+that the inclined jet provides more coverage at high effectiveness
+(g  0.5) than the vertical one. The vertical jet though provides
+significantly greater coverage at lower effectiveness levels (almost
+double in some cases), a sign of a greater spread at higher injection angle. Higher spread and performance in the neighborhood of
+the jet exit (Xj < 12) for high injection angles were previously
+reported in studies such as Ref. [24].
+The overall greater performance of the vertical jet in this study
+should be put in perspective with respect to the two considerations. First, the domain of the current study was limited to the
+near field (Xj < 12), which in Ref. [24] is approximately the
+streamwise location beyond which the inclined jet starts to have
+
+POD Analysis. POD has been recently used in fluid dynamics
+to provide a statistical modal decomposition of a flow field, maximizing the kinetic energy contained in each mode while providing
+an orthogonal basis conserving general properties, such as
+divergence-free for incompressible flows. Hence POD has become
+one of the preferred methods to provide a simplified decomposition of flow the dynamics through the most energetic modes in
+order to analyze dynamically complex and unstable flow configurations, such as open cavity flows as in Ref. [25], supersonic jets
+in Ref. [26], and also transverse jets in Refs. [27–29] in view of
+providing low order models for flow control. In the current study,
+the 3D flow field and temperature field from LES at BR ¼ 0.15
+were analyzed using the POD snapshot algorithm method first
+described in Ref. [30]. A set of 200 statistically independent flow
+fields and temperature fields with a spatial density of 10 points per
+jet diameter were used. It was found that at the considered low
+turbulence levels, 300 snapshots and 20 vectors per jet diameters
+lead to sensitively identical results with yet considerably longer
+computation times. The analyzed sub-domain was such that
+f 1  Xj  12,  2  Yj  2, 0 < Zj  2g yielding 106j600
+spatial points at the lowest resolution.
+Figures 11(a)–11(c), 12(a), and 13(a) show slices of the first
+four velocity POD modes (including the mean flow field) as well
+as the corresponding Q-criterion (second invariant of the velocity
+divergence tensor) isosurfaces. The time averaged flow field
+exhibits the classical features of inclined jet in cross-flow and
+compares qualitatively well with previously reported results [31].
+In particular the presence of a pair of counter-rotating vortices
+(CRVP) is visible in the Xj ¼ 6 and 10.6 slices (solid arrows) as
+well as in the Zj ¼ 0.25 slice with upward motion around the
+Yj ¼ 0 line surrounded by two lines of downward motion at
+Yj ¼ 6 0.5. The CRVP is generated through the downstream convection of the shear layer hairpin vortices legs. In addition, at
+
+Fig. 11 Mean flow (0th POD mode) and first three velocity POD modes at BR 5 0.15 (a)-(c) mode 0; (d)-(f) mode 1; (g)-(i)
+mode 2; (j)-(l) mode 3. Slices at Xj 5 6 (left), Xj 5 10.6 (center) with U velocity contours and V-W streamlines. Q-criterion
+iso-surfaces (right) computed from the corresponding POD modes colored by U velocity and mean wall temperature
+contours (gray scale).
+
+021037-6 / Vol. 135, MARCH 2013
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 12 Mean flow and first three velocity POD modes at
+BR 5 0.15 (a) mode 0; (b) mode 1; (c) mode 2; (d) mode 3. Slices
+at Yj 5 0 with V velocity contours and U-W streamlines.
+
+Xj ¼ 10.6 a secondary pair of counter-rotating streamwise vortices
+(hollow arrows) of opposite vorticity is formed near the wall on
+each side of the jet, corresponding to the side vortices observed in
+Fig. 7. The side vortices are observed in Fig. 11(c) for Xj > 9 and
+are materialized in the average flow field by vortex tubes along
+the jet core as well as in Fig. 13(a) through the formation of
+another ”stripe” of positive vertical motion at Yj ¼ 6 0.9. The
+side vortices have a positive impact on the temperature field at the
+wall in Fig. 7 as the lateral spread increases marginally beyond
+Xj ¼ 9. The mutual induction between CRVP and side vortices
+also generates a downward velocity component opposite to the
+one generated by the interaction between left and right CRVPs
+thus delaying the lift-off of the jet core from the bottom wall.
+The remaining POD modes provide an orthogonal decomposition of the fluctuation part of the velocity. According to
+Fig. 14(a), the first two POD modes virtually capture the same
+amount of energy while being also very similar in shape when
+comparing Figs. 11(f) and 11(i), Figs. 12(b) and 12(c), as well as
+Figs. 13(b) and 13(c) with a ”phase shift” in the streamwise direction. Both modes exhibit alternating changes in the sign of the
+velocity components in the downstream direction. Hence, the
+cumulative effects of modes 1 and 2 alternating positive and negative velocity regions combined with the phase shifted variations in
+Vel
+the signs of aVel
+1 and a2 in Fig. 14(b), generates a downstream
+motion. This result is typical of flows dominated by the convection of vortical structures as explained in Refs. [28,32]. In the
+present case, this behavior is associated with the convection of the
+shear layer hairpin vortices which are the principal structures
+observed in the attached jet configuration, supported by the fact
+that Figs. 11(f) and 11(i) show Q-criterion iso-surfaces very similar to the one of hairpin vortices observed in Figs. 5 and 7(a). The
+velocity vector field associated with the first two POD modes also
+exhibited in Figs. 13(b) and 13(c) focus points corresponding to
+the hairpins legs. It is also observed that the first modes that are
+strong are rather far away from the jet exit but not particularly significant near the jet exit. This is explained by the fact that proper
+orthogonal decomposition ”sorts” the modes with respect to the
+amount of kinetic energy they contain, thus sorting the scales of
+the structures as well, such that the most energetic modes (first
+modes) will usually represent the largest structures. The third
+mode presented in Figs. 11(k)–11(m), 12(d), and 13(d) exhibits
+similarities to the first two modes with alternating positive and
+negative vertical velocity in the plane Zj ¼ 0.25, though the pattern appears less regular. In the plane Yj ¼ 0 of Fig. 12(d), the
+streamlines clearly show the formation of rollups in the jet upper
+shear layer. A strong negative streamwise velocity region is
+located near the symmetry plane (Yj ¼ 0) between the hairpin legs
+which is visible in the plane Xj ¼ 10.6 as well. While streamwise
+Journal of Turbomachinery
+
+Fig. 13 Mean flow and first three velocity POD modes at
+BR 5 0.15 (a) mode 0; (b) mode 1; (c) mode 2; (d) mode 3. Slices
+at Zj 5 0.25 with W velocity contours and U-V streamlines.
+
+vorticity from the fluctuations of the CRVP and side vortices is
+captured in the first two modes, no significant x-vorticity appears
+to be contained in the third mode at Xj ¼ 6 or 10.6. Although
+according to Fig. 14(a) several other modes appear to carry a significant amount of energy, they will not be presented in the
+current document for the sake of brevity. However, it should be
+noted that the fourth mode closely resembles the third one yet
+with a ”phase shift” in the same way the first and second modes
+were related. The additional modes (N  5) describe principally
+the dynamics of the near-wall region, particularly the side vortices
+and their interaction with the hairpin vortices.
+The temperature field was analyzed as well using POD.
+Although the norm used in the standard proper orthogonal decomposition does not maximize the thermal energy, this method has
+been used in previous work to provide a set of orthonormal functions that can be used to obtain a reduced order model of the temperature field [33,34]. However, it can be argued that the
+decomposition may not be as ”optimal” as the one obtained for
+the velocity field in terms of energy since its associated norm is
+not related to any measure of the internal energy, but only the
+“energy” of the temperature signal.
+The 0th mode (average temperature field) is presented in
+Figs. 15(a)–15(c), 16(a), and 17(a). The temperature field at the
+wall (Fig. 17(a)) is consistent with the one presented in Fig. 8(a).
+The contours in Figs. 15(a) and 15(b) show the averaged impact
+of the CRVP and the side-vortices on the temperature field. While
+the CRVP entrains hot cross-flow fluid near the wall, the sidevortices tend to increase the spread by carrying jet fluid away
+from the jet core as the two lumps of cooler fluid at Yj ¼ 6 1 suggest. In Fig. 14(a), the two first modes carry equivalent
+”temperature signal energy” while Figs. 15(f) and 15(i) show that
+both modes, related to the hairpin shear layer vortices according
+to the shape of their iso-surfaces, are overall identical with a phase
+shift in the streamwise direction. Based on these considerations
+and given the distribution of the phase diagram in Fig. 14(c)
+and aTemp
+, it appears clearly
+showing alternating signs for aTemp
+1
+2
+that the first two modes describe the convective effect of the hairpin vortices on the temperature field. Near the wall at Zj  0
+(Figs. 17(b) and 17(c)), the two modes exhibit similar shifted patterns yet a noticeable difference exists near Xj ¼ 10 with the
+presence in the second mode of a pair of patches with a negative
+value (dark) on each side of the jet (around Yj ¼ 6 1) whose
+counterpart is not clearly found in the first mode. A comparable
+MARCH 2013, Vol. 135 / 021037-7
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 14 POD decomposition metrics for BR 5 0.15 (a) POD modes eigenvalues and cumulative temperature and velocity energies; (b) first two velocity POD coefficients a1Vel and
+a2Vel ; (c) first two temperature POD coefficients a1Temp and a2Temp
+
+discrepancy between the two first modes is found in the same
+plane around Xj ¼ 8, where in mode 1 a pair of patches of rather
+high positive values (white) near Yj ¼ 6 1 are present, yet no
+equivalent counterpart is found in mode 2. These differences can
+be attributed to ”quasi-stationary” events occurring near the wall
+where the velocity is low and the convective effects are not as
+strong. Thus, while the positive patches in mode 1 appear to correspond to the effect of the hairpin vortices on the pinching of the
+jet coverage observed in the mean temperature field and attributed
+to cross-flow entrainment from the legs of the structures, the negative patches in mode 2 are likely to be associated with the spreading of the jet coverage due to the effects of the side vortices. For
+the sake of brevity, the third and fourth modes are not presented
+here as they appeared very similar to the two first modes and were
+as well associated with the convective effects of the hairpin shear
+layer vortices although at smaller length scales.
+The fifth mode, however associated with a lower eigenvalue
+(Fig. 14(a)), captures a different behavior as shown in
+Figs. 15(k)–15(m), Fig. 16(d), and Fig. 17(d). At Xj ¼ 6 and
+Xj ¼ 10.6, mode 5 exhibits two continuous zones in the streamwise direction with positive and negative values. This mode
+
+appears to capture a different type of mixing since conversely to
+mode 1 and 2 the spatial distribution of the mode is not alternating
+signs in the downstream direction and no other POD mode was
+found to assume a similar distribution. These observations suggest
+mode 5 is associated with the mixing behavior induced by the
+CRVP rather than the downstream convective effect of the hairpin
+vortices. Hence, the stacking of an area with negative values on
+top of one with positive values can be interpreted by the CRVP
+bringing cooler fluid to the upper part of the domain while entraining hotter fluid near the wall and toward the symmetry plane.
+Near the wall in Fig. 17(d), a large area of negative values is
+visible around Xj ¼ 8, Yj ¼ 6 0.5 where the jet coverage starts to
+degrade due to cross-flow entrainment. A similar distribution was
+found near the wall in mode 4 although the rest of the distribution
+was more consistent with mode 3. From these observations, it can
+be argued that the temperature POD modes are more correlated
+than the velocity modes and part of the information associated
+with specific phenomena can be captured across several modes.
+Figure 14(a) provides an estimation of the total amount of
+kinetic and ”temperature signal” energies captured by the POD
+modes as well as the cumulative energy captured by the Nth first
+
+Fig. 15 Mean temperature field (0th POD mode) and first significant temperature POD modes at BR = 0.15 (a)-(c) mode 0;
+(d)-(f) mode 1; (g)-(i) mode 2; (j),(k) mode 5. Slices Xj = 6 (left), Xj = 10.6 (center) with temperature contours. Iso-temperature
+surfaces (right) computed from corresponding POD modes and mean wall temperature contours (gray scale).
+
+021037-8 / Vol. 135, MARCH 2013
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 18 Reconstructed velocity field for multiple values of Nr.
+Stream traces correspond to in-plane velocity, contours to
+streamwise velocity.
+Fig. 16 Mean temperature field and first significant temperature POD modes at BR 5 0.15 (a) mode 0; (b) mode 1; (c) mode
+2; (d) mode 5. Slices Yj 5 0 with temperature contours.
+
+Fig. 19 Reconstructed temperature field for multiple values of
+Nr
+
+Fig. 17 Mean temperature field and first significant temperature POD modes at BR 5 0.15 (a) mode 0; (b) mode 1; (c) mode
+2; (d) mode 5. Slices Zj 5 0 with temperature contours.
+
+modes. According to the latter, 61 velocity POD modes and 53
+temperature POD modes are required to gather at least 90% of the
+total energy while modes beyond, respectively, N ¼ 17 and N ¼ 15
+carry less than 1% of the total energy.
+In Fig. 18 an instantaneous velocity field was reconstructed
+from truncated POD series to assess the number of modes necessary to rebuild the dominant flow features. In the plane Yj ¼ 0, the
+first reconstruction using only two modes does not render the formation of the individual hairpin vortex present in the original
+snapshot at Xj ¼ 10.6. This is due to the absence of information
+carried by higher order modes with respect to the hairpin vortices
+as seen in Fig. 11(l); thus justifying the lack of accuracy of the
+reconstructed field. The individual hairpin vortex is observed for
+Nr  8. In the near field of the jet (Xj < 6) the reconstruction
+appears relatively close to the original field with as few modes as
+8, due to the low fluctuation levels and limited length scales of the
+structures in this region. In the plane Xj ¼ 6 however, the features
+of the original flow such as the two counter rotating vortices
+located at Zj ¼ 0.3, Yj ¼ 6 1 are only consistently reconstructed
+for Nr  20. Similarly in the plane Xj ¼ 10.6, the location and
+Journal of Turbomachinery
+
+scale of the multiple structures present in the original snapshot are
+only captured in reconstructions including 20 modes or more.
+Overall, although closer from the actual snapshot, the reconstruction using 60 modes does not appear to constitute a significant
+improvement over the one with 20 modes in terms of the dominant features.
+Figure 19 shows reconstructed and original temperature fields
+corresponding to Fig. 18. Overall in the plane Yj ¼ 0, the reconstructed temperature field appears to render individual structures
+beyond Nr ¼ 8, with a relatively satisfying definition for Nr  20.
+Similarly, in the planes Xj ¼ 6 and Xj ¼ 10.6, the reconstructed
+fields show very little differences.
+Beyond the qualitative examination of the reconstructed fields,
+time averaged error distributions with respect to the original field
+were also calculated to assess the quantitative accuracy obtained
+with a given number of POD modes. For the velocity field, the
+error is in the local kinetic energy. This choice has the advantage
+of combining all three velocity components into a single figure of
+merit, in addition to being directly related to the norm used for the
+orthogonal decomposition. However, as the 0th mode corresponds
+to the time averaged velocity field, not carrying any intrinsic error,
+it appears more adequate to monitor the error on the turbulent
+kinetic energy (TKE) rather than the total kinetic energy. The
+errors distributions on the turbulent kinetic energy are presented
+in Fig. 20. In the plane Yj ¼ 0, two zones can be identified.
+Beyond Xj ¼ 6 the error decreases significantly to be almost zero
+for Nr ¼ 60. However, for Xj < 6, the error, although decreasing,
+stays significant in the jet shear layers even with as many as
+100 POD modes. It should also be noted that the extent of this
+zone of relatively high error decreases with an increasing number
+of POD modes included in the decomposition. This can be
+explained by the nature of the proper orthogonal decomposition
+and the norm associated with it imposing a hierarchy of the modes
+based on the amount of kinetic energy they capture so that the first
+MARCH 2013, Vol. 135 / 021037-9
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 20 Average TKE error of the reconstructed fields for
+various values of Nr. Max. contour value 1 (white).
+
+principal vortical structures as well as their impact on the wall
+temperature field. In agreement with previous work, it was
+observed that coverage and adiabatic effectiveness performance
+of the inclined jet in laminar boundary layer cross-flow conditions
+was comparable to that of the vertical jet, within the limited domain considered, although greater spread for the former resulted
+in overall better performance.
+3D proper orthogonal decomposition of both velocity and temperature fields was carried out on a steady state case at BR ¼ 0.15.
+The most energetic velocity POD modes were found to be associated with the convection of the shear layer vortices encountered at
+this blowing ratio while higher order modes accounted for their
+interaction with side vortices located near the wall. The temperature analysis led to a more convoluted decomposition due to the
+nonoptimality of the norm associated with standard POD. The
+reconstruction of both fields has shown that satisfactory results
+can be obtained by including a total of 20 POD modes. However,
+due to the nature of the proper orthogonal decomposition, the relative error in the vicinity of the jet exit remains high and could
+potentially affect the behavior of a reduced order model based on
+a truncated series.
+In Part II of the current study [15], forced jets will be analyzed
+in a similar way to the unforced ones and compared to the baseline
+results presented in Part I.
+
+Acknowledgment
+Fig. 21 Average temperature error of the reconstructed field at
+various Nr values. Max. contour value: 7 3 102 3 (white)
+
+modes will capture the large scale structures of the domain. In the
+current study, the principal instability responsible for the formation of the shear layer hairpin vortices is of the convective type
+and exhibits multiple length scales as it develops in the downstream direction to reach maximum intensity in the far-field. The
+POD modes thus capture first the downstream motion carrying the
+largest amount of energy and then progressively capture the lower
+shear layer fluctuations by going in a reverse direction to the
+development of the instability thus justifying the relatively poor
+quality of the reconstruction in the near field of the jet. This constitutes one of the limitations of the standard POD which may
+lead to dynamical inaccuracy when trying to implement a reduced
+order model of the flow as pointed out by Ref. [35].
+Since no perturbation on the temperature field was imposed at
+the inlets of the domain and by nature the energy equation is free
+of an explicit nonlinear term in T capable of producing or sustaining fluctuations, a large part of the domain in the true temperature
+fluctuation is extremely low, even null, and thus induced
+extremely high errors on the fluctuation value when monitoring
+the reconstructed temperature field. Based on these considerations, it was decided to monitor the absolute relative error on the
+total temperature field rather than the fluctuation part, reported in
+Fig. 21. The error on the temperature field decreases consistently
+with increasing number of POD modes included in the reconstruction. Most of the error is concentrated beyond Xj ¼ 5 where most
+of mixing and temperature fluctuations occur. It should be noted
+that similar to the turbulent kinetic energy, the error in the shear
+layer of the near-field, appears to decrease at a slower rate than in
+the far-field. Overall with Nr ¼ 20, the maximum error was found
+to be inferior to 2%, decreasing to less than 1% with Nr ¼ 60.
+
+Conclusion
+Part I of this study focused on the behavior of unforced inclined
+jets in cross-flow as a baseline for forced jets. In unforced conditions, it was observed that the inclined jet behaved similarly to the
+vertical configuration with different jet regimes associated with
+distinct vortical structures. Special attention was brought to the
+attached configuration, more relevant to film cooling, and the
+021037-10 / Vol. 135, MARCH 2013
+
+The authors would like to thank the Air Force Office of
+Scientific Research for supporting this work under Grant Nos.
+FA9550–06–1–0335 and FA9550–08–1–0440, the Louisiana
+Board of Regents for supporting an instrumentation enhancement
+through Grant No. LEQSF(2006–07)-ENH-TR-14, as well as the
+Louisiana Optical Network Initiative (LONI).
+
+Nomenclature
+Dj ¼
+L¼
+Xj , Y j , Z j ¼
+U, V, W ¼
+d¼
+d* ¼
+h¼
+H¼
+T¼
+BR ¼
+g¼
+Nr ¼
+Cc ¼
+
+jet diameter (mm)
+jet pipe length (mm)
+normalized coordinates x/Dj, y/Dj, z/Dj
+velocities along x, y, and z axes, respectively, (ms1)
+99% boundary layer thickness (mm)
+boundary layer displacement thickness (mm)
+boundary layer momentum thickness (mm)
+boundary layer shape factor
+temperature (K)
+blowing ratio
+adiabatic effectiveness (Twall - T1)/(Tj - T1)
+number of modes used in POD reconstruction
+ ÐÐ
+coverage coefficient Cc ðgx Þ ¼ 1 Aj ggx dAwall
+
+Subscripts
+j¼
+1¼
+span ¼
+area ¼
+
+jet
+free stream
+spanwise averaged quantity
+area averaged quantity
+
+References
+[1] Nikitopoulos, D. E., Oertling, J., Acharya, S., and Muldoon, F., 2006, “On
+Active Control of Film-Cooling Flows,” ASME Turbo Expo, Barcelona, Spain,
+pp. 61–69.
+[2] Han, J.-C., and Ekkad, S., 2001, “Recent Development in Turbine Blade Film
+Cooling,” Int. J. Rotating Mach., 7(1), pp. 21–40.
+[3] Bunker, R. S., 2005, “A Review of Shaped Hole Turbine Film-Cooling Technology,” J. Heat Transfer, 127(4), pp. 441–453.
+[4] Bell, C. M., Ligrani, P. M., Hull, W. A., and Norton, C. M., 1999, “Film Cooling Subject to Bulk Flow Pulsations: Effects of Blowing Ratio, Freestream
+Velocity, and Pulsation Frequency,” Int. J. Heat Mass Transfer, 42(23),
+pp. 4333–4344.
+[5] Ligrani, P. M., Gong, R., Cuthrell, J. M., and Lee, J. S., 1996, “Bulk Flow Pulsations and Film Cooling–Ii. Flow Structure and Film Effectiveness,” Int. J.
+Heat Mass Transfer, 39(11), pp. 2283–2292.
+
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+[6] Ligrani, P. M., Gong, R., Cuthrell, J. M., and Lee, J. S., 1996, “Bulk Flow Pulsations and Film Cooling–I. Injectant Behavior,” Int. J. Heat Mass Transfer,
+39(11), pp. 2271–2282.
+[7] Womack, K. M., Volino, R. J., and Schultz, M. P., 2008, “Measurements in
+Film Cooling Flows with Periodic Wakes,” J. Turbomach., 130(4), pp.
+041008–13.
+[8] Narayanan, S., Barooah, P., and Cohen, J. M., 2003, “Dynamics and Control of
+an Isolated Jet in Crossflow,” AIAA J., 41(12), pp. 2316–2320.
+[9] M’closkey, R. T., King, J. M., Cortelezzi, L., and Karagozian, A. R., 2002,
+“The Actively Controlled Jet in Crossflow,” J. Fluid Mech., 452, pp. 325–335.
+[10] Ekkad, S., Ou, S., and Rivir, R. B., 2006, “Effect of Jet Pulsation and Duty
+Cycle on Film Cooling from a Single Jet on a Leading Edge Model,” J. Turbomach., 128, pp. 564–571.
+[11] Coulthard, S. M., Volino, R. J., and Flack, K. A., 2007, “Effect of Jet Pulsing
+on Film Cooling-Part I: Effectiveness and Flow-Field Temperature Results,” J.
+Turbomach., 129(2), pp. 232–246.
+[12] Coulthard, S. M., Volino, R. J., and Flack, K. A., 2007, “Effect of Jet Pulsing
+on Film Cooling-Part Ii: Heat Transfer Results,” J. Turbomach., 129(2), pp.
+247–257.
+[13] Womack, K. M., Volino, R. J., and Schultz, M. P., 2008, “Combined Effects of
+Wakes and Jet Pulsing on Film Cooling,” J. Turbomach., 130(4), pp.
+041010–12.
+[14] Bidan, G., and Nikitopoulos, D. E., 2011, “Fundamental Study of Modulated
+Transverse Jets from a Film-Cooling Perspective,” AIAA J., 49(7), pp.
+1498–1510.
+[15] Bidan, G., Vezier, C., and Niktopoulos, D. E., 2011, “Study of Steady and
+Modulated Inclined Film Cooling Jets Using Proper Orthogonal Decomposition
+– Part Ii: Forced Jets,” ASME Turbo Expo, Vancouver, Canada.
+[16] Burd, S. W., Kaszeta, R. W., and Simon, T. W., 1998, “Measurements in Film
+Cooling Flows: Hole L/D and Turbulence Intensity Effects,” J. Turbomach.,
+120(4), pp. 791–798.
+[17] Goldstein, R. J., Eckert, E. R. G., and Burggraf, F., 1974, “Effects of Hole Geometry and Density on Three-Dimensional Film Cooling,” Int. J. Heat Mass
+Transfer, 17(5), pp. 595–607.
+[18] Lutum, E., and Johnson, B. V., 1999, “Influence of the Hole Length-to-Diameter Ratio on Film Cooling with Cylindrical Holes,” J. Turbomach., 121(2), pp.
+209–216.
+[19] Acharya, S., and Tyagi, M., 2003, “Large Eddy Simulation of Film Cooling
+Flow from an Inclined Cylindrical Jet,” ASME Conference Proceedings,
+2003(36886), pp. 517–526.
+[20] Guo, X., Schröder, W., and Meinke, M., 2006, “Large-Eddy Simulations of
+Film Cooling Flows,” Comput. Fluids, 35(6), pp. 587–606.
+
+Journal of Turbomachinery
+
+[21] New, T. H., Lim, T. T., and Luo, S. C., 2003, “Elliptic Jets in Cross-Flow,” J.
+Fluid Mech., 494(1), pp. 119–140.
+[22] Fric, T. F., and Roshko, A., 1994, “Vortical Structure in the Wake of a Transverse Jet,” J. Fluid Mech., 279, pp. 1–47.
+[23] Kelso, R. M., Lim, T. T., and Perry, A. E., 1996, “An Experimental Study of
+Round Jets in Cross-Flow,” J. Fluid Mech., 306, pp. 111–144.
+[24] Yuen, C. H. N., and Martinez-Botas, R. F., 2003, “Film Cooling Characteristics
+of a Single Round Hole at Various Streamwise Angles in a Crossflow: Part I
+Effectiveness,” Int. J. Heat Mass Transf., 46(2), pp. 221–235.
+[25] Rowley, C. W., Colonius, T., and Murray, R. M., 2004, “Model Reduction for
+Compressible Flows Using Pod and Galerkin Projection,” Physica D, 189(1–2),
+pp. 115–129.
+[26] Moreno, D., Krothapalli, A., Alkislar, M. B., and Lourenco, L. M., 2004, “LowDimensional Model of a Supersonic Rectangular Jet,” Phys. Rev. E, 69(2),
+p. 026304.
+
+[27] Cavar, D., Meyer, K. E., Jakirlić, S., and Sarić,
+S., 2010, “LES Based Pod Analysis of Jet in Cross Flow, Direct and Large-Eddy Simulation Vii,” V. Armenio,
+et al., 7th International ERCOFTAC Workshop on Direct and Large-Eddy Simulation, University of Trieste, Italy, Vol. 13, pp. 253–259.
+[28] Meyer, K. E., Pedersen, J. M., and Özcan, O., 2007, “A Turbulent Jet in Crossflow Analysed with Proper Orthogonal Decomposition,” J. Fluid Mech., 583(1),
+pp. 199–227.
+[29] Vernet, R., Thomas, L., and David, L., 2009, “Analysis and Reconstruction of a
+Pulsed Jet in Crossflow by Multi-Plane Snapshot Pod,” Exp. Fluids, 47(4), pp.
+707–720.
+[30] Sirovich, L., 1987, “Turbulence and the Dynamics of Coherent Structures.
+Part I: Coherent Structures.,” Q. Appl. Math., 45(3), pp. 561–671.
+[31] Bernsdorf, S., Rose, M. G., and Abhari, R. S., 2006, “Modeling of Film Cooling—Part I: Experimental Study of Flow Structure,” J. Turbomach., 128(1), pp.
+141–149.
+[32] Gunes, H., and Rist, U., 2007, “Spatial Resolution Enhancement/Smoothing of
+Stereo–Particle-Image-Velocimetry
+Data
+Using
+Proper-OrthogonalDecomposition–Based and Kriging Interpolation Methods,” Phys. Fluids, 19(6),
+pp. 064101–19.
+[33] Gunes, H., 2002, “Low-Dimensional Modeling of Non-Isothermal Twin-Jet
+Flow,” Int. Commun. Heat Mass Transfer, 29(1), pp. 77–86.
+[34] Liakopoulos, A., Blythe, P. A., and Gunes, H., 1997, “A Reduced Dynamical
+Model of Convective Flows in Tall Laterally Heated Cavities,” Proceedings:
+Mathematical, Physical and Engineering Sciences, 453(1958), pp. 663–672.
+[35] Ilak, M., and Rowley, C. W., 2008, “Modeling of Transitional Channel Flow
+Using Balanced Proper Orthogonal Decomposition,” Phys. Fluids, 20(3), pp.
+034103–17.
+
+MARCH 2013, Vol. 135 / 021037-11
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/29/2016 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

@@ -1,0 +1,1375 @@
+High-Fidelity CFD Verification Workshop 2024: Spalart-Allmaras QCR2000-R Turbulence Model
+Boris Diskin1 and Yi Liu2
+National Institute of Aerospace, Hampton, Virginia 23666, USA
+Marshall C. Galbraith3
+Massachusetts Institute of Technology, Massachusetts 03130, USA
+This is an invited paper for the SciTech 2023 special session, High-Fidelity CFD
+Verification Preworkshop. The paper presents three test cases for verification of
+Reynolds-averaged Navier-Stokes solvers. The verification studies focus on a oneequation Spalart-Allmaras model, SA-neg-QCR2000-R. The test cases are a twodimensional subsonic flow around a Joukowski airfoil, a subsonic threedimensional flow around an extruded NACA 0012 wing in a tunnel, and a subsonic
+flow around a wing-body configuration developed by Boeing for verification of
+solvers participating in the High-Lift Prediction Workshop. The turbulence-model
+formulation, geometry, flow conditions, grids, and the desired outcome are
+described in detail. Solutions for the test cases computed by established codes are
+shown.
+I. Introduction
+A High-Fidelity Computational Fluid Dynamics Verification Workshop (HFCFDVW) is planned at the
+American Institute of Aeronautics and Astronautics (AIAA) SciTech Forum in 2024 to verify
+computational fluid dynamics (CFD) approaches to simulation of steady and unsteady turbulent flows.
+HFCFDVW is a successor to a series of workshops and special sessions that have been supported by AIAA
+for a number of years. These preceding activities include the High-Fidelity CFD Workshop [1], conducted
+at the AIAA SciTech Forum in 2022, a series of AIAA special sessions and international workshops on
+high-order methods (see, e.g., Refs. [2, 3]), and a series of AIAA special sessions and publications on
+Reynolds-averaged Navier-Stokes (RANS) solver technology [4, 5]. This year, a special session is
+organized at the AIAA SciTech 2023 Forum to lay the groundwork for the HFCFDVW. This special session
+introduces test suites for assessing the performance of CFD methods through comparison of simulations
+conducted by different codes using well-defined verification metrics. Four test suites have been identified
+for assessment of wall-modeled large-eddy simulations, mesh motion, simulations of shock-dominated
+flows, and RANS simulations of separating flows. The special session is expected to facilitate formation of
+working groups to collaborate during the next year on establishing best verification practices for the test
+suites. At HFCFDVW, each group will report on the verification studies and present findings and
+recommendations.
+This paper presents three test cases suggested by the HFCFDVW organizing committee for verification
+of RANS solvers. This verification campaign focuses on the one-equation Spalart-Allmaras (SA) model [6]
+that uses quadratic constitutive relation (QCR) [7] and a simple rotation correction proposed in Refs. [8, 9].
+The negative variant [10] of the SA model is recommended due to its superior numerical behavior. The
+model is referred as SA-neg-QCR2000-R according to the naming convention of the NASA turbulencemodeling resource (TMR) website [11]. The QCR is needed for SA-based RANS simulations of corner
+flows because normal stress differences induce flowfield behavior that cannot be captured with linear eddyviscosity models that make use of the Boussinesq assumption. The rotation correction designated as –R is
+1
+
+Senior Research Fellow, Associate Fellow AIAA
+Associate Principal Research Engineer, Senior Member AIAA
+3
+Research Engineer, Department of Aeronautics & Astronautics, Senior Member AIAA
+2
+
+1
+
+a specific modification that intends to mitigate generation of spurious eddy viscosity within a mature vortex.
+In preparation for this paper and HFCFDVW, a small group of researchers that included the authors of the
+SA model, the authors of the paper, and some other researchers, discussed clarifications on implementation
+of the –R correction in the positive and negative variants of the SA model. The results of these discussions
+have been reflected on the TMR website and are summarized in the paper.
+The three test cases include a two-dimensional (2D) flow around a Joukowski airfoil, a threedimensional (3D) internal flow around an extruded NACA 0012 wing in a tunnel, and a 3D flow around a
+simplified wing-body high-lift common research model (CRM-HL-WB) developed by Boeing for
+verification of CFD solvers applied to high-lift aerodynamics research. In this paper, solutions for each case
+are computed using well established RANS solvers to provide example computations for workshop
+participants. Families of consistently refined unstructured grids have been generated for each case and will
+be available to the community through the HFCFDVW website [12]. To minimize grid effects on solver
+verification, it is recommended to conduct simulations on the grids provided by the workshop. Iterative
+convergence to low (ideally, machine-zero) levels of residuals is expected on all grids.
+The material in the paper is presented in the following order. The RANS equations and the SA-negQCR2000-R turbulence model are described in detail in Section II. Section III briefly introduces solvers
+used for computing test-case solutions. Sections IV, V, and VI describe the three test cases and the
+corresponding solutions. Concluding remarks are given in Section VII.
+II. Reynolds-Averaged Navier-Stokes Equations
+The three-dimensional compressible unsteady RANS equations are given in Ref. [13].
+𝜕𝑡 𝑸 + 𝜕𝑥 𝑭 + 𝜕𝑦 𝑮 + 𝜕𝑧 𝑯 = 𝟎
+
+(1)
+
+The vectors 𝑭, 𝑮, and 𝑯 are defined in Eq. 2.
+𝜌𝑢
+𝜌𝑢𝑢 + 𝑝 − 𝜏𝑥𝑥
+𝜌𝑢𝑣 − 𝜏𝑥𝑦
+𝑭=
+𝜌𝑢𝑤 − 𝜏𝑥𝑧
+(𝐸
+( + 𝑝)𝑢 − (𝑢𝜏𝑥𝑥 + 𝑣𝜏𝑥𝑦 + 𝑤𝜏𝑥𝑧 ) + 𝑞𝑥 )
+𝜌𝑣
+𝜌𝑢𝑣 − 𝜏𝑥𝑦
+𝜌𝑣𝑣 + 𝑝 − 𝜏𝑦𝑦
+𝑮=
+𝜌𝑣𝑤 − 𝜏𝑦𝑧
+
+(2)
+
+((𝐸 + 𝑝)𝑣 − (𝑢𝜏𝑥𝑦 + 𝑣𝜏𝑦𝑦 + 𝑤𝜏𝑦𝑧 ) + 𝑞𝑦 )
+𝜌𝑤
+𝜌𝑢𝑤 − 𝜏𝑥𝑧
+𝜌𝑣𝑤 − 𝜏𝑦𝑧
+𝑯=
+𝜌𝑤𝑤 + 𝑝 − 𝜏𝑧𝑧
+((𝐸 + 𝑝)𝑤 − (𝑢𝜏𝑥𝑧 + 𝑣𝜏𝑦𝑧 + 𝑤𝜏𝑧𝑧 ) + 𝑞𝑧 )
+T
+
+Here, 𝑝 is the static pressure, 𝒖 = (𝑢, 𝑣, 𝑤 )T is the velocity vector, 𝒒 = (𝑞𝑥 , 𝑞𝑦 , 𝑞𝑧 ) is the local heat flux
+vector, and 𝑸 ≡ (𝜌, 𝜌𝑢, 𝜌𝑣, 𝜌𝑤, 𝐸)T is the vector of conserved variables that includes the density 𝜌, the
+momentum 𝜌𝒖 = (𝜌𝑢, 𝜌𝑣, 𝜌𝑤 )T , and the total energy per unit volume 𝐸. The superscript T denotes
+transposition to indicate column vectors. The vector of primitive variables is (𝜌, 𝑢, 𝑣, 𝑤, 𝑝)T . For a perfect
+gas, equations are closed using the relations defined in Eq. 3.
+𝜌
+𝑝
+𝑝 = (𝛾 − 1) (𝐸 − (𝑢2 + 𝑣 2 + 𝑤 2 )) ,
+𝑇 = 𝑎2 = 𝛾
+(3)
+2
+𝜌
+Here, T is the local temperature, 𝑎 is the speed of sound, and 𝛾 = 1.4 is the ratio of specific heats.
+
+2
+
+The viscous fluxes in the RANS equations refer to the diffusion terms including the shear stress tensor
+and the heat flux vector as defined in Eq. 4.
+2
+𝜏𝑥𝑥 = (𝜇 + 𝜇𝑡 )(2𝜕𝑥 𝑢 − 𝜕𝑦 𝑣 − 𝜕𝑧 𝑤)
+3
+2
+𝜏𝑦𝑦 = (𝜇 + 𝜇𝑡 )(2𝜕𝑦 𝑣 − 𝜕𝑥 𝑢 − 𝜕𝑧 𝑤)
+3
+2
+𝜏𝑧𝑧 = (𝜇 + 𝜇𝑡 )(2𝜕𝑧 𝑤 − 𝜕𝑥 𝑢 − 𝜕𝑦 𝑣)
+3
+𝜏𝑦𝑥 = 𝜏𝑥𝑦 = (𝜇 + 𝜇𝑡 )(𝜕𝑥 𝑣 + 𝜕𝑦 𝑢)
+𝜏𝑧𝑥 = 𝜏𝑥𝑧 = (𝜇 + 𝜇𝑡 )(𝜕𝑥 𝑤 + 𝜕𝑧 𝑢)
+(4)
+𝜏𝑧𝑦 = 𝜏𝑦𝑧 = (𝜇 + 𝜇𝑡 )(𝜕𝑧 𝑣 + 𝜕𝑦 𝑤)
+1
+𝜇
+𝜇𝑡
+𝑞𝑥 =
+( +
+)𝜕 𝑇
+(𝛾 − 1) 𝑃𝑟 𝑃𝑟𝑡 𝑥
+1
+𝜇
+𝜇𝑡
+𝑞𝑦 =
+( +
+)𝜕 𝑇
+(𝛾 − 1) 𝑃𝑟 𝑃𝑟𝑡 𝑦
+1
+𝜇
+𝜇𝑡
+𝑞𝑧 =
+( +
+)𝜕 𝑇
+(𝛾 − 1) 𝑃𝑟 𝑃𝑟𝑡 𝑧
+Here, 𝜇 is the dynamic laminar viscosity computed by Sutherland’s law [14], 𝜇𝑡 is the turbulent eddy
+viscosity computed by a turbulence model, and 𝑃𝑟 = 0.72 and 𝑃𝑟𝑡 = 0.9 are the Prandtl numbers for the
+meanflow and turbulence models, respectively. In Sutherland's law, the local dynamic viscosity, 𝜇, relates
+to the local temperature, 𝑇, through Eq. 5.
+3
+
+𝑇 2 𝑇𝑟𝑒𝑓 + 𝑆 ∗
+𝜇 = 𝜇𝑟𝑒𝑓 (
+) (
+)
+𝑇𝑟𝑒𝑓
+𝑇 + 𝑆∗
+
+(5)
+
+Here, 𝑆 ∗ = 198.6 °R and the reference viscosity, 𝜇𝑟𝑒𝑓 , is assumed at the reference temperature 𝑇𝑟𝑒𝑓 .
+Following the formulation presented at the TMR website [11], the standard Spalart-Allmaras (SA)
+turbulence model [6] is given by Eq. 6.
+𝜕𝑡 𝜈̂ + 𝒖 ∙ 𝛁𝜈̂ − 𝑐𝑏1 (1 − 𝑓𝑡2 )𝑆̂𝜈̂ + [𝑐𝑤1 𝑓𝑤 −
+
+𝑐𝑏1
+𝜈̂ 2 1
+𝑓
+(
+) − [𝛁 ∙ ((𝜈 + 𝜈̂ )𝛁𝜈̂ ) + 𝑐𝑏2 (𝛁𝜈̂ ∙ 𝛁𝜈̂ )] = 0 (6)
+]
+𝜅 2 𝑡2 𝑑
+𝜎
+
+T
+
+Here, 𝛁 ≡ (𝜕𝑥 , 𝜕𝑦 , 𝜕𝑧 ) denotes a formal vector of spatial derivatives. The boundary conditions are defined
+in Eq. 7.
+𝜈̂ 𝑤𝑎𝑙𝑙 = 0,
+𝜈̂𝑓𝑎𝑟𝑓𝑖𝑒𝑙𝑑 = 3𝜈𝑟𝑒𝑓
+(7)
+Here, 𝜈̂ is the turbulence variable, 𝑑 is the distance to the nearest wall, including a tangency wall (perfect
+slip inviscid boundary conditions), 𝜈 = 𝜇/𝜌 is the kinematic viscosity, and 𝜈𝑟𝑒𝑓 is the reference kinematic
+viscosity. The turbulent eddy viscosity is computed as in Eq. 8.
+𝜇𝑡 = 𝜌𝜈̂ 𝑓𝑣1
+(8)
+In the original reference [6], the term 𝑆̂ is defined as follows.
+𝜈̂
+𝑆̂ = Ω + S̅,
+S̅ = 2 2 𝑓𝑣2
+(9)
+𝜅 𝑑
+Here, Ω is the magnitude of vorticity defined in Eq. 10.
+2
+
+2
+
+Ω = √(𝜕𝑦 𝑤 − 𝜕𝑧 𝑣) + (𝜕𝑧 𝑢 − 𝜕𝑥 𝑤)2 + (𝜕𝑥 𝑣 − 𝜕𝑦 𝑢)
+
+(10)
+
+To avoid numerical problems associated with 𝑆̂ ≤ 0, Ref. [10] suggests the following modification.
+
+3
+
+Ω(𝑐22 Ω + 𝑐3 S̅)
+when S̅ < −𝑐2 Ω,
+(𝑐3 − 2𝑐2 )Ω − S̅
+Other terms appearing in Eq. 6 are defined as follows.
+𝑆̂ = Ω +
+
+𝑐2 = 0.7,
+
+𝑐3 = 0.9
+
+(11)
+
+1
+
+6
+6
+𝜒3
+𝜈̂
+𝜒
+1 + 𝑐𝑤3
+𝑓𝑣1 = 3
+,
+𝜒
+=
+,
+𝑓
+=
+1
+−
+,
+𝑓
+=
+𝑔
+[
+]
+, 𝑔 = 𝑟 + 𝑐𝑤2 (𝑟 6 − 𝑟),
+𝑣2
+𝑤
+6
+𝜈
+1 + 𝜒𝑓𝑣1
+𝑐𝑣1 + 𝜒 3
+𝑔6 + 𝑐𝑤3
+𝜈̂
+𝑓𝑡2 = 𝑐𝑡3 exp(−𝑐𝑡4 𝜒 2 ), 𝑟 = min [ 2 2 , 10]
+(12)
+̂
+𝑆𝜅 𝑑
+2
+3
+
+The constants are 𝜅 = 0.41, 𝜎 = , 𝑐𝑏1 = 0.1355, 𝑐𝑏2 = 0.622, 𝑐𝑡3 = 1.2, 𝑐𝑡4 = 0.5, 𝑐𝑣1 = 7.1,
+𝑐
+
+1+𝑐
+
+𝑐𝑤1 = 𝜅𝑏1 + 𝜎 𝑏2 , 𝑐𝑤2 = 0.3, and 𝑐𝑤3 = 2.
+The standard SA model equation requires 𝜈̂ > 0. The SA model extended to negative values of 𝜈̂ is
+referred to as the SA-neg model [10]. For negative 𝜈̂ , Eq. 13 is solved.
+𝜈̂ 2 1
+𝜕𝑡 𝜈̂ + 𝒖 ∙ 𝛁𝜈̂ − 𝑐𝑏1 (1 − 𝑐𝑡3 )Ω𝜈̂ − 𝑐𝑤1 ( ) − [𝛁 ∙ ((𝜈 + 𝜈̂ 𝑓𝑛 )𝛁𝜈̂ ) + 𝑐𝑏2 (𝛁𝜈̂ ∙ 𝛁𝜈̂ )] = 0 (13)
+𝑑
+𝜎
+Function 𝑓𝑛 is defined in Eq. 14.
+𝑐𝑛1 + 𝜒 3
+(14)
+𝑓𝑛 =
+,
+𝑐𝑛1 = 16
+𝑐𝑛1 − 𝜒 3
+The SA-neg turbulent eddy viscosity is computed using Eq. 8 when 𝜈̂ ≥ 0 and set to zero when 𝜈̂ < 0.
+In the SA-R variant of the turbulence model with a rotational correction [8, 9], the production term of
+the SA model, Eq. 6, is modified, resulting in the model given by Eq. 15.
+𝜕𝑡 𝜈̂ + 𝒖 ∙ 𝛁𝜈̂ − 𝑐𝑏1 (1 − 𝑓𝑡2 )(𝑆̂ + crot min(0, 𝑆 − Ω))𝜈̂
+𝑐𝑏1
+𝜈̂ 2 1
++ [𝑐𝑤1 𝑓𝑤 − 2 𝑓𝑡2 ] ( ) − [𝛁 ∙ ((𝜈 + 𝜈̂ )𝛁𝜈̂ ) + 𝑐𝑏2 (𝛁𝜈̂ ∙ 𝛁𝜈̂ )] = 0
+𝜅
+𝑑
+𝜎
+Here, the strain magnitude, 𝑆, is defined as in Eq. 16.
+2
+
+2
+
+2
+
+𝑆 = √(𝜕𝑦 𝑤 + 𝜕𝑧 𝑣) + (𝜕𝑧 𝑢 + 𝜕𝑥 𝑤)2 + (𝜕𝑥 𝑣 + 𝜕𝑦 𝑢) + 2(𝜕𝑥 𝑢)2 + 2(𝜕𝑦 𝑣) + 2(𝜕𝑧 𝑤)2
+
+(15)
+
+(16)
+
+If the strain magnitude is less than the vorticity magnitude, 𝑆 < Ω, and 𝑐𝑟𝑜𝑡 > 1, the production term may
+become negative and suppress production of eddy viscosity, which is considered as a desirable property in
+case of a solid body rotation. References [8, 9] recommend 𝑐𝑟𝑜𝑡 = 2. Computations reported in Ref. [15]
+use 𝑐𝑟𝑜𝑡 = 1. Note that all models based on SA-neg [10] benefit from smooth transition through 𝜈̂ = 0;
+therefore, it would be preferable to have the production term as 𝑐𝑏1 (1 − 𝑐𝑡3 )(Ω + 𝑐𝑟𝑜𝑡 min(0, 𝑆 − Ω))𝜈̂ in
+the negative branch of the SA-neg-R model. On the other hand, SA-neg does not allow a negative
+production term for 𝜈̂ < 0. For the current verification campaign, the negative branch uses the absolute
+value of the preferable production term.
+𝜕𝑡 𝜈̂ + 𝒖 ∙ 𝛁𝜈̂ − 𝑐𝑏1 (1 − 𝑐𝑡3 ) |Ω + 𝑐𝑟𝑜𝑡 min(0, 𝑆 − Ω)|𝜈̂
+𝜈̂ 2 1
+−𝑐𝑤1 ( ) − [𝛁 ∙ ((𝜈 + 𝜈̂ 𝑓𝑛 )𝛁𝜈̂ ) + 𝑐𝑏2 (𝛁𝜈̂ ∙ 𝛁𝜈̂ )] = 0
+(17)
+𝑑
+𝜎
+The mandatory verification is performed for 𝑐𝑟𝑜𝑡 = 1.0. This choice ensures positivity of the production
+term as Ω + min(0, 𝑆 − Ω) > 0 and a smooth transition between the positive and negative branches of the
+SA-neg-R model. However, it is believed that 𝑐𝑟𝑜𝑡 = 1.0 does not sufficiently suppress spurious eddy
+viscosity. The optional computations are suggested for 𝑐𝑟𝑜𝑡 = 2.0. In this scenario, the SA-neg-R
+production term is only C0 continuous for flow regimes where Ω + 𝑐𝑟𝑜𝑡 min(0, 𝑆 − Ω) < 0.
+The turbulent stress tensor, 𝛕𝑡 , is a part of the total shear stress tensor defined in Eq. 4. Formally, the
+turbulent stress tensor is defined similar to the total stress tensor, with the total coefficient (𝜇 + 𝜇𝑡 ) replaced
+
+4
+
+as 𝜇𝑡 . In the QCR2000 formulation [7], the turbulent stress tensor is corrected using the normalized
+antisymmetric rotation tensor that is defined as follows.
+𝜕𝑦 𝑢 − 𝜕𝑥 𝑣
+𝜕𝑧 𝑢 − 𝜕𝑥 𝑤
+𝑂𝑥𝑥 = 𝑂𝑦𝑦 = 𝑂𝑧𝑧 = 0, 𝑂𝑥𝑦 = −𝑂𝑦𝑥 =
+, 𝑂𝑥𝑧 = −𝑂𝑧𝑥 =
+,
+𝑏
+𝑏
+𝜕𝑧 𝑣 − 𝜕𝑦 𝑤
+𝑂𝑦𝑧 = −𝑂𝑧𝑦 =
+(18)
+𝑏
+Here, 𝑏 is the 𝑙2 -norm of the velocity gradient tensor defined in Eq. 19.
+2
+
+2
+
+2
+
+𝑏 = √(𝜕𝑥 𝑢)2 + (𝜕𝑦 𝑢) + (𝜕𝑧 𝑢)2 + (𝜕𝑥 𝑣)2 + (𝜕𝑦 𝑣) + (𝜕𝑧 𝑣)2 + (𝜕𝑥 𝑤)2 + (𝜕𝑦 𝑤) + (𝜕𝑧 𝑤)2 (19)
+The rotation tensor is set to be zero when 𝑏 = 0. The QCR turbulent stress tensor is computed as follows
+𝜏𝑡,𝑥𝑥,𝑄𝐶𝑅 = 𝜏𝑡,𝑥𝑥 − 2𝑐𝑐𝑟1 (𝑂𝑥𝑦 𝜏𝑡,𝑥𝑦 + 𝑂𝑥𝑧 𝜏𝑡,𝑥𝑧 )
+𝜏𝑡,𝑦𝑦,𝑄𝐶𝑅 = 𝜏𝑡,𝑦𝑦 − 2𝑐𝑐𝑟1 (𝑂𝑦𝑥 𝜏𝑡,𝑦𝑥 + 𝑂𝑦𝑧 𝜏𝑡,𝑦𝑧 )
+𝜏𝑡,𝑧𝑧,𝑄𝐶𝑅 = 𝜏𝑡,𝑧𝑧 − 2𝑐𝑐𝑟1 (𝑂𝑧𝑥 𝜏𝑡,𝑧𝑥 + 𝑂𝑧𝑦 𝜏𝑡,𝑧𝑦 )
+𝜏𝑡,𝑥𝑦,𝑄𝐶𝑅 = 𝜏𝑡,𝑥𝑦 − 𝑐𝑐𝑟1 (𝑂𝑥𝑦 (𝜏𝑡,𝑦𝑦 − 𝜏𝑡,𝑥𝑥 ) + 𝑂𝑦𝑧 𝜏𝑡,𝑥𝑧 + 𝑂𝑥𝑧 𝜏𝑡,𝑦𝑧 )
+
+(20)
+
+𝜏𝑡,𝑥𝑧,𝑄𝐶𝑅 = 𝜏𝑡,𝑥𝑧 − 𝑐𝑐𝑟1 (𝑂𝑥𝑧 (𝜏𝑡,𝑧𝑧 − 𝜏𝑡,𝑥𝑥 ) + 𝑂𝑥𝑦 𝜏𝑡,𝑧𝑦 + 𝑂𝑧𝑦 𝜏𝑡,𝑥𝑦 )
+𝜏𝑡,𝑦𝑧,𝑄𝐶𝑅 = 𝜏𝑡,𝑦𝑧 − 𝑐𝑐𝑟1 (𝑂𝑦𝑧 (𝜏𝑡,𝑧𝑧 − 𝜏𝑡,𝑦𝑦 ) + 𝑂𝑦𝑥 𝜏𝑡,𝑧𝑥 + 𝑂𝑧𝑥 𝜏𝑡,𝑦𝑥 )
+𝑐𝑐𝑟1 = 0.3
+The meanflow stress tensor remains unchanged.
+III. Computational Fluid Dynamics Codes
+A. FUN3D
+FUN3D is a node-centered, finite-volume, unstructured-grid RANS solver developed and supported at
+the NASA Langley Research Center; FUN3D is widely used for high-fidelity analysis and adjoint-based
+design of complex turbulent flows [16, 17]. Recently FUN3D has been adapted for NVIDIA GPU
+architectures [18, 19] and demonstrated breakthrough performance for perfect gas and thermochemical
+nonequilibrium flows [20, 21]. FUN3D solves the governing flow equations on mixed-element grids. The
+conservation laws are implemented on control volumes that are constructed around grid points using a
+median-dual partition of the computational domain. The inviscid fluxes are computed using an approximate
+Riemann solver. Roe’s flux-difference splitting scheme [22] is used in the current study. For second-order
+accuracy, the solution values at the edge medians are obtained by a UMUSCL scheme [23, 24], with
+unweighted least-squares gradients computed at the nodes. For this study, the UMUSCL scheme with 𝜅 =
+0.5 and no gradient limiting is used for the meanflow equations. In these studies, FUN3D uses a first-order
+nonconservative approximation [10] for the turbulence-model convection term.
+The viscous fluxes are discretized using the Green-Gauss (cell-based) gradients. For tetrahedral grids,
+this approach is equivalent to a finite-element Galerkin-type approximation [25]. On nontetrahedral cells,
+the edge-based gradients are combined with the Green-Gauss gradients [26, 27]; this approach improves
+stability of the viscous operator. The diffusion term in the turbulence model is handled in the same fashion
+as the meanflow viscous terms. The vorticity for the turbulence-model source term is computed using a
+Green-Gauss approximation on dual cells. The boundary conditions involved in the present study include
+subsonic inflow, specified back-pressure outflow, farfield Roe-based, farfield Riemann-invariant-based,
+symmetry, tangency-wall, and strong viscous-wall boundary conditions [16, 28].
+B. SANS
+Solution Adaptive Numerical Simulator (SANS) [29], currently under development at the Massachusetts
+Institute of Technology, is a general framework for solving discrete finite-element approximations to
+
+5
+
+advection-diffusion-reaction type partial differential equations, such as scalar advection-diffusion, NavierStokes, and RANS equations. A range of finite-element methods are currently implemented in SANS,
+including high-order discontinuous, hybridized discontinuous, and continuous Galerkin finite-element
+methods. The variational multiscale method with discontinuous subscales [30, 31] discretization is used to
+compute all solutions to the RANS equations presented here. Boundary conditions are weakly enforced,
+and forces are computed using the residual balance at the boundary.
+The nonlinear system of equations is solved using pseudotime continuation (PTC) damped Newton’s
+method with a line search to ensure that residuals decrease. The complete linearization of the residual is
+computed via operator overloaded automatic differentiation [32]. The PTC algorithm computes an element
+local time step based on the characteristic speed, element size, and a Courant-Friedrichs-Lewy (CFL)
+number. The inverse CFL is driven toward zero such that a Newton-like convergence rate is recovered. The
+portable, extensible toolkit for scientific computation framework [33-35] is used to solve the linear system
+for each PTC iteration with restarted generalized minimal residual (GMRES) [36] preconditioned with a
+Direct Lower Upper (Direct-LU) factorization. Parallel computations use the restricted additive Schwarz
+preconditioner with three layers of overlap. The Direct-LU preconditioner is applied to each subdomain,
+and restarted GMRES is applied to the global system. Adjoint systems are solved using the same linear
+solver as the primal. All discrete solutions are converged to near machine-zero residuals.
+IV. Test Case 1: Joukowski Airfoil
+This 2D test case is designed as a relatively simple verification case for implementation of the SA-negQCR2000-R RANS equations where theoretically optimal convergence rates for drag coefficients can be
+observed. For adjoint-consistent discretization methods of nominal order (𝑃 + 1), the optimal convergence
+rate of the error in the drag coefficient is expected to be 2𝑃. Without adjoint consistency, the drag error
+convergence rate is expected to be at least 𝑃 + 1.
+The Joukowski airfoil chosen for this test (Fig. 1) is a symmetric aerodynamic analytical shape that
+features a cusped trailing edge. A solution for a high-Reynolds-number flow at zero degrees angle of attack
+is expected to be smooth; although, there is a skin-friction singularity at the trailing edge. The flow
+conditions for this test case are the following: the freestream Mach number is 𝑀∞ = 0.15, the Reynolds
+number is 𝑅𝑒𝑐 = 6 × 106 based on the airfoil chord, the angle of attack is 𝛼 = 0°, and the reference
+temperature is 𝑇𝑟𝑒𝑓 = 520 °R. A no-slip adiabatic-wall boundary condition is set at the airfoil, and the farfield boundary conditions are based on an inviscid characteristic method.
+
+Fig. 1 Joukowski airfoil.
+The family of fixed grids used in this study includes seven nested, quadrilateral grids that follow the
+classic meshing guidelines requiring grid lines to be near orthogonal to the geometry and the sizes of
+neighboring elements to be similar. The grids are referenced as Grid 0 to Grid 6. The Joukowski conformal
+map is used to generate grids with nearly orthogonal grid lines. The coarsest Grid 0 is composed of 48 ×
+16 quadrilateral cells (48 × 17 grid nodes), the finest Grid 6 grid is composed of 3192 × 1024
+quadrilateral cells (3192 × 1025 grid nodes). Three views of Grid 2 are shown in Fig. 2. The computational
+domain extends 100 chord lengths from the airfoil. The grids are stretched toward the viscous surface,
+toward the x-axis (𝑦 = 0) upstream and downstream of the airfoil, and toward the grid line that goes through
+the trailing edge and is orthogonal to the x-axis at the trailing edge. The wake grid opens as the mesh
+progresses aft of the airfoil trailing edge to reduce the maximum cell aspect ratio to approximately 100 near
+the outflow boundary. The grid clustering at the leading edge serves to capture the weak stagnation pressure
+singularity. The grid clustering at the trailing edge is needed to capture the skin-friction singularity. The
+grid spacing near the leading and trailing edges was repeatedly adjusted to produce grids that facilitate
+observation of expected error rates in the drag output with grid refinement. These geometry and grids have
+been used for verification of SA-neg-QCR2000 model [39].
+
+6
+
+2
+
+0.5
+
+100
+
+1.5
+1
+
+50
+
+0.5
+0
+
+Y
+
+Y
+
+Y
+
+0
+
+0
+
+-0.5
+-1
+
+-0.5
+
+-50
+
+-1.5
+-2
+
+0
+
+0.5
+
+1
+
+X
+
+-100
+
+-1
+
+-0.5
+
+0
+
+0.5
+
+1
+
+X
+
+1.5
+
+2
+
+2.5
+
+3
+
+-100
+
+-50
+
+0
+
+50
+
+100
+
+X
+
+(a) Near surface view
+
+(b) Wake view
+(c) Global view
+Fig. 2 Grid 2 for Joukowski airfoil.
+FUN3D solutions are computed on six fixed quadrilateral grids, Grid 0 through Grid 5, and provide
+nominal second-order accuracy, although a first-order approximation to the convection term of the
+turbulence model is used. The specific implementation is based on 3D one-cell-wide hexahedral grids. The
+FUN3D formulation is not adjoint consistent. SANS computes solutions on five fixed grids, Grids 0 through
+Grid 4, and on adapted grids generated by Mesh Optimization via Error Sampling and Synthesis (MOESS)
+tool [37, 38]. The grid adaptation process is governed by the adjoint-based error estimator targeting
+reduction of the error in the drag coefficient. SANS solutions on the fixed grids are computed on truly 2D
+grids, in which each quadrilateral cell is divided into two triangular cells; the number of grid nodes remain
+unchanged. SANS solutions use polynomials of degrees 𝑃 = 1, 2, and 3, and provide nominal second-,
+third-, and fourth-order accuracy, respectively. The SANS formulation is adjoint consistent. All solutions
+reported in this section have the root mean square (rms) norm of the meanflow and turbulence-model
+residuals converged below 10−13.
+Table 1 collects grid convergence results for the total-drag (𝐶𝐷 ), pressure-drag (𝐶𝐷𝑝 ), and viscous-drag
+(𝐶𝐷𝑣 ) coefficients computed with the SA-neg-QCR2000-R model with 𝐶𝑟𝑜𝑡 = 1.0. Note that 𝐶𝐷 = 𝐶𝐷𝑝 +
+𝐶𝐷𝑣 . The nominal grid spacing is computed as ℎ = 𝑁 −1/2, where 𝑁 are the degrees of freedom (DOF). For
+FUN3D and SANS-P1 solutions, DOF are 2D grid points. Higher-order SANS solutions have more DOF
+on the same grids reflecting the increased operation count in computing higher-order residuals. The effect
+of the rotation correction on the solutions is minor; all drag coefficients are close to the corresponding
+coefficients computed with the SA-neg-QCR2000 model [39] for the same geometry, grids, and flow
+conditions.
+For the error estimate, the “truth” values for the coefficients of total drag, pressure drag, and viscous
+drag are taken as the corresponding coefficients computed from the SANS-P3 solution on the finest adapted
+grid. The error in a coefficient is estimated as the magnitude (absolute value) of the difference between the
+coefficient computed on a given grid and the “truth” value of the coefficient. Note that the uncertainty in
+the truth values is on the order of 10−6 ; thus, all estimates of errors that are comparable or smaller than the
+uncertainty threshold are not reliable. Nevertheless, estimated errors are plotted below for all solutions for
+completeness.
+Figure 3 shows convergence of the total-drag coefficient (Fig. 3(a)) and the error in the total-drag
+coefficient (Fig. 3(b)). The slopes that represent convergence of second, fourth, and sixth orders are also
+shown in Fig. 3(b). Convergence of the total-drag coefficient shown in Fig. 3(a) is mostly regular and
+monotonic for all solutions that have errors significantly greater than 10−6 . The SANS-P1 total drag
+coefficients computed on the fixed grids converge to the truth value from above but cross the truth value
+on Grid 4. In Fig. 3(b), FUN3D shows a convergence rate close to the optimal second-order rate, as
+expected. The SANS-P1 convergence rate apparently exceeds the optimal second-order rate on adapted and
+fixed grids. The SANS-P1, SANS-P2, and SANS-P3 convergence rates are similar on coarser fixed grids
+and close to the fourth-order rate, which is the optimal rate for P2 solutions. The SANS-P2 and SANS-P3
+convergence rates on adapted grids are not regular but the corresponding total drag coefficients exhibit
+significantly smaller errors per DOF than the coefficients computed on the fixed grids.
+
+7
+
+Table 1 Joukowski airfoil: convergence of drag coefficients on fixed grids.
+Grid
+𝐶𝐷𝑝
+𝑁
+𝐶𝐷
+𝐶𝐷𝑣
+Solution
+ℎ = 𝑁 −1/2
+Grid 0
+816 0.035007 0.061721 0.051628 0.010093
+Grid 1
+3,168 0.017767 0.021942 0.014936 0.007006
+Grid 2
+12,480 0.008951 0.010441 0.003818 0.006623
+FUN3D
+Grid 3
+49,536 0.004493 0.008284 0.001656 0.006627
+Grid 4 197,376 0.002251 0.007947 0.001310 0.006638
+Grid 5 787,968 0.001127 0.007891 0.001256 0.006635
+Grid 0
+816 0.035007 0.051355 0.038668 0.013797
+Grid 1
+3,168 0.017767 0.013792 0.006470 0.007342
+SANS-P1 Grid 2
+12,480 0.008951 0.008581 0.002008 0.006572
+Grid 3
+49,536 0.004493 0.007925 0.001382 0.006543
+Grid 4 197,376 0.002251 0.007868 0.001280 0.006588
+Grid 0
+3,168 0.017767 0.008873 0.002026 0.006850
+Grid 1
+12,480 0.008951 0.007916 0.001277 0.006642
+SANS-P2 Grid 2
+49,536 0.004493 0.007874 0.001244 0.006630
+Grid 3 197,376 0.002251 0.007873 0.001244 0.006629
+Grid 4 787,968 0.001127 0.007873 0.001245 0.006629
+Grid 0
+7,056 0.011905 0.007910 0.001263 0.006655
+SANS-P3 Grid 1
+27,936 0.005983 0.007874 0.001243 0.006631
+Grid 2 111,168 0.002999 0.007873 0.001245 0.006629
+100
+
+0.01
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+
+0.0095
+
+10-2
+
+CD
+
+CD error
+
+0.009
+
+0.0085
+
+0.008
+
+0.0075
+
+0
+
+0.02
+
+h
+
+0.04
+
+10
+
+-4
+
+10
+
+-6
+
+10
+
+-8
+
+10
+
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+Slope 2
+Slope 4
+Slope 6
+
+-10
+
+0.0005
+
+h
+
+0.0205
+
+0.0405
+
+(a) Total drag
+(b) Error in total drag
+Fig. 3 Joukowski airfoil: grid convergence of total-drag coefficient, 𝑪𝑫,𝒕𝒓𝒖𝒕𝒉 = 𝟎. 𝟎𝟎𝟕𝟖𝟕𝟐.
+Convergence plots of pressure-drag coefficients and the corresponding errors are shown in Fig. 4. The
+FUN3D and all SANS 𝐶𝐷𝑝 coefficients on the fixed grids and the SANS-P1 coefficients on the adapted
+grids converge monotonically. The SANS-P2 and SANS-P3 coefficients oscillate around the truth value on
+the fine adapted grids. The convergence rate of the FUN3D 𝐶𝐷𝑝 coefficient is higher than the optimal
+second-order rate. The SANS-P1 𝐶𝐷𝑝 coefficients converge with the optimal second-order rate on the fixed
+and adapted grids; the coefficients on the adapted grids show much higher accuracy per DOF. The SANSP2 convergence rate is super-optimal on the coarse fixed grids before the error approaches the truthuncertainty threshold, the SANS-P3 convergence rate on the fixed grids is less than optimal. The SANSP2 and SANS-P3 coefficients on adapted grids converge less regularly but exhibit higher accuracy per
+DOF.
+
+8
+
+100
+
+0.0035
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+
+0.003
+
+10-2
+
+CDp
+
+CDp error
+
+0.0025
+
+0.002
+
+0.0015
+
+0.001
+
+0
+
+0.02
+
+0.04
+
+10
+
+-4
+
+10
+
+-6
+
+10
+
+-8
+
+10
+
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+Slope 2
+Slope 4
+Slope 6
+
+-10
+
+0.0005
+
+h
+
+h
+
+0.0205
+
+0.0405
+
+(a) Pressure drag
+(b) Error in pressure drag
+Fig. 4 Joukowski airfoil: grid convergence of pressure drag coefficient, 𝑪𝑫𝒑,𝒕𝒓𝒖𝒕𝒉 = 𝟎. 𝟎𝟎𝟏𝟐𝟒𝟒.
+Convergence plots of viscous-drag coefficients and the corresponding errors are shown in Fig. 5.
+Convergence of FUN3D and SANS-P1 𝐶𝐷𝑣 coefficients is highly erratic and nonmonotonic, but, on
+average, the convergence rates are close to the optimal second-order rate. The SANS-P2 and SANS-P3
+coefficients converge monotonically on the fixed grids and show very similar convergence rates that are
+close to the fourth-order rate before the errors approach the uncertainty threshold. Similar to other drag
+coefficients, the SANS-P2 and SANS-P3 𝐶𝐷𝑣 coefficients on adapted grids converge less regularly but
+exhibit higher accuracy per DOF.
+100
+
+0.008
+
+10-2
+
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+Slope 2
+Slope 4
+Slope 6
+
+CDv
+
+CDv error
+
+0.0075
+
+FUN3D-Fixed
+SANS-P1-Fixed
+SANS-P1-Adapative
+SANS-P2-Fixed
+SANS-P2-Adapative
+SANS-P3-Fixed
+SANS-P3-Adapative
+
+0.007
+
+0.0065
+
+0
+
+0.02
+
+h
+
+0.04
+
+10
+
+-4
+
+10
+
+-6
+
+10
+
+-8
+
+10
+
+-10
+
+0.0005
+
+h
+
+0.0205
+
+0.0405
+
+(a) Viscous drag
+(b) Error in viscous drag
+Fig. 5 Joukowski airfoil: grid convergence of viscous drag coefficient, 𝑪𝑫𝒗,𝒕𝒓𝒖𝒕𝒉 = 𝟎. 𝟎𝟎𝟔𝟔𝟐𝟕.
+
+V. Test Case 2: Extruded NACA 0012 Wing in Tunnel
+A. Geometry, Flow, and Boundary Conditions
+The test case considers a separated subsonic flow around a 3D configuration that represents an NACA
+0012 wing extruded from a wall of a tunnel with a rectangular cross-section. The model is similar to the
+
+9
+
+one considered in Ref. [8]. The rectangular wing has a span of 0.75 and a constant cross-section in the shape
+of the NACA 0012 airfoil with a sharp trailing edge and unit chord. The wing has a rounded tip. The tunnel
+2
+test section has unit width, height of 3, and length of 3. The wing is mounted on the test-section wall
+corresponding to 𝑦 = 0 with pitch angle of 10 degrees; the opposite wall is located at 𝑦 = −1. The quarterchord location of the root airfoil corresponds to 𝑥 = 0. The limits of the 𝑥- and 𝑧-coordinates of the tunnel
+1
+1
+test section are −1 ≤ 𝑥 ≤ 2 and − ≤ 𝑧 ≤ , respectively. Comparing to Ref. [8], the 𝑥 range has been
+3
+3
+increased.
+The inflow conditions are Mach number of 0.2, Reynolds number of 4.6 × 106 based on the unit length,
+and an angle of attack of 0 degrees with respect to the tunnel. The reference temperature is 𝑇𝑟𝑒𝑓 = 521 °R.
+No-slip wall boundary conditions are assigned to the wing surface and the test section of the tunnel.
+Upstream and downstream of the test section, extensions with tangency-wall (perfect slip) boundary
+conditions are added. The upstream extension, −2 ≤ 𝑥 < −1, has the same rectangular cross-section as
+the test section. For meanflow, subsonic inflow boundary conditions are specified at 𝑥 = −2, where the
+ratio of the total pressure to the reference pressure is set to 1.02828 (based on the Mach number of 0.2), the
+ratio of the total temperature to the reference temperature is set to 1.008, the flow angle is set to zero, and
+the velocity magnitude is extrapolated from the interior. The downstream tangency-wall extension section
+narrows over 2 < 𝑥 ≤ 6.5 to a rectangular cross-section of width 0.9 and height 0.6 centered at 𝑧 = 0. This
+converging section is needed to increase the flow speed and prevent reversed flow at the outflow boundary
+at 𝑥 = 6.5, where the ratio of the back pressure to the reference pressure is set to 1.0 and all other solution
+quantities are extrapolated from the interior. The distance function used in the turbulence model is
+computed from the closest wall, either no-slip wall or tangency wall. The turbulence variable is set to zero
+on all walls, to the freestream ratio at the inflow boundary, and extrapolated from the interior at the outflow
+boundary. Figure 6 shows a global view of the computational geometry and a view of the wing inside the
+tunnel test section. The blue and grey colors indicate no-slip and tangency wall boundaries, respectively;
+the red and green colors indicate the inflow and outflow boundaries, respectively.
+
+(a) Global view of geometry
+
+(b) Wing in test section
+
+Fig. 6 Extruded NACA 0012 wing: surface grids.
+Figure 7 shows the solution Q-criterion isosurface colored by the vorticity magnitude contours. A strong
+tip vortex and geometrical features associated with corners and interfaces between surfaces with different
+boundary conditions are highlighted.
+
+10
+
+Fig. 7 Extruded NACA 0012 wing: vorticity contours.
+B. Grids
+A family of nine unstructured grids has been generated by Cadence® software Pointwise† and uses Glyph
+script package GeomToMesh [40]. The grids are generated by a consistent coarsening/refinement of the
+baseline grid that is tagged as Grid 1.0. The grid tag indicates the intended scaling factor of the grid edges.
+For example, the edges of Grid 0.5 are intended to be two times longer and the edges of Grid 2.0 are
+intended to be two times shorter than the edges of the baseline Grid 1.0. The Pointwise grids are referred
+to as fixed grids to distinguish from the adapted grids that are also used in the study. The grid generation
+process strictly follows the best practices in generation of grid families that provide user-specified
+resolution of all geometrical features and maintain smoothness of the surface and volume grids. The
+coarsest Grid 0.5 has 2.6 million grid points; the finest Grid 2.5 has 90 million grid points. Table 4 shows
+grid statistics.
+Table 4 Extruded NACA 0012 wing: statistics of fixed grids.
+Grid tag
+0.50
+0.75
+1.00
+1.25
+1.50
+1.75
+2.00
+2.25
+2.50
+
+Tetrahedra
+1,621,703
+5,783,545
+14,405,654
+29,147,202
+51,271,350
+82,717,090
+125,170,334
+180,254,204
+250,206,779
+
+Prisms
+66,678
+102,108
+137,367
+175,130
+218,680
+271,014
+326,234
+363,357
+417,605
+
+Pyramids
+89,813
+161,541
+253,387
+366,488
+503,967
+666,375
+841,549
+1,039,284
+1,256,432
+
+Hexahedra
+2,263,869
+4,812,270
+8,317,833
+12,684,582
+17,912,051
+24,252,915
+31,460,819
+39,541,502
+48,478,126
+
+Points
+2,618,268
+5,907,447
+10,891,035
+17,741,411
+26,667,090
+38,234,981
+52,458,483
+69,604,505
+90,023,530
+
+C. Solutions
+FUN3D solutions are computed on all nine fixed grids. Note the importance of high precision in
+representation of the ratio of the total pressure to the reference pressure (1.02828) and the ratio of the total
+temperature to the reference temperature (1.008). Rounding the ratios to fewer significant digits (1.03 and
+1.01, respectively) resulted in drag variation on the order of several dozens of counts. SANS computes P=1
+solutions on adapted grids generated by MOESS. All solutions reported in this section have the rms norm
+†
+
+http://www.pointwise.com, accessed 11/21/2022
+
+11
+
+of the meanflow and turbulence-model residuals converged below 10−10, which is the machine-zero level
+on the fine fixed grids. Grid convergence of the lift and drag coefficients is shown in Fig. 8. The
+characteristic mesh size is computed as h = 𝑁 −1⁄3 , where 𝑁 is the number of grid points. The aerodynamic
+coefficients are integrated over all no-slip walls, including the surfaces of the tunnel test section.
+
+0.077
+
+0.007
+
+0.0068
+
+FUN3D
+SANS
+
+0.076
+0.075
+
+0.0066
+
+FUN3D
+SANS
+
+0.074
+0.0064
+
+CL
+
+CD
+
+0.073
+0.072
+
+0.0062
+
+0.071
+0.006
+
+0.07
+0.0058
+
+0.069
+
+0.0056
+0.01
+
+h
+
+0.02
+
+0.03 0.04
+
+0.068
+0.01
+
+0.02
+
+0.03 0.04
+
+h
+
+(a) Lift
+(b) Drag
+Fig. 8 Extruded NACA 0012 wing: grid convergence of aerodynamic coefficients.
+Both lift and drag coefficients are converging but have not grid converged yet. Although the lift
+coefficients computed by FUN3D on the currently finest fixed grid and by SANS on the currently finest
+adapted grid differ by less than 1.5%, the coefficients have not settled and show a visible variation with
+grid refinement. The grid convergence of the lift coefficient is not monotonic. The drag coefficients
+converge monotonically but also have not settled. The drag coefficients computed by FUN3D and SANS
+appear heading to a similar limit with grid refinement. The difference between FUN3D and SANS
+coefficients computed on the currently finest grids is about 14 counts. Finer grids are needed to confidently
+establish the lift and drag coefficients.
+VI. Test Case 3: Simplified High-Lift Wing-Body Common Research Model
+A. Geometry, Flow, and Boundary Conditions
+The test case considers a semispan high-lift configuration that is designated as CRM-HL-WB. CRMHL-WB is the simplest configuration in the family of standard high-lift geometries designed for studying
+aerodynamic phenomena associated with high-lift flow regimes. The original NASA high-lift common
+research model (CRM-HL) [41] is a representative high-lift configuration used in the 4th High-Lift
+Prediction Workshop (HLPW) [42]. The CRM-HL model is a complex configuration that features fuselage,
+wing, nacelle, pylon, leading-edge slats with under-slat wings, trailing-edge flaps, horizontal tail, main
+landing gear, and aileron. The CRM-HL-WB model considered here is a simplified version of CRM-HL
+that is designed for verification of solvers participating in HLPW. The CRM-HL-WB model has similar
+fuselage and high-lift wing geometries as the CRM-HL model but it is stripped of all other geometric
+features. The model has wing semispan of 1156.75 in. The wing has a thin blunt trailing edge and a rounded
+tip cap. The mean aerodynamic chord (MAC) is 275.8 in. The reference area is 297,360.0 in2. The entire
+computational domain is a rectangular cuboid with dimensions −65,000 ≤ 𝑥 ≤ 65,000; 0 ≤ 𝑦 ≤ 65,000;
+−65,000 ≤ 𝑧 ≤ 65,000. The computational domain and the wing-body geometry are illustrated in Fig. 9.
+
+12
+
+(a) Global view of computational grid
+(b) Surface grid and symmetry plane
+Fig. 9 CRM-HL-WB: grid convergence of aerodynamic coefficients.
+The freestream flow conditions are Mach number of 0.2, Reynolds number of 5.6 × 106 based on the
+MAC, and an angle of attack of 11 degrees. The reference temperature is 𝑇𝑟𝑒𝑓 = 521 °R. The no-slip
+boundary condition is assigned to the wing and fuselage surface. Symmetry is specified at the 𝑦 = 0 plane.
+The farfield boundary conditions based on Riemann invariants are assigned at all other boundaries of the
+computational domain. For the current verification studies, the target characteristics are grid convergence
+of lift and drag coefficients.
+B. Grids
+A family of seven unstructured mixed-element grids has been generated by experts using the Pointwise
+Glyph script package GeomToMesh [40] and the best grid-generation practices. The grids are parametrized
+by the number of surface elements placed across the thin blunt trailing edge of the wing; this number is
+reflected in the grid tag. The coarsest grid, Grid 1v, has a single element across the trailing edge. Finer grids
+place multiple elements across the trailing edge, and all grid elements are scaled accordingly. Table 5 shows
+the grid statistics. The grids are referred to as fixed grids to distinguish them from the adapted grids that
+will be used later. Figure 9 shows the coarsest Grid 1v.
+Table 5 CRM-HL-WB: statistics of fixed grids.
+Grid tag Tetrahedra
+Prisms
+Pyramids
+Points
+1v
+1,050,501
+1,509,398
+21,289
+956,070
+3v
+3,522,591
+9,209,000
+72,125
+5,275,061
+5v
+8,103,392 27,858,957
+126,162 15,439,756
+7v
+15,483,899 62,266,147
+233,318 33,980,621
+9v
+26,206,961 117,276,602
+382,315 63,404,323
+11v
+41,131,004 198,147,783
+569,730 106,478,104
+C. Solutions
+Only FUN3D solutions have been computed on the fixed grids. Solutions computed on grids 1v to 7v have
+the rms norm of the meanflow and turbulence-model residuals converged below 10−9; the solutions
+computed on grid 9v and 11v converged to the rms residual norm of 10−8 , which is close to the machine
+zero on these grids. The surface pressure contours of the solution computed on Grid 7v are shown in Fig.
+10. Grid convergence of the lift and drag coefficients is shown in Fig. 11. The characteristic mesh size is
+
+13
+
+computed as h = 𝑁 −1⁄3 . Both the aerodynamic coefficients appear to converge with grid refinement, but
+have not converged yet. Finer grids are needed to observe grid converged aerodynamic coefficients.
+
+Fig. 10 CRM-HL-WB: surface pressure contours.
+
+0.1
+
+1.1
+
+FUN3D
+
+0.09
+
+1
+
+0.08
+
+FUN3D
+
+CL
+
+CD
+
+1.05
+
+0.95
+
+0.07
+
+0.9
+
+0.06
+
+0.85
+
+0.05
+0
+
+0.002
+
+0.004
+
+0.006
+
+h
+
+0.008
+
+0.01
+
+0.012
+
+0
+
+0.002
+
+0.004
+
+0.006
+
+0.008
+
+0.01
+
+0.012
+
+h
+
+(a) Lift
+(b) Drag
+Fig. 11 CRM-HL-WB: grid convergence of aerodynamic coefficients.
+VII. Concluding Remarks
+In preparation for High-Fidelity Computational Fluid Dynamics (CFD) Verification Workshop
+(HFCFDVW), three test cases are presented for a suite of verification cases for Reynolds-averaged NavierStokes (RANS) solvers with a nonlinear Spalart-Allmaras (SA-[neg]-QCR2000-R) turbulence model. This
+model accounts for anisotropy of turbulence stresses and can predict secondary recirculation in turbulent
+corner flows. This recirculation cannot be captured with linear eddy-viscosity models based on the
+Boussinesq assumption. The simple rotation correction (designated as –R) is used to mitigate generation of
+spurious eddy viscosity within vortices. A weak rotation correction corresponding to 𝐶𝑟𝑜𝑡 = 1.0 is chosen
+for the mandatory verification campaign. A more aggressive correction corresponding to 𝐶𝑟𝑜𝑡 = 2.0 is
+suggested as an option. The formulation that is compatible with the SA-neg version of the turbulence model
+
+14
+
+has been presented in detail. The SA-neg extension is often essential for achieving converged solutions on
+complex grids.
+The verification test cases include (1) a subsonic two-dimensional (2D) flow around a Joukowski airfoil,
+(2) a three-dimensional (3D) subsonic separated flow around an extruded NACA 0012 wing in a tunnel,
+and (3) a 3D subsonic separated flow around a Boeing high-lift common research model (CRM) that is
+intended for verification of solvers participating in the high-lift prediction workshop. Two well-established
+RANS solvers have been used to provide solutions for these test cases: FUN3D is a NASA unstructuredgrid node-centered finite-volume solver and SANS is a high-order finite-element solver developed at the
+Massachusetts Institute of Technology. All solutions are computed for 𝐶𝑟𝑜𝑡 = 1.0.
+The Joukowski-airfoil test case is a simple verification case designed to demonstrate the optimal
+convergence rate for high-order solvers with and without adjoint-consistent discretizations. A family of
+uniformly-refined nested quadrilateral grids has been generated for the study. The finest grid in the family
+includes more than 3 million grid nodes. Seven different types of solutions have been computed. FUN3D
+solutions computed on the expert generated fixed grids are nominally second-order accurate. SANS has
+provided three adjoint-consistent discretizations based on polynomials of degree 𝑃 = 1, 2, and 3. The
+optimal convergence rate for adjoint-consistent discretizations is 2P. The SANS solutions have been
+computed on the fixed grids and on adapted grids governed by the adjoint-based estimator of the error in
+the total drag coefficient.
+An internal flow around an extruded NACA 0012 wing mounted on a tunnel wall is chosen as a medium
+complexity verification case. This case features a simple wing in a tunnel that produces a tip vortex. A
+similar geometry was used in the original paper that introduced the –R correction. A family of nine fixed
+unstructured grids has been generated by experts for this study. The grid complexity ranges from 2 million
+grid points to 90 million grid points. FUN3D has computed solutions on the fixed grids. SANS-P1 solutions
+have been computed on adapted grids. All solutions converged to machine zero residuals. Lift and drag
+coefficients computed by the two codes are close to each other on the corresponding finest grids, but the
+grid converged values of the aerodynamic coefficients have not been established yet. Finer grids are needed
+to compute lift and drag with a better accuracy. This verification exercise has helped to establish sensitivity
+of the drag coefficient to the precision of the total pressure and total temperature used in the formulation of
+the inflow boundary conditions.
+An external flow around a wing-body common research model (CRM-HL-WB) that is closely related
+to the high-lift common research model (CRM-HL) used in the 4th High-Lift Prediction Workshop
+represents a challenging verification case. CRM-HL-WB was designed by Boeing for verification of solvers
+participating in future high-left prediction workshops. Seven grids have been generated by experts for this
+case. The coarsest grid includes 956 thousand grid points; the finest grid includes 106 million grid points.
+FUN3D solutions have been computed on the fixed grids. The lift and drag coefficients computed from
+these solutions approach but have not achieved grid convergence. Finer grids and solutions computed by
+other solvers are needed to confidently establish grid converged values of the aerodynamic coefficients.
+The presented test cases have been suggested to facilitate organization of a working group that will
+include prospective HFCFDVW participants interested in verification of their RANS solvers. The group
+will work during the next year to develop best practices for verification of practical RANS solvers. The
+final recommendations will be reported at the HFCFDVW sessions and disseminated in subsequent
+publications.
+Acknowledgments
+The Transformative Tools and Technologies (TTT) project of the Transformative Aeronautics Concepts
+Program (TACP) and Commercial Supersonic Technology (CST) projects of Advanced Air Vehicles
+Program (AAVP) partially funded the work reported herein. The first two authors were supported by the
+NASA Langley Research Center (LaRC) under cooperative agreement 80LARC17C0004 with the National
+Institute of Aerospace (NIA). The third author was supported by the Boeing Corporation with Dr. Andrew
+Cary as technical monitor. Most of computations were performed on the NASA LaRC K-Cluster. The
+
+15
+
+authors are grateful to Steve Karman (Oak Ridge National Laboratory) and Nick Wyman (Cadence) for
+generating grids for the CRM-HL-WB and NACA-0012 configurations, and to Adam Clark (Boeing) for
+information about the CRM-HL-WB configuration.
+References
+[1] “High Fidelity CFD Workshop 2022,” retrieved 22 November 2022.
+
+https://turbmodels.larc.nasa.gov/highfidelitycfd_workshop2022.html
+[2] “5th International Workshop on High-Order CFD Methods,” retrieved 22 November 2022.
+
+https://how5.cenaero.be
+[3] “4th International Workshop on High-Order CFD Methods,” retrieved 22 November 2022.
+https://how4.cenaero.be/
+[4] Diskin, B., Anderson, W. K., Pandya, M. J., Rumsey, C. L., Thomas, J. L., Lui, Y., and Nishikawa,
+H., "Grid Convergence of Three-Dimensional Benchmark Turbulent Flows,” AIAA 2018-1102,
+2018. https://doi.org/10.2514/6.2018-1102
+[5] Diskin, B. and Thomas, J. L., “Introduction: Evaluation of RANS Solvers on Benchmark
+Aerodynamic Flows,” AIAA Journal, Vol. 54, No. 9, 2016, pp. 2561-2562.
+https://doi.org/10.2514/1.J054642
+[6] Spalart, P. R. and Allmaras, S. R., "A One-Equation Turbulence Model for Aerodynamic
+Flows," Recherche Aerospatiale, No. 1, 1994, pp. 5-21.
+https://turbmodels.larc.nasa.gov/Papers/RechAerosp_1994_SpalartAllmaras.pdf
+[7] Spalart, P. R., “Strategies for Turbulence Modelling and Simulation,” International Journal of Heat
+and Fluid Flow, Vol. 21(3), 2000, pp. 252-263. https://doi.org/10.1016/S0142-727X(00)00007-2
+[8] Dacles-Mariani, J., Zilliac, G. G., Chow, J. S., and Bradshaw, P., "Numerical/Experimental Study of a
+Wingtip Vortex in the Near Field," AIAA Journal, Vol. 33(9), 1995, pp. 1561-1568.
+https://doi.org/10.2514/3.12826
+[9] Dacles-Mariani, J., Kwak, D., and Zilliac, G. G., "On Numerical Errors and Turbulence Modeling in
+Tip Vortex Flow Prediction," Int. J. for Numerical Methods in Fluids, Vol. 30(1), 1999, pp. 65-82.
+https://doi.org/10.1002/(SICI)1097-0363(19990515)30:1<65::AID-FLD839>3.0.CO;2-Y
+[10] Allmaras, S. R., Johnson, F. T., and Spalart, P. R., “Modifications and Clarifications for the
+Implementation of the Spalart-Allmaras Turbulence Model,” ICCFD7-1902, Seventh International
+Conference on Computational Fluid Dynamics (ICCFD7), Big Island, Hawaii, 2012.
+https://www.iccfd.org/iccfd7/assets/pdf/papers/ICCFD7-1902_paper.pdf
+[11] “NASA Turbulence Modeling Resource,” retrieved 22 November 2022.
+https://turbmodels.larc.nasa.gov/
+[12] HFCFDVW website, retrieved 29 November 2022.
+https://github.com/HighFidelityCFDVerificationWorkshop
+[13] Tannehill, J. C., Anderson, D. A., and Pletcher, R. H., “Computational Fluid Mechanics and Heat
+Transfer,” third edition, Taylor & Francis, 2012, Chap. 5.
+[14] White, F. M., "Viscous Fluid Flow," McGraw Hill, New York, 1974, p. 28.
+[15] Murayama, M., Ito, Y., Furuya, R., and Tanaka, K., “JAXA’s Results of Fixed Grid RANS
+Simulations for the Fourth High Lift Prediction Workshop,” AIAA 2022-3743.
+https://doi.org/10.2514/6.2022-3743
+[16] Biedron R. T., Carlson J. R., Derlaga J. M., Gnoffo P. A., Hammond D. P., Jones W. T., Kleb B.,
+Lee-Rausch E. M., Nielsen E. J., Park M. A., Rumsey C. L., Thomas J. L., Thompson K. B., Walden,
+A. C., Wang, L., and Wood W. A., “FUN3D Manual: 13.7,” NASA TM 2020-5010139, 2020.
+[17] Nielsen, E. J., and Diskin, B., “High-Performance Aerodynamic Computations for Aerospace
+Applications,” Parallel Computing, Vol. 64, 2017, pp. 20–32.
+https://doi.org/10.1016/j.parco.2017.02.004
+[18] Walden, A., Nielsen, E. J., Zubair, M., Linford, J. C., Wohlbier, J. G., Luitjens, J. P., Orender, J.,
+Beekman, I., Khuvis, S., and Shende, S. S., “Unstructured-Grid CFD Algorithms on Many-Core
+
+16
+
+Architectures,” Technical Research Posters of International Supercomputing Conference for High
+Performance Computing, Networking, Storage, and Analysis. p. 17, 2017.
+https://sc17.supercomputing.org/SC17%20Archive/tech_poster/poster_files/post134s2-file3.pdf
+[19] Walden, A., Nielsen, E. J., Diskin, B., and Zubair, M., “A Mixed Precision Multicolor Point-Implicit
+Solver for Unstructured Grids on GPUs," 2019 IEEE/ACM 9th Workshop on Irregular Applications:
+Architectures and Algorithms (IA3), Denver, CO, USA, 2019, pp. 23-30.
+https://doi.org/10.1109/IA349570.2019.00010
+[20] Nastac G., Walden A., Nielsen E. J., and Frendi K., “Implicit Thermochemical Nonequilibrium Flow
+Simulations on Unstructured Grids using GPUs,” AIAA 2021-0159, 2021.
+https://doi.org/10.2514/6.2021-0159
+[21] Walden A., Nielsen E. J., Korzum A., et al., “Landing on Mars: Petascale Unstructured Grid
+Computational Fluid Dynamics on Summit,” International Workshop on OpenPOWER for HPC, ISC,
+2019. https://indico-jsc.fz-juelich.de/event/87/material/slides/8.pdf
+[22] Roe P. L., “Approximate Riemann Solvers, Parameter Vectors, and Difference Schemes,” Journal of
+Computational Physics, Vol. 43, No. 2, 1981, pp. 357–372.
+https://doi.org/10.1016/0021-9991(81)90128-5.
+[23] Burg C. O. E., “Higher Order Variable Extrapolation for Unstructured Finite Volume RANS Flow
+Solvers,” AIAA 2005–4999, 2005. https://doi.org/10.2514/6.2005-4999
+[24] van Leer B., “Towards the Ultimate Conservative Difference Scheme, V. A Second Order Sequel to
+Godunov’s Method,” Journal of Computational Physics, Vol. 32, No. 1, 1979, pp. 101–136.
+https://doi.org/10.1016/0021-9991(79)90145-1
+[25] Barth T. J., “Numerical Aspects of Computing Viscous High Reynolds Number Flows on
+Unstructured Meshes,” AIAA 91–0721, 1991. https://doi.org/10.2514/6.1991-721
+[26] Haselbacher A. C., A Grid-Transparent Numerical Method for Compressible Viscous Flow on Mixed
+Unstructured Meshes, Ph.D. thesis, Loughborough University, 1999. https://hdl.handle.net/2134/7257
+[27] Nishikawa H., “Beyond Interface Gradient: A General Principle for Constructing Diffusion
+Schemes”, AIAA 2010-5093, 2010. https://doi.org/10.2514/6.2010-5093
+[28] Carlson J.-R., “Inflow/Outflow Boundary Conditions with Application to FUN3D,” NASA/TM–
+2011-217181, 2011. https://ntrs.nasa.gov/api/citations/20110022658/downloads/20110022658.pdf
+[29] Galbraith, M. C., Allmaras, S. R., and Darmofal, D. L., “SANS RANS Solutions for 3D Benchmark
+Configurations,” AIAA 2018–1570, 2018. https://doi.org/10.2514/6.2018-1570
+[30] Huang, A. C., “An Adaptive Variational Multiscale Method with Discontinuous Subscales for
+Aerodynamic Flows,” Ph.D. thesis, Massachusetts Institute of Technology, Feb. 2020.
+https://dspace.mit.edu/handle/1721.1/128310
+[31] Huang, A. C., Carson, H.A., Allmaras, S. R., Galbraith, M. C., Darmofal, D. L., and Kamenetskiy, D.
+S., “A Variational Multiscale Method with Discontinuous Subscales for Output-Based Adaptation of
+Aerodynamic Flows,” AIAA 2020-1563, January 2020. https://doi.org/10.2514/6.2020-1563
+[32] Galbraith, M. C., Allmaras, S. R., and Darmofal, D. L., “A Verification Driven Process for Rapid
+Development of CFD Software,” AIAA 2015–818, 2015. https://doi.org/10.2514/6.2015-0818
+[33] Abhyankar, S., Brown, J., Constantinescu, E. M., Ghosh, D., Smith, B. F., and Zhang, H.,
+“PETSc/TS: A Modern Scalable ODE/DAE Solver Library,” Computing Research Repository
+(CoRR),Vol.Numerical Analysis (math.NA),No. arXiv:1806.01437, 2018.
+http://arxiv.org/abs/1302.6066
+[34] Balay, S., Abhyankar, S., Adams, M. F., Benson, S., Brown, J., Brune, P., Buschelman, K.,
+Constantinescu, E. M., Dalcin, L., Dener A., Eijkhout, V., Faibussowitsch, J., Gropp, W. D., Hapla,
+V., Isaac, T., Jolivet, P., Karpeev, D., Kaushik, D., Knepley, M. G., Kong, F., Kruger, S., May, D. A.,
+McInnes, L. C., Mills, R. T., Mitchell, L., Munson, T., Roman, J. E., Rupp, K., Sanan, P., Sarich, J.,
+Smith, B. F., Zampini, S., Zhang, H., Zhang, H., and Zhang, J., “PETSc/TAO User’s Manual,” Tech.
+Rep. ANL-21/39 - Revision 3.18, Argonne National Laboratory, 2022.
+https://petsc.org/release/docs/manual/manual.pdf
+
+17
+
+[35] Balay, S., Gropp, W. D., McInnes, L. C., and Smith, B. F., “Efficient Management of Parallelism in
+
+Object Oriented Numerical Software Libraries,” Modern Software Tools in Scientific Computing,
+edited by E. Arge, A. M. Bruaset, and H. P. Langtangen, Birkhäuser Press, 1997, pp. 163–202.
+https://doi.org/10.1007/978-1-4612-1986-6_8
+[36] Saad, Y., and Schultz, M. H., “GMRES: A Generalized Minimum Residual Algorithm for Solving
+Nonsymmetric Linear Systems,” SIAM Journal of Scientific and Statistical Computing, Vol. 7, 1986,
+pp. 856–869. https://doi.org/10.1137/0907058
+[37] Yano, M., Darmofal, D. L. “An Optimization-Based Framework for Anisotropic Simplex Mesh
+Adaptation,” Journal of Computational Physics, Vol. 231, No. 22, 2012, pp. 7626–7649.
+https://doi.org/10.1016/j.jcp.2012.06.040
+[38] Carson, H. A., Huang, A. C., Galbraith, M. C., Allmaras, S. R., Darmofal, D. L., “Mesh optimization
+via error sampling and synthesis: An update.” AIAA 2020-0087. https://doi.org/10.2514/6.2020-0087
+[39] Diskin, B., Ahmad, N., Anderson, W. K., Derlaga, J. M., Pandya, M. J., Rumsey, C. L., Wang, L.,
+Wood, S. L., Liu, Y., Nishikawa, H., and Galbraith, M. C., “Verification Test Suite for SpalartAllmaras QCR2000 Turbulence Model,” AIAA 2021-1552, 2021.
+https://doi.org/10.2514/6.2021-1552
+[40] Karman, S. and Wyman, N., “Automatic Unstructured Mesh Generation with Geometry Attribution,”
+AIAA 2019-1721, 2019. https://doi.org/10.2514/6.2019-1721
+[41] Lacy, D. and Clark, A. M., “Definition of Initial Landing and Takeoff Reference Configurations for
+the High Lift Common Research Model (CRM-HL),” AIAA 2020-2771, 2020.
+https://doi.org/10.2514/6.2020-2771
+[42] 4th AIAA CFD High Lift Prediction Workshop, retrieved 29 November, 2022.
+https://hiliftpw.larc.nasa.gov/
+
+18
+
+

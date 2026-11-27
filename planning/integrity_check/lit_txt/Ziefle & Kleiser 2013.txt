@@ -1,0 +1,1131 @@
+Jörg Ziefle1
+e-mail: joerg.ziefle@gmail.com
+
+Leonhard Kleiser
+e-mail: kleiser@ifd.mavt.ethz.ch
+Institute of Fluid Dynamics,
+ETH Zurich,
+8092 Zurich, Switzerland
+
+Numerical Investigation
+of a Film-Cooling Flow Structure:
+Effect of Crossflow Turbulence
+Numerical simulation results using large-eddy simulation of a flow configuration relevant
+to the film cooling of turbine blades are presented. The flow configuration and the simulation parameters are chosen according to an experiment from literature, in which a hot turbulent crossflow over a flat plate is cooled by fluid issuing from a large isobaric plenum
+through a short inclined circular nozzle. Special attention is paid to the flow structure
+within the jet nozzle and the mixing region, as well as to the effect of the crossflow fluctuations thereon. To this end, the numerical results with the turbulent crossflow are compared
+to our previous data obtained with a steady mean-turbulent inflow profile. While the flow
+inside the nozzle is very similar for the two cases, large differences occur in the mixing
+region, where a much enhanced spreading of the coolant is observed with the turbulent
+crossflow. Consequently, the good agreement of the film-cooling efficiencies with the experimental data for the turbulent-crossflow case is contrasted by large deviations with the stationary inflow due to the lack of crossflow fluctuations. [DOI: 10.1115/1.4023361]
+Keywords: film cooling, jet in crossflow, large-eddy simulation, approximate-deconvolution model, turbulent crossflow, synthetic-eddy method
+
+1
+
+Introduction
+
+In modern high-performance gas turbines, the hot gas from the
+combustor enters the turbine stages at temperatures that often
+exceed the material limits of the turbine blades. Therefore, they
+have to be thermally protected, which is usually done by a technique called film cooling [1–3]. Here cool air (usually bleed air
+from the turbine compressor) is ejected through rows of small
+holes near the leading edge of the blades and across their surface.
+The cool air mixes with the oncoming hot crossflow and creates a
+layer of relatively cold gas which shields the blade surfaces.
+Film-cooling flows belong to the class of jets-in-crossflow, which
+is a heavily researched flow configuration with a wide range of
+practical applications [4]. Film cooling itself has also been subject
+to intensive research for several decades. A good recent review is
+given in [5], and older investigations are summarized in [6]. However, despite the large body of knowledge and experience, film
+cooling is still a subject not fully mastered yet. The main concern
+of current academic research and industrial development efforts on
+film cooling is the optimization of the cooling process, which
+requires a thorough understanding of the instantaneous flow behavior due to the complex flow topology in the mixing region near and
+downstream of the film-cooling hole.
+A topic that deserves particular attention is the avoidance of socalled “hot spots” [7]. These instantaneous patches of hot gas at
+the blade surface are caused by deficiencies in the film-cooling
+process. They thermally strain the blade surface and lead to the
+premature degradation of the blade material or even its structural
+failure, necessitating a costly repair or exchange. Due to the high
+frequencies and the closed and confined measurement environment, experimental investigations of hot spots have remained
+notoriously costly and challenging. In the numerical domain, the
+Reynolds-averaged Navier–Stokes simulations, which are current
+industry practice, are not able to capture the instantaneous
+1
+Corresponding author.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received June 24, 2008;
+final manuscript received April 22, 2009; published online June 3, 2013. Assoc.
+Editor: Je-Chin Han.
+
+Journal of Turbomachinery
+
+phenomena associated with hot spots by virtue of their timeaveraged nature. This calls for time-resolved simulation
+approaches such as large-eddy simulation (LES), which have proven their ability to accurately and reliably predict a wide variety
+of unsteady vortex-dominated flow scenarios.
+Since the cooling process is strongly influenced by the vortices
+that are formed around the film-cooling hole and farther downstream, the physical understanding of the vortex dynamics and
+vortex interaction is crucial to film cooling. Matters are further
+complicated by the fact that secondary flows and recirculation
+regions within the nozzle connecting plenum and crossflow can
+greatly affect the downstream mixing properties [8–11]. This was
+shown to be particularly important in the case of low length-todiameter ratios as occurring in real applications [12–14]. Therefore, a numerical investigation of a realistic film-cooling scenario
+is bound to fully include the plenum and nozzle geometry as well
+as proper flow conditions for them. Furthermore, one cannot
+neglect to analyze the influence and interaction of the secondary
+flow structures (which are themselves heavily dependent on the
+specific properties of plenum and nozzle) with the main flow.
+One of the most frequently investigated film-cooling configurations consists of a nozzle with a length-to-diameter ratio of 1.75 or
+3.5 with a streamwise inclination of 35 deg at a spanwise hole distance of three nozzle diameters. One such series of experiments was
+carried out by Sinha and others [15–29]. Numerical simulations of
+this configuration based on the Reynolds-averaged Navier–Stokes
+(RANS) approach were performed by several groups [8–10,30–32],
+as well as isolated detached-eddy simulations (DES) [33].
+Although these RANS studies were generally able to reproduce
+the gross flow behavior and predict the mean-flow quantities such
+as the film-cooling efficiency with reasonable accuracy, a timedependent simulation approach such as large-eddy simulation
+(LES) offers great advantages. Since the mixing process is an inherently nonstationary phenomenon, which is (in the near field) dominated by secondary flows and vortex interactions, only unsteady
+simulation methods can properly capture these aspects. One prime
+example are the hot spots, which can only be seen in an unsteady
+flow field but not in the time-averaged solution obtained by RANS.
+Besides deepening the understanding of the flow dynamics, the
+
+C 2013 by ASME
+Copyright V
+
+JULY 2013, Vol. 135 / 041001-1
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+considerably more demanding time-dependent simulation techniques can also provide reference data for the evaluation of turbulence
+models for RANS or give physical insight for the development of
+more sophisticated feature-based film-cooling models [34,35].
+Tyagi and Acharya [36,37] published one of the first LES treatments of film cooling. Their approach was based on an incompressible code using the dynamic mixed subgrid-scale model (DMM)
+[38] and a passive scalar for the evolution of the temperature field.
+Two geometric variants for the jet inlet were considered, the first
+one consisting of a plenum feeding a short nozzle as in [25]. In
+the second one, the long delivery tube of the experiment in [26]
+was modeled with a short nozzle, at whose inlet unsteady velocity
+profiles are prescribed (by a combination of mean profiles from a
+RANS computation with Gaussian noise). In both cases the
+oncoming turbulent boundary-layer crossflow was generated with
+Gaussian white-noise perturbations in the inflow plane.
+Liu and Pletcher [39] performed a quite highly resolved LES
+with a compressible finite-volume code based on the LU-SGS
+scheme and a dynamic SGS model. Instead of a plenum, a long
+delivery tube was employed, whose inflow data was provided by a
+simultaneously running LES of turbulent pipe flow. The turbulent
+boundary-layer fluctuations were generated with a rescalingrecycling method. Their analysis mostly focuses on the filmcooling aspects of the flow and demonstrate a good agreement
+with experimental film-cooling efficiency data from literature.
+Lele and Iourokina/Peet also developed an LES approach of
+Sinha’s film-cooling configuration [40–44]. Their simulation
+method used two different coupled codes, a low-Mach number
+code for the plenum and the film-cooling holes, and a compressible code for the crossflow and mixing regions. The dynamic
+Smagorinsky model was used for the treatment of the subgrid
+scales. In the first publication [40] a simplified flow configuration
+with a laminar crossflow and perpendicular ejection was considered, and the investigation focuses on qualitative aspects of the
+velocity field. In the subsequent paper [42] the setup was refined by
+using a 35-deg ejection angle, as well as a turbulent boundary layer
+with fluctuations generated by the rescaling-recycling method. Contours of the velocity field compare favorably to the measurements
+of Pietrzyk et al. [23]. Reference [44] contains a more detailed
+comparison of velocity profiles, which are found to be in good
+agreement, as well as the film-cooling efficiency, where some
+deviations are observed to the data of Sinha et al. [25].
+A series of LES results was published by Schröder et al.
+[45–48]. While the individual contributions vary in scope, they
+share a common simulation approach using a compressible finitevolume code based on the implicit subgrid-scale model AUSM
+(advective upstream splitting method) [49], low-Mach number
+improvements (dual time stepping, multigrid, and preconditioning; except for the first publication), a rescaling-recycling method
+for the turbulent boundary layer, and a large plenum feeding the
+jet. The first contribution [45] studies the influence of two different ejection angles (30 and 90 deg) for the jet on the flow field.
+The following publication [46] keeps the ejection angle at 30 deg
+and demonstrates a good agreement of the velocity field with
+in-house PIV measurements, as well as of the film-cooling efficiency with the experiments of Sinha et al. [25]. The two subsequent papers focus on the effect of the jet-to-crossflow density
+ratio [47] and the shape of the film-cooling hole [48] on the filmcooling behavior.
+Another LES investigation of film cooling targeting the leading
+edge of the blade was undertaken recently by Rozati and Tafti
+[50–53].
+In our present numerical study of film cooling we investigate
+the experimental configuration of Sinha et al. [25] by performing
+large-eddy simulations (LES) with the approximate deconvolution
+model (ADM) [2,54]. In a series of LES of separated flow configurations with increasing complexity [55–60], the present ADM
+implementation has been successfully validated, and the subgridscale model has been proven to work well for compressible flows
+featuring strong unsteady vortical structures.
+
+To reduce the computational effort, the simulation approach
+was simplified in a first step. The oncoming turbulent boundary
+layer of the experiment was represented with a steady meanturbulent profile, which also models to some extent the profile of
+the crossflow shortly downstream of the leading edge of a turbine
+blade (before its transition to turbulence). The evaluation of the
+adequacy of this approach for the prediction of the data of Sinha
+et al. [25], as well as the analysis of the complex flow structure
+within the nozzle and the mixing region, were the primary goals
+of our first contribution [61]. However, large deviations in the
+film-cooling efficiencies from the experimental data indicated that
+the steady crossflow did not suitably model the behavior of fully
+turbulent inflow for the purpose of film cooling, mainly due to the
+lack of crossflow fluctuations.
+In the present paper we consequently employ unsteady turbulent inflow data for the crossflow, which is generated with the
+synthetic-eddy method (SEM) [62,63]. The present focus is twofold. First, the differences in flow topology and cooling behavior
+between the two crossflow types (stationary and unsteady turbulent) are investigated. Second, the more realistic inflow conditions
+for the crossflow should yield a much improved prediction of the
+experimental results of Sinha et al. [25] and therefore demonstrate
+the suitability of our refined simulation approach for film cooling.
+The generation of realistic inflow turbulence is still a quite new
+area of computational fluid dynamics, which has experienced a
+considerable boost with the recent rise of the DES simulation
+methodology. The main demands for an inflow-generation method
+is a low computational overhead, a fast transition to a fully developed turbulence state (i.e., a short streamwise transition length),
+and flexibility with respect for the prescription of arbitrary
+Reynolds-stress profiles or autocorrelations of the velocity fluctuations. Moreover, for the present simulation approach, a straightforward application to domain decomposition and parallelization
+are further desirable properties.
+The tripping method [64] imposes a temporally varying near-wall
+volume force to a spanwise stretch of the flow that simulates the
+influence of a trip wire. While its implementation is relatively simple, the transition length of the tripping method (and thus the computational overhead) is quite long since the flow must undergo more
+or less full physical transition-to-turbulence as in a flow experiment
+in a wind tunnel. Similar statements can be made for inflowgeneration methods based on suction and blowing at the wall.
+The rescaling-recycling method [65], which was also used in previous large-eddy simulations of compressible boundary-layer flow
+using ADM [66], is another prominent example of an inflowgeneration method. Here an independent simulation of spatially
+developing boundary-layer flow is conducted parallel to the main
+flow simulation. The flow at a fixed downstream location is
+sampled, suitably rescaled (using standard scaling laws from
+boundary-layer theory) and imposed (“recycled”) in its inflow plane.
+The unsteady flow profiles at a chosen downstream location (e.g.,
+depending on the desired Reynolds number) can then be prescribed
+in the inlet plane of the boundary layer of the main simulation.
+While the transition length of the rescaling-recycling method
+should be somewhat shorter than that of the tripping method, due
+to the prescription of relatively realistic turbulence, it has some
+serious downsides. The implementation is quite challenging, especially that of the spanwise sampling when considering domain
+decomposition, curvilinear grids, and parallelization. Some
+“kludges” are required to make it work in a robust way (especially
+in the initial startup phase). The quasi-periodic boundary conditions of the precursor simulation create artificial (i.e., unphysical)
+streamwise autocorrelations of the flow fluctuations. Finally, the
+computational overhead is considerable, due to the inclusion of a
+full separate boundary-layer simulation and the moderately long
+transition length.
+The synthetic-eddy method was developed recently by Jarrin
+et al. [62,63] and has already become a popular inflow-generation
+method for DES simulations. It owes this mainly to the fact that it
+exhibits a number of intriguing properties and none of the
+
+041001-2 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+disadvantages of the above methods. It is computationally cheap,
+easy to implement, and flexible with respect to the geometry and
+desired properties of the inflow data (arbitrary geometries and
+inflow profiles can be used). Its transition length is comparably
+short, especially when physically realistic inflow conditions are
+employed (such as a varying turbulent length and time scales). For
+these benefits, the SEM was chosen as inflow-generation method
+for the present film-cooling simulation with unsteady fully turbulent
+inflow data for the boundary layer.
+This paper is structured as follows. First the investigated flow
+configuration and the simulation approach are introduced in the
+next section. In Sec. 3 the large-eddy simulation results with both
+the stationary and the unsteady inflow data for the turbulent crossflow are presented and compared to each other. After an analysis
+of the instantaneous flow field in Sec. 3.1, the time-averaged flow
+data is studied in various cross sections of the configuration. Special focus is placed on the flow structure in the film-cooling hole
+and the complex system of vortices evolving within the nozzle
+and in the mixing region. Finally the mean film-cooling efficiency
+results are compared to the experimental data of Sinha et al. [25].
+
+2
+
+Flow-Case Specification and Simulation Approach
+
+2.1 Flow Configuration, Boundary Conditions, and Spatial
+Discretization. Figure 1 depicts a schematic diagram of the filmcooling configuration of Sinha et al. [25]. The hot fluid in the
+turbulent boundary layer above the flat wall is cooled by a
+spanwise-periodic row of jets emerging from a large isobaric plenum below the wall. The plenum and the boundary layer are connected through a short hole of circular cross section with a
+streamwise inclination angle of 35 deg with respect to the wall of
+the boundary layer. Once the coolant jet (shaded gray in the
+sketch) exits the film-cooling hole, it mixes with the oncoming
+
+crossflow, thereby forming a layer of relatively cool fluid in the
+vicinity of the wall. With increasing streamwise distance, the jet
+dilutes and spreads in the vertical and spanwise directions, indicated by its widening boundaries in the sketch.
+All lengths are nondimensionalized with the diameter of the filmcooling nozzle D (hereafter omitted for brevity). The overall dimensions of the computational domain above the flat-plate wall are
+25  3  5 (Fig. 1). The center of the orifice of the film-cooling hole
+is located five nozzle diameters downstream of the boundary-layer
+inlet. The thickness of the wall between the plenum and the boundary layer is one nozzle diameter, leading to an axial length of the
+film-cooling nozzle of approximately 1.75 (measured between the
+intersections of the nozzle axis with the boundary layer and upper
+plenum walls). The plenum is modeled with a rectangular box of
+dimensions 8  3  7. In the vertical (z) direction, a stretch of two
+nozzle diameters is used for a dampening region (“sponge”), in
+which the desired inflow quantities are imposed [67,68]. The boundary of the sponge region is marked with a dashed line in Fig. 1(a).
+The boundary conditions are the same as in our previous filmcooling simulation [61]. At the adiabatic walls no-slip boundary
+conditions are enforced, and no explicit wall modeling (such as the
+use of wall functions) takes place. The spanwise boundaries are periodic, and nonreflecting boundary conditions are applied at all outflow planes on the top and downstream faces of the computational
+domain. Special care was found to be necessary in the formulation
+of the inflow conditions in the plenum, where for subsonic flow
+computations using the compressible Navier–Stokes solutions a
+special problem arises. While the desired inlet values for the density and velocities are known from the experiment, the physically
+appropriate pressure is unknown and needs to be computed from
+the instantaneous flow solution. This is achieved by using a dampening region (sponge) in combination with a nonreflecting boundary condition at the plenum inlet [67,68].
+
+Fig. 1 Schematic of the jet-in-crossflow configuration. (a) Lateral view and (b) top view.
+The gray areas symbolize the jet fluid. The dashed line in (a) marks the end of the sponge
+region, which is indicated by the shading transition from black to gray below it.
+
+Journal of Turbomachinery
+
+JULY 2013, Vol. 135 / 041001-3
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+The structured computational mesh was created with the commercial program ICEM Hexa. It consists of a block-structured topology of 34 blocks with a total of 1.8  106 nonoverlapping
+finite-volume cells. The plenum is discretized with 14 blocks (or
+450,000 cells), and 5 blocks (or 200,000 cells) are used for the
+film-cooling nozzle.
+
+2.2 Simulation Code, Numerical Method and SubgridScale Modeling. The NSMB (Navier–Stokes multiblock) code
+[69,70] employed for this investigation is a block-parallel cellcentered compressible finite-volume solver for structured grids.
+The present simulation is carried out with a skew-symmetric central spatial discretization of fourth-order accuracy for the inviscid
+fluxes, whose intrinsic properties contribute to accuracy and numerical stability by reducing aliasing errors [71,72], and a secondorder scheme for the viscous fluxes. The flow solution is advanced
+in time with a four-stage Runge–Kutta scheme. To facilitate statistical sampling, the time step was held constant at Dt ¼ 103 time
+units tref ¼ D=u1 . This corresponds to a CFL number of 2, which
+is approximately 70% of the linear stability limit of the time
+discretization.
+The approximate-deconvolution model (ADM), which is
+employed here as subgrid-scale model for LES, is based on two
+main components. The first one is the direct computation of the
+flux tensor FðUÞ of the Navier–Stokes equations in conservation
+form from an approximation U* of the unfiltered state vector U,
+which is obtained by a defiltering procedure [54]. The approximatedeconvolution filter QN (of order N) is based on a truncated series
+expansion of the inverse LES filter G1, leading to an approximate
+deconvolution U* defined by a linear combination of the repeatedly
+filtered state vector (the overbar  denotes spatial filtering, I is the
+identity filter, and the asterisk is convolution),
+U ¼ G1  U ¼
+
+1
+X
+ðI  GÞ  U
+¼0
+
+
+
+N
+X
+
+ðI  GÞ  U ¼ QN  U ¼ U?
+
+(1)
+
+¼0
+
+As a second key component of ADM, a relaxation term
+?
+vðI  QN  GÞ  U ¼ vðU  U Þ is added to the right-hand
+side for regularization [2]. The Navier–Stokes equations (in symbolic notation) with the ADM methodology applied read
+@U
+þ rT  FðU? Þ ¼ vðI  QN  GÞ  U
+@t
+
+(2)
+
+For simplicity and a reduced computational effort we employ a
+constant relaxation co-efficient v ¼ 1/Dt and a standard deconvolution order of N ¼ 5. Alternatively, the relaxation coefficient can
+be determined dynamically from the instantaneous flow field
+using an procedure based on kinetic-energy conservation principles in spectral space [2].
+The synthetic-eddy method (SEM) [62,63] was developed
+recently to facilitate the generation of realistic turbulent inflow
+data by reducing the computational demands and improving the
+flexibility. In SEM, the turbulent fluctuations in the inflow plane
+are constructed from the contribution of many coherent structures
+(or eddies). These eddies exhibit a location, a length scale, and an
+orientation and are convected (independently of the main simulation) with a characteristic mean velocity in a rectangular box with
+periodic boundary conditions. The fluctuating velocity at a given
+location in the inflow plane can be computed at each time from
+the contributions of all eddies. Arbitrary Reynolds-stress tensors
+can be imposed by transforming the generated signal with the
+Cholesky-decomposed Reynolds-stress tensor [65].
+Inflow profiles for SEM were obtained from [73] since one of
+the data sets presented there exhibits a Reynolds number quite
+
+
+
+Fig. 2 Reynolds stresses ui0 uj0 =us (normalized with the
+friction velocity us) at the boundary-layer inlet. Lines:
+present inflow data generated with SEM [62,63] and symbols:
+reference data from [73].  = Streamwise stresses hu 0 u 0 i=us ,
+ =
+spanwise stresses hv 0 v 0 i=us ;   =3 normal
+stresses hw 0 w 0 i=us ; =þ shear stresses hu 0 w 0 i=us .
+
+close to the present one. A number of 10,000 eddies was found to
+be practical for the given flow configuration and geometry, and
+their characteristic length scale was computed from the local turbulent kinetic energy k and the local turbulent dissipation e as outlined in [62,63].
+
+
+Figure 2 compares the Reynolds-stress profiles u0i u0j =us (normalized with the friction velocity us) of the unsteady velocity data
+generated by SEM with the reference data from [73]. As expected,
+the agreement of the synthetic inflow data with the reference data
+is very good.
+2.3 Flow and Simulation Parameters. The flow and simulation parameters correspond to case 10 of Sinha et al. [25] and are
+summarized in Table 1. In accordance with the experiments, which
+were conducted in a wind tunnel using air, the isentropic coefficient
+c ¼ 1.4 is that of a diatomic gas and the Prandtl number is Pr ¼ 0.7.
+The dependence of the dynamic viscosity l on the temperature T is
+modeled with a power law [74], lðT Þ=l1 ¼ ðT=T1 Þ0:7 . Beside the
+nozzle diameter D the free-stream momentum in the boundary layer
+ðquÞ1 is used for the nondimensionalization.
+An instantaneous flow field of the predecessor simulation with
+steady crossflow [61] was used as initial condition for the present
+simulation. After switching on the SEM method and prescribing
+its unsteady inflow data, a transitional period of about 300 time
+units (or about 12 flow-through times Lx =u1 , with the streamwise
+domain size Lx ¼ 25) was awaited until the flow solution was
+found to be statistically stationary.
+The mean flow was computed by temporal averaging of the full
+three-dimensional flow field during the numerical simulation. Statistical sampling was performed every 40 time steps during 554
+time units D=u1 , thereby accumulating almost 14,000 samples.
+The convergence of the statistics was visually confirmed by comparing the averaged solution after different sampling time intervals. The computation was carried out in parallel on four
+processors of a NEC SX-8 vector machine, using about 1000 CPU
+hours (including initial transients).
+To simplify the presentation, we omitted LES operators such as
+(Favre) filtering from our Nomenclature in comparison to our previous publication [61] (except for the discussion of the ADM
+subgrid-scale model above). Therefore, all flow quantities should
+be understood as filtered ones.
+
+3
+
+Results
+
+3.1 Instantaneous Flow Behavior. The instantaneous vortex
+structures of the two cases with the steady and turbulent cross-flows
+are displayed in Fig. 3 using isocontours of the vortex-identification
+
+041001-4 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Table 1 Flow and simulation parameters of the present LES as
+discussed in Sec. 2. The boundary-layer Reynolds number ReBL
+refers to the hypothetical flow state at the center of the jet nozzle
+([x, y, z]T 5 0) without the presence of a jet. The index ðÞjet;bulk
+indicates a bulk quantity of the coolant jet (measured in the nozzle), k a vector component aligned with the nozzle axis, and ðÞ‘
+a free stream (or reference) quantity. The symbol m denotes the
+kinematic viscosity (momentum diffusivity), a the thermal diffusivity and d99% the 99% thickness of the boundary layer.
+Density ratio
+Velocity ratio
+Mass-flux ratio
+(blowing ratio)
+Momentum ratio
+Boundary-layer
+thickness ratio
+Freestream
+Reynolds number
+Boundary-layer
+Reynolds number
+Momentum-thickness
+Reynolds number
+Freestream Mach number
+Prandtl number
+
+
+
+DR ¼ qjet;bulk =q1
+
+
+VR ¼ ukjet;bulk =u1
+BR ¼ hðquÞkjet;bulk i=ðquÞ1
+
+¼
+¼
+¼
+
+2
+0.25
+0.5
+
+IR ¼ hðqu2 Þkjet;bulk i=ðqu2 Þ1
+d99% =D
+
+¼
+¼
+
+0.125
+0.5
+
+Re1 ¼ ðquÞ1 D=l1
+
+¼
+
+ReBL ¼ ðquÞ1 d99% =l1
+
+¼
+
+7937.5
+
+Reh ¼ ðquÞ1 h=l1
+
+¼
+
+772.3
+
+pﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+Ma1 ¼ u1 = cRT1
+Pr ¼ =a
+
+¼
+¼
+
+0.2
+0.7
+
+15,875
+
+measure k2 [1]. The isocontour levels k2 ¼ 0.2 are the same in all
+panels to render the presentations comparable. An exception is Fig.
+3(c), which shows the vortex structures of the turbulent-inflow case
+at a lower isocontour level magnitude of k2 ¼ 0.01, leading to a
+higher level of detail. The flow topology with the steady crossflow
+was already analyzed in detail in [61], so we focus here on the differences between the two cases.
+In contrast to the steady inflow, some turbulent streaks  are
+visible upstream of the orifice in Fig. 3(b). These vortices are only
+relatively weakly visible since their strength is small compared to
+the vortices that are formed around the orifice (e.g., the horseshoe
+vortex ) and in the mixing region (e.g., the hairpin vortice). At
+the isocontour level k2 ¼ 0.01 in Fig. 3(c), more structures are
+shown. As the quasi-turbulent streaks (which are not fully developed) travel toward the orifice, they are subject to an interesting
+phenomenon. First, they become relatively sparser and larger.
+Second, the lateral ones seem to be reoriented toward the orifice,
+and near the lateral domain boundaries slightly upstream of the
+orifice almost no vortices are visible. Whether this behavior has a
+purely physical background or stems from the rather short development length for the boundary layer upstream of the orifice
+(which is close to the minimum according to [62,63]) or the rather
+coarse grid resolution cannot be decided from the current data and
+should be clarified in a future study.
+Although the characteristic hairpin vortices are also visible
+downstream of the film-cooling hole in Figs. 3(b) and 3(c), their
+spacing seems to be closer, and their breakup occurs farther
+
+Fig. 3 Isocontours of the vortex-identification measure [1]
+k2 5 20.2 (except otherwise noted) of the instantaneous flow
+field. (a) Top view (steady-crossflow case), (b) top view
+(turbulent-crossflow case), (c) top view with k2 5 20.01 (turbulent-crossflow case), (d) lateral closeup of nozzle region
+(steady-crossflow case), and (e) lateral closeup of nozzle region
+(turbulent-crossflow case). (a) and (d) and (b), (c), and (e) refer
+to the same instant of time, respectively.  Turbulent streaks in
+crossflow (turbulent-crossflow case),  outermost legs of
+horseshoe vortex, and  hairpin vortices. Solid walls appear as
+transparent gray surfaces.
+
+upstream than in the steady-crossflow case [61]. Similarly, the
+outermost legs of the horseshoe vortex only extend until the
+downstream end of the orifice. Farther downstream a quite irregular flow structure can be seen due to the unsteadiness of the
+upstream crossflow.
+Due to the unsteadiness in the oncoming crossflow, the flow topology with the turbulent crossflow is generally less regular as
+with the steady boundary-layer inflow. This also affects the timeperiodic formation of the hairpins near the orifice, which was evidenced for the steady-crossflow case by two distinct peaks in the
+energy-density spectra of the pressure and the vertical velocity
+(cf. Fig. 4(a)). The corresponding spectrum at the same location
+with the turbulent crossflow in Fig. 4(b) appears much flatter, and
+only for the pressure signal in Fig. 4(a) a weak peak is visible at a
+similar Strouhal number of St  0.4 as in the steady-crossflow
+case. As expected, the generally higher fluctuation level with the
+turbulent crossflow shows as a considerably higher spectral energy
+content toward the large frequencies.
+3.2 Mean Flow Field
+3.2.1 Contour at Boundary-Layer Wall. Large differences in
+the flow behavior between the two flow cases are also observable
+for the time-averaged quantities. Figure 5 shows the contour visualization of the mean film-cooling efficiency hgi :¼ ðhT i  T1 Þ=
+Tjet;bulk  T1 at the crossflow wall (z ¼ 0). While the former contour for the steady-crossflow case in Fig. 5(a) exhibits a
+
+Fig. 4 Energy-density spectrum Epp of an instantaneous pressure signal at
+x 5 ½x ; y ; z T  ½3; 0; 0:25 T . (a) Steady inflow and (b) turbulent inflow. The time series
+were treated with a Hann window and the frequency f is expressed in terms of the
+Strouhal number St ¼ fD=u‘.
+
+Journal of Turbomachinery
+
+JULY 2013, Vol. 135 / 041001-5
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Fig. 5 Contour visualization of mean film-cooling efficiency hgi at the wall (z 5 0).
+(a) Steady crossflow and (b) turbulent crossflow. The orifice is shown as a black ellipse.
+The contour lines mark ten equidistant intervals ranging from the minimum to the
+maximum of the value range indicated in the colorbar.
+
+Fig. 6 Positions of the cutting planes (a)–(f) within the nozzle
+in Fig. 7. The normal of cutting planes is parallel to the nozzle
+axis (vector n :5 [cos 35 deg, 0, sin 35 deg]T) and intersecting
+it in points 2s n with s ‰ R. (a) s  1.743, (b) s  1.386,
+(c) s  1.029, (d) s  0.714, (e) s  0.357, and (f) s 5 0.
+
+characteristic “three-pike shape,” the latter density contour occurs
+more “cone shaped” (or “flame shaped”). As detailed in [61], the
+distinct “three-pike” appearance of some contours in the steadycrossflow case can be attributed to the strong influence of the legs
+
+of the broken-up hairpin vortices in a laterally slightly diverging
+strait downstream of the film-cooling hole. Under their rotational
+effect, hot crossflow fluid is transported close to the wall and thus
+the local flow state (i.e., density and film-cooling efficiency) is
+closer to that of the crossflow. With the turbulent crossflow, the
+high fluctuation level of the on-coming crossflow causes the regular
+vortex structures downstream of the film-cooling hole to break up
+earlier, and the resulting irregular flow topology overshadows the
+influence of the legs of the hairpin vortices.
+Another important observation concerns development of the
+film-cooling efficiency close to the centerline. In the steadycrossflow case, the jet detaches upon exiting the film-cooling
+hole, as evident from the sharply falling values directly downstream of the downstream edge of the orifice in Fig. 5(a). After a
+short streamwise distance, the coolant jet reattaches, causing
+high densities (and film-cooling efficiencies) in an elongated
+streamwise stretch (1.5 x 5). With the turbulent crossflow,
+no detachment of the coolant jet occurs and the cooling efficiency decreases gradually immediately downstream of the filmcooling hole.
+
+Fig. 7 Line-integral
+convolution (LIC) [75] visualization of the mean velocity field
+D
+E
+½v ; u? T in the film-cooling hole (with u? :¼ u  t and t :¼ ½sin 35 deg; 0; cos 35 deg T ,
+for the stationary crossflow (top row) and the turbulent crossflow (bottom row).
+Details about the locations of the cutting planes (a)–(f) are given in Fig. 6 and are associated with the panels as indicated above them.
+
+041001-6 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+3.2.2 Flow Characteristics in Nozzle and Plenum. The mean
+velocity field within the nozzle is very similar in both simulations,
+as evident from a comparison of their line-integral convolution
+(LIC) [75] representations in Figs. 6 and 7. The data of the former
+case seems to be slightly more symmetric, and the vertical extent
+of its counter-rotating vortex pair is slightly larger in the downstream nozzle half (Figs. 7(e) and 7(f)). Only in Fig. 7(d), larger
+differences are visible in the upper half of the nozzle. Specifically,
+the upstream influence of the crossflow into the nozzle (causing a
+downward and lateral movement of the nozzle flow) seems to be
+larger with the steady crossflow. This is also more weakly visible
+in the downstream positions (e) and (f). Due to the lack of oncoming boundary-layer fluctuations and the resulting generally more
+regular flow structure with the steady inflow, the crossflow seems
+to be able to exert a larger influence into the nozzle.
+Figure 8 visualizes the structure of the mean flow field for both
+flow cases in the symmetry plane (Figs. 8(a) and 8(c)) and at the
+wall (Figs. 8(b) and 8(d)) using the LIC technique. While the
+overall appearance is rather similar, some subtle differences can
+be recognized. When comparing Figs. 8(a) and 8(c), the separation region in the jet nozzle is of larger vertical extent in the turbulent case.
+In the wall plane (Figs. 8(b) and 8(d)), the main differences are
+visible for the system of horseshoe vortices around the jet nozzle.
+The stagnation region at the upstream edge of the nozzle is more
+pronounced for the turbulent case. In contrast to the simulation
+with the steady crossflow, there is some backflow occurring, and
+the legs of the horseshoe vortex are located slightly farther
+upstream and outward (in the lateral direction). The middle legs
+of the horseshoe vortex detach already at x  0.5) from the
+outer ones with the turbulent crossflow, whereas this only occurs
+at x  0 in the steady-crossflow case.
+Furthermore, the “wake region” with some slight recirculation
+directly downstream of the downstream edge of the orifice is
+larger with the steady crossflow, as it would be expected from
+
+other visualizations (e.g., in Sec. 3.2.1). Moreover, the streamlines
+converge to the centerline y ¼ 0 faster with the turbulent crossflow, indicating a larger downstream effect of the orifice in the
+steady-crossflow case. Finally, the counter-rotating vortex pair
+emerging from within the jet nozzle appears larger in the turbulent
+case, especially in the “upright” (i.e., here x) direction.
+3.2.3 Flow Data in Symmetry Plane. A comparison of the
+contour visualizations between the two simulations in Fig. 9
+reveals some differences in their flow behavior in the symmetry
+plane. The most prominent deviation concerns the vertical jet
+spreading, which is significantly larger for the case with the turbulent crossflow. This flow feature directly begins at the orifice and
+is visible for the velocity magnitude in Figs. 9(a) and 9(b), as well
+as the film-cooling efficiency in Figs. 9(c) and 9(d). Additionally,
+their vertical gradients are significantly smaller. Both observations
+are clearly an effect of the oncoming crossflow fluctuations, which
+generally enhance the mixing process between the jet and the
+crossflow.
+The flow behavior within the nozzle also differs slightly
+between the two simulations. Most notably, the recirculation zone
+due to the plenum-nozzle contraction is more pronounced for the
+turbulent crossflow, and (maybe as a result) the jetting effect in
+the upper nozzle half is stronger. This is also evident from the
+mean velocity magnitude, which exhibits a larger value range
+(i.e., a stronger backflow and a higher vertical-velocity maximum)
+for the simulation with the turbulent crossflow in Fig. 9(b). Furthermore, the near-wall velocity magnitudes downstream of the
+orifice are somewhat larger in Fig. 9(b) than for the steady crossflow in Fig. 9(a).
+The immediate decrease of the film-cooling efficiency downstream of the orifice in the turbulent-crossflow case is clearly visible in Fig. 9(d) and in contrast to the considerably longer
+coverage of the wall by the coolant fluid in Fig. 9(c). (The short
+reattachment of the coolant jet in the latter case is not visible in
+
+Fig. 8 Line-integral convolution (LIC) [75] visualization of the mean velocity field hu i for the steady crossflow
+(upper row) and the turbulent crossflow (bottom row). (a)/(c) symmetry plane (y 5 0) and (b)/(d) wall plane (z 5 0).
+
+Journal of Turbomachinery
+
+JULY 2013, Vol. 135 / 041001-7
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Fig. 9 Contour visualization of the mean flow field in the center plane y 5 0. (a) and (b): Velocity
+magnitude hjuji for the (a) stationary and (b) turbulent crossflows. (c) and (d): Film-cooling efficiency hgi for the (c) stationary and (d) turbulent crossflows. The vertical lines denote the locations of the cross sections in Figs. 10 and 11. Same contour legend as in Fig. 5.
+
+the contour visualization due to a deficiency of the employed plotting tool in conjunction with the rather coarse spatial resolution.)
+3.2.4 Flow Data in Spanwise Planes. The contour visualizations of the mean velocity magnitude hjuji in spanwise planes for
+the turbulent-crossflow case exhibits some differences to the simulation with the steady crossflow (Fig. 10). Most notably, the vertical
+spreading of the coolant jet downstream of the orifice (i.e., in Figs.
+10(c)/10(d) and 10(g)/10(h)) is greater with the turbulent crossflow.
+Apparently the oncoming crossflow fluctuations strongly contribute
+to the vertical mixing process. The enhanced mixing process due to
+the turbulent crossflow applies to a lesser extent also to the lateral
+direction. This is also evident from the significantly smaller velocity gradients in Figs. 10(g)/10(h) compared to the corresponding
+Figs. 10(c)/10(d) for the steady crossflow. While the qualitative
+shape of the isocontours in Figs. 10(c) and 10(g) is quite similar
+(since they are based on the same underlying effects), it is evident
+that the influence of the streamwise legs of the hairpin vortices is
+smaller with the turbulent crossflow.
+A comparison of the streamwise development of the film-cooling
+efficiency contours hci between the two flow cases in Fig. 11
+reveals the major differences in their cooling behavior. The mixing
+between jet and crossflow is greatly enhanced in the turbulent
+case due to the oncoming fluctuations, visible by the much
+quicker spreading and the smaller gradients in Figs. 11(e)–11(h)
+compared to Figs. 11(a)–11(d). Moreover, the jet spreads more
+
+homogeneously in all directions for the turbulent-crossflow case
+since individual vortex structures have a relatively smaller influence
+on the local fluid transport compared to the general fluctuation
+level. This is particularly visible at some distance downstream of
+the orifice in Figs. 11(g) and 11(h). Here the streamwise legs of the
+hairpin vortices cause distinct “three-pike shapes” of the filmcooling efficiency contours in Figs. 11(c) and 11(d), as well as in
+the wall plane (Fig. 5(a)). In contrast, the contours of the turbulentcrossflow case in Figs. 11(g) and 11(h) are free from such an effect,
+as was already seen in Sec. 3.2.1.
+3.2.5 Mean Film-Cooling Efficiency. It can be expected that
+the more realistic unsteady turbulent inflow data for the crossflow
+greatly improves the predictive accuracy of the film-cooling efficiency. Figure 12 shows indeed a much more favorable agreement
+of the different cooling efficiencies with the experimental data
+of [25].
+The centerline efficiency in Fig. 12(b) exhibits only minor deviations in a short range close to the downstream edge of the orifice,
+where slightly higher efficiencies are predicted than observed in
+the experiment. They seem to stem from differences in the cooling
+behavior directly downstream of the orifice, where the computed
+cooling efficiency stays close to the ideal value of unity until
+x  1.5. In contrast, the first data point (at x  1) of [25] is already
+significantly below at hgi (x ¼ 1, y ¼ 0)  0.85. This could either
+
+041001-8 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 10 Contour visualization of the mean velocity magnitude hjuji in spanwise planes x 5 const. (marked in Fig. 8) for different streamwise positions x. Upper row: steady crossflow and lower row: turbulent crossflow. (a)/(e) x 5 0, (b)/(f) x  0.872,
+(c)/(g) x 5 4, and (d)/(h) x 5 15. Same contour legend as in Fig. 5.
+
+Fig. 11 Contour visualization of the mean film-cooling efficiency hgi in spanwise planes x 5 const. (marked in Fig. 8) for different streamwise positions x. Upper row: steady crossflow, lower row: turbulent crossflow. Streamwise positions as in
+Fig. 10. Same contour legend as in Fig. 5.
+
+indicate a slight detachment of the coolant jet, or the influence of
+a vortical structure transporting crossflow fluid close to the downstream edge of the orifice.
+One has to keep in mind, however, that there is a well-known
+uncertainty connected to the experimental conditions of [25]. As
+it became known some time after the publication of the experimental data, there was a slight skew of the jet centerline with
+respect to the geometrical centerline of the experimental setup [9].
+Especially, the centerline efficiency is quite sensitive to such geometric deviations, and significant improvements of the centerline
+efficiency, as well as the lateral efficiency, were achieved in the
+mentioned paper with a correction of the skew angle (for which a
+tentative value of 1.5 deg was used). However, since also the laterally averaged efficiency (which is much more robust as an integral measure) is somewhat overpredicted in the stretch
+downstream of the orifice, the previously mentioned reasons seem
+to be more plausible. Furthermore, the data presented in [25] gives
+rise to some uncertainty about the definition of the coordinate
+Journal of Turbomachinery
+
+origin (i.e., at the upstream or downstream edge of the orifice or at
+its center).
+As already mentioned, the laterally averaged cooling efficiency
+hhgiiy (x) in Fig. 12(d) is also somewhat overpredicted in a short
+region downstream of the film-cooling hole, indicating a consistently better lateral cooling in the computed case than in the
+experiment. Farther downstream, the agreement improves
+notably.
+The lateral cooling efficiency in three streamwise positions
+(Fig. 12(f)) shows a significantly improved agreement with the
+measurements. While the profiles at the two downstream locations
+(x ¼ 10  Dx and x ¼ 15  Dx) correlate very well with the experimental data, a relatively small but consistent overprediction is
+observed for the location close to the orifice (x ¼ 1  Dx). Furthermore, while the measured cooling efficiency shows a continuous
+and smooth decrease from the centerline toward the lateral domain boundary at this position, the computed centerline efficiency
+exhibits a notable upward bump within 0.5 y 1.
+JULY 2013, Vol. 135 / 041001-9
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Fig. 12 Mean film-cooling efficiency hgi. Left column: steady crossflow, right column: turbulent crossflow. ——— Present LES, – – – – Sinha et al. [25] (a)/(b) Centerline effectiveness
+hgiðx ; y ¼ 0Þ, (c)/(d) laterally averaged effectiveness hhgiiy ðx Þ, and (e)/(f) local lateral effectiveness hgiðx ¼ const:; y Þ at three different streamwise locations. Lines: present LES,
+symbols: Sinha et al. [25] ——/3 x ¼ 1  Dx , – – – –/ x 5 10 2 Dx, ——/ x ¼ 15  Dx ,
+where Dx ¼ 1=ð2 sin 35 degÞ  0:87 accounts for our different choice of coordinate origin
+compared to Sinha et al. [25].
+
+4
+
+Summary and Conclusions
+
+The flow structure and mixing behavior of the film-cooling flow
+configuration of Sinha et al. [25] was numerically investigated and
+compared for two different crossflow types. In the first, a steady
+mean-turbulent profile models the crossflow behavior shortly downstream of the leading edge of a turbine blade, whereas in the second
+unsteady turbulent inflow data (generated with the synthetic-eddy
+method [62,63]) provides more realistic inlet boundary conditions
+for a comparison with the experimental measurements. The simulations were performed using the NSMB code [69,70] in conjunction
+with the large-eddy simulation approach based on the approximatedeconvolution subgrid-scale model (ADM) [2,54].
+The presented results concern both instantaneous and timeaveraged data. In visualizations of the three-dimensional instantaneous flow field, the complicated flow structure in the mixing
+region was investigated, in particular the most prominent vortices
+and their interaction. While the shedding of hairpin vortices is
+present in both cases, the location of their formation is situated
+considerably farther upstream with the turbulent crossflow.
+The topology of the mean flow field was studied in various
+cross sections. The most prominent difference between the results
+
+of the two crossflow types is the faster spreading of the coolant jet
+in the turbulent-crossflow case. Furthermore; in contrast to the
+steady inflow, it also does not detach from the crossflow wall
+upon leaving the orifice. The flow structure within the jet nozzle
+and near the crossflow wall; on the other hand, was found to be
+very similar in both cases.
+The predicted film-cooling efficiencies from both simulations
+were compared with the measurements of Sinha et al. [25].
+Whereas considerable deviations to the experimental data were
+found in case of the stationary crossflow, the results obtained with
+the unsteady crossflow agree well with the reference data. They
+thus demonstrate the applicability of the current simulation
+approach to film-cooling flows and confirm our presumption [61]
+that the deviations of the steady-crossflow case are due to the lack
+of crossflow fluctuations.
+This leads to the conclusion that while the usage of a stationary
+crossflow might model certain aspects of the flow behavior near the
+leading edge of the turbine blade, it is not a suitable simplification
+for film cooling near the center of the blade (which is commonly
+investigated). Here only a simulation approach that includes unsteady
+inflow fluctuations for the boundary layer can be expected to yield a
+realistic reproduction of the flow structure and the mixing behavior.
+
+041001-10 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Acknowledgment
+Part of this work was carried out with support of the project
+“HPC-Europa” of the European Community. The hospitality of
+Professor U. Rist and his group at the Institute of Aerodynamics
+and Gasdynamics (University of Stuttgart), as well as the support
+of the High Performance Supercomputing Center Stuttgart
+(HLRS), are greatly appreciated. The authors thank Professor R.
+Abhari and his group at the Turbomachinery Laboratory (ETH
+Zurich) as well as F. Keiderling for fruitful discussions.
+
+Nomenclature
+Operators
+*¼
+ ¼
+? ¼
+ ¼
+hi or hit ¼
+hiy ¼
+T ¼
+a¼
+
+convolution
+low-pass filtered quantity
+deconvolved quantity
+derived quantity computed from low-pass filtered
+quantities
+time averaging
+spatial averaging in y direction
+vector transposition
+vector (bold), for example
+
+Roman Symbols
+D¼
+Epp ¼
+f¼
+F¼
+G, G1 ¼
+I¼
+Lx, Ly, Lz ¼
+Ma ¼
+N¼
+p¼
+Pr ¼
+QN ¼
+R¼
+Re ¼
+s¼
+St ¼
+t¼
+t, n ¼
+Dt ¼
+T¼
+u, v, w ¼
+u¼
+U¼
+x, y, z ¼
+Dx ¼
+
+nozzle diameter
+power density of the pressure
+frequency
+flux tensor of conservative Navier–Stokes equations
+primary LES filter and its exact inverse
+identity filter
+domain size in the x, y, and z directions
+Mach number
+deconvolution order
+pressure
+Prandtl number
+approximate-deconvolution filter
+mass-specific gas constant
+Reynolds number
+scaling factor
+Strouhal number
+time
+vectors aligned and normal to nozzle axis (cf. Fig. 6)
+time step
+temperature
+velocities in the x, y, and z directions
+velocity vector
+state vector of conservative Navier–Stokes equations
+streamwise, spanwise, and vertical directions
+streamwise shift of coordinate system
+
+Greek Symbols
+c¼
+d99% ¼
+g¼
+k2 ¼
+l¼
+q¼
+v¼
+
+isentropic coefficient
+99% boundary-layer thickness
+film-cooling efficiency
+vortex-identification criterion [1]
+dynamic viscosity
+density
+ADM relaxation coefficient [2]
+
+Subscripts
+BL ¼
+bulk ¼
+jet ¼
+ref ¼
+1¼
+jj; ? ¼
+
+boundary-layer quantity
+bulk quantity
+jet quantity
+reference quantity
+freestream quantity
+parallel and orthogonal vector components
+
+Journal of Turbomachinery
+
+References
+[1] Jeong, J., and Hussain, F., 1995, “On the Identification of a Vortex,” J. Fluid
+Mech., 285, pp. 69–94.
+[2] Stolz, S., Adams, N. A., and Kleiser, L., 2001, “The Approximate Deconvolution Model for Large-Eddy Simulations of Compressible Flows and Its Application to Shock-Turbulent-Boundary-Layer Interaction,” Phys. Fluids, 13(10), pp.
+2985–3001.
+[3] Han, J. C., Dutta, S., and Ekkad, S. V., 2000, Gas Turbine Heat Transfer and
+Cooling Technology, Taylor & Francis, New York.
+[4] Margason, R. J., 1993, “Fifty Years of Jet in Cross Flow Research,” AGARD
+report CP-534.
+[5] Bogard, D. G., and Thole, K. A., 2006, “Gas Turbine Film Cooling,” J. Propul.
+Power, 22(2), pp. 249–270.
+[6] Goldstein, R. J., 1971, “Film Cooling,” Adv. Heat Transfer, 7, pp. 321–379.
+[7] Dorney, D. J., and Davis, R. L., 1993, “Numerical Simulation of Turbine
+“Hot Spot” Alleviation Using Film Cooling,” J. Propul. Power, 9(3), pp. 329–336.
+[8] Leylek, J. H., and Zerkle, R. D., 1994, “Discrete-Jet Film Cooling: A Comparison of Computational Results With Experiments,” ASME J. Turbomach., 116,
+pp. 358–368.
+[9] Walters, D. K., and Leylek, J. H., 1997, “A Systematic Computational Methodology Applied to a Three-Dimensional Film-Cooling Flowfield,” ASME J. Turbomach., 119, pp. 777–785.
+[10] Walters, D. K., and Leylek J. H., 2000, “A Detailed Analysis of Film Cooling
+Physics: Part I—Streamwise Injection With Cylindrical Holes,” ASME J. Turbomach., 122, pp. 102–112.
+[11] Peterson, S. D., and Plesniak, M. W., 2004, “Evolution of Jets Emanating From
+Short Holes Into Crossflow,” J. Fluid Mech., 503, pp. 57–91.
+[12] Burd, S., and Simon, T., 1997, “The Influence of Coolant Supply Geometry on Film
+Coolant Exit Flow and Surface Adiabatic Effectiveness,” Proc. 1997 International
+Gas Turbine Conference, Orlando, FL, June 2–5, ASME Paper No. 97-GT-25.
+[13] Burd, S., and Simon, T., 1999, “Measurements of Discharge Coefficients in
+Film Cooling,” ASME J. Turbomach., 121(3), pp. 243–248.
+[14] Lutum, E., and Johnson, B., 1999, “Influence of the Hole Length-to-Diameter
+Ratio on Film Cooling With Cylindrical Holes,” ASME J. Turbomach., 121(2),
+pp. 209–216.
+[15] Goldstein, R. J., Eckert, E. R. G., Eriksen, V. L., and Ramsey, J. W., 1970,
+“Film Cooling Following Injection Through Inclined Circular Tubes,” Isr. J.
+Technol., 8(1–2), pp. 145–154.
+[16] Goldstein, R. J., Eckert, E. R. G., and Burggraf, F., 1974, “Effects of Hole Geometry and Density on Three-Dimensional Film Cooling,” Int. J. Heat Mass
+Transfer, 17, pp. 595–607.
+[17] Eriksen, V. L., and Goldstein, R. J., 1970, “Heat Transfer and Film Cooling
+Injection Through Inclined Circular Tubes,” ASME J. Heat Transfer, 96, pp.
+239–245.
+[18] Pedersen, D. R., Eckert, E. R. G., and Goldstein, R. J., 1977, “Film Cooling
+With Large Density Differences Between the Mainstream and the Secondary
+Fluid Measured by the Heatmass Transfer Analogy,” ASME J. Heat Transfer,
+99, pp. 620–627.
+[19] Bergeles, G., Gosman, A. D., and Launder, B. E., 1977, “The Near-Field Character of a Jet Discharged Through a Wall at 30 Deg to a Mainstream,” AIAA J.,
+15(4), pp. 499–504.
+[20] Foster, N. W., and Lampard, D., 1980, “The Flow and Film Cooling Effectiveness Following Injection Through a Row of Holes,” ASME J. Eng. Power, 102,
+pp. 584–588.
+[21] Goldstein, R. J., and Yoshida, T., 1982, “The Influence of a Laminar Boundary
+Layer and Laminar Injection on Film Cooling Performance,” ASME J. Heat
+Transfer, 104, pp. 355–362.
+[22] Ammari, H. D., Hay, N., and Lampard, D., 1990, “The Effect of Density Ratio
+on the Heat Transfer Coefficient From a Film-Cooling Flat Plate,” ASME J.
+Turbomach., 112, pp. 444–450.
+[23] Pietrzyk, J. R., Bogard, D. G., and Crawford, M. E., 1989, “Hydrodynamic
+Measurements of Jets in Crossflow for Gas Turbine Film Cooling
+Applications,” ASME J. Turbomach., 111, pp. 139–145.
+[24] Pietrzyk, J. R., Bogard, D. G., and Crawford, M. E., 1990, “Effects of Density
+Ratio on the Hydrodynamics of Film Cooling,” ASME J. Turbomach., 112, pp.
+437–443.
+[25] Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991, “Film-Cooling Effectiveness Downstream of a Single Row of Holes With Variable Density Ratio,”
+ASME J. Turbomach., 113, pp. 442–449.
+[26] Lavrich, P. L., and Chiappetta, L. M., 1990, “An Investigation of Jet in a Cross
+Flow for Turbine Film Cooling Applications,” Technical Report No. 90-04,
+United Technologies Research Center (UTRC).
+[27] Lee, S. W., Lee, J. S., and Ro, S. T., 1994, “Experimental Study on the Flow
+Characteristics of Streamwise Inclined Jets in Crossflow on Flat Plate,” ASME
+J. Turbomach., 116, pp. 97–105.
+[28] Lee, J. S., Jung, H. G., and Kang, S. B., 2002, “Effect of Embedded Vortices on
+Film Cooling Performance on a Flat Plate,” Exp. Therm. Fluid Sci., 26, pp.
+197–204.
+[29] Kohli, A., and Bogard, D. G., 2005, “Turbulent Transport in Film Cooling
+Flows,” ASME J. Heat Transfer, 127, pp. 513–520.
+[30] Heidmann, J. D., and Hunter, S. D., 2001, “Coarse Grid Modeling of Turbine
+Film Cooling Flows Using Volumetric Source Terms,” ASME Turbo Expo,
+New Orleans, LA, June 4–7, ASME Paper No. 2001-GT-138.
+[31] Azzi, A., and Lakehal, D., 2002, “Perspectives in Modeling Film Cooling of
+Turbine Blades by Transcending Conventional Two-Equation Turbulence Models,” ASME J. Turbomach., 124, pp. 472–484.
+
+JULY 2013, Vol. 135 / 041001-11
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+[32] Azzi, A., and Jubran, B. A., 2003, “Numerical Modeling of Film Cooling From
+Short Length Stream-Wise Injection Holes,” J. Heat Mass Transfer, 39, pp.
+345–353.
+[33] Kapadia, S., Roy, S., and Heidmann, J., 2004, “First Hybrid Turbulence Modeling for Turbine Blade Film Cooling,” J. Thermophys. Heat Transfer, 18(1), pp.
+154–156.
+[34] Burdet, A., Abhari, R. S., and Rose, M., 2007, “Modelling of Film Cooling—
+Part II: Model for Use in Three-Dimensional Computational Fluid Dynamics,”
+ASME J. Turbomach., 129(2), pp. 221–231.
+[35] Burdet, A., and Abhari, R. S., 2007, “Three-Dimensional Flow Prediction and
+Improvement of Holes Arrangement of a Film-Cooled Turbine Blade Using a
+Feature-Based Jet Model,” ASME J. Turbomach., 129(2), pp. 258–268.
+[36] Tyagi, M., and Acharya, S., 2003, “Large Eddy Simulation of Film Cooling Flow
+From an Inclined Cylindrical Jet,” ASME J. Turbomach., 125, pp. 734–742.
+[37] Tyagi, M., 2003, “Large Eddy Simulations of Complex Turbulent Flows,”
+Ph.D. thesis, Louisiana State University, Baton Rouge, LA.
+[38] Moin, P., Squires, K., Cabot, W., and Lee, S., 1991, “A Dynamic Subgrid-Scale
+Model for Compressible Turbulence and Scalar Transport,” Phys. Fluids A,
+3(11), pp. 2746–2757.
+[39] Liu, K., and Pletcher, R. H., 2005, “Large Eddy Simulation of Discrete-Hole
+Film Cooling in a Flat Plate Turbulent Boundary Layer,” 38th AIAA Thermophysics Conference, Toronto, Canada, June 6–9, AIAA Paper No. 2005-4944.
+[40] Iourokina, I., and Lele, S. K., 2005, “Towards Large Eddy Simulation of FilmCooling Flows On a Model Turbine Blade Leading Edge,” 43th Aerospace Sciences Meetings and Exhibit, Reno, NV, January 10–13, AIAA Paper No. 2005-0670.
+[41] Peet, Y. V., 2006, “Film Cooling From Inclined Cylindrical Holes Using Large
+Eddy Simulations,” Ph.D. thesis, Stanford University, Stanford, CA.
+[42] Iourokina, I., and Lele, S. K., 2007, “Large Eddy Simulation of Film-Cooling
+Flows Above the Flat Surface With a Large Plenum and Short Exit Holes,”
+44th Aerospace Sciences Meetings and Exhibit, Reno, NV, January 9–12,
+AIAA Paper No. 2006-1102.
+[43] Iourokina, I., and Lele, S. K., 2006, “Large Eddy Simulation of Film-Cooling
+Flow Above a Flat Plate From Inclined Cylindrical Holes,” Proc. ASME Joint
+U.S.–European Fluids Engineering Summer Meeting, Miami, FL, July 17–20,
+ASME Paper No. FEDSM2006-98282.
+[44] Peet, Y., and Lele, S. K., 2008, “Near Field of Film Cooling Jet Issued Into a
+Flat Plate Boundary Layer: LES Study,” Proc. ASME Turbo Expo, Berlin, June
+9–13, ASME Paper No. GT2008-50420.
+[45] Guo, X., Schröder, W., and Meinke, M., 2006, “Large-Eddy Simulations of
+Film Cooling Flows,” Comp. Fluids, 35(6), pp. 587–606.
+[46] Renze, P., Meinke, M., and Schröder, W., 2006, “LES of Turbulent Mixing in
+Film Cooling Flows,” Conference on Turbulence and Interactions TI2006, Porquerolles, France, May 28–June 2.
+[47] Renze, P., Schröder, W., and Meinke, M., 2008, “Large-Eddy Simulation of
+Film Cooling Flows With Variable Density Jets,” Flow Turb. Combust., 80(1),
+pp 119–132.
+[48] Renze, P., Schröder, W., and Meinke, M., 2007, “LES of Film Cooling Efficiency for Different Hole Shapes,” 5th International Symposium on Turbulence
+and Shear Flow Phenomena, Munich, August 27–29.
+[49] Liou, M. S., and Steffen, C. J., 1993, “A New Flux Splitting Scheme,” J. Comput. Phys., 107, pp. 23–39.
+[50] Rozati, A., 2007, “Large Eddy Simulation of Leading Edge Film Cooling: Flow
+Physics, Heat Transfer, and Syngas Ash Deposition,” Ph.D. thesis, Virginia Polytechnic Institute and State University, Blacksburg, VA.
+[51] Rozati, A., and Tafti, D. K., 2007, “Large Eddy Simulation of Leading Edge
+Film Cooling: Part I—Computational Domain and Effect of Coolant Inlet Condition,” Proc. ASME Turbo Expo, Montreal, Canada, May 14–17, ASME Paper
+No. GT2007-27689.
+[52] Rozati, A., and Tafti, D. K., 2008, “Effect of Coolant-Mainstream Blowing Ratio on Leading Edge Film Cooling Flow and Heat Transfer-LES Investigation,”
+Int. J. Heat Fluid Flow, 29(4), pp. 857–873.
+[53] Rozati, A., and Tafti, D. K., 2008, “Large-Eddy Simulations of Leading Edge
+Film Cooling: Analysis of Flow Structures, Effectiveness, and Heat Transfer
+Coefficient,” Int. J. Heat Fluid Flow, 29(1), pp. 1–17.
+[54] Stolz, S., and Adams, N. A., 1999, “An Approximate Deconvolution Procedure
+for Large-Eddy Simulation,” Phys. Fluids, 11(7), pp. 1699–1701.
+
+[55] Ziefle, J., Stolz, S., and Kleiser, L., 2005, “Large-Eddy Simulation of Separated
+Flow in a Channel With Streamwise-Periodic Constrictions,” 17th AIAA Computational Fluid Dynamics Conference, Toronto, Canada, June 6–9, AIAA
+Paper No. 2005-5353.
+[56] Ziefle, J., Stolz, S., and Kleiser, L., 2008, “Large-Eddy Simulation of Separated
+Flow in a Channel With Streamwise-Periodic Constrictions,” AIAA J., 46(7),
+pp. 1705–1718.
+[57] Ziefle, J., and Kleiser, L., 2008, “Compressibility Effects on Turbulent Separated Flow in a Streamwise-Periodic Hill Channel—Part 1,” IUTAM Symposium on Unsteady Separated Flows and Their Control, Corfu, Greece, Springer,
+Berlin.
+[58] Ziefle, J., and Kleiser, L., 2008, “Compressibility Effects on Turbulent Separated Flow in a Streamwise-Periodic Hill Channel—Part 2,” Notes on Numerical Fluid Mechanics and Multidisciplinary Design, Vol. 97, S.-H. Peng and W.
+Haase, eds., Springer, Berlin, pp. 316–325.
+[59] Ziefle, J., and Kleiser, L., 2006, “Large-Eddy Simulation of a Round Jet in
+Crossflow,” 36th AIAA Fluid Dynamics Conference, San Francisco, CA, June
+5–8, AIAA Paper No. 2006-3370.
+[60] Ziefle, J., and Kleiser, L., 2009, “Large-Eddy Simulation of a Round Jet in
+Crossflow,” AIAA J., 47(5), pp. 1158–1172.
+[61] Ziefle, J., and Kleiser, L., 2008, “Assessment of a Film-Cooling Flow Structure
+by Large-Eddy Simulation,” J. Turbulence, 9(29), pp. 1–25.
+[62] Jarrin, N., Benhamadouche, S., Laurence, D., and Prosser, R., 2006, “A Synthetic-Eddy-Method for Generating Inflow Conditions for Large-Eddy Simulations,” Int. J. Heat Fluid Flow, 27, pp. 585–593.
+[63] Jarrin, N., 2008, “Synthetic Inflow Boundary Conditions for the Numerical
+Simulation of Turbulence,” Ph.D. thesis, The University of Manchester, Manchester, UK.
+[64] Lundbladh, A., Berlin, S., Skote, M., Hildings, C., Choi, J., Kim, J., and Henningson, D., 1999, “An Efficient Spectral Method for Simulation of Incompressible Flow Over a Flat Plate,” Technical Report TRITAMEK 1999:11, KTH
+Stockholm, Sweden.
+[65] Lund, T., Wu, X., and Squires, D., 1998, “Generation of Turbulent Inflow Data
+For Spatially Developing Boundary Layer Simulations,” J. Comput. Phys., 140,
+pp. 233–258.
+[66] Stolz, S., and Adams, N. A., 2003, “LES of High-Reynolds-Number
+Supersonic Boundary Layers Using the Approximate Deconvolution Model
+and a Rescaling and Recycling Technique,” Phys. Fluids, 15(8), pp.
+2389–2412.
+[67] Ziefle, J., and Kleiser, L., 2007, “Large-Eddy Simulation of Film-Cooling:
+Treatment of Inlet Boundary Conditions for the Isobaric Plenum and Instantaneous Vortex Structures,” Proc. Appl. Math. Mech., 7, pp. 4110011–4110012.
+[68] Ziefle, J., 2008, “Large-Eddy Simulation of Complex Massively-Separated
+Turbulent Flows,” Ph.D. thesis, ETH Zurich, Switzerland, Dissertation No.
+17846.
+[69] Vos, J. B., van Kemenade, V., Ytterström, A., and Rizzi, A. W., 1997, “Parallel
+NSMB: An Industrialized Aerospace Code for Complete Aircraft Simulations,”
+Proc. Parallel CFD Conference 1996, Capri, Italy, May 20–23, P. Schiano, A.
+Ecer, J. Periaux, and N. Satofuka, eds., North Holland, Amsterdam.
+[70] Vos, J. B., Rizzi, A., Corjon, A., Chaput, E., and Soinne, E., 1998, “Recent
+Advances in Aerodynamics Inside the NSMB (Navier Stokes Multi Block)
+Consortium,” AIAA Paper No. 98-0225.
+[71] Blaisdell, G. A., Spyropoulos, E. T., and Qin, J. H., 1996, “The Effect of the
+Formulation of Nonlinear Terms on Aliasing Errors in Spectral Methods,”
+Appl. Numer. Math., 21, pp. 207–219.
+[72] Kravchenko, A. G., and Moin, P., 1997, “On the Effect of Numerical Errors in
+Large Eddy Simulations of Turbulent Flows,” J. Comput. Phys., 131(2), pp.
+310–322.
+[73] Spalart, P. R., 1988, “Direct Simulation of a Turbulent Boundary Layer Up to
+Rh ¼ 1410,” J. Fluid Mech., 187, pp. 61–98.
+[74] Coleman, G. N., Kim, J., and Moser, R. D., 1995, “A Numerical Study of Turbulent Supersonic Isothermal-Wall Channel Flow,” J. Fluid Mech., 305, pp.
+159–183.
+[75] Chabral, B., and Leedom, L. C., 1993, “Imaging Vector Fields Using Line Integral Convolution,” Proceedings of SIGGRAPH’93, Anaheim, CA, August 1–6,
+pp. 263–270.
+
+041001-12 / Vol. 135, JULY 2013
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 08/30/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+

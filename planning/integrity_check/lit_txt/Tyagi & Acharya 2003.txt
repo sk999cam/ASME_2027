@@ -1,0 +1,788 @@
+Large Eddy Simulation of Film
+Cooling Flow From an Inclined
+Cylindrical Jet
+Mayank Tyagi1
+Research Associate
+
+Sumanta Acharya
+Professor
+Mechanical Engineering Department,
+Louisiana State University,
+Baton Rouge, LA 70803
+
+Predictions of turbine blade film cooling have traditionally employed Reynolds-averaged
+Navier-Stokes solvers and two-equation models for turbulence. Evaluation of several
+versions of such models have revealed that the existing two-equation models fail to resolve the anisotropy and the dynamics of the highly complex flow field created by the
+jet-crossflow interaction. A more accurate prediction of the flow field can be obtained
+from large eddy simulations (LES) where the dynamics of the larger scales in the flow are
+directly resolved. In the present paper, such an approach has been used, and results are
+presented for a row of inclined cylindrical holes at blowing ratios of 0.5 and 1 and
+Reynolds numbers of 11,100 and 22,200, respectively, based on the jet velocity and hole
+diameter. Comparison of the time-averaged LES predictions with the flow measurements
+of Lavrich and Chiappetta (UTRC Report No. 90-04) shows that LES is able to predict the
+flow field with reasonable accuracy. The unsteady three-dimensional flow field is shown to
+be dominated by packets of hairpin-shaped vortices. The dynamics of the hairpin vortices
+in the wake region of the injected jet and their influence on the unsteady wall heat transfer
+are presented. Generation of ‘‘hot spots’’ and their migration on the film-cooled surface
+are associated with the entrainment induced by the hairpin structures. Several geometric
+properties of a ‘‘mixing interface’’ around hairpin coherent structures are presented to
+illustrate and quantify their impact on the entrainment rates and mixing processes in the
+wake region. 关DOI: 10.1115/1.1625397兴
+
+Introduction
+Advanced gas turbines are designed to operate at increasingly
+higher turbine inlet temperatures. This poses a greater challenge to
+design more effective blade cooling strategies. Film cooling is
+commonly used to cool the first-stage turbine blade and to maintain the blade temperatures below their melting point. In film
+cooling, coolant jets are injected at an angle into the heated crossflow that deflects these coolant jets over the blade surface to provide coolant film coverage. However, film-cooling air represents a
+reduction of the air in the main flow path through the combustor,
+and coolant injection introduces additional aerodynamic losses.
+Therefore, the goal of the turbine designer is to minimize coolant
+usage and maximize cooling effectiveness. This requires a complete and accurate understanding of the flow and heat transfer
+behavior associated with the film-cooling injection process.
+Most of the computational studies on film cooling flow have
+been done using steady Reynolds-averaged Navier-Stokes
+共RANS兲 calculation procedures 共Garg and Gaugler 关1,2兴; Berhe
+and Patankar 关3兴; Walters and Leylek 关4兴; Lakehal et al. 关5兴;
+Acharya et al. 关6兴兲. However, the turbulent stress field is highly
+anisotropic in the wake region of the coolant jet, and the inherent
+unsteadiness of the coolant jet-crossflow interactions may have
+important implications on the passive scalar entrainment process.
+In general, RANS calculations underpredict the lateral spread and
+mixing of the jet while they overpredict the vertical penetration of
+the coolant jet 共Acharya et al. 关6兴兲. For a square jet injected vertically into a crossflow, comparisons of predictions and measurements 共Hoda et al. 关7兴兲 reveal that RANS procedures with an array of turbulence models 共from two-equation models to Reynolds
+stress models兲 significantly underpredict the lateral shear stress
+u ⬘ w ⬘ 共responsible for the lateral mixing and spreading兲, while
+1
+Author to whom correspondence should be addressed.
+Contributed by the International Gas Turbine Institute and presented at the International Gas Turbine and Aeroengine Congress and Exhibition, Atlanta, GA, June
+16 –19, 2003. Manuscript received by the IGTI December 2002; final revision March
+2003. Paper No. 2003-GT-38633. Review Chair: H. R. Simmons.
+
+734 Õ Vol. 125, OCTOBER 2003
+
+large eddy simulation 共LES兲 predictions are in excellent agreement with measurements. Clearly, RANS modeling either at the
+two-equation level or at the second-moment level is inaccurate for
+correctly predicting the turbulent stresses and the scalar mixing,
+while LES can more accurately capture the flow physics. In the
+present paper, LES for an inclined film-cooling jet is reported, and
+an effort is made to understand the flow physics associated with
+the coolant-jet–crossflow interaction. While limited comparisons
+with available experimental data are made in this paper to validate
+the calculation procedure and the subgrid scale models employed,
+the main goal of the paper is to focus on the large-scale unsteady
+dynamics of the coolant jet, and how these dynamics influence the
+mixing and heat transfer that control the cooling effectiveness of
+the jet.
+
+Computational Procedure
+In LES, the governing equations are spatially filtered, with the
+filter width 共proportional to the size of each grid element兲 representing the scales in the flow field that are resolved 共Vreman et al.
+关8兴; Tyagi and Acharya 关9兴兲. The nondimensional filtered governing equations for the conservation of mass, momentum, and energy for an incompressible Newtonian fluid are given as
+
+⳵U j
+⫽0,
+⳵x j
+⳵ U i ⳵ U iU j
+⳵p
+1 ⳵ 2U i ⳵ ␶ i j
+⫹
+⫽⫺
+⫹
+⫹
+⫹fi ,
+⳵t
+⳵x j
+⳵ x i Re ⳵ x 2j
+⳵x j
+
+冉
+
+冊
+
+⳵⌰
+⳵⌰
+1 ⳵ 2⌰ ⳵ q j
+⌳ ⳵ 2⌰
+⫽ 关 1⫺⌽ 兴 ⫺U j
+⫹
+⫹⌽
+,
+2 ⫹
+⳵t
+⳵ x j Re Pr ⳵ x j
+⳵x j
+Re Pr ⳵ x 2j
+(1)
+where U i is the filtered velocity field, f i is the body force term,
+and ⌰⫽ (T⫺T ⬁ )/(T j ⫺T ⬁ ), where T j is the coolant-jet temperature and T ⬁ is the crossflow temperature. In the present calculation, a Cartesian grid is used, and an immersed boundary approach
+
+Copyright © 2003 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 1 Schematic of the computational domain and boundary
+conditions
+
+共Yusof 关10兴; Fadlun et al. 关11兴; Tyagi and Acharya 关9兴兲 is utilized
+to resolve the inclined surfaces of the coolant delivery tube. With
+the immersed boundary method, grid points internal to a solid
+surface have body force terms added such that the no-slip boundary conditions at the interior surface is exactly satisfied. For temperature, a conjugate heat transfer problem is solved with ⌳ in the
+energy equation representing the ratio of thermal diffusivity of the
+immersed solid to thermal diffusivity of the fluid and ⌽ representing an indicator function that is 0 in the fluid region and 1 in the
+immersed solid region.
+The subgrid scale 共SGS兲 stress tensor and SGS scalar flux vector are represented by ␶ i j and q j , respectively, in the governing
+equation. In this study, a dynamic mixed model 共DMM兲 is used to
+model the SGS stress tensor and the scalar flux vector 共Moin et al.
+关12兴; Vreman et al. 关8兴兲. The DMM can represent the backscatter
+of energy through the scale-similar part while it can drain the
+energy from the large scales to the small scales using an eddy
+viscosity part. This model is generally considered to be the simplest model that satisfies both the physical and mathematical requirements for SGS models. Box filters are used in the Germano
+identity for the calculation of the dynamic coefficient and for the
+calculation of Leonard stresses appearing in the subgrid stress
+term. The dynamic coefficient is test filtered to avoid numerical
+instabilities. Additional details of the procedure are given by
+Tyagi and Acharya 关9兴.
+The momentum equations are solved using a projection
+method. The temporal differencing is done using an explicit
+second-order accurate Adams-Bashforth scheme. The spatial descretization is done using a fourth-order central finite-difference
+scheme for all the terms except the convective term
+( ⳵ U ␣ U ␣ / ⳵ x ␣ ) that is upwind-differenced with a third-order accurate scheme. The pressure-Poisson equation is solved using a direct solver based on a matrix diagonalization approach. The Laplacian operator in the pressure equation is approximated using a
+fourth-order central difference for the gradient operator and a
+second-order accurate central difference for the divergence operator. All the terms in energy equation are differenced using fourthorder central differences. Additional details of the numerical
+scheme used are given by Acharya et al. 关6兴 and Tyagi and
+Acharya 关9兴.
+The computational domain of interest is shown in Fig. 1, and
+represents a spanwise-periodic module containing a single coolant
+delivery tube inclined at 35 deg to the streamwise direction. For
+this geometry, detailed flow measurements have been provided by
+Lavrich and Chiappetta 关13兴 with a coolant delivery tube length of
+6D 共where D is the diameter of the coolant-jet delivery tube兲, and
+film-cooling effectiveness data are provided by Sinha et al. 关14兴
+with a coolant delivery tube length of 1.75D. The LES results of
+the present study are compared with these reported measurements.
+A uniform grid of 172⫻102⫻62 is used to model the computational domain of size 17D⫻5D⫻6D. The film-cooled surface is
+placed at 1.0D from the bottom of the computational domain with
+the length of the coolant delivery tube being equal to 1.75D. The
+center of the jet injection hole at the film-cooled surface is 5D
+downstream from the inlet plane. The origin of axes is placed at
+Journal of Turbomachinery
+
+the center of hole on the film-cooled surface. Therefore, the domain is 关 ⫺5D,12D 兴 ⫻ 关 ⫺1D,4D 兴 ⫻ 关 ⫺3D,3D 兴 . The jet delivery
+tube is simulated as an inclined cylindrical surface, and as noted
+earlier, the immersed boundary method is utilized to enforce the
+no-slip conditions on the delivery tube surface 共Yusof 关10兴兲.
+At the inlet of the coolant delivery tube, flow boundary conditions must be provided that are consistent with the measurements.
+In most experimental studies, detailed velocity measurements at
+the inlet to the coolant delivery tube or the jet exit are not provided. Thus judicious choices must be made in this respect. It is
+generally accepted that since the crossflow influences the flow
+development in the delivery tube, the computational domain must
+include all or a portion of the coolant delivery tube. The present
+computations, with a 1.75D long delivery tube, are being compared with two sets of measurements with delivery tube lengths of
+6D and 1.75D, respectively. When comparing with the cooling
+effectiveness measurements of Sinha et al. 关14兴 with a 1.75D long
+delivery tube and blowing ratio M ⫽0.5, the correct delivery tube
+length was used in the calculations, and a large stagnation-type
+plenum was assumed in the computations upstream of the 1.75D
+delivery tube, with the plenum fed by air streams flowing parallel
+to the main crossflow. When comparing with the 6D delivery tube
+measurements of Lavrich and Chiappetta 关13兴, instead of extending the delivery tube to be 6D long 共due to the associated need for
+increasing the number of grid points significantly, and the limitations in the available computing resources兲, the delivery tube was
+maintained at 1.75D, and mean velocities at the tube inlet were
+specified from a RANS calculation where a 6D long delivery tube
+fed by a large cylindrical plenum 共as in the experiments兲 was
+used. Since LES requires the specification of instantaneous velocities, turbulent velocity fluctuations were added to the mean velocities. The velocity fluctuations were generated using a Gaussian
+random number generator 共Box-Muller algorithm兲 with a variance
+corresponding to the RANS-computed turbulent kinetic energy.
+The top boundary of the computational domain 共located 4D
+from the surface兲 is treated as freestream boundary. At the inlet, a
+fully developed turbulent profile 共1/7th law, boundary layer thickness ⬃1D) is specified from the experimental data. At the outflow, a convective boundary condition is used where the convection speed is obtained from the mass flux balance. The spanwise
+direction (Z) is assumed to be periodic.
+
+Results
+Comparisons With Measurements. To validate the LES calculation procedure, the time-averaged LES results are compared
+with the velocity measurements of Lavrich and Chiappetta 关13兴
+and the film-cooling effectiveness data of Sinha et al. 关14兴 Figures
+2 and 3 present the velocity comparisons for blowing ratios (M )
+of 0.5 and 1.0, respectively. The streamwise (U) and vertical (V)
+components of the velocity are shown along the spanwise centerplane (Z/D⫽0) at three axial locations (X/D⫽0, 5, and 10兲,
+while the spanwise (W) component of velocity is presented at
+Z/D⫽0.5, which corresponds to the spanwise edge of the hole.
+The time-averaged statistics is obtained as the run-time average
+from the computations over approximately ten flow-through time
+periods 共flow-through time is the time taken by the cross-flow to
+sweep the computational domain from the inlet plane to the exit
+plane兲. The velocity predictions at both blowing ratios are generally in good agreement with the experimental data. At X/D⫽5,
+the streamwise velocity underpredicts the measured data particularly for M ⫽1.0. However, the spanwise and vertical velocity
+components are in excellent agreement with the data. These velocity components play a critical role in the spanwise and vertical
+penetration of the jet, respectively, and the good agreement with
+the data at M ⫽0.5 and M ⫽1.0 provides a measure of validation
+for the LES calculations.
+Predictions of the centerline film-cooling effectiveness at a
+blowing ratio of 0.5 are shown in Fig. 4. Also shown are the data
+of Sinha et al. 关14兴 at the same blowing ratio. In both experiments
+OCTOBER 2003, Vol. 125 Õ 735
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Fig. 2 Comparison of predicted and measured „Lavrich and
+Chiapetta †13‡… velocities at a blowing ratio M Ä0.5. „a… Streamwise component of velocity at Z Õ D Ä0. „b… Vertical component
+of velocity at Z Õ D Ä0. „c… Spanwise component of velocity at
+Z Õ D Ä0.5.
+
+and computations the coolant delivery tube length was the same
+and equal to 1.75D. The agreement between the predictions and
+the data is excellent with the predicted profile lying virtually on
+top of the data. The good agreement between the cooling effectiveness predictions and the data again confirms the predictive
+accuracy of LES.
+Identification of Coherent Structures. The primary coherent structures for jets in crossflow 共JICF兲 reported in the literature
+are the counter-rotating vortex pair 共CVP兲, the horseshoe vortex,
+the upright wake vortices, and the jet-shear layer vortices. Most of
+these structures have been identified experimentally for normal
+jets injected at high blowing ratios, and the flow structures have
+been visualized using smoke-wire or dye-injection techniques
+共Fric and Roshko 关15兴; Kelso et al. 关16兴兲. There have been no
+studies, either experimental or computational, that have reported
+on the flow structures associated with an inclined jet injected into
+a crossflow at a moderate blowing ratio. Since inclined jets are of
+primary interest in film cooling, the present study attempts to
+identify the key flow structures and their dynamics for an inclined
+coolant jet at a moderate blowing ratio (M ⫽1.0).
+To simplify the understanding of the unsteady dynamics, different components of the vorticity field are presented at respective
+projection planes in Figs. 5共a兲–5共d兲. The spanwise vorticity component ␻ z at Z/D⫽0 shows shear layer or roller vortices 共negative vorticity patches兲 along the leeward edge of coolant jet 关Fig.
+5共a兲兴. These roller vortices are shed regularly into the wake region
+and are convected downstream. The origin of the roller vortices
+appear to be linked to the corresponding boundary layer vorticity
+exiting the coolant hole. Vorticity generated along the windward
+
+Fig. 3 Comparison of predicted and measured „Lavrich and
+Chiapetta †13‡… velocities at a blowing ratio M Ä1.0. „a… Streamwise component of velocity at Z Õ D Ä0. „b… Vertical component
+of velocity at Z Õ D Ä0. „c… Spanwise component of velocity at
+Z Õ D Ä0.5.
+
+surface of hole delivery tube is seen to be quickly dissipated. The
+absence of such rib- or roller-shaped vortices at the windward
+edge of the jet is primarily associated with the inclined jet injection, due to which the crossflow partially blocks the windward
+portion of the jet vortex ring issuing out of the delivery tube
+boundary layer. Note that no evidence of a horseshoe vortex is
+seen upstream of the inclined jet. This is in contrast to the normal
+jet injection studies 共Fric and Roshko 关15兴, Muldoon and Acharya
+关17兴兲 where a horseshoe vortex pair was clearly generated immediately upstream of the jet hole. Inclining the jet reduces the pressure gradients immediately upstream of the hole exit that are responsible for the formation of the horseshoe vortex.
+To visualize the upright vortices in the wake region, the vertical
+component ␻ y is presented at a plane just above the surface
+(Y /D⫽0.01) in Fig. 5共b兲. In the near-wake region, a symmetric
+vortex pair, with opposite vorticity on either side of the centerline,
+is observed. This is clearly in contrast with the wake of a bluff
+body where the vortices are shed alternately on either side of the
+centerline, and positive and negative vortices are shifted in the
+streamwise direction relative to each other. Fric and Roshko 关15兴
+attribute the origin of these wake upright vortices to the entrainment and reorientation of the crossflow boundary layer in the
+wake region. Further downstream, the wake vortices are less
+organized, and seem to have spread outwards in the spanwise
+direction.
+The streamwise vorticity component ␻ x is presented at X/D
+⫽5 and 10 关Figs. 5共c兲–5共d兲兴 to illustrate the development of the
+counter-rotating vortex pair. This coherent structure persists in the
+far field of the jet, and is the only dominant organized pattern that
+
+736 Õ Vol. 125, OCTOBER 2003
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 4 Comparison of „a… predicted non-dimensional temperature with experimental data of Lavrich and Chiapetta †13‡ at M
+Ä1.0 and „b… predicted centerline film-cooling effectiveness
+„lines… with experimental data „symbols… of Sinha et al. †14‡ at
+M Ä0.5
+
+can be observed in the time-averaged mean velocity field. The
+origin of the CVP is associated with the vorticity along the spanwise edges of the exiting coolant jet boundary layer. Figures 5共c兲
+and 5共d兲 show that the instantaneous CVPs are somewhat asymmetric in nature, and consist of patches of positive and negative
+vorticity. When time averaged, a symmetric and organized CVP is
+observed.
+Despite the large body of literature dealing with JICF, there is
+still no consensus on the generation mechanisms and evolutionary
+dynamics of the coherent structures 共Fric and Roshko 关15兴; Eiff
+and Keffer 关18兴; Kelso et al. 关16兴; Blanchard et al. 关19兴兲. In an
+attempt to explain the flow physics better, coherent structures are
+extracted here using positive isosurfaces of the Laplacian of the
+pressure field 共Wray and Hunt 关20兴; Tanaka and Kida 关21兴; Dubief
+and Delcayre 关22兴兲. Since the vortex cores are associated with
+strong vorticity and local pressure minima, it can be readily
+shown that positive surfaces of the Laplacian of pressure 关 p ,kk
+⫽( ␻ i ␻ i )/2– S i j S ji 兴 can be used to identify coherent structures.
+For incompressible flows, p ,kk is also directly related to the second invariant of the velocity gradient tensor. In Figs. 6 and 7, the
+isosurface corresponding to a positive value of 0.7 共of p ,kk ) is
+plotted, and yields packets of hairpin coherent structures. Therefore, a coherent hairpin structure is identified here as the primary
+large-scale structure associated with the JICF. The evolution of
+this hairpin structure can explain the dynamics of the coherent
+eddies, and its structure projected on different planes can be related to the various vortical features observed in Fig. 5. Based on
+the present simulations, it is our premise that the various structures identified in Fig. 5 are all related to the evolution, growth
+and transport of the hairpin structures, and are not isolated, disparate structures with individual origins.
+To explain the morphological details of the hairpin coherent
+Journal of Turbomachinery
+
+Fig. 5 „Color… Components of the instantaneous vorticity field
+on different projection planes „ M Ä1.0…
+
+structure, and its association with the various vortical structures
+identified in Fig. 5, a single hairpin vortex structure is presented in
+Fig. 6, along with several projected views and the corresponding
+vorticity in the X-Z, Y -Z, and X-Y planes. Superimposed on the
+hairpin structure are the velocity vectors at X/D⫽5.7, and the
+isosurface of helicity (⫽U i ␻ i ) associated with the legs of hairpin
+structure 共shown as blue and red surfaces兲. Although helicity is a
+non-Galilean invariant property, it can be used to provide details
+of the flow physics in inertial frames 共as is the case with present
+
+Fig. 6 „Color… Details of the flow field in the vicinity of a hairpin vortex „ M Ä1.0…
+
+OCTOBER 2003, Vol. 125 Õ 737
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Fig. 7 „Color… Unsteady dynamics of coherent structures and
+their influence on wall heat transfer at different time instants „a…
+t 0 „arbitrary…, „b… t 0 ¿ T , „c… t 0 ¿2 T , „d… T 0 ¿3 T , and „e… t 0 at 4 T .
+The time gap T
+is equal to 300 time steps
+„Ä1.5D Õ U j …. Arrows are tracking hairpin E from one snapshot
+to another „ M Ä1.0….
+
+computation兲. It provides the sense of rotation of fluid parcels as
+they move along with streamlines. The streamwise CVP is clearly
+associated with the horizontal legs 共parallel to the surface兲 of hairpin structures. At almost all time instances, these legs are more or
+less located at similar (Y , Z) coordinates at a specific X/D plane.
+Therefore, time-averaging will distinctly capture the CVP as in
+many experimental and steady RANS studies. The helicity contour as well as the velocity vectors at the X/D⫽5.7 plane clearly
+define the CVP whose core is centered along the horizontal legs of
+the hairpin. The CVP structure is also seen in the ␻ x contours on
+the projected plane at X/D⫽5.7 共front view兲, where the two legs
+of the hairpin structure are associated with streamwise vorticty of
+the opposite sign, and these are somewhat asymmetric in nature as
+seen in Fig. 5共c兲.
+In the XZ projection plane 共normal to the vertical direction, top
+view in Fig. 6兲, the wall normal vorticity is clearly associated with
+the upright legs of the hairpin structures. These upright legs are
+therefore most likely to be representative of the wake vortices
+observed in the flow visualization pictures of Fric and Roshko
+关15兴 and Kelso et al. 关16兴. These upright leg structures are oriented nearly parallel to the Y -Z plane, and help explain the symmetric shedding of vortices in the jet wake seen in Fig. 5共b兲. As
+noted earlier, this behavior is in distinct contrast to the alternate
+shedding of vortices behind a solid cylinder 共or any bluff body兲.
+Note that these upright legs of the hairpin structures entrain flow
+from the crossflow boundary layer as they rotate in a horizontal
+
+plane normal to the surface. The entrained flow is then pulled
+upwards along the hairpin structure. This observation of crossflow
+entrainment and reorientation is consistent with the flow visualization studies of Fric and Roshko 关15兴, who postulated this
+mechanism to be the origin of the wake vortices. The present
+simulations, however, reveal that the wake vortices are intrinsically related to the development of the hairpin structure, and the
+crossflow entrainment and reorientation are a consequence of the
+hairpin structure dynamics.
+The train of roller vortices presented in Fig. 5共a兲 is also related
+to the hairpin structure. In fact it represents the signature of the
+heads of the various hairpin coherent structure packets in the wake
+region 共see Fig. 7兲. The side view and the superimposed ␻ z contoursshown in Fig. 6 clearly show that the hairpin head is associated with strong negative ␻ x whose values match those of the
+roller vortices shown in Fig. 5共a兲. The entrainment of the crossflow fluid around the head of hairpin structures is expected to be a
+dominant contribution to the mixing processes in the wake region
+共shown in Fig. 9兲. Note that the velocity field induced by the arch
+of the hairpin 共head and upright legs兲 generates a backflow between the legs and below the head of the hairpin. This backflow
+generated is the main mechanism associated with the velocity
+deficit in the wake region of coolant jet.
+From the observations made in Figs. 5 and 6, it is clear that the
+structure and dynamics of the hairpin vortices can be used to
+rationalize many of the reported observations on flow structures in
+JICF. The hairpins are associated with Lagrangian disturbances
+issuing out of the jet representing hairpin-shaped loci of local
+pressure minima. The streamwise spacing of these disturbances
+and the Strouhal frequency of shedding of hairpin vortices can be
+related through the convection speed of these structures. The jet
+fluid wraps around the head and and the streamwise-oriented legs
+of these structures. The crossflow boundary layer is entrained by
+the horizontal and upright legs of the hairpins and is lifted upright
+共i.e., reoriented兲 around the upright legs of the hairpin structures.
+The experimental visualizations and measurements reported in the
+literature support the unified mechanism related to hairpin structures that has been discussed in this paper 共Smith et al. 关23兴; Eiff
+and Keffer 关18兴; Blanchard et al. 关19兴; Rivero et al. 关24兴; Camussi
+et al. 关25兴; Fric and Roshko 关15兴; Kelso et al. 关16兴兲.
+Dynamics of the Hairpin Structures. Hairpin structures
+evolve while convecting downstream in the wake region and control the entrainment and mixing of the crossflow fluid with the
+injected coolant fluid. Hairpin structures entrain crossflow fluid
+into the wake region of jet and can lead to the formation of ‘‘hot
+spots’’ on the film-cooled surface. The surface temperature of the
+adiabatic solid surface 共at Y /D⫽1.0) is a measure of the filmcooling effectiveness. A time sequence of the coherent structures
+superimposed on the corresponding surface temperature is shown
+in Figs. 7共a兲–7共e兲. The coherent structures are represented as a
+positive isosurface of the pressure Laplacian (⫽0.7) while the
+contours of the nondimensional temperature on the wall (Y /D
+⫽0) span the range from 1 共red兲 to 0 共blue兲. Since the jet fluid is
+heated in the present simulations, the wall temperature values can
+be directly interpreted as cooling effectiveness 共with 1 representing perfect coolant coverage and 0 representing no coverage兲.
+At t⫽t 0 , five hairpin structures can be clearly identified 共A–E兲,
+while hairpin structure F is in a nascent stage. Hairpins are labeled
+alphabetically in the time sequence of their generation. Thus, the
+last coherent structure in computational domain 共exit plane ⬃7D)
+is labeled A and this convention is followed while identifying
+successive hairpins located closer to the coolant hole exit. Also,
+note that some of the hairpin structures 共C and F兲 are not extracted
+completely by a single value of the pressure Laplacian isosurface.
+In examining the wall temperature values, low cooling effectiveness can be seen immediately below hairpin D 共and upstream of it,
+which is obscured by the hairpins E and F兲 as evidenced by the
+blue color 共low film-cooling effectiveness兲 in this region. This is
+associated with jet lift-off 关see Figs. 8共a兲 and 8共b兲兴 immediately
+downstream of the coolant hole. However, it should be noted that
+
+738 Õ Vol. 125, OCTOBER 2003
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+Fig. 9 „Color… Details of the ‘‘mixing interface’’ created by the
+hairpin coherent structure „ M Ä1.0…
+
+Fig. 8 „Color… Instantaneous non-dimensional temperature
+field on different projection planes „ M Ä1.0…
+
+the horizontal legs of hairpin D are closer to the surface, and
+provide higher cooling effectiveness. Further downstream 共beneath hairpins A–C兲, the coolant jet is attached to the surface, and
+higher cooling effectiveness values are obtained in the entire jet
+region.
+At t⫽t 0 ⫹T, hairpin A has left the domain. The morphology of
+hairpins B and C have changed, while hairpin D has grown in
+size. Note that D in Fig. 8共b兲 is roughly at the same location as C
+in Fig. 8共a兲, but the cooling effectiveness at this spot is not exactly
+the same at the two time instances, reflecting the unsteadiness in
+the flow field. Further, as hairpin D traverses to the right, and
+moves closer to the surface, cooling effectiveness below the hairpin increases and high effectiveness values can now be seen in the
+core regions of the hairpin. Evidence of increased cooling effectiveness generating beneath the legs of hairpin E and head of
+hairpin F can now be seen. However, in the core regions of hairpin
+E, the effectiveness is low. Hairpin F has developed further and is
+followed by another hairpin G 共at a nascent stage兲.
+At t⫽t 0 ⫹2T, hairpin B has left the computational domain and
+hairpin C has moved close to the exit plane. Hairpin D has grown
+further in size and is associated with high cooling effectiveness.
+Hairpin E has grown in size and convected downstream. The low
+effectiveness region beneath it has not been ameliorated, although
+there is evidence of increased film-cooling effectiveness below the
+horizontal legs of hairpins E and F. Hairpin G has evolved to a
+well-formed structure and is followed closely by hairpin H.
+At t⫽t 0 ⫹3T, hairpin C has left the computational domain.
+Hairpin E has convected to the right and has grown in size. There
+is evidence of increased cooling effectiveness below hairpin G
+and is presumably due to the downward migration of the G hairpin at this time instance. The cooling effectiveness below G is
+higher than the cooling effectiveness at this location at earlier time
+instances, and is a reflection of a low-frequency unsteadiness associated with the evolution and transport of the hairpin structures.
+In fact hairpin G appears to have lower effectiveness below it
+Journal of Turbomachinery
+
+compared to hairpin F. Hairpin H closely follows hairpin G and
+there is another hairpin I forming around 1D downstream of the
+coolant hole exit.
+At t⫽t 0 ⫹4T, hairpin D is at exit plane. The higher cooling
+effectiveness associated with hairpin G in Fig. 7共d兲 appears to be
+transported along with it in the next time instance 关Fig. 7共e兲兴. Note
+that hairpin H is now at the same location as G in Fig. 7共d兲, but
+has a lower cooling effectiveness. It is interesting to note that
+generally large hairpins are followed by small hairpins that do not
+grow in size 共there is evidence of a small ‘‘unlabeled’’ hairpin
+between D and E in all time instances兲. As explained earlier, large
+hairpin structures can generate substantial backflow and create
+velocity deficit in the wake region.
+From Fig. 7, it can be clearly concluded that the cooling effectiveness is intrinsically linked to the dynamics of the hairpin structures. When the hairpins are formed, high cooling effectiveness is
+first seen below the horizontal legs of the hairpin structures. As
+the hairpins convect downstream and move closer to the surface,
+higher cooling effectiveness is also observed in the core regions of
+the hairpin immediately below the roller vortices. The cooling
+effectiveness on the surface does vary with time and is dictated
+by the dynamics of the evolution and growth of the hairpin
+structures.
+Passive Scalar „Temperature… Mixing. The details of instantaneous temperature field are given at several projected planes of
+the computational domain 关Figs. 8共a兲–8共d兲兴. The center plane corresponds to Z/D⫽0.0 and shows the mixing of the main flow
+共nondimensional temperature of 0兲 and the injected jet 共nondimensional temperature of 1兲. The jet temperature drops rapidly in the
+downstream direction, as it entrains and mixes with the crossflow.
+The injected jet is lifted off the surface downstream of the injection, and there is crossflow fluid entrained beneath the jet. The
+billows in the coolant–crossflow interface correspond to the heads
+of hairpin coherent structures. The temperature distribution on the
+wall is shown in Fig. 8共b兲, and as noted earlier, this temperature
+distribution also corresponds to the film-cooling effectiveness values. Again, an immediate decrease in film-cooling effectiveness is
+seen just downstream of the jet injection and is due to the jet
+lifting off the surface. Note that downstream of the jet injection,
+high cooling effectiveness is first noticed along the spanwise
+edges of the jet. This is associated with the horizontal legs of the
+hairpin structures that are closer to the surface. Evidence of this
+was presented in Fig. 7 earlier. The coolant jet is closer to the wall
+at further downstream stations (X/D⬎5.0) leading to a recovery
+OCTOBER 2003, Vol. 125 Õ 739
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Fig. 10 Relative change in geometric properties from their respective mean value over observation period. „a… Surface Area. „b… Average Curvature. „c… Wrinkling. „d… Entrainment
+across the ‘‘mixing interface’’ versus time „ M Ä1.0….
+
+in film-cooling effectiveness in the entire jet region. The instantaneous temperature distributions at two X/D locations (X/D⫽5
+and 10兲 are shown in Fig. 8共d兲, and reflect the vertical and lateral
+penetration of the jet. The coolant jet is observed to have a welldefined kidney-shaped structure with local maxima close to the
+core of the CVP and large gradients near the crossflow-coolant
+interface. The cross-plane mixing of scalars leads to the decrease
+in scalar value in the core of coolant jet at stations farther downstream. Close to the surface, there seems to be lobelike extensions
+of the CVP. These are associated with the enhanced scalar mixing
+induced by the horizontal legs of the hairpin vortical structures.
+To further investigate the mixing and entrainment process due
+to a single hairpin structure, an isosurface of the scalar dissipation
+rate (⫽⌰ ,k ⌰ ,k ) is extracted and plotted in Fig. 9. The value
+(⫽0.01) is chosen such that this isosurface 共shown in red兲 forms
+an envelope over a hairpin coherent structure 共shown in gray兲.
+However, this measure of scalar dissipation rate does not account
+for subgrid stirring and mixing of scalar field and should be
+treated as a macroscale mixing measure 共Southerland et al. 关26兴兲.
+Also the scaling factor 关 ⫽1/(Re Pr) 兴 is omitted from the definition of the scalar dissipation rate since it does not change any
+interpretation of the results.
+The contour of the scalar dissipation isosurface clearly follows
+the contour of the hairpin structure, indicating that scalar mixing
+is strongly influenced by the entrainment and mixing across the
+hairpin structures. The gradient of the scalar field (⫽⌰ ,i ) is presented as vectors 共representing heat flux vectors兲 on different projections of the hairpin structure. In the top view, these vectors are
+
+seen to be directed toward the region beneath the head of hairpin
+structure. Similarly, the vectors converge beneath the hairpin head
+in the side view. Clearly, the direction of heat flux vectors indicates that the heat flux is directed toward the core of the hairpin,
+and that scalar mixing is enhanced beneath the head of hairpin and
+between its upright legs. Absence of scalar gradients in the crossflow is observed in the front view representing a cross-stream
+projection across the hairpin legs.
+A control volume of the size of a hairpin coherent structure is
+defined around X/D⫽5 over the film-cooled surface. As packets
+of hairpin structures convect through this control volume, they
+deform the scalar-dissipation isosurface. The geometric properties
+of this ‘‘mixing interface’’ are presented as a function of time in
+Figs. 10共a兲–10共d兲. Different geometric properties such as the surface area of mixing interface 关Fig. 10共a兲,兴 average curvature 关Fig.
+10共b兲,兴 wrinkling of the interface 关Fig. 10共c兲,兴 and entrainment
+across the interface 关Fig. 10共d兲兴 are evaluated 共Geurts 关27兴兲. The
+surface area of the ‘‘mixing interface’’ increases whenever the
+head of the hairpin structure is crossing through the fixed control
+volume. Hairpin packets usually are formed as clusters with
+smaller hairpins following large hairpin coherent structure and
+there is generally some gap between such clusters 共Fig. 7兲. Such
+clusters would lead to peaks and valleys in the surface area of the
+‘‘mixing interface’’ with a local minimum between such clusters
+关Fig. 10共a兲.兴 Note that local peaks of the surface area diminish in
+size as the hairpin cluster passes beneath this interface, suggesting
+that growth of following hairpin vortices may be hindered by the
+leading hairpin vortex in the cluster. The average curvature of this
+
+740 Õ Vol. 125, OCTOBER 2003
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+surface 共defined as the surface integral of local curvature兲 changes
+substantially 共from ⫺75% to ⫹75% of the mean value兲 during
+this time interval corresponding to the passage of the hairpin vortex. The event that corresponds to this change in curvature is the
+relaxation of the ‘‘mixing interface’’ between two hairpin clusters
+followed by its subsequent stretching by the following hairpin
+cluster. The entrainment across this interface can be evaluated
+approximately from the difference in flux contributions using the
+surface integral over the control volume that encompasses the
+‘‘mixing interface’’ around hairpin structures 关This is simply a
+result of the Gauss divergence theorem to evaluate surface integral
+in a divergence-free 共incompressible兲 flow field兴. The change in
+curvature is associated with the reversal of the entrainment process across the interface 关Fig. 10共d兲.兴 Also, the entrainment
+achieves a local maximum over the time interval between the
+passage of the hairpin clusters. Wrinkling 共defined as the surface
+integral of absolute value of local curvature兲 is a relatively stable
+geometric property 共usually varies between ⫺10% to ⫹10% of
+average mean value兲. It is a measure that is insensitive to ‘‘convexity’’ or ‘‘concavity’’ of mixing interface and implies that this
+interface maintains corrugations at almost all times. It is an important measure because small-scale mixing is insensitive to the
+curvature of mixing fronts and depends only on the absolute value
+of the curvature.
+
+Conclusion
+Large eddy simulations are performed for a simplified geometry
+representing film-cooling of a gas turbine blade surface and simulates an experimental study of Lavrich and Chiappetta 关13兴. The
+following remarks summarize this study:
+• Comparison of time-averaged LES predictions with experimental data of Lavrich and Chiappetta 关13兴 shows the adequacy of
+the LES approach for film-cooling flows. Few discrepancies are
+noted at stations farther downstream. Insufficient averaging of
+time-dependent fields as well as the uncertainty associated with
+boundary conditions can be regarded as the main reasons for these
+deviations.
+• Flow physics is explained in terms of components of vorticity
+field on respective projection planes in the computational domain.
+All previously reported vortical structures, i.e., CVP, roller vortices, and upright wake vortices are identified 共Kelso et al. 关16兴;
+Haven and Kurosaka 关28兴; Fric and Roshko 关15兴兲. Jet boundary
+layer vorticity is identified as the source of these vortices in the
+inclined jet in crossflow.
+• Coherent structure extraction from instantaneous threedimensional fields revealed packets of hairpin-shaped vortices in
+the coolant jet. A unified perspective of previously reported vortices on different projection planes in this flow field is presented in
+terms of these basic hairpin coherent structures. The CVP is
+shown to be associated with the legs of hairpin structure while
+roller vortices are linked to the head of hairpin structures. The
+upright legs are identified as the inception sites for wake vortices.
+Experimental visualizations and different coherent structure extraction techniques support this perspective 共Smith et al. 关23兴; Eiff
+and Keffer 关18兴; Blanchard et al. 关19兴; Rivero et al. 关24兴; Camussi
+et al. 关25兴兲.
+• The dynamics of packets of hairpins in the wake region of
+injected jet and their influence on the unsteady wall heat transfer
+is presented. Generation of ‘‘hot spots’’ and their migration on the
+film-cooled surface is associated with the entrainment due to hairpin structures. The transient behavior of wall heat transfer under
+the influence of coherent structures reveals the inadequacy of any
+steady state RANS simulation even if it matches time-averaged
+film-cooling effectiveness.
+• Several geometric properties such as surface area, average
+curvature, and wrinkling of a ‘‘mixing interface’’ around hairpin
+coherent structures are presented to illustrate and quantify their
+impact on entrainment rates and mixing processes in the wake
+region.
+Journal of Turbomachinery
+
+• Scalar field distribution on different projection planes of computational domain revealed correspondence with large-scale coherent structures. Details of gradients of the scalar field around a
+hairpin coherent structure showed the dynamical significance of
+such large-scale vortices on the mixing process.
+
+Acknowledgments
+The authors would like to thank Mr. Asif Hoda for providing
+the RANS solution for LES boundary conditions and Dr. Raymond Jones for several fruitful discussions.
+
+Nomenclature
+Ui
+p
+␶ij
+qj
+fi
+⌰
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+Tj
+T⬁
+⌽
+␯
+Re
+Pr
+D
+L
+M
+SDR
+X
+Y
+Z
+
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+⫽
+
+Filtered velocity field
+Pressure field divided by constant density
+Subgrid scale 共SGS兲 stress tensor
+Subgrid scale 共SGS兲 scalar flux vector
+Body force terms arising due to immersed boundary
+Nondimensional temperature
+关 ⌰⫽ (T⫺T ⬁ )/(T j ⫺T ⬁ ) 兴
+Coolant-jet temperature 共dimensional兲
+Crossflow temperature 共dimensional兲
+Indicator function
+Kinematic viscosity of fluid
+Reynolds number (⫽U ⬁ D/ ␯ )
+Prandtl number (⫽0.71)
+Jet diameter
+Coolant delivery tube length
+Blowing ratio
+Scalar dissipation rate (⫽⌰ ,k ⌰ ,k )
+Streamwise direction
+Vertical direction 共normal to the film-cooled surface兲
+Spanwise direction 共periodic兲
+
+References
+关1兴 Garg, V. K., and Gaugler R. E., 1994, ‘‘Prediction of Film Cooling on Gas
+Turbine Airfoils,’’ ASME paper no. 94-GT-2.
+关2兴 Garg, V. K., and Gaugler R. E., 1995, ‘‘Effect of Velocity and Temperature
+Distribution at the Hole Exit on Film Cooling of Turbine Blades,’’ ASME
+paper no. 95-GT-2.
+关3兴 Berhe, M. K., and Patankar, S., 1996, ‘‘A Numerical Study of Discrete-Hole
+Film Cooling,’’ ASME paper 96-WA/HT-8.
+关4兴 Walters, D. K. and Leylek, J. H., 1997, ‘‘A Detailed Analysis of Film-Cooling
+Physics Part 1: Streamwise Injection with Cylindrical Holes,’’ ASME paper
+no. 97-GT-269.
+关5兴 Lakehal, D., Theodoridis, G. S., and Rodi, W., 1998, ‘‘Computation of Film
+Cooling of a Flat Plate by Lateral Injection from a Row of Holes,’’ Int. J. Heat
+Fluid Flow, 19, pp. 418 – 430.
+关6兴 Acharya, S., Tyagi, M., and Hoda, A., 2001, ‘‘Flow and Heat Transfer Predictions for Film Cooling,’’ Heat transfer in gas turbine systems, Ann. N.Y. Acad.
+Sci., 934, pp. 110–125.
+关7兴 Hoda, A., Acharya, S., and Tyagi, M., 2000, ‘‘Predictions of a Jet-In-Crossflow
+with Reynolds Stress Transport Models and Large Eddy Simulations,’’ ASMEIGTI00, Munich.
+关8兴 Vreman, B., Geurts, B. J., and Kuerten, H., 1994, ‘‘On the Formulation of the
+Dynamic Mixed Subgrid Scale Model,’’ Phys. Fluids, 6, pp. 4057– 4059.
+关9兴 Tyagi, M., and Acharya, S., 2001, ‘‘Flow and Heat Transfer Predictions for the
+Film-Cooling Flow Using Large Eddy Simulations,’’ DNS/LES Progress and
+Challenges, C. Liu, L. Sakell, and T. Beutner, eds., Gryden Press, Columbus,
+OH, pp. 799– 806.
+关10兴 Yusof, J. M., 1996, ‘‘Interaction of Massive Particles with Turbulence,’’ Ph.D.
+dissertation, Cornell University, Ithaca, NY.
+关11兴 Fadlun, E., Verzicco, R., Orlandi, P., and Yusof, J. M., 2000, ‘‘Combined
+Immersed Boundary Finite Difference Methods for Complex Flow Simulations,’’ J. Comput. Phys., 161, pp. 35– 60.
+关12兴 Moin, P., Squires, K., Cabot, W., and Lee, S., 1991, ‘‘A Dynamic SubgridScale Model for Compressible Turbulence and Scalar Transport,’’ Phys. Fluids
+A, 11, pp. 2746 –2757.
+关13兴 Lavrich, P. L., and Chiappetta, L. M., 1990, ‘‘An Investigation of Jet in a Cross
+Flow for Turbine Film Cooling Applications,’’ United Technologies Research
+Center, UTRC Report No. 90-04.
+关14兴 Sinha, A. K., Bogard, D. G., and Crawford, M. E., 1991, ‘‘Film-Cooling Effectiveness Downstream of a Single Row of Holes with Variable Density Ratio,’’ ASME J. Turbomach., 113, pp. 442– 449.
+关15兴 Fric, T. F., and Roshko, A., 1994, ‘‘Vortical Structure in the Wake of a Transverse Jet,’’ J. Fluid Mech., 279, pp. 1– 47.
+
+OCTOBER 2003, Vol. 125 Õ 741
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+关16兴 Kelso, R. M., Lim, T. T., and Perry, A. E., 1996, ‘‘An Experimental Study of
+Round Jets in Crossflow,’’ J. Fluid Mech., 306, pp. 111–144.
+关17兴 Muldoon, F., and Acharya, S., 1999, ‘‘Numerical Investigation of the Dynamical Behavior of a Row of Square Jets in Crossflow Over a Surface,’’ ASMEIGTI99.
+关18兴 Eiff, O. S., and Keffer, J. F., 1997, ‘‘On the Structures in the Near-Wake
+Region of an Elevated Turbulent Jet in a Crossflow,’’ J. Fluid Mech., 333, pp.
+161–195.
+关19兴 Blanchard, J. N., Brunet, Y., and Merlen, A., 1999, ‘‘Influence of a Counter
+Rotating Vortex Pair on the Stability of a Jet in a Crossflow: An Experimental
+Study by Flow Visualizations,’’ Exp. Fluids, 26, pp. 63–74.
+关20兴 Wray, A. A., and Hunt, J. C. R., 1989, ‘‘Algorithms for Classification of Turbulent Structures,’’ Topological Fluid Mechanics, H. K. Moffat and A. Tsinober, eds., Cambridge University Press, Cambridge, UK, pp. 95–104.
+关21兴 Tanaka, M., and Kida, S., 1993, ‘‘Characterization of Vortex Tubes and
+Sheets,’’ Phys. Fluids A, 5, pp. 2079–2082.
+
+关22兴 Dubief, Y., and Delcayre, F., 2000, ‘‘On Coherent-Vortex Identification in Turbulence,’’ J. Turbulence, 1, pp. 1–22.
+关23兴 Smith, C. R., Walker, J. D. A., Haidari, A. H., and Soburn, U., 1991, ‘‘On the
+Dynamics of Near-Wall Turbulence,’’ Philos. Trans. R. Soc. London, 336, pp.
+131–175.
+关24兴 Rivero, A., Ferre, J. A., and Giralt, F., 2001, ‘‘Organized Motions in a Jet in
+Crossflow,’’ J. Fluid Mech., 444, pp. 117–149.
+关25兴 Camussi, R., Guj, G., and Stella, A., 2002, ‘‘Experimental Study of a Jet in
+Crossflow at Very Low Reynolds Number,’’ J. Fluid Mech., 454, pp. 113–144.
+关26兴 Southerland, K. B., Frederikson, R. D., Dahm, W. J. A., and Dowling, D. R.,
+1995, ‘‘Comparisons of Mixing in Chaotic and Turbulent Flows,’’ Chaos Applied to Fluid Mixing, Pergamon, Oxford, UK, pp. 313–345.
+关27兴 Geurts, B. J., 2002, ‘‘Buoyant Turbulent Mixing in Shear Layers,’’ Advances
+Turbulence IX, Proceedings of the 9th European Turbulence Conference, I. P.
+Castro, P. E. Hancock, and T. G. Thomas, eds., CIMNE, Barcelona.
+关28兴 Haven, B. A., and Kurosaka, M., 1997, ‘‘Kidney and Anti-Kidney Vortices in
+Crossflow Jets,’’ J. Fluid Mech., 352, pp. 27– 64.
+
+742 Õ Vol. 125, OCTOBER 2003
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 06/04/2013 Terms of Use: http://asme.org/terms
+
+Transactions of the ASME
+
+

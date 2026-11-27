@@ -1,0 +1,995 @@
+International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+Contents lists available at SciVerse ScienceDirect
+
+International Journal of Heat and Fluid Flow
+journal homepage: www.elsevier.com/locate/ijhff
+
+Turbulent transport in an inclined jet in crossﬂow
+F. Coletti a,⇑, M.J. Benson b, J. Ling a, C.J. Elkins a, J.K. Eaton a
+a
+b
+
+Department of Mechanical Engineering, Stanford University, Stanford, CA, USA
+Department of Civil and Mechanical Engineering, US Military Academy, West Point, NY, USA
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 3 January 2013
+Received in revised form 31 May 2013
+Accepted 2 June 2013
+Available online xxxx
+Keywords:
+Jet in crossﬂow
+Film cooling
+Turbulent mixing
+Turbulent diffusivity
+
+a b s t r a c t
+The present study experimentally investigates a turbulent jet in crossﬂow relevant to ﬁlm cooling applications. The jet is inclined at 30°, and its mean velocity is the same as the crossﬂow. Magnetic resonance
+imaging is used to obtain the full three-dimensional velocity and concentration ﬁelds, whereas Reynolds
+stresses are obtained along selected planes by Particle Image Velocimetry. The critical role of the counterrotating vortex pair in the mixing process is apparent from both velocity and concentration ﬁelds. The jet
+entrainment is not signiﬁcantly higher than in an axisymmetric jet without crossﬂow, because the proximity of the wall inhibits the turbulent transport. Reynolds shear stresses correlate with velocity and concentration gradients, consistent with the fundamental assumptions of simple turbulence models.
+However the eddy viscosity is strongly anisotropic and non-homogeneous, being especially low along
+the leeward side of the jet close to injection. Turbulent diffusion acts to decouple mean velocity and concentration ﬁelds, as demonstrated by the drop in concentration ﬂux within the streamtube issued from
+the hole. Volume-averaged turbulent diffusivity is calculated using a mass–ﬂux balance across the
+streamtube emanating from the jet hole, and it is found to vary slowly in the streamwise direction.
+The data are compared with Reynolds-Averaged Navier–Stokes simulations with standard k  e closure
+and an optimal turbulent Schmidt number. The computations underestimate the strength of the counter-rotating vortex pair, due to an overestimated eddy viscosity. On the other hand the entrainment is
+increasingly underpredicted downstream of injection. To capture the correct macroscopic trends, eddy
+viscosity and eddy diffusivity should vary spatially in different ways. Therefore a constant turbulent
+Schmidt number formulation is inadequate for this ﬂow.
+Ó 2013 Elsevier Inc. All rights reserved.
+
+1. Introduction
+The interaction of a jet with a crossﬂow is a widely studied conﬁguration in ﬂuids engineering, due to its numerous applications,
+from pollutant plumes to ﬁlm cooling (Margason, 1993; Mahesh,
+2013). The latter is a widely employed cooling technique for gas
+turbines: internal cooling air bleeds through small holes machined
+on the walls of the component, and creates a layer that protects the
+surface from the incoming high temperature gas (Bogard and
+Thole, 2006). Because of the relatively high Reynolds numbers of
+the ﬂows involved, the ﬁlm cooling process is governed by threedimensional turbulent mixing.
+In the open literature, fully resolved simulations of velocity and
+scalar ﬁelds of turbulent jets in crossﬂow are mostly concerned
+with canonical/simpliﬁed cases. For example Muppidi and Mahesh
+(2008) investigated a normal jet issued from a long pipe into a laminar boundary layer, with a velocity ratio of 5.7. They obtained
+⇑ Corresponding author.
+E-mail addresses: colettif@stanford.edu (F. Coletti), michael.benson@usma.edu
+(M.J. Benson), julial@stanford.edu (J. Ling), celkins@stanford.edu (C.J. Elkins),
+eatonj@stanford.edu (J.K. Eaton).
+
+important insight into the scalar transport, especially in terms of
+entrainment and turbulent ﬂuxes. However the dynamics of an inclined jet into a turbulent crossﬂow is very different.
+Given the elevated cost of performing time-accurate simulations, most numerical models for three-dimensional turbulent
+ﬂows in general, and for ﬁlm cooling in particular, are based on
+the Reynolds-Averaged Navier–Stokes (RANS) approach. This is
+true especially when the actual geometries (for example, details
+of the combustion chamber and the airfoils in gas turbines) need
+to be faithfully replicated, which would make Large Eddy Simulations (LESs) and Direct Numerical Simulations (DNSs) prohibitively
+expensive. In the RANS turbulence closures, Reynolds stresses are
+either determined via a turbulent viscosity model (Launder and
+Sharma, 1974), or via solution of modeled Reynolds-stress transport equations (Speziale et al., 1991). The turbulent heat ﬂuxes
+are typically determined via a gradient-diffusion assumption with
+a scalar turbulent diffusivity and constant turbulent Prandtl number PrT = mT/aT, where mT and aT are the turbulent viscosity and diffusivity, respectively. One of the underlying assumptions is a direct
+analogy between the momentum and thermal transport (Reynolds
+analogy).
+
+0142-727X/$ - see front matter Ó 2013 Elsevier Inc. All rights reserved.
+http://dx.doi.org/10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+2
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+Nomenclature
+Latin
+A
+C
+D
+L
+M
+Pr
+Re
+Sc
+U, V, W
+X, Y, Z
+k
+
+rms
+u, v, w
+area
+scalar concentration
+hole diameter
+hole length
+jet momentum
+Prandtl number
+Reynolds number
+Schmidt number
+streamwise, wall-normal and spanwise velocity component
+streamwise, wall-normal and spanwise axis
+turbulent kinetic energy
+
+While the turbulence closures for the momentum transfer can
+deliver acceptable results even for practical ﬂows, the constant
+PrT model can be used to compute only relatively simple boundary-layer, channel or pipe ﬂows (Kays, 1994). As a result, commonly used solvers largely mispredict scalar distributions in
+conﬁgurations different from the canonical ﬂows for which they
+have been developed. This is often given as a reason why Reynolds
+stress models do not perform substantially better than the simpler
+eddy-viscosity models (Hoda and Acharya, 2000). Recently several
+models have been devised in order to capture the physics of anisotropic dispersion. Abe (2005) proposed a hybrid approach connecting LES with RANS modeling in the near-wall region. Younis et al.
+(2005) presented a functional relationship between the turbulent
+scalar ﬂuxes and various tensorial properties of the velocity ﬁeld.
+A speciﬁc model for ﬁlm cooling ﬂows was devised by Lakehal
+(2002) coupling a standard two-equation model with a DNS-informed one-equation model resolving the near-wall layer. Liu
+et al. (2008) incorporated a laterally varying turbulent PrT in a realizable k  e calculation and found more accurate prediction of ﬁlm
+cooling effectiveness. However most of these models use ad hoc
+assumptions, which do not guarantee broad applicability to a wide
+range of conﬁgurations. Further progress in modeling of turbulent
+mixing in three-dimensional ﬂows is hindered by the lack of detailed and accurate experimental data for non-canonical ﬂows. Indeed the constant PrT model remains the most widely used for the
+prediction of ﬁlm cooling ﬂows, although its performance is poor,
+especially near injection (Kohli and Bogard, 2005).
+From the experimental standpoint, several attempts have been
+made to investigate the jet in crossﬂow dynamics by means of advanced measurements techniques, especially for conﬁgurations
+relevant to ﬁlm cooling. Kaszeta and Simon (2000) used triple sensor anemometry to capture the three instantaneous components of
+velocity, pointing out the anisotropy of the eddy viscosity. Kohli
+and Bogard (2005) used cold wire thermometry in combination
+with Laser-Doppler velocimetry to obtain the turbulent scalar
+ﬂuxes, and highlighted the limits of the Reynolds analogy. Jessen
+et al. (2007) and Bernsdorf et al. (2006) studied ﬁlm cooling conﬁgurations by two-dimensional and stereoscopic Particle Image
+Velocimetry (PIV), respectively. Issakhanian et al. (2012) used
+Magnetic Resonance Velocimetry (MRV) to explore the details of
+the in-hole and near-injection dynamics. None of these studies
+presented full three-dimensional distributions of the scalar ﬁeld
+downstream of injection. Benson et al. (2011) achieved this by
+Magnetic Resonance Concentration measurements (MRC) in a
+cut-back trailing edge ﬁlm cooling conﬁguration. However the latter differs signiﬁcantly from a discrete-hole conﬁguration, resembling more a wall-jet rather than a jet in crossﬂow.
+
+root mean square
+streamwise, wall-normal and spanwise velocity ﬂuctuation component
+
+Greek
+
+a
+e
+m
+x
+
+scalar diffusivity
+turbulent dissipation rate
+viscosity
+vorticity
+
+Subscripts
+0
+injection location
+j
+jet
+T
+turbulent
+
+With respect to single-point techniques, ﬁeld measurements
+such as PIV and MRV/MRC offer the advantage of capturing the
+large scale dynamics, which is of prime importance in the type of
+ﬂow investigated here. PIV struggles with strong out-of-plane
+components, whereas MRI-based techniques deliver full threedimensional ﬂow information and three-dimensional scalar ﬁelds.
+The latter cannot be obtained by any other method, unless 1D or
+2D techniques are used in conjunction with complex traversing
+systems. On the other hand, the need of inserting the test apparatus in the MRI bore limits the maximum size of the test section,
+which in the present case results in some conﬁnement on the jet
+dynamics. This has to be taken into account when performing
+quantitative comparisons with other studies. Finally, MRI-techniques do not provide easy access to the Reynolds stresses. PIV is
+used here to obtain this information along selected planes.
+The present study focuses on a single-hole ﬁlm-cooling conﬁguration, where a non-buoyant contaminant is injected into a channel ﬂow. The goal is to provide detailed data for a single parameter
+set that will provide new understanding of turbulent mass and
+momentum transfer. The full three-dimensional mean velocity
+ﬁeld is obtained by means of MRV, and the three-dimensional scalar concentration ﬁeld is obtained by MRC. Particle Image Velocimetry (PIV) is used to measure the Reynolds stresses along
+selected planes. Finally, RANS calculations using the commercial
+software FLUENT are compared with the experimental data, and
+the validity of the underlying assumptions is discussed.
+
+2. Apparatus and procedures
+2.1. Set-up and operating conditions
+The set-up was presented in detail by Coletti et al. (submitted
+for publication), and is only brieﬂy described here. The experimental model is sketched in Fig. 1a. It consists of several sections fabricated using stereolithography and assembled together in a
+channel 1350 mm in length. It includes a diffusing section with
+screens to prevent separation, a honeycomb to avoid secondary
+ﬂows, and a contraction which provides a low-turbulence uniform
+ﬂow to the 50 mm by 50 mm test section. The boundary layer is
+tripped about 210 mm upstream of the hole location. The round
+jet tube is D = 5.8 mm in diameter and L = 24 mm long. It is fed
+from a plenum and enters the main ﬂow at an angle of 30°. The
+boundary layer thickness upstream of injection (estimated as the
+distance from the wall at which the velocity is 95% of the centerline
+velocity) is about twice the hole diameter. An identical test section
+is used for the PIV measurements, but with transparent Plexiglas
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+3
+
+Fig. 1. Water tunnel (a) and test section (b). Dimensions are in mm.
+
+windows opened on one lateral wall and on the wall opposite to
+the ﬁlm cooling hole, to allow for illumination and imaging.
+The closed-loop ﬂow system includes a holding tank, from
+which two electric pumps extract the main ﬂow and jet ﬂow, passing through the channel and recirculating back to the tank. The elements are connected by 25.4 mm diameter plastic hoses. The main
+ﬂow Reynolds number, based on the channel hydraulic diameter
+and the bulk velocity (Ubulk = 0.5 m/s), is 25,000. The velocity ratio
+is one (Uj = Ubulk) which results in a jet Reynolds number of 2900.
+Since the density ratio (qj/qbulk) is one, the blowing ratio (qjUj/
+qbulkUbulk) and the momentum ﬂux ratio (qj U 2j =qbulk U 2bulk ) are also
+one. According to Thole et al. (1992) a ﬁlm cooling jet is fully detached for momentum ﬂux ratios higher than 0.8. Our measurements conﬁrm that the present jet is fully detached. The
+Reynolds number regime is signiﬁcantly lower than in turbine ﬁlm
+cooling applications. Much higher Reynolds numbers would likely
+produce quantitative differences with respect to the present experiments. The scope of the study is however to explore fundamental
+aspects of the phenomenon by the analysis of a well-deﬁned conﬁguration, rather than replicating engine-like conditions. Moreover, since the ﬂow is fully turbulent, the reported trends are not
+expected to change at higher ﬂow regimes.
+The working ﬂuid is water, which does not diminish the relevance of these experiments to gas turbine applications, because
+in the present regimes the turbulent transport coefﬁcients are orders of magnitude higher than their molecular counterpart. The
+heat-mass transfer analogy holds, and therefore the following results about the turbulent Schmidt number can be interpreted in
+terms of turbulent Prandtl number.
+2.2. Measurement methods
+Three-dimensional mean velocity ﬁelds are obtained using the
+method of Magnetic Resonance Velocimetry (MRV) described by
+Elkins et al. (2003). MRV makes use of a technique very similar
+to that used in conventional medical magnetic resonance imaging
+(MRI). Quantitative assessment of the ﬂow is obtained thanks to
+the sensitivity of the phase of the MR signal to motion. The procedure for the data acquisition technique is described by Pelc et al.
+(1994). Experiments are performed at the Richard M. Lucas Center
+for Imaging (Stanford, CA) with a 3 Tesla General Electric scanner,
+with a transmit-and-receive radio frequency coil commonly used
+for imaging human heads. Using the same MRI facility, the concentration of a passive scalar (copper sulfate) added to the ﬁlm cooling
+ﬂow is measured following the MRC (Magnetic Resonance Concentration) procedure developed by Benson et al. (2010). Time-averaged velocity and concentration data are obtained on a uniform
+grid at a resolution of 0.6 mm in all three directions. The uncertainty in the velocity ﬁelds is about 6% of the bulk velocity,
+whereas uncertainty in the concentration is 5% of the maximum
+concentration (both at 95% conﬁdence level). Details on the procedures are reported by Coletti et al. (submitted for publication).
+
+Measurements of mean velocity and Reynolds stresses are performed by means of two-dimensional PIV along the symmetry
+plane of the jet and along a wall-parallel plane at 0.5D from the
+injection wall. The light source is a pulsed Spectra-Physics PIV400 Nd:YAG laser (532 nm). The laser beam is shaped into a
+0.5 mm thick sheet by means of a convergent spherical lens of focal
+length f = 1000 mm followed by a cylindrical lens of f = 60 mm.
+The images are acquired by a 12-bit Princeton Instruments CCD
+camera (1300 by 1030 pixels2). A magniﬁcation factor of about
+112 pixel/mm is achieved using a 105 mm Canon objective. Five
+slightly overlapping windows (about 12 by 9 mm2 in size) are
+investigated along the symmetry plane, whereas four windows
+are considered for the wall-parallel plane. The sampling frequency
+is 10 Hz, which guarantees statistically independent realizations.
+In the post-processing, the initial interrogation windows are 128
+by 128 pixel2. Two reﬁnement steps lead to a ﬁnal resolution of
+0.28 by 0.28 mm2. Mean velocity and rms of the velocity ﬂuctuations are obtained by averaging over 4000 image pairs.
+2.3. RANS calculations
+We use the experimental data obtained for the present ﬁlm
+cooling conﬁguration in order to assess the performance and the
+limitations of a commonly employed RANS model. The standard
+k-e model with enhanced wall treatment and a coupled second-order solver was employed using the software FLUENT 13.0. This
+choice is in accordance with the best practices developed through
+several studies comparing different modeling strategies for these
+types of ﬂows (Ferguson et al., 1998). Karvinen and Ahlstedt
+(2005) compared the performance of various FLUENT turbulence
+models in a jet in crossﬂow conﬁguration, and showed that standard k   gave the best agreement with experimental results in
+terms of their prediction of the velocity proﬁles and turbulent kinetic energy proﬁles.
+The numerical set-up fully replicates the experimental conﬁguration, including the main ﬂow channel and the supply plenum.
+The inlet and outlet of the main channel are set 15D upstream
+and 35D downstream of the hole. The grid is structured and consists of 2.5 million hexahedral cells. Boundary layer meshes were
+applied to both the ﬁlm-cooled wall of the channel and the inside
+of the hole, with the ﬁrst cell located at y+ <1. The computation was
+run on single node with 36 GB of RAM and took 48 h to converge to
+residuals of less than 106. Grid-independent convergence was
+conﬁrmed by running the same simulation on a grid with 4.6 million cells and it was shown that the turbulent viscosity varied on
+average by less than 1% in the region of interest near the jet.
+The main inlet turbulence boundary conditions were prescribed
+based on empirical relations from Kim et al. (1987) and an estimated boundary layer thickness based on the experimental velocity proﬁles. The turbulence conditions at the coolant plenum inlet
+are prescribed as 1% turbulent intensity and 1 mm turbulent length
+scale, which compare well with dedicated PIV measurements. For
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+4
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+Fig. 2. Iso-surfaces of positive (red) and negative (blue) streamwise vorticity (a); cross-sections showing streamwise velocity contours (b); cross-section at X/D = 7.5 showing
+streamwise velocity contours and in-plane velocity vectors (c). Data from MRV measurements. (For interpretation of the references to color in this ﬁgure legend, the reader is
+referred to the web version of this article.)
+
+the scalar transport, a value of turbulent Schmidt number equal to
+0.85 was imposed, which was veriﬁed by Ling et al. (submitted for
+publication) to return the best agreement with experiments. More
+details on the RANS simulations are given in Ling et al. (submitted
+for publication).
+3. Results
+In the following, the X-axis indicates the streamwise direction,
+while the Y- and Z-axes are the wall-normal and spanwise directions, respectively. The origin is at the center of the hole at the
+ﬁlm-cooled wall. U, V, W are the mean velocity components in
+the X, Y and Z direction, respectively. u, v and w indicate the ﬂuctuating components. Ensemble-averaging is implied by the operator hi. C is the mean concentration, normalized between 0 and 1.
+The quantities are non-dimensionalized by the hole diameter D
+and the mean jet velocity Uj.
+
+Fig. 3. Streamtube originating from the ﬁlm cooling hole.
+
+3.1. Three-dimensional velocity and concentration ﬁelds
+The main topological features of a jet in crossﬂow have long
+been identiﬁed (see for example Fric and Roshko, 1994), although
+their origin and dynamic role is still under debate (Marzouk and
+Ghoniem, 2007). The present work deals with the mean ﬂow statistics and focuses on features that have a macroscopic impact on the
+scalar transport. Therefore we will restrict our attention to the
+counter-rotating vortex pair (CVP), which is the feature of highest
+dynamical signiﬁcance, and the one that leaves the strongest footprint on the time-averaged quantities. The CVP is clearly visible in
+Fig. 2, obtained from MRV. In particular, positive and negative isosurfaces of streamwise vorticity xZ = ±0.3Uj/D are shown in Fig. 2a.
+Fig. 2b displays color contours of streamwise velocity along a number of transverse planes, which stress the velocity deﬁcit due to the
+blockage imposed to the crossﬂow by the jet. Finally the in-plane
+velocity vectors in Fig. 2c demonstrate how the CVP acts to bring
+outer ﬂow close to the wall, also lifting the jet ﬂuid. It is clear
+why this feature is often indicated as the major ﬂow structure
+responsible for the mixing of jets in crossﬂow in general, and in
+ﬁlm cooling conﬁgurations in particular.
+It is well known that the CVP persists long after injection. Its
+cumulative effect in stirring the ﬂow is well visualized by plotting
+a streamtube found using the experimental mean velocity measurements (Fig. 3). A streamtube is deﬁned as the surface formed
+by all the streamlines that pass through a given closed curve in
+the ﬂuid (Batchelor, 1967). In the present case the curve is chosen
+as the ellipsoidal intersection of the hole with the main channel
+(offset towards the hole center by 0.1D in order to have non-zero
+
+velocity vectors). The originating curve is highlighted in red (color
+online) in Fig. 3, whereas successive cross-sections of the tube are
+in black. One thousand, streamlines (calculated with the opensource software ParaView) are integrated from equally spaced
+points along the originating curve. The streamlines are then used
+as skeleton to build the streamtube (which is calculated with the
+open-source visualization package VTK). The convoluted shape of
+the streamtube is the result of the CVP acting over its whole length.
+From a topological standpoint the CVP, by stretching and folding
+the jet stream-tube, increases the exchange area offered to the
+main ﬂow.
+In the present ﬂow regime, the distribution of the scalar injected by the inclined jet is not only a function of the ﬂow topology,
+but is also affected by the turbulent transport properties, which
+cannot be inferred from the mean velocity alone. To illustrate the
+three-dimensional structure of the coolant jet, iso-surfaces of mean
+concentration are shown for nine levels between 80% and 20%
+(Fig. 4a–i). The footprint of the CVP is visible in the scalar distribution up to about three hole diameters downstream of the injection
+(a–d): the two vortices are recognizable in the double-lobed shape
+of the iso-concentration surfaces. However, further downstream
+(and therefore at lower concentration levels), the concentration
+iso-surfaces are almost oval, indicating that the turbulent transport
+is dominating over the advection.
+The decoupling between velocity and concentration ﬁelds due
+to turbulent dispersion is highlighted in Fig. 5, where color contours of the mean concentration are displayed along the symmetry
+plane. The velocity centerline, deﬁned as the streamline originating
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+5
+
+Fig. 4. Mean scalar structure of the jet, illustrated by iso-surfaces of mean concentration, from 80% (a) to 20% (i).
+
+ies of normal jets in cross-ﬂow (Kamotani and Greber, 1972;
+Hasselbrink and Mungal, 2001), the velocity centerline penetrates
+further into the ﬂow than the maximum concentration line. In fact,
+the velocity centerline is located close to the upper edge of the
+streamtube (where the cross-section of the streamtube is thinner).
+The position of the maximum concentration line on the other hand
+is inﬂuenced by the turbulent diffusion of scalar out of the streamtube. It should be noted that the actual maxima of concentration,
+especially in the region of development of the CVP, are located
+off the symmetry plane. This is clearly indicated by the twopronged shape of the iso-surfaces in Fig. 4a–d.
+Fig. 5. Velocity centerline (continuous black line) and maximum concentration line
+(dashed black line) superimposed to color contours of mean concentration. (For
+interpretation of the references to color in this ﬁgure legend, the reader is referred
+to the web version of this article.)
+
+from the center of the hole, is plotted as a continuous black line.
+The maximum concentration line, deﬁned as the loci of highest
+scalar concentration at each streamwise location along the symmetry plane, is plotted as a dashed black line. As reported in stud-
+
+3.2. Jet entrainment
+Mass entrainment brings jet ﬂuid in contact with crossﬂow
+ﬂuid, creating regions of high scalar gradient and mixing. The
+entrainment rate can be determined by integrating the jet volume
+ﬂux through a section normal to the jet trajectory. Here we consider the trajectory deﬁned by the maximum concentration line,
+which describes the location of the jet ﬂuid more accurately than
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+6
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+the velocity centerline, as show in Fig. 5. Along this line we deﬁne
+an abscissa s; its origin is taken right below the ﬁlm-cooled wall, so
+that the cross-section at s = 0 is all inside the hole. To distinguish
+the boundary between jet ﬂuid and crossﬂow ﬂuid, a threshold value of scalar concentration has to be selected. This is chosen as
+C = 0.05, which was shown by Yuan and Street (1998) to provide
+a suitable distinction for a perpendicular jet in crossﬂow. Signiﬁcantly smaller values would increase errors due to measurement
+noise.
+Fig. 6 depicts the C = 0.05 isosurface, along with sections normal
+to the jet, color-coded by the mean velocity projected along the jet
+trajectory, Us. The evolution of the jet volume ﬂux Vs (normalized
+by the injection value V0) is presented on the left panel of Fig. 7.
+The deﬁnitions for Vs and V0 are given in the following equation:
+
+Vs ¼
+
+Z
+Ajet
+
+U s ðsÞdAjet
+
+V 0 ¼ U0
+
+pD 2
+4
+
+ﬁgurations was inferred by Pietrzyk et al. (1989) and recently characterized by Issakhanian et al. (2012). This is absent in canonical
+jets in crossﬂow fed by long pipes, as in Muppidi and Mahesh
+(2008). This bubble produces strong acceleration and mixing on
+the upstream (along the X-axis) side of the pipe, energizing the upstream portion of the shear layer. Likely, this is also a factor that
+inﬂuences the fractional distribution of the jet volume ﬂux between leeward and windward side, with respect to a canonical
+jet in crossﬂow case, which is fed by a symmetric pipe ﬂow.
+The surface area of the jet cross-section As at any given abscissa
+s is a measure of the jet spreading rate. We evaluate this quantity
+and normalize it by the hole cross-section area A0:
+
+As ¼
+
+Z
+
+dAjet
+
+A0 ¼
+
+Ajet
+
+ð1Þ
+
+where Ajet is the surface identiﬁed by the plane locally perpendicular to the jet centerline and enclosed in the C = 0.05 contour. U0 is
+the velocity at s = 0, and coincides with the bulk jet velocity Uj.
+The correlation of Ricou and Spalding (1961) for an axisymmetric
+jet into quiescent ﬂow and the results of the DNS of Muppidi and
+Mahesh (2008) for a perpendicular jet in crossﬂow (blowing ratio = 5.7) are also included for comparison. The insert shows that
+up to s/D = 2 an axisymmetric jet has a higher entrainment than jets
+in crossﬂow. At larger distances the jets in crossﬂow entrain more
+ﬂuid, due to the formation of the counter-rotating vortex pair. However, while the high blowing ratio jet of Muppidi and Mahesh
+(2008) displays increasing entrainment at further s/D, the present
+inclined jet appears to engulf less and less ﬂuid moving away from
+injection: for s/D > 12 it entrains even less crossﬂow ﬂuid than a
+regular jet. In perpendicular jets in cross-ﬂow (at least at blowing
+ratios sufﬁcient to have fully detachment from the wall) the counter-rotating vortex pair is thought to cause more mixing on the leeward side than on the windward side of the jet (Muppidi and
+Mahesh, 2008). In this case the leeward side is much closer to the
+wall than in a transverse jet, due to the shallow injection angle
+and the relatively low blowing ratio. This is likely the reason for
+the reduced level of entrainment.
+Another major difference between the present study and the
+one of Muppidi and Mahesh (2008) is worth underlining. The connection between the plenum and the short hole produces a strong
+separation in the hole, whose presence in similar ﬁlm cooling con-
+
+pD2
+
+ð2Þ
+
+4
+
+This is plotted in Fig. 7b, together with the jet momentum ﬂux
+and the mean jet velocity. The jet spreading rate would be constant
+in a standard axisymmetric jet, with a linear increase of jet diameter and a quadratic increase of jet cross-section area. In the present case As grows fast in the ﬁrst 4–5 diameters after injection, but
+then the spreading rate reduces and it may be approaching a plateau after s/D = 25. In fact, the trend reﬂects the behavior of the
+volume ﬂux.
+The momentum ﬂux and its initial value at s = 0 are deﬁned as:
+
+Ms ¼
+
+Z
+Ajet
+
+U 2s dAjet
+
+M0 ¼ U 20
+
+pD2
+4
+
+ð3Þ
+
+The momentum ﬂux of a standard jet in a quiescent environment is conserved along the jet trajectory. In the present case
+the presence of the crossﬂow produces a momentum transfer
+which results in the trend reported in Fig. 7b, reﬂecting the increase of jet cross-section area.
+We deﬁne the jet mean velocity (at each abscissa s) as follows:
+
+U s;mean ¼
+
+1
+A0
+
+Z
+
+U s dAjet
+
+ð4Þ
+
+Ajet
+
+(where A0 is the cross-section of the injection hole) and normalize it
+by U0. In an axisymmetric jet the mean velocity decreases as s1.
+Here, after a steep acceleration in the turning of the trajectory,
+Us,mean decelerates towards an asymptote slightly higher than U0,
+which in this case coincides with both the bulk velocity of the crossﬂow as well as the mean jet velocity.
+In normal jets in crossﬂow, the topology of the counter-rotating
+vortex pair suggests that most of the entrainment takes place in
+the leeward part of the jet, i.e. downstream of the jet centerline.
+This is the conclusion drawn by Muppidi and Mahesh (2008): the
+percentage volume ﬂux from the leeward side of their jet in crossﬂow at blowing ratio 5.7 is shown in Fig. 8b. After a few diameters
+from injection, about 90% of the entrainment is due to the leeward
+side. For direct comparison, Fig. 8a shows the fractional volume
+ﬂux from the leeward side of the present conﬁguration. The
+entrainment is well balanced among the two sides, and the volume
+ﬂux from the leeward side does not exceed 50% of the total. This
+supports our conclusion that the proximity of the wall inhibits
+the turbulent transport on this side, limiting its contribution to
+the jet entrainment.
+3.3. Reynolds stresses and eddy viscosity
+
+Fig. 6. Iso-surface of 5% concentration, with cross-sections perpendicular to the jet
+centerline, color-coded by jet velocity.
+
+Both the windward and the leeward shear layers are regions of
+intense turbulence production, as one can see from Fig. 9, displaying the rms of streamwise and wall-normal velocity ﬂuctuations
+along the symmetry plane. In particular rms(u) peaks in the early
+portion of the leeward shear layer, where the minimum of pressure
+is expected to be located in every jet in crossﬂow (Mahesh, 2013).
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+7
+
+Fig. 7. Evolution jet volume ﬂux of the considered conﬁguration, compared with the Ricou-Spalding correlation for an axisymmetric jet and with the DNS of a perpendicular
+jet in crossﬂow at blowing ratio 5.7 (a). Evolution of the jet cross-section, the momentum ﬂux and the mean jet velocity (b).
+
+Fig. 8. Fractional contribution of the leeward side of the jet to the volume ﬂux, for the present case (a), and the DNS of a perpendicular jet in crossﬂow at blowing ratio 5.7 (b,
+Muppidi and Mahesh, 2008).
+
+Fig. 9. rms of streamwise velocity ﬂuctuations along the jet symmetry plane (a). rms of wall-normal velocity ﬂuctuations along the symmetry plane, superimposed with
+isolines of mean concentration (b).
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+8
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+This area is associated with intense transfer of momentum and
+mass between the jet and the cross-ﬂow. It has been argued that
+the local pressure gradient directed upstream is responsible for
+the formation of the CVP (Muppidi and Mahesh, 2008). On the
+other hand the wall-normal ﬂuctuations appear intense in both
+shear layers. Interestingly, the region of elevated rms(v) maps
+quite accurately onto the concentration distribution, especially in
+its outer envelope. This seems to suggest that the decoupling between the velocity and concentration ﬁelds (apparent in Fig. 5) is
+due to differences between the turbulent ﬂuxes of momentum
+and scalar in the streamwise direction, rather than in the wall-normal direction.
+The combined mean velocity, concentration, and turbulence
+stress data allow us to test the applicability of the assumptions
+underlying the most common numerical models, i.e. the eddy viscosity hypothesis, the gradient diffusion hypothesis and the Reynolds analogy. They are expressed in Eqs. (5)–(7), respectively.
+
+
+
+@U i @U j
+hui uj i ¼ mT
+þ
+@xj
+@xi
+hui ci ¼ aT
+PrT ¼
+
+@C
+@xi
+
+mT
+1
+aT
+
+ð5Þ
+
+ð6Þ
+ð7Þ
+
+Here the eddy viscosity mT and eddy diffusivity aT are written as scalars, but in a more general form they can be vectors or even tensors.
+In particular, as we measure ﬂuctuations u and v along the symmetry plane and ﬂuctuations u and w along a wall-parallel plane, we
+deﬁne a wall-normal eddy viscosity mT,uv and a spanwise eddy viscosity mT,uw:
+
+huv i ¼ mT;uv
+
+
+
+@U @V
+þ
+@Y @X
+
+huwi ¼ mT;uw
+
+
+
+@U @W
+þ
+@Z
+@X
+
+ð8Þ
+
+ð9Þ
+
+In the present measurement planes, @U/@Y  @V/@X and @U/
+@Z  @W/@X, so that the deﬁnition of the mT,uv and mT,uw is analogous to the one of Kaszeta and Simon (2000), who used a triplesensor anemometer to measure eddy viscosity in a ﬁlm cooling
+ﬂow.
+Fig. 10a shows contour lines of the primary shear component
+@U/@Y superimposed on color contours of Reynolds shear stresses
+huvi along the symmetry plane. The correlation is evident, suggesting that the eddy viscosity hypothesis holds (at least qualitatively)
+along this plane. In Fig. 10b contours of in-plane concentration gradient ((@C/@X)2 + (@C/@Y)2)0.5 (from MRC) are superimposed on color contours of Reynolds shear stresses huvi. Some correspondence
+is visible (although less clearly than in Fig. 10a), suggesting that, in
+the limit of the validity of the gradient-diffusion hypothesis, the
+turbulent momentum transport correlates well with the turbulent
+scalar transport, in qualitative accordance with the Reynolds analogy. Fig. 10c shows color contours of mT,uv. Blanked areas correspond to locations in which the velocity proﬁle has an inﬂection,
+or otherwise where the velocity gradient is ill-deﬁned (due to ﬁnite
+resolution and experimental noise), resulting in overshoot/undershoot of the eddy viscosity. Generally the distribution mirrors
+the locations of the shear layers. A remarkable aspect is the large
+variation of the eddy viscosity within the investigated plane (almost an order of magnitude), and in particular the low values
+about the leeward shear layer. This latter feature was not identiﬁed
+by Kaszeta and Simon (2000), who reported the mT distribution
+only along a spanwise/wall-normal plane at X/D = 2.5. Moreover
+their conﬁguration had signiﬁcant differences with respect to ours:
+
+the injection angle was slightly larger (35°), the hole was shorter
+(L/D = 2.3), and the free stream turbulence intensity, which here
+is extremely low, was high (12%).
+Fig. 11 repeats the pattern of Fig. 10, this time along the wallparallel plane at Y/D = 0.5. In Fig. 11a contours of Reynolds shear
+stresses huwi are superimposed on the primary shear component
+@U/@Z, while in Fig. 11b they are compared with the in-plane
+concentration gradient ((@C/@X)2 + (@C/@Z)2)0.5. The noise level is
+higher than along the symmetry plane, due to the substantial
+through-plane velocity component, which affects the measurement accuracy. Again, both the eddy viscosity hypothesis and the
+Reynolds analogy (and implicitly also the gradient diffusion
+hypothesis) appear to hold qualitatively. It is conﬁrmed that the
+eddy viscosity is extremely low in the region just downstream of
+the jet.
+3.4. Evaluation of the turbulent diffusivity
+In order to directly measure the turbulent diffusivity it is necessary to measure the turbulent scalar ﬂuxes (or equivalently the
+turbulent heat ﬂuxes). However such measurements are very difﬁcult even in canonical ﬂows, and in three-dimensional ﬂows they
+can be practically unfeasible. To our best knowledge, the only measurements of turbulent diffusivity in a ﬁlm cooling ﬂow were obtained by Kohli and Bogard (2005), using Laser Doppler
+Velocimetry in conjunction with a cold-wire. Their results were
+limited to the symmetry plane.
+Here we propose a method to evaluate the turbulent diffusivity
+from the three-dimensional mean velocity and mean concentration
+ﬁelds. We follow a control volume approach, leveraging the concept of streamtube (see Section 3.1). In Fig. 12a contours of mean
+streamwise concentration ﬂux CU/Uj are plotted along various
+cross-sections. If the ﬂow were laminar, the integral concentration
+ﬂux within the streamtube would remain unchanged (other than
+the effect of molecular diffusivity which is assumed to be negligible). Instead the concentration ﬂux drops quickly moving away
+from the injection, due to turbulent diffusion. Considering two
+consecutive cross-sections of the streamtube, AIN and AOUT, the
+drop in concentration ﬂux can be expressed as:
+
+Z
+
+UC  dAOUT 
+
+AOUT
+
+¼ aT
+
+Z
+AIN
+
+Z
+
+UC  dAIN
+
+AIN
+
+rC  dAIN þ
+
+Z
+AOUT
+
+rC  dAOUT þ
+
+Z
+
+rC  dALAT
+
+
+
+ALAT
+
+ð10Þ
+where ALAT is the lateral surface of the streamtube between section
+AIN and AOUT. Eq. (10) is the integral expression of the gradient-diffusion hypothesis, applied to the control volume delimited by AIN,
+AOUT and ALAT, where aT is assumed constant. The streamtube is
+an especially convenient control volume: it is impermeable to the
+mean ﬂux, and therefore the expression of the ﬂux on the left-hand
+side is simpliﬁed. In order to have a sufﬁcient number of voxels to
+perform a robust evaluation, we consider successive segments of
+the streamtube, each of length D in the streamwise direction. The
+resulting turbulent diffusivity is plotted in Fig. 12b. Each data point
+in the aT plot is representative of a control volume of length D, centered at a given streamwise position X/D. To estimate the accuracy
+of the calculated turbulent diffusivity, a Monte Carlo error analysis
+is performed. Gaussian uncertainty is assumed for velocity (standard deviation r = 0.03Uj), concentration (r = 0.025), and position
+of the streamtube (r = 0.5 voxels). Repeating the calculation 1000
+times with random perturbations results in the error bars plotted
+in Fig. 12b (at 95% conﬁdence level). The values of aT are fairly constant in the streamwise direction, and match closely (after nondimensionalization) the optimal isotropic value of 3  105 m2/s
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+9
+
+Fig. 10. Reynolds shear stresses along the jet symmetry plane, superimposed with isolines of primary component of shear (a) and mean concentration gradient (b). Wallnormal eddy viscosity along the jet symmetry plane (c).
+
+Fig. 11. Reynolds shear stresses along Y/D = 0.5 plane, superimposed to isolines of primary component of shear (a) and mean concentration gradient (b). Spanwise eddy
+viscosity along the Y/D = 0.5 plane (c).
+
+obtained by Ling et al. (submitted for publication) for the same data
+set.
+For comparison, proﬁles of mT,uv and mT,uw obtained by PIV (Eqs.
+(8) and (9)) are also plotted in Fig. 12b. The proﬁles of eddy viscosity are extracted along the intersection of both PIV planes (Y/
+D = 0.5, Z/D = 0). We shall notice that these values are obtained at
+speciﬁc locations, while the values of eddy diffusivity are volume-averaged on a segment of streamtube of length D. However
+the steep variation of mT,uv with X is striking, as is the difference
+with respect to mT,uw. Models that use the concept of uniform isotropic eddy viscosity and the Reynolds analogy cannot capture
+these behaviors.
+
+3.5. Comparison with RANS calculations
+Most experimental studies concerned with jets in crossﬂow and
+ﬁlm cooling report information along the symmetry plane and/or
+along the wall. When comparing with numerical simulations, this
+is typically not sufﬁcient to assess whether the important ﬂuid
+dynamics are captured. Here we leverage the three-dimensional
+nature of the MRI techniques to obtain a more complete evaluation
+of the RANS calculation, and to gain insight into its limitations.
+Fig. 13a presents the concentration ﬁeld (color contours), velocity centerline (solid black line), and maximum concentration line
+(dashed black line) along the symmetry plane, as calculated from
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+10
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+Fig. 12. Streamtube originating from the ﬁlm cooling hole with cross-sections showing contours of mean streamwise concentration ﬂux (a). Streamwise evolution of
+turbulent diffusivity and turbulent viscosity (b).
+
+Fig. 13. Velocity centerline (continuous black line) and maximum concentration line (dashed black line) superimposed to color contours of mean concentration from RANS
+simulations (a). Wall-normal proﬁles of concentration at various streamwise position from MRC experiments and RANS simulations (b). (For interpretation of the references
+to color in this ﬁgure legend, the reader is referred to the web version of this article.)
+
+RANS. Direct comparison with the measurements (Fig. 5) demonstrates the signiﬁcant differences: the maximum concentration
+line reaches its highest point around X/D = 10, and then moves
+back towards the wall. This is reminiscent of the behavior of a reattaching jet. Consequently the near-wall concentration (most critical for ﬁlm cooling) is severely overpredicted, as underlined by
+the wall-normal proﬁles plotted in Fig. 13b.
+The three-dimensional mean ﬂow structure helps identify the
+roots of the miscalculation in the scalar ﬁeld. Fig. 14 compares
+end views of the streamtubes extracted from the MRV and CFD
+
+ﬁelds, issued by the ﬁlm cooling hole and plotted up to X/D = 22.
+The RANS model cannot reproduce the details of the vorticity
+transport in the jet-crossﬂow interaction, and the predicted counter-rotating vortices are farther apart and weaker than in the measurements. The result is that the streamtube is signiﬁcantly less
+convoluted. The streamwise vorticity in the RANS ﬁeld (not shown)
+diffuses away faster than indicated by the measurements, which is
+a consequence of the overpredicted eddy viscosity, shown in
+Fig. 15 (to be compared with Fig. 10c). In particular, the model fails
+to reproduce the low level of mT along the leeward jet shear layer. In
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+11
+
+Fig. 14. End view of the streamtube emanating from the ﬁlm cooling hole, as
+calculated from MRV experiments (a) and RANS simulations (b).
+
+Fig. 17. Evolution jet volume ﬂux, comparing MRV/MRC experiments and RANS
+simulations.
+
+Fig. 15. Wall-normal eddy viscosity along the jet symmetry plane from RANS
+simulations.
+
+this respect, we notice that the streamwise vortices have tangential velocity increasing with radial distance, and are therefore Rayleigh-stable. This limits the diffusion of momentum and mass from
+the jet towards the wall, an effect which is not captured by the
+present model. Finally, the weaker CVP in the RANS simulation induces less lift-off of the jet, which also affects the trajectory and
+the amount of coolant near the wall.
+Fig. 16 presents color contours of mean concentration along a
+wall-normal section at Y/D = 0.5. The near-injection pattern highlights the importance of the CVP formation mechanism. The experimental scalar distribution shows the footprint of the pressuredriven, upstream-directed acceleration about the leeward edge of
+the jet (Muppidi and Mahesh, 2008). This feature is not reproduced
+in the RANS calculation (which cannot model the pressure-trans-
+
+port term), and neither is the consequent steep concentration drop
+along the centerline. Moreover, the lateral spreading of the jet ﬂuid
+is underpredicted, which is a well-known limit of two-equation
+model simulations of ﬁlm cooling conﬁgurations (Acharya et al.,
+2001).
+To quantify the overall dispersion of injected scalar into the
+main ﬁeld we use again the concept of entrainment, quantiﬁed in
+terms of jet volume ﬂux as in Section 3.2. Fig. 17 shows how the
+present RANS approach largely underpredicts entrainment, especially far from injection. This is consistent with the overestimated
+scalar concentration mentioned above. For the entrainment rate to
+be properly predicted, a higher (or streamwise increasing) eddy
+diffusivity should be adopted in the RANS model. However, to capture the persistence of the CVP, a lower (or streamwise decreasing)
+eddy viscosity would be more appropriate. Note that the present
+turbulent Schmidt number of 0.85 was found to be optimal by
+comparison with the present data set (Ling et al., submitted for
+publication). Clearly the constant ScT model is of limited value,
+even in a relatively simple conﬁguration as the present one. For
+the important ﬂow and scalar details to be properly reproduced,
+both mT and aT should vary spatially (and independently) in the
+correct manner.
+4. Conclusions
+
+Fig. 16. Mean concentration along Y/D = 0.5 plane, from MRC measurements (a)
+and from RANS simulations (b).
+
+An inclined jet in cross-ﬂow has been investigated in a water
+tunnel by means of Magnetic Resonance Velocimetry, Magnetic
+Resonance Concentration measurements, and Particle Image
+Velocimetry. The ﬂow conﬁguration is relevant to ﬁlm cooling
+technology, since the molecular properties of the ﬂuid are irrelevant in the fully turbulent regime. The heat-mass transfer analogy
+is utilized, and the conclusions concerning the scalar concentration
+can be also interpreted in terms of temperature.
+The mean ﬂow is dominated by the CVP aligned in the streamwise direction, which brings crossﬂow ﬂuid into the vicinity of the
+wall. The streamtube issued by the hole is stretched and folded by
+the CVP, increasing the surface for mass exchange with the crossﬂow. The streamwise vorticity leaves its footprint on the scalar
+ﬁeld close to injection, but turbulent diffusion acts to smear out
+this pattern, marking a strong decoupling between mean velocity
+and mean concentration ﬁelds. This consideration is used to quantify the eddy diffusivity, considering a mass ﬂux balance through
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+12
+
+F. Coletti et al. / International Journal of Heat and Fluid Flow xxx (2013) xxx–xxx
+
+the streamtube issued by the hole. The eddy diffusivity is shown to
+be fairly constant in the streamwise direction.
+In the ﬁrst few diameters downstream of injection, the jet
+entrainment is slightly enhanced (with respect to an axisymmetric
+jet in quiescent environment) by the formation of the CVP. However, further downstream, the proximity to the wall inhibits this
+process. As a consequence, and unlike perpendicular jets in crossﬂow, the leeward side and the windward side contribute almost
+equally to the entrainment.
+The intense turbulent ﬂuctuations along both sides of the jet
+shear layers mark the envelope of the injected scalar. The Reynolds
+shear stresses are found to correlate qualitatively with the primary
+shear and concentration gradients, which seemingly supports the
+use of the eddy-viscosity hypothesis, the gradient-diffusion
+hypothesis and the Reynolds analogy. However the turbulent viscosity is strongly non-uniform and anisotropic, underscoring that
+these concepts can hardly be used to make quantitative
+predictions.
+A direct comparison against a standard k-e calculation highlights the limitations of RANS modeling for the present ﬂow. The
+formation mechanism of the CVP and its strength are not properly
+captured. Close to injection, the local minimum of eddy viscosity in
+between the counter-rotating vortices is not predicted. Consequently, RANS predicts an excess of mass and momentum transport radially from the CVP, resulting in over predicted coolant
+concentrations in the vicinity of the wall. On the other hand, further from injection, jet entrainment is largely underpredicted. It
+is concluded that, for an eddy viscosity model to capture the correct macroscopic trends, turbulent viscosity and diffusivity should
+vary spatially in different ways. Therefore a constant ScT model is
+clearly inadequate for this ﬂow.
+Acknowledgments
+The work of the ﬁrst author was supported by the Honeywell
+Corporation. Use of the facilities at the Richard M. Lucas Center
+for Magnetic Resonance Spectroscopy and Imaging is gratefully
+acknowledged. The help of Lester K. Su during the PIV measurement campaign was greatly appreciated. In addition, this study
+was supported in part by the U.S. Army Research Ofﬁce under contract/Grant number 57392-EG-II. The views expressed herein are
+those of the authors and do not purport to reﬂect the position of
+the Department of the Army, or the Department of Defense.
+References
+Abe, K., 2005. A hybrid LES/RANS approach using an anisotropy-resolving algebraic
+turbulence model. Int. J. Heat Fluid Flow 26, 204–222.
+Acharya, S., Tyagi, M., Hoda, A., 2001. Flow and heat transfer predictions for ﬁlmcooling. Ann. N.Y. Acad. Sci. 934, 110–125.
+Batchelor, G.K., 1967. An Introduction to Fluid Dynamics. Cambridge University
+Press, UK.
+Benson, M., Elkins, C.J., Mobley, P.D., Alley, M.T., Eaton, J.K., 2010. Three-dimensional
+concentration ﬁeld measurements in a mixing layer using magnetic resonance
+imaging. Exp. Fluids 49, 43–55.
+Benson, M., Elkins, C.J., Eaton, J.K., 2011. Measurements of 3D velocity and scalar
+ﬁeld for a ﬁlm-cooled airfoil trailing edge. Exp. Fluids 51, 443–455.
+Bernsdorf, S., Rose, M.G., Abhari, R.S., 2006. Modeling of ﬁlm cooling—Part I:
+experimental study of ﬂow structure. J. Turbomach. 128, 141 (9 pp).
+
+Bogard, D.G., Thole, K.A., 2006. Gas turbine ﬁlm cooling. AIAA J. Prop. Power 22,
+249–271.
+Coletti, F., Elkins, C.J., Eaton, J.K. An inclined jet in crossﬂow under the effect of
+streamwise pressure gradients. Exp. Fluids (submitted for publication).
+Elkins, C.J., Markl, M., Pelc, N., Eaton, J.K., 2003. Magnetic resonance velocimetry for
+mean velocity measurements in complex turbulent ﬂows. Exp. Fluids 34, 494–
+503.
+Ferguson, J.D., Walters, D.K., Leylek, J.H., 1998. Performance of turbulence models
+and near-wall treatments in discrete-jet ﬁlm-cooling simulations. ASME Paper
+No. 98-GT-438.
+Fric, T.F., Roshko, A., 1994. Vortical structure in the wake of a transverse jet. J. Fluid
+Mech. 279, 1–47.
+Hasselbrink, E.F., Mungal, M.G., 2001. Transverse jets and jet ﬂames. Part 1. Scaling
+laws for strong transverse jets. J. Fluid Mech. 443, 1–25.
+Hoda, A., Acharya, S., 2000. Predictions of a ﬁlm coolant jet in crossﬂow with
+different turbulent models. J. Turbomach. 122, 558–569.
+Issakhanian, E., Elkins, C.J., Eaton, J.K., 2012. In-hole and mainﬂow velocity
+measurements of low-momentum jets in crossﬂow emanating from short
+holes. Exp. Fluids 53, 1765–1778.
+Jessen, W., Schroder, W., Klaas, M., 2007. Evolution of jets effusing from inclined
+holes into crossﬂow. Int. J. Heat Fluid Flow 28, 1312–1326.
+Kamotani, Y., Greber, I., 1972. Experiments on turbulent jet in a crossﬂow. AIAA J.
+10, 1425–1429.
+Karvinen, A., Ahlstedt, H., 2005. Comparison of turbulence models in case of jets in
+crossﬂow using commercial CDF codes. In: Engineering Turbulence Modelling
+and Experiments 6-ETMM6. Elsevier Science.
+Kaszeta, R.W., Simon, T.W., 2000. Measurement of eddy diffusivity of momentum in
+ﬁlm cooling ﬂows with streamwise injection. J. Turbomach. 122, 178–183.
+Kays, W.M., 1994. Turbulent Prandtl number—where are we? J. Heat Transfer 116,
+284–295.
+Kim, J., Moin, P., Moser, R., 1987. Turbulence statistics in fully developed channel
+ﬂow at low Reynolds number. J. Fluid Mech. 177 (1), 133–166.
+Kohli, A., Bogard, D.G., 2005. Turbulent transport in ﬁlm cooling ﬂows. J. Heat
+Transfer 127, 513–520.
+Lakehal, D., 2002. Near-wall modeling of turbulent convective heat transport in ﬁlm
+cooling of turbine blades with the aid of direct numerical simulation data. J.
+Turbomach. 124, 485–498.
+Launder, B.E., Sharma, B.I., 1974. Application of the energy-dissipation model of
+turbulence to the calculation of ﬂow near a spinning disc. Lett. Heat Mass Trans.
+1, 131–138.
+Ling, J., Coletti, F., Yapa, S., Eaton, J.K. Experimentally-informed optimization of
+turbulent diffusivity for a discrete hole ﬁlm cooling geometry. Int. J. Heat Fluid
+Flow (submitted for publication).
+Liu, C.-L., Hui-Ren, Z., Bai, J.-T., 2008. Effect of turbulent Prandtl number on the
+computation of ﬁlm-cooling effectiveness. Int. J. Heat Mass Trans. 51, 6208–
+6218.
+Mahesh, K., 2013. The interaction of jets with crossﬂow. Ann. Rev. Fluid Mech. 45,
+379–407.
+Margason, R.J., 1993. Fifty years of jet in cross ﬂow research. In: Computational and
+Experimental Assessment of Jets in Cross Flow. AGARD-CP-534. Winchester, UK.
+Marzouk, Y.M., Ghoniem, A.F., 2007. Vorticity structure and evolution in a
+transverse jet. J. Fluid Mech. 575, 267–305.
+Muppidi, S., Mahesh, K., 2008. Direct numerical simulation of passive scalar
+transport in transverse jets. J. Fluid Mech. 598, 335–360.
+Pelc, N.J., Sommer, F.G., Li, K.C.P., Brosnan, T.J., Herfkens, R.J., Enzmann, D.R., 1994.
+Quantitative magnetic resonance ﬂow imaging. Magn. Reson. Quart. 10, 125–
+147.
+Pietrzyk, J.R., Bogard, D.G., Crawford, M.E., 1989. Hydrodynamic measurements of
+jets in crossﬂow for gas turbine ﬁlm cooling applications. J. Turbomach. 111,
+1139–1145.
+Ricou, F.P., Spalding, D.B., 1961. Measurements of entrainment by axisymmetrical
+turbulent jets. J. Fluid Mech. 11, 21–32.
+Speziale, C.G., Sarkar, S., Gatski, T.B., 1991. Modeling the pressure-strain correlation
+of turbulence: an invariant dynamical systems approach. J. Fluid Mech. 227,
+245–272.
+Thole, K.A., Sinha, A., Bogard, D.G., Crawford, M.E., 1992. Mean temperature
+measurements of jets with a crossﬂow for gas turbine ﬁlm cooling application.
+In: Kim, J.H., Yang, W.J. (Eds.), Rotating Machinery Transport Phenomena.
+Hemisphere, New York.
+Younis, B.A., Speziale, C.G., Clark, T.T., 2005. A rational model for the turbulent scalar
+ﬂuxes. Proc. R. Soc. A 461, 575–594.
+Yuan, L.L., Street, R.L., 1998. Trajectory and entrainment of a round jet in crossﬂow.
+Phys. Fluids 10, 2323–2335.
+
+Please cite this article in press as: Coletti, F., et al. Turbulent transport in an inclined jet in crossﬂow. Int. J. Heat Fluid Flow (2013), http://dx.doi.org/
+10.1016/j.ijheatﬂuidﬂow.2013.06.001
+
+

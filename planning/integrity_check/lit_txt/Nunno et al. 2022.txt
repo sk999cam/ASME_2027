@@ -1,0 +1,1003 @@
+AIAA SciTech Forum
+January 3-7, 2022, San Diego, CA & Virtual
+AIAA SCITECH 2022 Forum
+
+10.2514/6.2022-1404
+
+Wall-Resolved LES Study of Shaped-Hole Film Cooling Flow
+for Varying Hole Orientation
+A. Cody Nunno∗ , Sicong Wu† , Mushin M. Ameen‡ , Pinaki Pal§ , and Prithwish Kundu¶
+Energy Systems Division, Argonne National Laboratory, Lemont, IL 60439, USA
+Ahmed Abouhussein‖ and Yulia T. Peet ∗∗
+Arizona State University, Tempe, AZ 85287, USA
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+Michael M. Joly††
+Raytheon Technologies Research Center, East Hartford, CT 06108, USA
+Peter A. Cocks ‡‡
+Pratt and Whitney, East Hartford, CT 06118, USA
+This work presents the findings from a wall-resolved large-eddy simulation (WRLES) study
+of a canonical gas turbine film cooling configuration performed using a high-order spectral
+element computational fluid dynamics (CFD) solver known as Nek5000. In particular, flow
+over a flat plate with a single row of 7-7-7 shaped cooling holes (represented by a single hole
+with periodic boundary conditions in the spanwise direction) was examined. Numerical results
+for the baseline case comprised of blowing ratio (BR) of 2, density ratio of 1.6, inlet freestream
+Reynolds number of 6000, and 30° cooling hole orientation relative to the mean flow were
+compared with available experimental data. Thereafter, simulations for hole angles of 25°, 35°,
+and 40° were performed (at BR = 2) to analyze the impact of hole orientation on the adiabatic
+cooling effectiveness profiles; blowing ratio was also varied (keeping the cooling hole angle fixed
+at 30°) to investigate its impact on adiabatic effectiveness. With respect to cooling hole angle,
+it was found that the 30° case had the best peak cooling effectiveness, whereas the 25° case
+exhibited a broader effectiveness profile with a lower peak due to the plenum flow being more
+aligned with the bulk flow. On the other hand, lower blowing ratio cases showed a wider film
+cooling effectiveness profile, but lower overall cooling effectiveness downstream of the cooling
+hole due to the specifics of the chosen configuration.
+
+I. Nomenclature
+𝐵𝑅
+𝐶𝐹 𝐿
+𝐷
+DNS
+𝐷𝑅
+FTT
+LES
+𝑇
+RANS
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+Blowing ratio
+Courant–Friedrichs–Lewy number
+Hole diameter
+Direct numerical simulation
+Density ratio
+Flow-through time
+Large-eddy simulation
+Temperature
+Reynolds-averaged Navier-Stokes
+
+∗ Postdoctoral
+
+Appointee, 9700 South Cass Ave, Lemont, IL 60439.
+Appointee, 9700 South Cass Ave, Lemont, IL 60439.
+‡ Research Scientist, 9700 South Cass Ave, Lemont, IL 60439.
+§ Research Scientist, 9700 South Cass Ave, Lemont, IL 60439, AIAA Member.
+¶ Research Scientist, 9700 South Cass Ave, Lemont, IL 60439.
+‖ Graduate Researcher, 501 E. Tyler Mall, Tempe, AZ 85287.
+∗∗ Associate Professor, School for Engineering of Matter, Transport and Energy, 501 E. Tyler Mall, Tempe, AZ 85287, AIAA Member.
+†† Research Engineer, 411 Silver Lane, East Hartford, CT 06108.
+‡‡ Deputy Program Chief Engineer, 400 Main St, East Hartford, CT 06118, AIAA member.
+† Postdoctoral
+
+1
+Copyright © 2022 by the American Institute of Aeronautics and Astronautics, Inc.
+The U.S. Government has a royalty-free license to exercise all rights under the copyright claimed herein for Governmental purposes. All other rights are reserved by the copyright owner.
+
+𝑅𝑒 𝐷
+𝜂
+𝜃
+
+= Reynolds number based on hole diameter
+= Film cooling effectiveness
+= Normalized temperature
+
+II. Introduction
+as turbines require a high combustor exit temperature in order to be efficient. However, most gas turbine components
+past the combustor exit cannot withstand the necessary high temperatures for very long. Therefore, effective turbine
+cooling strategies are needed. Film cooling is a common approach, whereby air from the compressor stage is injected at
+the surface of the parts in question to create a barrier between the high temperature gases and the sensitive hardware.
+While film cooling has been a common practice for decades, understanding of the phenomenon is still imperfect, largely
+because of the challenges presented by experiments in such harsh conditions. By simulating such a flow, the authors
+seek to gain further insights into the film cooling phenomena.
+Film cooling has been extensively studied via experiments in the past [1], but simulations have recently become a
+common means of examining these flows. Reynolds-Averaged Navier-Stokes (RANS) simulations have been commonly
+used for these studies [2, 3] due to low computational cost. However, due to the limits of the RANS turbulence modeling
+approach, it tends to be a poor predictor for parameters like adiabatic effectiveness [4–6]. Other methods have been used
+to improve upon these predictions. RANS hybridized with other models have become popular, using techniques like
+unsteady RANS or Detached Eddy Simulation [7, 8]. Large-eddy simulation (LES), though, has become the preferred
+simulation tool for studying film cooling effectiveness at lower cost than direct numerical simulation (DNS).
+LES studies have been conducted for a variety of hole configurations. The simplest configuration that has been
+frequently studied is the cylindrical hole configuration [5, 9–11]. The main issue with cylindrical hole configurations is
+that they tend to inject the cooling fluid further into the boundary layer, thereby reducing the fluid’s contact with the
+surface and thus cooling effectiveness. Shaped hole configurations, on the contrary, have been shown to generally have a
+better cooling effectiveness, as they diffuse the flow out of the hole better, and as a result are a significant geometry of
+study [12–18]. This work seeks to contribute to the existing body of literature on shaped hole film cooling by providing
+further high-fidelity simulation datasets.
+Beyond hole shape, there are other features of the flow which can substantially affect the cooling effectiveness. Hole
+inclination angle has been occasionally studied [19–22], but investigations of its effects have been limited in scope and
+have rarely been simulated. Changes in blowing ratio also substantially alter cooling performance [23–25], with its
+results depending somewhat on the shape of the cooling hole configuration.
+This manuscript summarizes a campaign of high-fidelity wall-resolved LES of shaped hole geometries at conditions
+relevant to film cooling, using implicit LES for a 7-7-7 shaped hole configuration previously considered by Oliver and
+coworkers [15]. Results of these simulations are compared to the previous experimental results for model verification
+and validation. Results for velocity and adiabatic film cooling effectiveness are compared qualitatively and quantitatively.
+Alterations to the configuration are then performed. Specifically, small adjustments are made to the angle of the cooling
+hole above and below the baseline configuration for comparison. Further configuration changes explored include altering
+the blowing ratio (𝐵𝑅) for the baseline 30° configuration.
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+G
+
+III. Computational Configuration
+First, the geometry used for the simulations is described. Then, the details of the simulation configuration are
+provided. Finally, adjustments made to the geometry and simulation configuration for the latter part of this work are
+outlined.
+A. Simulation Geometry
+The geometry simulated in this work is identical to the one considered in Oliver et al. [15]. It consists of three parts:
+a 7-7-7 shaped hole, a plenum feeding cooled air into the hole, and a flat plate acting as the surface to be cooled. The
+hole geometry details are described in Ref. [26]. The configuration initially examined has the hole entering the flat plate
+region at an angle of 30°. The original experiment’s geometry was set up as a series of these cooling holes arranged in
+parallel, so as to mimic the cooling configurations typical of gas turbines.
+The baseline flow configuration examined has a blowing ratio (𝐵𝑅) of 2.0, a density ratio (𝐷 𝑅) of 1.6, a Reynolds
+number of 6000 based on the diameter of the hole (𝑅𝑒 𝐷 ), and a freestream Mach number of approximately 0.15. The
+
+2
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+plenum consists of a 16𝐷 × 15𝐷 × 6𝐷 box centered around the smaller end of the shaped hole. The flat plate region is
+described using a 25𝐷 × 5𝐷 × 6𝐷, where the hole enters the geometry approximately 5.2𝐷 downstream of the inlet,
+leaving a further 17.5𝐷 of the plate after the hole. An overview of this geometry can be seen in Fig. 1.
+
+(a) Entire mesh
+
+(b) Hole region mesh detail
+
+Fig. 1
+
+(c) Mesh detail of the flat plate region from above
+
+30° hole angle LES mesh with highlighted details.
+
+B. Simulation Details
+The flow was simulated using the Nek5000 [27] platform, a higher-order spectral element CFD code, using its
+low Mach flow solver. The simulation performed was an implicit, wall-resolved LES, using a high-pass filter with
+a relaxation term. The time scheme used was a semi-implicit second-order backward differentiation method with
+extrapolation using an operator-integrator factor scheme (OIFS). The grid was created to be fairly coarse for the 30° case,
+105128 elements, with refinement coming from the eighth-order polynomials used over each element, creating an
+effective resolution of 53.8 million grid points. The grid is also more refined in locations of particular importance, such
+as inside the hole and near the wall in the flat plate region. An overview of the grid can be seen in Fig. 1.
+A variable time-stepping scheme was used for these simulations, restricted such that 𝐶𝐹 𝐿 ≤ 1.5, due to the use
+of OIFS. Time-averaged statistics for the flow were taken over 18.6 flow-through times after an initial phase of 1.4
+flow-through times to establish an approximately steady flow. During this initial development phase, a more typical
+3
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+time-stepping scheme is used, restricting the 𝐶𝐹 𝐿 ≤ 0.5 for only the first 1.4 flow-through times. A flow-through time
+(FTT) in this work was based on the freestream velocity of the flat plate region, indicating the length of time for a
+theoretical fluid particle entering that region at the inflow boundary to travel to the outflow boundary.
+C. Boundary Conditions
+The incoming velocity profile over the flat plate was considered to be a Blasius boundary layer profile. Since
+Nek5000 uses a non-dimensional framework, velocity was used as the non-dimensionalizing parameter, such that the
+incoming freestream velocity over the flat plate region was equal to unity, given a 𝑅𝑒 𝐷 of 6000. To match the 𝐵𝑅 in the
+plenum, a constant velocity inflow was applied at the bottom of the plenum, approximately 1.02% of the freestream
+velocity over the flat plate. The appropriate 𝐷 𝑅 was achieved in the experiment using air at 295K in the boundary
+layer, and at 184K in the plenum region. Properties necessary to compute transport equations were taken from air at the
+appropriate temperature condition, then normalized.
+The spanwise boundaries in Fig. 1a were periodic for this simulation, so as to model an infinite series of holes next
+to one another. The top boundary was open to allow flow to move freely out of the domain, as is the exit of the flat plate.
+The walls of the hole, plenum, and flat plate regions were all considered as adiabatic walls under the no-slip condition.
+D. Geometry and Configuration Variations: Hole Angle and Blowing Ratio
+
+(a) Side view
+
+(b) Detail of the flat plate region from above
+
+Fig. 2 Geometries with varying hole angles overlaid on one another for comparison. The 30° baseline geometry
+is outlined in red. 25°, 35°, and 40° geometries are outlined in orange, blue, and magenta, respectively. The
+overlapping boundary layer region, identical in all geometries, is outlined in black.
+
+4
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+Two types of alterations were made to the Oliver et al. [15] flow configuration in the latter part of this work to
+examine their impact on cooling effectiveness. First, the angle of orientation of the hole relative to the flat plate region
+was adjusted through a series of angles surrounding the 30° baseline case. Then, the blowing ratio of the baseline case
+was decreased below 𝐵𝑅 = 2.0.
+For the flow configurations in which the hole angle changes, most features of the geometry and flow (𝐷, 𝐵𝑅, 𝐷 𝑅, 𝑅𝑒 𝐷 )
+remained consistent with the baseline case. The hole geometry angles examined in addition to the baseline 30° case were
+25°, 35°, and 40°. These adjusted geometries can be seen in Fig. 2. The hole entry remains centered around the plenum,
+and the center of the hole exit is fixed to the same location in the flat plate region as it is for the 30° orientation; this can
+be seen in Fig. 2a. The adjusted exit profile of the hole results in changes to the length of the flat plate observable in the
+domain after the hole exit, as can be seen in Fig. 2b.
+The last set of cases only adjusted the blowing ratio, down from 2.0 in a sweep of 𝐵𝑅 = 0.5, 1.0, 1.5. This was
+accomplished by adjusting the inflow velocity imposed at the bottom of the plenum to match the blowing ratio; thus,
+𝑅𝑒 𝐷 was kept the same as in the baseline case, as were density ratio and the hole configuration. The change in the
+blowing ratio relative to the freestream velocity allowed the maximum 𝐶𝐹 𝐿 considered to be increased to 2.0 for the
+𝐵𝑅 = 1.0 and 1.5 cases, but the 𝐵𝑅 = 0.5 retained the same restrictions as the baseline case.
+
+IV. Simulation Results
+First, the 30° hole angle case was considered for simulation validation, comparing the current simulation results
+to the experimental data from Oliver et al. [15]. Then, the 25°, 30°, 35°, and 40° hole angle cases were compared,
+examining the change in film cooling effectiveness, 𝜂, due to the change in hole angle. Finally, the baseline case was
+compared to WRLES corresponding to decreasing blowing ratio to examine how film cooling effectiveness changes
+with this parameter.
+A. Baseline Case: 30° Hole Angle
+
+Fig. 3
+
+Surface effectiveness 𝜂 in the flat plate region for the baseline 30° WRLES.
+
+Examining the cooling effectiveness on the surface of the flat plate region, the present simulation appears to match
+the experimental data quite well. The 2D plot of cooling effectiveness, shown in Fig. 3, visually matches the effectiveness
+data from Oliver and coworkers. This cooling effectiveness is defined as
+𝜂=
+
+𝑇∞ − 𝑇𝑤
+,
+𝑇∞ − 𝑇𝑐
+
+(1)
+
+where 𝑇∞ is the freestream temperature, 𝑇𝑐 is the temperature of the coolant, and 𝑇𝑤 is the local temperature at the wall.
+Generally, the contours of the surface effectiveness are approximately as broad as the previous experiment.
+By examining 1D plots of surface effectiveness, a more quantitative comparison between the current simulation
+and experiments is possible. The centerline surface effectiveness can be seen in Fig. 4. Here, the present simulation
+matches the surface effectiveness of the experiments from the referenced work. Further evidence of the excellent match
+5
+
+1
+
+Oliver (Exp)
+ANL (LES)
+
+0.8
+
+𝜂
+
+0.6
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+0.4
+
+0.2
+
+0
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+𝑥/𝐷
+Fig. 4 Surface effectiveness 𝜂 at the centerline in the flat plate region for the baseline 30° WRLES. The figure
+compares LES with experimental data from Oliver et al. [15]. 𝑥/𝐷 is measured from the downstream edge of
+the hole.
+in cooling effectiveness can be seen in Fig. 5. Here, the ”flattening” of the film cooling effectiveness profile can be more
+easily quantified than in Fig. 3; that is, peak cooling effectiveness is seen to decrease downstream in the simulation,
+but cooling effectiveness increases downstream at the edges of the wake region resulting from the cooling hole flow.
+The present LES shows approximately the same behavior as the experiment, matching closely at the various stations
+downstream of the hole. There is little discrepancy in the peak effectiveness near the center of the hole wake region.
+However, effectiveness is slightly higher than anticipated by the experiment at the distance furthest downstream.
+Normalized temperature can also be compared to the previous work. Here, normalized temperature is defined as:
+𝜃=
+
+𝑇∞ − 𝑇
+,
+𝑇∞ − 𝑇𝑐
+
+(2)
+
+where 𝑇 is the local temperature, effectively the same non-dimensionalization as 𝜂. The heatmap for normalized
+temperature, shown in Fig. 6, indicates a strong similarity of the present simulation to the experiment [15]. Both the
+present simulation and the experiment exhibit a flat, ellipsoidal profile.
+Normalized temperature can be measured more quantitatively using 1D data from the 𝑥/𝑑 = 5 plane. Here, 𝜃
+profiles are shown at half diameter increments outward from the centerline along this plane. These comparisons are
+shown in Fig. 7. Nearer to the centerline, the comparisons are almost identical. In the more distant region, there is some
+small deviation from experiment, likely owing to the choice of subgrid model.
+Fig. 8 shows the velocity profile both in the hole and over a small portion of the flat plate region. The velocity of the
+hole region matches the profile exhibited in Oliver and coworkers [15]: namely, a small recirculation region near the
+plenum entry, followed by an accelerated flow along the top of the hole. The velocity magnitudes in these two regions
+are approximately the same as the magnitudes shown in the previous work. The flat plate region also shows similar
+behavior to the previous work, in the form of a relatively swiftly developing boundary layer, propelled by the flow
+acceleration in the hole.
+Root mean squared velocity is shown as a measurement of turbulence intensity in Fig. 9, and it provides a clearer
+picture of the mixing intensity in the hole region of the simulation. As can be seen from the three planes in the hole
+shown in the image, the turbulence intensity is highest at the sharp corner where the plenum meets the hole. This
+appears to create a band of high turbulence intensity that gets carried with the main flow through the hole, ascending
+from the bottom of the hole to the top as the flow in the hole mixes.
+6
+
+1
+
+Oliver (Exp)
+ANL (LES)
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+(a) 𝑥/𝐷 = 5
+1
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(b) 𝑥/𝐷 = 10
+1
+
+0.8
+
+0.6
+𝜂
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+𝑧/𝐷
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(c) 𝑥/𝐷 = 15
+
+Fig. 5 Adiabatic effectiveness 𝜂 over the span of the flat plate at various distances downstream of the hole
+for the baseline 30° WRLES. The figure compares LES with experimental data from Oliver et al. [15]. 𝑥/𝐷 is
+measured from the downstream edge of the hole.
+B. Hole Angle Variation
+In Fig. 10, the surface effectiveness contours for the 25°, 35°, and 40° LES cases (at BR = 2) are shown. Differences
+in both as compared to the 30° case are readily apparent. Fig. 10a (25°) has a slightly weaker effectiveness in the core of
+
+7
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+Fig. 6
+
+Normalized temperature 𝜃 in the flat plate region at 𝑥/𝐷 = 5 for the baseline 30° LES.
+
+the hole’s wake, but the effectiveness is much broader over the flat plate. Fig. 10b (35°) demonstrates the opposite trend:
+the effectiveness is fairly strong in the area immediately past the hole, but that effectiveness drops off fairly quickly, and
+cooling is not seen over a span of the flat plate nearly so broad as the 30° case. The same trend is visible and even more
+exaggerated in the 40°case (Fig. 10c), where the effectiveness drops off steeply.
+These differences can be examined quantitatively by looking at cooling effectiveness plots similar to the ones in
+Figs. 11 and 5. Fig. 11 shows the centerline effectiveness for all four LES cases from the present study. The trends
+from the color plots are confirmed here: the peak effectiveness seen at the centerline wanes substantially in the 35° and
+40° cases when compared with the 30° case, while the effectiveness is overall lower at the centerline for the 25° case.
+The trends are clearer in Fig. 12, which shows the effectiveness at various downstream locations. As compared to the
+30° case, the 35° case exhibits inferior cooling effectiveness at the surface; across the entire flat plate region, the film
+cooling effectiveness for the 35° case is approximately 5% lower than the 30° case. The same trends are seen for the
+40° case, only more so; the film cooling effectiveness for the 40° case is nearly 25% lower than the 30° case throughout
+the entire domain, except in the region directly downstream of the hole. The benefits of the more flow-aligned 25° hole
+angle case are evident; film cooling effectiveness is substantially greater than the 30° baseline across the flat plate region
+at the cost of some peak cooling effectiveness.
+A visualization of the cooling capacity of each of these altered configurations is visible in Fig. 13. The 25° case
+(Fig.13a) is flatter against the surface of the wall than the 30° case due to the hole being more aligned with the flow,
+resulting in a higher overall cooling effectiveness; a more substantial portion of the flow is in contact with wall in the
+boundary layer. For the 35° (Fig.13b) and 40° (Fig.13c) cases, however, the fluid from the plenum injects substantially
+further into the boundary layer, causing the fluid to mix more with the bulk flow and resulting in less overall cooling of
+the surface of the wall.
+C. Blowing Ratio Variation
+Based on the surface plots of effectiveness in the 30° hole angle configuration for varying blowing ratio (Fig. 14),
+two trends are observed as the blowing ratio increases. First, the lower BR cases tend to have a wider film cooling
+profile as compared to the baseline case. This is also correlated to the cooling effectiveness immediately behind the
+hole, which is slightly higher in the 𝐵𝑅 = 0.5 case. Second, it’s also notable how the cooling effectiveness significantly
+drops off as the flow moves downstream over the plate. This is presumably due to the decrease in the injected mass of
+the cold fluid as the blowing ratio decreases.
+Figs. 15 and 16 show quantitative comparisons of the surface effectiveness with decreasing 𝐵𝑅. The strong decrease
+in centerline cooling effectiveness can be seen in Fig. 15, where the lower 𝐵𝑅 cases begin at the same effectiveness as
+the baseline case (or slightly higher), but quickly become less effective. The increase in cooling profile width can be
+seen in Fig. 16. Here, it is evident that the cooling profile width is increased for lower 𝐵𝑅 cases as compared to the
+baseline, at least until the last downstream station is reached, where the width is approximately similar. Again, this is
+likely attributable to the decrease in cold fluid mass injected into the boundary layer in lower 𝐵𝑅 conditions.
+The injected mass argument is even more compelling based on the normalized temperature data from Fig.17. Here,
+it is clear that much less cold fluid is making its way to the downstream stations along the plane, resulting in less fluid
+mass to cool the plate. The lower mass flow rate out of the hole relative to the bulk flow results in the cold fluid being
+more spread out along the cooled surface, but ultimately the flow has less total cooling power.
+
+8
+
+3
+
+Oliver (Exp)
+ANL (LES)
+
+2.5
+
+𝑦/𝐷
+
+2
+1.5
+1
+0.5
+0
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+0.6
+
+0.8
+
+1
+
+0.8
+
+1
+
+(a) 𝑧/𝐷 = 0
+3
+2.5
+
+𝑦/𝐷
+
+2
+1.5
+1
+0.5
+0
+0
+
+0.2
+
+0.4
+𝜃
+
+(b) 𝑧/𝐷 = ±0.5
+3
+2.5
+2
+𝑦/𝐷
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+𝜃
+
+1.5
+1
+0.5
+0
+0
+
+0.2
+
+0.4
+
+0.6
+𝜃
+
+(c) 𝑧/𝐷 = ±1
+
+Fig. 7 Normalized temperature 𝜃 over the span of the flat plate at a distance of 𝑥/𝑑 = 5 downstream from the
+hole for the baseline 30° LES. The figure compares LES with experimental data from Oliver et al. [15]. Solid
+lines in (b) and (c) refer to the right side of the symmetric domain (𝑧/𝐷 = +0.5, 𝑧/𝐷 = +1), and dashed lines
+refer to the left side of the symmetric domain (𝑧/𝐷 = +0.5, 𝑧/𝐷 = −1).
+
+9
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+Fig. 8
+
+Fig. 9
+
+Velocity profile in the hole and flat plate region for the baseline 30° LES.
+
+Root mean squared velocity profile in the hole region for the baseline 30° LES.
+
+V. Conclusions
+In this work, an implicit WRLES exploration of the effects of cooling hole angle and blowing ratio on film cooling
+effectiveness has been performed on a 7-7-7 shaped hole configuration arranged to mimic an infinite series of cooling
+holes on a flat plate. The configuration was validated against previous experiments by Oliver et al. [15], showing
+performance comparable to both the experiment and previous simulations. By varying hole angle, cooling effectiveness
+was found to vary significantly; in general, flow from the holes which were more aligned with the bulk flow provided
+more cooling effectiveness along the plate surface. Hole angles which inject the flow up higher into the bulk flow were
+less effective at cooling the surface. Lower blowing ratios were less effective overall at cooling the boundary layer
+surface after the hole, but presented a wider overall cooling profile than the high blowing ratio.
+
+10
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+(a) 25°
+
+(b) 35°
+
+(c) 40°
+
+Fig. 10
+
+Surface effectiveness 𝜂 in the flat plate region after the hole for LES cases at various hole angles.
+
+VI. Future Work
+A more complete sweep of the conditions surveyed will be completed to determine an optimal cooling hole orientation
+and blowing ratio combination. In addition, a machine-learned wall model is being developed from the high-fidelity
+WRLES data for this configuration to enable more cost-effective yet predictive wall-modeled LES (WMLES) of film
+cooling in the future.
+
+11
+
+1
+
+25°
+30°
+35°
+40°
+
+0.8
+
+𝜂
+
+0.6
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+0.4
+
+0.2
+
+0
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+𝑥/𝐷
+Fig. 11 Surface effectiveness 𝜂 at the centerline in the flat plate region. The figure compares different hole
+angle configurations. 𝑥/𝐷 is measured from the downstream edge of the hole.
+
+VII. Acknowledgements
+The submitted manuscript has been created by UChicago Argonne, LLC, Operator of Argonne National Laboratory
+(Argonne). Argonne, a U.S. Department of Energy Office of Science laboratory, is operated under Contract No.
+DEAC02-06CH11357. The U.S. Government retains for itself, and others acting on its behalf, a paid-up nonexclusive,
+irrevocable worldwide license in said article to reproduce, prepare derivative works, distribute copies to the public, and
+perform publicly and display publicly, by or on behalf of the Government. The research work was funded by the DOE
+Advanced Manufacturing Office (AMO) through the High Performance Computing for Energy Innovation (HPC4EI)
+program. The authors thank Dr. Robert Shroeder from Sargent and Lundy and Prof. Karen Thole from Pennsylvania
+State University for sharing the CAD file of the 7-7-7 shaped hole configuration. Lastly, the authors would like to
+acknowledge the computing core hours available through the Bebop cluster provided by the Laboratory Computing
+Resource Center (LCRC) at Argonne National Laboratory and National Energy Research Scientific Computing Center
+(NERSC) Cori supercomputer for this research.
+
+References
+[1] Bogard, D. G., and Thole, K. A., “Gas turbine film cooling,” Journal of propulsion and power, Vol. 22, No. 2, 2006, pp.
+249–270.
+[2] Ling, J., Elkins, C. J., and Eaton, J. K., “Optimal Turbulent Schmidt Number for RANS Modeling of Trailing Edge Slot Film
+Cooling,” Journal of Engineering for Gas Turbines and Power, Vol. 137, No. 7, 2015, p. 072605.
+[3] Jiang, Y., Murray, A., di Mare, L., and Ireland, P., “Mesh sensitivity of RANS simulations on film cooling flow,” International
+Journal of Heat and Mass Transfer, Vol. 182, 2022, p. 121825.
+[4] Acharya, S., Tyagi, M., Hoda, A., et al., “Flow and heat transfer predictions for film cooling,” Annals-New York Academy of
+Sciences, Vol. 934, 2001, pp. 110–125.
+[5] Peet, Y. V., and Lele, S. K., “Near field of film cooling jet issued into a flat plate boundary layer: LES study,” Turbo Expo:
+Power for Land, Sea, and Air, Vol. 43147, 2008, pp. 409–418.
+[6] Haydt, S., Lynch, S., and Lewis, S., “The effect of a meter-diffuser offset on shaped film cooling hole adiabatic effectiveness,”
+Journal of Turbomachinery, Vol. 139, No. 9, 2017.
+
+12
+
+1
+
+25°
+30°
+35°
+40°
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+(a) 𝑥/𝐷 = 5
+1
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(b) 𝑥/𝐷 = 10
+1
+
+0.8
+
+0.6
+𝜂
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+𝑧/𝐷
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(c) 𝑥/𝐷 = 15
+
+Fig. 12 Adiabatic effectiveness 𝜂 over the span of the flat plate at various distances downstream of the hole.
+The figure compares different hole angle configurations. 𝑥/𝐷 is measured from the downstream edge of the
+hole.
+[7] Takahashi, T., Funazaki, K.-i., Salleh, H. B., Sakai, E., and Watanabe, K., “Assessment of URANS and DES for prediction of
+leading edge film cooling,” Journal of Turbomachinery, Vol. 134, 2012, pp. 031008–1.
+[8] Foroutan, H., and Yavuzkurt, S., “Numerical simulations of the near-field region of film cooling jets under high free stream
+
+13
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+(a) 25°
+
+(b) 35°
+
+(c) 40°
+
+Fig. 13
+
+Normalized temperature 𝜃 in the flat plate region at 𝑥/𝐷 = 5 for various hole angles.
+
+turbulence: application of RANS and hybrid URANS/large eddy simulation models,” Journal of Heat Transfer, Vol. 137, No. 1,
+2015.
+[9] Iourokina, I. V., and Lele, S. K., “Large eddy simulation of film cooling flow above a flat plate from inclined cylindrical holes,”
+Fluids Engineering Division Summer Meeting, Vol. 47500, 2006, pp. 817–825.
+[10] Johnson, P. L., and Shyam, V., Large eddy simulation of a film cooling flow injected from an inclined discrete cylindrical hole
+into a crossflow with zero-pressure gradient turbulent boundary layer, National Aeronautics and Space Administration, Glenn
+Research Center, 2012.
+[11] Bodart, J., Coletti, F., Bermejo-Moreno, I., and Eaton, J., “High-fidelity simulation of a turbulent inclined jet in a crossflow,”
+Center for Turbulence Research Annual Research Briefs, Vol. 19, 2013, pp. 263–275.
+
+14
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+(a) BR 0.5
+
+(b) BR 1.0
+
+(c) BR 1.5
+
+Fig. 14
+
+Surface effectiveness 𝜂 in the flat plate region for LES cases at various blowing ratios.
+
+[12] Leedom, D., and Acharya, S., “Large eddy simulations of film cooling flow fields from cylindrical and shaped holes,” Turbo
+Expo: Power for Land, Sea, and Air, Vol. 43147, 2008, pp. 865–877.
+[13] Konopka, M., Jessen, W., Meinke, M., and Schröder, W., “Large-eddy simulation of film cooling in an adverse pressure gradient
+flow,” Journal of Turbomachinery, Vol. 135, No. 3, 2013.
+[14] Zhong, L., Zhou, C., and Chen, S., “Large eddy simulation of inclined jet in cross flow with cylindrical and fan-shaped holes,”
+ASME Turbo Expo 2016: Turbomachinery Technical Conference and Exposition, Vol. 49804, American Society of Mechanical
+Engineers Digital Collection, 2016, p. V05CT12A006.
+[15] Oliver, T. A., Anderson, J. B., Bogard, D. G., Moser, R. D., and Laskowski, G., “Implicit LES for shaped-hole film cooling flow,”
+Turbo Expo: Power for Land, Sea, and Air, Vol. 50879, American Society of Mechanical Engineers, 2017, p. V05AT12A005.
+
+15
+
+1
+
+BR 0.5
+BR 1.0
+BR 1.5
+BR 2.0
+
+0.8
+
+𝜂
+
+0.6
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+0.4
+
+0.2
+
+0
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+𝑥/𝐷
+Fig. 15 Surface effectiveness 𝜂 at the centerline in the flat plate region. The figure compares various blowing
+ratio configurations. 𝑥/𝐷 is measured from the downstream edge of the hole.
+[16] Oliver, T. A., Bogard, D. G., and Moser, R. D., “Large eddy simulation of compressible, shaped-hole film cooling,” International
+Journal of Heat and Mass Transfer, Vol. 140, 2019, pp. 498–517.
+[17] Sudesh, A., Boehler, M., and Turner, M. G., “CFD Simulation of Flat Plate Film Cooling of Shaped Hole Using LES,” AIAA
+Propulsion and Energy 2019 Forum, 2019, p. 4090.
+[18] Zamiri, A., You, S. J., and Chung, J. T., “Large eddy simulation of unsteady turbulent flow structures and film-cooling
+effectiveness in a laidback fan-shaped hole,” Aerospace Science and Technology, Vol. 100, 2020, p. 105793.
+[19] Foster, N. W., and Lampard, D., “The flow and film cooling effectiveness following injection through a row of holes,” Gas
+Turbine Conference and Exhibit and Solar Energy Conference, 1980.
+[20] Ekkad, S. V., Zapata, D., and Han, J. C., “Film effectiveness over a flat surface with air and CO2 injection through compound
+angle holes using a transient liquid crystal image method,” Journal of Turbomachinery, Vol. 119, No. CONF-950629-, 1997.
+[21] Kohli, A., and Bogard, D. G., “Adiabatic effectiveness, thermal fields, and velocity fields for film cooling with large angle
+injection,” Journal of Turbomachinery, Vol. 119, No. 2, 1997, pp. 352–358.
+[22] Lu, Y., “Effect of hole configurations on film cooling from cylindrical inclined holes for the application to gas turbine blades,”
+Ph.D. thesis, Louisiana State University and Agricultural and Mechanical College, 2007.
+[23] Rozati, A., and Tafti, D. K., “Effect of coolant–mainstream blowing ratio on leading edge film cooling flow and heat transfer–LES
+investigation,” International Journal of Heat and Fluid Flow, Vol. 29, No. 4, 2008, pp. 857–873.
+[24] Heidmann, J. D., “A numerical study of anti-vortex film cooling designs at high blowing ratio,” Turbo Expo: Power for Land,
+Sea, and Air, Vol. 43147, 2008, pp. 789–799.
+[25] Cao, N., Li, X., Wu, Z., and Luo, X., “Effect of film hole geometry and blowing ratio on film cooling performance,” Applied
+Thermal Engineering, Vol. 165, 2020, p. 114578.
+[26] Schroeder, R. P., and Thole, K. A., “Adiabatic effectiveness measurements for a baseline shaped film cooling hole,” Turbo Expo:
+Power for Land, Sea, and Air, Vol. 45721, American Society of Mechanical Engineers, 2014, p. V05BT13A036.
+[27] Fischer, P., Lottes, J., Kerkemeier, S., Marin, O., Heisey, K., Obabko, A., Merzari, E., and Peet, Y., Nek5000: User’s manual,
+Argonne National Laboratory, 2015.
+
+16
+
+1
+
+BR 0.5
+BR 1.0
+BR 1.5
+BR 2.0
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0
+-3
+
+-2
+
+-1
+
+0
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+1
+
+2
+
+3
+
+𝑧/𝐷
+
+(a) 𝑥/𝐷 = 5
+1
+
+0.8
+
+𝜂
+
+0.6
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(b) 𝑥/𝐷 = 10
+1
+
+0.8
+
+0.6
+𝜂
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+0.2
+
+0.4
+
+0.2
+
+0
+-3
+
+-2
+
+-1
+
+0
+𝑧/𝐷
+
+(c) 𝑥/𝐷 = 15
+
+Fig. 16 Adiabatic effectiveness 𝜂 over the span of the flat plate at various distances downstream of the hole.
+The figure compares various blowing ratio configurations. 𝑥/𝐷 is measured from the downstream edge of the
+hole.
+
+17
+
+Downloaded by University of Cambridge on October 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/6.2022-1404
+
+(a) BR 0.5
+
+(b) BR 1
+
+(c) BR 1.5
+
+Fig. 17
+
+Normalized temperature 𝜃 in the flat plate region at 𝑥/𝐷 = 5 for various blowing ratios.
+
+18
+
+

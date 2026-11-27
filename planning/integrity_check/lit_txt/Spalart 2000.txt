@@ -1,0 +1,1235 @@
+International Journal of Heat and Fluid Flow 21 (2000) 252±263
+
+www.elsevier.com/locate/ijh
+
+Strategies for turbulence modelling and simulations
+P.R. Spalart
+Boeing Commercial Airplanes, P.O. Box 3707, Seattle, WA 98124, USA
+Received 7 September 1999; accepted 19 February 2000
+
+Abstract
+This is an attempt to clarify and size up the many levels possible for the numerical prediction of a turbulent ¯ow, the target being
+a complete airplane, turbine, or car. Not all the author's opinions will be accepted, but his hope is to stimulate re¯ection, discussion,
+and planning. These levels still range from a solution of the steady Reynolds-Averaged Navier±Stokes (RANS) equations to a Direct
+Numerical Simulation, with Large-Eddy Simulation in between. However recent years have added intermediate strategies, dubbed
+``VLES'', ``URANS'' and ``DES''. They are in experimental use and, although more expensive, threaten complex RANS models
+especially for blu-body and similar ¯ows. Turbulence predictions in aerodynamics face two principal challenges: (I) growth and
+separation of the boundary layer, and (II) momentum transfer after separation. (I) is simpler, but makes very high accuracy demands, and appears to give models of higher complexity little advantage. (II) is now the arena for complex RANS models and the
+newer strategies, by which time-dependent three-dimensional simulations are the norm even over two-dimensional geometries. In
+some strategies, grid re®nement is aimed at numerical accuracy; in others it is aimed at richer turbulence physics. In some approaches, the empirical constants play a strong role even when the grid is very ®ne; in others, their role vanishes. For several decades,
+practical methods will necessarily be RANS, possibly unsteady, or RANS/LES hybrids, pure LES being unaordable. Their empirical content will remain substantial, and the law of the wall will be particularly resistant. Estimates are oered of the grid resolution needed for the application of each strategy to full-blown aerodynamic calculations, feeding into rough estimates of its
+feasibility date, based on computing-power growth. Ó 2000 Elsevier Science Inc. All rights reserved.
+Keywords: Turbulence; Aerodynamics; Simulation
+
+1. Introduction
+The turbulence problem is of course far from solved,
+whether in terms of mathematical and intuitive understanding,
+or in terms of obtaining engineering accuracy for machines
+that depend on viscous ¯uid dynamics. Technological ®elds of
+global importance such as the airliner and automobile industries revolve around such devices. This economic stake motivates relentless, imaginative, and expensive eorts at
+turbulence prediction by any plausible approach. This should
+not defeat common sense or let us hide from cost estimates
+(Spalart et al., 1997), and we must have visibility of when a
+method may progress from research to engineering. Chapman
+made such predictions in 1979 (Chapman, 1979), which still
+carry weight although his view of turbulence prediction in the
+1990s is now recognized as optimistic.
+This paper focuses on the numerical prediction of turbulent
+¯ow regions. The equally dicult problem of transition prediction is mentioned only in passing. Physical testing methods
+in the transportation industry are beset by their own severe
+transition- and turbulence-related diculties. Tests with scale
+models usually imply both lower Reynolds numbers and/or
+higher freestream turbulence levels (in addition to blockage,
+E-mail address: philippe.r.spalart@boeing.com (P.R. Spalart).
+
+surface-quality, bracket and mounting issues, and aero-elastic
+dierences). The resulting scale eects can be misleading, and
+unforeseen reversals of the normal trend (by which higher
+Reynolds numbers bring better performance) are very damaging. This is especially true as competing companies seek optimal
+aerodynamic designs. Such designs have narrow margins, and
+magnify the sensitivity to viscous eects. In view of the limits on
+testing accuracy, industry demands accuracy from Computational Fluid Dynamics (CFD), but not perfection.
+Also note that, whether in the airframe, turbine engine, or
+automotive industry, turbulence is not the only obstacle in
+CFD. Major numerical challenges remain between the state of
+the art and the routine calculation of ¯ows over even rather
+simple 3D geometries. These challenges relate not only to
+computing cost, but also to solution quality, particularly in
+terms of gridding. Presenting turbulence as the only ``pacing
+item'' in CFD could bene®t research funding, but it is not
+accurate. On the other hand, it sometimes appears that more
+capable people are engaged in grid generation, solvers, and
+pre- and post-processors, than in turbulence. Our eort may be
+unbalanced, although more duplication occurs on the programming side (it is easier to show progress in programming,
+not to mention code exercising, than in modelling). Sharing
+large codes is more dicult than sharing turbulence models,
+for which the equations (normally!) ®t on one page. With a few
+exceptions, models have been freely published.
+
+0142-727X/00/$ - see front matter Ó 2000 Elsevier Science Inc. All rights reserved.
+PII: S 0 1 4 2 - 7 2 7 X ( 0 0 ) 0 0 0 0 7 - 2
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+The numerical strengths of CFD increase by the year
+thanks to the progress of computers, whereas turbulence
+modelling can stagnate. If that takes place, modelling will
+become the principal pacing item in some types of industrial
+CFD in less than a decade, at least in the Reynolds Averaged
+Navier±Stokes (RANS) frame. It is then very sensible to examine approaches that trade high-level turbulence theories
+(``intelligence'') for computing eort (unfairly described as
+``brute force''). A primary purpose of this paper is to provide a
+viewpoint on these relatively new, evolving and misunderstood
+methods, besides predicting that they will proliferate and make
+a major contribution. The most stimulating issue may be the
+share between empiricism and numerical power in the successful methods (Section 2). The concrete cost issues are addressed through Table 1 in Section 3.
+2. Physical aspects
+2.1. RANS models
+The ®eld of classical RANS turbulence modelling is active.
+At a recent biennial international symposium, about 25 papers
+presented new models or new versions of models (Durst et al.,
+1997). These were oered for outside use, with varying degrees
+of completeness in the description. No student of turbulence
+has the time to give each of these serious consideration. The
+full range of RANS methods is receiving work; this unfortunately testi®es that no class of models has emerged as clearly
+superior, or clearly hopeless. Activity is not even restricted to
+dierential methods; isolated groups are re®ning integral
+boundary-layer solvers, to allow more three-dimensionality
+and more separation. The same seems to apply to algebraic
+models. Eddy-viscosity transport models, being the simplest
+models that can be applied with a general grid structure, are
+now used extensively. The step back from two equations to a
+single equation has not crippled the approach (Gulyaev et al.,
+1993; Shur et al., 1995; Spalart and Allmaras, 1994; Wilcox,
+1998), while tangibly reducing the true cost of solutions (partly
+by allowing a coarser grid spacing at the wall). Conversely,
+models with up to four equations are in contention (Durbin,
+1995; Perot, 1999). Perot's is especially intriguing.
+The abstract referred to ``Challenges I and II''; the following ``Challenge Zero'' could be added. Complete con®gurations often have laminar regions in their boundary layers; it
+is very helpful if a turbulence model can be ``dormant'' in such
+regions, meaning that its transport equations accept solutions
+with vanishing Reynolds stresses. Similarly, regions of irrotational and non-turbulent ¯uid, which are large in external
+aerodynamics, do not physically in¯uence the turbulent regions such as boundary layers (weak freestream activity does
+have much in¯uence on natural transition, but we leave transition prediction to a separate method). Again it is very helpful
+if the model accepts zero values in such regions, or small values
+without in¯uence on the turbulent layers. At the same time, the
+model should allow the contamination of a laminar shear layer
+by contact with a turbulent shear layer (transition triggered by
+moderate freestream turbulence is more subtle, and is within
+reach of only a few models). This all depends on the behaviour
+of the model at the turbulent/non-turbulent interface. In some
+models the stress level in the turbulent layer depends demonstrably on either the freestream values of the turbulence variables or, even worse, on the grid spacing at the interface. Few
+people have devoted attention to this question (Menter, 1992;
+Cazalbou et al., 1994; Spalart and Allmaras, 1994), and model
+descriptions sometimes make no mention of recommended
+freestream values (and also fail to demonstrate insensitivity).
+However, it happens that the k±, SST and S±A models, which
+
+253
+
+all three are insensitive to freestream values, can fairly be described as ``popular''. Their results are reproducible from code
+to code and grid to grid. In the perennial question of the choice
+of a second variable in two-equation models, freestream sensitivity should be given high priority. It is much more important than the value of some high derivative at the wall.
+The failure of most models to predict relaminarisation also
+causes frustration. While it is not reasonable to expect a model
+to predict transition in quiet environments, expecting relaminarisation is rather justi®ed.
+In terms of Challenge I, the dierent classes of models are
+surprisingly even, in the sense that the best models in each class
+perform quite comparably. Within that challenge, we can include the prediction of skin friction and boundary-layer
+thicknesses (which dictate the parasite drag in the absence of
+separation), along with separation (which creates pressure
+drag). Integral methods and algebraic boundary-layer models
+have been so well optimised that surpassing them with any
+Navier±Stokes model is dicult. Reasons include the grid
+needed, the intrusion of arti®cial dissipation, and the constraints placed on the turbulence model such as locality, performance in free shear ¯ows, and simplicity. It is geometric
+complexity and the drive towards massive separation, not lack
+of accuracy, that are making integral and algebraic methods
+obsolete.
+2.2. Simple RANS models
+We are referring here primarily to eddy-viscosity models.
+Improvements will be made to the simpler transport models,
+typically by adding new empirical terms aimed at compressibility, streamline curvature or better anisotropy of the Reynolds-stress tensor (non-Boussinesq constitutive relations)
+which can, for instance, create secondary ¯ows of the second
+kind in a square pipe (Speziale, 1987). An example is given in
+Fig. 1. The S±A model (see Appendix A) was used with the
+following constitutive relation, as a ®rst attempt to improve on
+the eddy-viscosity approximation. Let sij be the Reynolds
+stress given by the linear model. The nonlinear stress is then
+
+
+sij  sij ÿ cnl1 Oik sjk  Ojk sik ;
+where
+ok Ui ÿ oi Uk
+Oik  p
+on Um on Um
+is the normalised rotation tensor. The constant cnl1  0:3 was
+calibrated in the outer region of a simple boundary layer, by
+requiring a fair level of anisotropy u02 > w02 > v02 (the streamwise, spanwise and wall-normal Reynolds stresses, respectively).
+The result in the square duct is quite positive: ¯ow is induced
+towards the corners, and the skin friction is much closer to
+experiment (Gessner et al., 1991). However, other ¯ows such as
+3D wall jets have led to negative results (A.N. Secundov,
+personal communication, 1999). The cnl1 term must also be
+considered as very preliminary, in the sense that it uses only
+one of the many quadratic combinations of strain and vorticity. Also note that it is fully empirical, instead of being derived from a more complex model; we simply selected the most
+intuitively attractive combination. A systematic optimisation
+has not been performed. Nevertheless, it is of interest to show
+that even a one-equation model can be made to predict this
+secondary ¯ow. Similarly, realisable versions of simple models
+can be created (note that the common one-equation models are
+far from giving realisable Reynolds-stress tensors), but we have
+found the eect too weak to justify a widespread modi®cation
+of codes and testing campaign.
+
+254
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+Fig. 1. Square channel, with nonlinear constitutive relation: (a)
+streamlines in cross-plane; (b) skin-friction coecient: (±±) linear
+model, (- - -) nonlinear and () Exp.
+
+The activity of upgrading a widespread model is and should
+be very cautious, as it is highly desirable for new versions to
+preserve all or almost all of the past successes of a model. In
+rough terms, we hope for gradual progress on Challenge II but
+are unwilling to give up any of the accuracy and experience
+base in Challenge I. For this reason, this author is very intent
+on limiting the number of versions of the S±A model, believing
+that it best serves the needs of the community. In addition, the
+rate at which new models or even versions are added to government and industry 3D codes is unfortunately very slow.
+Codes become so large they are dicult to manage and to test,
+and frequent changes in computer architecture divert the attention of the code custodians. This could cause a model to
+become entrenched, if it was ®rst on the ``market'', and to
+dominate even after its accuracy has been surpassed.
+A classic example of the expedients we sometimes use in
+modelling is the use of vorticity instead of strain in production
+terms (Kato and Launder, 1993). This step is neutral in thin
+shear ¯ows, since both reduce to the shear rate, but it solves the
+long-standing problem of excessive turbulence levels in the ap-
+
+proach to stagnation points. In two-equation models, using
+vorticity is not legitimate, because the exact production terms
+contain the strain rate instead. Typically, vorticity is used as a
+``temporary'' expedient, which does nothing for the implicit
+hope that the dependence on empiricism will gradually decrease.
+The quandary seems intact as of 1998 (Bosch and Rodi, 1998).
+There is little dispute that the ultimate potential of eddyviscosity models does not include separated ¯ows over 3D
+geometries. This statement is widely accepted for calculations
+in steady mode, on the argument that the coherent shedding
+motion is very dierent from that in thin shear ¯ows. Calculations in unsteady mode have more potential but still have
+severe limitations, as discussed in Section 2.4. Two-dimensional blu bodies are sucient to make the simple models fail
+even with sharp corners, which set the separation location. The
+models are just too simple and replete with empiricism, and are
+trained in such a small pool of simple shear ¯ows, that they
+have no deep reason to generalize to complex ¯ows. We should
+however heed a remark of Hunt (1990), here slightly paraphrased:
+``It is important to note that in most ¯ows (including those
+over blu bodies) where the duration of a distortion is smaller
+than the intrinsic time scale of the turbulence, there is insucient time for the turbulence to aect the mean ¯ow and
+therefore an erroneous turbulence model has little eect on the
+mean ¯ow. Thus, fortuitously, in most turbulent ¯ows onepoint models of turbulence only aect the mean ¯ow calculations where the models are most appropriate (namely in shear
+¯ows where the intrinsic time scale is smaller than the distortion time scale)''.
+Hunt appears to place all one-point RANS models, of any
+complexity, in the class of turbulence treatments that have ``no
+reasonable claim'' to provide accurate stresses in complex
+¯ows, but in some useful situations do ``little enough damage''.
+The assessment is harsh, and high-quality modelling work has
+been dedicated to proving it unfair. However it has a basis, and
+some of us can accept it for our own models, particularly if
+they are simple.
+An example is given by Ying et al. (1999) who compare
+measured and calculated Reynolds stresses over a multi-element airfoil. This is the type of ¯ow Hunt had in mind. As the
+shear layers (boundary layer and slat wake) pass over the
+trailing edge of the main airfoil element, the streamlines have a
+modest de¯ection, as part of the abrupt merging with the
+stream from below the trailing edge. The strain-rate tensor has
+an excursion that is not modest, and propagates to the computed Reynolds-stress tensor. A transport-equation eddy-viscosity model was used. In contrast, the measured Reynolds
+stresses show no such excursion, and their behavior is consistent with that of a ``conserved quantity'', with only a slow
+evolution in the streamwise direction. The anomaly in the
+computed stresses is due to the eddy-viscosity approach (the
+eddy-viscosity is conserved, instead of the stresses). It certainly
+makes the experiment±computation comparison more delicate:
+the agreement level varies drastically within a short distance.
+On the other hand, the velocity pro®les downstream show no
+clear sequel of the stress excursion, as predicted by Hunt.
+Another wording of Hunt's line of thought is that quite a
+few ¯ow regions that appear complex and/or 3D are shaped by
+``vortical inviscid'' physics, and not by the local turbulent
+stresses. It may be the case for the ``necklace'' vortex at a wingwall junction. Its characteristics may depend more on the
+upstream growth of the boundary layer, which a simple model
+can accurately predict, than on the Reynolds stresses inside it.
+This contrasts with the secondary vortices in a square duct,
+which are created by the turbulence. These vortices expose
+linear eddy-viscosity models, but their practical importance is
+modest. Thus, a simple model can ``get credit'' for the suc-
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+cessful calculation of a new ¯ow, merely because the Reynolds
+stresses it generates in the complex regions are not damaging;
+usually, it is just as well if the stresses are too weak. The
+chances that the ¯ow feature will be smeared due to insucient
+grid resolution are also higher in such regions, because the
+user's experience base or willingness to manually re®ne the grid
+is less than in attached boundary layers. Unstructured adaptive grids will address that problem, but only in the next
+generation of codes.
+Hunt's optimism does not extend to blu-body ¯ows such
+as a stalled airfoil, because now the intrinsic time scale of the
+turbulence is the same as that of the distortion. In view of their
+limited prospects after separation, it is natural that most of the
+re®nements applied to simple models will be aimed at their
+accuracy in boundary layers, including short separation bubbles, curvature, compressibility, and a few thin shear ¯ows.
+This is Challenge I.
+2.3. Complex RANS models
+The simpler transport models will remain useful and receive
+slight improvements, but the state of aeronautical CFD makes
+dicult to evade the conclusion that a decisive improvement in
+turbulence accuracy must be achieved before CFD becomes
+general. It is a matter of debate whether higher-quality models
+will provide that answer. The primary candidates are Reynolds-Stress-Transport (RST) models. Now these models have
+a much closer connection to the equations, and boast several
+exact terms. An RST model would remove the anomaly noted
+in Section 2.2 with the sudden distortion over the trailing edge.
+With proper attention to invariance, RST models should generalise from their ``training ground'' to ¯ows with curvature, or
+vortex and similar ¯ows, much more reliably than eddy-viscosity models. On the other hand, they also contain many
+empirical terms particularly in the pressure and dissipation
+areas, adjusted by trial and error. For some of these quantities,
+data can be obtained only from DNS which has been limited to
+simple geometries, although progress is being made. In addition, precise term-by-term matching is often too much to ask
+for; compensating errors, for instance between the anisotropy
+of the dissipation and pressure-strain tensors, appear both
+common and acceptable.
+In terms of the two challenges, RST models have a tentative
+advantage over simple models for Challenge II, the separated
+and vortical regions (Launder, 1988). They are often far from
+``user-friendly'' in the sense of Challenge Zero. For Challenge
+I, incipient separation, no model can succeed without excellent
+empiricism, and it is no easier to impress such empiricism on a
+complex model than on a simple one (Lien and Leschziner,
+1995). In fact the exact character of certain terms puts them o
+limits to empiricism; in that sense, RST models are more dif®cult to ``steer''.
+Assessing true progress is made dicult by the constant
+modi®cations made in publications; sometimes the reader
+cannot be sure that the new version of the model also succeeds
+where the last version did. Another concern is the persistence
+of controversies such as about the use of ``wall-re¯ection''
+terms, or the question of whether RST models reproduce
+curvature eects without additional empirical modi®cations.
+Similarly, Zeman's study of free vortices implies that even RST
+models need speci®c curvature/rotation modi®cations to reproduce the damping of the turbulence (Zeman, 1995). Not
+only does this make the hope of an elegant resolution to
+Challenge II seem very remote, but streamline curvature is not
+a Galilean invariant (Spalart and Shur, 1997), and therefore
+Zeman's model for that ¯ow is not application-ready. Separated cases which are problematic for simple models, for instance strong shock/boundary-layer interactions, are also
+
+255
+
+problematic with complex models (Hellstr
+om et al., 1994).
+Possibly, CFD solutions with any model suer from numerical
+errors in strong interactions.
+At the risk of minimising the work of fellow modellers, the
+author deems it unlikely that a RANS model, even complex
+and costly, will provide the accuracy needed in the variety of
+separated and vortical ¯ows we need to predict. The intellectual task of synthesizing a large body of available ®ndings into
+a truly higher and durable version of a complex model is huge,
+and few model developers seem keen on doing it. Large groups
+tend to publish along ``tentacles''. This ®ts better with educational, institutional and funding needs than with the needs of
+the code writer who is searching for a robust, stable and
+understood formulation.
+After studying the turbulence-modelling ®eld, the author's
+colleagues in CFD at Boeing again and again have asked him
+for a ``®rst-principle-based'' turbulence model. So much empiricism makes the approach appear highly unreliable. It is
+more than plausible that Reynolds averaging suppresses too
+much information, and that the only recourse is to renounce it
+to some extent, which means calculating at least the largest
+eddies simply for their nonlinear interaction with the mean
+¯ow. This step appears desperate to observers, especially the
+mathematically oriented ones, with some reason. Prof. Jameson remarked that ``we should not compute 1-centimetre
+eddies over a Boeing 747''.
+2.4. URANS
+The ®rst alternative to complex RANS modelling has been
+called ``Very-Large Eddy Simulation'' (VLES) or ``Unsteady
+Reynolds-Averaged Navier±Stokes'' (URANS). The URANS
+acronym is more descriptive, and will be used in this paper.
+Such calculations rely on traditional RANS models but are
+deliberately unsteady, even with steady boundary conditions.
+For instance, vortex shedding is allowed past a blu body
+(Johansson et al., 1993; Orszag et al., 1997; Shur et al., 1996;
+Bosch and Rodi, 1998). Durbin correctly noted that the Reynolds stresses created by the time averaging of the URANS
+solution overwhelm those carried by the model itself, in the
+separated region, and therefore remove much ``responsibility''
+from that model (Durbin, 1995). Nixon's group used the acronym VLES for some very interesting work (Childs and
+Nixon, 1987), but it should be classi®ed as LES, and certainly
+not as URANS. This is another reason to avoid the VLES
+notation.
+It is simple to describe how to conduct a URANS, but the
+physical implications give pause. For simplicity, consider
+vortex shedding by a blu body and assume that URANS
+gives a periodic solution, which is typical (Durbin, 1995; Shur
+et al., 1996; Najjar and Balachandar, 1998; Travin et al.,
+2000). We are therefore envisioning a ¯ow ®eld that is periodic in time and smoother than the true turbulent ®eld but
+representative in some sense, so that its inviscid dynamics
+mirror the large-scale dynamics of the true ¯ow. Such a ®eld
+can be de®ned from the full turbulent one by phase-averaging. Plausible references can be found to adjust the phase
+slightly at every cycle. However this ignores the amplitude
+modulations, which are strong for blu bodies and have
+overwhelming experimental and simulation evidence (Najjar
+and Balachandar, 1998; Travin et al., 2000). Fig. 2 shows
+results for a circular cylinder. The peak lift coecient, ®ve
+cycles apart in the same ¯ow, can easily vary by a factor of 2.
+As an analogy, this type of averaging would amount to averaging a number of human beings that walk by and do not
+have the same height. The average is not a human body.
+Returning to the ¯ows, the phase-averaging creates Reynolds
+stresses of two kinds, and in URANS both are left to the
+
+256
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+2.5. LES and DES
+
+Fig. 2. Lift and drag coecients for circular cylinder. DES at
+Re  5  104 (Travin et al., 2000). Averaged over two diameters
+spanwise: ±± Cd and (- - -) Cl .
+
+turbulence model. The expected kind, due to incoherent
+small-scale motions, appears amenable to common modelling.
+The troublesome kind is that due to modulations in the
+shedding. The dierence between ®elds at the same phase in
+dierent cycles is just as coherent as the dierence between
+these ®elds and the long-term time average. It is just as dif®cult to model with the simple common approximations.
+Fortunately, it is smaller. Nevertheless, it is not rigorous to
+state that, with URANS, the turbulence model is responsible
+only for ``incoherent'' motions. Furthermore, the interpretation that only random and presumably weak (in terms of
+velocity and/or time scale) turbulence is appropriate for
+modelling is inconsistent with the simple fact that the models
+are usually adjusted to reproduce the spreading rate of mixing layers in RANS mode. Yet the mixing layer is notorious
+for its coherent vortices, which span its whole width and pair
+in obvious discrete events.
+Another slant is to observe that URANS implies a separation of time scales, between that of the visible shedding and
+that of the putative residual turbulence, which is not indicated in measurements of spectra for instance with hot wires.
+Nevertheless, the approach has plausibility, and certainly
+improves results quantitatively for blu bodies; the shedding
+frequency is often excellent. In the boundary layers, there is
+no strong additional reason to distrust the models, which
+operate in quasi-steady mode. Also note that for blu bodies,
+conducting unsteady calculations is optional only in somewhat arti®cial conditions: those in which a steady solution
+can be obtained by imposing symmetry, or a large time step,
+or using a Newton method for convergence. More frequently,
+a user that is after massive separation will ®nd that the code
+simply cannot ®nd a steady state, and that the only course is
+to operate in a time-accurate mode and analyse an unsteady
+solution.
+A 2D URANS recognizes the role of time, but not of the
+spanwise coordinate z. It has now been established by many
+simulations of blu bodies that ignoring the z-dependence is
+not safe (Karniadakis and Triantafyllou, 1992; Najjar and
+Vanka, 1995; Mittal and Balachandar, 1995; Jordan and Ragab, 1998). At least in LES and DNS, 3D solutions in 2D
+geometries are highly justi®ed. They are denoted by ``3/2D'' in
+Table 1 (Section 3). A z-dependence obviously belongs in a
+thorough study at the URANS and higher levels, but its role is
+clouded by several facts. The spanwise boundary conditions
+are arbitrary; periodic conditions are common and plausible,
+but some studies use re¯ection conditions at the side boundaries. The size of the spanwise domain is also arbitrary. Systematic tests of that parameter are costly. This issue will
+resolve itself in practice, in the sense that actual geometries are
+3D, but it is an obstacle to a simple understanding of the
+nominally 2D ¯ow, and to ecient validations of the various
+approaches.
+
+Away from boundaries and without chemistry, Large-Eddy
+Simulation (LES) appears well understood, and in this author's opinion there is little to gain by re®ning the SGS models
+(Fureby et al., 1997). Some proposals appear to add mathematical rigor, but amount to accounting changes. Others use
+sensible approximations, but fail to show a clear advantage
+over the same-cost LES with a simplistic model, which would
+have a slightly ®ner grid. Issues such as non-commutativity
+between the ®ltering and dierencing operators are valid, but
+their leverage is probably small compared with SGS modelling
+errors. It is even possible to run an LES without any SGS
+model, simply using an upwind or monotone numerical
+scheme to oset the energy cascade and maintain the
+smoothness of the solution. Such an exercise is not greeted
+warmly by those who built careers on SGS modelling, but it is
+far from absurd (Fureby and Grinstein, 1999). The procedure
+may damage a somewhat wider band of the spectrum than a
+purpose-designed SGS model does (much like the dierence
+between a simple viscosity and a hyper-viscosity in homogeneous turbulence), but a large enough grid will produce an
+inertial range. Galilean invariance is broken by the asymmetric
+schemes (with a centred scheme, time-integration errors are
+also non-Galilean-invariant, but they are weaker than here,
+when they amount to an SGS model). A much more serious
+concern is that SGS-free LES cannot deal with the wall region
+of the boundary layer (except by approaching DNS).
+In the wall regions, it is fair to describe most of the current
+LES work as Quasi-Direct Numerical Simulation (QDNS)
+(Spalart et al., 1997), for three reasons. These simulations resolve the near-wall ``streaks'', thus leaving no eddy type unresolved. The SGS stresses are of the same order of magnitude
+as the viscous stresses, since typical eddy-viscosity levels are
+very close to the molecular viscosity. Finally, the grid spacing
+in all three directions is limited in wall units; the streamwise
+spacing may rise from 20 in DNS to 50 in QDNS, at best.
+Typically, the saving in computer time is a factor of 10,
+roughly equivalent to a Reynolds-number increase by the
+modest factor 101=4 ; this is hardly worth the empiricism. An
+accurate and reliable ``true'' or ``full'' LES, meaning that the
+Reynolds number based on the grid spacing is unlimited, appears to be a dicult goal. Presumably the community switched to QDNS, although the pioneering work (Deardor,
+1970; Schumann, 1975) was full LES, in order to reduce empiricism in the near-wall treatment. In full LES, the grid
+spacing in all directions (or at least in the two directions parallel to the wall) would scale with the boundary-layer thickness, for a given level of accuracy. In this area, huge gains are
+expected from improved SGS modelling. However, it is unavoidable that empiricism will be added. At the least, such a
+treatment would have to imply values for the constants in the
+logarithmic law. This is a key statement, which needs to be
+pondered and challenged, and could force useful debate. It is a
+normal desire to reduce the empiricism, and agreeing on any
+hard limits in that path will organise our thinking.
+The full-LES method reverts to quasi-steady RANS behaviour very near the wall. It is quasi-steady in the sense that
+the time scale of resolved variations is much larger than the
+internal time scale of the turbulence model, which scales with
+the inverse of the shear rate. Typical values at the start of the
+logarithmic layer could be the following, all in wall units: the
+wall-parallel grid spacing is 1000, so that the minimum size of
+a ¯ow structure is 3000; its convection velocity is of the order
+of 15; therefore the passage time is 200; the shear rate is about
+0.1, much larger than the inverse of the passage time. It is
+RANS in the sense that the model is very similar to pure
+RANS models, and that grid re®nement does not eliminate the
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+in¯uence of the SGS treatment rapidly at all (until an extreme
+re®nement turns the method into QDNS).
+A robust and suciently accurate treatment of that kind is
+a plausible target. The streaks seem to be nearly as ``numerous
+and universal'' (and therefore amenable to modelling) as the
+small eddies in free turbulence (the streaks are not isotropic,
+but calling the small eddies of free turbulence isotropic is
+misleading: the collection of eddies that are modelled as SGS
+in one grid cell at one time step obviously has preferred directions). It is only that the streaks have much more leverage
+than the small Kolmogorov eddies. It will be well worth the
+eort, for several reasons. First, the law of the wall is quite a
+robust feature of boundary layers, although we expect an
+erosion of its domain of validity, expressed as y=d, in strongly
+stimulated ¯ows such as by a pressure gradient (d is the
+boundary-layer thickness). We also expect an erosion from a
+reduction of the statistical sample. Dr. G. Coleman and the
+author explored such a ``local log law'' in channel-¯ow DNS,
+with mixed results (unpublished). An obstacle is that the DNS
+domain size was not very large. The pressure-gradient erosion
+can be addressed by a ®ner grid which will resolve, instead of
+modelling, smaller eddies closer to the wall. Second, in 3D
+¯ows, the mean skin-friction vector is very unlikely to vanish;
+thus, the law of the wall could retain its validity even under a
+separating boundary layer. Finally, most of the diculty in
+RANS modelling of strongly stimulated boundary layers resides in the outer region. There, LES can clearly capture eects
+such as straining, cross-¯ow, and curvature. Therefore, LES
+addresses both Challenges, I and II. However, it is at a considerable cost over RANS. In addition, wall-bounded LES
+with the streaks modelled can be described as hybridized with
+RANS, although the implied empiricism is con®ned to a
+shallow layer.
+At a recent LES workshop, a variety of QDNS and fullLES methods were applied to fairly simple geometries with
+sharp corners (Rodi et al., 1997). In spite of these helpful
+features, the conclusions were particularly mixed, and did not
+make LES or even QDNS appear very mature. The ¯ow past a
+circular cylinder, even at Reynolds numbers of a few thousand,
+has also led to quite dierent levels of agreement with experiment in the last few years. For instance Breuer was disappointed with the results of both SGS-model improvements,
+and grid re®nement (Breuer, 1999). We also know from personal communications of at least two studies which their authors did not consider successful enough to publish. SGS
+models also remain quite dierent between dierent schools,
+again suggesting a lack of maturity and/or indierent progress.
+Section 3 re-iterates that LES, even with the best wall-region treatment, is very far from aordable in aerodynamic
+calculations, and will be for decades (Spalart et al., 1997). This
+is due to the large regions of very thin boundary layers, where
+d is of the order of 0.1% of the airfoil chord c. It led us to
+propose Detached-Eddy Simulation (DES), a further step in
+the hybridization of LES (Spalart et al., 1997). The idea is to
+entrust the whole boundary layer (populated with ``attached''
+eddies) to a RANS model, and only separated regions (``detached'' eddies) to LES. It is aimed primarily at external ¯ows.
+It is consistent with the two positions that Challenge I is a
+reasonable one for RANS models whereas Challenge II is not,
+and that LES is well understood away from walls. We show
+below that it leads to a manageable computing cost even at
+high Reynolds numbers (Shur et al., 1999; Nikitin et al., 2000).
+A typical application of DES is to a wing with a spoiler or a
+landing gear. Large areas of boundary layers are treated eciently with quasi-steady RANS (the time scale of the global
+unsteadiness of the ¯ow, which these boundary layers experience, is large compared with the inverse of the shear rate inside
+them). The model accounts for all the turbulent stresses across
+
+257
+
+the whole boundary layer, just like in a simple RANS run.
+Behind the spoiler, the momentum transfer is dominated by
+large unsteady eddies which are candidates for LES on two
+counts. First, they are not as numerous as the ``horseshoe''
+vortices in the outer part of a boundary layer (let alone the
+wall streaks) and second, they are geometry-speci®c. An additional bene®t of DES is its unsteady information. Though
+useless for many purposes, such as the range of the airplane, it
+will sooner or later be of great use for structural or noise
+studies.
+An attractive feature of DES is that it is simply formulated,
+and already being tested. This is not the case for similar concepts which have been informally envisioned. Many of them
+are zonal. DES is not, which is much preferable for routine
+use, and only requires a quick alteration of the S±A oneequation model. On the other hand deriving an ecient unsteady code, as needed for DES, from a steady one is not
+trivial. DES results for an airfoil at high angles of attack,
+a classical Challenge II example, have been presented (Shur
+et al., 1999) and Fig. 3 is reproduced from that paper. At high
+angle of attack the agreement with experiment is surprisingly
+good, but no better than in the best examples of DNS and LES
+for blu-body ¯ows (Najjar and Vanka, 1995; Mittal and
+Balachandar, 1995) (at lower Reynolds numbers). In addition,
+the ®nding that 2D simulations produce an excess of drag is
+consistent across studies. At low angles of attack the simulations correctly reduce to RANS; these ¯ows are out of reach of
+DNS and LES. DES will require de®nite skills from the user in
+directing the grid resolution; however, RANS also bene®ts
+from careful grid generation. Presently, a few patient RANS
+users are re®ning grids ``manually'' after exploring preliminary
+solutions (Ying et al., 1999), but it can be feared that many
+solutions are under-resolved in the separated regions.
+Fig. 4 illustrates the dierence in description for the ¯ow
+past a circular cylinder. The runs on the right are DES, but the
+visible eddies are in the LES region. Of course the DES ®gures
+show only a plane out of the 3D domain. Each step from
+SRANS through 2D URANS to LES/DES adds a dimension:
+®rst the time and then the third space dimension. The cost
+increase is of an order of magnitude each time. In return, the
+SRANS drag is too low at Cd  0:9, the URANS drag is much
+too high at Cd  1:7, and the DES drag is in much better
+agreement with experiment, although grid eects are still
+
+Fig. 3. Lift and drag coecients for NACA 0012 airfoil (Shur et al.,
+1999). (±±) Exp. Rc > 106 ; (- ±± -) Exp. Rc ' 105 ; () DES Rc  105 ; ()
+DES Rc  3  106 and (M) URANS Rc  105 .
+
+258
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+Fig. 4. Simulation of ¯ow past circular cylinder by various approaches (Shur et al., 1996; Travin et al., 2000).
+
+present: Cd  1:05 on the coarse grid but 1.32 on the ®ne grid
+(Travin et al., 2000). The experiment gives 1.2. The DES on
+two grids also depicts the inclusion of smaller eddies allowed
+by the ®ner grid. The ¯ow is at a Reynolds number of 50,000.
+It is modelled with laminar separation, in the following manner. By setting the in¯ow condition for the turbulence variable
+to zero, we have no eddy-viscosity in the attached boundary
+layers. Nonzero turbulence values are injected initially, and
+contaminate the shear layer slightly downstream of separation,
+so that the model remains active in the recirculation region
+only, after losing memory of the details of the initial condition.
+We can also obtain turbulent boundary layers, with an appropriate nonzero in¯ow value (thus triggering the drag crisis
+of the cylinder Travin et al., 2000); the key is to selectively set
+the in¯ow and the initial conditions. This decision is made by
+the user outside DES itself, and outside the turbulence model,
+which cannot predict transition due to boundary-layer instabilities. Since the boundary layers are laminar, there is little
+dierence between DES and LES at this Reynolds number.
+Some similarities between DES and past treatments of the
+wall region in LES (Deardor, 1970; Schumann, 1975; Balaras
+et al., 1996) have led to comments such as ``DES contains
+nothing new''. The similarities are not in the details (which are
+vastly dierent between methods) but merely in the position
+that the near-wall ¯ow ®eld, averaged over a grid cell, behaves
+closely enough to a full Reynolds-averaged ¯ow that the law of
+the wall and/or RANS modelling technology are good approximations. These comments stem from a narrow focus on
+the historic applications of LES, such as channel ¯ow. There, it
+is correct that DES is no more or less plausible than methods
+which blend simple buer-layer models and simple SGS
+models. Channel ¯ow will be discussed shortly. For instance,
+one could well use an eddy-viscosity that is the smaller of the
+one given by the mixing-length approximation, with VanDriest damping, and the Smagorinsky model. However the
+additional capability of DES, relative to all these methods, is
+clear: to treat the entire boundary layer in RANS mode. A
+mixing-length model does not have this capability; the lowest
+level that does is an algebraic model such as Cebeci±Smith.
+
+Algebraic models do not lend themselves to complex geometries, unstructured grids, or to function under detached eddies;
+therefore, one-equation models are the simplest type that make
+DES practical. Since their accuracy is acceptable in boundary
+layers, DES is possible now with reasonable ambitions of accuracy, for instance over a sphere or cylinder.
+DES was tested in a channel, with LES grids, by three
+groups (Nikitin et al., 2000). The approach was not adjusted at
+all for this ¯ow, the grid spacings parallel to the wall were
+several hundred wall units. In such a simulation, DES relaxes
+the restrictions on the wall-parallel spacing, but not the wallnormal spacing which has to be of the order of y   1. We
+obtained stable and reasonable results, but the additive constant C in the logarithmic law is not very accurate due to a
+``buer layer'' between the region in which the stress is modelled and the region in which it is resolved. The results of
+Wasistho and Squires at a friction Reynolds number
+Res  2000 are shown in Fig. 5. The coarser grid has
+64  64  32 points and the ®ner one 128  128  64 points,
+both in a domain of size 2p  2  p. The velocity pro®les
+display the shift between modelled log layer and upper layer.
+
+Fig. 5. Channel DES by Wasistho and Squires (1999). (a) Velocity;
+(±±) coarse grid; (- - -) ®ne grid. (b) Shear stresses; (- - -) resolved; (±±)
+modelled; (- ±±) viscous. Arrows point from coarse-grid to ®ne-grid
+results.
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+The ®ner grid does not strongly improve the shift, which is
+associated with the current calibration of the SGS model in
+DES. The shear-stress pro®les display a large transfer from the
+modelled shear stress mt uy  vx  to the resolved stress ÿuv
+when the grid resolution is doubled. Therefore, the two cases
+are deeply dierent, but the mean velocity changes little. The
+viscous stress muy is almost identical on the two grids. These
+results suggest that DES has potential as an approach to wall
+modelling, even though such an application was not designed
+for and is not natural.
+Still another hybrid concept can be formulated. It is zonal
+and would consist in treating the ``unchallenging'' regions of
+the boundary layer with RANS, and the Challenge-I regions
+with full LES. The method would switch to LES upstream of
+any intense pressure gradients, which tentatively makes another step up in accuracy. The diculties are: the ``arti®cial
+intelligence'' of identifying where the switch should be located;
+the generation of quality turbulent eddies for the RANS region
+to dispatch into the LES region (the regions might have to
+overlap). This is a concept that would live much more easily in
+a 2D boundary layer than on a 3D object. The ``eddy seeding''
+problem appears less severe with DES, because a separated
+shear layer is exposed to vigorous new instabilities, thanks to
+both the removal of the wall con®nement and what can be
+loosely called ``absolute instabilities'' (Huerre and Monkewitz,
+1985) (in contrast, the RANS-to-LES switch in the other
+concept would occur in a region of ``convective instabilities'').
+These new instabilities plausibly overwhelm the boundarylayer turbulence. If they do not, for instance in a separation
+bubble, DES cannot be expected to provide much improvement over RANS.
+2.6. DNS
+The value and requirements of Direct Numerical Simulation (DNS) are well-known. Few DNS projects have been
+conducted at a ``full'' Reynolds number, but the attachment
+line of swept wings is an example (Spalart, 1988). DNS was
+applied at the (local) Reynolds number of the ¯ow on an airliner. This is a case of ``microscopic'' simulation, in which it is
+justi®ed to isolate a very small region of the ¯ow (the justi®cation relies on experiments). The author once received dubious praise for simulating ``a milli-second over a postage
+stamp''! Simulations of homogeneous turbulence and of other
+boundary layers could also be described as microscopic. DNS
+of a whole device is normally out of the question. It is a
+beautiful research tool; in fact in the author's opinion its reach
+is sometimes under-estimated, due to a misguided insistence on
+simulating at the ``right'' Reynolds number.
+The argument, which has long been a minority one, is the
+following. When asking a fundamental question in turbulence, assume we have the choice between a DNS and an LES
+having the same cost. The DNS will have a slightly larger
+range of scales in each direction (certainly less than double),
+because of saving the SGS-model cost. The LES will have a
+higher Reynolds number; if a QDNS, the dierence will be
+less than a doubling. The LES will assume that the unresolved eddies have a simple enough behaviour to be modelled; for instance the great majority of the Reynolds shear
+stress will be resolved, at least in the challenging region of the
+domain. If so, the same-cost DNS can run at a Reynolds
+number sucient to sustain turbulence. Extrapolating the
+DNS results to the LES Reynolds number can also be done
+with con®dence (especially if the DNS is possible over a
+range of Reynolds numbers). An extrapolation ``after the
+simulation'' is inexpensive and can be re®ned, much more
+easily than the LES can be re-run with a dierent SGS model
+(or adjustable constants). By that standard, we could have
+
+259
+
+counted one run for a thorough DNS study, as opposed to
+maybe three runs for a thorough LES study, which changes
+the cost balance somewhat. Three to four runs is typical in
+LES studies, many of which are presented as comparative
+tests of SGS models and/or as tests of LES itself, by comparison with experiments. In contrast, in the author's opinion, a DNS study can be free-standing (Spalart and Strelets,
+2000). In addition, the extrapolation can then reach any
+Reynolds number (this amounts to the view that turbulence is
+more predictable, the higher the Reynolds number, which is
+not shared by all). Atmospheric scientists never consider
+DNS for the Planetary Boundary Layer, but fundamental
+PBL questions can very well be asked with DNS and extrapolation (Coleman et al., 1990), and the anti-DNS attitude
+is counter-productive.
+One good reason for doing QDNS is the comparison with a
+laboratory experiment that is moderately out of reach of DNS.
+This occurs typically when the experiment was designed to
+allow measurements of the smallest eddies; physical limits restrict the possible range of scales, but not as severely as DNS
+does.
+Below, DNS is classi®ed as requiring ``no empiricism''.
+This does not imply that the DNS of a complex ¯ow is free
+of decisions even once an accurate DNS code has been created. In the case of channel ¯ow, the decisions consist in the
+grid spacing, time step and domain size. For these, the direction of ``goodness'' is clear: smaller spacing and larger
+domain. Homogeneous turbulence adds the in¯uence of the
+initial conditions or stirring system, for which goodness is not
+simply a direction; there is an art. Flows containing transition
+require many further decisions, regarding the freestream-disturbance and wall-imperfection content and the vibrations.
+This ®ne information is not found in the CAD ®le of an
+airplane or car. Engineering DNS would not be a ``black
+box''.
+Recent Reynolds-number increases in DNS have been
+modest, partly because the ``super-computers'' have nearly
+stagnated, certainly compared with personal computers (more
+accurately, the DNS share of the super-computers has nearly
+stagnated). The channel has now reached Res  590 (Moser
+et al., 1999) but the boundary layer had reached Res  650,
+with a more ample horizontal domain, in 1988 (Spalart, 1988).
+For a really attractive new study, for instance to lock the value
+of the K
+arm
+an constant, a factor of 5 or preferably 10 in
+Reynolds number over the current highest would be needed.
+Therefore the DNS eort has, correctly, been directed instead
+at simulating more complex geometries, or simple ones with
+strong pressure gradients, three-dimensionality, rotation and
+curvature, complex deformations, heat transfer, combustion,
+shock waves, and noise (Alam and Sandham, 2000; Adams,
+1998; Coleman et al., 1995; Gavrilakis, 1992; Na and Moin,
+1998; Ragab and Sreedhar, 1995; Yang and Ferziger, 1993).
+Fully successful DNS studies of the supersonic boundary layer
+should appear very soon. The current standard includes
+``reasonable results'' but not quantitative comparisons, a
+problem being that low-Reynolds-number supersonic experiments are lacking (Adams, 1998). A de®nitive study of the
+interaction with a normal shock will certainly be of great
+interest to the airliner industry.
+2.7. Role of grid re®nement
+In RANS, the equations possess a smooth exact solution,
+and the numerical solution approaches that solution as we
+re®ne the grid. The aim of grid re®nement is numerical accuracy. In contrast, in LES as it is practised and in DES, the
+Sub-Grid-Scale (SGS) model adjusts to the grid so that the
+smallest resolved eddies match the grid spacing. Recall Fig. 4
+
+260
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+Table 1
+Summary of strategies
+Name
+2DURANS
+3DRANS
+3DURANS
+DES
+LES
+QDNS
+DNS
+
+Aim
+Numerical
+Numerical
+Numerical
+Hybrid
+Hybrid
+Physical
+Numerical
+
+Unsteady
+Yes
+No
+Yes
+Yes
+Yes
+Yes
+Yes
+
+Re-dependence
+Weak
+Weak
+Weak
+Weak
+Weak
+Strong
+Strong
+
+for the visual aspect and Fig. 5 for the corresponding stresses.
+In a ®ner grid, resolving eddies to a smaller size gives the
+large energy-containing eddies more eddies for genuine nonlinear interactions, making them more accurate. The aim of
+grid re®nement is now physical instead of numerical, to use
+simple words. This distinction is tracked in Table 1 (several
+methods had to be labelled ``hybrid'', as their aim is dierent
+in dierent ¯ow regions). Another description of it is that
+when the aim is numerical, the turbulence model does not
+depend on the grid spacing but when the aim is physical, it
+does. A consequence is that in URANS, no amount of grid
+re®nement will override the in¯uence of the empirical content
+of the turbulence model. In contrast, in a method with the
+``physical'' aim, grid re®nement weakens the role of the
+modelled eddies and thus improves the ®delity of the simulation. A 20% change of the Smagorinsky constant in a wellresolved LES is minor, but a 20% change in the K
+arm
+an
+constant is not.
+It has been proposed not to automatically link the width of
+the LES ®lter and the grid spacing, in order to obtain solutions of the ®ltered equations free of signi®cant numerical
+errors. A typical procedure to adjust an SGS model has been
+to seek a ÿ5=3 slope for the energy spectrum all the way to the
+cut-o wave-number of the grid. Then, the numerical errors
+remain the same fraction of the SGS kinetic energy, and it is
+fair to write that ``numerical and SGS eects cannot be separated''. This situation is disturbing to some careful people,
+who would prefer to understand the physical system of the
+®ltered equations, and then obtain very accurate solutions to
+it. That seems possible only if the spectrum rolls down from its
+ÿ5=3 slope some distance from the cut-o. The author's
+opinion, which is not based on tests, is that this would not be
+the best use of numerical eort. Widening the ®lter raises the
+magnitude of the sub-grid stresses, which are notoriously inaccurate locally. It is unlikely that this eect can be oset by
+the reduction of numerical errors, or even by the design of a
+superior SGS model, possibly gained from the better physical
+understanding. On a given grid, an LES with a wide ®lter
+would cost almost the same as one with a narrow ®lter: the
+cost per step would be the same, and the time step could only
+rise by a modest amount. Conclusive tests of the ®lter-grid
+relationship would crucially depend on the de®nition of a
+®gure of merit.
+3. Cost aspects
+Here the aim is a broad view of the methods with the order
+of magnitude of their cost, translated into a readiness date.
+Such predictions are not without risk. Time will tell how far o
+these dates are, but unless they are hugely in error, they are
+valuable for research planning. The principal de®nitions and
+assumptions which entered the estimates in Table 1 are the
+following. The target ¯ow is that over an airliner or a car. The
+acronyms in Column 1 have all been used above. ``Aim'' in
+
+3/2D
+No
+No
+No
+Yes
+Yes
+Yes
+Yes
+
+Empiricism
+Strong
+Strong
+Strong
+Strong
+Weak
+Weak
+None
+
+Grid
+5
+
+10
+107
+107
+108
+1011:5
+1015
+1016
+
+Steps
+3:5
+
+10
+103
+103:5
+104
+106:7
+107:3
+107:7
+
+Ready
+1980
+1990
+1995
+2000
+2045
+2070
+2080
+
+Column 2 refers to the aim of grid re®nement: numerical, or
+physical (Section 2.7). The Reynolds-number dependence refers to the number of grid points. The step from ``weak'' to
+``strong'' Reynolds-number dependence indicates a change
+from a slow logarithmic dependence similar to that of the skinfriction coecient, to a strong one similar to that of the viscous-sublayer thickness. ``3/2D'' refers to simulations which
+are 3D even if the geometry is 2D. When the geometry is already 3D, 3/2D means that the grid spacing scales with the
+shorter dimension of the device, and does not ``take advantage'' of high aspect ratios. A clear example would be a wing
+¯ap: a 3DRANS will cluster points near its tips but use a loose
+spacing elsewhere, whereas a 3/2D method will space points by
+the same fraction of the ¯ap chord all along. The step from
+``strong'' to ``weak'' empiricism indicates, perhaps arbitrarily,
+that the only remaining adjustable constants are those in the
+Law of the Wall.
+For the grid spacing, RANS and DES ®gures are based on
+current practice. The requirements are well understood for the
+spacing normal to the wall. In the other directions, the geometry is assumed to have only a moderate number of features such as ¯aps and spoilers. Under ``DES'' are included
+both strict DES as de®ned in (Spalart et al., 1997), and other
+hybrid methods which are likely to be developed in the next
+few years, with the general expectation that they will treat the
+simple attached boundary layers with RANS. For such
+methods, a grid block of the order of 643 points appears
+adequate to resolve a separated region, since about this many
+points were used on the stalled airfoil (Shur et al., 1999). At
+higher Reynolds numbers, the cost increase is modest, since
+only the normal grid spacing needs to be reduced. Thus, the
+grid increase over 3DRANS is plausibly in the millions of
+points, not tens of millions, and 108 is fair for the grid count.
+For LES we had estimated 1011 for a clean wing (Spalart et
+al., 1997), leading to a few times more for the whole aircraft.
+The DNS estimate is based on grid patches with an area
+Dx  Dz of 100 wall units and a chord Reynolds number for
+the wing of about 7  107 , and agrees with that of Moin and
+Kim (1997). Estimates would be lower for a road vehicle,
+which has a lower Reynolds number, but the dierence would
+be a large one only for QDNS and DNS, with their strong
+cost dependence. The number of steps uses the same grid information and CFL numbers of order 1, if unsteady, and
+assumes the simulation needs roughly six spans of travel for
+an airplane.
+The readiness estimates are based on the ``rule of thumb''
+that computer power increases by a factor of 5 every ®ve years.
+This will be disputed, but another rule has been a factor of 2
+every two years, which is not much faster. Readers are free to
+apply their favorite rate of progress, starting from the assumption that a very expensive problem today costs about 1015
+¯oating-point operations. ``Readiness'' roughly means that a
+simulation is possible as a so-called ``Grand Challenge''. Industrial everyday use will come later. Dates are rounded to the
+nearest ®ve years.
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+4. Outlook
+Progress in numerical methods and computers is intensifying the challenge for turbulence treatments, to provide a
+useful level of accuracy in slightly or massively separated ¯ows
+over fairly complex geometries at very high Reynolds numbers.
+This is desirable in the near future, between 5 and 10 years, and
+not only on a research basis; industry is more than ready for
+this capability, especially the jet-engine industry. In addition,
+the needs of non-specialist users and automatic optimizers
+dictate a very high robustness. Flows with shallow or no separation appear to be within the reach of the current steady
+RANS methods or their ®nely calibrated derivatives, incorporating modest improvements such as nonlinear constitutive
+relations. For such ¯ows, transition prediction with generality,
+accuracy, and robustness may prove more challenging than
+turbulence prediction.
+With massive separation, it appears possible we will give up
+RANS, steady or unsteady. This will probably be the major
+debate of the next few years. The alternative is a derivative of
+LES, in which the largest, unsteady, geometry-dependent eddies are simulated and (for most purposes) ``discarded'' by an
+averaging process. We have to balance our ambitions with cost
+considerations, and a table summarising the issue was tentatively provided. A major consideration is whether LES is
+practical for the entire boundary layer, and it was strongly
+argued that this will not be the case, in the foreseeable future.
+This forces hybrid methods, with quasi-steady RANS in the
+boundary layer. In this paper, LES was eectively de®ned as a
+simulation in which the turbulence model is tuned to the grid
+spacing, and RANS as the opposite. Other more subtle de®nitions probably exist, but this one seems to classify almost all
+the studies to date. Speziale's hybrid proposal involves the grid
+spacing and the Kolmogorov length scale but, surprisingly, not
+the internal length scale of the RANS turbulence model; thus, it
+is dicult to classify (Speziale, 1998). The proposal of Aubrun
+et al. is also hybrid, as it leads to combining ``modelled'' and
+``resolved'' Reynolds stresses, but the modelled stresses do not
+scale (and vanish) with the grid spacing as they do in LES
+(Aubrun et al., 1999). Variations on the now-running DES
+proposal clearly have a wide window of opportunity.
+The plausible spread of hybrid methods highlights the
+permanence of a partnership between empiricism and numerical power in turbulence prediction at full-size Reynolds
+numbers. This demands a balance in funding and in publication space. Since hybrid methods oer leeway when setting the
+boundary between ``RANS regions'' and ``LES regions'', the
+more capable the RANS component is, the lower the cost of
+the hybrid calculation will be. Therefore, the switch to LES in
+some regions does not remove the incentive to further the
+RANS technology. This scene also raises the issue of which
+core of experiments and DNS will be the foundation of the
+empirical component of the system. As ever, we will need
+simple ¯ows for calibration of the RANS sub-system, and
+more complex ¯ows for validation of the full CFD system.
+Acknowledgements
+The author is grateful for the comments of J. Crouch, W.H. Jou, G. Miller, A. Secundov, K. Squires and M. Strelets,
+and for years of informal teaching by P. Bradshaw.
+
+Appendix A. The Spalart±Allmaras model
+We give a little background on the S±A model, since it
+appears several times in the paper. The model was inspired by
+
+261
+
+the work of Baldwin and Barth, who invited the author to
+critique their model (Baldwin and Barth, 1991). In both cases
+the principle was to create a model that was complete in the
+sense of Wilcox (1998), which essentially meant it would be a
+transport model instead of algebraic, and as simple and numerically undemanding as possible. No deep reason was seen
+why two equations were indispensable, although this remains a
+widespread position, and a high reliance on intuition was accepted. Connections to exact transport equations were not
+sought, other than the obvious invariance requirements.
+A crucial term in the S±A model is the wall destruction
+term, which we found was identical to that of Secundov from
+1973 (Gulyaev et al., 1993; Wilcox, 1998). The term depends
+on the wall distance d, which has a numerical cost and is
+considered undesirable by some colleagues on physical
+grounds. We disagree with this, and believe the term sensibly
+mimics the con®nement of the eddies, expressed by the pressure term in the transport equation for Reynolds shear stress.
+The viscous sublayer treatment borrows from Baldwin±Barth
+(B±B) and is aimed at low cost. The production term is proportional to vorticity, instead of strain rate as for the turbulent
+kinetic energy; this is another untuitive choice. Similarly, the
+diusion term is not conservative for the eddy-viscosity; instead it conserves the eddy-viscosity raised to the power 1.622.
+The model was studied in depth in terms of Challenge Zero,
+which defeats the B±B model (ultimately because in B±B the
+destruction term is based on a gradient instead of the wall
+distance). It was calibrated on Challenge-I cases, using a subset
+of thin shear ¯ows that could be handled with a few adjustable
+constants and were closest to the aerodynamic applications we
+had in mind. Challenge II was not considered. The model has
+not received any major upgrades in its eight years. The rotation/curvature term proposed by Spalart and Shur (1997) has
+attracted little attention. Current work is directed at DES.
+Other extensions such as nonlinear and realizable constitutive
+relations are either not mature enough, or have too little eect
+to be published.
+The S±A model exceeded expectations, and is now useful to
+a rather large user base. Version control was maintained and
+frequent upgrades, which are costly for the users, avoided. Its
+numerical stability is very satisfactory, and in the author's
+opinion its performance for Challenge I is competitive enough
+with even the best two- to four-equation models to justify the
+con®dence of users, and the role of ``default model'' (however,
+codes should not oer only one model!). The model is not
+sophisticated, but it is not inaccurate.
+
+References
+Adams, N.A., 1998. Direct numerical simulation of turbulent compression ramp ¯ow. Theoret. Comput. Fluid Dyn. 12, 102.
+Alam, M., Sandham, N.D., 2000. Direct numerical simulation of
+`short' Laminar separation bubbles with turbulent reattachment.
+J. Fluid Mech. 403, 223.
+Aubrun, S., Kao, P.L., HaMinh, H., Boisson, H., 1999. The semideterministic approach as way to study coherent structures. Case of
+a turbulent ¯ow behind a backward-facing step. In: Proceedings of
+the Fourth International Symposium on Engineering Turbulence
+Modelling and Measurements, 24±26 May, Corsica, Elsevier,
+Amsterdam.
+Balaras, E., Benocci, C., Piomelli, U., 1996. Two-layer approximate
+boundary conditions for large-eddy simulations. AIAA J. 34 (6),
+1111.
+Baldwin, B.S., Barth, T.J., 1991. A one-equation turbulence transport
+model for high Reynolds number wall-bounded ¯ows. AIAA-910610.
+
+262
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+
+Bosch, G., Rodi, W., 1998. Simulation of vortex shedding past a
+square cylinder with dierent turbulence models. Int. J. Numer.
+Meth. Fluids 28, 601.
+Breuer, M., 1999. A challenging test case for large eddy simulation:
+high Reynolds number circular cylinder ¯ow. In: Banerjee, S.,
+Eaton, J.K. (Eds.), Proceedings of the First International Symposium on Turbulent Shear Flow Phenomena I, 12±15 September.
+Santa Barbara, pp. 735±740.
+Cazalbou, J.B., Spalart, P.R., Bradshaw, P., 1994. On the behavior of
+two-equation models at the edge of a turbulent region. Phys. Fluids
+A 6 (5), 1797.
+Chapman, D.R., 1979. Computational aerodynamics development and
+outlook. AIAA J. 17 (12), 1293.
+Childs, R.E., Nixon, D., 1987. Turbulence and ¯uid/acoustic interaction in impinging jets. SAE 87-2345.
+Coleman, G.N., Ferziger, J.H., Spalart, P.R., 1990. A numerical study
+of the turbulent Ekman layer. J. Fluid Mech. 213, 313.
+Coleman, G.N., Kim, J., Moser, R.D., 1995. A numerical study of
+turbulent supersonic isothermal-wall channel ¯ow. J. Fluid Mech.
+305, 159.
+Deardor, J.W., 1970. A numerical study of three-dimensional
+turbulent channel ¯ow at large Reynolds numbers. J. Fluid Mech.
+41, 453.
+Durbin, P.A., 1995. Separated ¯ow computations using the k±±v2
+model. AIAA J. 33 (4), 659.
+Durst, F., Launder, B.E., Schmidt, F.W., Whitelaw, J. H., Lesieur, M.,
+Binder, G. (Eds.), 1997. Proceedings of the 11th Symposium on
+Turbulent Shear Flows, 8±10 September. Grenoble, France.
+Fureby, C., Tabor, G., Weller, H.G., Gosman, A.D., 1997. A
+comparative study of subgrid scale models in homogeneous
+isotropic turbulence. Phys. Fluids 9 (5), 1416.
+Fureby, C., Grinstein, F.F., 1999. Monotonically integrated large eddy
+simulation of free shear ¯ows. AIAA J. 37 (5), 544.
+Gavrilakis, S., 1992. Numerical simulation of low-Reynolds-number
+turbulent ¯ow through a straight square duct. J. Fluid Mech. 244,
+101.
+Gessner, F.B., Eppich, H.M., Lund, E.G., 1991. The near-wall
+structure of turbulent ¯ow along a streamwise corner. In:
+Proceedings of the Eighth Symposium on Turbulent Shear Flows,
+9±11 September, Munich.
+Gulyaev, A.N., Kozlov, A.N., Ye, V., Secundov, A.N., 1993.
+Universal turbulence model mt -92. Ecolen Science Research Center,
+Moscow (Preprint No. 3).
+Hellstr
+om, T., Davidson, L., Rizzi, A., 1994. Reynolds stress transport
+modelling of transonic ¯ow around the RAE2822 airfoil. AIAA 940309.
+Huerre, P., Monkewitz, P.A., 1985. Absolute and convective instabilities in free shear layers. J. Fluid Mech. 159, 151.
+Hunt, J.C.R. 1990. Developments in computational modelling of
+turbulent ¯ows. In: Proc. ERCOFTAC Work, 26±28 March,
+Lausanne, Switzerland. Cambridge University Press, Cambridge.
+Johansson, S.H., Davidson, L., Olsson, E., 1993. Numerical simulation
+of vortex shedding past triangular cylinders at high Reynolds number
+using a k± turbulence model. Int. J. Numer. Meth. Fluids 16, 859.
+Jordan, S.A., Ragab, S.A., 1998. A large-eddy simulation of the near
+wake of a circular cylinder. J. Fluids Engrg. 120, 243.
+Karniadakis, G.E., Triantafyllou, G.S., 1992. Three-dimensional
+dynamics and transition to turbulence in the wake of blu objects.
+J. Fluid Mech. 238, 1.
+Kato, M., Launder, B.E., 1993. The modelling of turbulent ¯ow
+around stationary and vibrating square cylinders. In: Ninth
+Symposium on Turbulent Shear Flows, Kyoto.
+Launder, B.E., 1988. Turbulence modelling in three-dimensional shear
+¯ows. AGARD CP-438, Fluid Dynamics 3D Turbulent Shear
+Flows and Transition, 3±6 October. Turkey.
+Lien, F.S., Leschziner, M.A., 1995. Modelling 2D separation from a
+high lift aerofoil with a non-linear eddy-viscosity model and
+second-moment closure. Aero. J. 125.
+
+Menter, F.R., 1992. In¯uence of freestream values on k±x turbulence
+model predictions. AIAA J. 30 (6), 1657.
+Mittal, R., Balachandar, S., 1995. Eect of three-dimensionality on the
+lift and drag of nominally two-dimensional cylinders. Phys. Fluids
+7 (8), 1841.
+Moin, P., Kim, J., 1997. Tackling turbulence with supercomputers.
+Scient. Amer. 276 (1), 62.
+Moser, R.D., Kim, J., Mansour, N.N., 1999. Direct numerical
+simulation of turbulent channel ¯ow up to Res  590. Phys. Fluids
+11 (4), 943.
+Na, Y., Moin, P., 1998. Direct numerical simulation of a separated
+turbulent boundary layer. J. Fluid Mech. 370, 175.
+Najjar, F.M., Vanka, S.P., 1995. Eects of intrinsic three-dimensionality on the drag characteristics of a normal ¯at plate. Phys.
+Fluids 7 (10), 2516.
+Najjar, F.M., Balachandar, S., 1998. Low-frequency unsteadiness in
+the wake of a normal ¯at plate. J. Fluid Mech 370, 101.
+Nikitin, N.V., Nicoud, F., Wasistho, B., Squires, K.D., Spalart, P.R.,
+2000. An approach to wall modeling in large-eddy simulations.
+Phys. Fluids (submitted).
+Orszag, S.A., Borue, V., Flannery, W.S., Tomboulides, A.G., 1997.
+Recent successes, current problems, and future prospects of CFD.
+AIAA-97-0431.
+Perot, B., 1999. Turbulence modeling using body force potentials.
+Phys. Fluids 11 (9), 2645.
+Ragab, S., Sreedhar, M., 1995. Numerical simulation of vortices with
+axial velocity de®cits. Phys. Fluids 7 (3), 549.
+Rodi, W., Ferziger, J.H., Breuer, M., Pourquie, M., 1997. Status of large
+eddy simulation: results of a workshop. J. Fluids Engrg. 119, 248.
+Schumann, U., 1975. Subgrid scale model for ®nite dierence
+simulations of turbulent ¯ows in plane channels and annuli.
+J. Comp. Phys. 18, 376.
+Shur, M., Spalart, P.R., Strelets, M., Travin, A., 1999. Detached-eddy
+simulation of an airfoil at high angle of attack. In: Proceedings of
+the Fourth International Symposium on Engineering Turbulence
+Modelling and Measurements, 24±26 May, Corsica, Elsevier,
+Amsterdam.
+Shur, M.L., Spalart, P.R., Strelets, M.Kh., Travin, A.K., 1996.
+Navier±Stokes simulation of shedding turbulent ¯ow past a
+circular cylinder and a cylinder with a backward splitter plate.
+In: Third European CFD Conference, Paris.
+Shur, M., Strelets, M., Zaikov, L., Gulyaev, A., Kozlov, V., Secundov,
+A., 1995. Comparative numerical testing of one- and two-equation
+turbulence models for ¯ows with separation and reattachment.
+AIAA-95-0863.
+Spalart, P.R., 1988. Direct numerical study of leading-edge contamination. AGARD CP 438.
+Spalart, P.R., 1988. Direct simulation of a turbulent boundary layer up
+to Rh  1410. J. Fluid Mech. 187, 61.
+Spalart, P.R., Allmaras, S.R., 1994. A one-equation turbulence model
+for aerodynamic ¯ows. La Recherche Aerospatiale 1, 5.
+Spalart, P.R., Jou, W.-H., Strelets, M., Allmaras, S.R., 1997. Comments on the feasibility of LES for wings, and on a hybrid RANS/
+LES approach. In: Liu, C., Liu, Z. (Eds.), First AFOSR International Conference on DNS/LES, 4±8 August, Ruston, LA,
+Advances in DNS/LES, Greyden Press, Columbus, OH.
+Spalart, P.R., Shur, M., 1997. On the sensitization of simple turbulence
+models to rotation and curvature. Aerospace Sci. Technol. 1 (5),
+297.
+Spalart, P.R., Strelets, M.Kh., 2000. Mechanisms of transition and
+heat transfer in a separation bubble. J. Fluid Mech. 403, 329±349.
+Speziale, C.G., 1987. On nonlinear K±l and K± models of turbulence.
+J. Fluid Mech. 178, 459.
+Speziale, C.G., 1998. Turbulence modeling for time-dependent RANS
+and VLES: a review. AIAA J. 36 (2), 173.
+Travin, A., Shur, M., Strelets, M., Spalart, P.R., 2000. Detached-eddy
+simulations past a circular cylinder. Flow, Turb. Combust, to
+appear.
+
+P.R. Spalart / Int. J. Heat and Fluid Flow 21 (2000) 252±263
+Wilcox, D.C., 1998. Turbulence modeling for CFD. http://webknx.
+com/dcw.
+Yang, K.-S., Ferziger, J.H., 1993. Large-eddy simulation of turbulent
+obstacle ¯ow using a dynamic subgrid-scale model. AIAA J. 31 (8),
+1406.
+
+263
+
+Ying, S.X., Spaid, F.W., McGinley, C.B., Rumsey, C.L., 1999.
+Investigation of con¯uent boundary layers in high-lift ¯ows.
+J. Aircraft 36 (3), 550.
+Zeman, O., 1995. The persistence of trailing vortices: a modeling study.
+Phys. Fluids A 7, 135.
+
+

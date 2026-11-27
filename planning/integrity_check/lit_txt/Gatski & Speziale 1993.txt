@@ -1,0 +1,1580 @@
+59
+
+J. Fluid Mech. (1993), vol. 254, pp. 59-18
+
+On explicit algebraic stress models for complex
+turbulent flows
+By T.B. GATSKI’ A N D C. G. SPEZIALE’Jf
+INASA Langley Research Center, Hampton, VA 23681, USA
+ICASE, NASA Langley Research Center, Hampton, VA 2368 1, USA
+(Received 13 November 1992 and in revised form 16 February 1993)
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+Explicit algebraic stress models that are valid for three-dimensional turbulent flows in
+non-inertial frames are systematically derived from a hierarchy of second-order closure
+models. This represents a generalization of the model derived by Pope (1975) who
+based his analysis on the Launder, Reece & Rodi model restricted to two-dimensional
+turbulent flows in an inertial frame. The relationship between the new models and
+traditional algebraic stress models - as well as anisotropic eddy viscosity models is theoretically established. A need for regularization is demonstrated in an effort to
+explain why traditional algebraic stress models have failed in complex flows. It is also
+shown that these explicit algebraic stress models can shed new light on what secondorder closure models predict for the equilibrium states of homogeneous turbulent flows
+and can serve as a useful alternative in practical computations.
+
+1. Introduction
+Turbulent flows contain lengthscales and timescales that can change dramatically
+from one flow configuration to the next. Consequently, two-equation turbulence
+models - wherein transport equations are solved for two turbulent fields that are
+directly related to the lengthscales and timescales - represent the simplest level of
+Reynolds stress closure that can be formulated in a geometry independent fashion.
+This explains the current popularity of the K - - F model which, unlike the older mixing
+length models, does not require the specification of empirical lengthscales or timescales
+that must be adjusted in an ad hoc fashion from one flow to the next (see Launder &
+Spalding 1974). However, despite this positive feature, the K - e model shares a
+common deficiency with the older mixing length models : it is based on the Boussinesq
+eddy viscosity hypothesis. It is well known that eddy viscosity models are unable to
+properly describe turbulent flows with body force effects arising from curvature or a
+system rotation, unless ad hoc adjustments are made to the model. Likewise, their
+inaccurate prediction of normal Reynolds stress differences makes eddy viscosity
+models incapable of describing secondary flows in non-circular ducts (cf. Lumley 1978;
+Launder 1990; Speziale 1991). This has led to the development of nonlinear
+stress-strain relationships in turbulence modelling that transcend the Boussinesq
+hypothesis - an area of research that has received varying degrees of attention during
+the past three decades.
+Early work on the development of turbulence models with a nonlinear stress-strain
+
+t Present address : Aerospace and Mechanical Engineering Department, Boston University,
+Boston, MA 02215, USA.
+3-2
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+60
+
+T, B. Gatski and C. G.Speziale
+
+relation tended to be empirical in nature, relying on analogies with non-Newtonian
+flows (see Rivlin 1957; Lumley 1970; Saffman 1977). The similarities between the
+laminar flow of a non-Newtonian fluid and the mean turbulent flow of a Newtonian
+fluid have long been recognized (see Hinze 1975 for an interesting discussion of this
+point). In these older empirical models, which typically were obtained by simple tensor
+invariance arguments, the Reynolds stresses were taken to be nonlinear polynomial
+functions of the mean velocity gradients. In recent years, nonlinear Reynolds stress
+models of this type have been obtained within the context of two-equation turbulence
+modelling by more formal expansion techniques incorporating, for example, the Direct
+Interaction Approximation (DIA) and the Renormalization Group (RNG) (see
+Yoshizawa 1984; Speziale 1987; Rubinstein & Barton 1990; Yakhot et al. 1992). These
+models, which are characterized by an explicit relationship between the Reynolds stress
+tensor and the mean velocity gradients (and possibly their time derivatives) have come
+to be referred to as ‘anisotropic eddy viscosity models’.
+During the 1970s, second-order closure models became popular in which closure was
+achieved based on the Reynolds stress transport equation where history and non-local
+effects are accounted for. By means of an equilibrium hypothesis, in which the
+Reynolds stress convection and transport terms were neglected, algebraic stress models
+were obtained from second-order closures (see Rodi 1976). In these models, the
+Reynolds stresses were related implicitly to the mean velocity gradients. This provided
+the first formal means, based on a higher-order closure, to justify the extension of the
+Boussinesq hypothesis to incorporate nonlinearities into the mean velocity gradients.
+However, this type of algebraic stress model is cumbersome to implement in complex
+flows since the stress-strain relation is not explicit ; numerical stiffness problems can
+result from the need for successive matrix inversions at each iteration.
+In an interesting paper that has to a large extent gone unnoticed, Pope (1975)
+developed a nonlinear Reynolds stress model by invoking the same equilibrium
+hypothesis as Rodi (1976). However, Pope (1975) actually presented a methodology for
+obtaining an explicit relation for the Reynolds stress tensor from the implicit algebraic
+stress model that Rodi (1976) obtained from the Launder, Reece & Rodi (1975) model.
+This methodology, which leads to explicit algebraic stress models, is based on the use
+of integrity bases from linear algebra. Owing to the complexity of the algebra, Pope
+(1975) was only able to obtain a solution for two-dimensional turbulent flows which
+he accomplished using the Launder, Reece & Rodi model.
+The main purpose of the present paper is to extend the results of Pope (1975) to
+three-dimensional turbulent flows in non-inertial frames starting from a more general
+hierarchy of second-order closure models - a task that is now feasible computationally
+via symbolic manipulation. The relationship between these new explicit algebraic stress
+models and anisotropic eddy viscosity models, as well as the older nonlinear Reynolds
+stress models, will be established in a systematic fashion. There appears to be
+considerable confusion in the turbulence literature concerning the relationship between
+these various types of nonlinear Reynolds stress models that needs to be clarified. It
+will be shown that the new explicit algebraic stress models represent the equilibrium
+Reynolds stress anisotropies predicted by second-order closures in homogeneous
+turbulent flows. Consequently, beyond their potential use in practical turbulence
+calculations, the explicit algebraic stress models to be derived herein can be used to
+explore the predictive capabilities of a hierarchy of second-order closures in
+homogeneous turbulence. However, when applications are made to non-equilibrium
+turbulent flows with localized strain rates that are large, there is the need for
+regularization. These issues will be discussed in more detail in the sections to follow.
+
+On explicit algebraic stress models for complex turbulent flows
+
+61
+
+2. Theoretical background
+The incompressible turbulent flow of a viscous fluid will be considered where the
+velocity v and kinematic pressure P are decomposed into ensemble mean and
+fluctuating parts as follows :
+v = i+u, P = P + p .
+(1)
+The Reynolds stress tensor rii =
+is a solution of the transport equation (cf. Hinze
+1975):
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+which is valid in an arbitrary non-inertial reference frame that can undergo a rotation
+with angular velocity Qi relative to an inertial frame. In (2), D / D t = a/at+v.V is the
+mean convective derivative?eijkis the permutation tensor, v is the kinematic viscosity,
+and
+
+are, respectively, the pressure-strain correlation, the dissipation rate tensor, and the
+turbulent transport term. Turbulence models based on the Reynolds stress transport
+equation (2) are referred to as 'second-order or second-moment closures', since (2) is
+obtained by taking a second moment of the fluctuating Navier-Stokes equation. The
+advantage of basing Reynolds stress models on (2) is clear: the important physical
+effects of Reynolds stress convection and production are accounted for exactly by the
+first three terms in this equation.
+Homogeneous turbulent flows in equilibrium?as well as regions of inhomogeneous
+turbulent flows where there is a production-equals-dissipationequilibrium, satisfy the
+constraints :
+
+9;+ vv2T t f = 0,
+
+(7)
+
+where
+is the anisotropy tensor ( K = :G is the turbulent kinetic energy). In physical terms,
+this is an equilibrium for which convective and transport effects can be neglected; it is
+the basic equilibrium hypothesis used in the derivation of algebraic stress models.
+Although it constitutes an idealization, it is comforting to know that this equilibrium
+hypothesis is achievable in interesting physical limits that include homogeneous shear
+flow and the logarithmic region of an equilibrium turbulent boundary layer.
+It follows from (6) that
+3D r . .- rUDK
+(9)
+Dt
+KDt'
+
+T. B. Gatski and C. G . Speziale
+
+62
+
+and, hence, by making use of the contraction of (2) and (7), we obtain
+
+where 9 = -7 i javi/axjis the turbulence production and B = $sat is the scalar turbulent
+dissipation rate. The substitution of (7) and (10) into (2) yields the following
+equilibrium form of the Reynolds stress transport equation :
+
+The dissipation rate tensor can be split into isotropic and deviatoric parts as follows:
+
++
+
+eij =
+
+(12)
+
+D"j.
+
+By making use of (8) and (12), we can rearrange (11) into the alternative form
+
+(9
+- E ) b6j = -5KStj
+
++bjkSik-:bmnS,,
+
+- K(b,k Sjk
+
++ bjk(a$k +2emki
+
++ 2e,kj
+
+- K[bik(6jk
+
+cS,~)
+
++in$j ( 3,
+
+where
+(15)
+In all of the commonly used second-order closure models, ITij is modelled in the general
+form (see Lumley 1978; Reynolds 1987; Speziale 1991):
+nij
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+ITij
+
+= @ij-
+
+= c&j(b)
+
+DEij.
+
++ KAijkl(6)-.ax1
+auk
+
+(16)
+
+For non-inertial frames, auk/ax, is replaced with auk/ax,+ emlk52, in (16). The
+substitution of (16) (with its non-inertial correction) into (13) yields a closed system of
+algebraic equations for the determination of the Reynolds stress anisotropy in terms of
+the mean velocity gradients. This constitutes the general form of algebraic stress
+models; the algebraic stress model of Rodi (1976) is obtained when the Launder, Reece
+& Rodi model for Z7, is introduced into (13) and non-inertial effects are neglected. It
+is clear that these algebraic stress models are implicit in nature since the Reynolds stress
+tensor appears on both sides of the equation. In the next section we will examine how
+explicit relations can be obtained from (13). Explicit models can lead to considerable
+savings in computational expense by avoiding the need for successive matrix inversions
+to obtain the Reynolds stresses for a given set of mean velocity gradients (cf. Demuren
+& Rodi 1984).
+
+3. Explicit algebraic stress models
+When models for nijthat are tensorially linear in the anisotropy tensor b,, are
+considered, it is possible to obtain an explicit expression for b, in terms of the mean
+velocity gradients. This can be accomplished by techniques from linear algebra that
+make use of integrity bases (namely, polynomial representations for isotropic tensor
+functions). Pope (1975) was the first to show this by basing his analysis on the Launder,
+Reece & Rodi model which is the most commonly used model for nijthat is a linear
+function of bij.We will extend the analysis of Pope (1975) to a more general hierarchy
+
+On explicit algebraic stress models for complex turbulent flows
+
+63
+
+of tensorially linear models for Uij where non-inertial effects are accounted for.
+Furthermore, our analysis will be conducted for three-dimensional turbulent flows.
+Pope (1975)restricted his analysis to two-dimensional turbulent flows because of the
+severe complexity of the algebra-an obstacle that we will overcome by using
+Mathematica- (Wolfram 1988).
+It can be shown that the most general form of (16) that is tensorially linear in the
+anisotropy tensor b, is given by (cf. Reynolds 1987;Speziale 1991):
+
+where
+
+R*=
+
+(18)
+
+i3t*+EmjiQm
+
+is the absolute vorticity tensor (namely, the vorticity tensor (sti relative to an inertial
+frame). The coefficients Cl-C,can be functions of the invariants of b,, and can depend
+on P / c (of course, (16)requires that, at most, C,is a linear function of P / e ) . The model
+of Launder, Reece & Rodi (1975), the model of Gibson & Launder (1978) and the
+linearized model of Speziale, Sarkar & Gatski (1991)- where the quadratic part of the
+slow pressurestrain correlation is neglected - are special cases of (17). For these
+models, we have the following coefficients:
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+Launder, Reece and Rodi model
+C, = 3.0, C, =0.8,
+
+C3= 1.75, C,
+
+1.31,
+
+(19)
+
+Gibson and Launder model
+Cl= 3.6, C, = 0.8, C, = 1.2, C, = 1.2,
+
+(20)
+
+Speziale, Sarkar and Gatski model
+Cl= 3.4+ 1.88/~,C, = 0.8- 1.3II;",
+
+(21)
+
+=
+
+C, = 1.25, C4= 0.40,
+
+where I& = bijb,. It should be noted that for sufficiently small anisotropies, more
+complicated models can be approximated by the form (17).
+The direct substitution of (17) into (13) yields the equation:
+
+where
+K
+
+(24)
+
+7=-.
+E
+
+If we introduce the dimensionless, resealed variables :
+
+=
+
+(*)c - 2
+2
+
+3
+
+b,,
+
+T. B. Gatski and C. G . Speziale
+
+64
+
+then (22) reduces to the simpler form
+
++
+
++
+
++
+
+b: = - Sz -(b,*,S:k b,*,S,*,-$b,*, S,*,Sij) b& WZj bi*, q
+In matrix form, (28) can be written as
+
+b*
+
+= -S*-(b*S*+S*b*-g{b*S*}/)+b*W*-
+
+g.
+
+W*b*,
+
+(28)
+(29)
+
+where { - } denotes the trace and /denotes the unit tensor. This is a set of linear algebraic
+equations for the determination of the components of b* in terms of S* and W*; the
+solution to (29) is of the general form
+b* = f(S*,W*).
+
+(30)
+
+Form invariance under an orthogonal coordinate transformation (with rotation tensor
+Q) requires that
+Qf(S*,W*) Q' = f(QS* QT, Q W Q'),
+(3 1)
+i.e. that f be an isotropic tensor function of its arguments. It can be shown that the
+satisfaction of (31) requires that
+b* = C
+A
+
+FA),
+
+(32)
+
+where FA)
+is the integrity basis for functions of a symmetric and antisymmetric tensor
+and G(A)are scalar functions of the irreducible invariants of S* and W*. For the case
+under consideration, the integrity basis is given by (see Spencer 1971; Pope 1975):
+T'l) = S*,
+T(2)= S* W* - W*S*
+
+T(6)= W*'S*+S*W*2--{S*V(r*a}/,
+T(7)= W*S*W*2- W*ZS*W*,
+
+T(3)= S*2-gS*2}/,
+
+T'*' = s*w*s*2 - S*ZV(r*S*
+
+T(4) = w*"-w*2}/,
+T(5) = W*S*2 - S*aW*
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+i(33)
+
+p =W*2S*2+S*2W*2-2 ds*2w*214
+T(10)
+
+= W*S*2W*2 - W*2S*2W*.
+
+The irreducible invariants of S* and W* are:
+71 = {s*2},
+= {w*2L
+
+(34)
+(35)
+
+q5 = (S*ZW*".
+
+(38)
+
+72
+
+Hence, we have
+
+G(*)= G(*)(T~7 2,73774975)
+
+lo>*
+(39)
+Pope (1975) showed that for two-dimensional flows, only T(l),T@)and F3),as well as
+rl and Y,I~,
+are independent. Consequently, the calculations become much simpler. Here,
+we will obtain the three-dimensional solution using the same methodology that Pope
+used.
+The direct substitution of (32) into (28) yields
+2
+
+=
+
+1>23***3
+
+X G @ )FA) = -x&T(A)-xG(A) [T(A))s*+S*T(A)-~T(A))s*)/- T ( A ) W + W*T(A)],
+A
+
+A
+
+A
+
+(40)
+
+On explicit algebraic stress models for complex turbulent flows
+where we have made use of the fact that f ’ )= S*. Since
+know that
+
+65
+
+is an integrity basis e
+
+T‘”’s*+s*T‘”’-{T’~\’s*}/
+3
+= Z H , , p,),
+
+7
+
+(41)
+
+Y
+
+(ie. any polynomial in S* and W* can be expanded in the integrity bases; see Spencer
+1971; Pope 1975). The 10 x 10 matrices HA and
+are obtained by successive
+applications of the Cayley-Hamilton theorem fihe elements of these matrices are given
+in the Appendix). By substituting (41) and (42) into (40),we obtain an equation from
+which G(A)can be determined:
+
+Jhr
+
+This is a 10 x 10 linear system of equations for the determination of the G@)which can
+be written in the matrix form
+AG=B
+(44)
+where the components of A,G and B are given by
+=
+
+-
+
+-HAy
+G, = G‘”,
+BA
+
++Jhy,
+
+= ‘1,
+
+(see the Appendix). The solution to (44) is given by
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+= Aii
+
+In order to obtain a closed form expression for G(’),it is necessary to analytically invert
+the matrix A.The manual inversion of matrix A is not feasible in the light of its highly
+complex structure; however, such a mathematical computation can now be done
+symbolically by Mathematicam (Wolfram 1988). The resulting inverse matrix A-l is
+quite complex, but as noted in (48), only the first column of its elements are needed.
+The resulting solution for G(A)is:
+
+where the denominator D is given by
+
+Equations (49H50) were successfully put through a variety of consistency checks
+including numerical tests for the axisymmetric expansion and contraction.
+Unfortunately, this three-dimensional form is significantly more complex than the
+two-dimensional form derived by Pope (1975). Nevertheless, the result presented in
+
+T. B. Gatski and C. G . Speziale
+
+66
+
+(49) can be shown to reduce to Pope’s form in the two-dimensional limit where the
+invariants q, and q4 are zero and q6 becomes equal to ill, qz. Using this reduction and
+the redundancies in the integrity basis (F4)
+.,. T(l0) are linear combinations of P,T@)
+and Fs);
+see Pope 1975), the resulting expression for G(A)in the two-dimensional limit
+becomes
+
+The anisotropy tensor b* is then given by
+
+which can be shown to be identical to the expression in Pope (1975) after using
+(25)-(27) along with the constants (19) of the Launder, Reece & Rodi model. It should
+be noted that Pope used an alternative form for the third basis in (52) - constructed
+from the two- and three-dimensional Kronecker delta - that is directly proportional to
+our f 3 ) .
+It is now clear that the model derived by Pope (1975) (which is a special case of (52))
+actually constitutes the explicit solution of the algebraic stress model of Rodi for b in
+terms of S and
+Whereas Pope’s analysis is only valid for two-dimensional flows in
+an inertial frame, we have now succeeded, by means of the representation theorem
+embodied in (32), to extend his result to three-dimensionalflows in non-inertial frames.
+It is interesting to note that for turbulent flows subjected to purely rotational or
+irrotational strains, the three-dimensional solution is of the same tensorial form as the
+two-dimensional result (52). However, for turbulent flows where both S and W are
+non-zero, there are significant differences between the two- and three-dimensional
+solutions. The two-dimensional result has a single quadratically nonlinear coupling
+term whereas the full three-dimensional result has additional nonlinear coupling terms
+that are tensorially cubic and quartic. This could yield significantlydifferent qualitative
+behaviour in complex turbulent flows that needs to be explored in more depth in the
+future.
+Some comments are in order concerning how the three-dimensional solution
+obtained herein compares with the result derived recently by Taulbee (1992). The three7(2),
+F4),
+T(@,T(’)where the
+dimensional result of Taulbee only contains the bases F’),
+coefficients G(A),for the most part, only depend on the invariant q2. This simplification
+results from the neglect of the second strain-dependent term in the brackets on the
+right-hand side of (22) (namely, it is obtained by setting C, = 2). We feel that this is
+a questionable approximation. Our research on homogeneous shear flow indicates that
+the coefficient C,-2 is non-zero and must be nearly half as large as the coefficient
+C,-2 in order to obtain a good description of shear flows. Furthermore, by neglecting
+this term in (22), the coefficients of the solution become virtually independent of the
+strain rate Sij and the model collapses to the standard K - s model in the absence of
+rotational strains. This stands in serious contradiction of the exact two-dimensional
+result (52) as well as our new three-dimensional result.
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+w.
+
+On explicit algebraic stress models for complex turbulent Jlows
+
+67
+
+4. The regularization procedure
+The explicit algebraic stress model that we derived in (32) and (49) formally
+constitutes the equilibrium anisotropy tensor predicted by a hierarchy of second-order
+closure models for homogeneous turbulence.These second-order closures are typically
+solved in conjunction with a modelled transport equation for the turbulent dissipation
+rate that is of the general form
+
+where CE1,C,, and C,are either constants, or functions of the invariants of Ib, that vary
+from one model to the next. For homogeneous turbulence, the transport term on the
+right-hand side of (53) vanishes and the turbulent kinetic energy is a solution of the
+transport equation
+DK
+--9 - E .
+(54)
+Dt
+From (53)-(54), it follows that 9 / c achieves the equilibrium value (see Speziale 1991),
+
+c
+
+B = E-12
+-
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+6
+
+Ce1-1'
+
+(55)
+
+which will be used to determine g in homogeneous turbulence. Hence, the explicit
+algebraic stress model derived herein can be utilized to explore systematically the
+equilibrium states predicted by a hierarchy of second-order closures in homogeneous
+turbulent flows.
+As discussed earlier, the explicit algebraic stress model given by (32) and (49)
+represents an exact solution to the general implicit algebraic stress model (22) that
+includes the model of Rodi (1 976) as a special case. Consequently, by a direct analysis
+of this explicit model, new insights can be gained concerning the problems that the
+traditional algebraic stress models have had in the calculation of complex turbulent
+flows. The denominator of the coefficients G(A)given in (49) contains a sum of positive
+and negative terms which has the potential to become zero, rendering singular
+behaviour. For equilibrium homogeneous turbulence this will not happen since ql ...q5
+are constrained by the transport equations for 71j and E to yield a well-behaved solution
+(see Speziale & Mac Giolla Mhuiris 1989). However, when an algebraic stress model
+is applied to complex non-equilibrium turbulent flows, where the underlying
+assumptions invoked in its derivation are no longer valid, singular behaviour can
+result. This becomes a distinct possibility in turbulent flows that have localized strain
+rates that are large. When the traditional algebraic stress models of the form (22) are
+applied to turbulent flows with large strain rates where D can approach zero, we would
+expect the model to be ill-behaved. This is a serious issue since in the calculation of
+many practical turbulent flows that achieve equilibrium, it is necessary to compute
+through a transient state that is far from equilibrium. Problems have been experienced
+in the calculation of complex turbulent flows where the Rodi algebraic stress model has
+at times failed to converge when solved iteratively unless the mean strain rates were
+relatively small (Demuren & Rodi 1984; Demuren, private communication). Hence, it
+is clear that there is the need to regularize these explicit algebraic stress models. Such
+an approach has been used recently in the kinetic theory with considerable success (see
+Rosenau 1989).
+The model derived herein can be regularized by a Pad6 approximation (this
+
+68
+
+T. B. Gatski and C.G . Speziale
+
+approach was recently used by Yakhot et al. (1992) in the derivation of their RNG
+based dissipation rate equation). The main idea behind this approach can be easily
+illustrated for the two-dimensional model given in (52). For this case, the coefficient on
+the right-hand side of (52) can be rewritten as
+3
+
+3 - 2v1- 67'
+
+-
+
+3
+
++ 6yL'
+6 = (w;w$.
+3 -27'
+
+where
+7 = (SG s;y,
+(57)
+It is clear from (56) that, for sufficiently large strain rates 7, singularities can occur; on
+the other hand, the rotational strains do not cause any problems. In an equilibrium
+homogeneous turbulent flow, 7 is typically less than one so that (56) is well behaved.
+For example, in homogeneous shear flow (with shear rate S ) , the parameter S K / s
+achieves an equilibrium value of approximately 5 . For the Launder, Reece & Rodi
+model, this corresponds to 7 M 0.2 (see Speziale & Mac Giolla Mhuiris 1989).
+However, for purely strained turbulent flows where 7 > 1, (56) can become singular.
+While algebraic stress models do not formally apply to such flows since they are far
+from equilibrium, it is nevertheless important for the models to be computable through
+such a transient (or localized) state without causing the solution to diverge. Hence, we
+want to replace (56) with a regular function that, for 7 sufficiently less than one, is
+approximately the same. This can be accomplished by a Padk-type approximation. For
+example, to the first order we take
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+Substituting (58) into (56) then yields the expression
+
+which is regular. Hence, we obtain a regularized model that is well-behaved for all
+strain rates and constitutes a good approximation to the original model within the
+equilibrium range that it formally applies. For practical applications, the regularized
+model,
+
+should be used instead of the form (52) first derived by Pope (1975) for the special case
+of the Launder, Reece & Rodi model. For the three-dimensional case, a more
+systematic Pad6 approximation to (50) must be made. This leads to rather cumbersome
+expressions that require further simplification and are currently under investigation.
+5. Comparison with other nonlinear Reynolds stress models
+We will now show the relationship between the explicit algebraic stress model
+derived herein and existing anisotropic eddy viscosity models. It is clear that (32), with
+the coefficients (49), is of the general mathematical form
+
+On explicit algebraic stress models for complex turbulent flows
+
+69
+
+where (auklax,)* = S,*,+ W,*,and Aiikl is a fourth-rank tensor that is a function of S*
+and W .This constitutes the general form of anisotropic eddy viscosity models; the
+standard eddy viscosity hypothesis of Boussinesq is recovered in the limit as Aijk,
+becomes an isotropic tensor.
+Our explicit algebraic stress model for three-dimensional turbulent flows is
+tensorially quartic in the mean velocity gradients with coefficients that are ratios of
+polynomials in the invariants of S and W.We will make use of the fact that
+
++
+
+ru.. = t K S , 2a, Kb;,
+
+(62)
+where a1= (C2-$)/(C3-2). The normalized anisotropy tensor b* can then be
+expanded in a Taylor series. To the first order in the mean velocity gradients, we have
+b*41 = -S*ii
+
+(63)
+from the algebraic stress model (32) and (49). The direct substitution of (63) into (62),
+after making use of (25), yields
+Ti*
+
+K2 -
+
+= ;Kaij - 2C: -Sip
+
+(64)
+
+E
+
+where Cz = &($- C,). This is the eddy viscosity form of the standard K- c model (see
+Launder & Spalding 1974) with a coefficient C: that, for the second-order closures
+considered herein, is close to the traditional value of 0.09. When quadratic terms are
+maintained, we have
+
++
+
++
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+b: = - S$ - (S; Wc. S$ W,*,) 2 (S; Sz.-$S:, S:n Ssj),
+which, in an inertial frame, yields
+
+(65)
+
+where p1= g ( 2 - C,)(2- C,)and /3, = g2(2- C,)($- C2),This is identical in form to
+the nonlinear K-E model of Speziale (1987) when convective effects are neglected. The
+nonlinear K- E model is given by
+K3 - K2 K3 0
+Tii = QKaii - 2c,sii
+4
+c
+c;1”
+~
+g2
+(ssj -isrnrn
+a
+)
+,
+4
+c
+c2
+2
+( s i k SIC*
+st,),
+E
+P &
+
+-isrnn
+srnn
+
+0
+
+(67)
+
+where C, and C, are constants and
+
+is the Oldroyd derivative of S. When DS,/Dt is neglected, it is a simple matter to show
+that (67) is of the same form as (66).
+Equation (66) is also of the same form as the anisotropic eddy viscosity models of
+Yoshizawa (1984) and Rubinstein & Barton (1990) with one exception: it does not
+contain a term of the type
+K3 - -
+
+p3
+
+7
+
+wkj -$ma
+
+wrnn
+
+(69)
+
+This kind of term was eliminated by Speziale (1987) because it yields an erroneous
+prediction for isotropic turbulence subjected to a solid body rotation. More precisely,
+
+T. B. Gatski and C. G. Speziale
+
+70
+
+a term of the form (69) predicts that an initially isotropic turbulence develops Reynolds
+stress anisotropies when subjected to a solid body rotation-a result that is in
+contradiction of physical and numerical experiments (see Wigeland & Nagib 1978;
+Speziale, Mansour & Rogallo 1987). It is encouraging that this consistency constraint,
+concerning the vanishing of (69) to the second order in the mean velocity gradients, has
+now been obtained directly by a systematic analysis of the Reynolds stress transport
+equation.
+It is interesting to note that the quadratic approximation (66) to the threedimensional algebraic stress model is of the same tensorial form as the full nonlinear
+two-dimensionalmodel (60). However, owing to the fact that the coefficients in (60) are
+strain-dependent, more physics is accounted for. For example, (60) properly predicts
+that in a rapidly rotating frame - where SZ, and hence tends to infinity - b$ and 9
+go to zero. This is the restabilization effect of turbulence in a rapidly rotating frame
+that the usual anisotropic eddy viscosity models are unable to predict (see Speziale,
+Gatski & Mac Giolla Mhuiris 1990). Hence, we feel that the two-dimensional algebraic
+stress model (60) should be tried in the future as an alternative to the more commonly
+used quadratic anisotropic eddy viscosity models. Some applications of (60) will be
+considered in the next section.
+
+c,
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+6. Illustrative examples
+In order to demonstrate the efficacy of the regularized algebraic stress model (60)
+derived in this study, we will consider a few applications to non-trivial, twodimensional turbulent flows involving shear and rotation. We will base our calculations
+on the Speziale et al. (1991) second-order closure (hereinafter, referred to as the SSG
+model). The regularized algebraic stress model (60) can be rewritten in the form
+
+where 01, = (C2-$)/(C3--2) and S*, W*,7 and 5 are as defined in (25), (26) and (57).
+Some remarks are needed concerning how S / e and
+are evaluated in the model
+coefficients (21) for the SSG model. 9 / e is calculated using (55) which is formally valid
+for equilibrium homogeneous turbulent flows ;we take IIb M 0.1 1 which is the universal
+equilibrium value predicted by the SSG model for two-dimensional homogeneous
+turbulence. This yields the following choice of constants
+
+Z4
+
+C, = 6.80,
+
+C, = 0.36,
+
+C, = 1.25, C,= 0.40, g = 0.233,
+
+(71)
+for the explicit algebraic stress model corresponding to the SSG second-order closure.
+The explicit algebraic stress model (70) is solved in conjunction with modelled
+transport equations for K and E . These equations are of the same general form as those
+used in the K- E model and are given by:
+
+where vT = C,K2/e, C, = 0.09, crK = 1, we= 1.3, C,, = 1.44 and CE2= 1.83. Hence,
+the explicit algebraic stress model derived herein formally constitutes a two-equation
+
+On explicit algebraic stress models for complex turbulent flows
+
+71
+
+z
+
+FIGURE
+1. Schematic of homogeneous shear flow in a rotating frame.
+
+Equilibrium
+values
+bll
+
+bl,
+4 2
+
+4 8
+
+Standard
+K - s model
+0
+-0.217
+0
+0
+
+New ASM
+model
+
+SSG model
+
+0.204
+
+-0.157
+
+0.218
+
+0.20
+
+-0.163
+
+-0.15
+-0.14
+-0.06
+
+-0.146
+
+-0.149
+
+-0.072
+
+-0.055
+
+Experimental
+data
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+SKI6
+4.82
+6.02
+5.16
+6.0
+TABLE
+1. Comparison of the model predictions with the experimental equilibrium values in
+homogeneous shear flow measured by Tavoularis & Corrsin (1981).
+
+turbulence model; the K - c model is recovered when (70) is linearized with respect to
+the mean velocity gradients. While this explicit algebraic stress model is a two-equation
+model, it incorporates much more physics than the K - - E model since it is consistent
+with second-order closures in the limit of equilibrium homogeneous turbulent flows.
+The first example that we will consider is the case of homogeneous shear flow in a
+rotating frame. An initially decaying isotropic turbulence is, at time t = 0, subjected to
+a uniform shear rate S in a reference frame rotating steadily with angular velocity 9.
+The corresponding mean velocity gradient tensor is given by
+
+"),
+
+%=(o o 0s o
+
+j
+
+(74)
+
+0 0 0
+
+and the angular velocity of the reference frame is given by 9,= (0, 0,O) (see figure 1).
+In table 1, the equilibrium values predicted by the new explicit algebraic stress model
+(ASM) for homogeneous shear flow are compared with the experimental data of
+Tavoularis & Corrsin (1981) as well as with the predictions of the SSG model and the
+standard K--E model. From these results it is clear that: (a)the new explicit ASM
+
+T. B. Gatski and C. G . Speziale
+
+72
+
+n
+
+v
+u
+
+b
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+0
+
+2
+
+4
+
+6
+
+0
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+8
+
+10
+
+t*
+
+t*
+
+I
+
+I
+
+I
+
+I
+
+2
+
+4
+
+6
+
+8
+
+10
+
+t'
+FIGURE
+2. Time evolution of the turbulent kinetic energy in rotating homogeneous shear flow:
+Comparison of the model predictions with the large-eddy simulations of Bardina et al. (1983). (a)
+-, new explicit ASM; ---, SSG model; ----,K - - E
+model; 0 ,LES.
+Sa/S = 0, (b) Q/S = 0.5 and (c) Q/S = -0.5.
+
+performs far better than the standard K- E model, and (b)the new explicit ASM yields
+results in close proximity of the full SSG second-order closure model. The small
+differences between the new ASM model and the full SSG model arises from two
+sources: the neglect of the quadratic return to isotropy term and the PadC-type
+approximation that was implemented to regularize the model. However, it is clear from
+these results that the new regularized ASM model constitutes an excellent
+approximation to the full SSG model for equilibrium flows.
+Now, we will compare the predictions of these three models for the time-evolution
+of the turbulent kinetic energy (K* = K/K,,t* 3 St) with the large-eddy simulations
+(LES) of Bardina, Ferziger & Reynolds (1983) for rotating homogeneous shear flow.
+In figure 2, the model predictions for three rotation rates ( Q / S = 0, B/S = 0.5 and
+B/S = -0.5) are compared with the LES which is for an initial condition of eO/SKO=
+0.296. From these results it is clear that the new algebraic stress model does an
+
+On explicit algebraic stress models for complex turbulent J m s
+
+73
+
+n
+
+**,
+W
+
+NS=O
+
+k
+
+NS = 0.5
+
+1
+
+LYS = -0.5
+
+I
+0
+
+I
+
+I
+
+I
+
+1
+
+2
+
+4
+
+6
+
+8
+
+t'
+
+10
+
+0
+
+2
+
+4
+
+3r-----
+
+6
+
+8
+
+10
+
+tf
+
+U S = 0,0.5, -0.5
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+I
+FIGURE3. Time evolution of the turbulent kinetic energy in rotating homogeneous shear flow:
+(a) large-eddy simulations of Bardina et al. (1983), (b) new explicit algebraic stress model, and
+(c) standard K - - B model.
+
+excellent job in capturing the trends of the LES. It yields results that are far superior
+to the standard K - E model and are in close proximity to the SSG model. The main
+discernible difference between the new algebraic stress model and the SSG secondorder closure is during the early transient where its responds more abruptly to the
+application of the shear since it does not account directly for relaxation effects.
+However, it is important to note how the new ASM is far superior to the standard K - E
+model in responding to changes in the rotation rate. This is illustrated in figure 3, where
+it can be seen that the new algebraic stress model is able to capture the effect of
+rotations on homogeneous shear flow. In contrast to these results, the standard K - E
+erroneously yields the same results for all rotation rates-a deficiency tied to the
+Boussinesq eddy viscosity hypothesis.
+The last example that we will consider is the case of fully-developed turbulent
+channel flow subjected to a spanwise rotation with constant angular velocity i2 (see
+figure 4). This represents a non-trivial turbulent flow for which the standard algebraic
+
+74
+
+T. B. Gatski and C.G.Speziale
+
+Dm
+3
+sa
+
+FIGURE
+4. Schematic of fully-developed turbulent channel flow in a rotating frame.
+
+0*4
+0.2
+
+L
+
+0
+
+n
+
+~
+
+0
+
+0.2
+
+0.6
+
+0.4
+
+0.8
+
+1.0
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+Y/H
+
+Y/H
+FIGURE
+5. Comparison of the model predictions for the mean velocity profile (-)
+with the
+experimental data of Johnston et al. (1972) ( 0 )for rotating channel flow (Re = 11 500, Ro = 0.21) : (a)
+SSG second-order closure (taken from Speziale et ul. 1992) and (b)new explicit algebraic stress model.
+
+stress approximations do not rigorously apply. We will consider the experimental test
+case of Johnston, Halleen & Lezius (1972) for a Reynolds number Re = 11500 and a
+rotation number Ro = 0.21 (here, Re = U,H/v and Ro = QH/U, where U, is the bulk
+mean velocity). In figure 5 (a) the prediction for the mean velocity profile obtained from
+the SSG second-order closure by Speziale, So & Younis (1992) is compared with the
+
+On explicit algebraic stress models for complex turbulent $ows
+
+75
+
+experimental data of Johnston et al. (1972). The computations were done using law
+of the wall boundary conditions. In figure 5 (b),the same comparisons are made for the
+new explicit algebraic stress model (70) derived herein. It is clear from these results that
+the new ASM yields an asymmetric mean velocity profile that is very similar to that
+obtained from the full second-order closure. Owing to the use of wall functions that do
+not formally apply to rotating flows-as well as the neglect of roll instabilities (see
+Speziale et al. 1992) - the specific quantitative comparisons are not that good. The
+important point, however, is that the new algebraic stress model yields an asymmetric
+mean velocity profile in close proximity to that obtained from a full second-order
+closure. On the other hand, simpler two-equation models like the standard K - s model
+erroneously predict that the mean velocity profile is unaffected by a system rotation
+and remains symmetric (see Speziale 1991). The improved predictions of the new
+explicit ASM in rotating shear flows arises from the incorporation of rotational strains
+through the terms W* and
+
+c.
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+7. Conclusion
+Explicit algebraic stress models for two- and three-dimensional turbulent flows, in
+non-inertial frames, have been obtained for a hierarchy of second-order closure models
+that are tensorially linear in the Reynolds stress anisotropy. These models were
+obtained using the standard local equilibrium hypothesis and, therefore, constitute the
+explicit solution to the traditional algebraic stress models generalized to include noninertial effects and a range of pressure-strain models. They also formally represent the
+equilibrium states predicted by this hierarchy of second-order closures in homogeneous
+turbulent flows. A direct examination of these explicit models has shed new light on the
+limitations of the traditional algebraic stress models in applications to complex
+turbulent flows. For localized strain rates that are large, traditional algebraic stress
+models can become singular. These models need to be regularized - a task that can be
+achieved by means of a Pad6 approximation as demonstrated in this paper.
+The results of this study have presented the first definitive evidence as to why the
+traditional algebraic stress models are ill-behaved, yielding numerical problems in
+many applications. These models should eventually be abandoned in favour of
+regularized versions of the explicit algebraic stress models derived herein. The full
+three-dimensional form of the explicit models is rather complicated and work is
+underway to simplify them by means of a rational approximation procedure. However,
+in the mean time, the regularized two-dimensional form (70) can be used in practical
+applications. This simplified model is formally valid for two-dimensional equilibrium
+flows and collapses to the recently proposed anisotropic eddy viscosity models in the
+limit of small strain rates. However, while its general tensorial form is as simple as the
+commonly used anisotropic eddy viscosity models, it incorporates much more physics
+since the coefficients depend nonlinearly on both rotational and irrotational strains. A
+version of (70) based on the SSG second-order closure was applied to rotating shear
+flows herein with encouraging results. These developments, when combined with some
+recent improvements in the modelling of the turbulent dissipation rate, can lead to a
+new generation of two-equation models that can serve as a useful companion to
+second-order closures in the calculation of complex turbulent flows.
+The authors are indebted to Professor G. F. Smith (Lehigh University) for some
+helpful comments concerning tensor representation theorems, and to Dr B. A. Younis
+(City University, London) for his assistancewith the rotating channel flow calculations.
+
+T. B. Gatski and C. G. Speziale
+
+76
+
+C. G .S. acknowledges the support of the National Aeronautics and Space Administration under NASA Contract nos. NAS1-18605 and NAS1-19480 while in
+residence at the Institute for Computer Applications in Science and Engineering
+(ICASE), NASA Langley Research Center, Hampton, VA 23681, USA.
+
+Appendix
+The elements of the matrices H,, and
+0
+0
+0
+0
+-f7l
+0
+-7 4
+
+'0
+0
+
+HyA
+
+i71
+-$72
+0
+
+=
+
+%4
+
+0
+0
+
+0
+
+-+?I5
+
+-
+
+-b5-blVZ
+
+0
+- 72
+
+0
+0
+
+0
+0
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+4A =
+
+-
+
+2 0 0 0
+0 0 - 1 0
+0 0 0 0
+0 0 0 1
+0 0 0 0
+27, Vl 0 0
+0 0 7 , o
+0 0 0 0
+7 4 +?I3 0 $71
+
+i73
+
+-0
+
++ are given in terms of qr as
+
+0
+0
+0
+0
+
+0
+0
+0
+0
+
+0
+
+72
+
+271
+0
+
+k,
+
+7;
+21/5-7172
+0
+0
+
+0
+0
+
+0
+0 -274
+0
+0
+0
+7;
+
+0
+3
+0
+0
+
+0
+0
+-1
+0
+0
+0
+
+- 274
+
+0
+0
+27172-275
+
+0 0 0 0 0 0
+0 0 0
+0 0 0
+1 0 0
+0 -1 0
+0 0 - 2
+0 0 0
+0 0 0
+
+o*
+
+-$71 $72
+
+$74
+
+1
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+
+0
+0
+0
+0
+0 0
+0
+0
+0 0 -
+
+0
+0
+0
+0
+0
+0
+0
+0
+3 0
+0
+0
+
+- 1 0
+
+: : : : :]
+-V:z
+
+-k2
+0
+
+0
+0
+
+0
+0
+
+0
+0
+0 -27,
+
+-1
+
+0
+
+The elements of the matrix A are a linear combination of the elements of the matrices
+HYAand Jyh, as well as the identity matrix. The matrix structure is then given by
+
+'-' -'
+A31
+
+A=
+
+-
+
+0
+0
+0
+0
+0
+0
+
+'
+
+-'
+
+4,A53
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+
+-'
+
+A313
+
+0 -1 0 A57
+A,, 0 -1 A,,
+0 0 A,, -1
+0 A,, 0
+0
+0 A,, A,,
+0
+0 0 0 A,,,
+
+0 4 9 A510
+0
+A,, A,,
+0
+0
+A,,,
+-1
+0
+A,,,
+0 -1
+A,,,
+0 Alas - 1
+
+On explicit algebraic stress models for complex turbulent flows
+
+77
+
+with the non-zero elements determined from
+A,
+
+The vector B is given by
+
+=
+
+- 8AY - HAy+ Jny<
+
+rf
+0
+0
+0
+0
+B =
+0
+0
+0
+0
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+-0.
+REFERENCES
+BARDINA,
+J., FERZIGER,
+J. H. & REYNOLDS,
+W. C. 1983 Improved turbulence models based on largeeddy simulation of homogeneous, incompressibleturbulent flows. Stanford University Tech. Rep.
+TF-19.
+DEMUREN,
+A. & RODI,W. 1984 Calculation of turbulence-driven secondary motion in non-circular
+ducts. J. Fluid Mech. 140, 189-222.
+GIBSON,
+M. M. & LAUNDER,
+B. E. 1978 Ground effects on pressure fluctuations in the atmospheric
+boundary layer. J. Fluid Mech. 86, 491-511.
+HINZE,J. 0. 1975 Turbulence. McGraw-Hill.
+JOHNSTON,
+J. P., HALLEEN,
+R. M. & LEZIUS,D. K. 1972 Effects of a spanwise rotation on the
+structure of two-dimensional fully-developed channel flow. J . Fluid Mech. 56, 533-558.
+LAUNDER,
+B. E. 1990 Phenomenological Modeling: Present and Future (ed. J. L. Lumley). Lecture
+Notes in Physics, vol. 357, pp. 439-485. Springer.
+LAUNDER,
+B. E., REECE,G. & RODI,W. 1975 Progress in the development of a Reynolds stress
+turbulence closure. J . Fluid Mech. 68, 537-566.
+LAUNDER,
+B. E. & SPALDING,
+D. B. 1974 The numerical computation of turbulent flows. Comput.
+Methods Appl. Mech. Engng 3, 269-289.
+LUMLEY,
+J. L. 1970 Toward a turbulent constitutive equation. J. Fluid Mech. 41, 413434.
+LUMLEY,
+J. L. 1978 Computational modeling of turbulent flows. Ado. Appl. Mech. 18, 123-176.
+POPE, S. B. 1975 A more general effective viscosity hypothesis. J. Fluid Mech. 72, 331-340.
+REYNOLDS,
+W. C. 1987 Fundamentals of turbulence for turbulence modeling and simulation.
+Lecture Notes for Von Karmdn Institute, AGARD Lecture Series 86, North Atlantic Treaty
+Organization.
+RIVLIN,R. S. 1957 The relation between the flow of non-Newtonian fluids and turbulent Newtonian
+fluids. Q. Appl. Maths 15, 212-215.
+RODI,W. 1976 A new algebraic relation for calculating the Reynolds stresses. Z . angew. Math.
+Mech. 56, T219-T221.
+ROSENAU,
+P. 1989 Extending hydrodynamics via the regularization of the Chapman-Enskog
+expansion. Phys. Rev. A 40,7193-7196.
+RUBINSTEIN,
+R. & BARTON,
+J. M. 1990 Nonlinear Reynolds stress models and the Renormalization
+group. Phys. Fluids A 2, 1472-1476.
+SAFFMAN,
+P. G. 1977 Results of a two-equation model for turbulent flows and development of a
+relaxation stress model for application to straining and rotating flows. Proc. Project SQUZD
+Workshop on Turbulence in Internal Flows (ed. S . Murthy), pp. 191-231. Hemisphere.
+
+78
+
+T. B. Gatski and C. G . Speziale
+
+https://doi.org/10.1017/S0022112093002034 Published online by Cambridge University Press
+
+SPENCER,
+A. J. M. 1971 Theory of invariants. In Continuum Physics (ed. A. C . Eringen), vol. 1, pp.
+240-352. Academic.
+C. G. 1987 On nonlinear K-1 and K - s models of turbulence. J. Fluid Mech. 178,
+SPEZIALE,
+45-75.
+SPEZIALE,
+C. G. 1991 Analytical methods for the development of Reynolds stress closures in
+turbulence. Ann. Rev. Fluid Mech. 23, 107-157.
+SPEZIALE,C. G., GATSKI,T. B. & MAC GIOLLAMHUIRIS, N. 1990 A critical comparison of
+turbulence models for homogeneous shear flows in a rotating frame. Phys. Fluids A 2,
+1678-1 684.
+SPEZIALE,
+C. G. & MAC GIOLLAMHUIRIS,N. 1989 On the prediction of equilibrium states in
+homogeneous turbulence. J. Fluid Mech. 209, 591-615.
+SPEZIALE,
+C. G., MANSOUR,
+N. N. & ROGALLO,
+R. S. 1987 The decay of isotropic turbulence in a
+rapidly rotating frame. Proc. 1987 Summer Program of the Center for Turbulence Research (ed.
+P. Moin, W. C. Reynolds & J. Kim), pp. 205-211. Stanford University Press.
+SPEZIALE,
+C. G., SARKAR,S. & GATSKI,T. B. 1991 Modeling the pressure-strain correlation of
+turbulence : an invariant dynamical systems approach. J. Fluid Mech. 227, 245-272.
+SPEZIALE,
+C. G . ,So, R. M. C. & YOIJNIS,
+B. A. 1992 On the prediction of turbulent secondary flows.
+ICASE Rep. 92-57, NASA Langley Research Center.
+TAULBEE,
+D. B. 1992 An improved algebraic Reynolds stress model and corresponding nonlinear
+stress model. Phys. Fluids A 4, 2555-2561.
+TAVOULARIS,
+S. & CORRSIN,
+S. 1981 Experiments in nearly homogeneous turbulent shear flow with
+a uniform mean temperature gradient. Part 1. J. Fluid Mech. 104, 31 1-347.
+WIGELAND,
+R. A. & NAGIB,H. M. 1978 Grid-generated turbulence with and without rotation about
+the streamwise direction. ZIT Fluids and Heat Transfer Rep. R78-1.
+WOLFRAM,
+S . 1988 Mathernatica. Addison-Wesley.
+YAKHOT,
+V., ORSZAG,
+S. A,, THANGAM,
+S., GATSKI,
+T. B. & SPEZIALE,
+C. G. 1992 Development of
+turbulence models for shear flows by a double expansion technique. Phys. Fluids A 4,1510-1 520.
+YOSHIZAWA,
+A. 1984 Statistical analysis of the deviation of the Reynolds stress from its eddy
+viscosity representation. Phys. Fluids 27, 1377-1387.
+
+

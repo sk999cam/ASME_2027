@@ -1,0 +1,3128 @@
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+J. Fluid Mech. (2021), vol. 906, A27. © The Author(s), 2020.
+Published by Cambridge University Press
+doi:10.1017/jfm.2020.820
+
+906 A27-1
+
+Turbulent scalar ﬂux in inclined jets in crossﬂow:
+counter gradient transport and deep learning
+modelling
+Pedro M. Milani1, †, Julia Ling2 and John K. Eaton1
+1 Mechanical
+
+Engineering Department, Stanford University, Stanford, CA 94305, USA
+2 Citrine
+
+Informatics, Redwood City, CA 94061, USA
+
+(Received 6 January 2020; revised 24 August 2020; accepted 20 September 2020)
+
+A cylindrical and inclined jet in crossflow is studied under two distinct velocity ratios,
+r = 1 and r = 2, using highly resolved large eddy simulations. First, an investigation
+of turbulent scalar mixing sheds light onto the previously observed but unexplained
+phenomenon of negative turbulent diffusivity. We identify two distinct types of counter
+gradient transport, prevalent in different regions: the first, throughout the windward shear
+layer, is caused by cross-gradient transport; the second, close to the wall right after
+injection, is caused by non-local effects. Then, we propose a deep learning approach for
+modelling the turbulent scalar flux by adapting the tensor basis neural network previously
+developed to model Reynolds stresses (Ling et al., J. Fluid Mech., vol. 807, 2016a, pp.
+155–166). This approach uses a deep neural network with embedded coordinate frame
+invariance to predict a tensorial turbulent diffusivity that is not explicitly available in the
+high-fidelity data used for training. After ensuring analytically that the matrix diffusivity
+leads to a stable solution for the advection diffusion equation, we apply this approach
+in the inclined jets in crossflow under study. The results show significant improvement
+compared to a simple model, particularly where cross-gradient effects play an important
+role in turbulent mixing. The model proposed herein is not limited to jets in crossflow;
+it can be used in any turbulent flow where the Reynolds averaged transport of a scalar is
+considered.
+Key words: turbulent mixing, turbulence modelling, jets
+
+1. Introduction
+
+The jet in crossflow is a canonical geometry in fluid mechanics, whereby fluid is ejected
+from an orifice and interacts with main flow passing over that orifice (Mahesh 2013).
+This configuration has several practical applications. In the turbomachinery community,
+film cooling systems eject cooler air through rows of holes in the blade surface, which
+ideally stays close to the surface and protects it against the hot mainstream (Bogard &
+Thole 2006). In atmospheric flows some types of volcanic plumes rise from the vent while
+interacting with prevailing winds. This interaction helps determine mixing and deposition
+of ash (e.g. Gardner, Burgisser & Stelling 2007). Most interesting jets in crossflow
+involve mixing because the jet carries a scalar contaminant, such as heat or particles, into
+† Email address for correspondence: pmmilani@stanford.edu
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-2
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+the crossflow. In these problems it is imperative to analyse the resulting scalar
+concentration field, denoted by c, in addition to the velocity field ui .
+Different parameters determine the resulting flow in a jet in crossflow, including
+geometry (such as hole shape and angle), Reynolds number and crossflow characteristics
+(like incoming boundary layer thickness and turbulence). One key dimensionless
+parameter in the incompressible regime is the velocity ratio r, defined as
+r = Uj /Uc ,
+
+(1.1)
+
+where Uj is the bulk velocity of the jet and Uc is the bulk velocity of the crossflow. In
+general, low velocity ratio jets stay close to the wall, while high velocity ratio jets penetrate
+deep into the crossflow before turning.
+The literature on jets in crossflow is extensive (Mahesh 2013). Fric & Roshko (1994)
+used flow visualization and qualitatively described four types of vortices that appear
+in transverse jets in crossflow: the counter-rotating vortex pair, jet-shear layer vortices,
+horseshoe vortices and wake vortices. Su & Mungal (2004) and Schreivogel et al. (2016)
+used different techniques to simultaneously measure velocity and concentration, and
+then reported some turbulent mixing statistics. Computational studies have applied the
+Reynolds averaged Navier–Stokes (RANS) equations, but scalar transport is not computed
+accurately due to deficiencies in the available turbulence models (Acharya, Tyagi & Hoda
+2001). High-fidelity simulations, on the other hand, have been shown to be much more
+predictive. Yuan, Street & Ferziger (1999) performed one of the first successful large eddy
+simulations of a jet in crossflow. Muppidi & Mahesh (2008) reported results from a direct
+numerical simulation (DNS) that agreed well with the experiment of Su & Mungal (2004),
+a transverse jet in crossflow at r = 5.7. They analysed entrainment rates and reported on
+inadequacies of standard turbulent scalar mixing models, including regions of perceived
+counter gradient transport.
+The turbulence community has dedicated much effort to the modelling of the Reynolds
+stress, and multiple models are available and commonly employed in jets in crossflow
+(Hoda & Acharya 1999). Previous research also shows that errors in the turbulent mixing
+models contribute decisively to poor mean scalar field predictions in these flows (Ling
+et al. 2016b). Therefore, the present paper focuses solely on modelling the turbulent scalar
+flux, ui c , which represents the effect of turbulence on the mean scalar concentration field
+and is unclosed in the Reynolds averaged scalar transport equation.
+The most commonly used model, called the gradient diffusion hypothesis (GDH),
+assumes that turbulence acts like isotropic diffusion on the mean concentration gradient
+as shown in
+∂ c̄
+ui c = −αt
+.
+(1.2)
+∂ xi
+The spatially varying turbulent diffusivity field in (1.2) is αt , which is usually specified by
+means of a turbulent Schmidt number, Sct ≡ αt /νt , where the eddy viscosity νt is given by
+a baseline momentum model (Kays 1994; Combest, Ramachandran & Dudukovic 2011).
+More advanced models have been proposed, but have not gained much traction outside
+of research laboratories (Combest et al. 2011). Batchelor (1949) recognized that a tensor
+diffusivity Dij is more appropriate:
+ui c = −Dij
+
+∂ c̄
+.
+∂ xj
+
+(1.3)
+
+Different authors (e.g. Tavoularis & Corrsin 1981) measured diagonal and off-diagonal
+elements of Dij in simple flows. To actually solve the scalar equation, Daly &
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-3
+
+Harlow (1970) and Abe & Suga (2001) proposed algebraic models where Dij is specified
+based on the Reynolds stress. Such formulations can theoretically improve results, but
+recent work in jets in crossflow has shown that they are not necessarily superior to simpler
+models and struggle with convergence issues (Ling et al. 2016b; Ryan et al. 2017).
+Previous work highlighted some deficiencies of the GDH of (1.2) in jets in crossflow
+(e.g. Kohli & Bogard 2005; Weatheritt et al. 2020). In the present paper we focus our
+attention to a particular observation that has been reported before: regions of negative
+turbulent diffusivity, or counter gradient transport. This means that at least one component
+of the ui c vector has the same sign as the equivalent component of ∂ c̄/∂ xi , which
+directly contradicts (1.2) with a positive turbulent diffusivity. This was observed in jets
+in crossflow by several authors, both numerically (Muppidi & Mahesh 2008; Salewski,
+Stankovic & Fuchs 2008; Bodart et al. 2013; Milani & Eaton 2018) and experimentally
+(Salewski et al. 2008; Schreivogel et al. 2016). These workers reported the phenomenon
+without discussing its causes, so the present paper expands their analysis by explaining
+the observed counter gradient transport. This also inspired us to devise a deep learning
+approach for modelling the turbulent scalar flux that does not rely on the simple GDH
+of (1.2).
+Machine learning tools have been rising in popularity in the turbulence closure
+literature, as evidenced by the review of Duraisamy, Iaccarino & Xiao (2019). Ling,
+Kurzawski & Templeton (2016a) used deep neural networks to predict coefficients in a
+basis expansion for the Reynolds stress anisotropy tensor, which became known as tensor
+basis neural network (TBNN). Parish & Duraisamy (2016) proposed a modelling strategy
+that couples machine learning with field inversion through adjoint optimization to develop
+new models. Sandberg et al. (2018) used a genetic optimization algorithm to generate
+data-driven analytical expressions for turbulent anisotropy and turbulent diffusivity, and
+Maulik et al. (2019) explored the use of a neural network towards subgrid scale modelling
+in large eddy simulations. The bulk of the aforementioned literature focuses on Reynolds
+stress modelling, but some authors have had success in applying machine learning
+techniques for closure of the passive scalar equation (Milani et al. 2018; Sandberg et al.
+2018; Sotgiu, Weigand & Semmler 2018; Milani, Ling & Eaton 2020; Weatheritt et al.
+2020). In the present paper a different scalar closure model is proposed, leveraging the
+tensor basis neural network concept of Ling et al. (2016a) to generate a more general
+model form.
+The contribution of the present paper is twofold. First, we analyse and classify the
+regions of counter gradient transport found in an inclined jet in crossflow. These results
+suggest that an anisotropic model is needed to better capture the turbulent transport in part
+of the flow. Second, we adapt the popular TBNN methodology, which originally predicts
+the Reynolds stress tensor, to model the turbulent scalar flux vector. We analyse the results
+of this approach, denoted TBNN-s (where the ‘s’ stands for scalar flux modelling), with
+the counter gradient transport regions in mind. The paper is organized as follows: § 2
+describes the flow under consideration and the high-fidelity simulations used to generate
+the data; § 3 identifies and analyses the counter gradient transport regions; § 4 contains
+the description and the results of the deep learning model employed; and § 5 presents
+conclusions and suggestions for future work.
+
+2. Numerical set-up
+
+Two highly resolved large eddy simulations (LES) are used in the present work.
+The simulations were described in detail and validated against experimental data in
+
+906 A27-4
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+(a) Main f low
+
+(b)
+
+8.6D
+
+c = 0, Uc
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+y
+
+x
+
+θ = 30°
+
+30D
+
+30D
+
+D
+Coolant f low
+c = 1, Uj
+
+y
+
+2.4
+
+D
+
+z
+
+x
+
+F IGURE 1. (a) Schematic of the inclined jet in crossflow. The coordinate frame origin is located
+at the centre of the hole as it meets the bottom wall. (b) Three-dimensional view of the complete
+simulation domain, with plenum feed inlet plane shown in red, outlet plane in blue and walls in
+grey. Figures adapted from Milani et al. (2019a).
+
+Milani et al. (2019a). The present paper employs those results for analysis, thus, this
+section provides only a brief summary.
+The geometry considered is a fully three-dimensional (3-D) inclined jet in crossflow,
+shown in figure 1(a). The hole has a circular cross-section of diameter D and is inclined
+30◦ with respect to the streamwise direction. The mainstream consists of a turbulent
+developing flow in a square channel, whose boundary layer thickness just upstream of
+the hole location is δ99 /D = 1.5. The free stream turbulence level is roughly 1 %. The total
+simulation domain is shown in figure 1(b). Note that the injection hole is short, with length
+4.1D, and is fed from a rectangular plenum underneath the channel. This configuration was
+chosen partly because it is representative of film cooling applications; it also means that
+the flow inside the hole is highly non-uniform and contains secondary flows (Milani et al.
+2019a).
+The incompressible, filtered continuity and Navier–Stokes equations are solved in three
+dimensions as shown in (2.1a,b). The tilde over a variable is shown explicitly to denote
+filtered quantities; ui are the Cartesian components of the velocity and p is the pressure.
+The unresolved scales are accounted for in the subgrid scale stress, τ̃ij = u
+i uj − ũi ũj , which
+is closed using the Vreman model (Vreman 2004). The fluid density ρ and kinematic
+viscosity ν are constant. The two simulations use the same geometry and main channel
+inlet condition, and their difference lies in the velocity ratio r, which is varied by changing
+the flow rate into the plenum. The resulting jet Reynolds number is ReD = Uj D/ν = 2900
+for the r = 1 case and ReD = 5800 for r = 2. The transport equations are
+ 
+∂ ũi ∂ ũj ũi
+1 ∂ p̃
+∂ 2 ũi
+∂
+∂ ũk
++
+= 0;
+=−
++ν
+−
+τ̃ij .
+(2.1a,b)
+∂ xk
+∂t
+∂ xj
+ρ ∂ xi
+∂ xj ∂ xj ∂ xj
+The filtered equation for a passive scalar c is also solved as shown in (2.2). The
+molecular Schmidt number is Sc = 1 and the subgrid scale mixing is represented by σ̃j =
+c
+uj − c̃ũj , which is modelled employing the Reynolds analogy with a constant turbulent
+Schmidt number, Sct = 0.85. The scalar is injected with concentration c = 1 in the jet and
+c = 0 in the mainstream; all walls are adiabatic. The passive scalar transport equation is
+ 
+∂ c̃ ∂ ũj c̃
+ν ∂ 2 c̃
+∂
++
+=
+−
+σ̃j .
+(2.2)
+∂t
+∂ xj
+Sc ∂ xj ∂ xj ∂ xj
+The equations are solved with the incompressible solver Vida from Cascade
+Technologies. It employs the method developed by Ham (2007), which consists of
+second-order accurate spatial discretization and explicit time advancement, based on
+
+Turbulent scalar flux in inclined jets in crossflow
+(b) 2
+
+y/D
+
+(a)
+2
+
+r=1
+1
+
+0
+0
+
+5
+
+10
+
+15
+
+0
+
+(d ) 2
+
+(c)
+y/D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-5
+
+2
+0
+
+r=2
+
+0
+
+1
+0
+
+0
+
+1
+
+0.95
+0.80
+0.65
+0.50
+0.35
+0.20
+0.05
+
+5
+
+10
+
+x/D
+
+15
+
+1
+
+0
+
+–1
+
+z/D
+
+F IGURE 2. Scalar concentration results c on the centreplane (z = 0, a,c) and in an axial plane
+located at x/D = 2 (b,d). Colour contours show an instantaneous snapshot of c and lines indicate
+isocontours of mean concentration, c̄ = 0.2, 0.4, 0.6, 0.8.
+
+second-order Adams–Bashforth. The mesh is block-structured and contains exclusively
+hexahedral elements, either 40.1M (r = 1) or 48.3M (r = 2). The y + values in the hole
+and bottom walls are around 1, so no wall models are employed there. Throughout the
+whole jet-crossflow interaction, the subgrid scale viscosity is significantly smaller than the
+molecular viscosity, so the present large eddy simulations have almost DNS-like resolution
+in the regions of interest. Therefore, we subsequently omit the tilde over grid-filtered
+quantities. Thus, ui and c will refer to the (filtered) results from the LES, overbars
+will represent time averages of filtered quantities, and primes will denote fluctuating
+quantities in the filtered sense (so c ≡ c − c̄). The inlet conditions are generated using
+a method based on that from Xie & Castro (2008) and are chosen to match a concomitant
+experimental set-up. The validation is performed against 3-D magnetic resonance imaging
+(MRI) data for both velocity and scalar concentration and the agreement is excellent. More
+details including grid and time convergence studies are in Milani et al. (2019a).
+Figure 2 shows contour plots of scalar concentration c in the r = 1 and r = 2 cases
+to provide some physical insight into the flows. In both cases the jet detaches from the
+bottom wall as soon as it is injected; it re-attaches in the lower velocity ratio case, but
+remains detached under the higher velocity ratio. As the y–z planes show, the mean profile
+assumes a typical kidney shape due to the influence of the counter rotating vortex pair
+(CVP), a distinguishing feature of this flow (Mahesh 2013). More detailed results are in
+Milani et al. (2019a).
+3. Counter gradient transport
+
+In this section we use the validated high-fidelity simulations to study turbulent mixing.
+The focus is two distinct regions of negative turbulent diffusivity (or counter gradient
+transport) which we classify as type 1 and type 2.
+
+3.1. Type 1
+Figure 3(a) shows vertical profiles of the streamwise components u c and ∂ c̄/∂ x for
+r = 1. These are located at x/D = 5 on the centreline (z/D = 0). There is a region, marked
+in grey, where both u c < 0 and ∂ c̄/∂ x < 0. Figure 3(b) presents profiles of the mean
+
+P. M. Milani, J. Ling and J. K. Eaton
+(b) 2.0
+
+1.5
+
+1.5
+
+1.0
+
+1.0
+
+y /D
+
+(a) 2.0
+
+0.5
+
+–0.025
+
+0
+
+0.025
+
+0
+
+0.050
+
+(c)
+
+uˉ / Uc
+cˉ
+
+0.5
+
+uc / Uc
+D(∂cˉ/∂x)
+
+0
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-6
+
+0
+
+0.5
+
+1.0
+
+(d)
+2.5
+
+2.5
+
+2.0
+
+2.0
+
+1.5
+
+1.5
+
+1.0
+
+1.0
+
+0.5
+
+0.5
+
+0
+–0.10 –0.05
+
+0
+0
+
+0.05 0.10
+
+0
+
+0.5
+
+1.0
+
+1.5
+
+F IGURE 3. Vertical profiles at x/D = 5 and z/D = 0 from the r = 1 (a,b) and r = 2 (c,d) LES.
+(a,c) Streamwise turbulent scalar flux and mean concentration gradient. (b,d) Mean streamwise
+velocity and concentration. The grey area shows a region of implied negative diffusivity in the
+streamwise direction. (a) r = 1. (b) r = 1. (c) r = 2. (d) r = 2.
+
+streamwise velocity and concentration, ū and c̄, in the same location. It shows that the
+region with implied streamwise counter gradient transport is located just above the jet
+centreline, which is a similar observation to that of Schreivogel et al. (2016) and Bodart
+et al. (2013). Here, the likely cause of that phenomenon is not turbulent motion in the
+x-direction, but instead turbulent motion in the y-direction. In the grey area turbulent
+eddies of sufficiently small size that bring fluid from above (v  < 0) tend to bring weaker
+concentration (c < 0) and higher streamwise velocity (u > 0) since locally ∂ c̄/∂ y < 0
+and ∂ ū/∂ y > 0. Similarly, eddies that bring fluid from below (v  > 0) correlate c > 0
+with u < 0. That causes u c to be negative, which implies negative diffusivity since
+∂ c̄/∂ x < 0.
+The same phenomenon manifests itself in higher velocity ratio jets, with slight
+differences. Figure 3(c) shows vertical profiles at x/D = 5 and z/D = 0 from the r = 2
+LES. As is clear in figure 3(d), the jet core is faster than the free stream flow, so the y
+gradients of mean streamwise velocity and mean scalar gradient are roughly aligned in the
+top half of the jet, unlike when r = 1. Through a similar argument as before, vertical
+turbulent transport produces positive u c in that region. Thus, the perceived negative
+diffusivity region should occur when ∂ c̄/∂ x > 0. The streamwise mean scalar gradient
+is controlled by two main, competing effects: the spreading of the jet (which causes the
+concentration in the core to decrease), and the fact that the jet as a whole is moving
+up, away from the wall. Positive mean concentration streamwise gradients do not happen
+immediately above the jet centreline, but instead are present further up in the windward
+shear layer, as seen in figure 3(c). So, the grey band is located higher up and is wider when
+compared to the one shown in figure 3(a) for r = 1.
+
+Turbulent scalar flux in inclined jets in crossflow
+(a) 2.0
+
+All
+High |v |
+Low |v |
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+1.5
+
+906 A27-7
+
+(b)
+2.5
+2.0
+1.5
+
+1.0
+
+1.0
+0.5
+
+0.5
+0
+
+0
+–0.01
+
+0
+
+0.01
+
+uc / Uc
+
+0
+
+0.01
+
+0.02
+
+uc / Uc
+
+0.03
+
+F IGURE 4. Vertical profiles at x/D = 5 and z/D = 0 of u c from the LES. Different averages
+are performed: unconditional or conditioned on high/low values of |v  | at the centre of the grey
+band. (a) r = 1. (b) r = 2.
+
+To support these explanations, consider figures 4(a) and 4(b). They show three
+differently averaged profiles of u c in the same location as shown in figure 3 for r = 1
+and r = 2. For the solid line, the quantity u c is averaged over all available time steps
+to produce the same quantity shown in figures 3(a) and 3(c). For the other two lines,
+the average is conditioned on the local value of the magnitude of the vertical velocity
+fluctuation, |v  |, at the centre of the grey band (y/D = 0.91 and y/D = 2, respectively).
+The average is taken either when |v  | is high (top 20 % of samples) or low (bottom 20 %
+of samples). Away from the shaded region, the three lines converge as expected since the
+value of v  is uncorrelated with u c at long distances. However, in the grey band, the three
+lines are significantly different: u c has much higher magnitude when |v  | is high, and
+much smaller magnitude when |v  | is low. This shows that vertical transport indeed plays
+an important role in setting the value of u c in this region and that events of high |v  |
+accentuate the perceived negative diffusivity in the streamwise direction.
+To investigate the behaviour of ui c in more detail, it is useful to examine its transport
+equation, shown in (3.1). This equation is exact, and can be derived by multiplying ui to the
+(unaveraged) scalar transport equation and c to the (unaveraged) Navier–Stokes equation,
+adding the results, and performing a time average. Capital letters U and C stand for time
+averages exactly like overbars (thus, c̄ = C), but are used here for a leaner notation. Here
+δij is the Kronecker delta and α is the molecular diffusivity of the scalar, so α = ν/Sc.
+Note that these equations are mostly analogous to the Reynolds stress transport equations.
+Term A is the advection due to the mean velocity. Term I is the production term and shows
+how mean velocity and scalar gradients can locally generate ui c . Term II is the viscous
+destruction term. Term III consists of different mechanisms of turbulent transport, and
+term IV is a source term due to the pressure-scalar gradient correlation. For more details
+and modelling ideas, consult Younis, Speziale & Clark (2005). The equation is
+A
+
+∂ui c
++
+∂t
+
+ 
+∂ Uj ui c
+∂ xj
+
+I
+
+
+
+
+
+= −uj c
+
+
+
+∂Ui
+∂C
+∂c ∂ui
+−(ν + α)
+− uj ui
+∂ xj
+∂ xj
+∂ xj ∂ xj
+III
+
+
+−
+
+II
+
+
+
+
+∂
+∂ xj
+
+uj ui c +
+
+IV
+
+∂ui
+
+
+p c
+∂c
+δij − αui
+− νc
+ρ
+∂ xj
+∂ xj
+
+ 
+p ∂c
++
+.
+ρ ∂ xi
+
+(3.1)
+
+906 A27-8
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+(a) 2.0
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+1.5
+
+(b)
+
+–uc (∂U/∂x)
+–v c (∂U/∂y)
+–w c (∂U/∂z)
+
+2.5
+2.0
+1.5
+
+1.0
+0.5
+0
+–0.010
+
+1.0
+
+–uu (∂C/∂x)
+–uv  (∂C/∂y)
+–uw  (∂C/∂z)
+–0.005
+
+0.5
+
+0 0.002
+
+0
+–0.01
+
+0
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+u c
+
+F IGURE 5. Vertical profiles of different components of the
+production term (marked as I
+in (3.1)). The profiles are shown at x/D = 5, z/D = 0 and the grey band represents the area of
+negative diffusivity. Terms are non-dimensionalized by Uc and D. (a) r = 1. (b) r = 2.
+
+As further evidence that vertical velocity and concentration gradients are responsible for
+the streamwise negative diffusivity shown in figure 3, we consider the production terms
+of (3.1) for u c . In figure 5 vertical profiles of the six different components of term I are
+shown. Note that the GDH considers only the effects of the mean concentration gradient
+in the x-direction on u c , which is reflected on the production term −u u (∂C/∂ x).
+However, in the regions where counter gradient transport is observed, the production
+term is dominated by the components containing the vertical gradients: −v  c (∂U/∂ y) and
+−u v  (∂C/∂ y). These terms are indeed negative in figure 5(a) and positive in figure 5(b),
+which explains the sign of u c in the grey regions.
+There is one important caveat in our discussion of type 1 counter gradient transport. In
+shear flows the resulting mean scalar concentration is not a strong function of the modelled
+u c since the mean advection typically dominates the scalar transport in the streamwise
+direction. This point is discussed in more detail in appendix A. So, a turbulence model
+that fails to capture this phenomenon might still produce acceptable mean scalar field
+results in jets in crossflow. We believe the present analysis is still relevant for two reasons.
+First, it builds physical understanding of the turbulent transport in 3-D jets in crossflow
+by showing a concrete instance of the failure of the GDH and explaining the underlying
+cause. Such understanding is necessary to design improved and robust mixing models, and
+could be useful to interpret turbulence results in other flows as well. Second, in different
+contexts the correct prediction of these type 1 transport regions might be more relevant.
+For example, cross-gradient transport could be more important in different 3-D turbulent
+flows; or the quantity of interest might not be the mean scalar field, and instead be more
+sensitive to the streamwise scalar flux.
+
+3.2. Type 2
+A second region where counter gradient transport is present is near the wall, right
+after injection. In this case, negative diffusivity is observed in the vertical component:
+both v  c and ∂ c̄/∂ y are positive there. Figures 6(a) and 6(b) show vertical profiles at
+x/D = 2 and x/D = 5 for both r = 1 and r = 2, with grey bands indicating counter
+gradient transport regions. In general, it seems that the simple GDH could be useful: the
+solid lines approximately track the negated dashed lines throughout most of the plot, so a
+moderately non-uniform diffusivity could model v  c . However, this pattern breaks down
+
+Turbulent scalar flux in inclined jets in crossflow
+(a) 2.0
+
+y /D
+
+1.5
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+(b)
+
+60v c /Uc x/D = 5
+D(∂cˉ/∂y)
+
+x/D = 2
+
+2.5
+
+x/D = 2
+
+906 A27-9
+
+30v c /Uc x/D = 5
+D(∂cˉ/∂y)
+
+2.0
+1.5
+
+1.0
+
+1.0
+0.5
+0
+–2
+
+0.5
+–1
+
+0
+
+1
+
+2
+
+–1
+
+0
+
+1
+
+0
+–2
+
+–1
+
+0
+
+1
+
+2
+
+–1
+
+0
+
+1
+
+F IGURE 6. Vertical profiles at the centreplane of the y-component of scalar gradient and
+turbulent scalar flux. The grey band indicates regions where both have the same sign; for r = 2
+and x/D = 5, no consistent region of counter gradient transport is observed (thus, no grey band),
+but v  c is very near zero close to the wall. (a) r = 1. (b) r = 2.
+
+close to the wall in all cases, where v  c either has the same sign as ∂ c̄/∂ y or is much
+smaller in magnitude than expected.
+The first hypothesis to explain this instance of counter gradient transport is that it is
+similar in nature to the one described before, i.e. that gradients in directions orthogonal to
+y cause a positive correlation between v  and c . However, this is not the case. Averages
+that are conditional on u or w are inconclusive, and the v  c production term is dominated
+by mean gradients in the y-direction. So, the negative diffusivity observed in figure 6 is
+caused by a different physical mechanism. To help explain it, figure 7 shows a complete
+budget of v  c , with vertical profiles of all terms of (3.1).
+As the plots show, the production term is consistently negative in the grey band, which
+means that local effects act as a sink and, therefore, favour a negative value of v  c .
+Since the resulting scalar flux is positive, other effects are overwhelming the production.
+In particular, close to injection (x/D = 2), term III is the most positive term. This
+is the turbulent transport of v  c , which unlike the production is inherently non-local.
+The breakdown of term III (not shown) shows that the molecular terms are negligible
+throughout the domain, and close to the wall the pressure-scalar correlation is dominant.
+This suggests that non-local turbulent effects, chiefly through fluctuating pressure, are
+responsible for generating a positive correlation between v  and c in this region. Physically,
+this could be explained by the large scale stirring mentioned by Bodart et al. (2013):
+turbulent eddies with much larger length scales than the length scales over which ∂ c̄/∂ y
+varies act in those regions, meaning that they can induce turbulent fluctuations that
+cannot be explained by local information. Note, however, that Bodart et al. (2013) pointed
+out locations of type 1 counter gradient transport in their data but provided a physical
+reasoning that is more appropriate for type 2.
+Another interesting observation is on the role of mean flow advection (term A) in the
+balance. Since A is on the left-hand side of (3.1), a positive value represents a net outflow
+and a negative value represents a net inflow. Even though term A is not as important
+as some other terms in the grey band, it seems to enter the balance as a net outflow at
+x/D = 2 and as a net inflow at x/D = 5 for both velocity ratios. Since this is mostly
+due to mean streamwise advection, it suggests that non-local effects generate a positive
+v  c close to the wall right after injection, which then is advected downstream. In other
+words, those non-local effects are not as strong at x/D = 5, but v  c remains positive
+there partly because it is being advected from upstream (i.e. due to memory effects).
+
+906 A27-10
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+(a) 1.5
+
+(b) 2.0
+
+y /D
+
+1.0
+
+A
+I
+
+0.5
+
+0.5
+
+II
+III
+IV
+
+0
+
+0
+–0.2
+
+–0.1
+
+0
+
+–0.03
+
+0.1
+
+(c)
+
+–0.02
+
+–0.01
+
+0
+
+0.01
+
+0
+
+0.05
+
+(d )
+2.5
+1.5
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+1.5
+1.0
+
+2.0
+1.5
+
+1.0
+
+1.0
+0.5
+0.5
+0
+
+0
+–0.4
+
+–0.2
+
+0
+
+0.2
+
+–0.10
+
+–0.05
+
+F IGURE 7. Terms from (3.1) in the channel centreline, non-dimensionalized using D and Uc .
+For r = 1, the zoomed in version shows 0 < y/D < 0.25. For r = 2, it shows 0 < y/D < 0.3.
+The grey band indicates counter gradient transport in the vertical direction. (a) r = 1, x/D = 2.
+(b) r = 1, x/D = 5. (c) r = 2, x/D = 2. (d) r = 2, x/D = 5.
+
+This explanation is consistent with figure 6: the positive v  c close to the wall is more
+intense and concentrated at x/D = 2, and it is more diffuse at x/D = 5.
+
+3.3. Three-dimensional perspective
+In the previous subsections we highlighted locations where a particular component of the
+turbulent scalar flux had the same sign as the equivalent component of the mean scalar
+gradient. We did so for two reasons. First, that is how many previous authors reported
+counter gradient transport in this flow. For example, Muppidi & Mahesh (2008), Bodart
+et al. (2013) and Schreivogel et al. (2016) noted regions where u c and ∂ c̄/∂ x have the
+same sign, while Salewski et al. (2008) and Milani & Eaton (2018) highlighted regions
+where v  c and ∂ c̄/∂ y have the same sign; their results are consistent with the locations
+and mechanisms we explained as type 1 and type 2, respectively. Second, starting with
+a one-dimensional perspective permits an easier visualization of the turbulent scalar flux
+transport equation budgets as done in figures 5 and 7. However, despite providing useful
+insights, that methodology is dependent on the particular choice of axis; in fact, unless the
+mean scalar gradient and the negative turbulent scalar flux vectors are perfectly aligned,
+it is possible to construct a coordinate frame where one of the components will indicate
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-11
+
+apparent counter gradient transport. So, in this subsection we study the same locations
+by considering the angle between the vectors −ui c and ∂ c̄/∂ xi , given by θ in (3.2). This
+measure takes all of the 3-D information into account and is independent of the choice of
+axis. In places where the simple GDH of (1.2) is valid exactly, we should have θ = 0; in
+places of ‘true’ counter gradient transport, θ > 90◦ . The angle θ is given by
+⎞
+⎛
+∂ c̄
+ 
+−ui c
+⎟
+⎜
+∂x
+⎟.
+(3.2)
+θ = arccos ⎜
+ i
+⎠
+⎝
+∂
+c̄
+∂
+c̄
+   
+ui c ui c
+∂ xi ∂ xi
+Figure 8(a,b) shows colour contours of the angle θ in the r = 1 LES. Figures 8(c,d) and
+8(e, f ) contain the same planes showing the regions of type 1 and type 2, respectively,
+as described previously. In general, the angle θ is highest close to the wall, whose
+presence induces strong anisotropy into the turbulent mixing. Interestingly, there are key
+differences between type 1 and type 2 regions identified previously. On the windward shear
+layer, where cross-gradient effects give rise to type 1 transport, the overall misalignment
+indicated by θ is not too high, with angles between 20◦ and 50◦ being common. On
+the other hand, regions of type 2 transport shown in figure 8(e, f ) coincide with severe
+misalignment of −ui c and ∂ c̄/∂ xi , and in such areas the angle θ is frequently higher than
+90◦ . This shows that type 1 transport, caused mainly by local effects, actually translates to
+a consistent but small misalignment between the vectors when seen in three dimensions.
+The non-equilibrium, non-local causes of type 2 transport actually lead to a more than
+90◦ misalignment between the flux and gradient vectors in three dimensions, which can
+be seen as a ‘true’ counter gradient transport that is independent of the coordinate frame.
+Figure 9, which presents the same plots for the r = 2 dataset, leads to similar conclusions.
+From a modelling perspective, regions where θ is significantly above zero cannot be well
+captured with the simple GDH of (1.2) irrespective of the diffusivity chosen. Moving to a
+tensor diffusivity Dij , as shown in (1.3), can capture cross-gradient effects (since turbulent
+transport in the x-direction can be a function of the y gradient) and would thus be expected
+to model well the turbulent mixing in regions of type 1. This is further supported by the fact
+that θ in those regions is less than 90◦ , so the matrix diffusivity Dij is only required to rotate
+the concentration gradient vector by an acute angle. Thus, a positive semi-definite matrix
+Dij can be used, guaranteeing numerical stability. In locations where type 2 transport is
+found, the non-local effects on ui c preclude a purely local model, such as (1.3), from
+capturing all the relevant physics. Even if a diffusivity Dij where chosen such that ui c
+is matched, that matrix would not be positive semi-definite since θ > 90◦ in those areas.
+Therefore, the equation would be numerically unstable, akin to using a negative value of αt
+in (1.2). For locations of type 2 counter gradient transport, only a non-local model, based
+potentially on solving separate transport equations for ui c , could hope to reproduce the
+appropriate physics.
+4. Deep learning modelling
+
+In this section we transition to the question of modelling the ui c vector using deep
+learning. For simplicity, this section makes heavy use of matrix notation instead of index
+notation: a lower case bold letter indicates a vector (first-order tensor) and an upper case
+bold letter indicates a 3 × 3 matrix (second-order tensor).
+
+906 A27-12
+
+(b)
+
+y /D
+
+(a)
+
+10 30 50 70 90 110130150170
+
+1
+
+2
+0
+0
+
+5
+
+0
+
+10
+
+y /D
+
+(c)
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+1
+
+2
+
+0
+
+5
+
+0
+
+10
+
+(e)
+y /D
+
+1
+
+(d )
+
+0
+
+(f)
+1
+
+2
+0
+0
+
+5
+
+x /D
+
+0
+
+10
+
+1
+
+z /D
+
+F IGURE 8. Counter gradient transport in the r = 1 case. (a,c,e) Centreplanes (z = 0) and
+(b,d, f ) axial planes at x/D = 2. Lines indicate isocontours of c̄ = 0.2, 0.4, 0.6, 0.8. (a,b)
+Contains colour contours of θ in degrees. (c,d) Shows, in red, places where u c (∂ c̄/∂ x) > 0
+(with arrows highlighting type 1 transport). (e, f ) Identifies regions where v  c (∂ c̄/∂ y) > 0 (with
+arrows highlighting type 2 transport).
+
+(a)
+
+(b) 2
+
+y /D
+
+10 30 50 70 90 110 130 150 170
+2
+
+1
+
+0
+0
+
+5
+
+10
+
+y /D
+
+0
+
+15
+
+(d)
+
+(c)
+2
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+1
+
+0
+0
+
+5
+
+10
+
+0
+
+15
+
+(f)
+
+(e)
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+2
+
+1
+
+0
+0
+
+5
+
+x /D
+
+10
+
+15
+
+0
+
+1
+
+z /D
+
+F IGURE 9. Counter gradient transport in the r = 2 case. Same description as figure 8.
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-13
+
+4.1. Tensor basis neural network for scalar flux modelling
+Given the promise of the tensor basis neural network proposed by Ling et al. (2016a),
+we would like to use a similar method to model the vector u c . In summary, we aim to
+employ a neural network architecture that is designed to respect rotational invariance while
+predicting a tensorial output. However, the architecture described in Ling et al. (2016a) is
+designed to prescribe the Reynolds stress anisotropy tensor B , which is a symmetric and
+traceless second-order tensor. The approach must be modified for the turbulent scalar flux
+vector u c , which does not have those characteristics.
+We start by assuming that the turbulent scalar flux is a general vector-valued function
+of the mean velocity and scalar gradients, ∇ ū and ∇c̄. The velocity gradient tensor is
+split into a symmetric and an anti-symmetric part, S and R , respectively, such that ∇ ū =
+S + R . As is done in previous work that models turbulent scalar fluxes (Milani et al. 2018),
+two additional dimensionless quantities
+are also used to regress u c : the Reynolds number
+√
+based on wall distance, Red = kd/ν, and the eddy viscosity ratio, νt /ν, where d is the
+distance to the nearest wall, k is the turbulent kinetic energy and νt is the eddy viscosity
+from a baseline turbulence model. So, the functional dependence is
+− u c = f (S , R , ∇c̄, νt /ν, Red ).
+
+(4.1)
+
+Note that the model in (4.1) depends on a baseline turbulence model for the momentum
+equations, which provides field quantities such as k and νt . This is a design choice that
+makes the model more usable in practice, since one would not have access to high-fidelity
+simulation values for these quantities in a practical RANS simulation. A similar approach
+was taken by other authors who worked in scalar flux modelling with machine learning
+techniques (e.g. Sandberg et al. 2018; Sotgiu et al. 2018). As is done in Ling et al. (2016a),
+(4.1) is cast as a summation of an appropriate tensor basis, where each basis element is a
+vector and is multiplied by a scalar factor g(n) . This quantity, in turn, can be an arbitrary
+function of invariants λj , which are scalar quantities derived from the tensors S , R and ∇c̄
+that are reference frame independent. Thus, u c becomes
+
+− u c =
+
+6
+
+
+g(n) (λ1 , λ2 , . . . , λ15 )t(n) .
+
+(4.2)
+
+n=1
+
+When the function is written in this form, it is guaranteed to be unchanged under any
+coordinate frame rotation and reflection as explained in Ling et al. (2016a). The neural
+network’s eventual goal will be to approximate the functions g(n) (λ1 , λ2 , . . . , λ15 ).
+For this problem, we cannot use the same basis and invariants used in Pope (1975)
+or Ling et al. (2016a), since the quantity of interest is a vector (u c ) that depends
+upon one symmetric matrix (S ), one anti-symmetric matrix (R ) and one vector (∇c̄).
+Turning to the review of Zheng (1994), one can find the appropriate vector basis,
+given as
+
+t(1) = ∇c̄, t(2) = S ∇c̄, t(3) = R ∇c̄,
+(4.3)
+t(4) = S 2 ∇c̄, t(5) = R 2 ∇c̄, t(6) = (SR + RS ) ∇c̄,
+
+906 A27-14
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+and the appropriate invariants for the incompressible case, given as
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+λ1 = tr(S 2 ),
+
+λ2 = tr(S 3 ),
+
+λ6 = tr(S 2 R 2 SR ),
+
+λ3 = tr(R 2 ),
+
+λ7 = ∇c̄T ∇c̄,
+
+λ10 = ∇c̄T R 2 ∇c̄,
+
+λ8 = ∇c̄T S ∇c̄,
+
+λ11 = ∇c̄T SR ∇c̄,
+
+λ13 = ∇c̄T RSR 2 ∇c̄,
+
+⎫
+λ5 = tr(S 2 R 2 ),⎪
+⎪
+⎪
+⎪
+T 2
+λ9 = ∇c̄ S ∇c̄, ⎬
+
+λ4 = tr(SR 2 ),
+
+λ12 = ∇c̄T S 2 R ∇c̄,
+
+λ14 = Red ,
+
+λ15 = νt /ν.
+
+⎪
+⎪
+⎪
+⎪
+⎭
+
+(4.4)
+
+Note that the first 13 invariants are obtained from the tensor inputs, and the last two
+are purely the scalar quantities Red and νt /ν (which are automatically invariant to the
+choice of coordinate frame). In (4.3) and (4.4) products denote standard matrix-matrix or
+matrix-vector products, and tr() denotes the trace of a matrix.
+Under this formulation, given a vector basis and the invariants, the neural network
+directly prescribes the vector u c whose divergence acts as a source term in the Reynolds
+averaged scalar transport equation. As discussed in Wu et al. (2019), such an approach can
+lead to an ill conditioned equation, which is difficult to solve numerically. To mitigate this,
+they suggest that whenever possible data-driven closures should aim to predict diffusivity
+coefficients instead of source terms. With that in mind, we note that all basis elements
+shown in (4.3) consist of a matrix multiplying the mean concentration gradient. So, we
+can define a different basis T (n) where t(n) = T (n) ∇c̄. Thus, we rewrite (4.2) as
+
+
+− u c =
+
+D
+
+6
+
+
+
+
+
+
+g(n) (λ1 , λ2 , . . . , λ15 )T (n) ∇c̄,
+
+(4.5)
+
+n=1
+
+with the matrix part of the basis given by
+T (1) = I ,
+T (4) = S 2 ,
+
+T (2) = S ,
+
+T (5) = R 2 ,
+
+T (3) = R ,
+
+
+
+T (6) = SR + RS ,
+
+(4.6)
+
+where I is the 3 × 3 identity matrix.
+In (4.5) the term in square brackets is naturally interpreted as a 3 × 3 turbulent
+diffusivity matrix D . Thus, we recover an equation of the same form as (1.3) that is
+amenable to be learned via a neural network with embedded rotational invariance.
+Before the full model architecture is discussed, there remains the issue of
+non-dimensionalization. To obtain relevant scales and values for the eddy viscosity νt ,
+a baseline turbulence model is run on the original mesh utilizing the frozen mean velocity
+field from the LES calculation. Any model that yields length and time scales and a value
+for the eddy viscosity could be employed with the current framework; in the present paper
+we use the realizable k − model of Shih, Zhu & Lumley (1995). So, given the mean
+LES velocity and pressure fields, the transport equations for k and are solved, which also
+generates νt as a by-product. This approach to non-dimensionalization has been used by
+others such as Sandberg et al. (2018) and Milani et al. (2020). Then, S , R and ∇c̄ in (4.4)
+and (4.6) are non-dimensionalized using local values of k and before being fed as inputs
+to the network. To guarantee that the neural network maps from dimensionless inputs to a
+dimensionless output, a non-dimensional diffusivity tensor D ∗ is explicitly introduced as
+D = νt D ∗ .
+The architecture proposed, henceforth referred to as tensor basis neural network for
+scalar flux modelling, or TBNN-s, is presented in figure 10. The network receives as
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-15
+
+
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Diffusivity basis
+νt cˉ
+
+T (1), T (2), ..., T (6)
+
+Hidden layers
+
+Input invariants
+λ1, λ2, ..., λ15
+
++
+
+∗
+
+×
+
+–uc
+
+Basis coefficients
+g (1), g (2), ..., g (6)
+
+F IGURE 10. Schematic of TBNN-s architecture. Blue cells represent inputs to the network,
+green cells represent the hidden layers containing tuneable parameters and red cells denote
+different levels of outputs.
+
+inputs the mean flow invariants (listed in (4.4)) non-dimensionalized by k and and
+processes them through a sequence of hidden layers. These are fully connected layers,
+which sequentially perform a linear transformation (matrix multiplication plus an offset)
+followed by a nonlinear activation function (the simple rectified linear unit, or ReLU,
+is employed). The last hidden layer does not use a ReLU function and transforms its
+inputs into a six-dimensional vector containing the values of g(n) , the dimensionless
+basis coefficients. Note that the hidden layers are responsible for explicitly providing
+the functions g(n) (λ1 , . . . , λ15 ) and contain all the tuneable parameters of the model,
+which are learned from training data. Then, the coefficients g(n) multiply elementwise
+their respective dimensionless basis tensor T (n) shown in (4.6) and the result is summed
+producing the dimensionless diffusivity matrix D ∗ . Finally, the diffusivity is made
+dimensional via multiplication by νt and its matrix-vector product with the mean scalar
+gradient produces −u c .
+Note that this modelling framework is similar to that of Weatheritt et al. (2020), who
+also expanded the turbulent scalar flux vector as a sum of tensor basis that maintains
+rotational invariance. Our model has two key differences. First, we use a deep neural
+network to approximate the functions g(n) (λi ), while Weatheritt et al. (2020) use gene
+expression programming, a different regression tool (see Weatheritt et al. (2017) for a
+discussion of their differences). Second, their basis also involves the Reynolds stress
+tensor. In theory this allows for more accurate representation of the scalar flux, as they
+confirm. However, in a typical RANS framework one does not have access to the true
+values of the Reynolds stress; as such, we preferred to develop models that are based
+solely on the mean velocity gradient. In future work it would be useful to compare their
+model to ours under the same conditions in order to analyse strengths and weaknesses of
+different data-driven turbulence modelling strategies.
+
+4.2. Loss function and implementation
+Neural networks are trained via gradient descent-like algorithms. A loss function J is
+defined to capture how inadequate the present solution is compared to the known results
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-16
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+from training data. Given multiple batches of training data, the loss function is calculated
+together with its gradient with respect to each trainable parameter. The gradient, a key
+component for training neural networks, is calculated using backpropagation, which is
+sequential application of the chain rule starting at the loss function J and progressing back
+through the layers all the way to the first hidden layer. For backpropagation to work, every
+operation defined in the network must be differentiable which is the case for figure 10.
+Note that the loss function is defined based on the mismatch between the predicted value
+of the turbulent scalar flux, u c PRED , and the turbulent scalar flux given in the training
+data, u c LES . We experimented with a few different options, including the common sum of
+squared differences and sum of absolute differences:
+JL1 =
+JL2 =
+
+Ndata
+1 
+
+Ndata
+
+(i)
+
+(i)
+
+(i)
+
+(4.7)
+
+i=1
+
+Ndata
+1 
+
+Ndata
+
+(i)
+
+u c PRED − u c LES 1 ,
+u c PRED − u c LES 22 .
+
+(4.8)
+
+i=1
+
+Here  1 indicates vector 1-norm,  2 indicates vector 2-norm, Ndata is the number of
+data points over which the loss is computed and a superscript i indicates the i-th training
+point. These definitions of the loss have the disadvantage that they depend on a particular
+non-dimensionalization and scaling to compare points from different datasets and different
+locations from the same dataset. Instead, if we desire a loss function whose gradient with
+respect to model parameters is independent of the scaling used, the mean of the natural
+logarithms of the vector norms is a possible choice:
+Jlog =
+
+Ndata
+1 
+
+Ndata
+
+i=1
+
+(i)
+
+log
+
+(i)
+
+u c PRED − u c LES 2
+(i)
+
+u c LES 2
+(i)
+
+.
+
+(4.9)
+
+In (4.9) the factor that scales the loss at each point is the u c LES 2 in the denominator.
+Because the logarithm of the ratio becomes a difference of logarithms, this term vanishes
+when the gradient of Jlog with respect to the neural network parameters is calculated. This
+scaling is chosen so that the loss attains readily interpretable values (for example, a loss
+around 0 indicates that the vectorial discrepancy between predicted and given scalar fluxes
+has roughly the same norm as the LES scalar flux itself).
+We experimented with the three loss definitions shown in (4.7), (4.8) and (4.9). The
+results on the mean scalar field c̄ were similar among the three, so a comparison will
+not be shown for brevity. For the results in the present paper, the function Jlog of (4.9)
+is employed. We also added an L2 regularization term to the loss, which penalizes high
+magnitude parameters in the model. This is commonly done to prevent overfitting. The
+loss is optimized with a widely used algorithm based on stochastic gradient descent, called
+adaptive moment estimation (Adam) from Kingma & Ba (2014). Part of the reason for the
+current popularity of this method is that it has been shown to be reasonably robust to the
+choice of hyperparameters, especially the learning rate.
+To choose the different hyperparameters for the TBNN-s, we used validation points
+that were not used during training. Milani et al. (2019a) presents data on the geometry
+of figure 1 for a third value of velocity ratio, r = 1.5. In the current paper the TBNN-s is
+trained exclusively on the r = 2 dataset and the hyperparameters are chosen such that good
+values of the loss function are obtained on points taken from the r = 1.5 case. We observed
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-17
+
+that the quality of the model generated is not a strong function of the hyperparameters
+considered within a reasonable range. Besides, the validation aims to find hyperparameters
+that minimize the loss in (4.9), when the true test for the model is how well it predicts the
+mean scalar field c̄ after the Reynolds averaged equations are solved. Thus, not much
+emphasis should be placed on the specific choice of hyperparameters, and we picked a
+set that performed well on the validation set after manual tuning. In the current work we
+use a learning rate of 10−3 and other default parameters for Adam; we employ 10 hidden
+layers with 30 nodes each, roughly in line with the network size of Ling et al. (2016a);
+we use an L2 regularization strength of 10−2 ; we use an additional regularization method
+called dropout (Srivastava et al. 2014) with a drop probability of 0.2; and the batch size
+in which training data is fed into the Adam optimizer is 50. Training a neural network is
+not a deterministic exercise because results depend on a random initialization and on the
+stochastic nature of the optimization algorithm. To mitigate this, several training runs were
+executed with the same hyperparameters and the network that was saved and employed
+in this paper is the one that, at any point during each training procedure, produced the
+minimum loss in the validation set.
+The network as shown in figure 10 is implemented in Python using the Tensorflow
+package (Abadi et al. 2016) and the code can be found online in the following GitHub
+repository: https://github.com/pmmilani/tbnns. The TBNN-s discussed in following
+subsections was trained on 100k randomly sample points from the inclined jet in crossflow
+with r = 2. Only points where the mean scalar gradient is significant (∇c̄2 /( /k1.5 ) >
+10−3 ) are considered at training time.
+
+4.3. Results
+The architecture described in § 4.1 is used in its entirety when the network is being trained
+and a correct value of u c is available. Once the network has been trained, it is applied up
+to the prediction of D . In other words, the network learns to predict a turbulent diffusivity
+tensor that best matches the turbulent scalar flux presented at training time even though it
+has never seen an input turbulent diffusivity tensor. When applied to a test set, it predicts
+a D field over the whole domain which is then used to solve the Reynolds averaged scalar
+equation
+
+
+
+
+∂
+∂
+∂ c̄
+ν ∂ c̄
+∂
++
+Dij
+,
+(4.10)
+(ūi c̄) =
+∂ xi
+∂ xi Sc ∂ xi
+∂ xi
+∂ xj
+where the last term on the right-hand side consists of the model for the turbulent scalar flux
+involving the turbulent diffusivity matrix. To test the model independent of any velocity
+field errors, (4.10) is solved with the mean velocity field provided by the LES and with the
+matrix turbulent diffusivity D provided by the TBNN-s. Note that the TBNN-s is run only
+once, using LES results with k and fields from the baseline turbulence model (realizable
+k − ) as inputs, and then the diffusivity matrix is fixed and (4.10) is solved on the LES
+mesh. We employ ANSYS Fluent for the baseline turbulence model and for solving the
+scalar transport equation.
+Before discussing the results, there is one important consideration to be made about
+the diffusivity matrix D . An arbitrary scalar (isotropic) diffusivity could be numerically
+unstable, namely if it were ever negative. Analogously, a matrix diffusivity D produced
+by the TBNN-s could also lead to an unstable partial differential equation under some
+conditions, so it must be post processed before we use it in (4.10). In particular, we
+require that the diffusivity D be a positive semi-definite matrix. Note that this is a
+requirement for stability for any closure of the form given in (1.3), including higher-order
+
+906 A27-18
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+2
+
+(b)
+r=1
+
+1
+
+10 30 50 70 90 110 130 150 170
+
+0
+
+0
+0
+
+5
+
+10
+
+15
+
+(c)
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+y /D
+
+(a)
+
+2
+
+(d ) 2
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+r=2
+1
+
+0
+0
+
+5
+
+x /D
+
+10
+
+15
+
+0
+1
+
+z /D
+
+F IGURE 11. Angle between modelled and true turbulent scalar flux in degrees, given in θ TBNN-s .
+(a,c) Centreplane (z = 0) and (b,d) axial planes at x/D = 2; black lines indicate isocontours of
+c̄ = 0.2, 0.4, 0.6, 0.8.
+
+algebraic closures. See appendix B for a more detailed explanation of this point. Therefore,
+we post process the diffusivity D ∗ output: in locations where the predicted matrix is not
+positive semi-definite, it is replaced by a diagonal matrix that uses the GDH with fixed
+Sct = 0.85 as the model.
+
+4.3.1. A priori results
+A priori results directly test the TBNN-s predictions of the scalar flux. All the results
+shown are for a network trained on the r = 2 dataset only.
+Figure 11 shows the alignment between the predicted turbulent scalar flux vector and
+the ground truth scalar flux vector from the LES for both datasets. The angle in degrees is
+calculated as
+⎞
+⎛
+
+
+∂
+c̄
+
+⎟
+⎜
+−ui c Dij
+⎟
+⎜
+∂
+x
+j
+TBNN-s
+⎟
+(4.11)
+θ
+= arccos ⎜
+
+
+ ⎟,
+⎜
+⎝    
+∂ c̄
+∂ c̄ ⎠
+Dij
+Dij
+ui c ui c
+∂ xj
+∂ xj
+where Dij is the matrix turbulent diffusivity predicted by the TBNN-s.
+Note that these plots should be compared to the misalignment that would arise from
+a baseline GDH model shown in § 3 in figures 8(a,b) and 9(a,b). In figure 11 we see
+significant improvement in the full domain for both cases, r = 2 (where the model was
+trained) and r = 1 (where the model’s generality is tested). In the windward shear layer,
+where type 1 counter gradient transport was observed, the alignment is now excellent, with
+values below 10◦ being prevalent. This supports the argument made in § 3 that this physical
+process would be amenable to be modelled with a local, but anisotropic model. The
+alignment near the wall is also significantly superior to that shown in figures 8(a,b) and
+9(a,b). However, some higher values of θ TBNN-s are still present there. First, this reflects the
+fact that whenever the original misalignment, between −ui c and ∂ c̄/∂ xj , is more than 90◦
+it cannot be fully fixed with a positive semi-definite diffusivity matrix. Second, as argued
+in § 3, the turbulent scalar flux in this near-wall region is affected by non-equilibrium,
+non-local effects which cannot be satisfactorily captured with a purely local model.
+
+Turbulent scalar flux in inclined jets in crossflow
+
+y /D
+
+D∗12(r = 1)
+
+2
+
+(b)
+–1.5 –0.9 –0.3 0.3
+
+0.9
+
+1
+
+1.5
+
+0
+
+0
+0
+
+y /D
+
+(c)
+
+10
+
+15
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+(d )
+1
+
+2
+
+(e)
+y /D
+
+5
+
+D∗22(r = 1)
+
+0
+
+0
+0
+
+5
+
+10
+
+15
+
+(f) 2
+
+D∗12(r = 2)
+2
+
+1
+
+0
+0
+
+(g)
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+(a)
+
+906 A27-19
+
+5
+
+10
+
+15
+
+0
+
+(h) 2
+
+D∗22(r = 2)
+
+2
+1
+0
+
+0
+
+5
+
+10
+
+x /D
+
+15
+
+0
+
+1
+
+z /D
+
+F IGURE 12. Dimensionless components of the diffusivity matrix D predicted by the TBNN-s
+in r = 1 and r = 2 cases. (a,c,e,g) Centreplane (z = 0) and (b,d, f,h) axial planes at x/D = 2;
+black lines indicate isocontours of c̄ = 0.2, 0.4, 0.6, 0.8.
+
+Figure 12 shows two different components of the turbulent diffusivity matrix predicted
+by the TBNN-s in the r = 1 and r = 2 cases. Here D∗12 is an off-diagonal component
+that controls the effect of wall-normal gradients on the streamwise transport (and, thus, is
+relevant for prediction of type 1 transport as described in § 3), and D∗22 is the wall-normal
+diagonal element. Note that a standard GDH model would have uniform components, with
+D∗12 being zero and D∗22 being 1/Sct .
+The component D∗12 has low magnitude in most regions of the flow, showing that
+cross-gradient effects are not important everywhere. But it is particularly active where
+the wall-normal mean velocity gradient is significant. This is to be expected, since strong
+vertical gradients in ū would cause vertical eddies to correlate u with c in the presence
+of vertical concentration gradients. Close to the wall, this term is largest in magnitude
+because of the high velocity gradient due to the no-slip condition. It is also active in the
+windward shear layer, in locations of type 1 transport. While interesting from a physical
+perspective, these improvements by themselves do not lead to a significant improvement in
+mean scalar concentration, as discussed in appendix A. Note that the TBNN-s prediction
+of D∗12 in the windward shear layer has different signs in the r = 1 and r = 2 cases,
+which is the correct behaviour since ∂ ū/∂ y is positive for r = 1 and negative for r = 2
+in that region. This showcases the capacity of the model to learn physics rather than just
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-20
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+regurgitate the training data; in this case, this is due to the basis expansion in (4.5), which
+explicitly multiplies the data-driven functions, g(i) , by terms such as S which are sensitized
+to the local mean flow gradients.
+The component D∗22 is positive everywhere as it should be, due to the positive
+semi-definite requirement on D . It does contain some spatial variation. In general, it is
+lower in the bottom half on the jet and higher in the top half, except for very near the
+wall where it attains the highest values. These results are consistent with the experimental
+results of Kohli & Bogard (2005) who reported smaller vertical heat diffusivity below the
+jet’s centreline compared to above it. Relatively high values of D∗22 right above the wall
+and after injection appear in both the training set and in the test set, which is inconsistent
+with the regions of type 2 transport. This is because from the argument in § 3.2, we would
+expect D∗22 to be physically very small or even negative in this region since the counter
+gradient turbulent transport in the wall-normal direction is not caused by cross-gradients
+in the mean concentration. A possible reason for this inconsistency is that in those regions
+both the turbulent transport and the mean scalar gradients have very low magnitude, so
+the diffusivity entries are, in a sense, a ratio between two very small numbers. Thus, the
+TBNN-s which attempts to predict this ratio might fail to obtain satisfactory results.
+
+4.3.2. A posteriori results
+Finally, we show a posteriori results which test the ability of the model integrated
+into a computational fluid dynamics code to predict the mean concentration distribution.
+Appendix A includes a discussion on the relative importance of different components of
+the turbulent scalar flux on the a posteriori results discussed here. We compare results
+from two different models. The baseline is a simple, isotropic GDH where the turbulent
+diffusivity is prescribed with a fixed turbulent Schmidt number, Sct = 0.85 (Kays 1994).
+The second is the TBNN-s model which is proposed in the current paper and trained on
+the r = 2 dataset. Both modelled results use the mean velocity from the LES and depend
+on a baseline turbulence model for the momentum equations, which is the two-equation
+realizable k − model in the present work.
+Figures 13 and 14 contain two-dimensional contours of the mean scalar concentration
+c̄ in the r = 1 and r = 2 cases, respectively. In figure 13 the LES results indicate that the
+r = 1 jet detaches from the wall after injection and reattaches at approximately x/D = 4.
+The mean profile is distorted by the presence of the counter-rotating vortex pair as the axial
+(y–z) plane shows. The isotropic model, shown in figure 13(c,d), broadly overestimates
+mixing which transports scalar towards the wall immediately downstream of injection and
+speeds up the decay of the jet. In the axial view, the extent of the jet is larger in the spanwise
+direction due to the increased mixing. The TBNN-s model, as shown in figure 13(e, f ),
+converges to a smooth solution, which is already an achievement for a tensorial and
+data-driven model. This solution is also significantly more accurate than the baseline
+model of figure 13(c,d): the streamwise decay of the concentration profile is predicted
+much more accurately and the extent of the jet’s shear layer is more consistent with the
+LES data. As hinted by a priori results, the near-wall behaviour of the TBNN-s is still
+lacking, even though it represents an improvement over the simple GDH. This warrants
+future work to adapt the TBNN-s model to regions where non-local effects dominate and
+lead to counter gradient transport.
+Figure 14 shows the same results for the r = 2 dataset. Here, since the jet is further from
+the wall, non-equilibrium effects are less significant so both models perform relatively
+better. The standard GDH model seems to slightly underpredict the streamwise decay of
+the jet, opposite from what was observed in r = 1. The TBNN-s model in figure 14(e, f )
+
+Turbulent scalar flux in inclined jets in crossflow
+(a)
+y /D
+
+0.05 0.20 0.35 0.50 0.65 0.80 0.95
+
+2
+
+(c)
+y /D
+
+2
+
+0
+
+(e)
+
+5
+
+10
+
+1
+
+15
+
+0
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+1
+
+5
+
+10
+
+15
+
+0
+
+(f)
+
+TBNN-s
+
+1
+
+2
+
+y /D
+
+0
+
+(d)
+
+Sct = 0.85
+
+0
+
+0
+
+0
+
+5
+
+10
+
+15
+
+0
+
+1
+
+x /D
+
+z /D
+
+F IGURE 13. Mean scalar concentration contours in the r = 1 case, with (a,c,e) showing
+centreplane (z = 0) and (b,d, f ) showing axial (y–z) planes at x/D = 2. Isocontours at c̄ =
+0.2, 0.4, 0.6, 0.8 are also shown. (a,b) Contains LES results, (c,d) shows results from baseline
+GDH model, and (e, f ) presents results from the TBNN-s.
+
+y /D
+
+(a)
+
+(b) 2
+
+LES
+
+2
+
+1
+
+0
+0
+
+5
+
+10
+
+15
+
+y /D
+
+0
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+(d) 2
+
+(c)
+2
+
+Sct = 0.85
+1
+
+0
+0
+
+(e)
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+(b)
+
+LES
+
+0
+
+906 A27-21
+
+5
+
+10
+
+15
+
+( f) 2
+
+TBNN-s
+2
+
+0
+
+0
+
+1
+
+0
+
+5
+
+10
+
+x /D
+
+15
+
+0
+
+1
+
+z /D
+
+F IGURE 14. Mean scalar concentration contours in the r = 2 case, with same legend
+as figure 13.
+
+manages to correct for that. This is encouraging because by employing a tensorial
+diffusivity, the data-driven model manages to correct the baseline model in both directions
+(by broadly decreasing the decay rate for r = 1 and increasing the decay rate in r = 2).
+
+906 A27-22
+(a) 3.0
+
+x/D = 2
+
+2.5
+
+y /D
+
+x/D = 5
+
+(b) 3.0
+
+x/D = 10
+
+2.5
+
+LES
+Sct = 0.85
+TBNN-s
+
+2.0
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+1.5
+
+2.0
+1.5
+
+1.0
+
+1.0
+
+0.5
+
+0.5
+
+0
+
+0
+0 0.25 0.50 0.75 0 0.25 0.50 0 0.25 0.50
+
+0 0.25 0.50 0.75 0 0.25 0.50 0 0.25 0.50
+
+cˉ
+
+cˉ
+
+F IGURE 15. Vertical profiles of c̄ at the centre spanwise position (z = 0) calculated in three
+distinct streamwise locations. (a) r = 1. (b) r = 2.
+(a) 0.50
+
+y/D = 1.0
+
+(b) 0.25
+y/D = 2.0
+
+0.25
+0.5/0
+
+cˉ 0.5/0
+y/D = 0.5
+
+0.25
+0
+
+y/D = 1.0
+
+0.25
+
+LES
+Sct = 0.85
+TBNN-s
+
+0
+–1
+
+0
+
+z /D
+
+1
+
+–1
+
+0
+
+z /D
+
+1
+
+F IGURE 16. Horizontal profiles of c̄ at x/D = 5 plotted for two distinct vertical stations.
+(a) r = 1. (b) r = 2.
+
+This suggests that generalizable physics are indeed learned by the model during training
+and carry over to a different velocity ratio. As was observed in r = 1, the near-wall
+transport, particularly right after injection, is not captured accurately. Physically, as was
+discussed in § 3, this is due to the prevalence of non-equilibrium effects in this area, which
+cannot be modelled with a local diffusivity-based model (as evidenced by type 2 counter
+gradient transport).
+For a more quantitative comparison between the same results, figure 15 shows vertical
+profiles of mean scalar concentration at three different streamwise locations. Despite its
+shortcomings, it is worth noting that the GDH with Sct = 0.85 does a reasonably good
+job at capturing broad qualitative features of the scalar field given its simplicity. The
+TBNN-s model, however, presents clear improvements: it does a good job at predicting
+the streamwise decay of the peak jet concentration and the vertical concentration gradient
+in the windward shear layer. The highest discrepancy between the TBNN-s model and
+LES data is exactly where type 2 gradient transport was found. Figure 16 shows spanwise
+profiles of mean scalar concentration at x/D = 5 and further reinforces the points made in
+this section, especially the accuracy with which the data-driven tensorial diffusivity can
+predict the jet shear layer profiles.
+
+4.3.3. Basis coefficients results
+Lastly, we would like to gain some further understanding of the TBNN-s model.
+Deep neural networks are notoriously powerful but hard to interpret (Goodfellow, Bengio
+& Courville 2016) and physical understanding of machine-learned turbulence models
+
+Turbulent scalar flux in inclined jets in crossflow
+
+y /D
+
+g (1)
+
+(b)
+
+–1.0 –0.6 –0.2 0.2 0.6 1.0
+
+1
+
+2
+0
+0
+
+y /D
+
+(c)
+
+5
+
+10
+
+0
+
+15
+
+g (2)
+
+0
+
+y /D
+
+5
+
+10
+
+–1
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+0
+
+15
+
+(f)
+
+g (3)
+
+1
+
+2
+0
+0
+
+(g)
+
+0
+
+1
+
+2
+
+(e)
+
+1
+
+(d)
+
+0
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+(a)
+
+906 A27-23
+
+5
+
+10
+
+0
+
+15
+
+(h)
+
+g (6)
+
+1
+
+2
+0
+0
+
+5
+
+10
+
+x /D
+
+15
+
+0
+
+1
+
+z /D
+
+F IGURE 17. Colour contours of the basis coefficients g(i) predicted by the TBNN-s model in
+the r = 2 jet. (a,c,e,g) Centreplane (z = 0) and (b,d, f,h) axial planes at x/D = 2; black lines
+indicate isocontours of c̄ = 0.2, 0.4, 0.6, 0.8.
+
+remains an important open question (Duraisamy et al. 2019), so we do not intend to exhaust
+that question here. One method to interpret the model takes advantage of the TBNN-s
+structure which writes the turbulent diffusivity matrix as a weighted sum of simpler tensor
+basis elements. By analysing the relative contributions of such simpler elements, one can
+gain useful insight into the model. Thus, in the current subsection we look at the tensor
+basis weights g(i) prescribed by the TBNN-s in these flows. Recall that the structure in
+figure 10 outputs a dimensionless turbulent diffusivity matrix D ∗ which has O(1) entries,
+and the diffusivity basis elements T (n) (see (4.6)) are also non-dimensionalized such that
+in practice they have O(1) entries. Thus, the predicted values of tensor basis weights g(i)
+should be dimensionless, O(1) quantities.
+Figure 17 contains contours of four different basis coefficients (g(1) , g(2) , g(3) and g(6) )
+in the r = 2 jet in crossflow. Since the TBNN-s was trained on the r = 2 data, this is the
+machine-learned model’s attempt at reproducing its training data within the tensor basis
+decomposition. The coefficients g(4) and g(5) are not shown because the TBNN-s assigns
+very low values for both of these compared to the other weights. This suggests that the
+quadratic and symmetric basis elements, T (4) = S 2 and T (5) = R 2 , are not employed by
+the network to match the training data. All the coefficients shown have well-defined signs
+as learned by the deep neural network: g(1) , g(3) and g(6) are positive, while g(2) is negative.
+Also note that while g(1) and g(2) multiply symmetric tensors, g(3) and g(6) multiply
+anti-symmetric basis elements. This suggests that the strictly symmetric diffusivity matrix
+
+906 A27-24
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+(a)
+
+(b)
+–1.0 –0.6 –0.2 0.2
+
+y /D
+
+0.6 1.0
+
+1
+
+2
+0
+
+0
+0
+
+y /D
+
+(c)
+
+5
+
+10
+
+15
+
+g (2)
+
+y /D
+
+–1
+
+1
+
+0
+
+–1
+
+1
+
+0
+
+–1
+
+0
+
+–1
+
+0
+0
+
+5
+
+10
+
+15
+
+(f)
+
+g (3)
+
+1
+
+2
+0
+
+0
+0
+
+(g)
+
+0
+
+1
+
+2
+
+(e)
+
+1
+
+(d)
+
+0
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+g (1)
+
+5
+
+10
+
+15
+
+(h)
+
+g (6)
+
+1
+
+2
+0
+
+0
+0
+
+5
+
+10
+
+x /D
+
+15
+
+1
+
+z /D
+
+F IGURE 18. Colour contours of the basis coefficients g(i) predicted by the TBNN-s model in
+the r = 1 jet. (a,c,e,g) Centreplane (z = 0) and (b,d, f,h) axial planes at x/D = 2; black lines
+indicate isocontours of c̄ = 0.2, 0.4, 0.6, 0.8.
+
+hypothesized by some previous authors (e.g. Daly & Harlow 1970) is insufficient to capture
+the data in this case, even in locations where the turbulent scalar flux is mostly locally
+determined such as in the windward shear layer.
+Other features can be observed in figure 17. For example, the basis coefficients seem
+to attain generally higher magnitudes in locations of highest shear, such as right above
+the wall and in the windward shear layer. The coefficient g(1) determines the isotropic
+contribution and is the only coefficient allowed in the simple GDH of (1.2); the TBNN-s
+prescribes values roughly between 0.5 and 1.5 to that coefficient, with lower magnitudes
+in locations of type 2 transport (compare figures 9e, f and 17a,b) which would be the
+expected behaviour if the turbulent transport in those locations is to be captured. On the
+other hand, g(1) is highest in the windward shear layer, indicating that the standard GDH
+underestimates the isotropic mixing in those locations.
+Figure 18 shows equivalent results for the r = 1 jet in crossflow, where the model is
+tested outside of its training data. The overall patterns are very similar from before; the
+coefficients g(4) and g(5) are significantly smaller and thus not shown. The similarity in the
+coefficients between the calibration data and the test data indicates that the modelling
+framework, in particular the tensor basis expansion, is indeed sound. One difference
+between the r = 1 and r = 2 results is that the former seem to have slightly lower
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-25
+
+magnitudes, indicating that differences in the modelled eddy viscosity νt are not enough
+to capture the increased turbulent mixing from the r = 1 to r = 2 jet.
+This opportunity for interpretation naturally arises from the tensor basis expansion
+described in § 4.1. The patterns indicated here can be used to further improve and simplify
+the models. For example, future work could remove the T (4) and T (5) bases, or leverage
+the overall structure of figures 17 and 18 to prescribe uniform ratios g(2) /g(1) , g(3) /g(1)
+and g(6) /g(1) . We also believe that interpretation work should proceed in the direction of
+understanding the functional form g(n) (λi ) so that one can answer the question of why the
+deep neural network is predicting its results. The approaches exemplified in Ling et al.
+(2017) and Milani, Ling & Eaton (2019b) could provide a useful starting point for this
+endeavour. As mentioned before, this is a major open question in the field of deep learning
+particularly for physical applications.
+
+5. Concluding remarks
+
+Two highly resolved large eddy simulations of inclined jets in crossflow are used
+to analyse turbulent scalar transport. In § 3 we discuss physical origins and modelling
+implications of counter gradient turbulent transport. Counter gradient turbulent transport
+is classified into two types. Type 1 arises in the streamwise component of the turbulent
+scalar flux in the windward shear layer, and is caused by cross-gradient effects, whereby
+gradients in the wall-normal and spanwise direction control the scalar flux. This
+phenomenon is mostly local and is consistent with the reports of previous authors such
+as Muppidi & Mahesh (2008), Bodart et al. (2013) and Schreivogel et al. (2016). Type 2
+transport, on the other hand, is governed chiefly by non-local contributions to the scalar
+flux budget. It is observed close to the wall, after injection, and in the wall-normal
+component of the turbulent transport, consistent with the observations of Salewski et al.
+(2008) and Milani & Eaton (2018). Despite multiple reports of counter gradient transport
+in these flows, authors have not carefully examined its causes. For example, Bodart et al.
+(2013) reported observations consistent with type 1 transport in their windward shear layer,
+but erroneously alluded to non-local effects as possible causes (which actually cause type 2
+transport as shown presently). These discussions show that type 1 and type 2 phenomena
+would require models of different complexities. The former could be modelled with a local
+formulation, but would require a tensorial diffusivity to capture cross-gradient effects. The
+latter cannot be modelled adequately with any diffusivity-based model since it is inherently
+non-local; it might require, for example, solving separate transport equations for the scalar
+flux components.
+Given the implementation difficulties associated with non-local models (Combest et al.
+2011), we choose to use a matrix turbulent diffusivity with a machine learning approach.
+We adapt the tensor basis neural network of Ling et al. (2016a) to model the scalar flux,
+and denote this approach TBNN-s (tensor basis neural network for scalar flux modelling).
+Our deep learning model obeys rotational invariance through a tensor basis expansion, and
+is able to predict a tensorial diffusivity D that can be used in the Reynolds averaged scalar
+transport equations even though the training data do not contain this matrix explicitly.
+As expected, the turbulent diffusivity matrix improves the alignment of the turbulent
+scalar flux vector, and also increases the accuracy of the mean scalar concentration field.
+This happens not just in the training set, but also in the test flow. The TBNN-s model
+proposed herein can be applied in any other problem where scalar transport is of interest
+given adequate training data. We expect that this modelling approach could be particularly
+useful to practitioners who are interested in one specific class of turbulent flow and have
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-26
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+a few high-fidelity datasets to train their models. Note that unlike many other machine
+learning works in the recent fluid mechanics literature, this model can be directly applied
+to arbitrarily complex 3-D turbulent flows and computational meshes. The results in this
+paper show that our framework is a good candidate to be employed in turbulent shear
+flows, where cross-gradient transport effects are important. As discussed in § 4.3.3, future
+workers might focus on further developing the model by simplifying it; or on further
+interpreting deep neural networks used in physical applications, to understand how the
+input invariants are mapped to output turbulence quantities of interest.
+Acknowledgements
+
+The authors would like to acknowledge A. Mani for useful discussions and suggestions
+that strengthened this paper. Financial support from Honeywell Aerospace is gratefully
+acknowledged.
+Declaration of interests
+
+The authors report no conflict of interest.
+Appendix A. Relative magnitude of the turbulent scalar ﬂux
+
+One noteworthy aspect of modelling the turbulent scalar flux is that its contribution to
+the overall transport of the passive scalar varies with location and direction within the
+flow. In general, the passive scalar equation balances the mean advection and the turbulent
+scalar flux (assuming that molecular diffusion is negligible in such flows) as show in
+∂
+∂
+−ui c .
+(ūi c̄) =
+∂ xi
+∂ xi
+
+(A 1)
+
+In shear flows such as the jet in crossflow, length scales and mean velocities in the
+streamwise (x) direction are much larger than in the transverse directions (y and z),
+so streamwise mean advection is usually thought as balancing turbulent mixing in the
+transverse direction. This means that the computation of the mean scalar field through
+the RANS (A 1) is more sensitive to errors in the transverse components of the turbulent
+scalar flux (v  c and w c ) than it is to errors in the streamwise component u c . For a
+visualization, figure 19 shows the magnitude of the turbulent scalar flux components
+relative to the equivalent mean advection component from the r = 1 jet LES. As the
+conceptual discussion suggests, v  c is relatively more important than u c ; its magnitude
+is particularly high in the shear layer all around the jet and in some places close to the wall
+and right after injection.
+This suggests that accurately capturing type 1 transport does not impact significantly
+the predicted mean scalar field in this particular flow; on the other hand, capturing type 2
+is much more important. The goal of discussing type 1 transport in § 3.1 is to explain the
+exact observations of previous authors regarding counter gradient transport (Muppidi &
+Mahesh 2008; Bodart et al. 2013; Schreivogel et al. 2016) and show a specific physical
+mechanism that causes qualitatively incorrect predictions in the turbulent scalar flux
+in jets in crossflow (namely, cross-gradient transport). This physical analysis leads us
+to investigate machine-learned models that incorporate cross-gradient transport effects
+through a tensorial diffusivity, which is the focus of § 4. This improved model is not only
+able to capture specifically type 1 transport (as shown in figure 20a), but it also improves
+
+Turbulent scalar flux in inclined jets in crossflow
+(a)
+
+(b)
+
+y /D
+
+u c 
+
+1
+
+0.01 0.13 0.25 0.37 0.49
+
+2
+0
+
+0
+0
+
+y /D
+
+(c)
+
+5
+
+10
+
+1
+
+15
+
+0
+
+–1
+
+0
+
+–1
+
+(d )
+
+v c 
+
+1
+
+2
+
+0
+
+0
+0
+
+5
+
+10
+
+15
+
+1
+
+x /D
+
+z /D
+
+F IGURE 19. Magnitude of turbulent scalar flux components relative to the equivalent mean
+advection component in the r = 1 jet. Black lines showing isocontours at c̄ = 0.2, 0.4, 0.6, 0.8
+are also shown. (a,b) The streamwise component |u c /(ūc̄)| and (c,d) the wall-normal
+component |v  c /(v̄c̄)|.
+(a) 2.0
+
+y /D
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-27
+
+x/D = 2
+
+(b) 2.0
+
+x/D = 5
+
+1.5
+
+1.5
+
+1.0
+
+1.0
+
+0.5
+
+0.5
+
+LES
+Sct = 0.85
+TBNN-s
+
+0
+
+0
+–1
+
+0
+
+1
+
+2
+
+0
+
+1
+
+50uc/Uc
+
+–4
+
+–3
+
+–2
+
+–1
+
+0
+
+1
+
+2
+
+0
+
+1
+
+50v c /Uc
+
+F IGURE 20. Vertical profiles of the turbulent scalar flux in the r = 1 jet at the centreplane
+(z/D = 0) and two different streamwise locations. Lines compare LES results to the baseline
+model (GDH with Sct = 0.85) and to the TBNN-s model trained on the r = 2 jet (as discussed
+in § 4.3). (a) The streamwise component u c of the flux, and (b) the wall-normal component
+v  c .
+
+the prediction of the more important components such as v  c , as shown in figure 20(b).
+This explains its significant improvement over the baseline model.
+Appendix B. Stability of a tensorial diﬀusivity
+
+In this appendix we discuss the requirement for stability of a matrix turbulent diffusivity
+used to model the scalar flux in the Reynolds averaged advection diffusion equation.
+If the diffusivity were a scalar, it would have to be non-negative; for a matrix diffusivity,
+there is an analogous requirement: that the 3 × 3 matrix be positive semi-definite. To see
+this, we multiply both sides of (4.10) by c̄ to derive a transport equation for the squared
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-28
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+concentration φ = c̄2 /2, as shown in
+!
+
+
+
+"
+∂
+ν ∂ c̄
+∂
+∂
+∂ c̄
+c̄ ×
++
+Dij
+.
+(ūi c̄) =
+∂ xi
+∂ xi Sc ∂ xi
+∂ xi
+∂ xj
+
+(B 1)
+
+The first term in (B 1) can easily be manipulated since we assume the mean velocity
+field is divergence free, and simply becomes an advection of φ = c̄2 /2. The two terms
+on the left-hand side require a slightly more sophisticated application of the chain rule of
+differentiation, namely
+ 
+
+
+
+
+∂
+ν ∂ c̄ ∂ c̄
+∂
+ν ∂ 12 c̄2
+ν ∂ c̄
+c̄
+−
+=
+(B 2)
+∂ xi Sc ∂ xi
+∂ xi Sc ∂ xi
+Sc ∂ xi ∂ xi
+and
+
+
+
+∂
+∂
+∂ c̄
+Dij
+=
+c̄
+∂ xi
+∂ xj
+∂ xi
+
+Dij
+
+∂
+
+ 1 2
+c̄
+2
+∂ xj
+
+
+− Dij
+
+
+∂ c̄ ∂ c̄
+.
+∂ xi ∂ xj
+
+Now, using (B 2) and (B 3) we rewrite (B 1) as
+
+
+
+
+
+
+
+
+∂
+ν ∂ c̄ ∂ c̄
+∂
+∂
+∂φ
+ν ∂φ
+∂ c̄ ∂ c̄
++
+Dij
+−
+− Dij
+.
+(ūi φ) =
+∂ xi
+∂ xi Sc ∂ xi
+∂ xi
+∂ xj
+Sc ∂ xi ∂ xi
+∂ xi ∂ xj
+
+(B 3)
+
+(B 4)
+
+Note that the first three terms of (B 4) are the regular mean advection and diffusion terms
+of quantity φ. The last two act as source terms. For the diffusion of c to be stable, it must
+act to dissipate the quantity φ (the same way that momentum diffusion acts to dissipate
+kinetic energy), thus, the source terms must be non-positive. For the molecular diffusion,
+this is true if the diffusion coefficient ν/Sc is non-negative. The last term of (B 4) is a
+quadratic form of matrix D and will be non-positive if ∇c̄T D ∇c̄ ≥ 0. For this to hold
+for any mean concentration field, we require that D be positive semi-definite (which by
+definition means that the quadratic form of D with any vector is non-negative).
+The remaining question is, given an arbitrary matrix diffusivity D , how to test whether
+it is positive semi-definite? For a symmetric 3 × 3 matrix, the simplest test lies in its
+eigenvalues: a symmetric matrix is positive semi-definite if and only if all its eigenvalues
+are non-negative. For a general matrix, with complex eigenvalues, one extra step is needed.
+First, we split D into symmetric and anti-symmetric components A and W , respectively:
+
+
+A
+
+W
+
+
+ 
+D = 12 (D + D T ) + 12 (D − D T ) .
+
+(B 5)
+
+Then, we recognize that the quadratic form of an anti-symmetric matrix with any real
+vector is zero. Thus, the quadratic form of D with an arbitrary vector v is identical to that
+of its symmetric part A = (D + D T )/2 with v, as shown in (B 6). From that, we see that D
+is positive semi-definite if and only if its symmetric part A is positive semi-definite, since
+:0
+
+
+
+v T D v = v T Av + 
+v T
+W v.
+
+(B 6)
+
+In summary, to check whether an arbitrary turbulent diffusivity matrix D is positive
+semi-definite, we look at its symmetric part: D will be positive semi-definite if and only if
+(D + D T )/2 contains only non-negative eigenvalues. This criterium is used to post process
+the output of the TBNN-s, which leads to a stable advection diffusion equation with
+a matrix turbulent diffusivity. Note that having only non-negative diagonal entries is a
+necessary but not sufficient condition for D to be positive semi-definite. On the other hand,
+a positive semi-definite matrix can have positive, zero or negative off-diagonal entries.
+
+Turbulent scalar flux in inclined jets in crossflow
+
+906 A27-29
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+REFERENCES
+
+A BADI , M., AGARWAL , A., BARHAM , P., B REVDO , E., C HEN , Z., C ITRO , C., C ORRADO , G. S.,
+DAVIS , A., D EAN , J., D EVIN , M., et al. 2016 Tensorflow: large-scale machine learning on
+heterogeneous distributed systems. arXiv:1603.04467.
+A BE , K. & S UGA , K. 2001 Towards the development of a Reynolds-averaged algebraic turbulent scalar-flux
+model. Intl J. Heat Fluid Flow 22 (1), 19–29.
+ACHARYA , S., T YAGI , M. & H ODA , A. 2001 Flow and heat transfer predictions for film cooling. Ann. N.
+Y. Acad. Sci. 934 (1), 110–125.
+BATCHELOR , G. K. 1949 Diffusion in a field of homogeneous turbulence. I. Eulerian analysis. Austral.
+J. Chem. 2 (4), 437–450.
+BODART, J., C OLETTI , F., B ERMEJO -M ORENO , I. & E ATON , J. K. 2013 High-fidelity simulation of a
+turbulent inclined jet in a crossflow. Center Turbul. Res. Annu. Res. Briefs 19, 263–275.
+BOGARD , D. G. & T HOLE , K. A. 2006 Gas turbine film cooling. J. Propul. Power 22 (2), 249–270.
+C OMBEST, D. P., R AMACHANDRAN , P. A. & D UDUKOVIC , M. P. 2011 On the gradient diffusion
+hypothesis and passive scalar transport in turbulent flows. Ind. Engng Chem. Res. 50 (15),
+8817–8823.
+DALY, B. J. & H ARLOW, F. H. 1970 Transport equations in turbulence. Phys. Fluids 13 (11), 2634–2649.
+D URAISAMY, K., I ACCARINO , G. & X IAO , H. 2019 Turbulence modeling in the age of data. Annu. Rev.
+Fluid Mech. 51, 357–377.
+F RIC , T. F. & ROSHKO , A. 1994 Vortical structure in the wake of a transverse jet. J. Fluid Mech. 279,
+1–47.
+GARDNER , J. E., B URGISSER , A. & S TELLING , P. 2007 Eruption and deposition of the Fisher Tuff
+(Alaska): evidence for the evolution of pyroclastic flows. J. Geol. 115 (4), 417–435.
+G OODFELLOW, I., B ENGIO , Y. & C OURVILLE , A. 2016 Deep Learning. MIT Press.
+H AM , F. 2007 An efficient scheme for large eddy simulation of low-Ma combustion in complex
+configurations. Center Turbul. Res. Annu. Res. Briefs 4, 41–46.
+H ODA , A. & ACHARYA , S. 1999 Predictions of a film coolant jet in crossflow with different turbulence
+models. J. Turbomach. 122 (3), 558–569.
+K AYS , W. M. 1994 Turbulent Prandtl number – where are we? J. Heat Transfer 116 (2), 284–295.
+K INGMA , D. P. & BA , J. 2014 Adam: a method for stochastic optimization. arXiv:1412.6980.
+KOHLI , A. & BOGARD , D. G. 2005 Turbulent transport in film cooling flows. J. Heat Transfer 127 (5),
+513–520.
+L ING , J., H UTCHINSON , M., A NTONO , E., D E C OST, B., H OLM , E. A. & M EREDIG , B. 2017
+Building data-driven models with microstructural images: generalization and interpretability. Mater.
+Discovery 10, 19–28.
+L ING , J., K URZAWSKI , A. & T EMPLETON , J. 2016a Reynolds averaged turbulence modelling using deep
+neural networks with embedded invariance. J. Fluid Mech. 807, 155–166.
+L ING , J., RYAN , K. J., BODART, J. & E ATON , J. K. 2016b Analysis of turbulent scalar flux models for a
+discrete hole film cooling flow. J. Turbomach. 138 (1), 011006.
+M AHESH , K. 2013 The interaction of jets with crossflow. Annu. Rev. Fluid Mech. 45, 379–407.
+M AULIK , R., SAN , O., JACOB , J. D. & C RICK , C. 2019 Sub-grid scale model classification and blending
+through deep learning. J. Fluid Mech. 870, 784–812.
+M ILANI , P. M. & E ATON , J. K. 2018 Magnetic resonance imaging, optimization, and machine learning
+to understand and model turbulent mixing. In 21st Australasian Fluid Mechanics Conference (ed.
+I. Marusic), Australasian Fluid Mechanics Society.
+M ILANI , P. M., G UNADY, I. E., C HING , D. S., BANKO , A. J., E LKINS , C. J. & E ATON , J. K. 2019a
+Enriching MRI mean flow data of inclined jets in crossflow with large eddy simulations. Intl J. Heat
+Fluid Flow 80, 108472.
+M ILANI , P. M., L ING , J. & E ATON , J. K. 2019b Physical interpretation of machine learning models
+applied to film cooling flows. J. Turbomach. 141 (1), 011004.
+M ILANI , P. M., L ING , J. & E ATON , J. K. 2020 Generalization of machine-learned turbulent heat flux
+models applied to film cooling flows. J. Turbomach. 142 (1), 011007.
+
+Downloaded from https://www.cambridge.org/core. Carleton University Library, on 21 Nov 2020 at 07:27:47, subject to the Cambridge Core terms of use, available at https://www.cambridge.org/core/terms.
+https://doi.org/10.1017/jfm.2020.820
+
+906 A27-30
+
+P. M. Milani, J. Ling and J. K. Eaton
+
+M ILANI , P. M., L ING , J., SAEZ -M ISCHLICH , G., BODART, J. & E ATON , J. K. 2018 A machine learning
+approach for determining the turbulent diffusivity in film cooling flows. J. Turbomach. 140 (2),
+021006.
+M UPPIDI , S. & M AHESH , K. 2008 Direct numerical simulation of passive scalar transport in transverse
+jets. J. Fluid Mech. 598, 335–360.
+PARISH , E. J. & D URAISAMY, K. 2016 A paradigm for data-driven predictive modeling using field
+inversion and machine learning. J. Comput. Phys. 305, 758–774.
+P OPE , S. B. 1975 A more general effective-viscosity hypothesis. J. Fluid Mech. 72 (2), 331–340.
+RYAN , K. J., BODART, J., F OLKERSMA , M., E LKINS , C. J. & E ATON , J. K. 2017 Turbulent scalar mixing
+in a skewed jet in crossflow: experiments and modeling. Flow Turbul. Combust. 98 (3), 781–801.
+SALEWSKI , M., S TANKOVIC , D. & F UCHS , L. 2008 Mixing in circular and non-circular jets in crossflow.
+Flow Turbul. Combust. 80 (2), 255–283.
+SANDBERG , R. D., TAN , R., W EATHERITT, J., O OI , A., H AGHIRI , A., M ICHELASSI , V. &
+L ASKOWSKI , G. 2018 Applying machine learnt explicit algebraic stress and scalar flux models to a
+fundamental trailing edge slot. J. Turbomach. 140 (10), 101008.
+S CHREIVOGEL , P., A BRAM , C., F OND , B., S TRAUSSWALD , M., B EYRAU, F. & P FITZNER , M. 2016
+Simultaneous kHz-rate temperature and velocity field measurements in the flow emanating from
+angled and trenched film cooling holes. Intl J. Heat Mass Transfer 103, 390–400.
+S HIH , T. H., Z HU, J. & LUMLEY, J. L. 1995 A new Reynolds stress algebraic equation model. Comput.
+Methods Appl. Mech. Engng 125 (1), 287–302.
+S OTGIU, C., W EIGAND , B. & S EMMLER , K. 2018 A turbulent heat flux prediction framework based on
+tensor representation theory and machine learning. Intl Commun. Heat Mass Transfer 95, 74–79.
+S RIVASTAVA , N., H INTON , G., K RIZHEVSKY, A., S UTSKEVER , I. & SALAKHUTDINOV, R. 2014
+Dropout: a simple way to prevent neural networks from overfitting. J. Machine Learning Res. 15
+(1), 1929–1958.
+S U, L. K. & M UNGAL , M. G. 2004 Simultaneous measurements of scalar and velocity field evolution in
+turbulent crossflowing jets. J. Fluid Mech. 513, 1–45.
+TAVOULARIS , S. & C ORRSIN , S. 1981 Experiments in nearly homogenous turbulent shear flow with a
+uniform mean temperature gradient. Part 1. J. Fluid Mech. 104, 311–347.
+V REMAN , A. W. 2004 An eddy-viscosity subgrid-scale model for turbulent shear flow: algebraic theory
+and applications. Phys. Fluids 16 (10), 3670–3681.
+W EATHERITT, J., SANDBERG , R. D., L ING , J., SAEZ , G. & BODART, J. 2017 A comparative study
+of contrasting machine learning frameworks applied to RANS modeling of jets in crossflow. In
+ASME Turbo Expo 2017: Turbomachinery Technical Conference and Exposition. American Society
+of Mechanical Engineers Digital Collection.
+W EATHERITT, J., Z HAO , Y., SANDBERG , R. D., M IZUKAMI , S. & TANIMOTO , K. 2020 Data-driven
+scalar-flux model development with application to jet in cross flow. Intl J. Heat Mass Transfer 147,
+118931.
+W U, J., X IAO , H., S UN , R. & WANG , Q. 2019 Reynolds-averaged Navier–Stokes equations with explicit
+data-driven Reynolds stress closure can be ill-conditioned. J. Fluid Mech. 869, 553–586.
+X IE , Z. T. & C ASTRO , I. P. 2008 Efficient generation of inflow conditions for large eddy simulation of
+street-scale flows. Flow Turbul. Combust. 81 (3), 449–470.
+YOUNIS , B. A., S PEZIALE , C. G. & C LARK , T. T. 2005 A rational model for the turbulent scalar fluxes.
+Proc. R. Soc. A 461 (2054), 575–594.
+Y UAN , L. L., S TREET, R. L. & F ERZIGER , J. H. 1999 Large-eddy simulations of a round jet in crossflow.
+J. Fluid Mech. 379, 71–104.
+Z HENG , Q. S. 1994 Theory of representations for tensor functions – a unified invariant approach to
+constitutive equations. Appl. Mech. Rev. 47 (11), 545–587.
+
+

@@ -1,0 +1,558 @@
+R. W. Kaszeta
+
+Measurement of Eddy
+Diffusivity of Momentum in
+Film Cooling Flows With
+Streamwise Injection
+
+T. W. Simon
+Measurements of mean velocity and turbulent shear stress are presented for the mixing
+region of a film cooling situation in which the coolant is streamwise injected with an
+injection angle of 35 deg. Measurements are performed using triple-sensor anemometry
+so that all three instantaneous velocity components are documented. The free-stream
+turbulence intensity level is 12 percent, the ratio of the integral length scale to injection
+hole diameter is 4.0, the coolant-to-mainstream momentum flux ratio is 1.0, and the
+density ratio is unity. From these measurements, values for the eddy diffusivities of
+momentum in the lateral and wall-normal directions are calculated. Additionally, calculated values of the ratio of eddy diffusivity in the spanwise direction to eddy diffusivity in
+the wall-normal direction are presented, which provide documentation of the anisotropy
+of turbulent transport in this film cooling flow.
+
+Introduction
+Film cooling is commonly used to prevent distress in and failure
+of gas turbine engine airfoils, which would result from excessive
+operating temperatures. With film cooling, cool air is bled from the
+compressor, ducted to the internal chambers of the turbine airfoils,
+and discharged through small holes in the airfoil walls. This air
+provides a thin, cool, insulating blanket along the external surface
+of the airfoil. The cooling effectiveness is dependent upon the
+approach flow characteristics (including velocity distributions, turbulence intensity distribution, and turbulence length scale), the
+film cooling flow characteristics, and the blade and film cooling
+hole geometries.
+Much effort has been spent simulating film cooling flows computationally. Most calculations are usually done with a gradient
+diffusion model where the turbulent diffusion is proportional to the
+mean strain rate. The proportionality is the eddy diffusivity, ⑀. For
+most calculations, the eddy diffusivity of momentum for wallnormal transport, ⑀ M,y , is calculated from models developed from
+data taken in two-dimensional boundary layers. The lateral diffusivity term, ⑀ M,z , used with ⭸u៮ /⭸ z to compute lateral turbulent
+transport, is simply assigned to be the same. The presence of
+discrete jets in a film cooling boundary layer creates a flow that is
+three dimensional in nature, thus requiring accurate modeling of
+the eddy diffusivity of momentum in both the wall-normal and
+spanwise directions, ⑀ M,y and ⑀ M,z , respectively. Experimental measurement of eddy diffusivity of heat and mass by Quarmby and
+Quirk (1974) showed that the ratio of magnitudes of the diffusivities in the radial and circumferential directions in a tube ranged
+greatly, with values close to unity near the pipe center and as high
+as 100 as the wall was approached.
+Numerically investigating film cooling flows, Sathyamurthy and
+Patankar (1992) found that the assumption of isotropic turbulent
+eddy viscosity (through use of a standard k– ⑀ model) produced
+unsatisfactory predictions of coolant film lateral spreading. Leylek
+and Zerkle (1994) agree. Sathyamurthy and Patankar attempted to
+provide more accurate predictions of film cooling lateral jet
+spreading by adopting the model of boundary layer anisotropy
+Contributed by the International Gas Turbine Institute and presented at the 44th
+International Gas Turbine and Aeroengine Congress and Exhibition, Indianapolis,
+Indiana, June 7–10, 1999. Manuscript received by the International Gas Turbine
+Institute February 1999. Paper No. 99-GT-37. Review Chair: D. C. Wisler.
+
+178 / Vol. 122, JANUARY 2000
+
+developed by Bergeles et al. (1978), which is based upon an
+approximate linear fit of the Quarmby and Quark measurements in
+a fully turbulent pipe flow:
+
+冋 冉 冊册
+
+⑀ M,z
+y
+⫽ 1 ⫹ 3.5 1 ⫺
+⑀ M,y
+␦
+
+(1)
+
+where ␦ is the boundary layer thickness. Similar success with the
+Bergeles et al. model for anisotropy of eddy diffusivity was reported by Xu et al. (1990).
+In order to develop computational film cooling models further,
+experimental measurements of eddy diffusivity of momentum in
+both the lateral and wall-normal directions must be made. Wang et
+al. (1996) presented measurements of ⑀ M,z and ⑀ M,y taken with a
+row of streamwise-oriented film cooling holes of long development length (L/D ⫽ 7.0) under high (12 percent) free-stream
+turbulence intensity conditions. Their eddy diffusivity ratios, ⑀ M,z /
+⑀ M,y , ranged from 3.0 to upward of 15.0. However, Wang et al.
+provided measurements in the vicinity of only one spanwise location, z/D ⫽ 0.75. Furthermore, their spatial resolution is now
+considered to be a bit coarse for such measurements. Thus, it is
+desirable to investigate the magnitudes of eddy diffusivities more
+fully in streamwise injection film cooling flows.
+
+Present Study
+The present study focuses on measurements of turbulent shear
+stresses in film cooling flows where the coolant is injected inline
+with the freestream flow, with an injection angle, ␤, of 35 deg.
+Such measurements are taken on y–z planes at two streamwise
+locations downstream of the film cooling holes. The measured
+distributions of mean velocity and turbulent shear stresses are used
+to calculate values of the eddy diffusivities of momentum in both
+the lateral and wall-normal directions. The objective of this research is to provide experimental documentation of the anisotropy
+of eddy diffusivity of momentum in film cooling flows, as well as
+to provide support for computational modeling of these flows. The
+film cooling mixing region is investigated with a high free-stream
+turbulence intensity (⬃12 percent) and a single row of 11 film
+cooling supply holes of short entry length, L/D ⫽ 2.3, and lateral
+pitch to diameter ratio, P/D, of 3.0, representative of actual turbines. For all the experimental cases, ambient air was used for both
+the mainstream and coolant injection flows, resulting in a density
+
+Copyright © 2000 by ASME
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Heat Transfer Laboratory,
+University of Minnesota,
+Minneapolis, MN 55455
+
+Test section
+
+ratio of unity. This density ratio is not representative of actual film
+cooling flows. However, it has been shown that some flow characteristics, like jet penetration, of the film cooling flow collapse,
+somewhat, when momentum flux ratios match (Forth and Jones,
+1986).
+
+Experimental Configuration
+Wind Tunnel. The free-stream flow is a wall jet, supplied by
+a high-turbulence blown-type wind tunnel facility. The facility is
+described in detail by Wang et al. (1996). The measured freestream turbulence at the 68.6 cm ⫻ 12.7 cm nozzle exit is nearly
+isotropic with a free-stream turbulence intensity (FSTI) of approximately 12.3 percent and a decay rate, ⭸(FSTI)/⭸( x/D) of approximately 0.12 percent, yielding a FSTI of approximately 11 percent
+at the injection location. The FSTI level is characteristic of flows
+exiting the combustor stages of actual gas turbine engines (Goebel
+et al., 1993). The exit-plane turbulence intensity and mean velocity
+are uniform to within 2 percent of their mean values. The integral
+length scale ᐉ in the free stream above the holes (calculated from
+a u⬘ power spectrum) is approximately 7.7 cm (ᐉ/D ⬇ 4).
+Test Facility. The test facility (Fig. 1) consists of an upstream
+plate (25.4 cm ⫻ 68.6 cm), a film cooling test plate (15.2 cm ⫻
+68.6 cm), a downstream plate (91 cm ⫻ 68.6 cm), and the film
+
+Fig. 2
+
+Measurement planes and film cooling geometry
+
+coolant supply system. The film cooling plates and the film cooling
+geometry are shown in Fig. 2.
+The upstream and downstream plates are fabricated of 9.53 mm
+thick cast acrylic. The test plate, fabricated from a 2.54-cm-thick
+silicon phenolic laminate plate, has a single column of eleven
+streamwise-oriented film cooling holes distributed uniformly
+across the plate. The film cooling holes, 1.9 cm in diameter, are
+spaced 3D apart. These dimensionless parameters are representative of film cooling designs in modern airfoils.
+
+Nomenclature
+D ⫽ film cooling hole diameter
+DR ⫽ density ratio of coolant to mainstream flow ⫽ ␳ c / ␳ 0
+FSTI ⫽ free-stream turbulence intensity
+I ⫽ momentum flux ratio of coolant
+to mainstream ⫽ ␳ c U c2 / ␳ 0 U 02
+L ⫽ film cooling delivery length
+ᐉ ⫽ integral length scale of turbulence
+M ⫽ coolant-to-mainstream mass flux
+ratio ⫽ ␳ c U c / ␳ 0 U 0
+P ⫽ lateral distance between film
+cooling holes
+Re ␪ ⫽ Reynolds number based on U 0
+and ␪
+Re D ⫽ Reynolds number based on hole
+diameter and bulk coolant velocity
+St D ⫽ Stanton number based on freestream velocity, frequency, and
+hole diameter ⫽ fD/U 0
+u ⫽ streamwise component of velocity
+Journal of Turbomachinery
+
+U 0 ⫽ time-averaged free-stream
+velocity
+U c ⫽ bulk coolant velocity
+u⬘v ⬘, u⬘w⬘ ⫽ Reynolds turbulent shear
+stresses
+v ⫽ wall-normal component of
+velocity
+VR ⫽ coolant-to-mainstream velocity ratio ⫽ U c /U 0
+w ⫽ spanwise component of
+velocity
+x ⫽ streamwise distance from
+center of hole
+y ⫽ normal distance from wall
+surface
+z ⫽ spanwise distance from
+center of hole
+␤ ⫽ film cooling inclination
+angle
+
+␦ ⫽ hydrodynamic boundary layer
+thickness (99 percent)
+␦* ⫽ displacement thickness
+⑀ M,y ⫽ eddy diffusivity of momentum in
+y direction ⫽ ⫺u⬘v ⬘/(⭸u៮ /⭸ y)
+⑀ M,z ⫽ eddy diffusivity of momentum in
+z direction ⫽ ⫺u⬘w⬘/(⭸u៮ /⭸ z)
+␪ ⫽ momentum thickness
+␪ w ⫽ approach angle of flow to triplesensor probe
+␳ ⫽ density
+Subscripts and Superscripts
+⫺ ⫽ time-averaged
+⬘ ⫽ instantaneous values of velocity
+fluctuation
+0 ⫽ free-stream flow
+c ⫽ coolant flow
+
+JANUARY 2000, Vol. 122 / 179
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Fig. 1
+
+Serving as a boundary layer trip, a 1.6 mm ⫻ 13 mm ⫻ 68.6 cm
+square-edged rectangular polycarbonate strip is attached to the
+upstream plate, with its upstream edge located 21.1 cm upstream
+of the hole centers. In all the experiments, the mainstream flow
+velocity is maintained at a nominal value of U 0 ⫽ 11.0 m/s, and
+the coolant velocity is set to achieve a momentum flux ratio, I, of
+1.0 (Re D ⬃ 13,000). The approach flow conditions at x/D ⫽
+⫺4.0 are ␦ /D ⫽ 1.10, ␦ */D ⫽ 0.094, ␪ /D ⫽ 0.073, and Re ␪ ⫽
+960 (details of these measurements are given in Burd et al., 1998).
+The coolant flow is supplied by a fan through a metering section
+having two laminar flow meters and through a large, unrestricted
+supply plenum.
+
+Experimental Procedure. The data used in this paper were
+originally collected as part of an investigation into streamwise- and
+lateral-injection film cooling velocity fields, presented in Kaszeta
+et al. (1998). Triple-sensor profiles of the mean velocities, rms
+velocity fluctuation, and turbulent shear stress amplitudes were
+taken on y–z planes, with ⌬z ⫽ 0.3175 cm (⌬z/D ⫽ 0.167) and
+y varying near-logarithmically from y ⫽ 0.3175 cm (as close as
+the triple-sensor probe mount could be placed to the wall) to y ⫽
+2.86 cm (in the free-stream flow).
+Prior to data collection, the high-turbulence wind tunnel was
+activated to allow the mainstream flow to come to steady state.
+Next, the triple-sensor probe was aligned with the free-stream flow
+(with the coolant flow turned off). Then the film cooling flow was
+activated. After a sufficient warmup time, data collection was
+initiated.
+During data collection, care was taken that the approach angle,
+␪ w , between the approach flow velocity vector and the sensor axis
+did not exceed 35 deg. It was previously determined (Russ and
+Simon, 1990) that this was the threshold angle of attack for the
+probe. Beyond this, instantaneous flow reversal over one or more
+of the three sensing films was sufficiently frequent that incorrect
+flow measurements resulted. The long data collection times of
+these profiles required careful monitoring of the flow temperatures.
+First-order corrections of the triple-sensor response due to small
+changes in room temperature were made.
+Calculation of Eddy Diffusivity of Momentum. The eddy
+diffusivities of momentum in the spanwise and wall-normal directions are calculated as the turbulent shear stress divided by the
+local streamwise velocity gradient:
+
+⑀ M,z ⫽ ⫺u⬘w⬘/共⭸u៮ /⭸z兲
+
+(2)
+
+⑀ M,y ⫽ ⫺u⬘v⬘/共⭸u៮ /⭸y兲
+
+(3)
+
+Since the velocity gradients approach zero at many locations in the
+flow, we can expect large variations in the calculated values of ⑀ M,z
+and ⑀ M,y . Also, to achieve reasonable accuracy when calculating
+these values, it is necessary to calculate the local velocity gradient
+as accurately as possible. Our procedure for calculating the eddy
+diffusivities is as follows:
+180 / Vol. 122, JANUARY 2000
+
+Experimental Uncertainty. The uncertainties involved in
+triple-sensor measurements are difficult to assess. They result from
+changes in fluid properties between calibration and measurement,
+near-wall effects, alignment errors, and sensor drift. In order to
+estimate the magnitudes of the uncertainties in the triple-sensor
+measurements and verify that the triple-sensor probe can accurately measure velocity and shear stress quantities, the probe was
+used to measure turbulent shear stress and velocity profiles in a
+turbulent pipe flow and the data were compared to the published
+data of Laufer (1953). They compared within 5 percent. Additionally, the film cooling data for in-line injection collected in this
+study were compared with data taken on the same facility with a
+single-wire probe (Burd et al., 1998) with nearly identical results.
+From these experiences it was concluded that the errors present in
+the velocity and rms fluctuation measurements are on the same
+order as those of the single-wire sensor, 5–7 percent, while errors
+in the turbulent shear stresses are larger, on the order of 8 –10
+percent. As mentioned previously, due to the uncertainties in both
+the shear stresses and calculated velocity gradients, as well as the
+low value of velocity gradients at many locations in the flow, the
+uncertainty in value for the eddy diffusivities can grow to be quite
+large (upward of 60 percent). However, our analysis procedure
+discards values of eddy diffusivity with calculated uncertainties
+greater than 30 percent. Uncertainty in the total coolant mass flow
+rate is 2.3 percent. All uncertainties are expressed with 95 percent
+confidence.
+Cases Studied. Profiles of mean velocities and turbulent shear
+stresses were taken at the two y–z planes shown in Fig. 2, x/D ⫽
+2.5 and x/D ⫽ 5, y ranging from y/D ⫽ 0.2 to y/D ⫽ 1.5, and
+z ranging from z/D ⫽ ⫺1.5 to z/D ⫽ 1.5. Measurements were
+taken about the middle of the eleven holes. Due to the large size of
+the triple-sensor probe, very near-wall data ( y/D ⬍ 0.2) were not
+collected.
+
+Experimental Results
+Figures 3(a) and 3(b) show distributions of normalized streamwise velocity, u៮ /U 0 , and secondary fluid motion at x/D ⫽ 2.5 with
+I ⫽ 1.0. While the boundary conditions of the flow are symmetric,
+the profiles show a slight asymmetry. Such asymmetry is expected
+to have minimal effect on the results present herein. It has been
+observed in many streamwise film cooling studies (for example, a
+similar asymmetry is shown by Kohli and Bogard, 1997). Due to
+the high blowing rate and near-hole location, this case shows the
+highest streamwise velocity gradients of all the cases and, thus, the
+lowest values of uncertainty when calculating ⑀ M,z and ⑀ M,y . Therefore, the analysis of eddy diffusivities of momentum focuses on
+this case. Examining Fig. 3(a), we can see that the coolant flow
+acts as a blockage, which produces a region of decreased streamwise velocity directly downstream of the cooling holes. Examining
+Fig. 3(b), we can see a matched pair of “kidney vortices” common
+to streamwise-injected film cooling flows.
+Figures 4(a) and 4(b) show the turbulent shear stress u⬘w⬘ and
+its associated mean strain rate, ⭸u៮ /⭸ z, which characterize turbulent
+transport in the spanwise direction. Examining both figures, one
+can see similar features in the two distributions. However, it is
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Instrumentation. A triple-sensor hot-film probe (TSI Model
+1299BM-20) was used to obtain velocity, turbulence intensity, and
+turbulent shear stress measurements. The hot-film sensors on this
+probe have a diameter of 50.8 ␮m, and an active sensing length of
+1.016 mm (approximately 201 the diameter of the film cooling
+holes). Due to its triple-sensor construction, the probe spatially
+averages over a spherical volume of approximately 2 mm in
+diameter. The probe was driven using TSI IFA 100 anemometer
+bridges. A total of 262,144 (2 18) data points were taken at 5 kHz
+for a total sampling time of 52.4 seconds. The hot-film voltages
+were recorded using an IOTech ADC 488/8SA A/D converter
+controlled via a GPIB interface. An automated GPIB-controlled,
+two-axis traversing system (0.025 mm resolution) was used to
+control the probe positioning in the wall-normal and spanwise
+directions. Movement in the streamwise direction was accomplished with a manual traverse.
+
+The local values of ⭸u៮ /⭸ y and ⭸u៮ /⭸ z over the entire y–z
+profile are calculated from fitted smooth splines using MATLAB (MathWorks, Inc.). This results in fairly accurate estimations of ⭸u៮ /⭸ y and ⭸u៮ /⭸ z, with overall uncertainties of
+about 12 percent.
+2 The eddy diffusivities are calculated using (2) and (3).
+Regions of the flow in which small streamwise velocity
+gradients result in large (⬎30 percent) calculated uncertainties in diffusivity values are discarded.
+3 The ratio of eddy diffusivities, ⑀ M,z / ⑀ M,y , is calculated for all
+points at which both ⑀ M,z and ⑀ M,y are available. Again,
+points at which the calculated uncertainties exceed 30 percent are discarded.
+
+1
+
+Fig. 5 Turbulent shear stress uⴕv ⴕ [m 2 /s 2 ] (a) and associated gradient
+⵲ u៮ /⵲y [s ⴚ1 ] (b), versus y/D at x/D ⴝ 2.5 with I ⴝ 1.0
+
+important to note some differences—the outer pockets of high
+turbulent shear stress seen at z/D ⫽ ⫾0.6 have much weaker
+velocity gradient counterparts than the inner pockets of shear stress
+at z/D ⫽ ⫾0.3. Also, there are two regions of high shear stress
+magnitude near the wall ( y/D ⫽ 0.25, z/D ⫽ ⫾0.2) that have no
+visible counterparts in the ⭸u៮ /⭸ z distribution. Therefore, we can
+expect some significant variations in the calculated value of ⑀ M,z at
+different regions of the y–z plane.
+Figures 5(a) and 5(b) show the turbulent shear stress u⬘v ⬘ and
+its associated mean strain rate, ⭸u៮ /⭸ y, which characterize turbulent transport in the wall-normal direction. Again, each region of
+high shear stress is generally accompanied by a region of high
+velocity gradient. However, opposite of the shear stress in the
+spanwise direction, we see near-wall regions of high velocity
+gradient ( y/D ⫽ 0.25, z/D ⫽ ⫾0.6) with no associated regions
+of high shear stress. Thus, like ⑀ M,z , we can expect to see significant variations in ⑀ M,y over the entire y–z plane.
+Using these data, ⑀ M,z (Fig. 6) and ⑀ M,y (Fig. 7) were calculated.
+Examining ⑀ M,z (Fig. 6), we can see a number of interesting
+features. First, over much of the measured field, ⑀ M,z is fairly
+
+constant, ranging in value from 0.2 m 2/s to 0.4 m 2/s. However, in
+the region of the film cooling jet periphery, for example at z/D ⫽
+⫾0.5 and y/D ⫽ 0.25 (corresponding with the region in which we
+previously observed a poor qualitative agreement between the
+distributions in ⭸u៮ /⭸ z and u⬘w⬘), there are regions of the flow in
+which ⑀ M,z is negative, which means that at those locations the
+local lateral turbulent transport of streamwise momentum is actually opposite in direction to that of the velocity gradient. A
+reasonable explanation for these observed negative eddy diffusivities is that the flow behind the emerging film cooling jet contains
+coherent unsteadiness. Eckert (1987) noted cross-transport of energy by boundary work in similar, coherent, unsteady flows, leading to energy transfer against the thermal gradient. Such boundary
+work leads to momentum transfer against local gradients as well.
+Eckert notes that local streamline curvature and unsteadiness are
+prerequisites for such transport. Additional examples of such “negative viscosity” are presented by Starr (1968). With respect to this
+flowfield, vortex shedding from turbulent jets in crossflow is well
+documented. For example, McMahon et al. (1971) showed that a
+wall-normal turbulent jet in crossflow sheds vortices in the same
+manner as does flow past a solid, normal, circular cylinder. Spectral measurements taken in the jet region in our facility under the
+
+Fig. 4 Turbulent shear stress u ⴕw ⴕ [m 2 /s 2 ] and associated gradient
+⵲u៮ /⵲z [s ⴚ1 ] at x /D ⴝ 2.5 with I ⴝ 1.0
+
+Fig. 6 Eddy diffusivity of momentum in the z direction, ⑀ M,z [m 2 /s], at
+x/D ⴝ 2.5 with I ⴝ 1.0
+
+Journal of Turbomachinery
+
+JANUARY 2000, Vol. 122 / 181
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Fig. 3 Mean velocity distribution u៮ /U 0 (a), v̄, w̄ (b) versus y/D at x/D ⴝ 2.5
+with I ⴝ 1.0
+
+same flow conditions (Burd and Simon, 1999) show a localized
+frequency peak suggestive of a coherent structure, such as vortex
+shedding. This peak occurred at a Strouhal number based on hole
+diameter and free-stream velocity, St D , of 0.06 (for comparison, a
+rigid cylinder of the jet diameter in crossflow of the free-stream
+velocity sheds vortices at St D ⫽ 0.21). Note that in Fig. 6, most
+regions of negative diffusivity are accompanied by neighboring
+regions of higher than average diffusivity (for example, the region
+of ⑀ M,z ⫽ ⫹0.4 m 2/s located at z/D ⫽ 0 and y/D ⫽ 0.75 has an
+adjacent region of ⑀ M,z ⫽ ⫺0.4 m 2/s located at z/D ⫽ 0.125 and
+y/D ⫽ 0.8, a similar pairing can be seen near z/D ⫽ ⫺0.75 and
+y/D ⫽ 0.25), suggesting that in these regions the transport of
+streamwise momentum is enhanced by the coherent unsteadiness
+of adjacent flow.
+Examining Fig. 7, we see a similar range of values for wallnormal diffusivity as seen for the lateral direction transport. Much
+of the flow-field is fairly constant, ranging in value from 0.2 m 2/s
+to 0.4 m 2/s. However, like ⑀ M,z , we still see localized regions of
+negative ⑀ M,y around the periphery of the film cooling jet.
+Figure 8 show the ratio of eddy diffusivities, ⑀ M,z / ⑀ M,y . In the
+region near the jet core ( y/D ⬃ 0.85, ⫺0.5 ⱕ z/D ⱕ 0.5), the
+ratio has, generally, a positive value in the range 1.5– 4.0, clearly
+showing anisotropic behavior. Within the region of strongest lat-
+
+Concluding Remarks
+The results represent detailed documentation of the turbulent
+transport properties present in a film cooling mixing region with
+streamwise-oriented injection. These results provide useful insight
+into the nature of turbulent transport present in these flows, and
+also provide experimental measurements of ⑀ M,z and ⑀ M,y which
+may be useful to computational researchers. From these results, a
+number of conclusions can be made:
+1
+
+Due to the presence of structured unsteadiness in the mixing
+region, negative eddy diffusivities are calculated around the
+periphery of the jet. These negative values suggest that
+future investigations into turbulent transport in these flows
+to account for both the structured and turbulent characteristics of the flow are needed.
+2 Eddy transport is somewhat larger in the lateral direction
+than in the wall-normal direction, and, thus, isotropic turbulence modeling should not be applied. Over a large portion
+of the measured region, the eddy diffusivity ratio, ⑀ M,z / ⑀ M,y ,
+is larger than unity, lying in the range 1.5–2.5. However,
+these values are considerably smaller than those previously
+reported for this flow by Wang et al. (1996).
+3 While computational work incorporating the Bergeles model
+of anisotropy has shown some success, our results show that
+the anisotropy of turbulent transport in this flow is too
+complex to be represented with such a simple model.
+
+Acknowledgments
+
+Fig. 8
+
+Ratio of eddy diffusivities, ⑀ M,z /⑀ M,y , at x/D ⴝ 2.5 with I ⴝ 1.0
+
+182 / Vol. 122, JANUARY 2000
+
+This work is part of a combined study of film cooling with
+lateral injection and short delivery holes sponsored by the Department of Energy and NASA-Lewis Research Center, respectively.
+The DOE project is managed by Dr. Daniel Fant of the South
+Carolina Energy R&D Center and the NASA study Project Monitor is Douglas Thurman. Additional support in the form of a
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Fig. 7 Eddy diffusivity of momentum in the y direction, ⑀ M,y [m 2 /s], at
+x/D ⴝ 2.5 with I ⴝ 1.0
+
+eral shear (see Fig. 4(b), y/D ⬃ 0.4, z/D ⬃ 0.25) we see these
+curious zones of negative ⑀ M,z / ⑀ M,y , attributable to the negative
+values of ⑀ M,z . At the edge of the jet (0.75 ⬍ z/D ⬍ 1.0, y/D ⬍
+0.5), where the jet flow is mixing with the free-stream flow and it
+is presumed that the mixing eddy sizes are larger than in the region
+of strongest lateral shear, ⑀ M,z / ⑀ M,y values range from 1.0 – 4.0,
+again indicating strong anisotropy. Measured values reported by
+Wang et al. (1996) for approximately this same region and in the
+same case, but at x/D ⫽ 5.0, are near 7.0. With the benefit of
+observing the steep gradients in this area (see marked region in via
+Fig. 8), we suspect this difference in values is due to errors in
+Wang et al.’s calculation of gradients. The values of ⭸u៮ /⭸ z reported by Wang et al. were calculated using finite differences
+between two y profiles with spacing ⌬z/D ⫽ 0.333, which
+appears to be too large a spacing to accurately calculate the local
+gradients. This results in calculated gradients that are too small,
+and, thus, larger calculated values of ⑀ M,z and ⑀ M,z / ⑀ M,y . To ensure
+that the present study used a sufficiently small ⌬z/D, preliminary
+data were collected using ⌬z/D ⫽ 0.0833 instead of ⌬z/D ⫽
+0.167, and no significant change in the calculated gradients occurred, so it was concluded that a ⌬z/D ⫽ 0.167 was sufficient.
+In computation, anisotropy has traditionally been incorporated
+by a linear rise in ⑀ M,z / ⑀ M,y from 1.0 to a maximum value of
+⑀ M,z / ⑀ M,y ⫽ 4.5 as the wall is approached, as proposed by Bergeles
+et al. (1978). Recall that this model was based on two-dimensional
+(non-film cooled) turbulent pipe flow data. Xu et al. (1990) and
+Sathyamurthy and Patankar (1992) show that this model improves
+the accuracy of the cooling jet lateral spreading rate. However, our
+current results support the use of an anisotropic transport correction in the general range of values given by the Bergeles et al.
+model, but do not support this particular distribution. Our results
+indicate that the flow field is far more complex than the Bergeles
+et al. model would imply.
+
+graduate fellowship was provided by the National Science Foundation Fellowship program.
+
+References
+
+Journal of Turbomachinery
+
+JANUARY 2000, Vol. 122 / 183
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​122/​1/​178/​5840761/​178_1.​pdf by Cambridge University user on 17 November 2026
+
+Bergeles, G., Gosman, A. D., and Launder, B. E., 1978, “The Turbulent Jet in a
+Cross Stream at Low Injection Rates: A Three-Dimensional Numerical Treatment,”
+Numerical Heat Transfer, Vol. 1, pp. 217–242.
+Burd, S. W., Kaszeta, R. W., and Simon, T. W., 1998, “Measurements in Film
+Cooling Flows: Hole L/D and Turbulence Intensity Effects,” ASME JOURNAL OF
+TURBOMACHINERY, Vol. 120, pp. 791–798.
+Burd, S. W., and Simon, T. W., 1999, “Turbulence Spectra and Length Scales
+Measured in Film Coolant Flows Emerging From Discrete Holes,” ASME JOURNAL OF
+TURBOMACHINERY, Vol. 121, pp. 551–557.
+Eckert, E. R. G., 1987, “Cross Transport of Energy in Fluid Streams,” Wärme Stoff,
+Vol. 21, pp. 73– 81.
+Forth, C. J. P., and Jones, T. V., 1986, “Scaling Parameters in Film Cooling,” Proc.
+8th Intl. Heat Transfer Conference, Vol. 3, pp. 1271–1276.
+Goebel, S. G., Abuaf, N., Lovett, J. A., and Lee, C.-P., 1993, “Measurements of
+Combustor Velocity and Turbulence Profiles,” ASME Paper No. 93-GT-228.
+Kaszeta, R. W., Simon, T. W., Oke, R. A., and Burd, S. W., 1998, “Flow
+Measurements in Film Cooling Flows With Lateral Injection,” ASME Paper No.
+98-GT-54.
+Kohli, A., and Bogard, D. G., 1997, “Adiabatic Effectiveness, Thermal Fields, and
+
+Velocity Fields for Film Cooling With Large Angle Injection,” ASME JOURNAL OF
+TURBOMACHINERY, Vol. 119, pp. 352–358.
+Laufer, J., 1953, “The Structure of Turbulence in Fully-Developed Pipe Flows,”
+NACA Report 1174.
+Leylek, J. H., and Zerkle, R. D., 1994, “Discrete-Jet Film Cooling: A Comparison
+of Computational Results With Experiments,” ASME JOURNAL OF TURBOMACHINERY,
+Vol. 116, pp. 358 –368.
+McMahon, H. M., Hester, D. D., and Palfery, J. G., 1971, “Vortex Shedding from a
+Turbulent Jet in a Cross-Wind,” Journal of Fluid Mechanics, Vol. 48, No. 1, pp. 73– 80.
+Quarmby, A., and Quirk, R., 1974, “Axisymmetric and Non-Axisymmetric Turbulent Diffusion in a Plain Circular Tube at High Schmidt Number,” Intl. Journal
+Heat Mass Transfer, Vol. 17, pp. 143–174.
+Russ, S., and Simon, T. W., 1990, “Signal Processing Using the Orthogonal
+Triple-Wire Equations,” Flow Lines, the TSI quarterly magazine, Winter.
+Sathyamurthy, P., and Patankar, S. V., 1992, “Film Cooling Studies Using a
+Three-Dimensional Parabolic Procedure,” University of Minnesota Supercomputer
+Institute Research Report 92/44.
+Starr, V. P., 1968, Physics of Negative Viscosity Phenomena, McGraw-Hill.
+Wang, L., Tsang, H., Simon, T. W., and Eckert, E. R. G., 1996, “Measurements of
+a Mean Flow and Eddy Transport Over a Film Cooling Surface,” in: Proc. 31st
+National Heat Transfer Conference, Vol. 5, ASME HTD-Vol. 327, pp. 71–79.
+Xu, J. Z., Ko, S. Y., Chen, S. J., and Tsou, F. K., 1990, “Computer Simulation of
+Film-Cooling With Coolants From One and Two Rows of Holes,” ASME Paper No.
+90-WA/HT-7.
+
+

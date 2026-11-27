@@ -1,0 +1,773 @@
+Julia Ling
+Department of Mechanical Engineering,
+Stanford University,
+Stanford, CA 94305
+e-mail: julial@stanford.edu
+
+John K. Eaton
+Department of Mechanical Engineering,
+Stanford University,
+Stanford, CA 94305
+
+It has been previously demonstrated that Reynolds-averaged Navier–Stokes (RANS) simulations do not accurately capture the mixing between the coolant flow and the main flow
+in trailing edge slot film cooling configurations. Most RANS simulations use a fixed turbulent Schmidt number of either 0.7 or 0.85 to determine the turbulent scalar flux, based on
+the values for canonical flows. This paper explores the extent to which RANS predictions
+can be improved by modifying the value of the turbulent Schmidt number. Experimental
+mean 3D velocity and coolant concentration data obtained using magnetic resonance
+imaging techniques are used to evaluate the accuracy of RANS simulations. A range of
+turbulent Schmidt numbers from 0.05 to 1.05 is evaluated and the optimal turbulent
+Schmidt number for each case is determined using an integral error metric which accounts
+for the difference between RANS and experiment throughout a three-dimensional region
+of interest (ROI). The resulting concentration distribution is compared in detail with the
+experimentally measured coolant concentration distribution to reveal where the fixed turbulent Schmidt number assumption fails. It is shown that the commonly used turbulent
+Schmidt number of 0.85 overpredicts the surface effectiveness in all cases, particularly
+when the k-omega shear stress transport (SST) model is employed, and that a lower value
+of the turbulent Schmidt number can improve predictions. [DOI: 10.1115/1.4029206]
+
+Introduction
+Trailing edge slot film cooling is a commonly used active cooling scheme for the thin trailing edges of turbine blades. Modeling
+the turbulent mixing in this flow has proven to be challenging.
+Because of the three-dimensionality of the flow and the inherent
+unsteadiness of vortex shedding off of the slot lip, RANS simulations struggle to predict the mixing of the coolant flow with the
+main flow [1–6]. Large eddy simulations (LES) [7,8] and detached
+eddy simulations (DES) [3] can give more accurate film cooling
+predictions than RANS in film cooling flows. However, because
+of the computational cost of LES and DES, their sensitivity to
+inlet boundary conditions and their reliance on wall models for
+high Reynolds number cases, it is worthwhile to investigate methods for improving RANS predictions.
+In many commercial RANS software packages, the turbulent
+diffusivity is determined by a fixed turbulent Schmidt number as
+shown in Eq. (1), with a default value of Sct ¼ 0.85. This model
+involves the Reynolds analogy between momentum and scalar
+transport
+u0i c0 ¼ 
+
+t dC
+Sct dxi
+
+(1)
+
+However, there is no reason why this value of Sct should be accurate in the complex flow field of trailing edge slot film cooling.
+Multiple previous studies have shown that RANS with Sct ¼ 0.85
+overpredicts the cooling surface effectiveness [2,4,9]. Furthermore, it has been shown in discrete hole film cooling configurations that the calculated film cooling effectiveness is sensitive to
+the turbulent Schmidt number employed [10]. It is also noteworthy that the gradient diffusion hypothesis with an isotropic diffusivity and fixed Sct is one of the simplest models for the turbulent
+scalar fluxes. More complicated models, including the generalized
+gradient diffusion hypothesis (GGDH) and algebraic scalar flux
+
+Contributed by the Turbomachinery Committee of ASME for publication in the
+JOURNAL OF ENGINEERING FOR GAS TURBINES AND POWER. Manuscript received October
+8, 2014; final manuscript received October 13, 2014; published online December 30,
+2014. Editor: David Wisler.
+
+models, have been shown to yield improved accuracy in flows
+around bluff bodies [11] and in discrete hole film cooling flows
+[12]. Nevertheless, the gradient diffusion hypothesis remains a
+popular model both because of its simplicity and because of its
+numerical stability-enhancing properties. Therefore, this paper
+investigates the role of the turbulent Schmidt number in RANS
+simulations of trailing edge film cooling configurations by comparing the simulation results to new velocity and concentration
+data.
+Two different eddy viscosity models are implemented in conjunction with a range of turbulent Schmidt numbers from 0.05 to
+1.05, seeking optimal agreement with experimental data. The
+computations are compared to multiple data sets to assess the generality of the conclusions. To facilitate this, new data sets were
+acquired for a typical trailing edge configuration operated at three
+different blowing ratios (BRs). Comparisons are also made to a
+previously reported experiment that included an internal blockage
+in each slot [13].
+The experiments provided time-averaged three-component velocity data measured throughout the test volume using magnetic
+resonance velocimetry (MRV) [14] and three-dimensional coolant
+concentration measured using magnetic resonance concentration
+(MRC) [15]. The coolant concentration represents temperature in
+the actual application by the passive scalar analogy. This is appropriate because the flow field is highly three-dimensional with large
+scale mixing dominating over molecular and thermal diffusion.
+Therefore, the turbulent Schmidt number should be nearly identical to the turbulent Prandtl number.
+In order to make a quantitative comparison between the RANS
+simulations and experimental results, an integral error metric is
+used. Using this metric, optimal Sct values are determined for
+each of the four cases. The corresponding optimal concentration
+distributions are then compared to the experimental concentration
+distributions to reveal where the model breaks down. The purpose
+of this paper is not to recommend the usage of RANS or a fixed
+turbulent Schmidt number. Rather, the goal of this paper is to
+examine the effect of varying Sct, to determine how far off the
+optimal Sct is from the common default value of 0.85, and to see
+in which regions of the flow the Reynolds analogy is least
+appropriate.
+
+Journal of Engineering for Gas Turbines and Power
+C 2015 by ASME
+Copyright V
+
+JULY 2015, Vol. 137 / 072605-1
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+Christopher J. Elkins
+Department of Mechanical Engineering,
+Stanford University,
+Stanford, CA 94305
+
+Optimal Turbulent Schmidt
+Number for RANS Modeling of
+Trailing Edge Slot Film Cooling
+
+Table 1 Key dimensions of the airfoils
+Component
+
+Dimension (mm)
+
+Airfoil chord length
+Airfoil span
+Length of breakout surface
+Slot height
+Slot lip thickness
+Pin fin diameter
+Fig. 1 Schematic of the test section. Region over which experimental MRC measurements were obtained is indicated by the
+dashed box.
+
+The experimental apparatus has been well-documented in the
+previous studies [13,15,16]. The inlet consists of a series of three
+diffusers equipped with grids, followed by a 2:1 contraction for
+flow conditioning. The test section, shown in Fig. 1, holds an
+uncambered airfoil. Contraction inserts provide a favorable pressure gradient over the airfoil trailing edge region, as would be the
+case for a realistic turbine blade. The airfoil is interchangeable, so
+that airfoils with different trailing edge film cooling configurations
+can be tested.
+Schematics of the two airfoils of interest are shown in Fig. 2.
+Both airfoils are based on a NACA-0012 with a nominal chord
+length of 300 mm, but with the trailing edge blunted to give an
+actual length of 283 mm. The airfoil aspect ratio was 0.27.
+Because the airfoil was symmetric, the main flow was relatively
+spanwise uniform, with weaker secondary flow patterns than
+would be expected for a highly cambered turbine blade. The airfoils each have an internal radially fed coolant plenum that leads
+into a bank of pin fins and then through three slots, separated by
+lands. Two trailing edge configurations are investigated in this
+study. The baseline case has tapered lands 9 mm wide at the slot
+exit and a slot width of 15 mm. The case with a blockage in the
+slot, which will be called the “island airfoil,” has straight lands
+7 mm wide and a slot width of 17 mm. Both airfoils have slot
+heights h of 5 mm. These and other key airfoil dimensions are
+summarized in Table 1. The island airfoil was shown to have a
+dramatically different mean velocity field and concentration distribution [13], so it is used to determine the sensitivity of the optimal
+turbulent Schmidt number to geometric variation.
+
+Experimental Methods
+The experimental measurements were obtained on a 3.0 T
+GE magnetic resonance imaging (MRI) scanner with a transmit–
+receive head coil. The use of MRI techniques necessitated that the
+working fluid be water. Nevertheless, these experiments have
+
+relevance to air flows. The turbulent mixing dominates over the
+molecular mixing, making the effects of varying fluid properties
+negligible. Furthermore, while the absolute Mach number in film
+cooling flows can be near 1.0, the convective Mach number,
+which is a measure of the relative velocity of the coolant and
+main flow, is usually less than 0.5. It is this convective Mach number that is most important in determining the mixing properties of
+the flow [17], and for convective Mach numbers less than 0.5, the
+turbulent structures responsible for most of the mixing should be
+well-represented by incompressible flow [17–19].
+
+MRV
+The 3D mean velocity fields were obtained using MRV. This technique gives the time-averaged velocity field on a Cartesian grid using
+a phase contrast sequence detailed by Elkins et al. [14]. The working
+fluid is a weak copper sulfate solution (0.06 M) in water. The copper
+sulfate serves to increase the signal to noise ratio with respect to
+using pure water but has a negligible impact on the fluid properties.
+The field of view and resolution are summarized in Table 2.
+The velocity field was acquired through a series of 12 “flowon” scans and four “flow-off” scans. The flow-off scans were used
+for background subtraction and were spaced such that each flowoff scan was followed by three flow-on scans. The flow-off scans
+from directly before and after each set of flow-on scans were averaged and then subtracted from those flow-on scans. The resulting
+velocity fields were averaged over the 12 flow-on scans. The
+uncertainty in the velocity field, based on the analysis of Pelc
+et al. [20] and validated by Elkins et al. [14,21], was 5.1% at one
+standard deviation.
+
+MRC
+The 3D mean coolant concentration distribution was measured
+using MRC. This procedure has been documented in several previous studies [13,15]. Two different fluids were used: pure water and
+a 0.015 M copper sulfate solution in water. Because the copper sulfate solution gives a much stronger signal in comparison to the
+pure water, the copper sulfate solution could be used to differentiate the main flow from the coolant flow. The molarity of the copper
+sulfate solution was chosen to ensure that the signal intensity would
+vary linearly with concentration in this range. The resolution and
+field of view for these experiments are summarized in Table 2.
+Four different types of scans are used. In background scans,
+which are used for background subtraction, both the coolant flow
+and the main flow consist of pure water. Reference scans are used
+to normalize the maximum signal intensity, so both the coolant
+flow and main flow consist of copper sulfate solution. In standard
+runs, the main flow is water and the coolant flow is copper sulfate,
+Table 2 MRI scan parameters
+
+Fig. 2 Schematics of the baseline (top) and island (bottom) airfoils. All dimensions are in mm.
+
+072605-2 / Vol. 137, JULY 2015
+
+Parameter
+
+MRV
+
+MRC
+
+Resolution
+
+0.6 mm (streamwise)
+ 0.6 mm (wall-normal)
+ 1.0 mm (spanwise)
+256 mm  137 mm  93 mm
+
+1.0 mm (streamwise)
+ 0.5 mm (wall-normal)
+ 1.0 mm (spanwise)
+256 mm  55 mm  90 mm
+
+Field of
+view
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+Experimental Apparatus
+
+283.0
+76.0
+42.1
+5.0
+3.7
+5.0
+
+while for inverted runs, the reverse is true. By running both standard and inverted runs, the linearity of the signal intensity with
+copper sulfate concentration could be verified. Ten runs of each
+type were averaged to reduce the uncertainty.
+In order to calculate the coolant concentration, the following procedure was used. First, the references were all renormalized to have
+the same average intensity in the ROI and were averaged together.
+The backgrounds were processed in the same manner. The background runs were then scaled for each standard and inverted run to
+match the intensity in regions of known 0% copper sulfate concentration. The concentration was then calculated as shown in Eq. (2)
+for the standard and inverted runs. The standard and inverted concentrations (cs and cI, respectively) were then averaged, and the
+final concentration was constrained to lie in the range [0,1].
+cS ¼
+
+SB
+;
+RB
+
+cI ¼ 1 
+
+IB
+RB
+
+(2)
+
+In these equations, S, I, R, and B are the signal intensities of the
+standard, inverted, reference, and background runs, respectively.
+One important quantity that can be determined based on the
+coolant concentration distribution is the adiabatic surface effectiveness. Because the passive scalar analogy for temperature is being
+employed, the surface effectiveness is given by the coolant concentration at the cutback surface. The analogous condition for adiabaticity is no penetration, which is preserved perfectly. Because of
+the finite resolution of MRC, partial volume effects, in which a volumetric pixel (“voxel”) lies partially in the surface and partially in
+the flow, thereby giving an artificially lower concentration value,
+make it difficult to measure the concentration right at the surface.
+To mitigate partial volume effects, the surface effectiveness was
+taken to be the maximum concentration within 1 mm (0.2 h) of the
+surface. The uncertainty of the surface effectiveness measurements
+was calculated by finding the variance of each of the four scan
+types over the region relevant to determining the surface effectiveness and then using the Student-t distribution to calculate the 95%
+confidence interval for each scan type. The uncertainty in the concentration was then determined using the rule of partial derivatives
+based on the uncertainty in each scan type. An additional 3%
+uncertainty was combined with this based on the partial volume
+effect, yielding a total uncertainty of 5.9% at 95% confidence.
+
+given by the bulk-averaged main flow velocity at the plane of the
+slot exit, was 0.39 m/s and was kept constant in all cases. This
+yielded a Reynolds number of 110,000 based on the airfoil chord
+length and bulk velocity. The BR is the momentum ratio between
+the coolant flow and the main flow at the plane of the slot exit. The
+baseline configuration was tested at three BRs: 0.7, 1.0, and 1.3. The
+island case was tested at a BR of 1.3. Because the working fluid was
+water, the density ratio was 1.0, so the BR was equivalent to the velocity ratio at the plane of the slot exit.
+
+Experimental Results
+While the main objective of this paper is to use the experimental results as a benchmark against which to compare the RANS
+simulations, it is worthwhile to start by briefly examining the experimental data. Contours of surface effectiveness are shown in
+Fig. 3 for all four cases. As can be seen from this figure, the surface effectiveness varies significantly in the spanwise direction, so
+centerline comparisons between RANS and experiment will not
+be sufficient. In the island case, the surface effectiveness is highest along the centerline because of the presence of a horseshoe
+vortex pair that forms downstream of the blockage in the slot [13].
+Figure 4 shows the spanwise averaged surface effectiveness to
+provide a more quantitative comparison between the performance
+
+Experimental Parameters
+Four data sets will be used for comparison against RANS in this
+paper. These data sets include a baseline configuration at three BRs
+as well as the island configuration at a single BR. The bulk velocity,
+Journal of Engineering for Gas Turbines and Power
+
+Fig. 4 Spanwise averaged surface effectiveness. Results from
+Holloway et al. [4] and Martini et al. [22] shown for comparison.
+
+JULY 2015, Vol. 137 / 072605-3
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+Fig. 3 Contours of surface effectiveness (%). (a) Baseline, BR 5 0.7, (b) baseline, BR 5 1.0, (c) baseline, BR 5 1.3, and
+(d) island, BR 5 1.3.
+
+of the various BRs. Because the surface effectiveness on the tops
+of the lands is very low, the tops and sides of the lands are
+excluded from this average. As can be seen from this figure, the
+spanwise averaged surface effectiveness is relatively similar
+between the two BR ¼ 1.3 cases and the BR ¼ 1.0 case. The
+BR ¼ 0.7 case has slightly lower spanwise averaged surface effectiveness. The fact that the BR ¼ 1.3 cases do not perform better
+than the BR ¼ 1.0 case suggests more intense mixing at BR ¼ 1.3.
+Data from two other experiments in the literature are shown for
+comparison. Holloway et al. [4] measured carbon dioxide concentration through surface taps to find the centerline surface effectiveness on a similar geometry, but with wider lands, at BR ¼ 1.0.
+Martini et al. [22] used infrared techniques to measure a laterally
+averaged surface effectiveness for a configuration without lands at
+BR ¼ 1.25. As can be seen in Fig. 4, Holloway et al. measured
+lower surface effectiveness and Martini et al. found slightly higher
+surface effectiveness than the current experiments. However,
+these discrepancies are most likely due to variation in geometry
+between the different experiments. All the experiments agree that
+the surface effectiveness drops below 90% by x=h ¼ 8.
+
+Computational Methods
+A 5.5  106 cell mesh was created for each case with hexahedral cells. Figure 5 shows the computational domain as well as a
+section of the mesh in the breakout region to indicate the grid resolution. Boundary layer meshes were used in the coolant plenum
+and on the surface of the airfoil with yþ  1. A symmetry
+
+Computational Results
+Velocity Field. There are two different sources of modeling
+error in the RANS computation. The first is modeling the
+
+Fig. 6 Contours of streamwise velocity 0.5 h above the breakout surface in a plane parallel
+to the breakout surface. Units of (m/s). Solid regions of airfoil shown in white. (a) Experiment, (b) RANS RKE, and (c) RANS k-omega SST.
+
+072605-4 / Vol. 137, JULY 2015
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+Fig. 5 Computational domain for RANS simulations. Zoomedin box shows section of mesh in the breakout region.
+
+condition was imposed in the spanwise direction such that only
+half of a slot and half of a land were meshed. The coolant inlet
+was axially fed upstream of the pin fin array. This is in contrast to
+the radially fed case of the experiment, but the pin fin array gave a
+relatively uniform flow out of each of the slots in the experiment
+(the flow rate varied by less than 5% between the three slots), justifying this assumption. The main flow inlet was set 45 mm (9 slot
+heights) upstream of the airfoil leading edge and the outlet was set
+135 mm (27 slot heights) downstream of the trailing edge, as
+shown in Fig. 5. The main inlet velocity was set at 0.19 m/s, with
+6 mm thick boundary layers on the top and bottom walls, and the
+turbulence levels were set to give low levels of turbulent viscosity
+in the freestream (t ¼ 1  106 m2 =s) and higher levels in the
+boundary layers (t ¼ 5  106 m2 =s). The molecular viscosity of
+water is 1  106 m2/s at 20  C. Uniform velocity inlet conditions
+were prescribed for the coolant inlet, with the velocity chosen to
+give the correct BR at the slot exit. The turbulence inlet conditions
+for the coolant flow were 2% turbulent intensity and a length scale
+of 5 mm. The outlet was set to be a constant pressure outlet. These
+conditions led to the prediction of a turbulent boundary layer on
+the airfoil exterior, as would be expected for the pressure side of a
+turbine blade at engine conditions.
+Two different RANS models were used: k-omega SST and realizable k-epsilon (RKE). These two models were chosen because
+of their widespread usage for film cooling applications [23,24].
+The commercial software FLUENT 12 was used to solve the flow,
+with the enhanced wall treatment option selected for the RKE
+model. The turbulent scalar fluxes were modeled using a turbulent
+diffusivity determined by a fixed Sct. Eight values of Sct, ranging
+between 0.05 and 1.05, were tested. The PRESTO pressure solver,
+SIMPLEC coupling method, and second order upwind momentum
+and scalar solvers were employed. At convergence, the scaled
+residuals had decayed to less than 103 for k-omega SST and less
+than 106 for RKE. RKE had stronger convergence than k-omega
+SST because it predicted higher levels of turbulent viscosity,
+which aided in the convergence. Grid convergence was confirmed
+by running an RKE simulation for the baseline geometry at
+BR ¼ 1.3 on a grid with double the number of cells in the plenum
+and breakout regions and 8.7  106 cells total. The turbulent viscosity differed by less than 2% on average in the breakout region
+between the two grid sizes.
+
+Reynolds stresses, and the second is modeling the turbulent scalar
+fluxes. Errors in the calculated Reynolds stresses will affect the
+velocity field. Errors in the concentration distribution arise both
+from an incorrect velocity field and from an incorrect turbulent
+scalar fluxes. It is therefore important to examine errors in the velocity field first in order to understand errors in the concentration
+distribution. Figure 6 shows contours of streamwise velocity from
+experiment and RANS in a plane parallel to the breakout surface,
+0.5 h above the breakout floor for the baseline case, BR ¼ 1.3.
+This case serves as a representative example of the accuracy of
+the RANS velocity fields.
+As can be seen from Fig. 6, RKE does a much better job of
+accurately predicting the velocity field. Both models overestimate
+the extent of the wake behind the pin fins, but k-omega SST does
+so much more drastically. The result is that while the experiment
+shows relatively uniform flow in the center slot by the plane of the
+slot exit (where the lands start to taper), both RKE and especially
+k-omega SST show greater variation in the spanwise direction.
+This error is indicative of insufficient turbulent viscosity in the
+wake of the pin fins.
+
+edge and slot lip. However, RKE predicts levels of turbulent viscosity that are 2–4 times higher than those predicted by k-omega
+SST in both of these regions. The lower levels of turbulent viscosity help to explain why k-omega SST overpredicted the velocity
+wakes in the pin fin array. They also indicate that k-omega SST
+will predict lower levels of coolant mixing with the main flow in
+the breakout region.
+Concentration Distribution. Because of the highly 3D nature
+of the flow field, profile comparisons or centerplane comparisons
+are insufficient to determine the error in the RANS concentration
+
+Turbulent Viscosity and Diffusivity. Based on the Reynolds
+analogy, the turbulent diffusivity, at, and turbulent viscosity,  t, in
+the RANS simulations are related based on the turbulent Schmidt
+number: Sct ¼ t =at . Therefore, contours of turbulent viscosity
+give information not only about the Reynolds stresses but also
+about the turbulent scalar fluxes. Figure 7 shows contours of turbulent viscosity for the baseline configuration at BR ¼ 1.3 for
+both RANS models on two planes: a plane parallel to the breakout
+surface 0.5 h above the surface and the slot symmetry plane.
+Because MRI techniques provide only the mean velocity field,
+there is no MRI data for comparison.
+Figure 7 shows that both models predict elevated levels of turbulent viscosity in the pin fin array and in the wakes of the trailing
+
+Fig. 8 Diagram of the ROIs for evaluating the integral error
+metric. ROI-1 shown outlined in black. ROI-2 outlined in white.
+
+Journal of Engineering for Gas Turbines and Power
+
+Fig. 9 Integral error metric as a function of turbulent Schmidt
+number, evaluated over both ROIs. (a) ROI-1 and (b) ROI-2.
+
+JULY 2015, Vol. 137 / 072605-5
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+Fig. 7 Contours of turbulent viscosity normalized by molecular viscosity. Solid regions of airfoil shown in white. (a) RANS RKE, plane 0.5 h above breakout. (b) RANS k-omega SST, plane
+0.5 h above breakout; (c) RANS RKE, symmetry plane; and (d) RANS k-omega SST, symmetry
+plane.
+
+Table 3 Optimal values of turbulent Schmidt number
+
+Case
+Baseline, BR ¼ 0.7
+Baseline, BR ¼ 1.0
+Baseline, BR ¼ 1.3
+Island, BR ¼ 1.3
+
+k-w SST,
+ROI-1
+
+RKE,
+ROI-1
+
+k-w SST,
+ROI-2
+
+RKE,
+ROI-2
+
+0.075
+0.10
+0.10
+0.25
+
+0.85
+0.65
+0.45
+0.65
+
+0.05
+0.075
+0.05
+0.075
+
+0.45
+0.45
+0.25
+0.45
+
+E¼
+
+1X
+jcRANS  cMRC j
+n ROI
+
+(3)
+
+where cRANS is the calculated concentration from RANS, cMRC is
+the measured concentration from MRC, and the sum is taken over
+all measurement points within a ROI. Ling et al. [25] compared
+this error metric to several other possible choices and demonstrated that the optimization process was robust with respect to the
+choice of error metric. This metric was chosen because of its relative insensitivity to experimental outliers as compared to a root
+mean squared type error.
+In order to find the difference between the RANS and experimental concentrations, the experimentally measured distribution
+was first interpolated onto the RANS grid. Ideally, the ROI
+should be a region in which it is critical that RANS have good
+predictions and also where the experimental uncertainty is low.
+Two different ROIs were chosen for examination and are illustrated in Fig. 8. Both ROIs are restricted in the streamwise
+
+Fig. 10 Contours of coolant concentration for (a) experiment, surface effectiveness; (b) experiment, centerplane; (c) RKE,
+surface effectiveness (Sct 5 0.25); (d) RKE, centerplane (Sct 5 0.25); (e) k-omega SST, surface effectiveness (Sct 5 0.05); (f)
+k-omega SST, centerplane (Sct 5 0.05)
+
+072605-6 / Vol. 137, JULY 2015
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+distribution. Furthermore, in order to determine the optimal
+Sct for each case, a quantitative error metric is required. Therefore, an integral error metric, E, based on the metric described in
+Ref. [25], is proposed:
+
+direction to lie between the slot lip and the trailing edge and in
+the spanwise direction to lie above the breakout surface (i.e., not
+over the lands). Because the RANS simulations only calculate the
+flow over half of the slot, only one half of the breakout region of
+the center slot is contained within the ROI. In the wall-normal
+direction, the first ROI (ROI-1) goes from the breakout floor to
+2 h above it, encompassing the full mixing region in which the
+coolant concentration is greater than 5%. The value of E in this
+ROI should indicate the extent to which the RANS model is correctly predicting the mixing in the wake of the slot lip. The second ROI (ROI-2) goes from the breakout floor to 0.5 h above it,
+including only the near-surface region. This ROI is relevant to
+the model’s ability to correctly predict the surface effectiveness.
+The disadvantage of ROI-2 as compared to ROI-1 is that it has
+fewer points within it, and that those points correspond to experimental data with higher uncertainty, because of partial volume
+effects.
+The integral error metric was evaluated for eight separate
+RANS simulations: three BRs for the baseline case and a single
+BR for the island case, each for RKE and k-omega SST. For
+each of the eight simulations, eight passive scalar distributions
+were calculated with turbulent Schmidt numbers ranging from
+0.05 up to 1.05, and the integral error metric was evaluated
+over both ROIs. This range of Sct values was chosen in an effort
+to include the optimal Sct values for a wide variety of cases.
+Figure 9 shows the error metric as a function of Sct for all eight
+simulations. Table 3 lists the optimal Sct values for each case,
+where the optimal value of Sct is where E is minimized. It
+should be noted that in two cases, the minimum value for error
+occurs at Sct ¼ 0.05, but no lower value of Sct was tested, so it
+is possible that the optimal value of Sct in those cases was
+actually lower.
+From Fig. 9, it can be seen that the accuracy of the concentration distribution depends strongly on the choice of Sct for both
+
+Conclusions
+RANS simulations of coolant/main-flow mixing in a trailing
+edge slot film cooling configuration were compared to 3D
+experimental data obtained using MRI techniques. A range of
+turbulent Schmidt numbers were tested to determine which
+value gave the best match to experimental data and where the
+Reynolds analogy breaks down. It was shown that k-omega SST
+Journal of Engineering for Gas Turbines and Power
+
+did not accurately capture either the velocity field or the concentration distribution and required very low turbulent Schmidt
+numbers to give even a rough estimate of the surface effectiveness. RKE not only did an overall better job of predicting the
+velocity field and concentration distribution, but also required a
+value of Sct lower than 0.85 to give the best match for the surface effectiveness. While the optimal value of Sct varied
+between BRs and film cooling configurations, Sct ¼ 0.45 gave
+improved surface effectiveness predictions in all cases in comparison to Sct ¼ 0.85. However, this value of Sct did not necessarily accurately capture the coolant concentration distribution
+elsewhere in the flow. Because MRI techniques provide the full
+3D concentration distribution, it was also possible to make comparisons along the slot centerplane. This analysis revealed that
+by tuning the turbulent Schmidt number to get a more accurate
+surface effectiveness, the coolant distribution elsewhere became
+less accurate.
+Our main conclusions are enumerated below:
+(1) k-omega SST underpredicts the turbulent viscosity in the
+pin fin array and in the wake of the slot lip, leading to inaccurate velocity and concentration distributions.
+(2) The default value of Sct ¼ 0.85 overpredicts the surface
+effectiveness in all cases.
+(3) A fixed turbulent Schmidt number is not able to accurately
+predict the coolant concentration distribution everywhere in
+the cutback region, demonstrating that the Reynolds analogy is not sufficient in this flow field.
+It is therefore suggested that more realistic models for the turbulent scalar flux are required in order to accurately model this
+flow. One possible avenue for improving RANS modeling of trailing edge configurations would be to use values of turbulent diffusivity or Sct determined from high fidelity LES simulations of
+such flows. However, it remains an open question whether such
+extrapolations can generalize across variations in cutback geometries and flow parameters.
+
+Acknowledgment
+This work was supported by GE Aircraft Engines. J. Ling was
+supported by a National Science Foundation Graduate Fellowship.
+The authors gratefully acknowledge the use of resources at the
+Richard M. Lucas Center for Imaging at Stanford. The authors
+acknowledge the following award for providing computing
+resources that have contributed to the research results reported
+within this paper: MRI-R2: Acquisition of a Hybrid CPU/GPU
+and Visualization Cluster for Multidisciplinary Studies in Transport Physics with Uncertainty Quantification, Award No.
+0960306. This award is funded under the American Recovery and
+Reinvestment Act of 2009 (Public Law 111-5).
+
+Nomenclature
+B¼
+BR ¼
+C¼
+c0 ¼
+cI ¼
+cMRC ¼
+cRANS ¼
+cS ¼
+E¼
+h¼
+I¼
+n¼
+R¼
+ROI ¼
+S¼
+
+signal magnitude in background MRC run
+blowing ratio
+mean coolant concentration
+fluctuating component of coolant concentration
+coolant concentration as calculated from inverted MRC
+run
+experimentally measured coolant concentration
+RANS coolant concentration
+coolant concentration as calculated from standard MRC
+run
+integral error metric
+slot height
+signal magnitude in inverted MRC run
+number of points within a given ROI
+signal magnitude in reference MRC run
+region of interest
+signal magnitude in standard MRC run
+JULY 2015, Vol. 137 / 072605-7
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+models. It is also notable that the optimal values of Sct are much
+lower for k-omega SST than for RKE. This is not unexpected
+given that Fig. 7 showed that k-omega SST predicted much lower
+levels of turbulent viscosity. The optimal values of Sct for
+k-omega SST are approximately ten times smaller than the default
+value of 0.85. Most likely, this is due at least in part to underprediction of the turbulent viscosity, not just to differences in
+momentum transport versus scalar transport. Since the integral
+error metric is the average error magnitude over the ROI, it is also
+apparent that in ROI-1, RKE more accurately predicts the concentration distribution, leading to lower error levels at the optimal Sct
+than in the k-omega SST simulations. Furthermore, in ROI-1,
+Sct ¼ 0.85 does not seem like an unreasonable assumption for
+RKE at a BR of 0.7. However, at the higher BRs, lower values of
+Sct are required for both ROIs and both trailing edge configurations. The optimal Sct value for the island airfoil is relatively consistent with the baseline case at BR ¼ 1.3, indicating that the
+optimal Sct is not highly sensitive to the presence of internal structures in the slot or to the land geometry.
+However, in ROI-2, which is more relevant to surface effectiveness predictions, RKE requires a lower Sct than it did in ROI-1,
+nearer to half of the default value of 0.85. This is because RKE
+predicts low levels of turbulent viscosity in the boundary layer
+near the breakout surface. The fact that a different Sct value is
+required to accurately calculate the concentration in different
+regions of the flow undermines the validity of the Reynolds analogy for this flow.
+It is useful to compare the concentration distribution from the
+optimal RANS simulations to the experimental values. Figure 10
+shows contours of concentration for the baseline configuration at
+BR ¼ 1.3 for the values of Sct that were optimal for ROI-2, the
+near-surface ROI. The contours of concentration from the experiment are shown for comparison.
+Figures 10(a), 10(c), and 10(e) show contours of surface
+effectiveness. Based on these plots, RKE seems to do a reasonably good job of predicting both the centerline surface effectiveness and its spanwise variation. In contrast, k-omega SST does
+not capture the spanwise variation correctly, perhaps because it
+did not accurately predict the spanwise variation of the streamwise velocity. Figures 10(b), 10(d), and 10(f) show contours of
+coolant concentration on the slot symmetry plane. From these
+contours, it becomes clear that neither RKE nor k-omega SST is
+accurately capturing the full 3D concentration distribution.
+While Sct ¼ 0.25 was the optimal value for RKE in ROI-2, it
+was lower than the optimal value in ROI-1. Accordingly,
+Sct ¼ 0.25 gives a good match for the surface effectiveness, but
+overestimates the mixing in the wake of the slot lip. In fact,
+only a very thin layer of high concentration persists near the surface, preserved by the layer of low turbulent viscosity near the
+breakout surface. The symmetry plane contours for k-omega
+SST are also inaccurate, overestimating the mixing on the coolant side of the slot lip and underestimating the mixing on the
+main flow side.
+Based on the surface effectiveness contours and velocity
+field, it seems as if RKE is substantially more accurate than
+k-omega SST in these configurations. However, by comparing
+centerplane concentration contours, it becomes clear that in
+order to get the right surface effectiveness, the turbulent
+Schmidt number must be tuned in such a way that it gives the
+wrong concentration distribution elsewhere. Such a fix cannot
+be expected to be reliable.
+
+Sct ¼
+ui 0 ¼
+at ¼
+t ¼
+
+turbulent Schmidt number
+fluctuating component of velocity
+turbulent diffusivity
+turbulent viscosity
+
+References
+
+072605-8 / Vol. 137, JULY 2015
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​gasturbinespower/​article-pdf/​137/​7/​072605/​6168161/​gtp_137_07_072605.​pdf by Cambridge University user on 11 November 2026
+
+[1] Schneider, H., Bauer, H., von Terzi, D., and Rodi, W., 2012, “Coherent Structures in Trailing-Edge Cooling and the Challenge for Turbulent Heat Transfer
+Modelling,” ASME Paper No. GT2012-69771.
+[2] Martini, P., and Schulz, A., 2004, “Experimental and Numerical Investigation
+of Trailing Edge Film Cooling by Circular Coolant Wall Jets Ejected From a
+Slot With Internal Rib Arrays,” ASME J. Turbomach., 126(2), pp. 229–236.
+[3] Martini, P., Schulz, A., Bauer, H.-J., and Whitney, C., 2006, “Detached Eddy
+Simulation of Film Cooling Performance on the Trailing Edge Cutback of Gas
+Turbine Airfoils,” ASME J. Turbomach., 128(2), pp. 292–299.
+[4] Holloway, D., Leylek, J., and Buck, F., 2002, “Pressure-Side Bleed Film Cooling: Part 1—Steady Framework for Experimental and Computational Results,”
+ASME Paper No. GT2002-30471.
+[5] Medic, G., and Durbin, P., 2005, “Unsteady Effects on Trailing Edge Cooling,”
+ASME J. Heat Transfer, 127(4), pp. 388–392.
+[6] Ravelli, S., and Barigozzi, G., 2013, “Evaluation of RANS Predictions on a
+Linear Nozzle Vane Cascade With Trailing Edge Cutback Film Cooling,”
+ASME Paper No. GT2013-94694.
+[7] Schneider, H., von Terzi, D., and Bauer, H.-J., 2010, “Large-Eddy Simulations
+of Trailing-Edge Cutback Film Cooling at Low Blowing Ratio,” Int. J. Heat
+Fluid Flow, 31(5), pp. 767–775.
+[8] Tyagi, M., and Acharya, S., 2003, “Large Eddy Simulation of Film Cooling Flow
+From an Inclined Cylindrical Jet,” ASME J. Turbomach., 125(4), pp. 734–742.
+[9] Martini, P., Schulz, A., Whitney, C., and Lutum, E., 2003, “Experimental and Numerical Investigation of Trailing Edge Film Cooling Downstream of a Slot With Internal
+Rib Arrays,” Proc. Inst. Mech. Eng., Part A: J. Power Energy, 217(4), pp. 393–401.
+[10] Liu, C., Zhu, H., and Bai, J., 2008, “Effect of Turbulent Prandtl Number on the
+Computation of Film Cooling Effectiveness,” Int. J. Heat Mass Transfer,
+51(25–26), pp. 6208–6218.
+[11] Rossi, R., Philips, D., and Iaccarino, G., 2010, “A Numerical Study of Scalar
+Dispersion Downstream of a Wall-Mounted Cube Using Direct Simulations and
+Algebraic Flux Models,” Int. J. Heat Fluid Flow, 31(5), pp. 805–819.
+[12] Xueying, L., Yanmin, Q., Jing, R., and Hongde, J., 2013, “Algebraic Anisotropic Turbulence Modeling of Compound Angled Film Cooling Validated by
+PIV and PSP Measurements,” ASME Paper No. GT2013-94662.
+
+[13] Ling, J., Yapa, S., Benson, M., Elkins, C., and Eaton, J., 2013, “3D Velocity
+and Scalar Field Measurements of an Airfoil Trailing Edge With Slot Film
+Cooling: The Effect of an Internal Structure in the Slot,” ASME J. Turbomach.,
+135(3), p. 031018.
+[14] Elkins, C., Markl, M., Pelc, N., and Eaton, J., 2003, “4D Magnetic Resonance
+Velocimetry for Mean Velocity Measurements in Complex Turbulent Flows,”
+Exp. Fluids, 34(4), pp. 494–503.
+[15] Benson, M., Elkins, C., and Eaton, J., 2011, “3D Velocity and Scalar Field
+Diagnostics Using Magnetic Resonance Imaging With Applications in FilmCooling,” Stanford University, Stanford, CA, Turbulent Flow Report No.
+123.
+[16] Benson, M., Elkins, C., and Eaton, J., 2011, “Measurements of 3D Velocity
+and Scalar Field for a Film-Cooled Airfoil Trailing Edge,” Exp Fluids, 51(2),
+pp. 443–455.
+[17] Papamoschou, D., and Roshko, A., 1988, “The Compressible Turbulent Shear
+Layer: An Experimental Study,” J. Fluid Mech., 197, pp. 453–477.
+[18] Maqbool, D., and Cadou, C., 2011, Master’s thesis, University of Maryland,
+College Park, MD.
+[19] Barigozzi, G., Armellini, A., Mucignat, C., and Casarsa, L., 2012,
+“Experimental Investigation of the Effects of Blowing Conditions and Mach
+Number on the Unsteady Behavior of Coolant Ejection Through a Trailing
+Edge Cutback,” Int. J. Heat Fluid Flow, 37, pp. 37–50.
+[20] Pelc, N., Sommer, F., Li, K., Brosnan, T., Herfkens, R., and Enzmann, D.,
+1994, “Quantitative Magnetic Resonance Flow Imaging,” Magn. Reson. Q.,
+10(3), pp. 125–147.
+[21] Elkins, C., Markl, M., Iyengar, A., Wicker, R., and Eaton, J., 2004, “Full-Field
+Velocity and Temperature Measurements Using Magnetic Resonance Imaging
+in Turbulent Complex Internal Flows,” Int. J. Heat Fluid Flow, 25(5), pp.
+702–710.
+[22] Martini, P., Schulz, A., and Bauer, H.-J., 2006, “Film Cooling Effectiveness
+and Heat Transfer on the Trailing Edge Cutback of Gas Turbine Airfoils
+With Various Internal Cooling Designs,” ASME J. Turbomach., 128(1), pp.
+196–205.
+[23] Harrison, K., and Bogard, D., 2008, “Comparison of RANS Turbulence Models
+for Prediction of Film Cooling Performance,” ASME Paper No. GT200851423.
+[24] Bradley, A., Najafabadi, H., Karlsson, M., and Wren, J., 2011, “Towards Efficient CFD-Simulations of Engine Like Turbine Guide Vane Film Cooling,”
+AIAA Paper No. 2011-708.
+[25] Ling, J., Coletti, F., Yapa, S., and Eaton, J., 2013, “Experimentally Informed
+Optimization of Turbulent Diffusivity for a Discrete Hole Film Cooling Geometry,” Int. J. Heat Fluid Flow, 44, pp. 348–357.
+
+

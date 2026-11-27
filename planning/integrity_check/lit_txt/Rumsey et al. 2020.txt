@@ -1,0 +1,1098 @@
+AIAA JOURNAL
+Vol. 58, No. 10, October 2020
+
+Improvements to the Quadratic Constitutive Relation
+Based on NASA Juncture Flow Data
+C. L. Rumsey∗ and J.-R. Carlson†
+NASA Langley Research Center, Hampton, Virginia 23681
+T. H. Pulliam‡
+NASA Ames Research Center, Moffett Field, California 94035
+and
+P. R. Spalart§
+Boeing Commercial Airplanes, Seattle, Washington 98124
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+https://doi.org/10.2514/1.J059683
+Modifications to the quadratic constitutive relations (QCRs) of Spalart (“Strategies for Turbulence Modelling and
+Simulation,” International Journal of Heat and Fluid Flow, Vol. 21, 2000, pp. 252–263) and Mani et al. (“Predictions
+of a Supersonic Turbulent Flow in a Square Duct,” AIAA Paper 2013-0860, Jan. 2013) are proposed. These
+modifications result from computational fluid dynamics (CFD) studies in the FUN3D and OVERFLOW solvers of
+the flowfield in the body boundary layer and near-corner region of the NASA Juncture Flow model. When used in
+conjunction with the Spalart–Allmaras turbulence model with rotation/curvature correction, the new relations
+improve the CFD Reynolds normal stress predictions, as compared with the experiment. This improvement leads
+to better predictions of separated corner flow behavior across a wide range of angles of attack that were measured,
+somewhat beyond the original QCR effect. The model’s performance in a square duct, driven by turbulence-induced
+vortices, is slightly improved. The QCR remains fairly simple to program and compatible with other eddy-viscosity
+models.
+
+Nomenclature
+a1
+Ccr1 , Ccr2
+
+=
+=
+
+0 , C0
+Ccr1
+cr2
+00
+00
+Ccr1
+, Ccr2
+Cfw1 , Cfw2
+C2 , C3
+cf
+cf;x
+cv1
+cw2 , cw3
+D
+d
+fv1 , fv2
+fw
+g
+k
+M
+Oij
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+Re
+Reθ
+r
+Sij
+Sij
+
+=
+=
+=
+=
+=
+
+structure parameter
+constants used in quadratic constitutive relation
+models
+constants used in QCR2020 model
+functions used in QCR2020 model
+constants used in QCR2020 model
+constants from Spalart–Allmaras model
+surface skin friction coefficient
+surface skin friction coefficient in the x direction
+constant from Spalart–Allmaras model
+constants from Spalart–Allmaras model
+square duct width, m
+distance to the nearest wall, m
+variables from Spalart–Allmaras model
+function from Spalart–Allmaras model
+function from Spalart–Allmaras model
+turbulent kinetic energy, m2 ∕s2
+Mach number
+tensor used in quadratic constitutive relation
+models
+Reynolds number
+Reynolds number based on momentum thickness
+function from Spalart–Allmaras model
+strain rate tensor, s−1
+traceless strain rate tensor, s−1
+
+S
+S^
+U
+ui
+
+=
+=
+=
+=
+
+ui0
+ui0 uj0
+W ij
+xi
+
+=
+=
+=
+=
+
+α
+δ
+δij
+κ
+μt
+ν
+ν^
+ρ
+τij
+χ
+Ω
+hi
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+
+function from Spalart–Allmaras model, s−1
+source term in Spalart–Allmaras model, s−1
+velocity, m∕s
+(u1 , u2 , u3 ), Cartesian velocity components (u, v,
+w), m∕s
+(u10 , u20 , u30 ), velocity fluctuation (u 0 , v 0 , w 0 ), m∕s
+velocity fluctuation correlation tensor, m2 ∕s2
+vorticity tensor, s−1
+(x1 , x2 , x3 ), Cartesian coordinates (x, y, z), m (mm
+where noted)
+angle of attack, deg
+boundary-layer thickness, m
+Kronecker delta
+von Karman constant
+turbulent eddy viscosity, kg∕m ⋅ s
+molecular kinematic viscosity, m2 ∕s
+Spalart–Allmaras turbulence variable, m2 ∕s
+density, kg∕m3
+Reynolds stress tensor, −hρui0 uj0 i, kg∕m ⋅ s2 
+variable from Spalart–Allmaras model
+vorticity; also modified vorticity, s−1
+long time average
+
+=
+=
+=
+=
+=
+=
+
+centerline
+QCR2000 model
+QCR2013 model
+QCR2013-V model
+QCR2020 model
+reference
+
+=
+
+linear model
+
+Subscripts
+CL
+QCR2000
+QCR2013
+QCR2013v
+QCR2020
+ref
+
+Received 10 April 2020; revision received 2 June 2020; accepted for
+publication 3 June 2020; published online 29 June 2020. This material is
+declared a work of the U.S. Government and is not subject to copyright
+protection in the United States. All requests for copying and permission
+to reprint should be submitted to CCC at www.copyright.com; employ
+the eISSN 1533-385X to initiate your request. See also AIAA Rights and
+Permissions www.aiaa.org/randp.
+*Senior Research Scientist, Computational AeroSciences Branch, Mail
+Stop 128. Fellow AIAA.
+†
+Senior Research Scientist, Computational AeroSciences Branch, Mail
+Stop 128. Associate Fellow AIAA.
+‡
+Retired Senior Research Scientist, Computational Aerosciences Branch,
+Mail Stop 258-2. Associate Fellow AIAA.
+§
+Boeing Senior Technical Fellow, MS 0R-221. Senior Member AIAA.
+
+Superscript
+L
+
+I.
+
+I
+4374
+
+Introduction
+
+N THIS study, modifications to the quadratic constitutive relations
+(QCRs) of Spalart [1] and Mani et al. [2] are proposed, based on
+
+4375
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+RUMSEY ET AL.
+
+the NASA Juncture Flow (JF) experiment [3–5]. The purpose of the
+JF experiment was to provide computational fluid dynamics (CFD)
+practitioners with high-quality mean and turbulence flowfield data in
+the near-corner region of a wing–fuselage junction that experiences
+separation. This area was of concern at the AIAA CFD Drag
+Prediction Workshops [6–8]. The test was designed to be a “CFD
+validation” experiment by modern standards, with considerable
+effort devoted to establishing information, including boundary
+conditions and experimental uncertainty, needed by CFD to match
+the experimental setup as closely as possible. Very detailed turbulence measurements were also made possible by a creative use of
+instrumentation. The key needs from CFD’s perspective are 1) the
+assurance that major differences between CFD and experimental
+flowfields are due primarily to inadequacies of the turbulence models
+and not to inconsistencies in how CFD is physically representing the
+experiment, and 2) that errors between CFD and the experiment take
+into account all relevant uncertainties (i.e., CFD should be considered
+incorrect only if its uncertainty bounds lie outside of realistic uncertainty bounds of the experiment). With these assurances, efforts
+to improve the turbulence models can then proceed with more
+confidence.
+Several Reynolds-averaged Navier–Stokes (RANS) CFD efforts
+have been conducted to date, comparing predictions with the JF
+experiment [9–14]. These efforts have included grid-resolution studies (to ascertain the influence of numerical discretization errors on
+quantities of interest) as well as free-air versus in-tunnel studies
+(to ascertain the influence of wind tunnel walls). When making use
+of the Spalart–Allmaras (SA) turbulence model [15] with rotation/
+curvature correction (RC) [16] and a quadratic constitutive relation
+(QCR) (either QCR2000 [1] or QCR2013 [2]), the onset of separation
+on the NASA JF model was predicted too far upstream, with separation length in error by roughly 30%. It should be noted that even
+though SA-RC-QCR predicted separation onset too far upstream, the
+inclusion of QCR dramatically improved the results compared with
+SA-RC alone, which predicted about 100% error in separation
+length. Significant qualitative improvement from QCR has been seen
+in other junction flow studies, both with SA as well as with other
+linear models [17–19]. QCR can be applied with other eddy-viscosity
+models, normally without adjustment. However, for two-equation
+models, the internal value of the turbulent kinetic energy (i.e., the k
+solved for by the model) may be preferred to the estimates used with
+the one-equation model, which does not have k available.
+With detailed near-corner flowfield data available from the NASA
+JF experiment, a wealth of new information is now available that
+allows for improved assessment of the flaws in existing models,
+leading to the ideas in the current paper for how they might be
+improved. In the work of Rumsey et al. [12], it was hypothesized
+that a main requirement for a turbulence model to be able to predict
+the NASA JF corner separation correctly was its ability to capture a
+“stress-induced vortex” deep in the junction corner. It is known that
+differences between the Reynolds normal stresses are a driver for this
+near-wall secondary corner vortical flow [20], which, when present,
+acts to inhibit corner separation [21]. Therefore, a key driver in the
+case of SA-RC-QCR is QCR’s ability to modify the incorrect behavior of the Reynolds normal stresses in the linear model (e.g., SA-RC
+alone) to more closely reproduce the Reynolds normal stresses in the
+experiment.
+It is important to note that the expression “normal stresses” usually
+implies a set of axes, two of which are aligned with the flow direction
+and the direction of most rapid variation, respectively. In boundary
+layers, the latter direction is normal to the wall. Recall that the
+distinction between “normal” and “shear” stress depends on the axes
+used [22]. However, throughout this paper, Cartesian axes are used,
+with x aligned with the fuselage body, y to the right, and z up. This is
+the same coordinate system used in the experiment. Therefore, x is
+only approximately streamwise and z approximately normal to the
+wing upper surface. The comparisons are valid, but the physical
+meaning of some stresses requires attention: for instance, in a twodimensional boundary layer expressed by a velocity uy (with y up
+and z the third dimension), both τ13 and τ23 would be zero. Here, this
+is no longer necessarily true.
+
+In this paper, proposed modifications to QCR are described.
+Improved results are then demonstrated for the NASA JF configuration. The model is also applied to a zero-pressure gradient flat plate
+and a supersonic square duct configuration to demonstrate that it does
+not negatively impact cases where the original QCR model was
+considered adequate.
+
+II.
+
+Modified Quadratic Constitutive Relation
+
+The QCR can be applied to any linear eddy-viscosity model. A
+linear model uses the Boussinesq assumption to define the Reynolds
+stress tensor:
+
+
+1 ∂uk
+2
+δij − ρkδij
+(1)
+τLij  2μt Sij −
+3 ∂xk
+3
+with the last term sometimes neglected. In this paper, QCR is used in
+conjunction with the SA-RC model [15,16]. In QCR2000 [1], the
+turbulent stresses are modified via
+τij;QCR2000  τLij − Ccr1 Oik τLjk  Ojk τLik 
+
+(2)
+
+where τLij represents the turbulent stresses from the linear eddyviscosity model, and
+2W ik
+Oik  q
+∂um ∂um
+∂xn ∂xn
+
+W ik 
+
+
+
+1 ∂ui ∂uk
+−
+2 ∂xk ∂xi
+
+ 2  2  2  2
+∂um ∂um
+∂u
+∂u
+∂u
+∂v
+
+
+
+
+∂x
+∂y
+∂z
+∂x
+∂xn ∂xn
+ 2  2  2  2  2
+∂v
+∂v
+∂w
+∂w
+∂w
+
+
+
+
+
+∂y
+∂z
+∂x
+∂y
+∂z
+
+(3)
+
+(4)
+
+(5)
+
+and Ccr1  0.30. In linear eddy-viscosity models that have k available (e.g., in a k − ω, k − ε, or k − kL model), then the −2ρkδij ∕3
+term can be readily included in the Boussinesq relation [Eq. (1)].
+However, one-equation models like SA or SA-RC do not have k
+available. In QCR2013 [2], a second term is included for use with
+turbulence models that do not have k available, to approximately
+account for the −2ρkδij ∕3 term in regions of nonzero strain:
+p
+τij;QCR2013  τLij − Ccr1 Oik τLjk  Ojk τLik  − Ccr2 μt 2Smn Smn δij (6)
+where
+1 ∂uk
+δ
+3 ∂xk ij
+
+(7)
+
+
+
+1 ∂ui ∂uj
+
+2 ∂xj ∂xi
+
+(8)
+
+Sij  Sij −
+Sij 
+
+and Ccr2  2.5. This last term in Eq. (6) has origins from Spalart
+and
+Allmaras
+p
+ [23]. It comes from approximating 2ρk∕3 with
+μt 2Smn Smn ∕3a1 , with a1 the “structure parameter” from Bradshaw et al. [24]. Thus, Ccr2  1∕3a1  with a1 taken to be a1  0.13.
+The last term has no effect on the flowfield if it is incompressible
+and only a very weak effect at the present Mach numbers. The
+resulting improvement in the Reynolds normal stresses is significant,
+although often these improvements do not translate into much of
+an effect on the mean flow because taking the divergence of the
+stress tensor almost eliminates their influence. As mentioned in
+the Introduction, even for corner flows it is only the differences
+between the Reynolds normal stresses that impact the stress-induced
+
+4376
+
+RUMSEY ET AL.
+
+vortex, so capturing their absolute levels typically does not matter
+very much.
+It is worth noting that, in practice, some CFD codes encounter
+numerical difficulties with QCR2013 that are absent with QCR2000
+[12]. A minor variant, termed “QCR2013-V,” was introduced in
+Ref. [12] that apparently eliminates the numerical difficulties:
+τij;QCR2013v 
+
+τLij
+
+−
+
+Ccr1 Oik τLjk
+
+
+
+Ojk τLik 
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+Compare Eq. (9) with Eq. (6).
+When applied to the JF configuration, the above (existing) QCR
+models in conjunction with SA-RC performed essentially identically
+to each other in terms of flowfield prediction. This was expected. As
+described in previous CFD studies [10–12], SA-RC-QCR results
+were dramatically improved compared with SA-RC alone but were
+still somewhat deficient compared with experimental data. In particular, the separation location was predicted too far upstream in the
+junction corner. In terms of Reynolds stresses, it was noted that the
+near-wall peak of the x-direction Reynolds normal stress component
+hu 0 u 0 i was severely underpredicted. The other components also
+differed from experiment to some degree, with the normal stress
+components tending to be worse than the shear stress components.
+For the new version of QCR introduced in this paper (termed
+“QCR2020”), it is desired to improve the prediction of this hu 0 u 0 i
+peak near the wall, at least to some degree, as well as to balance the
+differences between the other Reynolds normal stresses so as to
+achieve a more accurate separation location. To accomplish this,
+the main change to the QCR model is a modification to the term in
+front of Oik τLjk  Ojk τLik . Instead of a constant, the multiplier is
+changed to be a function. This function increases the multiplier
+(compared with the original Ccr1 constant) close to the wall and
+decreases it toward the boundary-layer edge. (The second term
+approximating −2ρkδij ∕3 is also altered, although this term has less
+importance, as discussed earlier.) The particular choice of functions
+was made by 1) the considered use of an existing function, fw ,
+already available in the SA model with the desired behavior in
+boundary layers, namely, an intense effect very near the wall, and
+2) selection and trial-and-error testing of specific function coefficients on JF test cases, with consideration of both Reynolds stress
+comparisons and separation size. The Reynolds stresses are multifaceted and still leave more room for improvement.
+The current proposed model is
+p
+00
+00
+τij;QCR2020  τLij − Ccr1
+Oik τLjk  Ojk τLik  − Ccr2
+μt 2W mn W mn δij
+(10)
+
+(14)
+
+
+
+ν^
+;
+10
+r  min
+^ 2 d2
+Sκ
+
+(15)
+
+Ω
+
+p
+− Ccr2 μt 2W mn W mn δij
+(9)
+
+g  r  cw2 r6 − r
+
+S^ 
+
+p
+2W ij W ij
+
+8
+< Ω  S
+:Ω 
+
+if S ≥ −C2 Ω
+
+
+ΩC22 ΩC3 S
+
+C3 −2C2 Ω−S
+
+if S < −C2 Ω
+
+ν^
+S  2 2 fv2
+κ d
+
+(16)
+
+(17)
+
+(18)
+
+fv2  1 −
+
+χ
+1  χfv1
+
+(19)
+
+fv1 
+
+χ3
+ c3v1
+
+(20)
+
+χ3
+
+χ  ν^ ∕ν
+
+(21)
+
+where ν^ is the SA turbulence variable, ν is the molecular kinematic
+viscosity, d is the distance to the nearest wall, cw2  0.3, cw3  2,
+κ  0.41, cv1  7.1, C2  0.7, and C3  0.9.
+As will be shown in the Results section, QCR2020 produces a greater
+separation between the Reynolds normal stresses near the wall than
+QCR2013, in better agreement with experiment (JF and channel flow)
+and Direct Numerical Simulation (DNS) (flat plate boundary layer). In
+particular, for a system with x streamwise and y normal to the wall,
+hu 0 u 0 i and hw 0 w 0 i are both increased near the wall (the latter only
+0 0 O τL 
+slightly), whereas hv 0 v 0 i is generally decreased. It is the Ccr1
+ik jk
+L
+Ojk τik  term in Eq. (10) that is responsible for this augmented separation
+between
+the normal stress components. On the other hand, the
+p
+00 μ
+Ccr2
+t 2W mn W mn δij term moves all normal stress curves equally, at
+a given height above the wall. In other words, the differences between
+the Reynolds normal stresses are controlled by the first term, whereas
+the general position of the group is controlled by the second term, as a
+function of wall distance. It should also be noted that, as described by
+Perkins [20], the hu 0 u 0 i Reynolds normal stress component has no
+influence on streamwise vorticity along a junction corner aligned with
+the x direction. So the near-wall behaviors of the other components are
+likely to be more important in the JFs under consideration.
+Although converged results are essentially unaffected, an alternative “smoother” version of fw is recommended, in which Eq. (16) is
+replaced by
+
+with
+00
+0
+ Ccr1
+1  Cfw1 fw 
+Ccr1
+
+(11)
+
+00
+0
+Ccr2
+ Ccr2
+1  Cfw2 fw 
+
+(12)
+
+0
+0
+and Ccr1
+ 0.20, Ccr2
+ 1∕3a1 , Cfw1  2.0, and Cfw2  0.3.
+Ignoring the effect
+of
+f
+w , the last term in Eq. (10) approximates
+p
+2ρk∕3 with μt 2W mn W mn ∕3a1 , where Bradshaw’s structure
+parameter [24] is taken as a1  0.155. This value is identical to that
+0 (rounded off to five
+used by Menter [25] and gives the value of Ccr2
+0  2.15054. The f function is originally
+decimal places) as Ccr2
+w
+from Spalart and Allmaras [15], later modified by Allmaras et al. [26]
+to recover from small negative excursions. It is one at walls and
+decays to low values near the boundary-layer edge, which makes it
+instrumental in enhancing the near-wall peaks:
+
+
+
+1  c6w3
+fw  g 6
+g  c6w3
+where
+
+1∕6
+
+(13)
+
+Ω  0.52W ij W ij  2Sij Sij 1∕2
+
+(22)
+
+The use of Eq. (22) generally led to better iterative convergence
+behavior in FUN3D, likely because Eq. (22) is not as close to zero as
+Eq. (16), and this quantity appears in the denominator of Eq. (15).
+Equation (22) was used for all results in this paper.
+As with QCR2013, if k is available in the linear eddy-viscosity
+turbulence model being employed, then the last term in Eq. (10)
+would not be used because the −2ρkδij ∕3 term would already be
+directly included in the Boussinesq relation.
+
+III.
+
+Results
+
+A. Juncture Flow Model
+
+The JF configuration was tested at Re  2.4 × 106 based on wing
+crank chord and a nominal M  0.189. Figure 1 provides a representation of the JF configuration at angle of attack α  5°, showing
+lines along which flowfield results are plotted in this paper. At this
+angle of attack, the separation location is notionally indicated in blue
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+RUMSEY ET AL.
+
+Fig. 1 Locations where line data are plotted.
+
+near the wing trailing edge. The line L1 is located on the side of
+the fuselage upstream of the wing, at x  1168.4 mm, z  0 mm.
+The lines L2 and L3 emanate vertically from the wing very close
+to the wing–body junction corner, approximately 1 mm from the
+
+4377
+
+fuselage. L2 is at x  2747.6 mm, y  −237.1 mm (upstream of
+separation); L3 is at x  2852.6 mm, y  −237.1 mm (near to the
+separation location).
+FUN3D [27] was employed on a semispan free-air grid, run fully
+turbulent with SA-RC as the base model in conjunction with
+QCR2013-V [Eq. (9)] and QCR2020 [Eq. (10)]. Note that, in the
+remainder of the paper, QCR2013-V is referred to simply as
+QCR2013 because in practice there is no difference between their
+results. FUN3D was run in steady-state mode, with nominally second-order spatial accuracy. Roe’s flux difference splitting [28] was
+used for the calculation of the inviscid terms for all the results in this
+paper. The grids from Rumsey et al. [12] were employed.
+Sample plots demonstrating the effect of grid for SA-RCQCR2020 in FUN3D are shown in Fig. 2, along line L2. The fine
+(F) grid used 161 million grid points, and the medium (M) grid used 39
+million grid points. Nondimensional velocity components are plotted
+in Fig. 2a, whereas nondimensional Reynolds stresses are plotted in
+Figs. 2b and 2c. (Note: τij ≡ −hρui0 uj0 i is the Reynolds stress tensor,
+with the hi operation indicating time-average mean. However, in the
+literature, the velocity fluctuation correlation hui0 uj0 i is often referred
+to as the “Reynolds stress,” especially for subsonic flows, with
+hui0 uj0 i ≈ τij ∕hρi. Here, we adopt this same naming convention.) As
+the figure shows, there was only a minor influence of the grid on the
+velocity and Reynolds stress profiles, which was significantly smaller
+than the differences between CFD and the experiment. From the grid
+study results, the unstructured fine grid was determined to be sufficiently fine for this study; it was used for all results in this paper.
+
+Fig. 2 Effect of grid on profiles from SA-RC-QCR2020 in FUN3D along line L2, α  5°.
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+4378
+
+RUMSEY ET AL.
+
+OVERFLOW [29] was also used on its own set of overset fine grids
+[12] to help verify the implementation of the new model in FUN3D.
+Like FUN3D, OVERFLOW was run in steady-state mode. A thirdorder Roe upwind scheme [28] was used for the convective fluxes,
+and the implicit solve was performed using the Beam–Warming
+scalar pentadiagonal scheme and low-Mach preconditioning. OVERFLOW’s grids [12] were somewhat smaller than FUN3D’s, with
+about 25.5 million grid points (M) and 86.6 million grid points (F)
+for half the model. Sample plots demonstrating the effect of grid for
+SA-RC-QCR2020 in OVERFLOW are shown in Fig. 3, along line
+L2. Like FUN3D, the F grid in OVERFLOW was determined to be
+sufficiently fine for this study. Additional details can be found in the
+work of Rumsey et al. [12].
+Sample plots comparing the Reynolds normal stresses for the two
+codes are shown in Fig. 4, for line L1. The two codes yielded nearly
+identical results for both QCR2013 and QCR2020. At other locations
+on the wing, there were small differences between the codes due to the
+presence of higher discretization errors in the region near separation
+(see additional details from the grid refinement study in the work of
+Rumsey et al. [12]). However, the trends resulting from the changes to
+QCR were consistent for the two codes. Examples showing the
+consistent trends are shown in Fig. 5, for line L2.
+Figure 6 shows length and width separation size predictions (measured along the wing surface) from the two QCR models, along with
+predictions using the second-moment Reynolds stress closure model
+SS G∕L RR-RSM-w2012-SD [30,31] in FUN3D. This latter model’s
+results are included here because it is known to predict the corner
+
+Fig. 3
+
+separation size well for this case [14]. Note that, like SA-RCQCR2013, this Reynolds stress model is also known to mispredict
+Reynolds normal stresses, particularly near walls [30]. As seen in the
+figure, SA-RC-QCR2013 tended to overpredict the separation
+length, whereas the new SA-RC-QCR2020 was reasonably accurate
+across all angles of attack tested. All three models predicted the
+corner separation width reasonably well. Note that OVERFLOW
+and FUN3D results were not identical, but their trends were again
+very similar for both QCR2013 and QCR2020. To simplify the
+figures, all results to follow are from FUN3D.
+Figure 7 shows sample surface-restricted streamlines for α  5°,
+comparing SA-RC-QCR2013 with SA-RC-QCR2020 (the surface is
+colored by cf;x, the skin friction coefficient in the x direction).
+QCR2020 produced a smaller separation region. This was true at
+all other angles of attack as well. In all of the QCR models, the
+constant (or function) multiplying the Oik τLjk  Ojk τLik  term has an
+overwhelming influence on this aspect of the flow. Leger et al. [19]
+demonstrated the influence of Ccr1 in QCR2000. Increasing it from its
+nominal value of 0.30 improved results very near the corner of a
+supersonic square duct compared with LES but also produced additional, nonphysical vortices further from the wall when it was
+increased too much. Spalart et al. [32] also found that values of Ccr1 >
+0.35 tended to cause instabilities and spurious vortices. QCR2020
+appears to overcome this problem because the function, Eq. (11),
+increases the multiplier only near the wall but decreasing it away from
+the wall.
+
+Effect of grid on profiles from SA-RC-QCR2020 in OVERFLOW along line L2, α  5°.
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+RUMSEY ET AL.
+
+Fig. 4
+
+Effect of code on Reynolds normal stress profiles from SA-RC-QCR2013 and SA-RC-QCR2020 along line L1, α  5°.
+
+Fig. 5
+
+Effect of code on Reynolds normal stress profiles from SA-RC-QCR2013 and SA-RC-QCR2020 along line L2, α  5°.
+
+4379
+
+4380
+
+RUMSEY ET AL.
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+in Fig. 8. However, they play a significant role in the formation
+of stress-induced secondary flow in corner regions, which can act
+to delay corner separation. Figure 9 shows results on the wing along
+line L2, very near the corner (approximately 1 mm from fuselage,
+inside its boundary layer), upstream of separation. Here, only small
+differences in mean flow behavior between QCR2013 and QCR2020
+are visible, primarily seen in the u component of velocity near
+the wall in Fig. 9a. The Reynolds normal stresses from QCR2020
+(Fig. 9b) are in better agreement with the experiment than QCR2013.
+In particular, note the larger spread between the components, which
+better approach the experimental levels. Again, there are only minor
+differences in the Reynolds shear stresses of Fig. 9c.
+With improved predictions of the Reynolds normal stresses
+upstream of separation, the QCR2020 model yielded a far-more
+accurate separation prediction than QCR2013. In Fig. 10, results
+are shown along line L3, very close to where separation occurred in
+the experiment. Indeed, the QCR2020 results were far superior to
+QCR2013, which separated too far upstream.
+B. Other Canonical Test Cases
+Fig. 6 Length and width of separation size with angle of attack.
+
+The influence of the modified QCR can be seen in Figs. 8–10, for
+the case of α  5°. Figure 8 shows results along line L1, far upstream
+on the nose, where most state-of-the-art turbulence models are
+expected to perform well in terms of the mean flowfield. Indeed,
+both SA-RC-QCR2013 and SA-RC-QCR2020 yielded essentially
+identical mean flow profiles, Fig. 8a, in very good agreement with the
+experiment. However, QCR2020 produced significant differences in
+Reynolds normal stress profiles, seen in Fig. 8b. In particular, near the
+wall the QCR2020 spread the three profiles apart more than
+QCR2013. Although still not in very good agreement with the experiment (and particularly low in its absolute prediction of near-wall
+hu 0 u 0 i), QCR2020 tended to at least move the profile trends in the
+right direction. It did a better job than QCR2013 both in terms of
+spread between the components as well as in absolute levels. As
+expected after examining equations such as Eq. (10), QCR2020
+yielded only very minor differences in Reynolds shear stress profiles
+compared with QCR2013, as seen in Fig. 8c. Note the nonzero values
+of the “apparent shear stresses” hu 0 w 0 i and hv 0 w 0 i, which are zero by
+symmetry in a 2D case if x is streamwise; the reason why they are not
+zero here is that the flow direction is not quite aligned with the x axis.
+As is well known, the Reynolds normal stresses have little influence on the mean flow in a standard wall boundary layer like that
+
+QCR2020 was calibrated using JF data, so it is perhaps no surprise
+that it improved results for that case. We now briefly examine the
+model’s behavior for two other canonical test cases, to verify that it
+still performs as least as well as QCR2013. Here, the FUN3D and
+OVERFLOW results were essentially the same, so only FUN3D
+results are shown.
+1. Flat Plate
+
+The effect of QCR2020 compared with QCR2013 is shown in
+Fig. 11 for a canonical flat plate case from the NASA Langley
+Turbulence Modeling Resource (TMR) website [33]. The
+545 × 385 grid from the TMR website was employed. For this case,
+Reynolds number is 5 million based on plate length and the Reθ at the
+location shown is approximately 7600. Scaled DNS results from
+Schlatter and Orlu [34] are also included in the figure for reference,
+although the Reθ of the DNS was somewhat smaller (4061). The
+Reynolds shear stress hu 0 v 0 i for SA-QCR2020 and SA-QCR2013
+are identical and in good agreement with the DNS. Regarding the
+Reynolds normal stresses, QCR2020 generally does a better job than
+QCR2013 in capturing the DNS trends. Mainly, QCR2020 is seen to
+produce a lower overall hv 0 v 0 i, a somewhat sharper hw 0 w 0 i near the
+wall, and a much sharper hu 0 u 0 i near the wall. The former two
+components are in reasonable agreement with the DNS, but hu 0 u 0 i
+is still severely underpredicted by the model. Observe the strong
+similarity between Figs. 8b and 11, which attests to the accuracy of
+the JF measurements.
+
+Fig. 7 Change in separation size from SA-RC-QCR2013 (left) to SA-RC-QCR2020 (right) at α  5°, FUN3D.
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+RUMSEY ET AL.
+
+Fig. 8
+
+Fig. 9
+
+Profiles upstream on side of fuselage nose along line L1, α  5°, FUN3D.
+
+Profiles upstream of separation on wing along line L2, α  5°, FUN3D.
+
+4381
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+4382
+
+RUMSEY ET AL.
+
+Fig. 10 Profiles upstream of separation on wing along line L3, α  5°, FUN3D.
+
+Although not shown, the SA model without QCR cannot predict
+the Reynolds normal stresses. However, its predicted hu 0 v 0 i is
+identical to that for SA-QCR2020 and SA-QCR2013. As mentioned
+earlier, the normal stresses play essentially no part in typical boundary layers like this, so their misprediction does not matter for many
+
+aerodynamic problems of interest (for which corners/junctions are
+not present/important). Although not shown, the SA-QCR2020, SAQCR2013, and SA models all predict the same mean flow and wall
+skin friction for the flat plate.
+2. Supersonic Square Duct
+
+Fig. 11 Reynolds stresses for a flat plate, FUN3D.
+
+The supersonic square duct case is widely used to demonstrate
+the need for a nonlinear constitutive relation for capturing stressinduced secondary motion in corners. Experimental data are from
+Davis and Gessner [35]. The reference Mach number is 3.9 and
+Reynolds number based on channel height is 508,000. Results for
+many existing turbulence models are provided on the TMR
+website [33].
+Comparisons are made in Fig. 12 between the new SA-QCR2020
+model and the existing SA-QCR2000 and SA-QCR2013 models.
+The 481 × 81 × 81 grid from the TMR website was employed. As
+seen in Figs. 12a–12c, QCR2020 still yielded very similar results to
+both QCR2000 and QCR2013 in terms of the vortical motions
+induced by the Reynolds normal stress differences. However, in
+QCR2020, the magnitude of the velocity driven into the corner
+along the diagonal was somewhat increased. The normalized u
+velocity along both a diagonal and a vertical cut, shown in Fig. 12d,
+was essentially unchanged and was in very good agreement with the
+experiment. The QCR2020 skin friction coefficient shown in
+Fig. 12e was slightly improved compared with the older models.
+In other words, the modifications made to better reproduce the JF
+measurements were slightly favorable in a fully independent
+test case.
+
+4383
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+RUMSEY ET AL.
+
+Fig. 12 Supersonic square duct case, comparing new SA-QCR2020 results at x∕D  50 with SA-QCR2000 and SA-QCR2013, FUN3D.
+
+IV.
+
+Conclusions
+
+Proposed modifications to the QCR of Spalart and Mani et al. were
+shown to improve CFD results for the NASA JF configuration.
+Predicted corner separation with the new model (in conjunction with
+SA-RC) agreed better with the experiment. Although the Reynolds
+normal stresses were still not in very good agreement with the experiment, the new model pushed them in the right direction, particularly
+in regard to the spread between the components near the walls. Flat
+plate results demonstrated somewhat improved Reynolds normal
+stresses, with no change to the Reynolds shear stress or mean flow
+results, as expected. The model also did no harm to (in fact it slightly
+
+improved) results for a supersonic square duct, for which the original
+QCR model versions were already considered to be adequate.
+
+Acknowledgments
+This work was supported by NASA’s Transformational Tools and
+Technologies project of the Transformative Aeronautics Concepts
+Program. The authors acknowledge the other members of the NASA
+Juncture Flow Team, including Mike Kegerise, Dan Neuhart, Judi
+Hannon, Luther Jenkins, Scott Bartram, C.-S. Yao, Nashat Ahmad,
+
+4384
+
+RUMSEY ET AL.
+
+P. Balakumar, Joe Morrison, Bil Kleb, Cathy McGinley, James Bell,
+Mujeeb Malik, Bill Oberkampf, Roger Simpson, and Gwibo Byun.
+
+Downloaded by University of Cambridge on November 23, 2026 | http://arc.aiaa.org | DOI: 10.2514/1.J059683
+
+References
+[1] Spalart, P. R., “Strategies for Turbulence Modelling and Simulation,”
+International Journal of Heat and Fluid Flow, Vol. 21, No. 3, 2000,
+pp. 252–263.
+https://doi.org/10.1016/S0142-727X(00)00007-2
+[2] Mani, M., Babcock, D. A., Winkler, C. M., and Spalart, P. R.,
+“Predictions of a Supersonic Turbulent Flow in a Square Duct,” AIAA
+Paper 2013-0860, Jan. 2013.
+https://doi.org/10.2514/6.2013-0860
+[3] Kegerise, M. A., and Neuhart, D. H., “An Experimental Investigation of
+a Wing-Fuselage Junction Model in the NASA Langley 14- by 22-Foot
+Subsonic Tunnel,” NASA TM-2019-220286, June 2019, https://doi.org/
+https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20190027403.pdf.
+[4] Rumsey, C. L., Neuhart, D. H., and Kegerise, M. A., “The NASA
+Juncture Flow Experiment: Goals, Progress, and Preliminary Testing,”
+AIAA Paper 2016-1557, Jan. 2016.
+https://doi.org/10.2514/6.2016-1557
+[5] Rumsey, C. L., “The NASA Juncture Flow Test as a Model for Effective
+CFD/Experimental Collaboration,” AIAA Paper 2018-3319, June 2018.
+https://doi.org/10.2514/6.2018-3319
+[6] Vassberg, J. C., Tinoco, E. N., Mani, M., Brodersen, O. P., Eisfeld, B.,
+Wahls, R. A., Morrison, J. H., Zickuhr, T., Laflin, K. R., and Mavriplis,
+D. J., “Abridged Summary of the Third AIAA Computational Fluid
+Dynamics Drag Prediction Workshop,” Journal of Aircraft, Vol. 45,
+No. 3, May–June 2008, pp. 781–798.
+https://doi.org/10.2514/1.30572
+[7] Vassberg, J. C., Tinoco, E. N., Mani, M., Rider, B., Zickuhr, T., Levy,
+D. W., Brodersen, O. P., Eisfeld, B., Crippa, S., Wahls, R. A., Morrison,
+J. H., Mavriplis, D. J., and Murayama, M., “Summary of the Fourth
+AIAA Computational Fluid Dynamics Drag Prediction Workshop,”
+Journal of Aircraft, Vol. 51, No. 4, July–Aug. 2014, pp. 1070–1089.
+https://doi.org/10.2514/1.C032418
+[8] Levy, D., Laflin, K., Tinoco, E., Vassberg, J., Mani, M., Rider, B.,
+Rumsey, C., Wahls, R., Morrison, J., Broderson, O., Crippa, S.,
+Mavriplis, D., and Murayama, M., “Summary of Data from the Fifth
+Computational Fluid Dynamics Drag Prediction Workshop,” Journal of
+Aircraft, Vol. 51, No. 4, 2014, pp. 1194–1213.
+https://doi.org/10.2514/1.C032389
+[9] Rumsey, C. L., Carlson, J.-R., Hannon, J. A., Jenkins, L. N., Bartram,
+S. M., Pulliam, T. H., and Lee, H. C., “Boundary Condition Study for the
+Juncture Flow Experiment in the NASA Langley 14 × 22-Foot Subsonic Wind Tunnel,” AIAA Paper 2017-4126, June 2017.
+https://doi.org/10.2514/6.2017-4126
+[10] Rumsey, C. L., Carlson, J.-R., and Ahmad, N. N., “FUN3D Juncture
+Flow Computations Compared with Experimental Data,” AIAA Paper
+2019-0079, Jan. 2019.
+https://doi.org/10.2514/6.2019-0079
+[11] Lee, H. C., and Pulliam, T. H., “OVERFLOW Juncture Flow Computations Compared with Experimental Data,” AIAA Paper 2019-0080,
+Jan. 2019.
+https://doi.org/10.2514/6.2019-0080
+[12] Rumsey, C. L., Lee, H. C., and Pulliam, T. H., “Reynolds-Averaged
+Navier-Stokes Computations of the NASA Juncture Flow Model Using
+FUN3D and OVERFLOW,” AIAA Paper 2020-1304, Jan. 2020.
+https://doi.org/10.2514/6.2020-1304
+[13] Abdol-Hamid, K. S., Ahmad, N. N., Carlson, J.-R., and Biedron, R. T.,
+“Juncture Flow Computations Using kL-Based Turbulence Models,”
+AIAA Paper 2020-1305, Jan. 2020.
+https://doi.org/10.2514/6.2020-1305
+[14] Eisfeld, B., Togiti, V., Braun, S., and Sturmer, A., “Reynolds-Stress
+Model Computations of the NASA Juncture Flow Experiment,” AIAA
+Paper 2020-1306, Jan. 2020.
+https://doi.org/10.2514/6.2020-1306
+[15] Spalart, P. R., and Allmaras, S. R., “A One-Equation Turbulence
+Model for Aerodynamic Flows,” Recherche Aerospatiale, Vol. 1,
+1994, pp. 5–21.
+[16] Shur, M. L., Strelets, M. K., Travin, A. K., and Spalart, P. R., “Turbulence
+Modeling in Rotating and Curved Channels: Assessing the Spalart-Shur
+Correction,” AIAA Journal, Vol. 38, No. 5, 2000, pp. 784–792.
+https://doi.org/10.2514/2.1058
+
+[17] Yamamoto, K., Tanaka, K., and Murayama, M., “Effect of a Nonlinear
+Constitutive Relation for Turbulence Modeling on Predicting Flow
+Separation at Wing-Body Juncture of Transonic Commercial Aircraft,”
+AIAA Paper 2012-2895, June 2012.
+https://doi.org/10.2514/6.2012-2895
+[18] Dandois, J., “Improvement of Corner Flow Prediction Using the
+Quadratic Constitutive Relation,” AIAA Journal, Vol. 52, No. 12,
+2014, pp. 2795–2806.
+https://doi.org/10.2514/1.J052976
+[19] Leger, T., Bisek, N., and Poggie, J., “Supersonic Corner Flow Predictions Using the Quadratic Constitutive Relation,” AIAA Journal, Vol. 54,
+No. 7, 2016, pp. 2077–2088.
+https://doi.org/10.2514/1.J054732
+[20] Perkins, H. J., “The Formation of Streamwise Vorticity in Turbulent
+Flow,” Journal of Fluid Mechanics, Vol. 44, Part 4, Dec. 1970, pp. 721–
+740.
+https://doi.org/10.1017/S0022112070002112
+[21] Bordji, M., Gand, F., Deck, S., and Brunet, V., “Investigation of a
+Nonlinear Reynolds-Averaged Navier-Stokes Closure for Corner
+Flows,” AIAA Journal, Vol. 54, No. 2, 2016, pp. 386–398.
+https://doi.org/10.2514/1.J054313
+[22] Spalart, P. R., “Philosophies and Fallacies in Turbulence Modeling,”
+Progress in Aerospace Sciences, Vol. 74, April 2015, pp. 1–15.
+https://doi.org/10.1016/j.paerosci.2014.12.004
+[23] Spalart, P. R., and Allmaras, S. R., “A One-Equation Turbulence Model
+for Aerodynamic Flows,” AIAA Paper 1992-0439, Jan. 1992.
+https://doi.org/10.2514/6.1992-439
+[24] Bradshaw, P., Ferris, D. H., and Atwell, N. P., “Calculation of BoundaryLayer Development Using the Turbulent Energy Equation,” Journal of
+Fluid Mechanics, Vol. 28, Part 3, May 1967, pp. 593–616.
+https://doi.org/10.1017/S0022112067002319
+[25] Menter, F. R., “Two-Equation Eddy-Viscosity Turbulence Models for
+Engineering Applications,” AIAA Journal, Vol. 32, No. 8, 1994,
+pp. 1598–1605.
+https://doi.org/10.2514/3.12149
+[26] Allmaras, S. R., Johnson, F. T., and Spalart, P. R., “Modifications and
+Clarifications for the Implementation of the Spalart-Allmaras Turbulence Model,” 7th International Conference on Computational Fluid
+Dynamics (ICCFD7), Paper 1902, July 2012, https://doi.org/https://
+www.iccfd.org/iccfd7/assets/pdf/papers/ICCFD7-1902_paper.pdf.
+[27] “FUN3D User’s Manual,” https://fun3d.larc.nasa.gov [retrieved 19 Feb.
+2020].
+[28] Roe, P. L., “Approximate Riemann Solvers, Parameter Vectors, and
+Difference Schemes,” Journal of Computational Physics, Vol. 43,
+Oct. 1981, pp. 357–372.
+https://doi.org/10.1016/0021-9991(81)90128-5
+[29] Nichols, R. H., and Buning, P. G., “User’s Manual for Overflow 2.2,”
+https://overflow.larc.nasa.gov/home/users-manual-for-overflow-2-2
+[retrieved 19 Feb. 2020].
+[30] Eisfeld, B., Rumsey, C., and Togiti, V., “Verification and Validation of a
+Second-Moment-Closure Model,” AIAA Journal, Vol. 54, No. 5, 2016,
+pp. 1524–1541.
+https://doi.org/10.2514/1.J054718
+[31] Eisfeld, B., Rumsey, C., and Togiti, V., “Erratum: Verification and
+Validation of a Second-Moment-Closure Model,” AIAA Journal,
+Vol. 54, No. 9, 2016, p. 2926.
+https://doi.org/10.2514/1.J055336
+[32] Spalart, P. R., Garbaruk, A., and Strelets, M., “RANS Solutions in
+Couette Flow with Streamwise Vortices,” International Journal of Heat
+and Fluid Flow, Vol. 49, Oct. 2014, pp. 128–134.
+https://doi.org/10.1016/j.ijheatfluidflow.2014.04.010
+[33] Rumsey, C. L., “NASA Langley Turbulence Modeling Resource
+Website,” https://turbmodels.larc.nasa.gov [accessed 21 Feb. 2020].
+[34] Schlatter, P., and Orlu, R., “Assessment of Direct Numerical Simulation
+Data of Turbulent Boundary Layers,” Journal of Fluid Mechanics,
+Vol. 659, Sept. 2010, pp. 116–126.
+https://doi.org/10.1017/S0022112010003113
+[35] Davis, D. O., and Gessner, F. B., “Further Experiments on Supersonic
+Turbulent Flow Development in a Square Duct,” AIAA Journal, Vol. 27,
+No. 8, Aug. 1989, pp. 1023–1030.
+https://doi.org/10.2514/3.10216
+
+P. G. Tucker
+Associate Editor
+
+

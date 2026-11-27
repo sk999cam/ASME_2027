@@ -1,0 +1,1229 @@
+R. D. Sandberg1
+Department of Mechanical Engineering,
+University of Melbourne,
+Parkville 3010, VIC, Australia
+e-mail: richard.sandberg@unimelb.edu.au
+
+R. Tan
+Department of Mechanical Engineering,
+University of Melbourne,
+Parkville 3010, VIC, Australia
+
+Applying Machine Learnt Explicit
+Algebraic Stress and Scalar Flux
+Models to a Fundamental
+Trailing Edge Slot
+
+J. Weatheritt
+Department of Mechanical Engineering,
+University of Melbourne,
+Parkville 3010, VIC, Australia
+
+A. Ooi
+Department of Mechanical Engineering,
+University of Melbourne,
+Parkville 3010, VIC, Australia
+
+A. Haghiri
+Department of Mechanical Engineering,
+University of Melbourne,
+Parkville 3010, VIC, Australia
+
+V. Michelassi
+Baker Hughes, a GE Company,
+Florence 50127, Italy
+e-mail: vittorio.michelassi@bhge.com
+
+G. Laskowski
+General Electric Aviation,
+Lynn, MA 01905
+e-mail: laskowsk@ge.com
+
+Machine learning was applied to large-eddy simulation (LES) data to develop nonlinear
+turbulence stress and heat flux closures with increased prediction accuracy for trailingedge cooling slot cases. The LES data were generated for a thick and a thin trailing-edge
+slot and shown to agree well with experimental data, thus providing suitable training
+data for model development. A gene expression programming (GEP) based algorithm
+was used to symbolically regress novel nonlinear explicit algebraic stress models and
+heat-flux closures based on either the gradient diffusion or the generalized gradient diffusion approaches. Steady Reynolds-averaged Navier–Stokes (RANS) calculations were
+then conducted with the new explicit algebraic stress models. The best overall agreement
+with LES data was found when selecting the near wall region, where high levels of anisotropy exist, as training region, and using the mean squared error of the anisotropy tensor as cost function. For the thin lip geometry, the adiabatic wall effectiveness was
+predicted in good agreement with the LES and experimental data when combining the
+GEP-trained model with the standard eddy-diffusivity model. Crucially, the same model
+combination also produced significant improvement in the predictive accuracy of adiabatic wall effectiveness for different blowing ratios (BRs), despite not having seen those
+in the training process. For the thick lip case, the match with reference values deteriorated due to the presence of large-scale, relative to slot height, vortex shedding. A GEPtrained scalar flux model, in conjunction with a trained RANS model, was found to significantly improve the prediction of the adiabatic wall effectiveness.
+[DOI: 10.1115/1.4041268]
+
+Introduction
+The trailing edge of a high pressure turbine blade, which represents its thinnest geometrical section, is exposed to substantial
+heat load during operation, and therefore, requires efficient cooling strategies. Trailing edge cooling of high pressure turbine airfoils is typically accomplished with either pressure side bleed
+slots or trailing edge ejection depending on application, design
+requirements, and cost. A canonical representation of the trailingedge slot is a wall jet with finite slot lip thickness. This configuration was studied experimentally by Kacker and Whitelaw [1]
+using a range of blowing and temperature ratios, slot heights, and
+slot lip thicknesses, and their experimental data have been used
+for comparison in a number of subsequent numerical studies.
+Using unsteady Reynolds-averaged Navier–Stokes (URANS),
+Holloway, Medic and Durbin [2], and Joo and Durbin [3] did find
+significant differences to the experimental data, in particular in
+terms of the prediction of the adiabatic wall effectiveness. This
+was attributed mainly to the inability of RANS modeling to reproduce the correct level of turbulent mixing in the region very close
+to the wall.
+
+1
+Corresponding author.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received August 15,
+2018; final manuscript received August 21, 2018; published online September 28,
+2018. Editor: Kenneth Hall.
+
+Journal of Turbomachinery
+
+In recent years, turbulence models have been developed with
+the aid of data-driven methodologies. Broadly speaking, varied
+machine-learning algorithms are being applied as regression tools
+to large, high-fidelity data sets to infer closure terms in turbulence
+closures. For example, neural networks have been applied to secondary flow prediction [4] and Gaussian processes have modeled
+corrective terms for channel flow [5]. A third and quite different
+method is gene expression programming [6] (GEP), a form of
+evolutionary algorithm, which was successfully used to implement new stress–strain relationships for separated flow [7]. The
+algorithm is a form of symbolic regression, such that the result
+of the optimization is a tangible equation which can be easily
+implemented into a flow solver.
+Machine learning tools have also been applied to turbomachinery related problems. Recently, a comparison of neural networks
+and GEP to regress nonlinear stress–strain relationships showed
+very similar predictive performance, yet the GEP optimization
+was at a fraction of the cost [8]. Further, GEP was applied to
+high-pressure turbines and showed improvement over the linear
+model [9]. These studies looked primarily at the stress–strain relationship, yet researchers are also exploring other model components. One group has successfully extracted functional forms for
+intermittency transport, in order to model bypass transition
+[10,11]. For heat-transfer problems, similar to that addressed in
+this paper, random forest regression has been applied to model the
+turbulent thermal diffusivity, for a gradient-diffusion model in the
+scalar transport of temperature [12].
+
+C 2018 by ASME
+Copyright V
+
+OCTOBER 2018, Vol. 140 / 101008-1
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+In this paper, GEP is used to formulate improved turbulence
+and heat flux closures, using subsets of highly resolved large-eddy
+simulation (LES) data for which improved prediction of adiabatic
+wall effectiveness is achieved. The paper is structured as follows.
+First, the LES and RANS setups used throughout this work are
+detailed. Then, the machine-learning approaches for the construction of Reynolds stress and heat flux models are presented. Next,
+the LES results are compared against experimental data [1], along
+with baseline RANS predictions. Thereafter, the underlying cause
+for the overprediction of the adiabatic wall effectiveness of baseline RANS is discussed through an analysis of the LES datasets
+for two of the cases also studied by Kacker and Whitelaw [1]. The
+results obtained using the newly trained nonlinear models are presented and the sensitivity to the subset of LES data considered is
+discussed.
+
+Computational Details
+A sketch of the simulation domain is presented in Fig. 1(a).
+The flow configuration fundamentally represents a twodimensional wall-jet in a co-flow. The inlet velocity profiles were
+obtained from the experiment results provided by Kacker and
+Whitelaw [1]. For the present simulations, two different values of
+nondimensional lip thickness were considered. They represent
+flows with different physical phenomena. An overview of the simulation flow parameters is shown in Table 1.
+LES Setup. The large eddy simulations were conducted using
+the in-house multiblock structured compressible Navier–Stokes
+solver HiPSTAR [13]. The wall adapting local eddy viscosity model
+[14] was used for modeling of the subgrid scale stresses. In solving
+the density weighted filtered energy equation, the subgrid scale heat
+flux contribution is assumed to be zero. This assumption is valid for
+sufficiently refined grid such that the subgrid scale heat flux contribution is negligible as compared to the resolved heat flux.
+A fourth-order accurate central differencing scheme was used
+for spatial discretization in the streamwise and wall normal direction. A spectral method based on the FFTW3 library was used for
+the discretization in the spanwise direction. Additionally, skewsymmetric splitting was used to stabilize the convective terms. As
+for the temporal discretization, a five-step, fourth-order accurate
+Runge Kutta scheme was used.
+The baseline computational grid of the LES is composed of five
+blocks as illustrated in Fig. 1(b). The first block represents the
+nozzle region and was composed of 80 points in the x and 128
+
+Table 1 Simulation parameters
+Simulation parameters
+Ubulk
+Ufs
+Islot
+Imain
+lt
+BR
+t/s
+Reslot
+Tslot
+Tfs
+
+24.2 m/s
+19.2 m/s
+5%
+0.5%
+10% of slot height
+1.26
+1.14 and 0.126
+12,000
+273 K
+323 K
+
+points in the y direction. The second, third, and fourth blocks represent the region downstream of the nozzle and all contained 1280
+points in the x direction and in the y direction block 2 had 128
+points from the wall to one slot height, block 3 had 128 points or
+64 points to represent the slot thickness in the cases t/s ¼ 1.14 and
+t/s ¼ 0.126, respectively, and block 4 had 128 points from the
+upper slot wall to the freestream boundary at 24s. The fifth block
+was composed of 80 points in the x and 128 points in the y direction. For the thick-lip and thin-lip cases, 32 and 64 Fourier modes
+were used in the spanwise direction, respectively, corresponding
+to 66 and 130 collocation points. In the LES, only mean profiles
+were prescribed at the inlet and no fluctuations were added as
+only marginal differences in the flow and temperature fields had
+been observed in the previous studies [15]. Characteristic boundary conditions were used for the freestream, and at the outlet, a
+zonal characteristic boundary condition was employed [16] using
+30 streamwise points. All walls were set to no-slip boundaries and
+adiabatic temperature conditions were used. The nondimensional
+timestep was set to 6  104 to satisfy the Courant-FriedrichsLewy condition and all cases were initially run for 360 time units,
+based on slot height and freestream velocity, to overcome the initial transient. The LES were then performed for another 240 time
+units in order to collect averaged quantities and statistics. Additional LES were conducted on different grids and the LES were
+run for longer for comparison to ensure that the results were grid
+independent and statistically converged, respectively.
+Reynolds-averaged Navier–Stokes Setup. For the RANS calculations, initially the baseline k–x shear stress transport (SST) turbulence model [17] from OpenFOAM version 2.4 was used. The
+incompressible SimpleFoam and PimpleFoam solvers were used for
+steady RANS and unsteady RANS calculations, respectively. These
+solvers couple the incompressible Reynolds averaged momentum
+equation with the Poisson equation to solve for the velocity and pressure field, respectively. The use of the incompressible solvers can be
+justified as follows. First, the free-stream velocity and maximum jet
+velocity is well below Mach 0.3. Second, small temperature differences between the jet flow and the free-stream imply that buoyancy
+effect can be neglected from the mean momentum equation. Thus,
+the energy equation can be decoupled from the momentum equation,
+allowing for the temperature field to be solved passively. The inlet
+conditions of the RANS simulations, i.e., the values of turbulence
+intensities and the turbulent length scale, lt, were taken from Ivanova
+and Laskowski [15]. From these turbulent length scale, the turbulence intensity and specific dissipation prescribed at the inlet were
+computed with the following relations:
+3
+2
+kinlet ¼ ðUI Þ ;
+2
+
+Fig. 1 (a) Computational domain (not to scale) and (b) LES
+blocks
+
+101008-2 / Vol. 140, OCTOBER 2018
+
+Values
+
+1=2
+
+xinlet ¼
+
+kinlet
+1=4
+
+(1)
+
+cl lt
+
+This resulted in the free-stream and slot inlet turbulent intensity to
+be set as 0.5% and 5%, respectively.
+For spatial discretization, the second-order central differencing
+schemes were used. The spatial Gauss linear scheme in OPENFOAM,
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+a second-order central differencing scheme, was being used for
+discretization for most of the flow variables except for the temperature and turbulent quantities used in RANS model. The divergence term of the passive scalar transport equation was
+discretized using the linearUpwind scheme in OPENFOAM. The
+order of accuracy of this scheme corresponds to somewhere
+between a first- and second-order accurate scheme. As for the turbulent quantities, both the modeled form of the turbulent kinetic
+energy and the turbulent specific dissipation were being discretized using a Gauss upwind scheme (first order accurate) for the
+divergent terms in their respective transport equation. The gradient and Laplacian terms in the respective momentum and Poisson
+equation were discretized using the Gauss linear schemes. In the
+case of the Unsteady RANS calculation, the time discretization of
+the unsteady term in the momentum equation uses the implicit,
+second-order backward Euler schemes.
+The computational grid of the RANS was conducted using the
+same resolution in the x–y plane as in the LES. However, the
+RANS calculations were conducted in two dimensions only, rather
+than in 3D as the LES. The baseline computational grid of the
+thicker lip thickness to slot ratio case has a total grid count of
+510,306 cells in the x–y plane, while the case with the smaller lip
+thickness to slot ratio has a total grid count of 428,321 cells in the
+x–y plane. An OPENFOAM tool was used to convert the structured
+grid used in the LES to a unstructured grid with approximately the
+same total cell count. A one cell thick grid is used in the spanwise
+direction for the RANS calculation. The yþ of both cases was kept
+well below 0.2 for the first cell away from the wall (the lower wall
+and the lip wall).
+Methodology for Reynolds Stress Closure. The incompressible form of the Reynolds-averaged momentum equation, written
+as
+@u i
+@u i
+@p
+@2ui
+@sij
+¼
+þ
+
+þ uj
+@xi
+@t
+@xj
+@xj @xj @xj
+
+(2)
+
+where overbars denote Reynolds-averaged quantities and the density is absorbed into the modified pressure p, contains the
+unclosed term sij. Therefore, sij, known as the Reynolds stress tensor, must be modeled, and as such, contributes to a large portion
+of the error in a RANS calculation. In the so-called linear RANS
+models, the Reynolds stress tensor is modeled using the Boussinesq approximation
+2
+sij ¼ kdij  2t Sij
+3
+
+(3)
+
+This dictates that deviations from the isotropic part ð2=3Þkdij ,
+where k is the turbulent kinetic energy, are linear in the strain rate
+tensor Sij. The constant of proportionality, the eddy viscosity  t, is
+obtained from one or two transport equations [18].
+In a common extension to linear modeling, one can append
+higher order combinations of the strain and rotation rate tensor to
+the Boussinesq approximation. In the current study using a
+machine-learning framework, the goal is to model the anisotropy
+such that
+tensor amod
+ij
+2
+sij ¼ kdij  2t Sij þ 2kamod
+ij ðSij ; Xij Þ
+3
+
+10
+X
+
+Gk ðI1 ; I 2 ÞVijk ðSij ; Xij Þ
+
+N X
+3 X
+i 
+
+
+2
+1X
+LES
+amod
+SLES
+ aLES
+ij
+ij ; Xij
+ij
+N n¼1 i¼1 j¼1
+
+(6)
+
+is the nondimensional “true” anisotropy tensor at each of the
+aLES
+ij
+N data points in specified “training regions” of the LES cases
+described earlier. Typically, training regions correspond to areas
+the engineer wishes to more accurately capture with their RANS
+solver. The sensitivity of the training region definitions is discussed in the results section. Equation (6) aims to minimize the
+mean squared error of the model amod
+ij , computed using the LES
+velocity field. Therefore, the process does not require repeated
+RANS simulations for each new model. Note, in order to preserve
+dimensionality, the strain and rotation rate tensors must be nondimensionalized by a turbulent timescale. In this work, we choose a
+definition using the specific dissipation rate, such that the timescale is equal to ð1=xÞ. In order to obtain x, we passively solve
+the x transport equation once by freezing the LES velocity and
+Reynolds stress fields [20]. The result is a dissipation rate consistent with the LES fields and the RANS transport equations. For
+more information on this process, see earlier work on turbine
+blade flows [9].
+To minimize Eq. (6), GEP [6], a type of evolutionary algorithm,
+is used to symbolically regress the three coefficients G1,2,3(I1, I2).
+GEP evolves a population of candidate functions, expressed as
+trees—which are decoded into mathematical equations (example
+outputs are given in Eq. (16)). GEP employs analogies to survival
+of the fittest, using Eq. (6) as a measure of individual fitness, and
+genetic mutation, which modifies the tree structure of candidate
+models. As the algorithm progresses, incremental changes through
+mutation occur with the poor changes filtered out by natural selection. The output is the best solution in the population after a specified number of iterations. As the algorithm is symbolic, no
+functional form is specified by the user. Instead, a functional form
+is evolved through increasingly complicated tree structures. The
+algorithm is nondeterministic due to the randomness inherent in
+mutation and this allows for the training of many models. For
+more information on evolutionary algorithms, see the work of
+Koza [21] and Ferreira [6]. For the specifics of tailoring the algorithm to turbulence modeling, see Weatheritt and Sandberg’s initial implementation [7].
+Methodology for Scalar Flux Closure. In an incompressible
+framework, temperature can be considered as a passive scalar, the
+mean transport of which is governed by the equation
+@u0j T 0
+@T
+@T
+ @2T
+þ uj
+¼
+
+@t
+@xj Pr @xj @xj
+@xj
+
+(5)
+
+k¼1
+
+Vijk ðSij ; Xij Þ are integrity basis functions and are polynomial in Sij
+and Xij. Due to the Cayley–Hamilton theorem, there are ten such
+Journal of Turbomachinery
+
+J¼
+
+(4)
+
+where
+¼
+amod
+ij
+
+independent polynomials. The coefficients Gk are functions of the
+scalar invariants Ik. For two-dimensional flows, the number of
+independent basis functions reduces to three and there are only
+two independent scalar invariants: I1 ¼ SijSij and I2 ¼ XijXji. The
+definitions of the polynomial basis functions are provided in
+Pope [19].
+In order to close Eq. (4), one must provide the coefficients Gk.
+Typically, this is achieved through mathematical simplification of
+the transport equation for the anisotropy of Reynolds stress [18].
+However, in this paper, we follow a trend in data-driven
+approaches that aim to fit a functional form to each Gk for a given
+dataset. This can be done through the minimization of the cost
+function J
+
+(7)
+
+The heat flux term is usually modeled using the gradient diffusion hypothesis (GDH)
+u0i T 0 ¼ at
+
+@T
+@xj
+
+(8)
+
+OCTOBER 2018, Vol. 140 / 101008-3
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+which dictates the scalar flux points in the direction of maximum
+mean temperature gradient and the model acts as a turbulent diffusion term. The diffusivity at ¼ ðt =Prt Þ is modeled as eddy viscosity over turbulent Prandtl number Prt. In this study, instead of
+using a turbulent viscosity by constant turbulent Prandtl number
+assumption, the machine-learning framework is used to infer the
+thermal diffusivity as a function of velocity gradients and temperature at ¼ at(T, Sij, Xij), much like an existing study for jets in
+crossflow [12].
+A second formulation for u0i T 0 is also considered, which can be
+considered an extension of the first. Equation (8) assumes an isotropic turbulent diffusivity. Instead, a generalized gradient diffusion hypothesis (GGDH) [22] can be assumed
+u0i T 0 ¼ f
+
+1 @T
+sij
+x @xj
+
+(9)
+
+where f ¼ f(T, Sij, Xij) is a scalar field to be optimized. This form
+is found by assuming that the scalar flux is proportional to its rate
+of production with the implicit terms neglected.
+This gives us two optimization problems, namely closure via at
+and closure via f. In both cases, the cost function
+N 
+X
+
+/mod  /LES
+
+2
+
+n¼1
+
+J¼
+
+N 
+X
+
+(10)
+
+
+LES 2
+
+/
+
+n¼1
+
+is used, where / is either at or f. The target quantity /LES for each
+optimization is found by contracting the respective equations with
+the temperature gradient (Eqs. (8) and (9))
+1LES
+@T
+C
+@xi C
+¼ B
+C
+B
+@ @T @T A
+@xj @xj
+
+(11)
+
+1LES
+@T
+C
+@xk C
+¼ B
+C
+B
+@ @T @T A
+sij
+@xi @xj
+
+(12)
+
+0
+
+aLES
+t
+
+0
+Bui T 0
+
+0
+
+f LES
+
+0
+Bxuk T 0
+
+The models /mod are found by constructing independent invariants from ð@T =@xj Þ, Sij and Xij. The full list used in this study
+closely mirrors the work of Milani et al. [12] and is given as
+I 1 ¼ Sij Sji ;
+IT1 ¼
+
+@T @T
+;
+@xi @xi
+
+I 2 ¼ Xij Xji ;
+IT2 ¼
+
+I 3 ¼ Sij Sjk Ski ;
+
+@T @T
+Sij
+;
+@xi @xj
+
+IT3 ¼
+
+I4 ¼ Xij Xjk Ski
+@T
+@T
+Sij Sjk
+@xi
+@xk
+
+@T
+@T
+@T
+@T
+Xij Xjk
+; IT5 ¼
+Xij Sjk
+@xi
+@xk
+@xi
+@xk
+@T
+@T
+IT6 ¼
+Xij Sjk Skl
+@xi
+@xl
+@T
+@T
+@T
+@T
+IT7 ¼
+Xij Sjk Xkl Slm
+; IT8 ¼
+Xij Xjk Skl
+@xi
+@xm
+@xi
+@xl
+IT4 ¼
+
+(13)
+
+where the velocity gradient is nondimensionalized by 1/x. The
+temperature gradient is nondimensionalized by ðk0:5 =cl xÞ, where
+x is obtained through the same process as described for the development of the Reynolds stress closure. Therefore, all quantities
+are nondimensional in Eq. (13) and only nondimensional quantities can be made from them. This implies to ensure dimensional
+is multiplied by ðx=kÞ. The GEP algorithm is
+consistency, aLES
+t
+101008-4 / Vol. 140, OCTOBER 2018
+
+and fmod out of Eq. (13).
+tasked with making functions for amod
+t
+For this, the standard GEP algorithm is used [6].
+
+Results and Discussion
+Instantaneous temperature fields of the LES results for both the
+thick and thin lip cases are presented in Fig. 2. For a view of the
+mean behavior, in particular, the mean spreading of the mixed
+fluid region, time-averaged temperature contours are also added to
+the figures with the levels chosen as Tslot þ 2 K and Tfs – 2 K. The
+threshold of 62 K was chosen somewhat arbitrarily but was found
+to display the spreading of the thermal wake very well, with only
+marginal differences to even smaller threshold values. From the
+instantaneous color-contours, it can be seen that the vortices that
+form behind the thicker lip wall are significantly larger than those
+generated by the thin lip. These larger-scale structures lead to
+increased turbulent mixing bringing the hot main-path flow
+toward the wall much earlier than in the thin-lip case, with the first
+occurrence of increased wall temperature seen in the range
+10  x/s  15. The mean temperature contour at Tslot þ 2 K confirms that the cooling flow is rapidly mixed with the freestream
+flow, and thus, the temperature at the wall has increased by 2 K
+already at x/s  7. For the case with the thinner lip-geometry, the
+turbulent mixing does not affect the wall until at least 25 slot
+heights downstream of the trailing edge, as reflected by the sudden
+drop in the adiabatic wall effectiveness (see Fig. 3) and the mean
+temperature contour at Tslot þ 2 K that extends to just beyond
+x/s ¼ 25. Results obtained from unsteady RANS using the baseline
+k–x SST turbulence model and the standard eddy-diffusivity
+model for the heat flux are shown for comparison in Figs. 2(c) and
+2(d), again including the time-averaged temperature contours with
+levels Tslot þ 2 K and Tfs – 2 K. For the thick-lip case (t/s ¼ 1.14),
+large scale vortex shedding can be observed persisting over a long
+streamwise distance and mixing the jet flow with the external
+flow. Although the mean contour at Tfs – 2 K is in reasonable
+agreement with the one in the LES, the mean temperature contour
+with level Tslot þ 2 K shows a very different behavior to the LES
+data, in that cool flow with T  Tslot þ 2 K persists much further
+downstream due to a shallower slope of the contour line in the
+near nozzle region. In the thin-lip case, vortex shedding with significantly smaller spatial scales with a quick return to a steady
+flow at around x/s ¼ 8 is observed. Again, the contour line of
+mean temperature at Tslot þ 2 K exhibits a shallower slope than in
+the LES, hence leading to a longer region where a low temperature is maintained at the wall. However, this effect is by far not as
+pronounced as in the thick-lip case. These results re-emphasize
+that the two chosen test cases feature significant differences in
+their physical behavior and part of the current study is to assess
+whether turbulence and heat transfer closures can be trained for
+steady calculations that are robust to these very disparate cases.
+A comparison of the adiabatic wall effectiveness between the
+linear steady RANS (k–x SST model), LES results, and the experimental result of Kacker and Whitelaw [1] is presented in Fig. 3.
+Since the value of Prt strongly influences the wall temperature due
+to variation in the heat transfer diffusivity, the value of Prt is kept
+constant at a commonly assumed value of 0.9 in the current study.
+The results show that the highly resolved LES are generally in
+good agreement with the reference experimental data. Thus, the
+LES data can be seen as a reliable data set representing the
+physics of the simplified trailing-edge slot with sufficient accuracy
+to be used for RANS model assessment and modeling using the
+above discussed machine-learning strategy. The RANS calculations using the baseline model on the other hand severely overpredict the adiabatic wall effectiveness. There are several reasons
+contributing to this overprediction. First, one mechanism driving
+both the momentum and scalar diffusion can be attributed to the
+eddies generated at the interface of the shear layer between the jet
+and the freestream/near wall flow. This mechanism is not represented in steady RANS modeling. Another possible source of deficiency is the eddy-diffusivity model used in the Reynolds
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 2 Instantaneous temperature fields obtained from LES and unsteady RANS using the baseline k–xSST model, dashed lines denote time-averaged temperature at Tslot 1 2 K and Tfs – 2 K. (a) Instantaneous
+LES temperature field for t/s 5 1.14. (b) Instantaneous LES temperature field for t/s 5 0.126. (c) Instantaneous URANS temperature field for t/s 5 1.14. (d) Instantaneous URANS temperature field for t/s 5 0.126.
+
+Fig. 4 Thermal diffusivity obtained from LES using Eq. (11)
+
+Fig. 3 Comparison of gwall obtained from LES, experiments [1]
+and baseline RANS for different t/s
+
+averaged advection diffusion equation. In this case, the model
+error is related to both its mathematical formulation as well as the
+assumption of a constant turbulent Prandtl number. The use of
+such a model assumes an isotropic turbulent diffusivity at each
+point in the flow and the connection between the momentum and
+scalar diffusion via a constant turbulent Prandtl number is questionable in general. Equations (11) and (12) are used to evaluate
+the thermal diffusivity or GGDH coefficient, respectively, predicted by the LES. As can be seen in Figs. 4 and 5, the results
+obtained from either approach exhibit significant spatial variation
+which implies that heat flux modeling cannot be neglected in this
+application.
+Journal of Turbomachinery
+
+Third, the overprediction of the adiabatic wall effectiveness can
+be attributed to the inability of the linear RANS model to reproduce the high level of near wall anisotropy as compared to the
+LES approach. Using the LES data, this can be quantified by considering the alignment of the strain rate tensor and the anisotropy
+tensor, computed as follows [23]:
+2
+¼ sLES
+ kdij ¼ 2t Sij
+aLES
+ij
+ij
+3
+aLES
+ij Sij
+c ¼  pﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ ;
+LES
+aLES
+mn anm Spq Sqp
+
+1 < c < 1
+
+(14)
+
+(15)
+
+A value of 1 implies that the strain rate and anisotropy tensor
+are aligned in the opposite direction. A value of 0 implies no
+alignment between the stress and strain rate tensor. Finally, a
+value of þ1 indicates strong alignment between the anisotropy
+and the strain rate tensor. In Fig. 6, it can be seen that a region of
+poor alignment occurs close to the wall, while strong alignment
+occurs in the wake region behind the slot.
+OCTOBER 2018, Vol. 140 / 101008-5
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 5 Thermal diffusivity obtained using GGDH, Eq. (12)
+
+Fig. 7 Training regions for RANS (top) and heat flux (bottom)
+models
+
+Table 2 Model names and training region/dataset
+Model Name
+
+Training Region
+
+LES
+
+Eq.
+
+KCI.R.1b
+KCI.R.thin.1
+KCI.R.1f
+HF.1 (GDH)
+HF.2 (GGDH)
+HF.3 (GGDH)
+
+0 < x/s < 85, 0 < y/s < 1
+0 < x/s < 85, 0 < y/s < 1
+0 < x/s < 85, 0 < y/s < 3
+30 < x/s < 85, 0 < y/s < 3
+30 < x/s < 85, 0 < y/s < 3
+0 < x/s < 30, 0 < y/s < 3
+
+t/s ¼ 1.14
+t/s ¼ 0.126
+t/s ¼ 1.14
+t/s ¼ 1.14
+t/s ¼ 1.14
+t/s ¼ 1.14
+
+16a
+16b
+16c
+17a
+17b
+17c
+
+Fig. 6 Alignment of strain and anisotropy tensor using baseline k–x-SST model: (a) t/s 5 1.14 and (b) t/s 5 0.126
+2
+¼ Vij1 ð1:05I1  0:6Þ
+amod
+ij
+
+Training Region and Proposed Models. Using the Machine
+learning approach discussed earlier, the following models were
+produced by the algorithm: Models KCI.R.1b and KCI.R.thin.1
+were trained on the same region illustrated in Fig. 7. The only
+difference is that model KCI.R.1b is trained on the LES dataset
+of the thick lip geometry, while model KCI.R.thin.1 is trained
+on the LES dataset of the thin lip geometry. The training region
+presented here is the region found to give the best improvement
+in adiabatic wall effectiveness while providing the best match
+to the LES Reynolds stress profiles. The region was selected
+based on the high levels of alignment error, shown in Fig. 6.
+For comparison sake, a separate RANS model that was trained
+with a less optimal training region is presented (see Table 2).
+For this model (KCI.R.1f), the training region extends up to
+wall normal height of 3s, while the x domain remains the same.
+A comparison of the alignment between the LES anisotropy
+and modeled anisotropy, adiabatic wall effectiveness as well as
+Reynolds stress with the models trained with the optimal
+region (KCI.R.1b, KCI.R.thin.1) will be presented in the
+following
+1
+¼ Vij1 ð2I1 I2  1:0I2  0:43Þ
+amod
+ij
+
+þ Vij2 ð1:0I1 I2 þ I1 þ ðI2 Þ2  3:0I2  3:903Þ þ Vij3 ð4I2 Þ
+(16a)
+101008-6 / Vol. 140, OCTOBER 2018
+
+þ Vij2 ð2:0I1  ð4:0I1  8:6I2 þ 8I1 I2  4:3Þ
+ ð5:0I1  4I2  2I12 þ 2I1 I2  2ÞÞ
+þ Vij3 ð6:0ð2:0I2 þ 1:0ÞðI2  I1 þ 2:0Þ  1:0Þ
+3
+¼ Vij1 ð0:609Þ þ Vij2 ðI2  1:0Þ þ Vij3 ðI2 Þ
+amod
+ij
+
+(16b)
+(16c)
+
+In the case of the heat flux models, the training area should be
+located using the region where either the value of the thermal diffusivity or GGDH coefficient is dominant. In both cases, this
+region corresponds approximately to the domain downstream of
+the slot lip from 0  y  3 and x > 0 (see Figs. 4 and 5). A further
+consideration is that the selection region should consider only the
+physical phenomenon for which the mechanism of diffusion
+occurs primarily due to turbulence and not vortex shedding. In the
+RANS model training, the magnitude of the anisotropy tensor is
+not significantly affected by the presence of the additional mechanism of vortex shedding due to the thick lip. The region of large
+anisotropy occurs mainly at the lower wall region and this is true
+for both the thick and the thin lip case irrespective of the vortex
+shedding mechanism. On the other hand, the magnitude of the
+thermal diffusivity or GGDH coefficient is strongly linked to the
+location of vortex formation. In Fig. 4, it can be seen that the large
+magnitude of thermal diffusivity occurs at the region right behind
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+the thick lip wall. Therefore, the region for which the mechanism
+of diffusion does not include the vortex shedding effect, x  > 30
+and 0  y  3 (see Fig. 7), is considered for the extraction of the
+coefficient/thermal diffusivity. For the current flux training region
+where the models are trained on the LES dataset of the thick lip
+case, the following models were compared:
+1
+¼ 2:447  I2  IT1  ð2:21I1  0:959Þ
+amod
+t
+þ 3:447IT1 þ 3:447
+
+(17a)
+
+f ð::Þmod2 ¼ I2  ðI1 þ IT2 þ 0:75Þ  293:25  IT1
+þ 0:75  IT2  ðIT7 þ 16:794Þ
+þ 20801:39  IT4 þ ð4:95  ð4:95  I2 þ 4:95Þ
+ ðI2  4:95Þ  41:56Þ  ðI1 þ IT1 þ 2IT3 Þ þ 4:4078
+(17b)
+f ð::Þmod3 ¼ 2I1  27:4656I2  36:2562IT1  IT2  IT3
+þ ðIT5  0:03Þ  ððI3  2:488Þ  ðIT2 þ 2:488Þ
+þ 8:129Þ  ð7:3603IT8 þ 97:656Þ
+ ðIT1 þ 5:201IT2 þ IT3  0:01Þ þ 2:003
+(17c)
+It should be pointed out that for these models, the scalar invariants
+were extracted from the momentum field computed using the best
+performing trained RANS model. An overview of the different
+RANS and flux models is presented in Table 2.
+Alignment of Modeled and Large-Eddy Simulation Anisotropy Tensors. In order to test the newly trained models, the alignment of the models with respect to the anisotropy tensor from
+LES was compared. The alignment of the anisotropy tensors is
+defined as
+mod
+aLES
+ij aij
+c ¼ qﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ ;
+LES mod mod
+aLES
+mn anm apq aqp
+
+1 < c < 1
+
+(18)
+
+In Fig. 8, it can be seen that the alignment results are very similar, and in all cases, the alignment, particularly close to the lower
+wall, has significantly improved over the linear models shown in
+Fig. 6. Models trained on the datasets from the thin or thick lip
+LES produced a very similar result. This is also the case when the
+models are tested on the thin lip geometry. This implies that the
+influence of the lip thickness on the anisotropy of the flow field
+near the lower wall is negligible. In Fig. 8(c), the alignment plot
+of a third model trained under a less optimal region is presented.
+Although the plot looks very similar to the above two plots, it can
+be seen that the magnitude of the alignment is comparatively
+smaller at both the wake and near wall regions.
+Reynolds Stress Profiles. A comparison of the Reynolds Stress
+profiles at a streamwise distance of 30 slot heights for the different
+models is presented in Figs. 9 and 10 for the thick and thin lip
+cases, respectively. Note that Fig. 10 also shows the results when
+the models obtained for BR ¼ 1.26 are used for two lower blowing
+ratios of the thin lip case. In the comparison of the models, it
+should be pointed out that the trained models were applied across
+the entire domain for the active simulation. The analysis of the
+alignment plot shows that applying the model across the entire
+domain is appropriate since relatively high alignment is found
+across the region of interest except for the location near the wall
+at which a strip of low magnitude of alignment is found (see
+Fig. 8). This location corresponds closely to the wall normal
+height for which the growing boundary layer interacts with the
+wake behind the lipwall. At this specific location, it was found
+Journal of Turbomachinery
+
+Fig. 8 Alignment of strain and anisotropy tensor using different trained nonlinear RANS models for t/s 5 1.14 case. Note that
+arrows are pointing toward the areas of highest interest (close
+to the lower wall) where significant improvement in the alignment is observed compared to Fig. 6.
+
+that neither of the trained models were able to adequately recover
+a high alignment value at the intersection.
+In Figs. 9 and 10, it can be seen that there is significant
+improvement in the prediction of the Rxx component when compared to the baseline RANS model. In the near wall region, the
+trained RANS models are able to produce a sharper peak as compared to the baseline RANS model. It should also be noted in
+
+Fig. 9 Rxx (a) and Rxy (b) from trained models compared with
+baseline RANS and LES profiles at x/s 5 30 for t/s 5 1.14
+
+OCTOBER 2018, Vol. 140 / 101008-7
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 11 Comparison of streamwise heat flux obtained from different flux models for case t/s 5 1.14: (a) LES streamwise heat
+flux, (b) HF.1 streamwise heat flux, (c) HF.2 GGDH streamwise
+heat flux, and (d) HF.3 GGDH streamwise heat flux.
+Fig. 10 Rxx (left) and Rxy (right) from trained models compared
+with baseline RANS and LES profiles at x/s 5 30 for t/s 5 0.126
+at different blowing ratios: (a) BR 5 1.26, (b) BR 5 1.07, and (c)
+BR 5 0.86
+
+Figs. 10(b) and 10(c) that the prediction of the Rxx component for
+other blowing ratios of the thin lip case is significantly improved
+compared to the baseline RANS model even using the current
+models trained at BR ¼ 1.26. This implies the applicability of the
+models for different conditions than what they were trained on.
+The Rxy component is better predicted for models KCI.R.1b and
+KCI.R.thin.1 in the case of the thicker slot, although both models
+performed poorer in the case of the thin lip as compared to the
+baseline RANS model in terms of overall magnitude. However,
+the general shape of the profile is still captured with the trained
+models. Results from the model trained in a different region,
+KCI.R.1f, are included in Fig. 9 as well and show that, for both
+components of the Reynolds stress tensor, particularly Rxx, the
+improvement over the baseline model is not as good as for the
+other models, suggesting that training region 1 (see Fig. 7, top)
+produces better results.
+101008-8 / Vol. 140, OCTOBER 2018
+
+Comparison of Modeled and Large-Eddy Simulation Heat
+Flux Vector. The trained heat flux models are now tested a priori
+using the constructed invariants from the converged RANS field
+to compare the modeled heat flux to the actual heat flux vector
+from the LES dataset. In a flow domain for which the temperature
+gradient is dominant in the y direction, the streamwise heat flux
+tends to be underpredicted using the eddy-diffusivity model.
+Using a model based on the generalized gradient diffusion hypothesis would in theory give better prediction of the heat flux especially in the streamwise direction. In this comparison, the
+modeled form of the heat flux vector can take either the form of
+the gradient diffusion hypothesis or the generalized gradient diffusion hypothesis seen in Eqs. (11) and (12), respectively.
+From Fig. 11(a) and 12(a), it can be inferred that the mechanism driving the decrease of the wall temperature is due to both
+the negative streamwise and the wall normal heat flux. It is also
+evident that the wall-normal heat flux is in general larger than the
+streamwise heat flux, especially in the wake region behind the lip
+wall. The dominant region where the flux is largely negative is
+mostly concentrated in a region right behind the lipwall and away
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Fig. 12 Comparison of wall-normal heat flux obtained from different flux models for case t/s 5 1.14: (a) LES wall-normal heat
+flux, (b) HF.1 wall-normal heat flux, (c) HF.2 GGDH wall-normal
+heat flux, and (d) HF.3 GGDH wall-normal heat flux.
+
+from the lower wall. In the vicinity of the lower wall, both the
+streamwise and wall-normal heat flux components are much
+smaller in magnitude although the wall-normal heat flux plays a
+greater role in the transport of heat away from the wall. Heat flux
+models based on the gradient diffusion hypothesis (HF.1) appear
+to be unable to produce the correct magnitude of the streamwise
+heat flux component without overpredicting wall-normal heat
+flux. With respect to the LES heat flux, it can be seen that the heat
+flux produced by HF.1 model overpredicts the wall-normal and
+underpredicts the streamwise heat flux. In contrast, the machine
+learnt heat flux model (HF.2) based on the generalized gradient
+diffusion hypothesis is able to provide the best prediction of both
+the streamwise and wall-normal heat flux components when compared to the LES data, especially the near-lip wall region. To illustrate the effect of a change in training region, another flux model
+was trained using a domain between 0 < x/s < 30 instead. A comparison of the adiabatic wall effectiveness obtained from the
+abovementioned heat flux models is made next.
+Journal of Turbomachinery
+
+Fig. 13 Comparison of gwall for different RANS models for
+t/s 5 0.126 at different blowing ratios: (a) BR 5 1.26, (b)
+BR 5 1.07, and (c) BR 5 0.86.
+
+Adiabatic Wall Effectiveness of Trained Models. In
+Fig. 13(a), it can be seen that the adiabatic wall effectiveness of
+the cases using the KCI.R.1b and KCI.R.thin.1 RANS models
+show significant improvement over the baseline k–x SST model,
+resulting in a very good comparison with both LES and the
+experiment [1]. Of particular interest is that the model
+KCI.R.1b, trained using the thick-lip LES dataset, produces
+almost the same adiabatic wall effectiveness as the model
+KCI.R.thin.1, trained using the thin-lip LES dataset. Further,
+applying the models trained using the LES dataset at BR ¼ 1.26
+to different blowing ratios of the thin lip geometry leads to a
+significant improvement in RANS prediction of adiabatic wall
+OCTOBER 2018, Vol. 140 / 101008-9
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+low-frequency vortex shedding is produced by the trailing edge
+that persists for a large distance downstream, while in the thin
+trailing-edge case the vortex shedding frequency is higher and
+does not persist as long downstream, in particular when looking at
+the URANS result. For the thin-lip case, it was also found that the
+error in heat flux modeling between baseline RANS and LES was
+smaller than in the thick lip case. This implies that by training a
+RANS model that can produce a flow field that more closely
+matches the reference data might suffice in order to obtain a good
+prediction of gwall, as indeed observed in Fig. 13. On the other
+hand, for the thick-lip case, a heat flux model needs to be trained
+in conjunction with a RANS model to improve gwall predictions.
+However, as trained RANS models are not able to predict an accurate flow field, as indicated by the Reynolds stress components,
+see Figs. 9 and 10, the trained heat flux models are at risk of overcompensating in order to obtain the correct temperature field
+based on an inaccurate flow field. In order to address this issue, a
+future study using unsteady RANS will be conducted with the aim
+of obtaining accurate flow and temperature fields for different
+geometries using only one set of trained models.
+Fig. 14 Comparison of gwall for different RANS and heat flux
+models for t/s 5 1.14
+
+effectiveness, as shown in Figs. 13(b) and 13(c). Taken together,
+these results suggest that the developed models, using the same
+training region and blowing ratio, are robust to changes in
+geometry and flow condition.
+However, when performing RANS using the newly trained
+models on the thick-lip case with t/s ¼ 1.14, a much wider spread
+of the results can be observed (see Fig. 14). Using models
+KCI.R.1b, KCI.R.thin.1, and KCI.R.1f again an improvement
+over the baseline model results can be observed, with little difference between the models. However, the results are by far not as
+close to the reference data as for the thin-lip case. This is mainly
+due to the fact that in the thick-lip geometry, the error in the scalar
+flux model is more significant than in the thin-lip case. Thus for
+the thick-lip case training, only a RANS model is not sufficient,
+and additionally, a trained heat-flux model needs to be considered.
+Figure 14 also includes the results from the combined RANS and
+flux models KCI.R.1b-HF.1, KCI.R.1b-HF.2, and KCI.R.1b-HF.3.
+For all three trained heat-flux models, combined with the most
+successful RANS model KCI.R.1b, the results improve further
+over the baseline model and the trained RANS-only model cases.
+A comparison of the GDH model, KCI.R.1b-HF.1, and the GGDH
+model, KCI.R.1b-HF.2, shows that the correct prediction of the
+streamwise heat flux just in the wall region downstream of the lip
+is necessary to obtain a better match in adiabatic wall effectiveness to the LES results. In particular, KCI.R.1b-HF.2 succeeds in
+approximating the reference data very closely. Different GDH
+models were generated using different training regions and it was
+found that none of these models were able to match the LES
+results closely, although they still performed significantly better
+than results based on the standard eddy-diffusivity model. The
+large difference between models KCI.R.1b-HF.2 and KCI.R.1bHF.3, trained in different regions, shows that the adiabatic wall
+effectiveness is very sensitive to the change in the flux model
+training region as the temperature field is explicitly dependent on
+the modeled heat flux term in its transport equation.
+Overall, the models presented so far, therefore, are able to significantly improve the prediction of the adiabatic wall effectiveness for both geometries, although with one caveat. When using
+the most successful Reynolds stress model developed for the
+thick-lip case (Eq. (16a)) combined with the heat flux model
+(Eq. (17b)), denoted KCI.R.1b-HF.2, on the thick-lip case, the adiabatic wall effectiveness is predicted well (see Fig. 14). However,
+on the other hand, when using the best model combination
+obtained for the thick-lip case, KCI.R.1b-HF.2, on the thin-lip
+case, gwall is underpredicted (not shown in Fig. 13). This behavior
+can be explained by having another look at the instantaneous temperature fields shown in Fig. 2. For the thick trailing-edge case,
+101008-10 / Vol. 140, OCTOBER 2018
+
+Conclusion
+A gene expression programming based machine-learning technique has been applied for the development of nonlinear turbulence and heat transfer closure models suited for steady RANS
+calculations of a fundamental trailing-edge slot. Highly resolved
+large-eddy simulations were initially performed for two different
+trailing-edge slot thicknesses and were shown to agree well
+with experimental data [1], thus providing suitable training
+data for model development. RANS calculations using a linear
+stress–strain model and eddy-diffusivity based heat flux models
+were conducted of the same cases for comparison, showing the
+well-known overprediction of adiabatic wall effectiveness. The
+LES data were used to identify deficiencies in the baseline RANS
+calculations. It was shown that the turbulent stress tensor is poorly
+aligned with the strain rate tensor, in particular in the near wall
+region, justifying the use of the mean squared error of the anisotropy tensor as a cost function for the RANS model development,
+and explaining the use of the near-wall region as most successful
+training region.
+The machine-learnt models were then applied to both thin and
+thick trailing-edge slot geometries to assess their performance.
+The comparison of the Reynolds stress profiles shows that the
+trained RANS models are able to provide somewhat better prediction of the normal components of the Reynolds stress tensor in
+both the thick and thin lip cases when compared with the baseline
+results, without penalty of performance for the shear component.
+However, importantly, it is found that the trained turbulence
+model in conjunction with the standard eddy-diffusivity model
+can achieve a good match with the reference data for the thin lip
+geometry in terms of the adiabatic wall effectiveness. This was
+also the case when this combination (i.e., the RANS model trained
+using the LES dataset at BR ¼ 1.26 and the standard eddydiffusivity model) was applied to different blowing ratios of the
+thin lip geometry. The trained nonlinear models also improve the
+prediction of adiabatic wall effectiveness for the thick-lip case,
+although the results do not agree well with the reference data.
+Extracting the thermal diffusivity from the LES data revealed
+significant spatial gradients that cannot be represented by an
+eddy-diffusivity model, thus motivating the use of the GEP algorithm for turbulent heat flux model development. For the turbulent
+heat flux models, the strain rate and vorticity tensors and the temperature gradient vector were used to construct the basis functions. The LES data showed that the streamwise heat flux is the
+least important component. It was found that a modeled form of
+the heat flux vector based on the generalized gradient diffusion
+hypothesis provided a better match to the LES heat flux especially
+in terms of the streamwise heat flux component. This resulted in
+good predictions of the adiabatic wall effectiveness even for the
+Transactions of the ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+thick lip case when using the trained heat flux model with a nonlinear trained RANS closure. Thus, a set of models has been
+developed and presented, each producing accurate predictions of
+the adiabatic wall effectiveness for the respective, topologically
+different, cases of thick and thin trailing edges.
+Applying the combination of nonlinear turbulence and heat flux
+models best suited for the thick lip case to the thin lip case, an
+underprediction of the adiabatic wall effectiveness is found. This
+is most likely due to the fact that the steady RANS does not feature the large-scale vortex shedding present in the thick trailing
+edge case, and thus, the heat flux model developed for the thicklip case is overcompensating for the lack of mixing due to the
+deterministic unsteadiness. To address this, the next logical step
+in developing a machine-learning framework for nonlinear turbulence and heat flux modeling is the consideration of unsteady
+RANS and models developed specifically in that context.
+
+Acknowledgment
+This work was supported by resources provided by the
+Pawsey Supercomputing Centre with funding from the Australian
+Government and the Government of Western Australia. The
+University of Melbourne authors also acknowledge the financial
+support and the permission to publish by General Electric.
+
+Funding Data
+ General Electric.
+
+Nomenclature
+aij ¼
+cl ¼
+Islot ¼
+Imain ¼
+k¼
+lt ¼
+Pr ¼
+Prt ¼
+Sij ¼
+Ub ¼
+Ufs ¼
+at ¼
+gwall ¼
+t ¼
+¼
+q¼
+sij ¼
+Xij ¼
+
+nondimensional anisotropy tensor
+turbulence model constant; 0.09
+inlet slot turbulence intensity
+inlet main turbulence intensity
+turbulent kinetic energy
+turbulent length scale
+Prandtl number
+turbulent Prandtl number
+strain rate tensor
+inlet slot bulk velocity
+inlet main free-stream velocity
+Thermal Diffusivity
+Tfs
+adiabatic wall effectiveness, TTwall
+slot Tfs
+turbulent viscosity
+kinematic viscosity
+density
+Reynolds stress tensor
+rotation rate tensor
+
+Abbreviations
+BR ¼ blowing ratio
+GDH ¼ gradient diffusion hypothesis
+GGDH ¼ generalized gradient diffusion hypothesis
+Superscripts and Subscripts
+fs ¼ free-stream
+
+Journal of Turbomachinery
+
+LES ¼
+mod ¼
+s¼
+t¼
+w¼
+
+LES quantity
+modeled quantity
+slot height
+slot lip thickness
+wall
+
+References
+[1] Whitelaw, S., and Kacker, J., 1963, “An Experimental Investigation of the
+Influence of Slot Lip Thickness of the Impervious Wall Effectiveness of the
+Uniform Density, Two Dimensional Wall Jet,” Int. J. Heat Mass Transfer,
+542(9), pp. 1196–1201.
+[2] Medic, G., and Durbin, P. A., 2005, “Unsteady Effects on Trailing Edge
+Cooling,” ASME J. Heat Transfer, 127(4), pp. 388–392.
+[3] Joo, J., and Durbin, P. A., 2009, “Simulation of Turbine Blade Trailing Edge
+Cooling,” ASME J. Fluids Eng., 131(2), pp. 211021–2110214.
+[4] Ling, J., Kurzawski, A., and Templeton, J., 2016, “Reynolds Averaged Turbulence Modelling Using Deep Neural Networks With Embedded Invariance,”
+J. Fluid Mech., 807, pp. 155–166.
+[5] Parish, E. J., and Duraisamy, K., 2016, “A Paradigm for Data-Driven Predictive
+Modeling Using Field Inversion and Machine Learning,” J. Comput. Phys.,
+305, pp. 758–774.
+[6] Ferreira, C., 2001, “Gene Expression Programming: A New Adaptive Algorithm for Solving Problems,” Complex Syst., 13(2), pp. 87–129.
+[7] Weatheritt, J., and Sandberg, R. D., 2016, “A Novel Evolutionary Algorithm
+Applied to Algebraic Modifications of the RANS Stress–Strain Relationship,”
+J. Comput. Phys., 325, pp. 22–37.
+[8] Weatheritt, J., Sandberg, R. D., Ling, J., Saez, G., and Bodart, J., 2017, “A
+Comparative Study of Contrasting Machine Learning Frameworks Applied
+to RANS Modeling of Jets in Crossflow,” ASME Paper No. GT201763403.
+[9] Weatheritt, J., Pichler, R., Sandberg, R. D., Laskowski, G. M., and Michelassi,
+V., 2017, “Machine Learning for Turbulence Model Development Using a
+High Fidelity HPT Cascade Simulation,” ASME Paper No. GT2017-63497.
+[10] Duraisamy, K., and Durbin, P., 2014, “Transition Modeling Using Data Driven
+Approaches,” CTR Summer Program, p. 427.
+[11] Zhang, Z. J., and Duraisamy, K., 2015, “Machine Learning Methods for DataDriven Turbulence Modeling,” 22nd AIAA Computational Fluid Dynamics
+Conference, p. 2460.
+[12] Milani, P. M., Ling, J., Saez-Mischlich, G., Bodart, J., and Eaton, J. K., 2018,
+“A Machine Learning Approach for Determining the Turbulent Diffusivity in
+Film Cooling Flows,” ASME J. Turbomach., 140(2), p. 021006.
+[13] Sandberg, R., 2015, “Compressible-Flow DNS with Application to Airfoil
+Noise,” Flow, Turbul. Combust., 95(2–3), pp. 211–229.
+[14] Ducros, F., Nicoud, F., and Poinsot, T., 1998, “Wall-Adapting Local EddyViscosity Models for Simulations in Complex Geometries,” Conference on
+Numerical Methods in Fluid Dynamics, pp. 1–7.
+[15] Ivanova, E., and Laskowski, G. M., 2014, “LES and Hybrid RANS/LES of a
+Fundamental Trailing Edge Slot,” ASME Paper No. GT2014-25906.
+[16] Sandberg, R. D., and Sandham, N. D., 2006, “Nonreflecting Zonal Characteristic Boundary Condition for Direct Numerical Simulation of Aerodynamic
+Sound,” AIAA J., 44(2), pp. 402–405.
+[17] Menter, F., and Esch, T., 2001, “Elements of Industrial Heat Transfer Predictions,”
+16th Brazilian Congress of Mechanical Engineering (COBEM), Vol. 109.
+[18] Leschziner, M., 2015, Statistical Turbulence Modelling for Fluid Dynamics–Demystified: An Introductory Text for Graduate Engineering Students,
+World Scientific, Imperial College Press, London, U.K.
+[19] Pope, S. B., 1975, “A More General Effective-Viscosity Hypothesis,” J. Fluid
+Mech., 72(2), pp. 331–340.
+[20] Spalart, P., Shur, M., Strelets, M. K., and Travin, A., 2015, “Direct Simulation
+and RANS Modelling of a Vortex Generator Flow,” Flow, Turbul. Combust.,
+95(2–3), pp. 335–350.
+[21] Koza, J. R., 1992, Genetic Programming: On the Programming of Computers
+by Means of Natural Selection, 1st ed., MIT Press, Cambridge, MA.
+[22] Daly, B., and Harlow, F., 1970, “The Generalized Gradient Diffusion Hypothesis,” Phys. Fluids, 13(11), p. 2634.
+[23] Schmitt, F. G., 2007, “About Boussinesq’s Turbulent Viscosity Hypothesis:
+Historical Remarks and a Direct Evaluation of Its Validity,” C. R. Mec.,
+335(9–10), pp. 617–627.
+
+OCTOBER 2018, Vol. 140 / 101008-11
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org on 10/05/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

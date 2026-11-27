@@ -1,0 +1,586 @@
+Proceedings of Global Power and Propulsion Society
+ISSN-Nr: 2504-4400
+GPPS Montreal26
+September 9-11, 2026
+www.gpps.global
+
+GPPS-TC-2026-0005
+The Effect of Discrete Perturbations on Boundary Layer Transition in HP
+Turbines
+Soham Kar
+Whittle Laboratory, University of Cambridge
+sk999@cam.ac.uk
+
+Christopher J. Clark
+Whittle Laboratory, University of Cambridge
+cjc95@cam.ac.uk
+
+Andrew P.S. Wheeler
+Whittle Laboratory, University of Cambridge
+aw329@cam.ac.uk
+
+Nicholas R. Atkins
+Whittle Laboratory, University of Cambridge
+nra27@cam.ac.uk
+
+ABSTRACT
+Film cooling introduces discrete perturbations on the suction surface boundary layer of high-pressure turbine blades,
+acting as trip sites for transition. However, the strong favourable pressure gradient present within turbines can reverse this
+effect through acceleration induced reverse transition Mayle (1991). This paper uses direct numerical simulations (DNS)
+to demonstrate how perturbation location, size and spacing control the transition mechanism, specifically whether bypass
+or separated flow transition occurs, through the acceleration parameter (K) and its control of turbulent kinetic energy tke.
+Simulations are conducted on a flat palate with conditions representative of a Reynolds number based on surface length
+(ReL ) of ∼ 400, 000, approximately equivalent to a Reynolds number based on axial chord Rex of ∼ 250, 000. Two parameters are varied in parallel: First, the location of the film ejection, in this study modelled as hemispherical trips, is
+varied between the leading edge and peak suction. Second, the size of the hemispherical trip is varied to simulate various
+film cooling configurations. Key findings reveal that acceleration suppresses tke production when K > Kcrit = 3e−6, with
+differences in tke between cases arising primarily from wall normal and lateral velocity fluctuations (v′ and w′ ). The predominant turbulence length-scales decay differentially downstream of the trip, with smaller scales dissipating more rapidly
+in strongly accelerating regions. Larger trips exhibit reverse transitional behaviour controlled by local Ktrip relative to Kcrit ,
+while smaller trips are suppressed by the near wall shear-layer regardless of acceleration. Optimally-spaced trips excite
+maximum non-modal transient growth and achieve complete bypass transition independent of acceleration, though this
+mechanism is highly spanwise spacing sensitive with ∼ 12% reduction in spacing removing this effect.
+1
+
+INTRODUCTION
+Mayle (1991) summarises various bypass transition mechanisms possible over a HPT blade categorising them into
+primary mechanisms: free stream turbulence (FST), periodic wakes and laminar separation bubbles and, secondary mechanisms: roughness and film cooling ejection. The success of these mechanisms are governed by the local value of acceleration
+parameter (K), see Equation 1, at their point of action. Film cooling and roughness were said to be a secondary mechanism
+with transition mainly being a result the unsteady interactions of all of the other mechanisms. Multiple studies have found
+differing behaviours as a result of the the impact of film cooling ejection.
+(
+) (
+) (
+)
+d( UUT E )
+ν dU
+ρ −1
+µ
+U −2
+−1
+K= 2
+= Rex
+U dL
+UT E
+ρT E
+µT E d( LL )
+
+(1)
+
+SS
+
+Tiedemann and Kost (1999) states that film cooling will alter the measured behaviour but does not specify to what extent.
+Film cooling induced transition is observed by Gladden et al. (1973) and Hodson and Howell (2005) while Petersen (2017)
+This work is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International (CC-BY-NC-ND)
+See: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+
+states that film cooling leads to earlier transition via a separation bubble, not film induced bypass. Clark et al. (2024) showed
+that the location of cooling ejection plays a significant role in the transitional behaviour of the boundary layer and is the
+primary mechanism governing transition. At a global blade Reynolds number, based on axial chord and at exit flow condition,s Rex ∼ 4e5 a lack of film induced transition was found, with transition occurring due to a separation bubble further
+downstream on the suction surface. Above Rex ∼ 4e5 film cooling induced transition was the primary mechanism.
+From this understanding it becomes useful to track the transition mechanisms in isolation which is shown in Figure 1
+reproduced from Clark et al. (2024). At lower the Rex of smaller engines or future engines with small cores the main transition mechanism is via a separation bubble. As Rex is increased it shows that the primary contributors to transition are
+extreme end of life roughness or, more likely, film cooling. As Rex is reduced in modern engines the transition mechanism
+switches to a late suction surface (SS) separation bubble showing that the earlier film cooling induced transition is being
+suppressed due to the strong acceleration of the flow. This switch in primary mechanism, known as reverse transition, is currently modelled to occur if the local acceleration parameter at coolant ejection (Ke j ) is greater than the critical value of 3e−6.
+
+Separation/Reattachment
+Turbulence
+Roughness
+Film Cooling
+
+Figure 1 Primary transition mechanism map on HPT SS at varying Rex reproduced from Clark et al. (2024).
+
+Teekaram et al. (1991) and Schmidt and Bogard (1995) did initial studies on film cooling flows in regions of high mainstream
+acceleration at large Rex ∼ 2e6. Both papers used moderate accelerations, far below the relaminerisation limit, and measure
+cooling effectiveness which can be interpreted as a proxy for local boundary layer state. The results found a quicker decay
+in effectiveness, when compared to zero pressure gradient cases, caused by an increase in heat transfer between the gas
+and the blade likely due to a more turbulent boundary layer. For an initially laminar boundary layer which is subsequently
+perturbed by coolant ejection Launder and York (1974) found that for Ke j ∼ 2e − 6 there was a 30% improvement in centreline cooling effectiveness due to the maintenance of a laminar/transitional boundary layer. Kanani et al. (2018) showed an
+increase in effectiveness immediately following coolant ejection from a slot indicating that a more laminar like boundary
+layer is sustained. Using the previously cited papers Coletti et al. (2013) attributed the varying effect of acceleration on
+span-averaged effectiveness to four competing mechanisms. The jet deflection towards the boundary layer and likelihood of
+laminar-turbulent transition being reduced by strong acceleration improved effectiveness. Conversely, the counterrotating
+vortex pair, caused by the ejected coolant, is strengthened and the spanwise spread of ejected coolant is prevented both
+deteriorated effectiveness. Overall the disarrangement in the affect of acceleration on film cooling induced transition and
+the various competing near wall mechanisms lead to the consensus that the particular arrangement of film cooling both in
+terms of location and strength is important in determining boundary layer state.
+The simplest model of reverse transition used by Mayle (1991), described above, is still the most widespread model used in
+design methods currently. In simulations the k − ε turbulence model is used to predict relaminerization in Jones and Launder
+(1972) and the k − ω SST turbulence model in conjunction with the γ − Reθ transition model in Langtry and Menter (2009)
+are used. The capability of the k − ω SST turbulence model is assessed Bader et al. (2017) which shows that general trends
+are captured and it is well tuned to Kcrit = 3e − 6 correctly predicting that reverse transition will not occur below the critical
+value. Although the predictions can be reliable, the models depend heavily on empirical transition correlations for generating Reθ ,transition derived from flat plate experiments that do not consider disturbances such as film cooling, roughness or FST.
+The location of reverse transition onset and completion are key parameters to define to be used in low order model solvers
+particularly in the design stage. Ranjan and Narasimha (2017) argues that since K is based purely on external variables
+and takes no account of the dynamics of the boundary layer, such as the size or perturbation or sustained acceleration, it
+2
+
+cannot be a strict criterion for the onset of reverse transition. Clark et al. (2024) showed that averaging the value of Ke j
+for 10 hole diameters downstream of the point of ejection collapsed the behaviour of the boundary layer into the more
+binary turbulent/laminar behaviour as described by Mayle (1991) indicating that integral effects of acceleration also play
+a role. The completion of reverse transition is defined as the point at which the Reynolds stresses in the boundary layer
+have become negligible and do not effect the flow as described in Narasimha and Sreenivasan (1973) and Narasimha and
+Sreenivasan (1979). Different values of Kcrit have been proposed for different types of boundary layer flows ranging from
+2e − 6 < Kcrit < 3.6e − 6 with 3e − 6 emerging as the widely agreed upon threshold value. This range in Kcrit however shows
+that K ≥ Kcrit is not a complete description of onset. Further this K > Kcrit model also ignores the size of the perturbation
+experienced by the boundary layer and multimodal interactions with other pathways which could enhances or impede film
+cooling induced transition. The length required for a boundary layer to fully achieve this state is dependent on the initial
+level of disturbance within the boundary layer, the onset location, and the profile of the acceleration and no current model
+exists to predict this without simulation.
+2
+
+RESEARCH AIMS
+This paper aims to capture the behaviour of the HPT SS boundary layer when acted upon by discrete perturbations introduced by film cooling under various idealised film-cooling configurations represented by hemispherical trips of different
+sizes. The research aims are:
+1. Capture the variety of behaviours introduced by film cooling both transition seeded by turbulent structures introduced
+by film ejection and their absence resulting in a separation bubble
+2. Understand the effect of typical HPT sustained, post coolant ejection, acceleration on the tke and its length scale.
+3. Show that local value of K is not the only governing parameter in the bifurcated behaviour but that the size and spacing
+of the trip are also key parameters.
+3 METHODS
+3.1 Computational Setup
+The present study uses 3DNS presented in Wheeler (2023), Wheeler et al. (2016) to run Direct Numerical Simulation
+(DNS) over a flat wall to model disturbances introduced by film cooling ejection under an idealised HPT blade loading.
+The flat wall approximation is minor, as suction-side curvature is concentrated near the leading edge and decreases substantially downstream of peak suction, where the trips and region of interest in the present study are located. As convex
+curvature is known to stabilise boundary layer turbulence via centrifugal force Ranjan et al. (2017), any residual curvature
+in this region would act in the same stabilising sense, making the present flat-plate results conservative relative to the true
+curved geometry. The solver uses a 4th order differencing scheme, following the method of Tam and Webb (1993), with
+a 7 point stencil. Skew split differencing is applied to inviscid fluxes using the method of Kennedy and Gruber (2008)
+with characteristic interfaces applied at inlet and outlet from Kim and Lee (2000) and Kim and Lee (2003). A four step
+Runge-Kutta loop is used to perform time marching. The region of interest of the simulations were restricted to the suction
+surface with an idealised loading profile imposed on the domain through a freestream boundary condition following the
+method of Jagger et al. (2025). The full domain is shown in Figure 2 with the flow direction from left to right. At the inlet
+free stream turbulence length-scale is specified and a Blasius boundary layer profile with a chosen Reθ ,in is imposed at the
+wall. The flow is allowed to develop undisturbed though the inlet buffer region after which the boundary layer is accelerated
+following an idealised blade Mach distribution. The freestream boundary condition imposes the static pressure and velocity
+through a buffer layer to replicate the acceleration and diffusion experienced in a HPT blade. The domain is extruded in
+the span-wise direction (into the page) but is periodic in span to replicate cascade conditions while still allowing for 3D
+spanwise instabilities to develop. The boundary layer is perturbed by trips in the region between the leading edge and peak
+suction to replicate the perturbation of film cooling.
+Periodic repeating hemispherical trips were used to simulate the aerodynamic impact of coolant ejection on the incoming
+laminar boundary layer. Trips were chosen over direct film cooling configurations as film cooling has a wide parameter
+space so no single configuration would be fully representative. Hemispherical trips allow for an easily parametrisable and
+reproducible way to replicate the aerodynamic impact of the ejecting flow on the boundary layer capturing similar flow
+physics. The trip radii, rtrip , were defined as fractions of the inlet boundary layer thickness, δ99,in , spanning a range of
+perturbation sizes. The trips were space d 4 radii apart as shown in Figure 3. The total number of trips used across the
+domain varied between 12 trips for the largest trips and 24 for the smallest and were implemented using an immersed
+boundary method by enforcing zero momentum on mesh points within the trip in all directions.The inlet boundary layer
+momentum thickness was set to Reθ ,in ∼ 100 to replicate conditions found in a HPT blade at Rex ∼ 250, 000 matching the
+Rex regime where reverse transition is expected to occur reliably. This is nominally equivalent to a Reynolds number based
+
+3
+
+Inlet Buffer
+
+Freestream Buffer
+
+Hemispherical Trip
+
+Figure 2 DNS domain with elements to replicate flow features on the SS of a HPT blade.
+
+on surface length (ReL ) of ∼ 400, 000, which will be used hence forth, calculated at exit conditions as follows, density of
+0.87 kgm−3 , exit velocity of 135.14 ms−1 , reference viscosity of 2.66e − 4 kgm−1 s−1 and a streamwise length of 0.9 m
+as the first 0.1 m was used as an inlet buffer layer. In addition FST was introduced at the inlet, following the method of
+Martin (2023), at a turbulence intensity of Tu ∼ 3% with a length scale of ∼ δ99,in . These conditions were chosen to be
+representative of current business jet engines and anticipated future HPT designs.
+Hemispherical Trip
+
+Figure 3 Spacing of the hemispherical trip elements in the spanwise direction.
+
+3.2
+
+Trip Location and Size Parameter Study
+In this study two parameters were varied in combination. Trip location (x̂trip ) was varied to different streamwise points
+on the idealised HPT blade loading selected to span a range of K based on the understanding of reverse transition summarised
+by Mayle (1991) . Four different trip sizes were used at each trip location based on inlet boundary layer thickness (δ99,in )
+for a total of twelve cases to be simulated. ReL was held constant at 400, 000 for all cases in this study with the values of
+Ktrip and rtrip /δ99,in for each trip location shown in Table 1. An idealised straight line Mach number distribution was used
+in this study, with Mach number at inlet set to 0.2 raising to 0.5 at the peak and diffusing to 0.4 at the end of the domain.
+The respective K distribution is also shown with the marks representing the three trip locations used in the study.
+Table 1 Parameters of cases in the trip location and size study
+
+Case Label
+x̂trip
+rtrip /δ99,in
+ReL
+Ktrip
+
+early
+middle
+late
+0.2
+0.3
+0.45
+0.5, 0.33, 0.29 ,0.25
+400k
+4.46e-06 3.32e-06 2.30e-06
+
+The total grid points used in the CFD domain was ni = 9216, n j = 288, nk = 576 with a spanwise extent of 24 × δ99,in
+which is 6% of the domain length. The mean ∆y+ was 0.33 with corresponding mean ∆x+ and mean ∆z+ of 2.01 and
+1.8 respectively. As the cases were unsteady convergence was measured following the method recommended in Wheeler
+(2023). This measured the time mean spanwise averaged loss at domain exit for increasing simulation times and the case
+was determined to be statistically converged when the change in loss between subsequent time windows was < 1%. The
+resolution was measured by comparing the total entropy generated in the flow field against the resolved entropy generated
+(Σres /Σ f lux ) the average for the cases was at ∼ 90% with the local grid size compared to Kolmogorov length-scale (∆/η ),
+of a representative tripped case, is shown in Figure 4 to be less than 2 throughout the simulation domain. This matches the
+standard of accuracy set in Wheeler (2023) as to resolve more entropy generation means resolving smaller length-scales of
+4
+
+Figure 4 Local grid size compared to Kolmogorov length-scale (∆/η )
+
+dissipation and finer turbulent structures. Figure 5a shows the achieved loading and acceleration parameter distributions in
+the flow domain. Overall there is a good match to the idealised boundary conditions that are imposed particularly in the
+region aft of the trip. The main locations where there are large discrepancies are at the inlet which is caused by the flow needing time to establish and adjust to the imposed conditions and at points of very sharp gradients in Mach number (x̂ = 0.1, 0.6).
+A reference case was simulated with no trip, the match of the loading of this case compared to the ideal is shown in Figure 5a
+in the yellow line. The match between the idealised and the realised Mach distribution is good with the exception of the
+region spanning the large separation bubble in the diffusing region of the loading which caused the flat region in the Mach
+distribution and kink in the K. An instantaneous snapshot of the no trip case is shown in Figure 6 showing the streamwise
+velocity (u) and the development and separation of the boundary layer. The respective mean flow parameters are shown
+in Figure 5b where shape factor (H) is used as a proxy for boundary layer state and friction coefficient (C f ) and Thwaites
+acceleration parameter (λθ ) are used to determine the start and extent of the separation bubble. The boundary layer initially
+shrinks when it is accelerated maintaining a laminar H ∼ 2.3. In the diffusing region it starts to grow in momentum thickness
+crossing Thwaites criterion for separation (λθ < −0.09) at an x̂ = 0.681 eventually reattaching at x̂ ∼ 0.863 as a turbulent
+boundary layer as indicated by C f > 0 and H ∼ 1.4 matching turbulent values.
+
+(b) Shape Factor (H), Coefficient of Friction (C f ) and Thwaites
+acceleration parameter (λθ ) for the un-tripped boundary layer.
+
+(a) Idealised (black) and achieved blade loading profiles with
+trip location x̂trip varied.
+
+Figure 5 Spanwise averaged flow properties for rtrip /δ99,in = 0.5.
+
+4 RESULTS & DISCUSSION
+4.1 Energetics of Relaminarizing Flow
+Within the high-pressure turbine there exists competing transition mechanisms through which turbulent transition is
+triggered. Bypass transition is seeded at the film cooling injection site, leading to an attached fully developed turbulent
+boundary layer in the diffusing region. If there is sufficient flow acceleration transition is delayed and occurs via laminar
+5
+
+Figure 6 Snapshot of Mach number (M ) in the no-trip flowfield. Y-axis stretched to aid visualization of the boundary
+layer
+
+separation and reattachment. The results in this section discuss the causes of the bifurcation in the boundary layer behaviour
+observed using time and span averaged turbulent kinetic energy (tke). It is shown that the bifurcation in transition mode is
+not a result of purely viscous dissipation, but a consequence of the action of pressure gradients on different length-scales of
+turbulence.
+In the acceleration region, prior to the onset of a laminar separation bubble or bypass transition, the mean boundary layers for
+the cases outlined in Table 1 with rtrip = 0.5δ99,in are similar in shape and thickness. Figure 7 confirms that shape factors
+(H), skin friction coefficients (C f ), momentum thickness Reynolds number (Reθ ) and displacement thickness Reynolds
+number (δ ∗ ) collapse onto each other with a maximum of ∼ 4% difference between the three tripped and the reference
+non-tripped boundary layer baseline. The wall normal variation in mean velocity profiles U/Ue are also indistinguishable
+at peak suction indicating that there is little to no difference in time mean strain between cases.
+
+Figure 7 Mean boundary layer properties of all cases with varying trip location.
+
+Figure 8a shows local contour plots, at the three different trip locations, of tke/Ue2 which is tke normalised by local edge
+velocity Ue2 . The horizontal axis shows the streamwise direction x̂ with the vertical axis showing the wall normal height
+which is normalised by local δ99 . The viscous sublayer, defined by y+ < 5, is identified by the region of very low tke
+highlighted below the green dashed line. The trip results in a similar normalised tke field at all locations and values of K.
+This means later trips, where boundary layer edge velocity (Ue ) is higher, will input higher absolute tke. Figure 8b shows
+the production of turbulent energy (Pδ99 /Ue3 ) behind the trip. A region of negative Pδ99 /Ue3 is present immediately behind
+the trip in the same region as the previously observed bright spot in tke meaning that this tke is likely being transferred from
+the unsteady flowfield back to the steady flowfield and does not really effect the overall turbulent behaviour downstream.
+Production also occurs in a layer just above the viscous sublayer and it is this that contributes to the downstream tke of the
+boundary layer. The images show higher normalised production for later trips. As the normalising velocity is larger for
+later trips the production is vastly greater in these cases.
+
+6
+
+(a) Local field of tke surrounding the trip.
+
+(b) tke production by trip
+
+Figure 8 Boundary layer tke and turbulence production P aft of trip for various Ktrip . x̂trip = 0.2, Ktrip = 4.46e − 6
+(top), x̂trip = 0.3, Ktrip = 3.32e − 6 (middle) and x̂trip = 0.45, Ktrip = 2.30e − 6 (bottom).
+
+Figure 9 Integral boundary layer tke properties of all cases with varying trip location.
+
+Figure 9 shows tke within the boundary layer averaged in different ways, together describing the dynamics of the energy.
+All cases with trips are compared to the the black line case which has no trip representing the base turbulence present in the
+boundary layer due to inlet FST . The total tke normalised by inlet velocity (Uin2 ) to give a sense of the absolute amount of
+tke within the boundary layer is shown on the left graph. The tke/Uin2 decreases for all cases until the local value of K falls
+below Kcrit , which occurs at x̂ = 0.33, after which it begins to grow resulting in an elevated level at peak suction (x̂ = 0.6)
+for all tripped cases compared to the un-tripped case. As Ktrip gets lower and crosses the Kcrit threshold this rate of growth
+increases driven by stronger net turbulence production due to mean shear. The tke normalised by edge velocity (Ue2 ) to
+show the magnitude relative to free stream conditions is shown on the right. The tke/Ue2 shows a strong decrease in the
+region x̂ < 0.33 for all cases. The case where Ktrip = 4.46e − 6 > Kcrit (blue) continues to decreases immediately post trip
+and throughout the rest of the accelerating region until peak suction. The red shows Ktrip = 3.32e − 6 ≃ Kcrit which remain
+flat whereas the green showing Ktrip = 2.30e − 6 < Kcrit immediately beings to increase. The cases with Ktrip ≥ Kcrit the
+production of turbulence does not keep pace with the increasingly energetic mean flow and is having progressively less
+influence on the boundary layer.
+Figure 10 shows averaged integrated root mean square values of streamwise (u′ ), wall normal (v′ ) and spanwise (w′ ) turbulent fluctuations. Looking at the various components of turbulence there is again not much difference in u′ . The main
+differences between cases with Ktrip ≥ Kcrit (blue, red) and Ktrip < Kcrit (green) is v′ and w′ within the boundary layer indicating a difference in the structure of the turbulence confirming observations in Ranjan and Narasimha (2017). Since u′ is fed
+directly by mean shear production, in boundary layer flows, while v′ and w′ gain energy only through pressure-strain redistribution, which is altered by local flow acceleration. This dominance of u′ in the tke results in v′ being a better differentiator
+between transition pathways. The difference was found in the magnitude of v′ but the interaction of eddies is a consequence
+of internal turnover which is directly related to the local length-scale. To determine the characteristics of length-scale span-
+
+7
+
+wise FFT is performed of the absolute value of v′ in a volume about a point within the boundary layer and an average of the
+result is taken. Figure 11 shows the development of the spectrum of v′ for all tripped cases about points downstream of the
+trip. Figure 11a and Figure 11b are for cases with Ktrip > Kcrit . These cases develop similarly,specifically the acceleration
+is seen to suppress the higher wave numbers as the flow moves downstream in x̂ while the low wave numbers remain largely
+the unchanged. Figure 11c shows the case where Ktrip < Kcrit where all wave numbers grow as the flow moves downstream.
+
+Figure 10 Structure of turbulence within the boundary layer.
+
+(a) Development of averaged spanwise (b) Development of averaged spanwise (c) Development of averaged spanwise
+spectra of v′ within the boundary layer aft spectra of v′ within the boundary layer aft spectra of v′ within the boundary layer aft
+of the trip at x̂trip = 0.2, Ktrip = 4.46e − 6. of the trip at x̂trip = 0.3, Ktrip = 3.32e − 6. of the trip at x̂trip = 0.45, Ktrip = 2.30e − 6.
+
+Figure 11 Development of the spectra of v′ .
+
+The spectra of the v′ about suction peak is shown on Figure 12a. The surviving fluctuations for the trip placed at Ktrip =
+2.3e − 6 (green) have significantly more content at higher spanwise wave number (smaller length-scales). In the higher
+Ktrip cases, the spectrum of injected fluctuations are altered by pressure gradient which dissipate the smaller length-scales
+and only leaving larger length-scale. The top of Figure 12b plots the thickness of viscous sub-layer showing that in the case
+with Ktrip = 2.3e − 6 (green) it is the quickest to shrink. This indicates that the boundary layer is the first to transition to
+a turbulent state via a bypass mode. The early trips with Ktrip > Kcrit (blue, red) show the same effect at a slower rate, the
+sub-layer persists long enough for laminar separation to occur before the tke, with its rapidly reducing length scales and
+increasing turnover rate, can take hold. The bottom graph of Figure 12b shows the averaged tke/Ue2 within the boundary
+layer and it is visible that towards the end of the flow domain, due to the separation bubble, the cases with Ktrip > Kcrit end
+with more tke on average with all tripped cases have a similar level of v′ and w′ at the end of the domain.
+4.2
+
+Trip Size vs. Streamwise Location
+Turbulent spot nucleations are individual random events, but full transition happens due to the coalescence of many
+such events. As a result, the mean behaviour of the flow can be very different to instantaneous snapshots. As the turbulent
+features travel through the flow domain, it causes surface properties such as C f to vary leading to intermittent switching
+8
+
+(b) Laminar sublayer (y+ = 5) thickness (top) and averaged
+tke/Ue2 within the boundary layer (bottom) for the region
+post peak suction (x̂ ≥ 0.6).
+
+(a) Averaged spanwise spectra of v′ within the boundary layer
+about peak suction (x̂ = 0.6) for all tripped cases.
+
+Figure 12 Boundary layer turbulent energy properties for various Ktrip .
+
+between separation and bypass transition. The bubble is then present more often for trips that introduce fewer spots e.g.
+in cases where reverse transition takes effect. This section evaluates the effect of trip size (the size of the perturbation
+provided) and trip location (the stabilizing influence of the acceleration).
+Small trips fail to trigger transition because the velocities surrounding the trip are smaller, resulting in lower tke production,
+and their induced disturbances are damped within the viscous sublayer. Trips of size 0.25δ99,in to 0.5δ99,in are shown in
+Figure 13 with all trips placed at x̂ = 0.45 and Ktrip = 2.3e − 6 meaning, bypass transition is expected to occur. Figure 13a
+shows the resulting tke production around the trip with the corresponding mean shear flowfield, calculated in Equation 2,
+shown in Figure 13b. For the case at rtrip = 0.25δ99,in the trip does not penetrate the layer of shear near the surface (top
+Figure 13b) meaning that viscous effects are too strong for tke production to take hold which is visible in the corresponding
+plot on Figure 13a. Successful transition requires injection of tke into higher region where the mean shear is lower. In these
+layers vortical structures can break down and successfully extract energy from mean shear without being dissipated quickly
+which allows for more frequent turbulent events.
+
+τxy = µ (
+
+du dv
++ )
+dy dx
+
+(2)
+
+Figure 14 shows instantaneous snapshots of near wall tke, taken at one cell away from the wall at ŷ = 3.6e − 5, in the region
+0.15 ≤ x̂ ≤ 0.95 for the case with rtrip = 0.5δ99,in , and x̂ = 0.2. Figure 14a shows an example of a nucleated turbulent spot at
+the trip, highlighted by the orange circle being convected downstream by the flow (across a timespan of 0.005s) eventually
+seeding bypass transition aft of peak suction shown by its rapid growth in the spanwise direction. Figure 14b highlights
+a weaker turbulent structure generated from the trip which if traced downstream is dissipated quickly, within 0.001s, well
+before peak suction so has no effect on the separation bubble. It is the frequency and coalescence in streamwise space of
+these spots that determine whether transition occurs via a bypass mode or separation mode. To summarise the behaviour
+for all cases simulated Figure 15 shows a space-time digram of spanwise averaged near-wall tke for four through flows in
+time in the region 0.15 ≤ x̂ ≤ 0.95. In each image the location of the trip can be identified by the straight band of high tke
+at x̂ = 0.2, 0.3, 0.45 for the columns from left to right. Upstream of the trip regular alternating bands of deep and light blue
+are seen as a result of spots in inlet turbulence and the fixed length-scale at which it is injected into the flowfield. These
+spots are convected downstream as seen by the diagonal lines of light blue and encounters the trip. After this point the tke
+packets are either uneffected, amplified or attenuated based on trip size, spacing and the local acceleration environment.
+The top row of Figure 15 shows trips of size rtrip = 0.25δ99,in which are not expected to seed bypass mode transition. As turbulence is a random phenomenon even “failed trips” can occasionally seed spots where they would normally not be expected
+to occur as seen in Figure 15-II. Overall this size of trip is insensitive Ktrip and for the majority of the time do not seed spots.
+As the trip has little effect the inlet turbulent perturbations are seen to decay with transition occurring via a separation mode.
+
+9
+
+(a) Turbulent production P around the trip for rtrip = 0.25 ∗
+
+δ99,in − 0.5 ∗ δ99,in
+
+(b) Mean shear stress (τxy ) around the trip for rtrip = 0.25 ∗
+
+δ99,in − 0.5 ∗ δ99,in
+
+Figure 13 Boundary layer turbulent energy properties for various rtrip .
+
+(a) Captured sequence turbulent spot growing and causing bypass transition.
+
+(b) Captured sequence of turbulent spot decaying.
+
+Figure 14 Instantaneous snapshots of near wall tke for rtrip = 0.5δ99,in , and x̂ = 0.2
+
+10
+
+Figure 15 Space-Time diagrams of span averaged surface tke in diffusing region for all cases. Increasing trip size
+from top row to bottom row (rtrip /δ99,in = 0.25, 0.29, 0.33, 0.50), Later trips hence weaker local acceleration from left
+to right column (Ktrip = 4.46e − 6, 3.32e − 6, 2.30e − 6).
+
+The cases where rtrip is large enough to have some impact on the boundary layer are shown from the second row of Figure 15 downwards. In Figure 15-IV, V, VI the trips are of size rtrip = 0.29δ99,in and are too small, no matter the Ktrip , to
+completely eliminate the bubble. Case VI, where Ktrip < Kcrit shows many clear isolated turbulent spots seeded by the trip
+showing the effect of reduced local acceleration. Jumping to the bottom row looking at Figure 15- X, XI, XII the trips retain
+
+11
+
+a dependence on Ktrip with rtrip = 0.5δ99,in paced in regions of Ktrip < Kcrit able to eliminate the bubble for a high fraction
+of time. An exception is seen in Figure 15-VII, VIII, IX where trips of size rtrip = 0.33δ99,in were used. In these pictures
+no white highlighted area is observed meaning that no matter the local acceleration environment of the trip it is triggering
+intense bypass mode transition.
+The study identifies an optimal spanwise spacing (in this study trip size and spacing are coupled and varied as in Figure 3) in the cases Figure 15-VII, VIII, IX which coincidences with the spanwise wavenumber identified as the theoretical
+optimum for maximum non-modal transient growth by Andersson et al. (1999). When trips of an sufficient size (i.e will not
+be dominated by shear sheltering) are spaced as such a very large spike in tke production aft of the trip, see Figure 13a, is
+seen which injects tke. By analogy with Andersson et al. (1999) the most unstable perturbation modes are excited, causing
+bypass mode transition no matter the surrounding acceleration environment. Unlike the zero pressure gradient cases used
+in Andersson et al. (1999) the induction mechanism in the favourable pressure gradient cases appears strongly sensitivity
+to spanwise pitch. A 12% reduction in spacing with rtrip = 0.29 ∗ δ99,in seen in Figure 15-IV, V, VI can prevent the boundary layer from taking the optimal transient growth path, leading to a failure of transition induction despite similar local
+conditions.
+{
+∫ tend
+1 if tke(x̂,t) > tke∗
+1
+γstreak (x̂) =
+S(x̂,t) dt , S(x̂,t) =
+(3)
+tend − tstart tstart
+0 if tke(x̂,t) ≤ tke∗
+{
+∫ tend
+1 if C f (x̂,t) ≤ C∗f
+1
+B(x̂,t) dt , B(x̂,t) =
+γbubble (x̂) =
+(4)
+tend − tstart tstart
+0 if C f (x̂,t) > C∗f
+The overall effect of the various sizes of trips placed at different streamwise locations can be summarised probabilistically
+through calculating the occurrence of streaks in the space-time diagram from convecting turbulent spots and the separation
+bubble. This is done through defining intermittences for both parameters (γstreak , γbubble ) the calculations of which are shown
+in shown in Equation 3 and Equation 4. The streak intermittency is computed as the fraction of time the span averaged surface tke exceeds the threshold of tke∗ . This is calculated using the method described in Otsu (1979) to the pooled data
+from all cases, which maximises the inter-class variance to separate the laminar background from intermittent streak events.
+Bubble intermittency was computed similarly using a threshold of C∗f = 1e − 3, as separated regions are characterised by
+very low friction coefficients. The standard C f < 0 criterion was not met in the mean flow because it occurs instantaneously,
+these were transient events that did not appear as negative values once averaged over the span.
+The results for these calculation are shown on Figure 16 separated by the various sizes of trip. The black line in all graphs
+in Figure 16a and Equation 4 shows the behaviour of the streaks and bubble un-tripped case. The left most graphs shows
+the trip of size 0.25δ99,in which due to the shear sheltering effect fails to cause bypass transition. As the trips are so small
+there is little difference in γstreak when compared to the no trip case. γstreak starts at ∼ 0.8 decaying to near zero through
+the accelerating region. This lack of streaks at peak suction means no spots are being seeded leading to γbubble ∼ 1 for all
+locations of trip. The next image to the right shows the trip of size 0.29δ99,in these are of a sufficient size, hence initially
+at the location of the trips at x̂ = 0.2, 0.3, 0.45, there is an elevated level of γstreak which rapidly decays for all locations.
+There is little difference from the no trip case by peak suction for the case with Ktrip > Kcrit (blue) and only slightly elevated γstreak ∼ 0.1 for Ktrip ≤ Kcrit (red, green) when compared to the no trip case. The presence of these turbulent streaks
+destabilises the bubble but does not eliminate it completely at any location. The destabilisation is in order of Ktrip with the
+blue (Ktrip = 4.46e-6) most stable with γbubble ∼ 0.90 and the green (Ktrip = 2.30e − 6) the most unstable with γbubble ∼ 0.70.
+The trip of size 0.33δ99,in is the identified optimal spacing and is seen to eliminate the bubble at all locations. For this
+case γstreak remains elevated at for all streamwise locations downstream of the trip eventually ending at γstreak > 0.8 for all
+cases. This strong presence of streaks seeds very strong and frequent turbulent spot generation which eliminates the bubble
+as seen by the very low γbubble ∼ 0 in the corresponding graph. Finally, the right most graph is showing trips of size 0.5δ99,in
+which experiences reverse transition behaviour. Trips where Ktrip ≥ Kcrit (blue,red) have an initial γstreak ∼ 1 but due to
+strong acceleration it rapidly decays to a lower level downstream of the trip resulting in γstreak = 0.09, 0.17 respectively at
+peak suction. A similar patter is seen for the case where Ktrip < Kcrit (green) but the decay is arrested at a much higher
+level resulting in γstreak = 0.38. This difference in γstreak between the cases later causes the difference observed in γbubble
+with Ktrip ≥ Kcrit cases not being able to seed many turbulent spots having a peak γbubble ∼ 0.8. Conversely for the case
+with Ktrip < Kcrit more frequent spots are present and these coalesce with each other closing the separation bubble, having
+a peak γbubble ∼ 0.18.
+
+12
+
+(a) Span averaged streak intermittency for all trip sizes. Black: notrip, Blue: x̂trip = 0.2, Red: x̂trip = 0.3, , Green: x̂trip = 0.45.
+
+(b) Span averaged bubble intermittency for all trip sizes. Black: notrip, Blue: x̂trip = 0.2, Red: x̂trip = 0.3, , Green: x̂trip = 0.45.
+
+Figure 16 Streak and bubble intermittency in the boundary layer tracking seeded turbulent spots from trip.
+
+5
+
+CONCLUSIONS
+In this research DNS over a flat wall with an imposed loading distribution was conducted to simulate a HPT SS
+boundary layer . The impact of coolant ejection on the boundary layer was modelled using discrete span-wise repeating
+hemispherical trips with free-stream turbulence and inlet laminar boundary layer properties matching a blade Reynolds
+number of 280, 000. The trips were placed at three streamwise locations depending on the local value of K with two placed
+at Ktrip = 4.46e − 6, 3.32e − 6 > Kcrit and one placed at Ktrip = 2.30e − 6 < Kcrit . Four different sizes of trip were also used
+to simulate the varying impact on the boundary layer of different film cooling arrangements. The the key outcomes of the
+research are listed below:
+1. The variety of different transitional behaviours of the suction surface boundary layer within a cooled high pressure
+turbine were captured
+2. Acceleration suppresses the absolute amount of tke if K > Kcrit beyond which tke grows for all trip locations. tke
+relative to boundary layer edge velocity shrinks for cases with Ktrip > Kcrit as production cannot keep pace with the
+mean flow.
+3. The differences in the tke at peak suction come mainly from v′ and w′ which acts as a better indicator for the effect
+of acceleration.
+4. The main differentiator between cases where trips were placed at Ktrip > Kcrit or Ktrip < Kcrit was the predominant
+length-scales contained in the turbulence.
+5. Different length-scales of turbulence decay at different rates, with earlier trips losing small length-scale content more
+rapidly. The magnitude and structure of tke remaining at peak suction governs the latter transitional behaviour.
+6. The frequency and coalescence of turbulent spots in the diffusing region determines whether separation or bypass
+transition occurs. Large trips show reverse transitional behaviour depending on Ktrip versus Kcrit , while small trips
+are suppressed.
+13
+
+7. Trips optimally spaced to match a critical spanwise wavenumber excite maximum non-modal transient growth, driving bypass transition independent of Ktrip . This mechanism is highly spanwise-sensitive: a ∼ 12% spacing reduction
+reverts behaviour to that of completely sheltered trips.
+ACKNOWLEDGEMENTS
+The authors gratefully acknowledge the support of UKRI (Grant No. APP63018) and the computing resources provided
+by Isambard 3, which facilitated the direct numerical simulations presented in this work. The authors also wish to thank
+Rolls-Royce plc for their support of this research.
+References
+Andersson, P., Berggren, M. and Henningson, D. S. (1999), ‘Optimal disturbances and bypass transition in boundary layers’,
+Physics of Fluids 11(1), 134–150.
+Bader, P., Pieringer, P. and Sanz, W. (2017), ‘On the capability of the γ − reθ transition model to predict relaminerization’.
+Clark, C. J., Atkins, N. R., Stokes, M. and Vazquez, R. (2024), Transitional flows within cooled HP turbines, in ‘ASME
+Turbo Expo 2024: Turbomachinery Technical Conference and Exposition’, American Society of Mechanical Engineers.
+Coletti, F., Elkins, C. J. and Eaton, J. K. (2013), ‘An inclined jet in crossflow under the effect of streamwise pressure
+gradients’, Experiments in Fluids 54(9).
+Gladden, H. J., Gauntner, J. W., Yeh, F. C. and Gauntner, D. J. (1973), An adverse effect of film cooling on the suction
+surface of a turbine vane, Technical Report Technical Memorandum TM X-68210, NASA.
+Hodson, H. P. and Howell, R. J. (2005), ‘The role of transition in high-lift low-pressure turbines for aeroengines’, Progress
+in Aerospace Sciences 41(6), 419–454.
+Jagger, O., Marioni, Y. F., Meyer, M. and Wheeler, A. (2025), Non-equilibrium boundary layers on fan blades, in ‘Proceedings of the ASME Turbo Expo 2025: Turbomachinery Technical Conference and Exposition’, Vol. 10, American Society
+of Mechanical Engineers, Memphis, Tennessee, p. V010T29A027.
+Jones, W. P. and Launder, B. E. (1972), ‘The prediction of laminarization with a two-equation model of turbulence’, International Journal of Heat and Mass Transfer 15(2), 301–314.
+Kanani, Y., Acharya, S. and Ames, F. (2018), ‘Simulations of slot film-cooling with freestream acceleration and turbulence’,
+Journal of Turbomachinery 140(4), 041005.
+Kennedy, C. A. and Gruber, A. (2008), ‘Reduced aliasing formulations of the convective terms within the Navier-Stokes
+equations for a compressible fluid’, Journal of Computational Physics 227, 1676–1700.
+Kim, J. W. and Lee, D. J. (2000), ‘Generalized characteristic boundary conditions for computational aeroacoustics’, AIAA
+Journal 38(11), 2040–2049.
+Kim, J. W. and Lee, D. J. (2003), ‘Characteristic interface conditions for multiblock high-order computation on singular
+structured grid’, AIAA Journal 41(12), 2341–2348.
+Langtry, R. B. and Menter, F. R. (2009), ‘Correlation-based transition modeling for unstructured parallelized computational
+fluid dynamics codes’, AIAA Journal 47(12), 2894–2906.
+Launder, B. E. and York, J. (1974), ‘Discrete-hole cooling in the presence of free stream turbulence and strong favourable
+pressure gradient’, International Journal of Heat and Mass Transfer 17(11), 1403–1409.
+Martin, H. (2023), Extraction of Turbomachinery Loss Mechanisms from High-Fidelity Simulations, PhD thesis, University
+of Cambridge.
+Mayle, R. E. (1991), The role of laminar-turbulent transition in gas turbine engines, in ‘ASME 1991 International Gas
+Turbine and Aeroengine Congress and Exposition’, American Society of Mechanical Engineers, Orlando, Florida, USA.
+Narasimha, R. and Sreenivasan, K. R. (1973), ‘Relaminarization in highly accelerated turbulent boundary layers’, Journal
+of Fluid Mechanics 61(3), 417–447.
+Narasimha, R. and Sreenivasan, K. R. (1979), Relaminarization of fluid flows, in ‘Advances in Applied Mechanics’, Vol. 19,
+Elsevier, pp. 221–309.
+
+14
+
+Otsu, N. (1979), ‘A threshold selection method from gray-level histograms’, IEEE Transactions on Systems, Man, and
+Cybernetics 9(1), 62–66.
+Petersen, A. (2017), Influence of cooling on the transition location in a straight high pressure turbine cascade, in ‘European
+Conference on Turbomachinery Fluid Dynamics and Thermodynamics’, Stockholm, Sweden.
+Ranjan, R., Deshpande, S. M. and Narasimha, R. (2017), ‘New insights from high-resolution compressible DNS studies on
+an LPT blade boundary layer’, Computers & Fluids 153, 49–60.
+Ranjan, R. and Narasimha, R. (2017), ‘An assessment of the two-layer quasi-laminar theory of relaminarization through
+recent high-Re accelerated turbulent boundary layer experiments’, Journal of Fluids Engineering 139(11), 111205.
+Schmidt, D. L. and Bogard, D. G. (1995), Pressure gradient effects on film cooling, in ‘ASME 1995 International Gas
+Turbine and Aeroengine Congress and Exposition’, American Society of Mechanical Engineers, p. V004T09A018.
+Tam, C. K. W. and Webb, J. C. (1993), ‘Dispersion-relation-preserving finite difference schemes for computational acoustics’, Journal of Computational Physics 107, 262–281.
+Teekaram, A. J. H., Forth, C. and Jones, T. V. (1991), ‘Film cooling in the presence of mainstream pressure gradients’,
+Journal of Turbomachinery 113(3), 484–492.
+Tiedemann, M. and Kost, F. (1999), Unsteady boundary layer transition on a high pressure turbine rotor blade, in ‘International Gas Turbine & Aeroengine Congress & Exhibition’, American Society of Mechanical Engineers, Indianapolis.
+Wheeler, A. P. S. (2023), ‘Desktop-DNS: An open toolkit for turbomachinery aerodynamics’, Journal of Turbomachinery .
+Wheeler, A. P. S., Sandberg, R. D., Sandham, N. D., Pichler, R., Michelassi, V. and Laskowski, G. (2016), ‘Direct numerical
+simulations of a high-pressure turbine vane’, Journal of Turbomachinery 138(7), 071003.
+
+15
+
+

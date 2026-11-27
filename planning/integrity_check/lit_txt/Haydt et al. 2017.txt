@@ -1,0 +1,1444 @@
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+TURBO-16-1299
+
+ed
+ite
+d
+
+THE EFFECT OF A METER-DIFFUSER OFFSET ON SHAPED FILM COOLING HOLE
+ADIABATIC EFFECTIVENESS
+
+Co
+
+tN
+
+ot
+
+manufacture and less expensive than more complex geometries,
+but has been shown to perform more poorly than shaped holes
+[1]. High performing cooling holes are advantageous because
+they can use less coolant, which is diverted from the compressor
+and could otherwise be used to produce power.
+Both the meter and the diffuser are often manufactured using
+electrical discharge machining (EDM). A carefully controlled
+and localized electrical spark is created between an electrode and
+the area of interest on a workpiece. This spark reaches
+temperatures between 8000 and 12000°C, and the intense heat
+melts away the material [2]. Occasionally during manufacturing,
+the meter and diffuser are created in two separate steps. First,
+the metering section is drilled through the wall, either with laser
+drilling, EDM, or another inexpensive and simple manufacturing
+procedure. Then, the part is moved to a different machine where
+the diffuser is created using EDM with an appropriately shaped
+electrode for the given diffuser design. Finite alignment errors
+can occur in this two-step process that result in an offset between
+the meter and the diffuser centerlines.
+This study attempts to characterize the detriment to film
+cooling effectiveness caused by a meter-diffuser offset, in five
+directions and at two offset sizes. Designers and manufacturers
+could benefit from knowing the impact of this detriment when
+deciding on a manufacturing process.
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+ABSTRACT
+Shaped film cooling holes are used extensively in gas
+turbines to reduce component temperatures. These holes
+generally consist of a metering section through the material and
+a diffuser to spread coolant over the surface. These two hole
+features are created separately using electrical discharge
+machining, and occasionally an offset can occur between the
+meter and diffuser due to misalignment. The current study
+examines the potential impact of this manufacturing defect to the
+film cooling effectiveness for a well-characterized shaped hole
+known as the 7-7-7 hole. Five meter-diffuser offset directions
+and two offset sizes were examined, both computationally and
+experimentally. Adiabatic effectiveness measurements were
+obtained at a density ratio of 1.2 and blowing ratios ranging from
+0.5 to 3. The detriment in cooling relative to the baseline 7-7-7
+hole was worst when the diffuser was shifted upstream (aft
+meter-diffuser offset), and least when the diffuser was shifted
+downstream (fore meter-diffuser offset). At some blowing ratios
+and offset sizes, the fore meter-diffuser offset resulted in slightly
+higher adiabatic effectiveness than the baseline hole, due to a
+reduction in the high-momentum region of the coolant jet caused
+by a separation region created inside the hole by the fore meterdiffuser offset. Steady RANS predictions did not accurately
+capture the levels of adiabatic effectiveness or the trend in the
+offsets, but it did predict the fore offset’s improved performance.
+
+Scott Lewis
+Turbine Durability
+United Technologies—Pratt & Whitney
+400 Main Street
+East Hartford, CT 06108, USA
+
+py
+
+Shane Haydt
+Stephen Lynch
+Mechanical and Nuclear Engineering Department
+The Pennsylvania State University
+University Park, PA 16802, USA
+
+REVIEW OF RELEVANT LITERATURE
+Extensive research has been performed on film cooling
+since its invention, including both cylindrical and shaped holes.
+The overwhelming consensus, highlighted in Bunker’s shaped
+film cooling review [1], is that shaped holes outperform
+cylindrical holes, especially as blowing ratio increases. This is
+because a shaped hole with its expanded diffuser more closely
+approaches a slot injection, which leads to a continuous layer of
+film cooling over the endwall and is the ideal scenario [1].
+Goldstein [3] was the first to quantify the advantage of shaped
+holes, and since then, researchers and designers have improved
+film cooling effectiveness by varying parameters of the hole,
+particularly in the diffuser. The primary intention of the diffuser
+
+TURBO-16-1299, Haydt
+
+1
+
+Ac
+
+ce
+
+INTRODUCTION
+Shaped film cooling holes are added to hot gas path
+components in gas turbines to help reduce the metal temperature
+of the component, increasing life and improving durability.
+These holes consist of two components: a metering section and
+a diffuser. The metering section is generally cylindrical and is
+drilled through the surface of the part. The diffuser acts to reduce
+the momentum of the coolant jet and spread the coolant across
+the surface. Many diffuser shapes and sizes have been tested as
+designers and researchers work to achieve the best possible film
+cooling performance. The absence of a diffuser results in what
+is referred to as a cylindrical hole, which is simple to
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Co
+
+py
+ed
+
+ite
+d
+
+algebraic anisotropic model better predicts the CRVP and the
+lateral spreading of the jets.
+To the authors’ best knowledge, there has not been any
+published research on the effect of a meter-diffuser offset.
+Bunker [12] examined the effect of manufacturing tolerances on
+film cooling performance, but his study did not include the
+meter-diffuser offset effect. Despite very little research being
+done on this topic, several patents from major gas turbine
+manufacturers cite the issue of a meter-diffuser misalignment
+[13-16]. In these patents, General Electric, United Technologies
+Corporation, and Chromalloy Gas Turbine Corporation all cite a
+meter-diffuser misalignment as a manufacturing defect that is to
+be corrected by the cited invention. In general, the inventions in
+these patents attempt to create both the meter and the diffuser in
+a single step, thus eliminating the potential for misalignment.
+However, these gas turbine companies do not make their
+manufacturing processes public, and the inventions in these
+patents have not been cited in open literature, so it is difficult to
+know how prevalent the discussed manufacturing techniques are.
+
+tN
+
+ot
+
+EXPERIMENTAL FACILITY
+Adiabatic effectiveness measurements for this study were
+collected using an IR camera in a closed-loop wind tunnel,
+previously described and validated by Eberly and Thole [17]. A
+schematic of the wind tunnel is shown in Figure 1. The
+mainstream flow is circulated by an in-line axial fan and is kept
+at a uniform temperature of 295 K by a bank of electrical heating
+elements and a chilled water heat exchanger. At the beginning
+of the test section, as shown in Figure 1, there is a suction loop
+to remove the incoming mainstream boundary layer. Once inside
+the test section, a new boundary layer develops on the Styrofoam
+endwall and transitions to a turbulent boundary layer due to a trip
+wire located at x/D = -35. Boundary layer measurements for this
+test section were measured and reported by Schroeder and Thole
+[6] at low freestream turbulence of Tu = 0.5%. The turbulent
+boundary layer was measured at x/D = -4.7, and for at least five
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+is to reduce the momentum of the coolant jet, relative to a
+cylindrical hole, and thus decrease jet penetration into the
+mainstream [3]. Shaped film cooling holes are able to achieve a
+higher momentum flux without the coolant jet separating from
+the endwall.
+In any jet in crossflow, there will develop a counter-rotating
+vortex pair (CRVP), described in detail by Cortelezzi and
+Karagozian [4]. This CRVP dominates the flow field of a film
+cooling hole, and can draw the hot mainstream fluid to the
+endwall and even under the coolant jet [1]. Thole et al. [5]
+showed that the CRVP is weakened by shaped holes, and that
+there is less shear mixing between the coolant jet and
+mainstream, less mainstream penetration, and more lateral
+spreading of the coolant jet, as compared to a cylindrical hole.
+Amongst shaped holes, the most common in literature are
+laidback fanshaped holes, a collection of which was curated by
+Schroeder and Thole [6]. Saumweber and Schulz [7] found that
+the expansion angle of the diffuser, the inclination angle of the
+hole, and the length of the metering section are some of the most
+important geometric parameters in the laidback fanshaped
+design. Many variations of those parameters have been tested in
+order to find the optimal film cooling hole shape. Schroeder and
+Thole [6] created a film cooling hole that is representative of the
+observed parameter variations, in order to serve as a baseline for
+shaped film cooling research. It is against this baseline hole that
+the current study is compared.
+The baseline 7-7-7 hole performs best at M=1.0, and the
+performance decreases as the blowing ratio increases, due to the
+narrowing of the jets and increased mainstream penetration. At
+lower blowing ratios, the coolant jet sees increased lateral
+spreading, but the cooling effectiveness does not extend far
+downstream [6].
+In addition to the many experimental studies performed on
+film cooling holes, many computational studies have been
+attempted as well. Using computational fluid dynamics (CFD)
+is helpful in understanding the flowfield in regions where
+measurement is difficult, but it is also important to understand
+that CFD has many limitations, as pointed out by Denton [8]. In
+order to solve the turbulence closure problem in a Reynoldsaveraging approach (RANS), turbulence models make several
+approximations. One of the common approximations is that the
+eddy viscosity (relationship between fluid strain and turbulent
+stresses) is isotropic, which is not true in film cooling flows.
+Of the available isotropic eddy viscosity RANS models,
+Silieti et al. [9] found that the realizable k-ε model agreed best
+with experimental data for a shaped film cooling hole, especially
+just downstream of the film cooling hole where the largest
+temperature and velocity gradients exist. Additionally, Harrison
+and Bogard [10] found that for cylindrical holes, the k-ω model
+most closely predicted the laterally averaged effectiveness and
+the realizable k-ε model best predicted the centerline
+effectiveness. Recently, work by Li et al. [11] has shown that an
+algebraic anisotropic turbulence model is better able to predict
+the flow field and adiabatic effectiveness for cylindrical film
+cooling holes, as opposed to an isotropic turbulence model. The
+
+TURBO-16-1299, Haydt
+
+Figure 1. Schematic of wind tunnel facility used in current study
+[17]
+
+2
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+ite
+d
+
+A FLIR T650sc infrared camera was used to capture surface
+temperature measurements on the adiabatic foam endwall. An
+in-situ calibration developed by Eberly and Thole [17] was done
+to ensure measurement accuracy of the camera, and the
+temperature measurements were then used to calculate adiabatic
+film effectiveness. Coolant and freestream temperatures were
+measured using multiple thermocouples in both the coolant
+plenum and on a thermocouple rake in the mainstream test
+section. Adiabatic effectiveness measurements made by Eberly
+and Thole for cylindrical holes in this facility showed good
+agreement with the literature [17].
+
+tN
+
+ot
+
+Co
+
+py
+ed
+
+UNCERTAINTY ANALYSIS
+An uncertainty analysis was done for the variables of
+blowing ratio, density ratio, and adiabatic effectiveness by
+propagating measurement uncertainties, as shown in Figliola and
+Beasley [18]. All calculations were done using a 95%
+confidence interval.
+Uncertainty in blowing ratio was found to be ±5% for all
+blowing ratios, which is driven primarily by the bias uncertainty
+in the mainstream Pitot probe pressure transducer and also the
+coolant Venturi flowmeter (±0.25% of full-scale flow and
+verified by separate tests with a laminar flow element in series).
+Uncertainty in density ratio was low, below ±0.01 for all blowing
+ratios. The uncertainty in adiabatic effectiveness was calculated
+to be δη = ±0.034. This is based on a surface temperature
+uncertainty of ±1.6 ºC and an average mainstream to coolant
+temperature difference of 49 ºC. The uncertainty in surface
+temperature was due to both scatter in the in situ infrared camera
+calibration and also bias uncertainty of the thermocouples.
+Repeatability was confirmed by repeating a measurement of
+the baseline 7-7-7 hole and comparing it to previous results
+found by Schroeder and Thole [6], who tested the same hole
+geometry but with a diameter that was 5% smaller. Several offset
+hatches were also retested, including a hatch that had been
+removed and reinstalled. The maximum difference in laterallyaveraged effectiveness was within the uncertainty range.
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+pitchwise locations. The average values were reported as θ/D =
+0.14, H = 1.45, Reθ = 670, Re* = 315, and uτ = 0.5 m/s [6].
+Some air from the mainstream section of the flow is diverted
+to a coolant loop using a hermetically sealed blower. Due to the
+cryogenic temperatures experienced in the coolant loop, the air
+must be dried in order to avoid the formation of frost. This is
+accomplished by routing the air through a vent dryer filled with
+solid desiccant. The air is cooled in a heat exchanger with liquid
+nitrogen, and then the gaseous nitrogen exiting the heat
+exchanger is added to the coolant loop. Before the plenum, but
+after the heat exchanger and addition of the gaseous nitrogen, the
+total coolant flow rate is measured by a venturi flow meter.
+Inside the plenum, three flow conditioning screens are used to
+ensure flow uniformity at the entrance to the film cooling hole
+metering section.
+Film cooling holes were machined in low conductivity Dow
+Styrofoam (k = 0.029 W/m-K) in order to approximate an
+adiabatic endwall condition. Five holes were drilled in the
+endwall with a metering section diameter of D=8.16 mm and a
+lateral spacing of P/D=6. The baseline hole used in this study is
+the 7-7-7 hole created by Schroeder and Thole [6] and shown in
+Figure 2. The diffuser is defined as the region of the film cooling
+hole measured by Lfwd in Figure 2. The meter-diffuser offset was
+created by translating the centerline of the diffuser relative to the
+meter by two offset sizes, 1/8D and 1/4D, and five offset
+directions, as shown in Figure 3. An isometric view of some of
+the offsets can be seen in Figure 4.
+
+COMPUTATIONAL SETUP
+A grid sensitivity analysis was performed to ensure the
+resultant CFD solution results were independent of the mesh
+size. Three different meshes were run on the fore 1/4D offset
+geometry with sizes of 3.00x106, 4.02x106 , and 4.93x106 cells.
+The results of this study can be seen in Figure 5 (a), for both
+centerline and laterally-averaged effectiveness. The maximum
+
+Ac
+
+Figure 3. Baseline 7-7-7 hole geometry [6]
+
+Figure 2. Meter-diffuser offset directions and corresponding color code for figures
+
+TURBO-16-1299, Haydt
+
+3
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Co
+
+2 were located at an x/D = 1 with Point 1 in-line with the diffuser
+and Point 2 near the lateral edge of the CFD domain. Points 3
+and 4 were located at an x/D = 40 with Point 3 in-line with the
+diffuser and Point 4 near the lateral edge of the CFD domain.
+The temperature monitors converged after about 1,000 total
+iterations.
+
+tN
+
+ot
+
+DISCUSSION OF RESULTS
+Contours of measured adiabatic effectiveness are shown at
+four blowing ratios for the baseline 7-7-7 hole in Figure 7. At
+each blowing ratio, the central three holes in the array of five are
+displayed. Good periodicity is observed at all blowing ratios for
+these three holes, and also for the two outer holes, not pictured.
+Adiabatic effectiveness in the hole outlet is omitted, since the
+measured surface is not on the same plane as the IR camera’s
+focal length. Inspecting the contours visually, it is clear that from
+M = 0.5 to M = 1.0, the baseline hole sees improved
+effectiveness, not only near the hole but especially downstream.
+As the blowing ratio increases beyond 1.0, the footprint of the
+coolant on the surface narrows. From M = 1.0 to M = 2.0, the
+contour narrows, but the degradation in centerline adiabatic
+effectiveness is reduced, with the higher blowing ratio displaying
+effectiveness levels of η = 0.3 at 35 diameters downstream. At
+the highest blowing ratio however, the contour not only narrows,
+but has a comparatively lower centerline effectiveness
+downstream. These trends were previously described by
+Schroeder and Thole [6] and our results match very well.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+difference in laterally-averaged effectiveness at any x/D location
+was 0.0032 between the 3.00 to 4.02 million element cases, and
+was 0.0008 between the 4.02 to 4.93 million element cases. The
+maximum centerline effectiveness difference at any x/D location
+between these same cases were 0.0106 and 0.0112. These
+differences were deemed small enough for grid independence.
+Based on these results a 5 million element size mesh, seen in
+Figure 6, was selected to be used for the remaining CFD cases.
+ANSYS Fluent was used to run the CFD, using the
+realizable k-ε turbulence model. The CFD cases were run for
+500 iterations with first order discretization, then switched to
+second order discretization for 2000 more iterations.
+Convergence was ensured through several monitors including an
+area-weighted average temperature monitor on the film surface
+downstream of the hole exit as well as four individual point
+monitors. The results can be seen in Figure 5 (b). Points 1 and
+
+py
+ed
+
+Figure 4. The metering section (yellow) is created first, and then the diffuser (pink) is offset from the its centerline
+
+Figure 5. (a) Centerline and laterally-averaged effectiveness for
+three meshes of the same geometry; (b) Five different monitors are
+plotted versus CFD iterations to show solution convergence
+
+Figure 6. CFD domain with boundary conditions and a depiction of
+the mesh resolution at the centerline
+
+TURBO-16-1299, Haydt
+
+4
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Co
+
+py
+ed
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Figure 7. Adiabatic effectiveness contours for the baseline 7-7-7 hole at DR=1.2, measured in this study
+
+tN
+
+ot
+
+EFFECT OF OFFSET DIRECTION
+Adiabatic effectiveness contours are shown in Figure 9 for
+the baseline 7-7-7 hole and all five 1/4D offset directions, all at
+M = 1.0 and DR = 1.2. Visually inspecting the contours for both
+footprint width and centerline effectiveness degradation it is
+clear that while the fore 1/4D offset is competitive with the
+baseline, all other offsets are a detriment, with performance
+decreasing as the offset moves from fore (best) to aft (worst). For
+cases that include a left diffuser offset, the coolant jets are
+noticeably positioned toward the right side of the diffuser since
+the meter is closer to that side (see Figure 4).
+This qualitative comparison is corroborated by the laterallyaveraged effectiveness curves for each 1/4D offset, shown in
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+Figure 8 shows laterally-averaged adiabatic effectiveness as
+a function of nondimensional distance downstream of the
+diffuser trailing edge for the four cases depicted in Figure 7. As
+was seen in the contours, a blowing ratio of M = 1.0 produces
+the highest cooling effectiveness near the hole. M = 2.0 has
+slightly higher effectiveness than M = 1.0 downstream of x/D =
+20, due to the slower rate of centerline effectiveness degradation
+and also due to the greater amount of coolant present over the
+endwall at the higher blowing ratio. Figure 8 also indicates good
+agreement to the study by Schroeder and Thole [6]. This nooffset case is used as a baseline throughout this study in order to
+determine the relative effect of a meter-diffuser offset in any
+given size or direction.
+
+Figure 8. Baseline 7-7-7 hole laterally-averaged effectiveness, with
+data from Schroeder and Thole [6]
+
+Figure 9. Effectiveness contours for all 1/4D offset directions, at
+M=1.0
+
+TURBO-16-1299, Haydt
+
+5
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+py
+ed
+Co
+
+Figure 11. Adiabatic effectiveness contours for representative offset
+cases at M=1.0 and DR=1.2
+
+tN
+
+ot
+
+The effect of offset size can also be observed quantitatively
+by examining the laterally-averaged effectiveness shown in
+Figure 12 for the same cases depicted in Figure 11. As expected
+from the contours, the left and aft offsets perform worse at a
+larger offset size. The fore offset, however, seems to be
+insensitive to offset size for these ranges. The effect of offset size
+is also demonstrated by the area-averaged effectiveness of these
+same cases, shown in Figure 13 at all four tested blowing ratios.
+Area-averaged effectiveness is calculated from x/D = 3 to x/D =
+15, across the pitch of the hole. The trends observed in Figure
+12 for each offset direction are generally maintained at moderate
+blowing ratios, with the left and aft offset direction performing
+worse at an offset of 1/4D, and the fore offset direction
+performing the same or slightly better at an offset of 1/4D
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+EFFECT OF OFFSET SIZE
+Two offset sizes were considered for this study: 1/4D and
+1/8D. It was expected that the larger 1/4D offset would be worse
+than the 1/8D offset. This was indeed the case for four out of the
+five offset directions, except the fore offset.
+Figure 11 shows contours of adiabatic effectiveness for three
+offset directions and both offset sizes, all at M = 1.0. For both
+the left and the aft offset cases, the footprint of the coolant on the
+endwall is noticeably narrower, and the degradation of centerline
+effectiveness is more pronounced with a larger, 1/4D offset. In
+the case of the fore offset, however, the 1/4D offset has a slightly
+wider footprint, and its centerline effectiveness is about the same
+as the 1/8D offset.
+Also, it can be observed from the contours in Figure 11 that
+the fore and aft offsets result in symmetric footprints. In the left
+offset, however, the coolant tends toward the side of the diffuser
+that is closer to the metering section exit. For the 1/4D left offset,
+this leads to sidewall separation in the diffuser. This effect is
+evident by the low effectiveness levels immediately at the
+trailing edge on the left side of the diffuser.
+
+ite
+d
+
+Figure 10. At the blowing ratio of M = 1.0, which is where the
+baseline exhibits peak performance, the fore 1/4D offset shows
+a slight improvement relative to the baseline. All other 1/4D
+offsets are a detriment to performance, relative to the baseline.
+The two diagonal cases, fore-left 1/4D and aft-left 1/4D, have
+very similar effectiveness as the left 1/4D offset, to within
+experimental uncertainty. The fore-left 1/4D diagonal offset does
+seem to perform slightly better than the left, perhaps somewhat
+influenced by its advantageous fore offset component, but the
+improvement is only seen near the trailing edge of the hole and
+is within the experimental uncertainty between cases. Finally,
+the aft 1/4D offset is the worst performing offset direction
+relative to the baseline. A physical explanation for these trends
+is presented in a later section of the paper.
+
+Figure 10. Laterally-averaged effectiveness for all 1/4D offset
+directions, at M=1.0
+
+Figure 12. Laterally-averaged effectiveness for representative cases
+at M=1.0
+
+TURBO-16-1299, Haydt
+
+6
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Co
+
+py
+ed
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+tN
+
+Figure 14. Adiabatic effectiveness contours for the left 1/4D offset
+
+At M = 1.0, all holes perform the best, and the trends
+previously described are apparent, which are that the fore 1/4D
+offset is advantageous, the aft 1/4D offset is the most
+detrimental, and the left and diagonal 1/4D offsets have very
+similar area averaged effectiveness. Also, while that general
+trend seems to hold for the 1/8D offsets as well, the difference
+for all of them relative to the baseline 7-7-7 is less than
+experimental uncertainty and thus they have a minor impact to
+cooling effectiveness.
+
+ip
+
+(although within experimental uncertainty) for all blowing
+ratios. However, at the lowest (M = 0.5) and highest (M = 3.0)
+blowing ratios, there is little impact of offset size. The effect of
+blowing ratio on all of the offset sizes and directions will be
+discussed later in this paper.
+
+ot
+
+Figure 13. Area-averaged effectiveness, averaged from x/D=3 to 15,
+for three offset directions at all blowing ratios
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+EFFECT OF BLOWING RATIO
+Every offset size and offset direction was tested at four
+blowing ratios: M = 0.5, 1.0, 2.0, and 3.0. For every hole, the
+trend with blowing ratio was the same as the baseline described
+earlier; Figure 14 shows an example of the left 1/4D offset.
+Effectiveness increases from M = 0.5 to M = 1.0, as the footprint
+of the coolant remains wide and high centerline effectiveness
+persists further downstream. From M = 1.0 to M = 3.0, the
+footprint of the coolant narrows with increasing blowing ratio
+and the effectiveness decreases. This decrease in effectiveness
+at high blowing ratio is especially pronounced in the left 1/4D
+offset. Since the coolant entering the diffuser in the left offset
+case is askew, it tends to separate from the side of the diffuser.
+This can be seen from the contours, since the high effectiveness
+levels right at the exit of the hole do not extend across the entire
+trailing edge. This only becomes more pronounced as the
+blowing ratio increases, which leads to very poor effectiveness.
+In fact, the sidewall separation in the left 1/4D offset at M =
+3.0 is such a detriment that at this blowing ratio, the left 1/4D
+offset performs as badly as the aft 1/4D offset. This is seen more
+clearly in Figure 15, which shows the area averaged
+effectiveness for all holes in this study. In this figure, the 1/8D
+offsets are presented with open symbols and dotted lines, the
+1/4D offsets are presented with solid symbols and solid lines, and
+the baseline 7-7-7 hole is in solid black. In Figure 15, the trend
+of declining effectiveness with increasing blowing ratio
+generally levels out beyond M=2.0 for the aft offset hole, but
+continues to decline sharply for the left offset hole.
+
+TURBO-16-1299, Haydt
+
+Figure 15. Area-averaged effectiveness, averaged from x/D=3 to 15,
+for all cases (experimental uncertainty indicated)
+
+7
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+py
+ed
+Co
+
+ot
+
+Figure 17. Laterally-averaged effectiveness for three cases, both
+experimental and CFD, all at M=2.0
+
+tN
+
+footprint relative to the experiment, but it captures the centerline
+effectiveness (defined at the meter centerline) fairly well, which
+leads to an underprediction of laterally-averaged effectiveness.
+Since some cases were under predicted, most notably the left
+1/4D offset, and others were over predicted, most notably the
+1/4D aft offset, the general trend of the effect of offset was not
+well captured by the CFD. This can also be seen by comparing
+the area-averaged effectiveness for both CFD and experimental
+data, for all holes at an offset of 1/4D, shown in Figure 18. Some
+area-averaged predictions are reasonable or within experimental
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+PREDICTED VERSUS MEASURED TRENDS
+CFD is a powerful tool to investigate the flow field where
+measurements cannot be taken, but typical RANS-based
+modeling makes several approximations which are not valid for
+film cooling flows. Despite having matched boundary conditions
+and a spatially resolved mesh, the CFD predictions did not match
+the experimental data in this study, either for predicting absolute
+levels of cooling or even cooling detriment trends for the various
+offset directions.
+Figure 16 shows contours of both experimental data and
+CFD for the baseline 7-7-7 hole and three offset directions, all at
+a 1/4D offset. These results are for a blowing ratio of 2.0.
+Several clear differences exist between the experimental and
+computational contours. The centerline effectiveness is over
+predicted by the CFD, especially near the hole, which is
+consistent with previous CFD studies by both Silieti et al. [9] and
+Harrison and Bogard [10]. For the baseline case and fore 1/4D
+offset, the CFD captures the jet spreading fairly well, but for the
+left 1/4D and especially the aft 1/4D offset cases, the footprint
+on the endwall is poorly predicted. Also, based on the left 1/4D
+offset contours, the CFD seems to have over predicted the
+sidewall separation inside the diffuser, which leads to the jet
+being narrower and more askew than the experimental data.
+All of these differences can also be observed quantitatively.
+Figure 17 shows the laterally-averaged effectiveness for three
+representative cases, for both predicted and experimental data.
+The baseline 7-7-7 prediction is somewhat reasonable near the
+hole, since the centerline effectiveness is overpredicted but
+lateral spreading is underpredicted. However, the lateral
+spreading and centerline effectiveness are both greatly over
+predicted for the aft 1/4D offset, so the laterally-averaged
+effectiveness is very greatly over predicted. The prediction of
+the left 1/4D offset has a narrower and more askew coolant
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Figure 16. Adiabatic effectiveness contours for CFD and experimental data, at M=2.0
+
+TURBO-16-1299, Haydt
+
+8
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Co
+
+py
+ed
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+tN
+
+ip
+
+uncertainty (the baseline, fore and fore-left offsets), while others
+are not well captured (aft, left, and aft-left). However, the
+ranking of the best to worst performing hole is not well captured,
+with the CFD indicating that the left offset is worst while the
+experiments indicate the aft offset is worst.
+
+ot
+
+Figure 18. Area-averaged effectiveness for both CFD and
+experimental data at M=2.0
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+PREDICTED FLOWFIELD INSIDE HOLES
+Although the CFD did not accurately predict effectiveness
+magnitudes or trends of offset degradation for every case, it was
+nonetheless inspected to help understand the physics of the effect
+of offsets. Shown in Figure 19 are plots of non-dimensionalized
+velocity magnitude at the centerline plane of three film cooling
+holes: the 7-7-7 baseline, the fore 1/4D offset, and the aft 1/4D
+offset. To the best knowledge of the authors, experimental
+measurements have never been taken inside a shaped film
+cooling hole, so the flow field predicted by CFD has not been
+confirmed experimentally. Despite this, it is still reasonable to
+assume that CFD can capture the general flow features inside the
+hole. One such common flow feature is a large, low velocity, recirculating vortex located in the bottom of the diffuser. The
+existence of this re-circulating vortex has already been reported
+in literature in other computational studies, for example by Kohli
+and Thole [19]. The size and shape of this vortex is dependent
+on the shape of the diffuser. Another important feature of the
+film cooling flow field is the area of high coolant jet momentum
+located at the top of the metering section where it enters the
+diffuser. This high velocity region can be seen in each depicted
+case, with some important differences. In each of the offset
+cases, a discontinuity of the wall occurs due to the offset. At this
+discontinuity, a separation region is created. For the fore 1/4D
+offset case, the separation region occurs right where the high
+velocity region of the coolant jet is located, which acts as an
+additional expansion and significantly reduces the velocity of the
+coolant jet, as compared to the 7-7-7 baseline case. The effect of
+
+TURBO-16-1299, Haydt
+
+Figure 19. Contour plots of non-dimensionalized velocity
+magnitude at the centerline plane of the hole
+
+this reduction in momentum can be seen more evidently when
+the coolant first interacts with the mainstream. The velocity at
+the hole outlet is lower in the fore 1/4D case than in the 7-7-7
+baseline, which makes it less likely to penetrate into the
+mainstream flow and separate from the endwall downstream.
+Conversely, the aft 1/4D offset has a higher velocity at the
+film cooling hole outlet, making it more likely to penetrate into
+the mainstream flow. This is because the high velocity region of
+the coolant jet is still present, and, because of the position of the
+diffuser relative to the meter, the jet is under-diffused relative to
+the baseline. This restricts the diffusion of the high momentum
+region of the coolant jet and leads to the highest amount of
+mainstream jet penetration of any of the studied holes, which
+may explain why the aft 1/4D offset is the worst performing hole
+experimentally.
+Figure 20 also shows this effect, by depicting the nondimensionalized velocity magnitude at the exit plane of the film
+cooling hole for each of the three cases discussed in this section,
+
+9
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+py
+ed
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Figure 20. Contour plots of non-dimensionalized velocity magnitude at the exit plane of the film cooling hole
+
+ot
+
+Co
+
+Also in Figure 21 is a contour plot of the ̅̅̅̅̅
+𝑢′𝑣′ turbulent shear
+stress. The turbulent shear stress is highest at the leading edge
+of the hole outlet, exactly where the region of high momentum
+is also located. This higher turbulent shear stress leads to greater
+turbulent mixing, both of the velocity and the temperature, which
+could lead to coolant jet degradation downstream. This could
+explain why offset cases with regions of higher momentum
+perform more poorly as compared to the baseline.
+
+tN
+
+DOWNSTREAM PREDICTED FLOWFIELD
+Figure 22 shows contours of non-dimensional temperature
+at a plane coincident with the centerline of the metering section.
+These contours are at M = 2.0, and they show the relative levels
+of coolant jet penetration. The 7-7-7 and 1/4D fore offset coolant
+jets remain close to the wall, which is consistent with the velocity
+plots discussed in the last section. From these contours, it
+appears as if the 1/4D aft jet is attached to the wall, but the
+temperature of the coolant at the wall degrades quickly as
+compared to the baseline case. For the 1/4D diagonal offset
+cases, and especially the 1/4D left offset case, the core of the
+coolant jet is lifted up away from the endwall, so the
+effectiveness on the wall is low, as was seen previously. It should
+be noted for the left offset cases, however, that since these
+coolant jets are askew with respect to the meter centerline, Figure
+22 does not necessarily capture the true center of the jet.
+Another way to visualize the size and location of the coolant
+jet is depicted in Figure 23. These are downstream planes, five
+diameters from the trailing edge, normal to the mainstream flow
+direction, which is into the page.
+The contour is of
+dimensionless temperature and the streamlines are based on inplane velocity components. All five 1/4D offsets are depicted at
+M = 2.0.
+From this figure, it is possible to see the shape of the coolant
+jets and explain the footprints they are leaving on the endwall.
+In each case, the CFD predicts that the cooling jets produce
+counter-rotating vortices (evidence of this was measured by
+Schroeder [20]). Note that the streamlines are just showing the
+direction of the in-plane velocity, not the magnitude, so this
+depicts the size and shape of the counter rotating vortices, but
+not the strength. The jet for a 1/4D fore offset remains attached
+to the wall and is providing high effectiveness, and has a small
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+all at M = 2.0. The exit plane of the film cooling hole is defined
+as a plane normal to the metering section and coincident with the
+leading edge of the diffuser (Aexit in Figure 2). These contour
+plots make it clear that, compared to the baseline 7-7-7, the aft
+1/4D offset case has a region of relatively high momentum, and
+the fore 1/4D offset case has a region of relatively low
+momentum. Therefore, the fore 1/4D offset has less jet
+penetration into the mainstream and thus higher effectiveness,
+and the aft 1/4D offset has more jet penetration and lower
+effectiveness.
+Schroeder and Thole [20] recently reported contours of
+time-mean streamwise velocity and ̅̅̅̅̅
+u′v′ turbulent shear stress at
+the centerline plane of a baseline 7-7-7 hole. Those contours are
+shown in Figure 21 at M = 3.0, and DR = 1.5, which is a higher
+density ratio than the one used in the present study. Although
+measurements inside the hole were not taken in Schroeder and
+Thole’s study, it is still clear that there is a high momentum
+region located near the leading edge of the film cooling hole
+outlet, which suggests that the predicted velocity inside the hole
+is likely reasonable.
+
+Figure 21. Contours of time-mean streamwise velocity, and ̅̅̅̅̅
+𝐮′𝐯′
+turbulent shear stress in the centerline plane for DR=1.5, M=3.0 for
+the baseline 7-7-7 hole, from Schroeder and Thole [20]
+
+TURBO-16-1299, Haydt
+
+10
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+py
+ed
+
+ite
+d
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Figure 22. Predicted non-dimensional temperature contours at the centerline plane for each 1/4D offset case at M=2.0
+
+tN
+
+ot
+
+Co
+
+inside the film cooling hole indicates that a separation region on
+the upstream side of the hole caused by that offset configuration
+was responsible for diffusing a region of high momentum near
+the top of the cooling jet and reducing its interaction with the
+mainstream. Aside from the fore offset case, the separation
+regions inside the film cooling holes resulting from other offsets
+were detrimental to film cooling performance, especially as the
+size of the offset increased and as the blowing ratio increased.
+The aft offset was the worst performing case, because this offset
+configuration caused a restricted diffusion zone in the region of
+high cooling jet momentum which preserved high jet momentum
+inside the hole and led to poor cooling effectiveness.
+This study shows that gas turbine manufacturers should try
+to minimize or eliminate a meter-diffuser offset, since it is
+generally detrimental in all directions but one.
+If the
+manufacturing process is such that an offset will occur, a fore
+offset is preferable. Also, the effect of the fore offset in this study
+suggests that film cooling holes could be designed such that the
+region of high coolant jet momentum in the film cooling hole is
+reduced, which would lead to less mainstream jet penetration and
+higher film cooling effectiveness.
+
+sc
+r
+
+ip
+
+CRVP close to the wall. The 1/4D aft offset case is also attached
+to the wall, but compared to the fore offset case, it is
+experiencing more thermal diffusion in the direction away from
+the endwall and appears to have CRVP cores that are further
+away from the endwall. As previously mentioned, the diagonal
+1/4D offset cases and the left 1/4D offset case have coolant jets
+whose cores are not near the endwall. These jets, especially for
+the left 1/4D offset, are showing signs of separation. This
+explains why the CFD predicts such a low effectiveness for the
+left 1/4D offset, because the coolant jet is separating and not
+providing coolant to the endwall. Also, the presence of a left
+offset makes the CRVP uneven, with the side without the offset
+having a larger vortex.
+
+ACKNOWLEDGMENTS
+The authors would like to thank Christopher Whitfield and
+Dr. Karen Thole for their help with this topic. Support for this
+study was provided by Pratt & Whitney. The authors would also
+like to thank Phil Irwin for his skilled machining of all the film
+cooling holes used in this study.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+CONCLUSIONS
+Experiments and computational predictions were performed
+to find the effect of a meter-diffuser offset in shaped film cooling
+holes. The baseline case was the 7-7-7 hole developed by
+Schroeder and Thole [6], and two offset sizes, 1/8D and 1/4D,
+were tested at five offset directions: fore, fore-left, left, aft-left,
+and aft. Adiabatic effectiveness measurements were taken in a
+large scale wind tunnel at DR = 1.2 and M = 0.5, 1.0, 2.0, and
+3.0. The computational study was performed in ANSYS Fluent
+using the realizable k-ε turbulence model. The CFD predictions
+did not match the trend of the experimental data, but were within
+experimental uncertainty for all but two cases.
+Both experimental data and computational predictions
+indicated that a fore offset has slightly higher film cooling
+effectiveness than the baseline 7-7-7. A predicted flowfield
+
+Figure 23. Predicted contours of non-dimensional temperature and streamlines of in-plane velocity plotted on a plane normal to the main flow
+direction at x/D=5 downstream from the hole trailing edge, for all 1/4D offsets at M=2.0
+
+TURBO-16-1299, Haydt
+
+11
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Ac
+
+ce
+
+pt
+
+ed
+
+TURBO-16-1299, Haydt
+
+ip
+
+tN
+
+ot
+
+Co
+
+py
+ed
+
+ite
+d
+
+REFERENCES
+[1] Bunker, R. S., 2005, "A Review of Shaped Hole Turbine
+Film-Cooling Technology," Journal of Heat Transfer, 127(4), p.
+441.
+[2] Jameson, E. C., 2001, Electrical Discharge Machining,
+Society of Manufacturing Engineers (SME).
+[3] Goldstein, R. J., and Eckert, E. R. G., 1974, "Effects of Hole
+Geometry and Density on Three-Dimensional Film Cooling,"
+Journal of Heat and Mass Transfer, 17, p. 13.
+[4] Cortelezzi, L., and Karagozian, A. R., 2001, "On the
+Formation of the Counter-Rotating Vortex Pair in Transverse
+Jets," Journal of Fluid Mechanics, 446, pp. 347-373.
+[5] Thole, K., Gritsch, M., Schulz, A., and Wittig, S., 1996,
+"Flowfield Measurements for Film-Cooling Holes with
+Expanded Exits," 96-GT-174, Proc. ASME 1996 International
+Gas Turbine and Aeroengine Congress and Exhibition, ASME,
+Birmingham, UK, pp. V004T009A010.
+[6] Schroeder, R. P., and Thole, K. A., 2014, "Adiabatic
+Effectiveness Measurements for a Baseline Shaped Film Cooling
+Hole," GT2014-25992, ASME Turbo Expo 2014: Turbine
+Technical Conference and Exposition, ASME, Düsseldorf,
+Germany, p. V05BT13A036.
+[7] Saumweber, C., and Schulz, A., 2012, "Effect of Geometry
+Variations on the Cooling Performance of Fan-Shaped Cooling
+Holes," ASME J. Turbomach, 134(6), p. 16.
+[8] Denten, J. D., 2010, "Some Limitations of Turbomachinery
+CFD," GT2010-22540, ASME Turbo Expo 2010: Power for
+Land, Sea, and Air, ASME, Glasgow, United Kingdom, p. 735745.
+[9] Silieti, M., Kassab, A. J., and Divo, E., 2005, "Film Cooling
+Effectiveness From a Single Scaled-Up Fan-Shaped Hole A CFD
+Simulation of Adiabatic and Conjugate Heat Transfer Models,"
+GT2005-68431, ASME Turbo Expo 2005: Power for Land, Sea,
+and Air, Reno, USA, p. 431-441.
+[10] Harrison, K. L., and Bogard, D. G., 2008, "Comparison of
+RANS Turbulence Models for Prediction of Film Cooling
+Performance," GT2008-51423, ASME Turbo Expo 2008: Power
+for Land, Sea, and Air, ASME, Berlin, Germany, pp. 1187-1196.
+[11] Li, X., Qin, Y., Ren, J., and Jiang, H., 2013, "Algebraic
+Anisotropic Turbulence Modeling of Compound Angled Film
+Cooling Validated by Particle Image Velocimetry and Pressure
+Sensitive Paint Measurements," Journal of Heat Transfer,
+136(3), pp. 032201-032201.
+[12] Bunker, R. S., 2009, "The Effects of Manufacturing
+Tolerances on Gas Turbine Cooling," ASME J. Turbomach,
+131(4), p. 11.
+[13] Sidenstick, J. E., 1980, "Method and apparatus for forming
+diffused cooling holes in an airfoil," US4197443 A, General
+Electric Company, Google Patents.
+[14] Vertz, R. J., and Mosavi, R. K., 1988, "Airfoil with diffused
+cooling holes and method and apparatus for making the same,"
+US4762464 A, Chromalloy Gas Turbine Company, Google
+Patents.
+[15] Cross, J. A., and Jackson, C. M., 1989, " Method of forming
+electro-discharge machining electrode," US4819325 A,
+Technical Manufacturing Systems, Inc., Google Patents.
+
+sc
+r
+
+Ma
+nu
+
+NOMENCLATURE
+A
+hole cross-sectional area
+AR area ratio, Aexit/Ainlet
+skin friction coefficient
+𝑐𝑓
+D
+diameter of film cooling holes
+DR density ratio, 𝜌𝑐 ⁄𝜌∞
+H
+shape factor, 𝛿 ∗ ⁄𝜃
+2
+I
+momentum flux ratio, 𝜌𝑐 𝑈𝑐2 ⁄𝜌∞ 𝑈∞
+k
+thermal conductivity
+L
+hole length
+coolant mass flow rate
+ṁ𝑐
+M
+blowing ratio, 𝜌𝑐 𝑈𝑐 ⁄𝜌∞ 𝑈∞
+P
+pitch, lateral distance between holes
+Re
+Reynolds number (𝑅𝑒 ∗ = 𝛿 ∗ 𝑢𝜏 ⁄𝑣∞ )
+t
+hole breakout width
+T
+temperature
+Tu
+freestream turbulence intensity, 𝑢𝑟𝑚𝑠 ⁄𝑈∞
+U∞
+mainstream mean velocity
+uτ
+friction velocity, 𝑈∞ √𝑐𝑓 ⁄2
+V
+velocity magnitude
+x
+downstream distance measured from hole
+trailing edge
+y
+vertical distance from surface
+z
+pitchwise distance measured from center
+hole
+Greek
+α
+hole injection angle
+β
+expansion angle for diffuser
+δ
+99% boundary layer thickness
+displacement thickness
+𝛿∗
+η
+local adiabatic effectiveness,
+(𝑇∞ − 𝑇𝑎𝑤 )⁄(𝑇∞ − 𝑇𝑐 )
+θ
+momentum thickness
+ν
+kinematic viscosity
+ρ
+fluid density
+φ
+non-dimensional fluid temperature,
+(𝑇∞ − 𝑇)⁄(𝑇∞ − 𝑇𝑐 )
+Subscripts
+aw
+adiabatic wall
+c
+coolant, at hole inlet
+CL
+centerline
+eff
+effective, at hole exit
+exit exit plane of the film cooling hole
+fwd forward expansion of diffuser
+inlet inlet plane of the film cooling hole
+lat
+lateral expansion of the diffuser
+m
+metering section
+∞
+mainstream
+Superscripts
+laterally-averaged
+̅
+area-averaged
+̿
+
+12
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+Journal of Turbomachinery. Received November 18, 2016;
+Accepted manuscript posted March 10, 2017. doi:10.1115/1.4036199
+Copyright
+(c) Journal
+2017 byofASME
+ASME
+Turbomachinery
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+r
+
+ip
+
+tN
+
+ot
+
+Co
+
+py
+ed
+
+ite
+d
+
+[16] Draper, S. D., and Kvasnak, W. S., 2014, "Turbine engine
+blades with drillable film cooling holes," EP1607577 B1, United
+Technologies Corporation, Google Patents.
+[17] Eberly, M. K., and Thole, K. A., 2013, "Time-Resolved
+Film-Cooling Flows at High and Low Density Ratios," ASME J.
+Turbomach, 136(6), p. 061003.
+[18] Figliola, R. S., and Beasley, D. E., 2006, Theory and Design
+for Mechanical Measurements, John Wiley, Hoboken, N.J.
+[19] Kohli, A., and Thole, K. A., "Entrance Effects On Diffused
+Film-Cooling Holes," 98-GT-402, ASME 1998 International
+Gas Turbine and Aeroengine Congress and Exhibition, ASME,
+Stockholm, Sweden, pp. V004T09A070.
+[20] Schroeder, R. P., 2015, "Influence of In-Hole Roughness
+and High Freestream Turbulence on Film Cooling from a Shaped
+Hole," Ph.D., The Pennsylvania State University.
+
+TURBO-16-1299, Haydt
+
+13
+
+Copyright © 2016 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/pdfaccess.ashx?url=/data/journals/jotuei/0/ on 03/15/2017 Terms of Use: http://www.asme.org/about-as
+
+

@@ -1,0 +1,1033 @@
+Matteo Dellacasagrande1
+Department of Mechanical Energy Management
+and Transport Engineering,
+University of Genova,
+Genova 16145, Italy
+e-mail: matteo.dellacasagrande@edu.unige.it
+
+Davide Lengani
+
+Ettore Bertolini
+Institute of Thermal Turbomachinery
+and Machine Dynamics (ITTM),
+Graz University of Technology,
+Inffeldgasse 25/A,
+Graz 8010, Austria
+e-mail: ettore.bertolini@tugraz.at
+
+Wolfgang Sanz
+Institute of Thermal Turbomachinery
+and Machine Dynamics (ITTM),
+Graz University of Technology,
+Inffeldgasse 25/A,
+Graz 8010, Austria
+e-mail: wolfgang.sanz@tugraz.at
+
+The present work describes the coupled pressure–velocity instability in the suction side
+boundary layer of a transonic high-pressure turbine blade. The application case is the
+VKI LS89 turbine blade MUR237. Modal decomposition techniques such as the proper
+orthogonal decomposition (POD) and the dynamic mode decomposition (DMD) are
+applied to data obtained by large eddy simulations (LES) to inspect the existing correlation
+between pressure ﬂuctuations induced by traveling pressure waves and the velocity disturbances growing into the boundary layer. To this end, POD and DMD were applied to both
+velocity and pressure ﬁelds from the leading edge up to the end of the blade surface. DMD
+was computed on a 2D slice oriented parallel to the blade surface inside the boundary layer.
+Data were ordered along the curvilinear abscissas, so that the most spatially ampliﬁed
+waves were obtained. Interestingly, unstable velocity modes were detected in the front
+blade suction side where pressure waves dominate. The unstable velocity modes computed
+upstream of the peak suction highlighted the occurrence of elongated streaky structures
+showing spanwise ﬂuctuations which are typical of their instability. The comparison of
+pressure and velocity modes highlighted the occurrence of pressure-related ﬂuctuations
+in the velocity ﬁeld at the same time instants at which streak instability is observed. The
+analysis carried out in this work suggests that pressure waves can provoke localized instability of boundary layer streaks, which then break up further downstream causing transition. [DOI: 10.1115/1.4055971]
+Keywords: boundary layer development, ﬂuid dynamics and heat transfer phenomena in
+compressor and turbine components of gas turbine engines
+
+1 Introduction
+It is well known that the unsteadiness occurring in turbomachinery environment strongly affects the evolution of the boundary layer
+(BL) evolving over the pressure and especially on the suction side
+(SS) of blade proﬁles. In order to further improve the efﬁciency of
+such aerodynamic components, there is an increasing need for the
+detailed description of the role of unsteady disturbances in promoting the boundary layer instability and transition. The unsteadiness
+of the ﬂow forming in blade rows largely arises from the relative
+motion of the upstream stator or rotor rows. In this context, the
+dominant unsteadiness is constituted by the passing wakes that
+impinge the suction side boundary layer and affect its laminarturbulent transition [1,2]. As described in the comprehensive
+reviews of Sandberg and Michelassi [3] and Sieverding and
+Manna [4], when trailing edge wakes develop in transonic conditions, such as for high-pressure turbines (HPTs) for instance, a
+complex interaction of shocks, wakes, and vortex shedding
+occurs just downstream of the trailing edge. The wake and vortices
+not only cause losses themselves but also have a strong impact on
+the downstream blade surface [5]. In this context, pressure waves
+constitute an additional source of unsteadiness, whose role in the
+transition process, heat transfer, and loss generation is of paramount
+importance [6–9].
+From the boundary layer point of view, a shock wave produces a
+localized adverse pressure gradient, which may cause ﬂow separation. Additionally, adverse pressure gradients provoke the instability of boundary layer structures [10], thus impinging waves may act
+promoting the laminar-turbulent transition. The shock BL
+
+1
+Corresponding author.
+Contributed by the International Gas Turbine Institute (IGTI) of ASME for
+publication in the JOURNAL OF TURBOMACHINERY. Manuscript received September 7,
+2022; ﬁnal manuscript received October 10, 2022; published online November 7,
+2022. Tech. Editor: David G. Bogard.
+
+Journal of Turbomachinery
+
+interaction in turbomachinery environment has been initially
+studied in the pioneering work of Delery [11] using a curved
+surface being representative of the suction side of fan and compressor proﬁles. Among others, Giles [12] numerically investigated the
+stator/rotor interaction in a highly loaded transonic ﬁrst turbine
+stage, describing the propagation and reﬂection of shocks which
+originate at the trailing edge of the upstream stator. The high
+level of unsteadiness carried by the waves was responsible for
+increased losses due to the shedding of an unsteady vortex sheet.
+More recently, Klinner et al. [13] studied the dynamics of a transonic buffet ﬂow on the suction side of a highly loaded 2D compressor blade. It was shown that transverse velocity oscillations in front
+of the shock occur at the ﬁrst harmonic of the shock buffet and lead
+to phase-locked variations of the ﬂow angle.
+Despite the past decades of investigation on shock-waves boundary layer interaction [13–15], many of the related topics are still not
+fully understood, such as the origins and sources of unsteadiness
+associated with the interaction region. In this sense, the increasing
+availability of unprecedented amounts of data coming from experiments and high ﬁdelity simulations makes modal decomposition
+techniques essential tools for the characterization of the complex
+ﬂows evolving in compressor and turbine blade rows under
+real-engine conditions. Data-driven techniques such as the proper
+orthogonal decomposition (POD) and the dynamic mode decomposition (DMD) have been widely applied in previous literature works
+dealing with aerodynamic components in several engineering applications (see, e.g., Refs. [16,17]). POD allows ranking the main ﬂow
+features based on their corresponding energy of ﬂuctuations (see
+Refs. [18,19]). On the other hand, DMD provides the most ampliﬁed disturbances in the analyzed ﬂows (see, e.g., Refs. [20,21]).
+The combined used of these techniques allows the statistical
+characterization of the main ﬂow features and their eventual
+growth or decay in both space and time. Among others, Hall
+et al. [22] used POD for the construction of reduced order models
+of the unsteady ﬂows evolving on an isolated transonic airfoil and
+
+Copyright © 2022 by ASME
+
+APRIL 2023, Vol. 145 / 041015-1
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+Department of Mechanical Energy Management
+and Transport Engineering,
+University of Genova,
+Genova 16145, Italy
+e-mail: davide.lengani@edu.unige.it
+
+Correlated Pressure–Velocity
+Instability in a Transonic
+High-Pressure Turbine Blade
+
+2 Flow Case
+The LES simulations refer to the MUR237 test case. This particular ﬂow case is part of a campaign of measurements (MUR132,
+MUR218, and MUR237), performed in the VKI LS89 turbine
+linear cascade test facility, where the inﬂuence of turbulence intensity on boundary layer transition and heat transfer was investigated
+[25]. The cascade counts a total of ﬁve blades, where the central one
+was equipped for both static pressure and heat transfer measurement
+devices. Chord length, blade height, and blade pitch were equal to
+67.647 mm, 100 mm, and 57.5 mm, respectively. The MUR237
+ﬂow case employs a higher inﬂow turbulence level (6%) compared
+to the MUR218 (4%) and MUR132 (0.8%) ﬂow cases and therefore, an earlier laminar-to-turbulence transition of the boundary
+layer at the blade suction side was found.
+
+3 Large Eddy Simulations
+3.1 Numerical Method. In the measurements, the ﬂow was
+proven to be reasonably periodic in the pitchwise direction for the
+
+central blade. Furthermore, at mid-span, the inﬂuence of the hub
+and shroud vortices was found negligible. Thus, only one blade
+channel and only a part of the entire blade height (10%) were considered when generating the computational grid for LES. Periodicity was then used in pitchwise and spanwise directions.
+Regarding the LES grid, a conﬁguration with O-blocks around
+the blade was used to guarantee higher accuracy close to the
+blade wall (y + < 1.2, x + < 30, z + < 40) while maintaining a low
+number of grid points in the freestream region where such grid resolution is not needed. As can be seen in the zoomed view in Fig. 1,
+the number of grid points along the streamwise direction was
+doubled moving towards the blade surface from one O-block to
+the consecutive one. The same was done in the spanwise direction.
+Between the O-blocks around the blade, an interpolation of
+second-order was used to connect the faces [26]. With the
+O-blocks approach, the numerical grid counts around 20% fewer
+grid points than when a more traditional approach is used, resulting
+in 38M points for the current investigation. Regarding the resolution of the numerical grid in the freestream region, it was shown
+in Ref. [27] that the grid could accurately resolve the turbulence
+decay.
+At the inlet and outlet, the boundary conditions were set accordingly to Table 1. Since the synthetic eddy method (SEM) of Jarrin
+et al. [28] was used in order to reproduce the incoming turbulent
+ﬂow, static pressure and static temperature were imposed instead
+of the total values. The average inlet velocity was also set at the
+inlet boundary. In Ref. [26], the inﬂuence of different subgridscale (SGS) models and inﬂow boundary conditions on the boundary layer transition for the MUR237 ﬂow case was investigated.
+Regarding the synthetic inﬂow turbulence, different combinations
+of turbulent length scale, number of incoming eddies, and turbulence intensity were tested. The results showed that the turbulence
+length scale is the parameter that mainly inﬂuences transition, and
+particularly, the best results could be achieved for a length scale
+of 3 mm and a value of inlet turbulence of 6%. Regarding the
+SGS model, the wall-adapting local eddy-viscosity (WALE)
+model performed the best compared to the standard Smagorinsky
+model and the one-equation subgrid-scale kinetic energy model,
+and for this reason, it was also used in this work. At the outlet, a
+non-reﬂecting boundary condition [29] is used to further increase
+the stability of the simulations. For the time iteration, the fourthorder explicit Runge–Kutta method was used with a time-step
+equal to 4 * 10−9 s and a maximum value of CFL < 1, whereas for
+the computation of the cell ﬂuxes, a weighted essentially nonoscillatory scheme was employed. For the simulations, the
+in-house code LINARS was used. More details about the LES validation and the numerical method used for this investigation can be
+found in Ref. [26].
+3.2 Large Eddy Simulation Results and Flow Field. In
+Fig. 2 a comparison between the experimental and the predicted
+Table 1 Boundary conditions for the numerical investigation
+MUR237
+Parameter
+Inlet total temperature
+Inlet static temperature
+Inlet total pressure
+Inlet static pressure
+Inlet velocity
+Outlet static pressure
+Wall temperature
+Outlet Reynolds number
+Freestream turbulence
+Incidence angle
+Exit Mach number
+
+Fig. 1 Computational grid and O-blocks
+
+041015-2 / Vol. 145, APRIL 2023
+
+Symbol
+
+Value
+
+T1tot
+T1s
+p1tot
+p1s
+v1
+p2s
+Twall
+Reout
+Tu
+β1
+M2is
+
+417.3
+415.43
+1.753
+1.726
+61.29
+1.179
+299.85
+1.0 * 106
+6.0%
+0
+0.775
+
+K
+K
+bar
+bar
+m/s
+bar
+K
+–
+–
+deg
+–
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+in a two-dimensional airfoil cascade. The authors have shown that
+POD provided a compact but accurate ﬂutter model once combined
+with the characterization of the structural dynamic. Lengani et al.
+[16] developed a POD-based procedure for the identiﬁcation of
+the different contributions to the entropy production rate caused
+by the unsteady aerodynamics of a low-pressure turbine blade
+from large eddy simulations (LES) data. Kou et al. [23] combined
+higher order dynamic mode decomposition with a mode selection
+criterion to provide a reduce order model of a NACA0012 airfoil
+buffeting in a transonic ﬂow. It has been shown that DMD
+allowed the accurate reconstruction of the original case and the prediction of the permanent dynamics in the ﬂow.
+In the present work, we combined a variant of the POD, called
+extended POD (EPOD; see Ref. [24]), and the DMD technique to
+inspect the existing correlation between pressure and velocity ﬂuctuations in a transonic HPT blade. Data are obtained by means of LES
+with elevated inlet freestream turbulence. The EPOD technique provided the statistical description of coupling pressure–velocity ﬂuctuations in the suction side boundary layer. In addition, dynamic mode
+decomposition showed that the ampliﬁcation rate of velocity disturbances may be affected by the passage of traveling waves, which
+promote the instability of the boundary layer structures in the
+region of favorable pressure gradient. Otherwise, transition to turbulence will be shown to occur further downstream due to the combined
+action of freestream turbulence and pressure unsteadiness.
+
+convective heat transfer coefﬁcient (h) is shown. In the fore part of
+the blade (−20 < S < 20), the LES simulations perfectly match the
+experiments, whereas on the blade pressure side from approximately S < −20, the convective heat transfer is slightly underpredicted. By looking at the experimental results on the blade
+suction side, starting from about S = 30 a sudden increase of the
+convective heat transfer coefﬁcient was measured. This was
+caused by the transition from laminar-to-turbulent of the boundary
+layer.
+To further check the LES results, the turbulent intermittency (γ)
+was estimated at the blade suction side. To do so, different snapshots containing the information of the instantaneous spanwise
+Reynolds stresses were extracted starting from about S = 30 up to
+S = 80. The snapshots were taken in a plane parallel to the wall
+inside the boundary layer every 500th numerical iteration for a
+total of 200 samples. Otsu’s method [30] was then used to classify
+the data and determine at each given position whether the ﬂow was
+laminar or turbulent assigning a value equal to 0 and 1, respectively.
+The optimum threshold value is estimated directly from the Otsu’s
+method by minimizing the intra-class variance [31]. Thus, the intermittency function was obtained by averaging along the spanwise
+direction and in time.
+As it can be seen by the proﬁle of heat transfer in Fig. 3,the turbulent structures of the boundary layer are not evenly distributed
+along the spanwise direction, but some laminar spots are present
+also downstream of the point where the laminar-to-turbulence transition ﬁrst occurs. Therefore, after averaging in time and along the
+spanwise direction, local values of γ lower than 1 were obtained in
+this region with a maximum value of γmax = 0.85. This value was
+then used to normalize the γ curve. As it can be seen by the
+results in Fig. 2, from about S = 30, γ starts to rise marking the
+point where the laminar-to-turbulent transition starts. Then, from
+this point, γ rapidly increases and ﬁnally reaches its maximum
+values around S = 70 where the transition region ends. It should
+be noted that the transition region so derived occurs for the same
+positions at which the ramp of the heat transfer coefﬁcient is
+observed. The LES simulation is therefore able to predict the location of the laminar-to-turbulent transition as for the experiments, as
+it can also be seen in Fig. 3, but it underestimates the heat transfer.
+This deviation can be connected to a non-fully turbulent boundary
+layer across the spanwise direction as discussed before. As it was
+observed in Ref. [32], this discrepancy with the experimental
+results could be connected with the description of the incoming turbulence. Probably, the LES results could be improved using more
+realistic inﬂow turbulence or by including in the numerical
+domain the grid that was used in the experiments for generating
+the turbulent inﬂow.
+In Fig. 3, a representation of the instantaneous ﬂow ﬁeld is given.
+By looking at the iso-surfaces of Q-criterion (top plot), it can be
+Journal of Turbomachinery
+
+4 Modal Decomposition of Large Eddy
+Simulation Data
+In this section, we present the mathematical framework of the
+proper orthogonal decomposition and the dynamic mode decomposition to make the reader familiar with these techniques. The variants and the algorithm adopted in this work are also discussed.
+Proper orthogonal decomposition is a modal decomposition
+technique that was proposed ﬁrst by Lumley [33] for the analysis
+of turbulent ﬂows. Given a certain velocity ﬁeld which is a function
+of space and time (i.e., u(x, t)), the POD procedure provides spatial
+modes ϕ(x) (resembling ﬂow structures) and temporal coefﬁcients
+χ(t) (i.e., the mode dynamics). In the original formulation of
+Lumley [33], the POD modes are obtained solving the eigenvalue
+problem of the spatial cross-correlation matrix, and the temporal
+coefﬁcients are computed by projection. In the present work, we
+refer to the successive method of Sirovich [34], where the POD
+coefﬁcients are directly obtained as the eigenvectors of the temporal
+cross-correlation matrix. Particularly, the Nt realizations of the ﬂow
+ﬁeld obtained from LES probed in a 2D wall-parallel plane, i.e.,
+u(x, z, t), with x = 1… Nx, z = 1… Nz, and t = 1… Nt, are stacked
+ﬁrst in the following snapshot matrix U, sizing [NxNz × Nt]:
+⎛
+⎞
+u(x1 z1 , t1 ) · · · u(x1 z1 , tNt )
+⎜
+⎟
+..
+(1)
+U=⎝
+...
+...
+⎠
+.
+u(xNx zNz , t1 ) · · · u(xNx zNz , tNt )
+Then, the POD temporal coefﬁcients χ(t) are obtained from the
+solution of the following eigenvalue problem:
+CX = ΛX
+
+(2)
+
+where C = U TU is the temporal cross-correlation matrix, X is the
+matrix containing the eigenvectors of C, and Λ is a diagonal
+matrix with the sorted eigenvalues. Once the POD temporal coefﬁcients are computed from Eq. (2), the corresponding spatial modes
+are obtained by projection as
+Φ = UXΛ−(1/2)
+
+(3)
+
+where Φ is the matrix containing the POD modes, which are normalized with their corresponding eigenvalues.
+APRIL 2023, Vol. 145 / 041015-3
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+Fig. 2 Convective heat transfer coefﬁcient and turbulence
+intermittency
+
+noticed that at the blade leading edge the incoming turbulent vortices hit the blade, and by doing so elongated structures are formed,
+which were found to move downstream in the successive snapshots.
+Therefore, by the interaction of freestream vortices with the boundary layer, streaks are formed near leading edge of the proﬁle. The
+streaks ﬁnally break down in the aft part of the blade slightly
+after the channel throat. By the contour of the instantaneous convective heat transfer coefﬁcient, it can be seen that the incoming turbulent vortices signiﬁcantly affect the heat transfer at the blade leading
+edge causing h to locally rise where the turbulent eddies hit the
+blade. Later on, the inﬂuence of the turbulent vortices seems to
+weaken in the throat. Finally, in the aft part of the blade the
+laminar-to-turbulent transition enhances the heat transfer as can
+be seen by the sudden increase of h.
+The instantaneous pressure gradient magnitude contour is also
+included in Fig. 3 (bottom plot). The vortex shedding that takes
+place at the blade trailing edge produces acoustic waves with highpressure gradient on both pressure and suction side. These waves
+travel upstream and interact with the boundary layer as can be
+noticed by the spanwise structures along the blade surface. This
+interaction seems to have a major impact on the boundary layer
+upstream of the throat region. The pressure waves seem to excite
+the boundary layer and to induce streak instability. The streaks
+after going through this region break down causing the
+laminar-to-turbulent transition. The effects due to pressure waves
+on the stability of boundary layer streaks will be characterized in
+detail in the following sections by means of the extended POD
+and DMD.
+
+A variant of the POD is the EPOD, proposed ﬁrst by Borée [25].
+In the EPOD, the spatial modes of a given ﬁeld are obtained by projection on the temporal coefﬁcients computed in a different spatial
+domain, or with different quantities used for the deﬁnition of the
+POD kernel (i.e., the matrix C). Given the snapshot matrices U
+and P, the extended POD modes of U (ΦUext ) on the temporal
+basis of P (XP) are deﬁned as
+T
+ΦUext = UXP = ΦU Λ(1/2)
+U XU XP
+
+(4)
+
+where the product XUT XP represents the correlation between the
+POD coefﬁcients of the two different sets of observations (U, P).
+In the present work, the extended POD is used to highlight the statistical correlation between the pressure and velocity ﬂuctuations in
+the boundary layer, as shown in the following.
+Dynamic mode decomposition is a data-driven technique proposed by Schmid [20] for the analysis of ﬂuid ﬂows, which is nowadays applied in many other research ﬁelds (see, e.g., Ref. [35]).
+Given a set of snapshots, the DMD algorithm provides the dynamics of the best linear approximation of the system. More precisely, if
+the snapshots are ordered along the temporal coordinate, as in the
+matrix U (Eq. (1)), the DMD algorithm provides the growth or
+decay rate of temporal perturbations. Otherwise, when data are
+stacked along the main ﬂow direction, the outputs of the DMD procedure are wavelengths that grow or decay in space. Since in transitional boundary layers the convective instability of disturbances is
+typically observed, DMD is implemented here by stacking the ﬂow
+observations along the streamwise coordinate. To this end, the
+041015-4 / Vol. 145, APRIL 2023
+
+following snapshot matrices are deﬁned:
+⎛
+⎞
+u(z1 t1 , x1 ) · · · u(z1 t1 , xNx −1 )
+⎜
+⎟
+..
+..
+..
+V =⎝
+⎠
+.
+.
+.
+u(zNz tNt , x1 ) · · · u(zNz tNt , xNx −1 )
+⎛
+⎜
+V′ = ⎝
+
+u(z1 t1 , x2 )
+..
+.
+u(zNz tNt , x2 )
+
+⎞
+· · · u(z1 t1 , xNx )
+⎟
+..
+..
+⎠
+.
+.
+· · · u(zNz tNt , xNx )
+
+(5)
+
+(6)
+
+The LES data were reshaped and stacked in the above matrices
+along the x-coordinate which is representative of the main ﬂow
+direction. The DMD procedure then solves the below minimization
+process:
+
+
+(7)
+min V ′ − AV 2
+where |·|2 is the Euclidean norm. In other words, DMD looks for the
+linear operator A that provides the best prediction of the shifted
+matrix V′ in a least square sense once applied on the original
+matrix V. This is equivalent of solving the following eigenvalue
+problem for the matrix A:
+AΨ = ΩΨ
+
+(8)
+
+where the real and the imaginary parts of the complex eigenvalues
+Ω are directly linked to speciﬁc wavelengths and their
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+Fig. 3 Visualization of the instantaneous ﬂow ﬁeld: iso-surfaces of Q-criterion (q = 108) with
+contour of velocity magnitude (top); convective heat transfer coefﬁcient (center); pressure
+gradient magnitude (bottom)
+
+corresponding growth/decay rate. On the other hand, the eigenvectors Ψ (i.e., the DMD modes) are time-space (t − z) diagrams that
+provide the spatio-temporal characterization of the coherent structures whose growth is captured by the corresponding eigenvalues.
+According to the pioneering work of Schmid [20], in the present
+study we consider the projection of the matrix A onto a subset of
+the POD modes of V, thus providing the dynamics of only the
+main components of the analyzed ﬁelds. The procedure here
+adopted is summarized below:
+
+In the present work, the DMD algorithm is computed initially from
+the leading edge up to the trailing edge of the blade. More precisely,
+the extension of the DMD domain is gradually increased in the
+streamwise direction to investigate the overall ampliﬁcation of
+velocity ﬂuctuations from the laminar up to the turbulent regions
+of the BL. For each spatial region considered, the most unstable
+mode is recorded based on the real part of the corresponding eigenvalue, thus providing the spatial distribution of the most ampliﬁed
+disturbances for the entire blade surface (see also the previous
+authors’ work [36]). Then, based on the global response of the
+DMD procedure, we focused on speciﬁc regions of interest
+located in the front and the rear suction side of the blade. This
+allowed us to better highlight the similarities observed between
+the most unstable pressure and velocity ﬂuctuations, together with
+the main disturbances driving the laminar-turbulent transition of
+the boundary layer.
+
+4.2 Proper Orthogonal Decomposition and EPOD of
+Pressure and Velocity Fields. Figure 5 reports some selected
+POD modes of the unsteady pressure ﬁeld being representative of
+the main coherent ﬂuctuations in the boundary layer (more than
+
+Fig. 4 Visualization of the streaks through contours of instantaneous streamwise velocity
+ﬂuctuations (top); view of the extracted plane for POD and DMD analysis (bottom). The
+black lines indicate the mesh blocks.
+
+Journal of Turbomachinery
+
+APRIL 2023, Vol. 145 / 041015-5
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+(1) Compute the POD of V, such that V = ΦΛ1/2X T, where Φ and
+X are the POD modes and coefﬁcients, respectively, and Λ is
+the diagonal matrix containing the related eigenvalues.
+(2) Compute the projection of A onto the POD space of V as A =
+Φ∗ V ′ XΛ−1/2 (* indicates the conjugate complex).
+(3) The eigensolution for A provides the DMD eigenvalues Ω,
+which are the same as for A, while the DMD modes are
+obtained as Ψ = ΦXA, being XA the eigenvector matrix of A.
+
+4.1 Data
+Extrapolation
+for
+Proper
+Orthogonal
+Decomposition and Dynamic Mode Decomposition Analyses.
+POD and DMD analyses were performed on the blade suction
+side in a wall-parallel plane that is located inside the boundary
+layer. Figure 4 depicts the 2D plane considered here (top plot)
+together with the extension of the different zones analyzed
+(bottom plot). The contour of the streamwise velocity ﬂuctuations
+is reported for a given time instant in the top plot of the ﬁgure,
+where elongated streaky structures are observed in the front and
+the rear part of the proﬁle. Moving towards the blade trailing
+edge, smaller incoherent ﬂuctuations are observed that are the evidence of streak breakup and transition. Since boundary layer streaks
+mostly affect the streamwise velocity component, POD and DMD
+will be used for the characterization of only the streamwsie velocity
+ﬂuctuations together with pressure unsteadiness. This allowed us to
+inspect the eventual correlation between pressure unsteadiness and
+the instability of the boundary layer streaks driving the turbulent
+transition of the boundary layer. The information about velocity
+and pressure ﬂuctuations was extracted every 500th time iteration
+for a total of 230 samples. The total period covered by the
+samples is 4.6 * 10−4 s whereas the ﬂow through time is approximately 1.7 * 10−4 s.
+As a ﬁrst step, the pressure POD modes and the extended velocity
+modes were compared to highlight the statistical correlation
+between the pressure and the velocity ﬁelds. Successively, DMD
+is applied from zone 1 to zone 16 (see the bottom plot of Fig. 4)
+to show the global growth of ﬂuctuations in the suction side boundary layer. Then, zones 6, 8, and 11 were analyzed in detail being
+located in the front SS, at about the peak suction position and in
+the transition region, as discussed below.
+
+Fig. 6 Normalized extended POD modes of velocity ﬂuctuations
+computed by projection of the velocity ﬁeld onto the pressure
+POD basis. From top to bottom: mode 1, 2, 6, 8, and 10.
+
+65% of the overall energy of ﬂuctuations is captured by the modes).
+The other modes among the ﬁrst 10, not shown for brevity, have
+similar spatial distributions. Note that since the classic method of
+Sirovich [34] is herein adopted, the POD provides spatial modes
+and temporal coefﬁcients. The ﬁrst two plots of Fig. 5 show
+large-scale pressure ﬂuctuations that are ascribed to low-frequency
+oscillation of the overall pressure ﬁeld. On the other hand, modes
+from 6 to 10 (from the 3rd to the 5th plot of Fig. 5) clearly highlight
+the occurrence of streamwise periodic ﬂuctuations in the front part
+of the blade, with sensibly smaller scale and a well-deﬁned wavelength. These are the signatures of the traveling pressure waves
+already observed in the bottom plot of Fig. 3. Additionally, high
+intensity of the modes is observed at the blade trailing edge
+where a local maximum was observed in the pressure gradient distribution reported in Fig. 3. The occurrence within the same modes
+of pressure ﬂuctuations at the front SS and the blade trailing edge
+indicates that these pressure unsteadiness have the same dynamic
+content, which is captured by the POD coefﬁcients. Pressure ﬂuctuations observed at the front SS may be therefore linked to the wake
+unsteadiness [6]. Back traveling waves coming from the trailing
+edge were indeed observed in the instantaneous pressure ﬁeld, as
+those highlighted inFig. 3.
+Figure 6 depicts the extended POD modes of the streamwise
+velocity component obtained by projection onto the pressure coefﬁcients. This directly highlights the statistical correlation between
+the unsteady pressure ﬁeld and the streamwise velocity ﬂuctuations. The extended modes shown in Fig. 6 clearly highlight the
+occurrence of elongated structures resembling boundary layer
+streaks, which are the main source of disturbance for the streamwise
+velocity component. Additionally, the traces of the pressure ﬂuctuations observed in the corresponding pressure modes are recognizable. According toEq. (4), the modes depicted in Fig. 6 are affected
+by the correlation between the pressure and velocity coefﬁcients,
+which in the present case retain the temporal dynamics. Therefore,
+
+Figs. 5 and 6 clearly reveal an elevated degree of correlation
+between pressure unsteadiness and the velocity ﬁeld in the boundary layer, especially at the front SS. Interestingly, the intensity of
+streak-related ﬂuctuations increases in correspondence with the signature of the pressure waves (see the spanwise oriented stripes in
+the extended modes). The present results suggest that the growth
+of streak-related ﬂuctuations in the boundary layer may be promoted by the passage of the pressure waves. DMD will be therefore
+adopted in the following for the detailed characterization of the
+growth rate of velocity ﬂuctuations and to highlight the existing
+similarities between the most unstable disturbances in the pressure
+and velocity ﬁelds.
+
+041015-6 / Vol. 145, APRIL 2023
+
+4.3 EPOD for the Construction of Reduced Order Models
+of Pressure–Velocity Interaction. Before presenting the DMD
+results, the usability of the EPOD procedure for the construction
+of reduced order models of pressure–velocity interaction is discussed. In the context of turbulence modeling, the Reynolds
+stress transport equations constitute one of the most complex
+closure scheme for RANS-based codes. In the absence of body
+force and system rotation, the generic form of the Reynolds stress
+equations is as follows [37]:
+Dui uj
+∂Uj
+∂Ui
+1
+∂p
+∂p
+−
++ uj uk
+ui
++ uj
+= − ui uk
+ρ
+∂xj
+∂xi
+Dt
+∂xk
+∂xk
+− 2ν
+
+∂ui ∂uj
+∂
+∂ui uj
+∂
++
++
+ν
+−ui uj uk
+∂xk
+∂xk ∂xk ∂xk
+∂xk
+
+(9)
+
+The right terms of the above equation represent the production, the
+pressure–velocity interaction (named hereafter Π), the dissipation
+rate, and the viscous and turbulent diffusion, respectively. As
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+Fig. 5 Normalized POD modes of pressure ﬂuctuations. From
+top to bottom: mode 1, 2, 6, 8, and 10.
+
+regards Π, this term can be split into two contributions:
+Π=
+
+p ∂ui ∂uj
+∂ pui
+∂ puj
+−
++
++
+ρ ∂xj ∂xi
+∂xj ρ ∂xi ρ
+
+(10)
+
+that are referred to as the pressure-strain and the pressure diffusion
+terms, respectively. Based on Eqs. (3) and (4), low-rank representations of the pressure and velocity ﬁelds can be computed considering the contributions of the ﬁrst K POD modes. Accordingly, if the
+pressure and velocity ﬂuctuations are expanded on the same POD
+basis, the mixed products pui and puj can be written as products
+of the corresponding spatial modes [16]:
+K
+
+
+(k)
+ϕ(k)
+p ϕui ,ext
+
+k=1
+
+puj (K) =
+
+K
+
+
+(k)
+ϕ(k)
+p ϕuj ,ext
+
+(11)
+
+k=1
+
+In Eq. (11), both the pressure and velocity ﬁelds are expanded on
+the pressure POD basis, thus the velocity modes are extended
+ones (as those shown in Fig. 6). It is stressed here that the choice
+of the basis on which data are expended is arbitrary.
+To highlight the existing link between the extended modes
+depicted in Fig. 6 and the quantities deﬁning the pressure–velocity
+interaction, a low-rank representation of Eq. (10) based on the ﬁrst
+10 POD modes was computed. Figure 7 depicts the reduced order
+models of up, wp, and the overall pressure–velocity interaction
+term Π. It is worth noticing that the spatial distributions of these
+quantities resemble well the dominant extended modes reported
+in Fig. 6 (see the ﬁrst and the second extended modes). The term
+Π (third plot of Fig. 7) retain all the features highlighted in the
+
+4.4 DMD of Pressure and Velocity Fields. In order to highlight the dynamic behavior of pressure and velocity unsteadiness,
+DMD was applied on LES data considering the entire suction side
+of the blade. Figure 8 depicts the streamwsie distribution of the
+growth rate of streamwise velocity ﬂuctuations as obtained by the
+DMD algorithm. As previously stated, the DMD domain is continuously extended from the leading towards the trailing edge of the
+blade and the most unstable eigenvalue Ω (i.e., the one with the
+largest real part) is recorded for each domain considered. The
+values of the growth rate are plotted as a function of the curvilinear
+abscissa. Zones 6, 8, and 11 that will be further analyzed below are
+highlighted with vertical dashed lines, while the rectangular box
+indicates the extension of the transition region based on the intermittency curve reported in Fig. 2. It is worth noticing that distinct peaks
+are observed in the growth rate distribution for 20 < S < 40, which
+have the same streamwise periodicity as the pressure ﬂuctuations
+
+Fig. 7 Low-rank reconstruction of the time mean mixed products up (top), wp (middle), and of
+the pressure–velocity interaction term in Reynolds stress transport equation (bottom)
+
+Journal of Turbomachinery
+
+APRIL 2023, Vol. 145 / 041015-7
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+pui (K) =
+
+ﬁrst two extended modes of velocity ﬂuctuations, with smaller
+scales observed also in the transition region. According to
+Eq. (4), the extended modes of velocity ﬂuctuations retain indeed
+the quota of pressure correlated unsteadiness, which are accounted
+by means of the correlation matrix of POD basis (i.e., XUT XP in
+Eq. (4)). This indicates that the EPOD analysis presented above
+can be functional to the construction of reduced order models of
+the pressure-strain and the pressure diffusion terms reported in
+Eq. (10). In the following section, the further application of the
+DMD procedure will provide the regions where pressure-induced
+instability may occur and the role of pressure unsteadiness in promoting transition.
+
+observed in Figs. 5 and 6. This clearly indicates that streamwise
+velocity disturbances, that are mostly due to the propagation of
+streaky structures, are signiﬁcantly ampliﬁed by the occurrence of
+pressure unsteadiness due to traveling waves. However, such localized growth of disturbance is not sufﬁcient to lead to transition
+
+Fig. 9 Normalized velocity and pressure DMD modes for zones 6, 8, and 11 that are located in
+the front suction side, at about the peak suction position and in the transition region,
+respectively
+
+041015-8 / Vol. 145, APRIL 2023
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+Fig. 8 Streamwise distribution of the spatial growth rate of
+streamwise velocity ﬂuctuations. The position of zones 6, 8,
+and 11 are highlighted with vertical dashed lines. The rectangular
+box indicates the transition region position.
+
+because of the favorable pressure gradient in the front part of the
+blade. Moving towards the blade trailing edge, the periodic peaks
+related to pressure unsteadiness decrease. Particularly, a monotonic
+reduction of the spatial growth rate is observed in zone 8 up to a local
+minimum occurring in correspondence with the transition onset
+location (left side of the box indicating the transition region in
+Fig. 8). Downstream of this position, the growth rate of disturbances
+gradually increases up to about S = 58 mm. This is the position corresponding to the mid-transition location (i.e., γ = 0.5; see Fig. 2), at
+which the maximum growth of disturbances is typically observed
+(see, e.g., Ref. [38]). Interestingly, localized peaks with similar
+streamwise periodicity of those observed for S < 40 are recognized
+in the transition region, but with sensibly lower values.
+To further investigate the existing correlation between the most
+ampliﬁed velocity and pressure disturbance both in the laminar
+and the transition regions, the DMD was applied independently in
+zones 6, 8, and 11. These zones extend in the regions where the
+pressure waves periodicity dominates (front SS), around the peak
+suction position and in the rear SS at about the mid-transition position. Figure 9 depicts the DMD modes of the pressure and streamwise velocity ﬁelds corresponding to the eigenvalues showing the
+largest real part among the DMD spectrum for each zone. As previously stated, the present modes are in the form of time-space diagrams showing the spanwise and temporal distribution of the
+velocity and pressure unsteadiness, whose streamwise growth is
+captured by the corresponding eigenvalues.
+
+5 Conclusions
+The present work describes the application of the extended
+proper orthogonal decomposition and dynamic mode decomposition on data obtained from the large eddy simulation of a transonic
+HPT blade. The application case is the VKI LS89 turbine blade
+MUR237. Numerical simulations were performed with elevated
+inlet turbulence that was shown to promote the formation of elongated streaky structures. These latter break down at the rear
+suction side of the blade, thus leading to the laminar-turbulent transition of the boundary layer.
+The application of POD to the unsteady pressure ﬁeld highlighted
+the occurrence of traveling waves, whose signatures were found
+also in the extended POD modes of the streamwise velocity component. Particularly, 2D spanwise oriented structures were detected in
+the extended modes of the streamwise ﬂuctuating velocity together
+with the signatures of BL streaks and their breakdown events. This
+clearly indicates that pressure unsteadiness and streaks related ﬂuctuations are correlated in a statistical sense. Additionally, the
+present EPOD procedure was shown to be suitable for the construction of reduced order models of pressure–velocity interaction terms
+in Reynolds stress transport equations.
+The analysis of the DMD eigenavalues showed the occurrence of
+localized peaks of the spatial growth rate of streamwise ﬂuctuations
+in the front part of the blade. Interestingly, these peaks have the
+same periodicity of the traveling waves captured by the pressure
+POD modes and the corresponding extended modes of the streamwise velocity.
+Journal of Turbomachinery
+
+Downstream of the peak suction position, the effects due to pressure unsteadiness on the growth of velocity ﬂuctuations were found
+to reduce, despite being still recognizable. Indeed, the comparison
+of DMD modes of the pressure and velocity ﬁelds showed that
+the inception of turbulent spots, occurring as a consequence of
+streak breakdown, may be forced by the localized pressure gradients
+associated with traveling waves. Therefore, the present study indicates that for transonic HPT proﬁles, the laminar-to-turbulent transition occurs due to the combined forcing of the freestream vortices
+and traveling pressure waves, with these latter playing an important
+role in the instability process of streaky structures.
+
+Acknowledgment
+The research leading to these results has received funding from
+Take Off programme within the project ALESIA. Take Off is a
+Research, Technology and Innovation Funding Programme of the
+Republic of Austria, Ministry of Climate Action. The Austrian
+Research Promotion Agency (FFG) has been authorised for the programme management.
+
+Conﬂict of Interest
+There are no conﬂicts of interest.
+
+Data Availability Statement
+The datasets generated and supporting the ﬁndings of this article
+are obtainable from the corresponding author upon reasonable
+request.
+
+Nomenclature
+h
+x
+y
+z
+C
+S
+Ma
+Re
+
+=
+=
+=
+=
+=
+=
+=
+=
+
+heat transfer coefﬁcient
+streamwise coordinate
+wall-normal coordinate
+spanwise coordinate
+blade chord
+curvilinear abscissa
+Mach number
+Reynolds number
+
+References
+[1] Paxson, D., and Mayle, R., 1991, “Laminar Boundary Layer Interaction With an
+Unsteady Passing Wake,” ASME J. Turbomach., 113(3), pp. 419–427.
+[2] Cardamone, P., Stadtmuller, P., and Fottner, L., 2002, “Numerical Investigation
+of the Wake-Boundary Layer Interaction on a Highly Loaded LP Turbine
+Cascade Blade,” Turbo Expo: Power for Land, Sea, and Air, Amsterdam, The
+Netherlands, Vol. 3610, pp. 401–409.
+[3] Sandberg, R. D., and Michelassi, V., 2021, “Fluid Dynamics of Axial
+Turbomachinery: Blade- and Stage-Level Simulations and Models,” Annu.
+Rev. Fluid Mech., 54, pp. 255–285.
+[4] Sieverding, C., and Manna, M., 2020, “A Review on Turbine Trailing Edge
+Flow,” Int. J. Turbomach. Propul. Power, 5(2), p. 10.
+[5] Lin, D., Su, X., and Yuan, X., 2018, “DDES Analysis of the Wake Vortex Related
+Unsteadiness and Losses in the Environment of a High-Pressure Turbine Stage,”
+ASME J. Turbomach., 140(4), p. 041001.
+[6] Göttlich, E., Woisetschläger, J., Pieringer, P., Hampel, B., and Heitmeir, F., 2006,
+“Investigation of Vortex Shedding and Wake-Wake Interaction in a Transonic
+Turbine Stage Using Laser-Doppler-Velocimetry and Particle-ImageVelocimetry,” ASME. J. Turbomach, 128(1), pp. 178–187.
+[7] Duan, P., Tan, C. S., Scribner, A., and Malandra, A., 2018, “Loss Generation in
+Transonic Turbine Blading,” ASME J. Turbomach., 140(4), p. 041006.
+[8] Dupuy, D., Gicquel, L., Odier, N., Duchaine, F., and Arts, T., 2020, “Analysis of
+the Effect of Intermittency in a High-Pressure Turbine Blade,” Phys. Fluids,
+32(9), p. 095101.
+[9] Asghar, M. A., Liu, Y., Cui, J., and Lu, L., 2018, “Investigation of Unsteady Flow
+Interactions in a Transonic High Pressure Turbine Using Nonlinear Harmonic
+Method,” Energies, 11(2), p. 342.
+[10] Nolan, K., and Zaki, T., 2013, “Conditional Sampling of Transitional Boundary
+Layers in Pressure Gradients,” J. Fluid Mech., 728, pp. 306–339.
+[11] Delery, J. M., 1985, “Shock Wave/Turbulent Boundary Layer Interaction and Its
+Control,” Prog. Aerosp. Sci., 22(4), pp. 209–280.
+
+APRIL 2023, Vol. 145 / 041015-9
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+In the velocity mode computed in zone 6 (top plot of Fig. 9), the
+time traces of the elongated streaky structures are clearly observed.
+Additionally, the same periodic spanwise oriented signatures
+observed in the corresponding pressure mode (second plot) are
+detected. The present modes therefore capture the temporal periodicity of the pressure waves whose effect on the spatial growth rate of
+velocity ﬂuctuations was described in Fig. 8. Interestingly, the time
+traces of the streaky structures observed in zone 6 exhibit spanwise
+modulation at about 0.3 < t/Tacquisition < 0.5, where high intensity of
+the pressure signatures is observed. The spanwise oscillation of the
+boundary layer streaks is known to be the evidence of their instability, which is therefore promoted by the localized pressure gradients
+due to pressure waves. However, their breakup events were shown
+to occur further downstream and ordered streaks are observable for
+the entire simulation period in the present zone.
+The intensity of the pressure signatures in the velocity modes
+sensibly decreases in zones 8 and 11 (Fig. 9). In zone 8, where
+the intensity of pressure gradient was shown to reduce (see
+Fig. 3), the trace of pressure unsteadiness in the velocity mode is
+observed only at about t/Tsimulation = 0.1 and 0.7. At the former
+time instant, localized instability of the trace of the BL streak occurring at z = 0.008 is observed. Again, this indicates that localized
+regions of turbulent ﬂuctuations are provoked by the action of pressure waves. However, the streak signature gets stable at further time
+instants due to the favorable pressure gradient in this region, as previously discussed. Otherwise, the velocity mode computed in zone
+11 clearly shows the occurrence of streak breakup events at different spanwise positions and time instants. Turbulent ﬂuctuations
+characterized by sensibly smaller spanwise and temporal scales
+are observed together with elongated structures, as the BL is transitional at this position. Interestingly, the spatio-temporal signatures
+of breakup events occur at the same time instants at which pressure
+discontinuities are observed in the most unstable pressure mode for
+the same region (bottom plot of Fig. 9). This indicates that pressure
+unsteadiness provoke the formation of turbulent spots in the rear
+suction side of the blade despite their lower effect on the growth
+rate of velocity ﬂuctuations (see Fig. 8). This is due to the overall
+adverse pressure gradient characterizing the rear suction side of
+the proﬁle that promotes streak instability in combination with the
+pressure ﬂuctuations induced by the traveling pressure waves.
+
+041015-10 / Vol. 145, APRIL 2023
+
+[26]
+
+[27]
+
+[28]
+
+[29]
+[30]
+[31]
+
+[32]
+
+[33]
+[34]
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+for Inviscid and Viscous Flow Computations.” Technical note Von Karman
+Institute for Fluid Dynamics, von Karman Institute for Fluid Dynamics.
+Bertolini, E., Pieringer, P., and Sanz, W., 2021, “Effect of Different Subgrid-Scale
+Models and Inﬂow Turbulence Conditions on the Boundary Layer Transition in a
+Transonic Linear Turbine Cascade,” Int. J. Turbomach. Propul. Power, 6(3),
+p. 35.
+Bertolini, E., Pieringer, P., and Sanz, W., 2020, “Large Eddy Simulation of a
+Transonic Linear Cascade With Synthetic Inlet Turbulence,” Proceeding of
+ASME Turbo Expo 2020, London, Great Britain, Vol. 2C: Turbomachinery,
+06, No. GT2020-14461.
+Jarrin, N., Benhamadouche, S., Laurence, D., and Prosser, R., 2006, “A
+Synthetic-Eddy-Method for Generating Inﬂow Conditions for Large-Eddy
+Simulation,” Int. J. Heat Fluid Flow, 27(4), pp. 585–593.
+Giles, M. B., 1990, “Nonreﬂecting Boundary Conditions for Euler Equation
+Calculations,” AIAA J., 28(12), pp. 2050–2058.
+Otsu, N., 1979, “A Threshold Selection Method From Gray-Level Histograms,”
+IEEE Trans. Syst. Man Cybern., 9(1), pp. 62–66.
+Kushwaha, A., Park, J. S., and Graham, M. D., 2017, “Temporal and Spatial
+Intermittencies Within Channel Flow Turbulence Near Transition,” Phys. Rev.
+Fluids, 2(2), p. 024603.
+Jee, S., Joo, J., and Medic, G., 2016, “Large-Eddy Simulation of a High-Pressure
+Turbine Vane With Inlet Turbulence,” Proceeding of ASME Turbo Expo 2016,
+Seoul, South Korea, Vol. 2D: Turbomachinery, No. GT2016-56980.
+Lumley, J. L., 1970, Stochastic Tools in Turbulence, Vol. 12, Courier
+Corporation, North Chelmsford, MA.
+Sirovich, L., 1987, “Turbulence and the Dynamics of Coherent Structures. Part I–
+III,” Q. Appl. Math., 45(3), pp. 561–590.
+Kutz, J. N., Brunton, S. L., Brunton, B. W., and Proctor, J. L., 2016, Dynamic
+Mode Decomposition: Data-Driven Modeling of Complex Systems, SIAM,
+Philadelphia, PA.
+Dellacasagrande, M., Verdoya, J., Barsi, D., Lengani, D., and Simoni, D., 2020,
+“Dynamic Mode Decomposition Analysis of Separated Boundary Layers Under
+Variable Reynolds Number and Free-Stream Turbulence,” Turbo Expo: Power
+for Land, Sea, and Air, Virtual, Online.
+Leschziner, M., 2015, Statistical Turbulence Modelling for Fluid
+Dynamics-Demystiﬁed: An Introductory Text for Graduate Engineering
+Students, World Scientiﬁc, London, UK.
+Matsubara, M., and Alfredsson, P. H., 2001, “Disturbance Growth in Boundary
+Layers Subjected to Free-Stream Turbulence,” J. Fluid Mech., 430(5), pp. 149–
+168.
+
+Transactions of the ASME
+
+Downloaded from asmedigitalcollection.​asme.​org/​turbomachinery/​article-pdf/​145/​4/​041015/​6939206/​turbo_145_4_041015.​pdf by Cambridge University user on 27 November 2026
+
+[12] Giles, M. B., 1990, “Stator/Rotor Interaction in a Transonic Turbine,” J. Propul.
+Power, 6(5), pp. 621–627.
+[13] Klinner, J., Hergt, A., Grund, S., and Willert, C. E., 2021, “High-Speed PIV of
+Shock Boundary Layer Interactions in the Transonic Buffet Flow of a
+Compressor Cascade,” Exp. Fluids, 62(3), pp. 1–19.
+[14] Knight, D., and Mortazavi, M., 2018, “Hypersonic Shock Wave Transitional
+Boundary Layer Interactions—A Review,” Acta Astronaut., 151, pp. 296–317.
+[15] Ligrani, P. M., McNabb, E. S., Collopy, H., Anderson, M., and Marko, S. M.,
+2020, “Recent Investigations of Shock Wave Effects and Interactions,” Adv.
+Aerodyn., 2(1), pp. 1–23.
+[16] Lengani, D., Simoni, D., Pichler, R., Sandberg, R., Michelassi, V., and Bertini, F.,
+2018, “Identiﬁcation and Quantiﬁcation of Losses in a LPT Cascade by POD
+Applied to LES Data,” Int. J. Heat Fluid Flows, 70, pp. 28–40.
+[17] Dellacasagrande, M., Sterzinger, P., Zerobin, S., Merli, F., Wiesinger, L., Peters,
+A., Maini, G., Heitmeir, F., and Göttlich, E., 2019, “Unsteady Flow Interactions
+Between a High- and Low-Pressure Turbine: Part 2—Rotor-Synchronic
+Averaging and Proper Orthogonal Decomposition of the Unsteady Flow
+Fields,” Turbo Expo: Power for Land, Sea, and Air, Phoenix, AZ, Vol. 58554,
+American Society of Mechanical Engineers, p. V02AT45A011.
+[18] Lumley, J. L., 1967, “The Structure of Inhomogeneous Turbulent Flows,”
+Atmospheric Turbulence and Radio Wave Propagation, A. M. Yaglom, and V. I.
+Tartarsky, eds., Defense Technical Information Center, Belvoir, VA, pp. 166–177.
+[19] Berkooz, G., Holmes, P., and Lumley, J. L., 1993, “The Proper Orthogonal
+Decomposition in the Analysis of Turbulent Flows,” Annu. Rev. Fluid Mech.,
+25(1), pp. 539–575.
+[20] Schmid, P. J., 2010, “Dynamic Mode Decomposition of Numerical and
+Experimental Data,” J. Fluid Mech., 656, pp. 5–28.
+[21] Tu, J. H., 2013, “Dynamic Mode Decomposition: Theory and Applications,”
+Ph.D. Thesis, Princeton University, Princeton, NJ.
+[22] Hall, K. C., Thomas, J. P., and Dowell, E. H., 2000, “Proper Orthogonal
+Decomposition Technique for Transonic Unsteady Aerodynamic Flows,” AIAA
+J., 38(10), pp. 1853–1862.
+[23] Kou, J., Le Clainche, S., and Zhang, W., 2018, “A Reduced-Order Model for
+Compressible Flows With Buffeting Condition Using Higher Order Dynamic
+Mode Decomposition With a Mode Selection Criterion,” Phys. Fluids, 30(1),
+p. 016103.
+[24] Borée, J., 2003, “Extended Proper Orthogonal Decomposition: A Tool to Analyse
+Correlated Events in Turbulent Flows,” Exp. Fluids, 35(2), pp. 188–192.
+[25] Arts, T., de Rouvroit, M., and Rutherford, A., 1990, “Aero-Thermal Investigation
+of a Highly Loaded Transonic Linear Turbine Guide Vane Cascade: A Test Case
+
+

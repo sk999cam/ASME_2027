@@ -1,0 +1,1180 @@
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Contents lists available at ScienceDirect
+
+International Journal of Heat and Mass Transfer
+journal homepage: www.elsevier.com/locate/hmt
+
+Direct numerical simulation of the 7-7-7 film cooling at a range of compound
+angles
+Yuanwei Bin a,b,c , Xiang I.A. Yang a ,∗
+a
+b
+c
+
+Department of Mechanical Engineering, Pennsylvania State University, State College, 16903, PA, USA
+College of Engineering, Peking University, Beijing, 100871, Beijing, China
+Shenzhen Tenfong Science and Technology Co., Ltd., Shenzhen, 518000, Guangdong, China
+
+ARTICLE
+
+INFO
+
+Keywords:
+Film cooling
+Direct numerical simulation
+
+ABSTRACT
+Film cooling is essential for protecting substrate materials from the hot gases in turbomachines. Recent
+experiments have explored the effects of compound angles for the 7-7-7 film cooling hole, a baseline shaped
+film cooling hole developed at the START lab. However, differences in facility conditions, manufacturing
+process uncertainties, uncertainties in flow conditions, and the absence of internal cooling hole measurements
+necessitate further investigation to fully understand the impact of compound angles and the associated flow
+physics. This study presents direct numerical simulations (DNS) for the baseline 7-7-7 shaped film cooling hole,
+examining a range of compound angles and flow conditions paralleling those in prior lab experiments. The
+data gleaned offers insights into the flow dynamics within and in the vicinity of the cooling hole, particularly
+in areas proximate to the wall. Our findings indicate that increasing the compound angle adversely affects
+adiabatic cooling efficiency. A detailed analysis reveals that this decline in efficiency is primarily due to hot
+gas intrusion into the cooling hole, the elevation of the cooling jet from the wall, and intensified secondary
+flows at higher compound angles. Additionally, the DNS data reveals a logarithmic scaling in the laterally
+averaged mean velocity profile and a self-similarity in temperature profiles beyond a certain distance from the
+cooling hole.
+
+1. Introduction
+Film cooling involves the ejection of coolant through drilled cooling holes on the surface. In contemporary gas turbine systems, it is
+anticipated that the internal gas temperature will exceed 2000 𝐾, a
+level considerably surpassing the maximum operational temperature
+tolerated by the majority of substrate materials without undergoing
+substantial degradation. In this context, film cooling serves as the
+primary and foremost defense mechanism safeguarding the hot gas path
+surfaces against the formidable onslaught of extremely hot gas [1]. The
+technology finds widespread application in critical components within
+the turbine hot-section, including guide vanes [2,3], blades [4,5],
+turbine casings [6], combustor liner [7,8], exhaust nozzle [9,10], and
+others.
+The inception of film cooling research can be traced back to the
+1970s, with a seminal contribution made by Goldstein et al. [11],
+who pioneered the demonstration and quantification of film cooling
+effects. The recent investigations have further clarified the many factors that impact the efficacy of film cooling. These factors include
+mainstream turbulence intensity [12,13], compressibility [14], coolant
+
+blowing ratio [15], inclination angle [16,17], hole length [18], pitchwise spacing [19–21], arrangement [22], pressure gradient [23,24],
+coverage and area ratios [25], as well as the expansion angle of the
+diffused outlet [26]. Detailed reviews of literature can be found in Refs.
+[1,27–29] and are not repeated here for brevity.
+This study focuses on shaped cooling holes at a range of compound
+angles. Shaped film cooling holes have a diffused outlet that decelerates
+the coolant jet and spreads it laterally across protected surfaces. Such
+designs have demonstrated superior cooling performance compared
+to cylindrical ones. The 7-7-7 film cooling hole serves as a baseline
+for shaped film cooling holes [30]. It consists of a meter section and
+a diffuser section and has an inclination angle of 30◦ . The property
+of the 7-7-7 film cooling hole has been thoroughly investigated, including the effects of in-hole roughness [31], mainstream turbulent
+intensity [13,32], blockage [33], meter-diffuser offset [34]. This study
+focuses on the effect of the compound angle [35,36]. The compound
+angle refers to the angle between the direction of the coolant jet and the
+mainstream flow direction. This design parameter is known to impact
+the cooling effectiveness [37–39]. Experimental studies have suggested
+
+∗ Corresponding author.
+E-mail address: xzy48@psu.edu (X.I.A. Yang).
+
+https://doi.org/10.1016/j.ijheatmasstransfer.2024.125816
+Received 7 April 2024; Accepted 3 June 2024
+Available online 14 June 2024
+0017-9310/© 2024 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+compound angle from 𝛼 = 0◦ to and 60◦ . The DNS results will show that
+the cooling effectiveness decreases with increasing compound angle.
+Analysis will show that the decreased cooling effectiveness is attributed
+to enhanced thermal mixing and increased jet penetration. In addition,
+the data suggests a self-similarity of the laterally averaged temperature
+profile.
+The rest of the paper is as follows. Section 2 provides an introduction to the numerical setup employed in the simulation. Section 3
+presents the results instantaneous and mean flow results. Section 4
+discusses the parameterization of the laterally averaged temperature
+and velocity profiles. Finally, conclusions are presented in Section 5.
+2. Computational details
+This section presents the details of our DNSs.
+2.1. Configuration and flow condition
+Fig. 2 provides a schematic the flow configuration. To enhance
+clarity, Figs. 2(a) and (b) show the upper and the lower parts of the
+computational domain, respectively. The upper section contains the
+incoming boundary layer and the cooling jet, and the lower section
+contains the plenum and the coolant feed. The juncture of these two
+parts is indicated by the blue lines in (a, b). For ease of reference,
+we have set the origins of the 𝑥 and 𝑧 coordinates at the center of
+the cooling hole, and the origin of the 𝑦 coordinate at the adiabatic
+wall. The red dashed-dot lines in Fig. 2(a, b) indicate the rotation axis.
+It traverses through the point (𝑥∕𝐷 = 0.7, 𝑦 = 0, 𝑧 = 0). We introduce
+variations in the compound angle by rotating the part in (b) around this
+axis. For this study, we will study cases with a zero compound angle,
+denoted as 𝛼 = 0◦ , a 30◦ compound angle, denoted as 𝛼 = 30◦ , and a
+60◦ compound angle, denoted as 𝛼 = 60◦ .
+The dimensions of the upper part in (a) are (𝐿𝑥𝑖 + 𝐿𝑥𝑜 ), 𝐿𝑦 , and
+𝑃 in the longitudinal (𝑥), vertical (𝑦), and transverse (𝑧) directions
+respectively. Here, 𝐿𝑥𝑖 ∕𝐷 = 15 represents the distance from the inlet
+to the center of the cooling hole, 𝐿𝑥𝑜 ∕𝐷 = 40 denotes the distance from
+the center of the cooling hole to the non-reflective outlet, 𝐿𝑦 ∕𝐷 = 10 is
+the distance from the adiabatic wall to the non-reflective top boundary,
+and 𝑃 ∕𝐷 = 6 indicates the size of the domain in the periodic lateral
+direction. The parameter 𝐷, employed for non-dimensionalization, is
+the diameter of the coolant feed. The dimensions of the plenum in (b)
+are 𝐿𝑥𝑏 × 𝐿𝑦𝑏 × 𝐿𝑧𝑏 = 12.5𝐷 × 4.5𝐷 × 5𝐷. The geometry of the
+coolant feed is outlined in Fig. 3, consisting of a cylindrical section with
+a diameter of 𝐷 and a diffuser section with a 7◦ expansion in the +𝑧,
+−𝑧, and +𝑥 directions. The feed is truncated by the upper surface of
+the plenum as well as the wall at 𝑦 = 0, at an angle of 30◦ , giving
+rise to an elliptic cross-section at the upper surface of the plenum and
+a uniquely shaped cooling hole at 𝑦 = 0, respectively. The lengths of
+the cylindrical section and the diffuser section, as measured by the
+distances between their centers, are denoted as 𝐿𝑚 and 𝐿𝑑 as indicated
+in Fig. 3. For further elaboration on the flow configuration, we refer
+the reader to [30], with additional insight into the 7-7-7 cooling hole
+design provided in Refs. [13,34].
+The current computational study replicates the experiment in Ref.
+[30]. The flow conditions are as follows. The freestream Mach number
+is 𝑀𝑎∞ = 𝑈∞ ∕𝑐∞ = 0.1, where 𝑐∞ is the freestream sound speed. The
+turbulent inflow is a synthetic one, and it is such that the Reynolds
+number of the incoming boundary layer is 𝑅𝑒𝜃 = 670 at 𝑥∕𝐷 = −5.
+Here, 𝑅𝑒𝜃 is defined as 𝜌∞ 𝑈∞ 𝜃∕𝜇∞ , 𝜃 is the momentum thickness and
+is 0.14𝐷 at 𝑥∕𝐷 = −5, 𝜌∞ and 𝜇∞ correspond to the freestream density
+and the freestream dynamic viscosity, respectively. The blowing ratio
+is:
+𝜌 𝑈
+𝑀 ≡ ∞ ∞ = 1,
+(1)
+𝜌𝑐 𝑈 𝑐
+
+Fig. 1. Cooling effectiveness reported in [30,35] at nominally the same flow condition
+(corresponding to the condition of A0, see Section 2 for details).
+
+that increasing the compound angle promotes the lateral spread of
+the coolant. However, the uncertainties in the measurements make it
+hard to consolidate the observations in Refs. [30,35]. Fig. 1 shows
+the reported cooling effectiveness in Refs. [30,35] at nominally the
+same flow condition (same as A0, see details in Section 2). A couple
+of observations emerge. Firstly, the error bars in both datasets signify
+considerable uncertainties, with the magnitude of these uncertainties
+surpassing the differences caused by varying the compound angle (see
+Section 3 for more details). Furthermore, there exists a discrepancy
+between the measurements from the two studies, with each set of
+results falling outside the error margins of the other. Given these
+uncertainties, the effect of the compound angle on the effectiveness
+of shaped hole film cooling remains an open question. Furthermore,
+the complex geometry of the 7-7-7 cooling hole poses challenges in
+measuring the flow and thermal behavior. For instance, to gain insights
+into the impact of shaped film cooling apertures, an intuitively compelling approach entails the visualization and quantification of the flow
+and temperature fields within the aperture itself and in the wall layer.
+However, such measurements are extremely hard, if not impossible, to
+get in a laboratory setting. Numerical simulations give access to the
+flow field inside, but existing CFD calculations of the 7-7-7 film cooling
+hole are limited to large-eddy simulations (LES) and Reynolds-averaged
+Navier Stokes (RANS) [40–43], and no high-fidelity direct numerical
+simulation (DNS) exists.
+DNS directly solves the Navier–Stokes equation and is often regarded as the truth [44]. Despite its high cost [45,46], DNS has
+become an accessible tool for analyzing film cooling problems, and
+many DNSs have been reported, see, e.g., Refs. [47–52]. For instance,
+Muldoon et al. [47] employed DNS to determine the optimal pulsing
+frequency for maximizing cooling effectiveness in pulsed film cooling
+systems. In another study, Fu et al. [50] conducted DNS of film cooling
+under varying mainstream Reynolds numbers, discovering a correlation
+between increased Reynolds numbers and reduced vortex scale in the
+wake. The high spatial resolution and accuracy of DNS are instrumental
+in providing detailed insights into vortex structures and the underlying
+flow physics [53,54]. However, DNSs of the 7-7-7 hole film cooling configuration, which are more relevant to practical engineering scenarios,
+are still lacking.
+This paper presents a DNS study of the 7-7-7 film cooling hole at a
+range of compound angles. We aim to fill the gaps in the present understanding of the 7-7-7 shaped film cooling holes and provide benchmark
+data to the research community. The DNS setup will closely follow the
+experimental setup in Schroeder and Thole [30,35]. The flow condition
+will be limited to a low blowing ratio (𝑀 = 1) and low-density ratio
+(𝜌𝑐 ∕𝜌 = 1.2) that are typical in film cooling studies, and we change the
+
+and the density ratio is 𝜌𝑐 ∕𝜌∞ = 1.2. Here, the subscripts 𝑐 and ∞
+respectively refer to ‘‘coolant’’ and ‘‘freestream’’. These conditions for
+this study are summarized in Table 1. For further elaboration on the
+flow, the reader is referred to Ref. [30].
+2
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 2. Schematic of the flow configuration. (a) The upper part, containing the incoming boundary layer and the cooling jet. (b) The lower part, containing the plenum and the
+coolant feed.
+
+Fig. 3. Schematic of the 7-7-7 hole. (a) Flat view, (b) Side view, (c) Top view.
+Table 1
+Flow conditions.
+
+mass:
+1 ∗ ∗ 𝑝∗
+𝑢 𝑢 + ∗;
+2 𝑖 𝑖
+𝜌
+
+Name
+
+𝑅𝑒𝜃
+
+𝑀𝑎∞
+
+𝜌𝑐 ∕𝜌∞
+
+𝑀
+
+𝛼
+
+𝐸∗ =
+
+A0
+A30
+A60
+
+670
+670
+670
+
+0.1
+0.1
+0.1
+
+1.2
+1.2
+1.2
+
+1.0
+1.0
+1.0
+
+0◦
+30◦
+60◦
+
+𝜇 ∗ is the dynamic viscosity and is a function of the temperature:
+
+(5)
+
+∗
+∗ 2∕3
+𝜇 ∗ = 𝜇ref
+(𝑇 ∗ ∕𝑇ref
+) ,
+
+with 𝜇ref being the reference dynamic viscosity;
+conductivity:
+
+2.2. Governing equations
+
+𝜅∗ =
+
+We solved the following compressible Navier–Stokes equation
+∗ ∗
+𝜕𝜌∗ 𝜕𝜌 𝑢𝑖
++
+= 0,
+∗
+𝜕𝑡
+𝜕𝑥∗𝑖
+(
+)
+(
+(
+))
+(
+) 𝜕 𝜌∗ 𝑢 ∗ 𝑢 ∗ + 𝑝 ∗ 𝛿
+∗ 𝛿 ∕3
+𝜕 2𝜇 ∗ 𝑆𝑖𝑗∗ − 𝑆𝑘𝑘
+𝑖𝑗
+𝑖𝑗
+𝜕 𝜌∗ 𝑢∗𝑖
+𝑖 𝑗
++
+=
+,
+𝜕𝑡∗
+𝜕𝑥∗𝑗
+𝜕𝑥∗𝑗
+((
+)
+(
+(
+) )
+) ∗
+∗ 𝛿 ∕3 𝑢∗
+∗ ∗
+∗
+𝜕 2𝜇∗ 𝑆𝑖𝑗∗ − 𝑆𝑘𝑘
+𝑖𝑗
+𝑖
+𝜕 (𝜌∗ 𝐸 ∗ ) 𝜕 𝜌 𝐸 + 𝑝 𝛿𝑖𝑗 𝑢𝑗
++
+=
+𝜕𝑡∗
+𝜕𝑥∗𝑗
+𝜕𝑥∗𝑗
+(
+)
+∗
+𝜕
+∗ 𝜕𝑇
++
+𝜅
+.
+𝜕𝑥∗𝑗
+𝜕𝑥∗𝑗
+
+𝑐𝑝 𝜇 ∗
+𝑃𝑟
+
+,
+
+(6)
+𝜅∗
+
+is the thermal
+
+(7)
+
+with 𝑐𝑝 being the specific heat and 𝑃 𝑟 = 0.7. The fluid is an ideal gas,
+and we have:
+
+(2)
+
+𝑝∗ = 𝜌∗ 𝑅𝑇 ∗ ,
+
+(8)
+
+(3)
+We use the freestream density 𝜌∞ , the diameter of the coolant feed 𝐷,
+the speed of sound in the freestream 𝑐∞ , and the freestream temperature 𝑇∞ for non-dimensionalization. The non-dimensionalized variables
+are denoted as:
+𝑢∗
+𝑥∗
+𝑡∗ 𝑐∞
+𝜌∗
+, 𝑡=
+, 𝑢𝑖 = 𝑖 , 𝑥𝑖 = 𝑖 ,
+𝜌∞
+𝐷
+𝑐∞
+𝐷
+𝑝∗
+𝜇∗
+𝐸∗
+𝑇∗
+𝑝=
+, 𝜇=
+, 𝐸=
+, 𝑇 =
+.
+2
+2
+𝜌∞ 𝑐∞ 𝐷
+𝑇∞
+𝜌∞ 𝑐∞
+𝑐∞
+
+(4)
+
+𝜌=
+
+Here, the superscript ‘‘∗’’ indicates variables with dimensions; 𝑢∗𝑖 is the
+velocity in 𝑖th direction; 𝜌∗ is the density; 𝑡∗ is the time; 𝑥∗𝑖 is the
+coordinate in 𝑖th direction; 𝑝∗ is the pressure; 𝛿𝑖𝑗 is the Kronecker delta;
+𝜇 ∗ is the dynamic viscosity; 𝑇 ∗ is the temperature; 𝑆𝑖𝑗∗ is the strain-rate
+tensor and equals (𝜕𝑢∗𝑖 ∕𝜕𝑥∗𝑗 + 𝜕𝑢∗𝑗 ∕𝜕𝑥∗𝑖 )∕2; 𝐸 ∗ is the total energy per unit
+
+(9)
+(10)
+
+where 𝜌, 𝑡, 𝑢𝑖 , 𝑥𝑖 , 𝑝, 𝜇, 𝐸, and 𝑇 are the non-dimensional density, time,
+velocity (in the 𝑖th direction), spatial coordinate (in the 𝑖th direction),
+pressure, dynamic viscosity, energy, and temperature.
+3
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 4. Block structure of the grid in the neighborhood of the cooling hole at 𝑦 = 0 (a) A0, (b) A30, (c) A60.
+
+Fig. 5. Grid resolution in the wall layer. Top: height of the first cell off the wall; Bottom: 𝛥 =
+
+√
+𝐴, where 𝐴 is the area of the wall adjacent face of wall cell.
+
+because they do not satisfy the grid resolution requirement in Ref.
+[55]. This study focuses on the mean flow, and by adhering to the grid
+resolution requirement in [55] is sufficient.
+We utilize a block-structured grid comprising 55.3 million cells to
+resolve the section depicted in Fig. 2(a), and 22.7 million cells to
+resolve the portion illustrated in Fig. 2(b). Fig. 4 provides a visual
+representation of the block structure close to the cooling hole.
+The resolution within the boundary layer adheres to the established
+heuristics outlined in Refs. [55,67]: the grid spacing maintains 𝛥𝑦+ < 1
+at the wall, with streamwise and spanwise grid spacings of 𝛥𝑥+ ≈ 12
+and 𝛥𝑧+ ≈ 8, respectively. Refinement is implemented in the vicinity of
+the cooling hole, spanning from 𝑥∕𝐷 = −5 to 𝑥∕𝐷 = 5.5. A visualization
+of the grid spacing in the wall layer is shown in Fig. 5. Fig. 6 shows
+the grid resolution at 𝑥∕𝐷 = 3, 10, and 30 outside the wall layer, where
+the grid spacing is kept below 5 Kolmogorov length scales. The present
+resolutions are comparable to those in Refs. [50,51,54,68,69], to name
+a few, if not finer. Further details of the grids are not presented here
+for brevity, and the reader is directed to GitHub [70], where the grid
+is made publicly available.
+The finite-volume code CharLES is employed for the DNSs. The
+code is second-order accurate in space and third-order accurate in
+time. It has been used for film cooling calculations in [54,71]. Other
+applications of the code can be found in Refs. [57,72,73].
+
+2.3. Grid and code
+A DNS must resolve all eddies within a flow. Given that the Kolmogorov length scale represents the smallest scale in turbulence, the
+DNS grid spacing, denoted as 𝛥, should scale with the Kolmogorov
+length scale 𝜂, i.e., 𝛥 ∼ 𝜂. The precise grid resolution requirement, however, varies depending on whether the flow is bounded or unbounded.
+Ref. [55] set forth the grid resolution requirement in wall-bounded
+flows: 𝛥𝑥+ ≈ 12, 𝛥𝑧+ ≈ 7, and 𝛥𝑦+ to be less than 1 in the sublayer
+and approximately 4.4 away from the wall. Given that the Kolmogorov
+length scale, 𝜂 + , is approximately 1 in the sublayer and increases with
+distance from the wall, the grid resolution requirements from Ref. [55]
+imply that 𝛥𝑥 ≲ 12𝜂, 𝛥𝑧+ ≲ 7𝜂, and 𝛥𝑦 ≲ 𝜂. Coarser grids have also been
+used. For instance, Ref. [56] utilized a grid resolution of 𝛥𝑥+ = 17.8,
+𝛥𝑧+ = 8.9, and 𝛥𝑦+ = 0.6 and 8 at the wall and away from the wall,
+respectively, which proves to be sufficient to capture the mean flow.
+If a DNS meets the established grid resolution requirement, conducting a grid convergence study is often deemed unnecessary, as such
+studies are expensive and yield minimal additional insights. Indeed,
+recent DNS investigations, see, Refs. [57–65], to name a few, did not
+include grid convergence studies.
+Ref. [46] seems to be the first grid refinement study that exceeded
+the established grid resolution requirements and revealed inadequacies
+of the grid resolution requirement in Ref. [55]. While affirming the
+adequacy of the established grid resolution requirement for first-order
+statistics such as the mean flow, the findings in Ref. [46] indicated that
+the standard grid resolution is insufficient for capturing flow intermittency. Further, Ref. [66] demonstrated that first-order statistics, such as
+mean flow, achieve grid convergence before variables like velocity rms
+and turbulence dissipation. This aligns well with the current practice
+of implicit LES. Most implicit LES, if properly done, can obtain grid
+convergence for the mean flow, but they are LES rather than DNS
+
+3. Results
+We present DNS results. Results pertaining to the instantaneous flow
+fields are shown in Section 3.1, and the mean flow results are presented
+in Section 3.2. Time average is taken over a period of 𝑡𝑈∞ ∕𝐷 = 500 to
+ensure statistical convergence. The discussion here will focus on the
+flow in the wall layer and inside the coolant feed, where experimental
+measurements are not available.
+4
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 6. Grid spacing in terms of the Kolmogorov length scale at 𝑥 = 3, 10, and 30 in case A0.
+
+Fig. 7. Contours of instantaneous cooling effectiveness 𝜂 at 𝑦∕𝐷 = 0. (a) A0, (b) A30, (c) A60.
+
+as differences between the three cases do arise after taking the time
+average.
+Next, Figs. 9 and 10 show the instantaneous temperature and velocity near and slightly away from the wall at 𝑦 = 0.1𝐷 and 𝑦 =
+1.0𝐷. Again, we do not see much similarity between the instantaneous
+temperature and velocity fields. In addition, we make the following
+observations. From Fig. 9, we see that a larger compound angle leads
+to deeper penetration of the cooling jet into the incoming flow as well
+as more mixing. Instantaneous velocity fluctuations, which manifest as
+streaks in Fig. 10, are large. Nonetheless, we see low-speed regions in
+Fig. 10(a, b, c) downstream of the cooling hole and high-speed regions
+next to the low-speed regions. The presence of neighboring high- and
+low-speed regions often indicates the presence of elongated streamwise
+vortices that bring low-speed fluid from the wall layer to the bulk and
+the high-speed fluid from the bulk to the wall layer.
+Last, we present the instantaneous flow field inside the coolant feed.
+For that, a coordinate system whose 𝑥–𝑦 plane aligns with the direction
+of the cooling jet is more convenient. The following coordinate transformation maps the original coordinate (𝑥, 𝑦, 𝑧) to such a coordinate
+(𝑥ℎ , 𝑦ℎ , 𝑧ℎ ):
+
+3.1. Instantaneous flow field
+Figs. 7 and 8 show the instantaneous cooling effectiveness and
+the instantaneous skin friction coefficient at the bottom wall. The
+instantaneous cooling effectiveness 𝜂 is defined as:
+𝜂≡
+
+𝑇∞ − 𝑇
+,
+𝑇∞ − 𝑇𝑐
+
+(11)
+
+where 𝑇𝑐 is the temperature of the coolant. This definition allows 𝜂 to
+be interpreted as a dimensionless temperature. The instantaneous skin
+friction coefficient is defined as:
+𝜏𝑤
+𝐶𝑓 =
+,
+(12)
+1
+𝜌 𝑈2
+2 ∞ ∞
+where
+d𝑢∥ ||
+𝜏𝑤 ≡ 𝜇𝑤
+(13)
+| ,
+d𝑦 ||𝑤
+√
+and 𝑢∥ ≡
+𝑢21 + 𝑢23 is the magnitude of the wall-parallel velocity. By
+comparing Figs. 7 and 8, it is evident that the instantaneous thermal
+and momentum fields are not well correlated. In addition, we observe the following. Firstly, the flow is highly turbulent and unsteady.
+Secondly, from Fig. 7, we see a more rapid decay of the cooling
+effectiveness in A60 than in A30 and A0. Thirdly, there are hot fluids
+at the cooling hole locations in A30 and A60. Fourthly, the instantaneous wall-shear stresses in cases A0, A30, and A60 do not look very
+different except very close to the cooling holes. This visual similarity is
+probably due to the overwhelmingly large instantaneous fluctuations,
+
+⎡ 𝑥ℎ
+⎢ 𝑦
+⎢ ℎ
+⎣ 𝑧ℎ
+
+⎤ ⎡ cos(𝛼)
+⎥=⎢
+0
+⎥ ⎢
+⎦ ⎣ sin(𝛼)
+
+0
+1
+0
+
+− sin(𝛼)
+0
+cos(𝛼)
+
+⎤ ⎛⎡ 𝑥 ⎤ ⎡ 0.7𝐷 ⎤⎞ ⎡ 0.7𝐷 ⎤
+⎥ ⎜⎢ 𝑦 ⎥ − ⎢ 0 ⎥⎟ + ⎢ 0 ⎥
+⎥ ⎜⎢
+⎥ ⎢
+⎥⎟ ⎢
+⎥
+⎦ ⎝⎣ 𝑧 ⎦ ⎣ 0 ⎦⎠ ⎣ 0 ⎦
+(14)
+
+Fig. 11 illustrates the 𝑧ℎ = 0 plane in this new coordinate.
+5
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 8. Contour of instantaneous skin friction coefficient (a) A0, (b) A30, and (c) A60.
+
+Fig. 9. Contours of 𝜂 in cases (a, d) A0 (b, e) A30 (c, f) A60 at 𝑦∕𝐷 = (a, b, c) 0.1 (d, e, f) 1.0. The white lines indicate the location of the film cooling hole.
+
+Fig. 10. Contours of velocity magnitude |𝑢𝑖 | of (a, d) A0 (b, e) A30 (c, f) A60 at 𝑦∕𝐷 = (a, b, c) 0.1 (d, e, f) 1.0. The white lines indicate the location of the film cooling hole.
+
+Figs. 12(a, c, e) and (b, d, f) display the instantaneous velocity
+magnitude |𝑢𝑖 | and the instantaneous temperature in the 𝑧ℎ = 0 plane
+for the cases A0, A30, and A60. The instantaneous velocity fields are
+not noticeably different between the three cases. The flow separates and
+transitions to turbulence at about 𝑦 = −3𝐷. The resulting flow features
+a high-speed region and a low-speed region. The two regions lead to the
+
+wind side and leeside of the cooling hole. Also, we see from (b, d, f)
+that the large compound angles in A30 and A60 give rise to intrusions
+of the hot fluid into the feed, a phenomenon that is absent in A0.
+Before we proceed further, we comment on the feasibility of modal
+analysis for this flow. Consider POD analysis. The present flow is
+fully three-dimensional. The size of the full 3D grid is 100 million.
+6
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 11. Sketch of the 𝑧ℎ = 0 plane in (a) A0, (b) A30, and (c) A60.
+
+Fig. 12. Contour of (a, c, e) instantaneous |𝑢𝑖 |∕𝑈∞ (b, d, f) instantaneous 𝜂 at 𝑧ℎ ∕𝐷 = 0 for (a, b) A0, (c, d) A30, and (e, f) A60.
+
+Even limiting ourselves to one velocity component, we must solve an
+eigenvalue problem for a 100 million by 100 million matrix to extract
+the POD modes, which is highly non-trivial if not impossible.
+
+We proceed and pursue a more quantitative analysis of the wake
+flow. Define the height, ℎ, and the width, 𝑏, of the wake as follows:
+ℎ2 = 𝐶
+
+3.2. Time-averaged flow field
+
+𝑏2 = 𝐶
+
+We now examine the mean flow fields. We will present the results
+pertaining to the flow above the adiabatic wall, at the adiabatic wall,
+and below the adiabatic wall (inside the coolant feed). We subsequently
+will use ̄⋅ and ̃⋅ to denote Reynolds time averaging and Favre time
+averaging, respectively.
+We begin by examining the flow in the wake of the cooling hole.
+Fig. 13 shows the non-dimensional temperature 𝜂̄ in the 𝑦 − 𝑧 plane
+at 𝑥∕𝐷 = 3, 10, and 30. The cold fluid in the cooling jet gives rise to a
+low-temperature (high 𝜂)
+̄ region in the wall layer. This low-temperature
+region expands as it convects downstream. In A0, the low-temperature
+region is attached to the wall, but, in A60, it is slightly lifted from the
+wall. The former is desired, but the latter is not. In fact, the purpose of
+the 7-7-7 hole is to keep the cooling jet attached to the wall. Fig. 14
+depicts the time-averaged velocity magnitude |𝑢̃ 𝑖 | at 𝑥∕𝐷 = 3, 𝑥∕𝐷 = 10,
+and 𝑥∕𝐷 = 30 for A0, A30, and A60. The cooling jet gives rise to a lowspeed region in the wall layer. This velocity deficit reduces as a function
+of 𝑥. A high compound angle leads to a skewed wake. In addition, we
+see that the low-speed region in A60 is slightly lifted from the wall, but
+in A0, the wake is attached to the wall.
+
+∫ 𝜂̄ 2 (𝑦 − 𝑦𝑐 )2 d𝐴
+∫
+
+𝜂̄ 2 d𝐴
+
+∫ 𝜂̄ 2 (𝑧 − 𝑧𝑐 )2 d𝐴
+∫
+
+𝜂̄ 2 d𝐴
+
+, 𝑦𝑐 =
+, 𝑧𝑐 =
+
+∫ 𝜂̄ 2 𝑦d𝐴
+∫ 𝜂̄ 2 d𝐴
+∫ 𝜂̄ 2 𝑧d𝐴
+∫ 𝜂̄ 2 d𝐴
+
+,
+
+(15)
+
+,
+
+(16)
+
+where 𝐶 = 2. These definitions are extensively used in the wake
+flow literature, see, e.g., Ref. [74,75]. Here, we briefly explain the
+rationale. Consider a wake. Its height and width could be defined by
+measuring the distance between the center of the wake to where the
+velocity deficit drops to 1∕𝑒 of its value at the wake center. However,
+by relying on flow statistics at one point, this textbook definition is
+susceptible to uncertainties in data. Furthermore, it is inapplicable to
+wake with distortions (like the wakes in our study). Therefore, integralbased definitions like the ones in Eqs. (15) and (15) are preferred.
+Figs. 15(a) and (b) show the evolution of ℎ and 𝑏 in the 𝑥 direction. We
+see that both the height and the width increase as a function of 𝑥, with
+the height increasing linearly as a function of 𝑥 beyond 𝑥∕𝐷 = 5. At a
+given 𝑥, a larger compound angle leads to a larger height and width. A
+wake grows as it mixes with the ambient fluid. Therefore faster growth
+indicates stronger mixing. As we see faster growth in cases with larger
+compound angles, we can conclude that mixing is stronger in cases with
+larger compound angles.
+Next, we examine flow variable at the wall, i.e., at 𝑦 = 0. Fig. 16
+shows the time-averaged cooling effectiveness 𝜂 on the bottom wall.
+7
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 13. Contours of the normalized temperature at 𝑥∕𝐷 = (a, b, c) 3 (d, e, f) 10 (g, h, i) 30 for (a, d, g) A0 (b, e, h) A30 (c, f, i) A60.
+
+Fig. 14. Same as Fig. 13, but for the velocity magnitude.
+
+Fig. 15. (a) Height ℎ (b) width 𝑏 as defined in Eq. (16).
+
+The contour line corresponding to 𝜂̄ = 0.5 is highlighted. A large
+compound angle leads to reduced cooling effectiveness. Specifically,
+the 𝜂̄ = 0.5 contour line extends to only 𝑥∕𝐷 ≈ 4 in A60, but reaches
+𝑥∕𝐷 ≈ 15 in A0. Furthermore, we see an intrusion of hot fluid at the
+cooling hole location in A60—a phenomenon that is not found in A0
+and A30. Fig. 17 displays the cooling effectiveness as a function of
+the spanwise coordinate at six streamwise locations from 𝑥∕𝐷 = 5 to
+𝑥∕𝐷 = 30. The maximum cooling effectiveness is a decreasing function
+of 𝑥∕𝐷 in each case, and at given an 𝑥∕𝐷, it is a decreasing function
+
+of the compound angle. That said, although the high compound angle
+in A60 leads to a small maximum cooling effectiveness, it does lead
+to cooling in a more extended region than both A0 and A30. Lastly,
+we also notice that the profiles in A0 are symmetric about 𝑧∕𝐷 = 0
+due to a 0 compound angle, whereas the profiles in A30 and A60 are
+asymmetry.
+Fig. 18(a) displays the laterally-averaged cooling effectiveness ⟨𝜂⟩.
+̄
+This statistic is often invoked as a direct measure of the efficacy of
+a cooling strategy [30]. We make the following observations. Firstly,
+8
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 16. Contours of the time-averaged cooling effectiveness on the wall in (a) A0, (b) A30, (c) A60. The contour line corresponding to 𝜂̄ = 0.5 is highlighted.
+
+Fig. 17. Cooling effectiveness 𝜂̄ on the wall as a function of spanwise location at 𝑥∕𝐷 = 5, 10, 15, 20, 25, and 30. (a) A0, (b) A30, and (c) A60.
+
+Fig. 18. (a) Laterally averaged cooling effectiveness on the wall ⟨𝜂⟩
+̄ and (b) its standard deviation as a function of streamwise location.
+
+varying the compound angle from 0 to 60 leads to a 0.1 change in the
+laterally-averaged cooling effectiveness. In all three cases, the laterallyaveraged cooling effectiveness is about 0.35 at the location of the
+cooling hole, about 0.2 at 𝑥∕𝐷 = 15, and about 0.1 at 𝑥∕𝐷 = 40.
+Secondly, the cooling effectiveness in A60 is higher than that in A0 at
+the cooling hole location but is lower than that in A0 beyond 𝑥∕𝐷 = 1.7.
+Thirdly, the laterally averaged cooling effectivenesses in A0 and A30
+are very close for 𝑥∕𝐷 < 10, but beyond 𝑥∕𝐷 = 10, A0 leads to more
+cooling than A30. Fig. 18(b) shows the root-mean-square of the cooling
+effectiveness in the transverse direction as a function of the streamwise
+
+coordinate. Here, std(𝜂)
+̄ is defined as
+std(𝜂)
+̄ =
+
+1
+𝐿𝑧 ∫ 0
+
+𝐿𝑧
+
+̄ 2 𝑑𝑧.
+(𝜂̄ − ⟨𝜂⟩)
+
+(17)
+
+Thus defined std(𝜂)
+̄ is a function of the 𝑥 coordinate and provides a
+measure of the inhomogeneity of the 𝜂̄ in the transverse direction. We
+see that the large compound angle in A60 gives rise to a smaller std(𝜂̄𝑤 )
+than that in A0. The results in A0 and A30 are again not very different
+with A0 leading to a slightly larger std(𝜂)
+̄ than A30. Last, it is interesting
+to note that the std(𝜂)
+̄ is comparable to ⟨𝜂⟩,
+̄ indicating that the cooling
+is rather uneven in the 𝑧 direction.
+9
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 19. Contour of the skin friction coefficient 𝐶𝑓 .
+
+Fig. 19 depicts the time-averaged skin friction coefficient for A0,
+A30, and A60. Time averaging removes instantaneous fluctuations,
+revealing the mean flow structure. We see two high wall-shear stress
+regions that do not extend very far downstream and a low wall-shear
+stress region that persists far downstream. Unlike the instantaneous
+skin friction coefficient and cooling effectiveness in Figs. 7 and 8 that
+show no clear correlation, correlations emerge when comparing the
+mean skin friction coefficient and cooling effectiveness in Figs. 16 and
+19. In particular, we see that the high cooling effectiveness is correlated
+with low wall-shear stress, a phenomenon we will revisit in the next
+subsection.
+Last, we examine the flow below the wall, i.e., the mean flow field
+inside the coolant feeds. Fig. 20 depicts the time-averaged velocity magnitude and temperature at 𝑧ℎ = 0. Again, the 𝑥ℎ , 𝑦ℎ , and 𝑧ℎ coordinates
+are defined in Eq. (14). We see from Fig. 20 that varying the compound
+angle does not change the flow field inside the coolant feeds except very
+close to their outlets. Close to the outlet, we see flow patterns like those
+found in KH instability. Note that while KH instability among other
+instabilities is often seen in a temporally evolving flow, most of these
+instabilities have their spatial counterparts, and therefore observing
+instability modes in the mean flow is possible. The presence of such
+instability explains the early mixing of the coolant and the hot fluid in
+the high compound angle cases.
+Figs. 21 and 22 show the velocity magnitude |𝑢̄ 𝑖 | and the temperature at 𝑦∕𝐷 = −0.1, which is inside the coolant feed. We see
+high-speed fluid at the one end and comparably low-speed fluid at the
+other end. The low-speed fluid is a result of the 7-degree expansion
+and is intended. The coolant inside the cooling hole has not mixed
+with the hot fluid and therefore the fluid temperature is 𝜂 = 1 or
+𝑇 = 𝑇𝑐 at 𝑦∕𝐷 = −0.1 in A0 and A30, which is also intended. The high
+temperature in A60 at 𝑦∕𝐷 = −0.1 is, however, unintended. It indicates
+the intrusion of hot fluid into the cooling hole in case A60.
+
+grid resolution of a typical system-level calculation does not resolve
+small-scale features such as the cooling holes. Taking averages in nonhomogeneous directions is not uncommon in turbulence modeling.
+For example, roughness modeling involves taking horizontal averages
+in the roughness sublayer and parameterizing the effects of surface
+roughness [76,77].
+Fig. 23 shows the laterally averaged streamwise velocity {𝑢̃ 1 } as a
+function of 𝑦 at a couple of 𝑥 locations from 𝑥∕𝐷 = 5 to 30. The dashed
+lines in the figures represent the log law, i.e., {𝑢̃ +
+} = ln(𝑦+ )∕𝜅 + 𝐵0 , and
+1
+the dash-dotted lines represent the linear law, i.e., {𝑢̃ +
+} = 𝑦+ . Here,
+1
+𝜅 = 0.41 is the von Kármán constant, and 𝐵0 = 5.0 is the log law
+intercept [78,79]. We see that all profiles follow a linear scaling in the
+viscous layer. Furthermore, the log law provides a good approximation
+of the profiles in the log region for the velocity profiles in cases A0
+and A30. It, however, overestimates the profiles in A60, particularly
+for those close to the cooling hole.
+The mean velocity profile can be parameterized by the log law
+intercept 𝐵 and the wake parameter 𝑃 𝑖 as follows [80]:
+[ (
+)]2
+𝜋𝑦
+1
+2𝛱
+𝑈 + = ln(𝑦+ ) + 𝐵 +
+sin
+.
+(18)
+𝜅
+𝜅
+2𝛿99
+The canonical values for 𝐵 and 𝛱 are 5 and 0.5. We may measure the
+log law intercept 𝐵 and the wake parameter 𝛱 from data as follows
+(
+)
+ln(𝑦+ ) ||
+𝐵 = {𝑢̃ +
+}−
+,
+(19)
+|
+1
+|+
+𝜅
+|𝑦 =45
+[
+]|
+ln(𝑦+ )
+𝜅
+|
+𝛱=
+{𝑢̃ +
+}
+−
+−
+𝐵
+.
+(20)
+|
+1
+|+ +
+2
+𝜅
+|𝑦 =𝛿99
+The measured 𝐵 and 𝛱 are shown in Fig. 24. We make the following
+observations. Firstly, the measured log-law intercepts fall below the
+canonical value initially but eventually converge to the canonical value.
+A large compound angle leads to a small log law intercept, although
+the difference between the three cases diminishes beyond 𝑥∕𝐷 ≈ 20.
+Secondly, the wake parameters 𝛱 lie above the canonical value initially
+and eventually converge to the canonical. A large compound angle
+leads to a small wake parameter 𝛱 but the difference between A0 and
+A60 is only about 0.2.
+Fig. 25 shows the profiles of the laterally averaged non-dimensional
+temperature, ⟨𝜂⟩,
+̄ at streamwise locations from 𝑥∕𝐷 = 2.5 to 30. Close
+
+4. Further analysis
+In this section, we pursue the parameterization of the mean flow
+and the mean temperature, which will be more relevant to turbulence
+modeling. Here, we will focus on laterally averaged flow statistics.
+Here, we take averages in a non-homogeneous direction because the
+10
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 20. Time-averaged (a,c,e) velocity magnitude, |𝑢̃ 𝑖 |∕𝑈∞ , and (b,d,f) non-dimensional temperature, 𝜂.
+̄ (a, b) A0, (c, d) A30, and (e, f) A60.
+
+Fig. 21. Contour of time-averaged velocity magnitude at (a) 𝑦∕𝐷 = −2 (b) 𝑦∕𝐷 = −1 and (c, d, e) 𝑦∕𝐷 = −0.1. (a, b, c) A0 (d) A30 (e) A60.
+
+Fig. 22. Contour of time-averaged cooling effectiveness at 𝑦∕𝐷 = −0.1. (a) A0 (b) A30 (c) A60.
+
+Fig. 23. {𝑢̃ 1 } as a function of 𝑦 location in wall units of (a) A0 (b) A30 (c) A60. The linear law and logarithm law are represented by the dashed-dot line and dashed line,
+respectively.
+11
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+Fig. 24. The measured (a) 𝐵 (b) 𝛱 as a function of streamwise location.
+
+Fig. 25. Laterally averaged non-dimensional temperature ⟨𝜂⟩
+̄ as a function of 𝑦 at a couple of 𝑥 locations from 𝑥∕𝐷 = 2.5 to 30. (a) A0, (b) A30, (c) A60.
+
+Fig. 26. (a) max(⟨𝜂⟩)
+̄ (b) 𝑦1∕2 (solid line) and 𝑦0 (dashed line) as a function of 𝑥 location.
+
+Fig. 27. Self-similar ⟨𝜂⟩
+̄ for (a) A0 (b) A30 (c) A60 case. The data is the same as 25, but ⟨𝜂⟩
+̄ is normalized by max(⟨𝜂⟩),
+̄ and 𝑦 is normalized by 𝑦1∕2 and 𝑦0 .
+
+to the cooling hole, for 𝑥∕𝐷 ≲ 5, the non-dimensional temperature
+attains its maximum at a distance from the wall. Beyond 𝑥∕𝐷 ≈ 5, the
+profiles attain their maximums at the wall, and the thermal boundary
+layer grows as a function 𝑥. The profiles in Fig. 25 are characterized
+by the magnitude of the peak, the location of the peak, and the height
+of the thermal boundary layer. Fig. 26(a) shows the maximum value of
+⟨𝜂⟩
+̄ as a function of 𝑥. Fig. 26(b) shows the wall-normal location where
+⟨𝜂⟩
+̄ attains its maximum and the wall-normal location 𝑦1∕2 where ⟨𝜂⟩
+̄ is
+half of its maximum, the latter of which is a measure of the height of
+the thermal boundary layer. We see that a large compound angle leads
+to a small max(⟨𝜂⟩).
+̄ Furthermore, a large compound angle leads to a
+fast growth of the thermal boundary layer. It is also interesting to note
+that the growth of the 𝑦1∕2 seems to be linear beyond 𝑥∕𝐷 ≈ 10.
+
+Last, we report an interesting self-similarity of the non-dimensional
+temperature profiles. Fig. 27 shows ⟨𝜂⟩∕ max(⟨𝜂⟩)
+̄ as a function of (𝑦 −
+𝑦0 )∕𝑦1∕2 for 𝑥∕𝐷 ≈ 10, to 35. We see that the scaled profiles collapse, suggesting the existence of self-similarity in the flow. This is
+certainly consistent with the linear growth observed in Figs. 15, but the
+underlying flow physics responsible for this self-similarity is unclear.
+5. Conclusions
+This paper presents the first set of direct numerical simulation (DNS)
+results for the 7-7-7 film cooling hole at three distinct compound angles: 0◦ , 30◦ , and 60◦ . We detail both instantaneous and time-averaged
+12
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+observations of wall shear stress, velocity, and temperature above the
+adiabatic wall, near the wall surface, and inside the cooling hole. Given
+the challenges of acquiring such data in a laboratory setting, these DNS
+results provide new insights into the flow dynamics.
+Our findings indicate that an increase in the compound angle correlates with a decrease in laterally averaged cooling effectiveness. This
+reduced effectiveness can be attributed to several factors. Firstly, a
+larger compound angle facilitates the intrusion of hot fluid into the
+cooling hole. Secondly, at higher compound angles, the cooling jet
+is observed to lift away from the wall, in contrast to its attachment
+to the wall at smaller compound angles. Thirdly, while an increased
+compound angle enhances the lateral spread of the coolant – a desirable outcome – it also inadvertently promotes turbulence mixing. This
+mixing, in turn, draws hotter fluid towards the wall, adversely affecting
+cooling effectiveness.
+Last but not least, our analysis of the DNS data yields practical
+parameterizations for the laterally averaged mean velocity and temperature profiles. Notably, the laterally averaged temperature profiles
+demonstrate self-similarity beyond a dimensionless distance of 𝑥∕𝐷 =
+10.
+
+[12] C. Saumweber, A. Schulz, S. Wittig, Free-stream turbulence effects on film
+cooling with shaped holes, J. Turbomach. 125 (1) (2003) 65–73.
+[13] R.P. Schroeder, K.A. Thole, Effect of high freestream turbulence on flowfields of
+shaped film cooling holes, J. Turbomach. 138 (9) (2016) 091001.
+[14] W. Zhou, B. Johnson, H. Hu, Effects of flow compressibility and density ratio
+on film cooling performance, J. Propuls. Power 33 (4) (2017) 964–974.
+[15] M. Gritsch, A. Schulz, S. Wittig, Adiabatic wall effectiveness measurements of
+film-cooling holes with expanded exits, J. Turbomach. 120 (3) (1998) 549–556.
+[16] X. Guo, W. Schröder, M. Meinke, Large-eddy simulations of film cooling flows,
+Comput. & Fluids 35 (6) (2006) 587–606.
+[17] J. Zhou, X. Wang, J. Li, H. Lu, Effects of diameter ratio and inclination angle on
+flow and heat transfer characteristics of sister holes film cooling, Int. Commun.
+Heat Mass Transfer 110 (2020) 104426.
+[18] E. Lutum, B.V. Johnson, Influence of the hole length-to-diameter ratio on film
+cooling with cylindrical holes, J. Turbomach. 121 (2) (1999) 209–216.
+[19] A. Brown, C. Saluja, Film cooling from a single hole and a row of holes
+of variable pitch to diameter ratio, Int. J. Heat Mass Transfer 22 (4) (1979)
+525–534.
+[20] C. Han, J. Ren, et al., Multi-parameter influence on combined-hole film cooling
+system, Int. J. Heat Mass Transfer 55 (15–16) (2012) 4232–4240.
+[21] F. Montomoli, A. D’Ammaro, S. Uchida, Numerical and experimental investigation of a new film cooling geometry with high P/D ratio, Int. J. Heat Mass
+Transfer 66 (2013) 366–375.
+[22] T. Huang, H. Li, X. Su, X. Yuan, Influence of film hole arrangement on cooling
+and aerodynamic performance of blade tip with squealer structure, Int. J. Therm.
+Sci. 195 (2024) 108636.
+[23] H. Zhang, J. Gou, P. Yin, X. Su, X. Yuan, Film-cooling hole optimization and
+experimental validation considering the lateral pressure gradient, Front. Mech.
+Eng. 8 (2023) 973293.
+[24] W. Qingsong, X. Su, X. Yuan, Large-eddy simulation of shaped hole film cooling
+with the influence of cross flow, Int. J. Turbo Jet-Engines 39 (4) (2022) 575–588.
+[25] W.F. Colban, K.A. Thole, D. Bogard, A film-cooling correlation for shaped holes
+on a flat-plate surface, J. Turbomach. 133 (1) (2010) 011002.
+[26] S.H. Park, Y.J. Kang, H.J. Seo, J.S. Kwak, Y.S. Kang, Experimental optimization
+of a fan-shaped film cooling hole with 30 degrees-injection angle and 6-hole
+length-to-diameter ratio, Int. J. Heat Mass Transfer 144 (2019) 118652.
+[27] J. Zhang, S. Zhang, C. Wang, X. Tan, Recent advances in film cooling
+enhancement: A review, Chin. J. Aeronaut. 33 (4) (2020) 1119–1136.
+[28] D. Kercher, et al., A film-cooling CFD bibliography: 1971–1996, Int. J. Rotating
+Mach. 4 (1998) 61–72.
+[29] S. Ekkad, J.-C. Han, A review of hole geometry and coolant density effect on film
+cooling, in: Heat Transfer Summer Conference, vol. 55492, American Society of
+Mechanical Engineers, 2013, V003T20A003.
+[30] R.P. Schroeder, K.A. Thole, Adiabatic effectiveness measurements for a baseline
+shaped film cooling hole, in: Turbo Expo: Power for Land, Sea, and Air, vol.
+45721, American Society of Mechanical Engineers, 2014, V05BT13A036.
+[31] R.P. Schroeder, K.A. Thole, Effect of in-hole roughness on film cooling from a
+shaped hole, J. Turbomach. 139 (3) (2017) 031004.
+[32] R.P. Schroeder, K.A. Thole, Thermal field measurements for a shaped hole at low
+and high freestream turbulence intensity, J. Turbomach. 139 (2) (2017) 021012.
+[33] C.A. Whitfield, R.P. Schroeder, K.A. Thole, S.D. Lewis, Blockage effects from
+simulated thermal barrier coatings for cylindrical and shaped cooling holes, J.
+Turbomach. 137 (9) (2015) 091004.
+[34] S. Haydt, S. Lynch, S. Lewis, The effect of a meter-diffuser offset on shaped film
+cooling hole adiabatic effectiveness, J. Turbomach. 139 (9) (2017) 091012.
+[35] S. Haydt, S. Lynch, Cooling effectiveness for a shaped film cooling hole at a
+range of compound angles, J. Turbomach. 141 (4) (2019) 041005.
+[36] S. Haydt, S. Lynch, Heat transfer coefficient augmentation for a shaped film
+cooling hole at a range of compound angles, J. Turbomach. 143 (5) (2021)
+051012.
+[37] J. Dittmar, A. Schulz, S. Wittig, Assessment of various film-cooling configurations
+including shaped and compound angle holes based on large-scale experiments,
+J. Turbomach. 125 (1) (2003) 57–64.
+[38] E.L. McGrath, J.H. Leylek, F.A. Buck, Film cooling on a modern HP turbine
+blade: Part IV—compound-angle shaped holes, in: Turbo Expo: Power for Land,
+Sea, and Air, vol. 36088, 2002, pp. 945–952.
+[39] R. Goldstein, P. Jin, Film cooling downstream of a row of discrete holes with
+compound angle, in: Turbo Expo: Power for Land, Sea, and Air, vol. 78569,
+American Society of Mechanical Engineers, 2000, V003T01A054.
+[40] T.A. Oliver, D.G. Bogard, R.D. Moser, Large eddy simulation of compressible,
+shaped-hole film cooling, Int. J. Heat Mass Transfer 140 (2019) 498–517.
+[41] P.M. Milani, I.E. Gunady, D.S. Ching, A.J. Banko, C.J. Elkins, J.K. Eaton,
+Enriching MRI mean flow data of inclined jets in crossflow with large eddy
+simulations, Int. J. Heat Fluid Flow 80 (2019) 108472.
+[42] K. Tracy, S.P. Lynch, Large eddy simulation of the 7-7-7 shaped film cooling
+hole at axial and compound angle orientations, in: Turbo Expo: Power for Land,
+Sea, and Air, vol. 84171, American Society of Mechanical Engineers, 2020,
+V07BT12A016.
+[43] Z. Zhang, Y. Mao, X. Su, X. Yuan, Inversion learning of turbulent thermal
+diffusion for film cooling, Phys. Fluids 34 (3) (2022) 035118.
+
+CRediT authorship contribution statement
+Yuanwei Bin: Formal analysis, Methodology, Visualization, Writing
+– original draft, Writing – review & editing. Xiang I.A. Yang: Conceptualization, Formal analysis, Methodology, Supervision, Writing –
+original draft, Writing – review & editing.
+Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to
+influence the work reported in this paper.
+Data availability
+Data will be made available on request.
+Acknowledgments
+Yang acknowledges Stephen Lynch for the fruitful discussion. Bin
+acknowledges NSFC, China grant numbers 11988102 and 91752202.
+The DNSs are conducted on the Penn State HPC system ROAR.
+References
+[1] R.S. Bunker, A review of shaped hole turbine film-cooling technology, J. Heat
+Transfer 127 (4) (2005) 441–453.
+[2] J. Sargison, S. Guo, M. Oldfield, G. Lock, A. Rawlinson, A converging slot-hole
+film-cooling geometry—Part 2: transonic nozzle guide vane heat transfer and
+loss, J. Turbomach. 124 (3) (2002) 461–471.
+[3] W. He, Q. Deng, W. Zhou, T. Gao, Z. Feng, Film cooling and aerodynamic
+performances of a turbine nozzle guide vane with trenched cooling holes, Appl.
+Therm. Eng. 150 (2019) 150–163.
+[4] J.-C. Han, S. Ekkad, et al., Recent development in turbine blade film cooling,
+Int. J. Rotating Mach. 7 (2001) 21–40.
+[5] Z. Gao, D.P. Narzary, J.-C. Han, Film cooling on a gas turbine blade pressure
+side or suction side with axial shaped holes, Int. J. Heat Mass Transfer 51 (9–10)
+(2008) 2139–2152.
+[6] M. Collins, K. Chana, T. Povey, Application of film cooling to an unshrouded
+high-pressure turbine casing, J. Turbomach. 139 (6) (2017) 061010.
+[7] A. Jubasz, C. Marek, Combustor Liner Film Cooling in the Presence of High
+Free-Stream Turbulence, Technical Memorandum NASA-TN-D-6360, NASA, 1971.
+[8] J.J. Scrittore, K.A. Thole, S.W. Burd, Investigation of velocity profiles for effusion
+cooling of a combustor liner, J. Turbomach. 129 (3) (2006) 518–526.
+[9] E. Martelli, F. Nasuti, M. Onofri, Numerical analysis of film cooling in advanced
+rocket nozzles, AIAA J. 47 (11) (2009) 2558–2566.
+[10] B. Aupoix, A. Mignosi, S. Viala, F. Bouvier, R. Gaillard, Experimental and
+numerical study of supersonic film cooling, AIAA J. 36 (6) (1998) 915–923.
+[11] R. Goldstein, E. Eckert, F. Burggraf, Effects of hole geometry and density on
+three-dimensional film cooling, Int. J. Heat Mass Transfer 17 (5) (1974) 595–607.
+13
+
+International Journal of Heat and Mass Transfer 231 (2024) 125816
+
+Y. Bin and X.I.A. Yang
+
+[62] X. Yang, M. Ge, Revisiting Raupach’s flow-sheltering paradigm, Bound.-Layer
+Meteorol. 179 (2021) 313–323.
+[63] H.H. Xu, S.J. Altland, X.I.A. Yang, R.F. Kunz, Flow over closely packed cubical
+roughness, J. Fluid Mech. 920 (2021) A37.
+[64] X.I.A. Yang, S. Pirozzoli, M. Abkar, Scaling of velocity fluctuations in statistically
+unstable boundary-layer flows, J. Fluid Mech. 886 (2020) A3.
+[65] F. Alcántara-Ávila, S. Hoyas, Direct numerical simulation of thermal channel flow
+for medium–high Prandtl numbers up to Re 𝜏=2000, Int. J. Heat Mass Transfer
+176 (2021) 121412.
+[66] P.E. Chen, X. Zhu, Y. Shi, X.I.A. Yang, Quantifying uncertainties in directnumerical-simulation statistics due to wall-normal numerics and grids, Phys. Rev.
+Fluids 8 (7) (2023) 074602.
+[67] S. Pirozzoli, P. Orlandi, Natural grid stretching for DNS of wall-bounded flows,
+J. Comput. Phys. 439 (2021) 110408.
+[68] F. Muldoon, S. Acharya, Direct numerical simulation of a film cooling jet, in:
+Turbo Expo: Power for Land, Sea, and Air, vol. 41685, 2004, pp. 461–473.
+[69] C.-L. Liu, H.-R. Zhu, J.-T. Bai, Effect of turbulent Prandtl number on the
+computation of film-cooling effectiveness, Int. J. Heat Mass Transfer 51 (25–26)
+(2008) 6208–6218.
+[70] Grids of 7-7-7 film cooling hole, 2023, URL https://github.com/yuanweibin/
+Grids-for-7-7-7-shaped-hole.
+[71] P.M. Milani, J. Ling, G. Saez-Mischlich, J. Bodart, J.K. Eaton, A machine learning
+approach for determining the turbulent diffusivity in film cooling flows, J.
+Turbomach. 140 (2) (2018) 021006.
+[72] X. Hu, I. Hayat, G.I. Park, Wall-modelled large-eddy simulation of threedimensional turbulent boundary layer in a bent square duct, J. Fluid Mech. 960
+(2023) A29.
+[73] X.I.A. Yang, J. Urzay, S. Bose, P. Moin, Aerodynamic heating in wall-modeled
+large-eddy simulation of high-speed flows, AIAA J. 56 (2) (2018) 731–742.
+[74] M.B. de Stadler, S. Sarkar, K.A. Brucker, Effect of the Prandtl number on a
+stratified turbulent wake, Phys. Fluids 22 (9) (2010).
+[75] K.A. Brucker, S. Sarkar, A comparative study of self-propelled and towed wakes
+in a stratified fluid, J. Fluid Mech. 652 (2010) 373–404.
+[76] H. Schlichting, K. Gersten, Boundary-Layer Theory, Springer, 2016.
+[77] X.I.A. Yang, On the mean flow behaviour in the presence of regional-scale surface
+roughness heterogeneity, Bound.-Layer Meteorol. 161 (2016) 127–143.
+[78] I. Marusic, J.P. Monty, M. Hultmark, A.J. Smits, On the logarithmic region in
+wall turbulence, J. Fluid Mech. 716 (2013) R3.
+[79] H.H. Xu, X.I.A. Yang, Fractality and the law of the wall, Phys. Rev. E 97 (5)
+(2018) 053110.
+[80] D. Coles, The law of the wake in the turbulent boundary layer, J. Fluid Mech.
+1 (2) (1956) 191–226.
+
+[44] P. Moin, K. Mahesh, Direct numerical simulation: a tool in turbulence research,
+Annu. Rev. Fluid Mech. 30 (1) (1998) 539–578.
+[45] H. Choi, P. Moin, Grid-point requirements for large eddy simulation: Chapman’s
+estimates revisited, Phys. Fluids 24 (1) (2012) 011702.
+[46] X.I.A. Yang, K.P. Griffin, Grid-point and time-step requirements for direct
+numerical simulation and large-eddy simulation, Phys. Fluids 33 (1) (2021)
+015108.
+[47] F. Muldoon, S. Acharya, DNS study of pulsed film cooling for enhanced cooling
+effectiveness, Int. J. Heat Mass Transfer 52 (13–14) (2009) 3118–3127.
+[48] G. Desoutter, C. Habchi, B. Cuenot, T. Poinsot, DNS and modeling of the
+turbulent boundary layer over an evaporating liquid film, Int. J. Heat Mass
+Transfer 52 (25–26) (2009) 6028–6041.
+[49] Z. Wang, Y. Lv, P. He, J. Zhou, K. Cen, Fully explicit implementation of direct
+numerical simulation for a transient near-field methane/air diffusion jet flame,
+Comput. & Fluids 39 (8) (2010) 1381–1389.
+[50] W.-S. Fu, W.-S. Chao, M. Tsubokura, C.-G. Li, W.-H. Wang, Direct numerical
+simulation of film cooling with a fan-shaped hole under low Reynolds number
+conditions, Int. J. Heat Mass Transfer 123 (2018) 544–560.
+[51] T. Yu, D. Wang, H. Li, H. Xu, Direct numerical simulation capability for stronglycoupled fluid-solid heat transfer in film-cooling structures, Int. J. Heat Mass
+Transfer 138 (2019) 750–761.
+[52] Y. Zhao, R.D. Sandberg, High-fidelity simulations of a high-pressure turbine
+vane subject to large disturbances: Effect of exit mach number on losses, J.
+Turbomach. 143 (9) (2021) 091002.
+[53] T. Wei, Y. Wang, X.I.A. Yang, Layered structure of turbulent plane wall jet, Int.
+J. Heat Fluid Flow 92 (2021) 108872.
+[54] H.H. Xu, S. Lynch, X.I.A. Yang, Direct numerical simulation of slot film cooling
+downstream of misaligned plates, Flow 2 (2022) E7.
+[55] J. Kim, P. Moin, R. Moser, Turbulence statistics in fully developed channel flow
+at low Reynolds number, J. Fluid Mech. 177 (1987) 133–166.
+[56] Y. Yamamoto, Y. Tsuji, Numerical evidence of logarithmic regions in channel
+flow at R e 𝜏=8000, Phys. Rev. Fluids 3 (1) (2018) 012602.
+[57] A. Lozano-Durán, M.G. Giometto, G.I. Park, P. Moin, Non-equilibrium threedimensional boundary layers at moderate Reynolds numbers, J. Fluid Mech. 883
+(2020) A20.
+[58] R. Ma, K. Alamé, K. Mahesh, Direct numerical simulation of turbulent channel
+flow over random rough surfaces, J. Fluid Mech. 908 (2021) A40.
+[59] M. Lee, R.D. Moser, Direct numerical simulation of turbulent channel flow up
+to, J. Fluid Mech. 774 (2015) 395–415.
+[60] S. Endrikat, R. Newton, D. Modesti, R. García-Mayoral, N. Hutchins, D. Chung,
+Reorganisation of turbulence by large and spanwise-varying riblets, J. Fluid
+Mech. 952 (2022) A27.
+[61] T. Wang, Y. Zhao, J. Leggett, R.D. Sandberg, Direct numerical simulation of a
+high-pressure turbine stage: Unsteady boundary layer transition and the resulting
+flow structures, J. Turbomach. 145 (12) (2023).
+
+14
+
+

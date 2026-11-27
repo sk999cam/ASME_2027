@@ -1,0 +1,2614 @@
+Flow Topologies and Turbulence Scales in a Jet-In-Cross-Flow
+A. M. Ruiza,∗, G. Lacazea , J. C. Oefeleina
+a
+
+Combustion Research Facility, Sandia National Laboratories,
+7011 East Avenue, Livermore, CA 94551-0969 USA
+
+Abstract
+This paper presents a detailed analysis of the flow topologies and turbulence scales in the jet-in-cross-flow
+experiment of Su and Mungal [Su and Mungal JFM 2004]. The analysis is performed using the Large
+Eddy Simulation (LES) technique with a highly resolved grid and time-step, and well controlled boundary
+conditions. This enables quantitative agreement with the first and second moments of turbulence statistics
+measured in the experiment. LES is used to perform the analysis since experimental measurements of
+time-resolved 3D fields is still in its infancy, and because sampling periods are generally limited with Direct
+Numerical Simulation. A major focal point is the comprehensive characterization of the turbulence scales
+and their evolution. Time-resolved probes are used with long sampling periods to obtain maps of the integral
+scales, Taylor microscales, and turbulent kinetic energy spectra. Scalar-fluctuation scales are also quantified.
+In the near-field, coherent structures are clearly identified, both in physical and spectral space. Along the
+jet centerline, turbulence scales grow according to a classical one-third power law. However, the derived
+maps of turbulence scales reveal strong inhomogeneities in the flow. From the modeling perspective, these
+insights are useful to design optimized grids and improve numerical predictions in similar configurations.
+Keywords: Jet-In-Cross-Flow, Large Eddy Simulation, Flow Structures, Turbulence Scales
+
+∗ Corresponding
+
+author
+Email addresses: amruiz@sandia.gov (A. M. Ruiz), gnlacaz@sandia.gov (G. Lacaze), oefelei@sandia.gov (J. C.
+Oefelein)
+
+1
+
+1. Introduction
+Achieving a detailed understanding of turbulent mixing in a Jet-In-Cross-Flow (JICF) is valuable in
+many practical situations. Applications include plume dispersion, gas turbine combustor cooling, and fuel
+injection. In each of these cases, the primary technical objective is to control and optimize transport and
+mixing, all of which depends on having a refined understanding and knowledge of the related mechanisms of
+turbulence. For this reason, JICF configurations have been extensively studied experimentally, theoretically,
+and numerically. Comprehensive reviews can be found in papers by Margason et al. [1], Karagozian [2] and
+Mahesh [3]. The details of turbulent processes leading to destabilization have been investigated over a
+wide range of Reynolds numbers, momentum-flux ratios, density ratios, Mach numbers, and reactivities.
+However, the complexity of turbulence and the large variety of instabilities present in such systems still
+requires research to develop efficient control methods.
+A key area that needs to be improved is the precise characterization of turbulence scales, the mechanism
+of their formation, and their evolution. This is relevant at both technical and scientific levels for the
+reasons mentioned above. This information is also valuable for industry since the predictive capabilities of
+engineering simulation techniques critically depends on understanding how to best resolve the key processes.
+There is currently no clear methodology to quantify what optimal local grid spacings should be used to make
+calculations both affordable and accurate. Knowledge of the characteristic sizes and topology of turbulence
+can be used to optimally distribute the computational cells where they are needed, enabling more accurate
+predictions at a lower cost.
+A complete characterization of turbulence scales has not been undertaken yet in a JICF for two reasons.
+First, a precise measure of scales can be achieved in experiments by placing probe clusters in the flow and
+analyzing the spatial correlations of temporal signals of given quantities. However, the characterization of
+the three-dimensional spatial evolution of turbulence scales is not practical using this method. Experimental
+methods such as high-speed tomographic Particle Image Velocimetry (PIV) can be used, as recently detailed
+in Scarano [4]. But, despite the significant progress, this method has spatial and temporal resolution
+challenges and cannot be employed yet to characterize the small scales of turbulence. Second, even though
+Direct Numerical Simulation (DNS) can be carried out in some JICF configurations [3], the characterization
+of scales requires large computational domains and long integration times, which are still prohibitively
+expensive with the computational power of today.
+In the present work we have characterized the different turbulence scales present in the JICF studied
+experimentally by Su and Mungal [5] employing highly-resolved Large Eddy Simulation (LES). Using the
+“high-fidelity” approach, assumptions associated with boundary conditions and physics are minimized and
+the spatial/temporal resolutions are selected precisely to ensure grid-independent predictions of the first
+moments of turbulence. The fidelity in the solution allows one to characterize the distribution of turbulence
+scales throughout the flow at a level of detail, which to-date, has not been achieved.
+LES has been applied to the JICF configuration by a number of researchers. Most have been aimed at
+predicting film-cooling in gas turbines [6, 7, 8, 9, 10, 11]. These studies have improved our understanding
+of turbulent mixing processes associated with a JICF. In general, good qualitative agreement between LES
+results and time-averaged experimental data can be obtained. Our approach differs from previous works
+through the use of fine and uniform mesh spacing in all spatial directions. This approach does not require
+any a priori knowledge of the jet trajectory, and enables one to control the simulation accuracy with a
+single scalar parameter. The parametric study in Section 4 then facilitates setting the grid spacing to a
+value that provides grid-independent predictions of the turbulence statistics. The level of resolution applied
+is significantly higher than in previous studies (e.g. see Appendix. B). Other studies have also had to deal
+with many degrees of freedom related to local cell-size distribution and local stretching in complex threedimensional flow fields. In these studies, the mesh is generally designed through trial-and-error, until a
+sufficient agreement with experimental results is obtained. However it is not clear if the local resolutions
+applied are adequate in the spatially evolving field downstream of the jet.
+The paper is organized as follows. The target JICF configuration is described in Section 2 along with
+respective operating and boundary conditions. In Section 3, a description of the LES solver, filtered conservation equations, and subgrid-scale (SGS) models employed are presented. In Section 4, we explain how
+2
+
+the computational domain size and grid resolution have been determined. In Section 5, an extensive comparison of the LES results with available experimental data is conducted. The goal is to demonstrate that
+turbulence is accurately resolved before deepening the analysis. In Section 6, vortex identification is used to
+describe qualitatively the structural characteristics of turbulence. In Section 7, we analyze turbulence scales
+and present spatial maps that provide new insights and are useful for designing better LES grids for these
+configurations.
+2. Description of geometry, operating, and boundary conditions
+
+Figure 1: Schematic of geometry and orientation of the computational domain.
+
+The present simulations focus on the experiment conducted by Su and Mungal [5]. The experiment is
+performed at atmospheric pressure and ambient temperature in an updraft wind tunnel with air as the crossflow fluid and nitrogen mixed with acetone as the jet fluid. The cross-flow is laminar upstream of the jet,
+with a peak velocity of v∞ = 2.96 m/s. The diameter of the jet nozzle is d = 4.53 mm and the length of the
+injection pipe is 70 d, which is long enough for a fully developed turbulent boundary layer to form. The bulk
+jet velocity is uj = 16.9 m/s, giving a velocity ratio r = 5.7 and a jet Reynolds number of 5000. The jet fluid
+is seeded with approximately 10% acetone by volume for diagnostic purposes. To seed the acetone vapor
+into the jet flow, the jet fluid is passed through a bubbler containing liquid acetone. During the experimental
+runs, the acetone level in the bubbler, and the seeding efficiency, “slowly diminishes” [5]. Even though the
+post-processing procedure of raw PLIF signals accounts for this concentration drift, the penetration of the jet
+might be sensitive to this drift through small changes in momentum-flux ratio. This issue will be addressed
+further in Section 5.2. For additional details on the experimental setup, see Su and Mungal [5].
+Figure 1 shows the geometry and the orientation of the computational domain. The grid spacing is
+constant everywhere in both the chamber and nozzle. Use of a constant grid spacing facilitates a clear
+understanding of the effects of grid resolution and removes ambiguities related to local stretching. The
+spatial extent of the computational domain in the x-y plane is chosen to allow comparisons of the LES
+results to available experimental data. The z spatial extent has been determined through trial-and-error to
+prevent confinement of the jet and allow the development of the counter-rotating vortex-pair, which drives
+far-field mixing and jet penetration.
+Instead of simulating the laminar-to-turbulent transition in the 70d-long pipe used in the experiment, we
+inject a fully-developed turbulent velocity profile [12] at the inlet of a shortened pipe, located 10d upstream
+3
+
+x 10−3
+
+1.5
+u’u’/u2j or v’v’/u2j
+
+25
+
+u/u [ ]
+
+1
+j
+
+Eggels
+0.5
+
+0
+0
+
+LES
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+Eggels u’u’
+
+20
+
+LES
+15
+
+LES
+
+10
+
+v’v’
+
+5
+0
+0
+
+0.5
+
+r/d [ ]
+
+u’u’
+
+Eggels v’v’
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+r/d [ ]
+
+(a)
+
+(b)
+−3
+
+4
+
+x 10
+
+Eggels u’v’
+
+u’v’/u2j
+
+3
+
+LES
+
+u’v’
+
+2
+1
+0
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+r/d [ ]
+
+(c)
+
+Figure 2: Mean velocity profile and velocity fluctuation profiles generated by the digital filtering technique of Klein et al. [13],
+compared with the target profiles of Eggels et al. [12].
+
+of the chamber wall plane. This is done using the digital filtering method of Klein et al. [13]. Figure 2 shows
+a comparison of the injected profiles with the target ones. The turbulence injection method is accurate
+in generating the desired profiles of turbulence intensities. To match experimental conditions, the molar
+fraction of acetone and nitrogen at the pipe inlet are XC3 H6 O = 0.1 and XN2 = 0.9. This acetone-nitrogen
+mixture has a larger molecular weight (= 31.0 g/mol) than air (= 28.9 g/mol), which induces a density ratio
+of 1.07 between the jet and the cross-flow. This is in contrast to the DNS of Muppidi and Mahesh [14],
+where a passive scalar is transported and the density is identical in the jet and the cross-flow. In the latter,
+jet trajectories have been rescaled by an effective momentum flux ratio to compensate for the discrepancy in
+injection density. Here, the density ratio effects are captured by reproducing the actual mixture composition
+of the jet and we do not need to use a correction factor.
+At the channel inlet, we use an analytic approximation of the Blasius profile [15] for the vertical velocity,
+v, and we set the horizontal velocity, u, to zero. Thus, we neglect the wall-normal velocity given by the
+Blasius equations since it is very small in comparison to the v-velocity (u∞ = 6 × 10−3 v∞ ) and the actual
+u-velocity profile establishes itself in the channel before reaching the jet nozzle. The profile is then given by
+v
+
+=
+
+v∞ tanh(78η/19 − (219/5)atan(8η/93))
+
+(1)
+
+where η = 5x/δc , δc = 1.025 d, and v∞ = uj /5.7 (=2.96 m/s). The thickness of the boundary layer, δc , is
+determined from the PIV measurements of Su and Mungal [5].
+For the outflow boundary conditions, pressure is set to P = 1.013 × 105 Pa, while velocity and scalars
+are extrapolated. Immediately upstream of the outlet boundary condition, a sponge-layer starts at y = 28d,
+with a transition thickness of 0.5 d. The transport coefficients are multiplied by a factor of 10 in this
+4
+
+sponge-layer, which damps hydrodynamic structures before they cross the outlet boundary condition. This
+prevents backflow and contamination of the upstream flow field.
+3. Theoretical and numerical framework
+LES is performed using a code framework called RAPTOR, which is a fully compressible solver that
+has been optimized to meet the strict algorithmic requirements imposed by the LES formalism. RAPTOR
+uses non-dissipative, discretely conservative, staggered, finite-volume differencing. Temporal integration is
+performed using a dual-time multistage scheme that allows one to set the physical time-step based solely
+on accuracy considerations. Details related to the baseline formulation and SGS models are given by
+Oefelein [16]. Representative case studies are given by Oefelein et al. [17, 18, 19, 20, 21, 22, 23].
+The baseline system of equations are cast in dimensionless form using a reference length-scale, δref , flow
+speed, Uref , and fluid state characterized by a reference density, ρref , sound speed, cref , constant pressure
+specific heat, Cp ref , and dynamic viscosity, µref . Using these quantities, reference Mach and Reynolds
+numbers are defined as M = Uref /cref and Re = ρref Uref δref /µref . Using these definitions, the filtered
+conservation equations of mass, momentum, total-energy and chemical species can be written in conservative
+form as follows:
+∂ρ
++ ∇ · (ρũ) = 0,
+(2)
+∂t
+
+
+P
+∂
+~
+(3)
+(ρũ) + ∇ · ρũ ⊗ ũ + 2 I
+= ∇ · T~ ,
+∂t
+M
+
+
+∂
+2 ~
+~
+~
+(4)
+(ρẽt ) + ∇ · [(ρẽt + P)ũ] = ∇ · Qe + M (T · ũ) ,
+∂t
+∂
+(ρỸi ) + ∇ · (ρỸi ũ) = ∇ · S~i .
+∂t
+
+(5)
+
+~ ~
+~
+The terms P, T~ , Q
+e and Si represent respective composite (i.e., molecular plus SGS) stresses and fluxes.
+The subgrid-scale closure is obtained using the “mixed” dynamic Smagorinsky model by combining the
+models proposed by Erlebacher et al. [24] and Speziale [25] with the dynamic modeling procedure [26, 27,
+28, 29, 30]. The composite stresses and fluxes in Eqs. (2)–(5) are then given as:
+
+
+
+1
+2
+~
+T~ = (µt + µ)
+− (∇ · ũ)I + ∇ũ + ∇ũT
+Re
+3
+
+
+˜ ⊗ ũ
+˜ ,
+^
+−ρ ũ
+(6)
+⊗ ũ − ũ
+
+~e
+Q
+
+S~i
+
+
+N
+X
+µt
+µ
+1
+=
++
+∇T̃ +
+h̃i S~i
+Pr t
+Pr Re
+i=1
+
+
+f ˜˜
+−ρ h̃ũ − h̃ũ , and
+
+
+
+=
+
+µt
+µ
++
+Sc ti
+Sc i
+
+
+
+(7)
+
+
+
+1
+g̃
+˜˜ ˜
+∇Ỹi − ρ Y
+i ũ − Yi ũ .
+Re
+(8)
+
+The term µt represents the subgrid-scale eddy viscosity given by
+1
+
+µt = ρCR ∆2 ΠS̃2 ,
+where
+ΠS̃ = S̃ : S̃, and S̃ =
+5
+
+
+1
+∇ũ + ∇ũT .
+2
+
+(9)
+
+(10)
+
+Transport Coefficients [ ]
+
+µ/µair
+
+ScC H O
+3 6
+
+ScN
+
+2
+
+ScO
+
+2
+
+1.6
+1.4
+1.2
+1
+0.8
+0.6
+0
+
+0.25
+
+0.5
+
+0.75
+
+1
+
+C[]
+Figure 3: Molecular transport coefficients as a function of scalar concentration.
+
+The terms CR , Pr t , and Sc ti represent the modified Smagorinsky, SGS Prandtl, and SGS Schmidt numbers,
+respectively, and are evaluated dynamically as functions of space and time. The overall model includes
+the Leonard and cross-term stresses and provides a Favre averaged generalization of the Smagorinsky eddy
+viscosity model [31] coupled with gradient diffusion models to account for subgrid-scale mass and energy
+transport processes.
+In the present study, the ideal-gas equation of state is used. Viscosity and thermal conductivity are
+obtained using the extended corresponding states methodologies developed by Ely and Hanley [32]. Mass
+and thermal diffusion coefficients are obtained using the methodologies outlined by Bird et al. [33] and
+Hirschfelder et al. [34]. Figure 3 shows the variation of transport coefficients as a function of acetone concentration in a binary mixture of acetone and air at 300 K. In Su and Mungal [5], a constant Schmidt number
+of 1.5 is recommended for CFD simulations, and this assumption is made in Muppidi and Mahesh [14]. Here,
+no simplifying assumption is made on molecular transport. Instead, preferential diffusion is accounted for.
+4. Computational domain
+In this section, the procedure to determine the computational domain (grid resolution and domain size)
+is detailed.
+4.1. Grid resolution
+First, the LES filter size that ensures grid-independent statistics in the near-field is determined. A
+small domain of size (Lx /d, Ly /d, Lz /d) = (23, 13, 6), focusing on the near-field, have been used and a
+parametric study on the filter width size has been conducted. The mesh spacing is progressively refined
+with an increasing number of cells, denoted “n”, within the reference length scale d (i.e., the jet diameter).
+Four different levels of resolution have been considered: n = 5 (d05), n = 10 (d10), n = 15 (d15), and
+n = 20 (d20), which corresponds to grids containing 0.6-million, 3-million, 8.5-million and 18-million cells,
+respectively. Integration times steps have been adjusted to the spatial resolution so that a unity convective
+CFL number is maintained. This ensures accurate temporal discretization for all simulations. The jet
+nozzle is included in the simulations using the immersed boundary technique, which facilitates the use of
+the same spatial resolution as in the chamber and removes meshing difficulties. All of the simulations have
+been initialized using the same initial solution. The jet nozzle flow is initially at rest, and the inlet velocity
+profile of the cross-flow air is extruded in the channel. Acetone mass fraction and jet velocity are slowly
+ramped-up as the jet enters the cross-flow. The time-averaging period is equal to 200 d/uj for all cases,
+which approximately corresponds to 40 flow time through the near field region (y/d <= 5). Before recording
+statistics, a flushing period of 30 d/uj has been used, which was sufficient to establish the flow field in this
+region. Note that this reduced domain produces some confinement of the jet in the span-wise direction and
+is only used for the grid convergence analysis.
+6
+
+d05
+
+d10
+
+d15
+
+d20
+
+Figure 4: Mean and RMS fields of scalar concentration in the transverse plane at y/d=2.5 for increasing mesh resolutions
+
+Figure 4 shows the mean and RMS fields of concentration at a transverse cut of y/d = 2.5, which is
+in the near-field region after jet turbulence breaks down. This plane is used to monitor mesh convergence
+since it contains the footprint of resolved coherent structures and developing turbulence, which are highly
+sensitive to grid resolution at this location. Farther downstream, turbulent flow structures grow and the
+deviations between mesh resolutions becomes diminished. At the two highest resolutions (d15 and d20),
+classical kidney-shape structures are observed on the mean and RMS concentration fields. At the two lowest
+resolutions, however, the turbulent mixing in the near-field is not predicted accurately. Other statistics (mean
+and RMS of velocity and turbulent fluxes) show the same trends. Statistical results are not significantly
+different between the d15 and d20 cases, which indicates grid convergence associated with these quantities is
+achieved using a filter width of dx ≤ d/15. Note that for the d10 case, the non-symmetrical shape observed
+in Figure 4 is not cause by too short of an averaging time. It is caused by a bifurcation phenomenon also
+observed experimentally at low Reynolds number [35].
+4.2. Domain size
+In addition to ensuring the statistics of interest are grid independent, it is necessary to ensure that the
+computational domain is free from the influence of solid boundaries. This was done by performing a coarse
+simulation with a mesh spacing dx = d/5 in a large domain, denoted Dl . The dimensions of this domain are
+(Lx /d, Ly /d, Lz /d) = (60, 46, 40). Statistics have been converged up to y/d = 25, which is approximately
+10 diameters downstream of the end of the interrogation window in Su and Mungal [5]. The extent of the
+domain was then decreased using a visual margin of 3d around the large counter-rotating vortex-pair at
+y/d = 25, as shown in Fig. 5a. This new domain, D, has the dimensions (Lx /d, Ly /d, Lz /d) = (33, 33, 40).
+The solution from the large domain, Dl , was then interpolated on the smaller domain, D, and the statistics
+were compared. Figure 5b shows the mean concentration along one-dimensional cuts through the jet. The
+time-averaging period is equal to 300 d/uj for both cases, which approximately correspond to 10 flow time
+through the domain (y/d <= 27). Before recording statistics in the domain D, a flushing period of 100 d/uj
+has been used.
+The mean concentration field is qualitatively similar in both cases and the minor deviations are only due
+to the finite averaging time used. This confirms that, even in the far-field, the jet is not being influenced by
+the side boundaries of the computational domain.
+In summary, it has been determined that turbulence statistics (mean and RMS of velocities and scalars)
+are independent of the LES filter width with a constant grid spacing of dx ≤ d/15, where d = 4.53 mm,
+7
+
+0.06
+
+C[]
+
+Dl z axis
+
+0.05
+
+D z axis
+
+0.04
+
+Dl x axis
+D x axis
+
+0.03
+0.02
+0.01
+0
+−15
+
+a)
+
+b)
+
+−10
+
+−5
+0
+5
+(x−xc)/d or (z−zc)/d [ ]
+
+10
+
+15
+
+Figure 5: a) Mean span-wise velocity field at y/d = 25 for a large domain Dl using a coarse LES filter width of dx = d/5.
+b) Mean scalar concentration along one-dimensional cuts through the jet. The cut locations are indicated in a). The dimensions
+of the two domains are D: (Lx /d, Ly /d, Lz /d) = (33, 33, 40) and Dl : (Lx /d, Ly /d, Lz /d) = (60, 46, 40).
+
+and that a domain size of (Lx /d, Ly /d, Lz /d) ≥ (33, 33, 40) does not induce confinement of the jet in
+the region upstream of y/d = 25. Thus, a domain size of (Lx /d, Ly /d, Lz /d) = (33, 33, 40) and grid
+resolution of dx = d/15 is used in the analysis that follows. The final computational domain contains
+190-million cells and statistics are acquired using a sampling period of 20 flow-through times, as described
+in Section 5.2. The computational time required was approximately 2-million CPU hours on a cluster
+equipped with AMD Opteron Processors (2.2 GHz).
+5. Validation with experimental data
+In this section, a detailed comparison of the LES results with available experimental data is conducted.
+The goal is to demonstrate that turbulence is accurately resolved by the present simulation before analyzing
+the detailed flow characteristics in the sections that follow.
+5.1. Two-dimensional cross-sections
+Figure 6 provides a comparison between instantaneous concentration fields obtained from LES and the
+experiment. Fig. 6a shows the flow in the jet center plane (z/d = 0). Fig. 6b-d show the flow in multiple
+off-center planes at (b) z = 1.25d, (c) z = 2.56d and (d) z = 3.82d. In Figure 6a, one can observe (in both
+the experiment and LES) disturbances in the jet shear-layer in the first few diameters of the jet nozzle exit.
+These disturbances are induced by span-wise rollers [6] that develop due to the Kelvin-Helmholtz instability.
+The three-dimensional topology of these structures is shown in Section 6. In the immediate wake of the jet,
+pockets of jet fluid are separated from the jet core. This is closely related to the developing counter-rotating
+vortex-pair in the wake of the jet, which transports fluid from the edges of the jet back into the center plane.
+The three-dimensional topology of the counter-rotating vortex pair is also shown in Section 6. Further
+downstream, the jet bends due to pressure forces created by the impact of the cross-flow. Disturbances at
+larger scales are visible on the outer edge of the jet in both the LES and the experiment. This is related to
+the engulfment of air into the jet, and is one of the mechanisms which enhances entrainment relative to an
+isolated turbulent round jet [6, 2].
+In the off-center planes (see Figs. 6b-d), the formation of isolated pockets is more frequent. These
+pockets contain well-mixed fluid, which is qualitatively similar to what is described as a “cliff” and “plateau”
+8
+
+LES
+
+EXP
+
+a) z = 0.00 d
+
+b) z = 1.25 d
+
+c) z = 2.56 d
+
+d) z = 3.82 d
+
+Figure 6: Instantaneous scalar concentration fields in a) the jet center plane; and b), c), d) off-center planes.
+
+in Shan and Dimotakis [36]. The bottom location where jet fluid appears first in the off-center planes is
+similar to the experimental measurements. Thus, the transport of the jet fluid in the span-wise direction
+appears to be well predicted in the LES. In the next section we focus on quantitative comparisons of
+turbulence statistics.
+5.2. One-dimensional profiles
+In this section, quantitative comparisons of LES and experimental results are conducted for first order
+statistics (mean of concentration and velocity) and second order statistics (the Reynolds stress tensor).
+Additional comparisons of second order statistics (RMS of concentration and turbulent fluxes) are shown
+in Appendix. A. The location of the one-dimensional cuts is shown in Fig. 7. This figure shows the square
+
+Figure 7:
+Location of one-dimensional cuts used for validation of LES with experimental results. The center plane at
+z/d = 0 is colored by the square root of the turbulent kinetic energy. TBP stands for Turbulence Breakdown Point, located at
+(x/d, y/d) = (6, 1).
+
+9
+
+root of the Turbulent Kinetic Energy (TKE) field in the center plane (z = 0). The TKE k is defined as
+
+(11)
+k = u0 u0 + v 0 v 0 + w0 w0 /2
+where u0 , v 0 , w0 denote the jet-wise, crossflow-wise, and span-wise velocity fluctuations, respectively, and the
+overline represents averaging with respect to time. For ease of notation, the tilde indicating spatially-filtered
+quantities has been dropped. The first four cuts between x = 0.57d and x = 8.55d are located near the jet
+nozzle exit and show the evolution of turbulent mixing statistics as the jet bends into the cross-flow. The
+top four cuts between y = 2.85d and y = 14.25d are located downstream of turbulence breakdown and show
+how turbulent mixing statistics evolve toward a wake flow in the far-field. To simplify the discussions that
+follow, we place a reference point called the Turbulence Breakdown Point (TBP), located in the vicinity
+of the tip of the large velocity fluctuation region, at (x/d, y/d) = (6, 1). Muppidi and Mahesh [14] have
+validated their DNS with the cuts located in the near-field of the jet, limiting the comparison to the first
+three cuts at x = 0.57d, x = 2.85d and x = 5.7d. Note that they focused their effort on this region using
+only 11 million cells, whereas 190 million cells are equally distributed in the domain in the calculations
+performed here. A comparison of grid resolutions with turbulence scales is provided in Appendix. B. In the
+present study, the results are also validated against data in the the far-field, which is important for assessing
+the accuracy of turbulent mixing predictions in the wake of the jet.
+Ensemble averages are performed over a period of 20 flow-through times, Tf t . The flow-through time is
+estimated using a length scale of L = 20d and the fuel bulk velocity U = uj . Thus, a flow-through time is
+equal to Tf t = L/U = 20d/uj . Time-averaging is thus conducted over 400 dimensionless time units (d/uj ),
+which corresponds to a physical time of 100 ms. Note that the statistics obtained with half of this sampling
+period are not significantly different from the results presented here, which ensures that they are converged.
+Figure 8 shows the time-averaged scalar concentration profiles in the jet center plane. Figure 8a shows
+that at x = 0.57d, the jet potential core is still present and a flat profile of concentration is observed. At
+x = 2.85d, which corresponds to the end of the jet core (see Fig. 7), the concentration profile starts to
+spread and the maximum concentration decreases. The maximum value of concentration is C = 0.84 for
+the LES and C = 0.92 for the experiment, which represents a 9% relative deviation. The location of the
+peak concentration is similar in both cases (y = 0.11d). The profile is almost symmetric around the position
+of maximum concentration, except that a tail is present for y > 0.5d, although it is not as pronounced in
+the LES as in the experiment. It represents jet fluid that has been advected in the wake region by the
+counter-rotating vortex pair, as already observed in Fig. 6a. At x = 5.7d, which is located near the TBP,
+the LES accurately predicts the asymmetric concentration profile and its maximum value C ≈ 0.4 located
+at y = 0.7d. The relative error between LES and experiment at this maximum value is very small (= 4%).
+At x = 8.55d, which is downstream of the TBP, the maximum concentration in the LES is comparable
+to the experiment. However, it appears that the jet predicted by LES penetrates less into the chamber
+than the experiment. The same observation can be made with the far-field cuts shown in Fig. 8b, even
+though the asymmetric shape of the concentration profiles is comparable between LES and experiment, as
+well as the evolution of the maximum concentration value. The reason for this discrepancy is not totally
+clear. It is unlikely that the SGS models play a significant role in this deviation because the maximum
+value of turbulent viscosity in the computational domain is comparable to the molecular viscosity. In the
+far-field (s ≥ 17d along the jet center streamline), the turbulent viscosity is negligible (µt ≤ µ/10). This
+suggests that the high-resolution simulation presented here does not heavily rely on the SGS model, which
+is consistent with the comparison of turbulence scales and grid resolution in Appendix. B. It is also possible
+that experimental uncertainties associated with the acetone concentration of the jet are a factor. Although
+it is estimated in Su and Mungal [5] that the jet contains approximately 10% acetone by volume, variations
+in acetone content changes significantly the actual penetration of the jet, as detailed with the parametric
+study performed in Appendix. C.
+Figure 9 shows profiles of the velocity magnitude in the jet center plane. Figure 9a shows that the
+average velocity field is very well predicted in the near field in the first two cuts at x = 0.55d and x = 2.85d.
+At x = 0.55d, the influence of the cross-flow is observable with the small tail present in the wake of the jet.
+This is because the boundary layer is perturbed in the wake of the jet which contains developing hair-pin
+10
+
+y/d=14.25
+0.05
+0
+y/d=8.55
+
+C[]
+
+0.1
+
+LES
+exp
+
+0
+y/d=5.7
+0.1
+0
+y/d=2.85
+0.15
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=8.55
+
+x/d=5.7
+
+6
+5
+
+y/d [ ]
+
+4
+3
+2
+1
+0
+−1
+−2
+0
+
+0.5
+
+0
+
+0.5
+
+0
+
+0.25
+
+0
+
+0.25
+
+C[]
+
+(a)
+Figure 8: Time-averaged scalar concentration profiles in the jet center plane. The ‘exp’ label refers to the experiment of
+Su and Mungal [5].
+
+11
+
+y/d=14.25
+
+| u − v∞ ey| / v∞ [ ]
+
+0.5
+0
+y/d=8.55
+
+1
+
+LES
+
+0.5
+
+exp
+
+0
+y/d=5.7
+
+1.0
+0.5
+0
+
+y/d=2.85
+1
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=8.55
+
+x/d=5.7
+
+6
+5
+
+y/d [ ]
+
+4
+3
+2
+1
+0
+−1
+−2
+0
+
+(a)
+
+4
+
+0
+
+4
+
+0
+
+2.5
+
+0
+
+1.5
+
+| u| /v∞ [ ]
+
+Figure 9: Time-averaged profiles of the velocity magnitude in the jet center plane. The ‘exp’ label refers to the experiment of
+Su and Mungal [5]. Note that in a), the cross-flow speed v∞ has been subtracted from the vertical velocity component.
+
+12
+
+structures, as observed later in Fig. 12. At x = 2.85d, a mean velocity peak is located near the jet axis at
+y/d ≈ 0. A large tail is observed on the positive-y side of the profile, which corresponds to the start of a
+bifurcated structure in the mean velocity magnitude [5]. This tail is the “fingerprint” of the wake downstream
+of the jet, which is accurately predicted by the LES. Further downstream at x = 5.7d and x = 8.55d, small
+deviations can be observed but overall, good agreement is still observed. Fig. 9b shows that even though
+deviations are also observed between the LES and experiment in the far-field, the essential flow features
+are well predicted by the LES. Note that following Su and Mungal [5], the cross-flow speed v∞ has been
+subtracted from the vertical velocity component in these far-field cuts. The bifurcated structure induces
+two peaks in the mean velocity profile. The peak which is located the furthest away from the nozzle slowly
+disappears as the jet disintegrates. The amplitude of this secondary peak is well predicted by the LES in
+spite of a lesser penetration in the cross-flow. The magnitude of the main velocity peak, which is induced
+by the counter-rotating vortex pair in the wake of the jet, is smaller in the LES than in the experiment,
+with a relative deviation inferior to 21%, as indicated in Table 1.
+Figure 10 shows the time-averaged Reynolds stress tensor in the jet center plane. At x = 0.57d, two peaks
+of RMS velocity are observed in the jet shear-layer where turbulent flow structures form. Cross-correlations
+of velocity alternate in sign, as is classically observed in turbulent pipe flows. At x = 2.85d, horizontal
+velocity fluctuations are enhanced on the windward side of the jet whereas the fluctuations on the leeward
+side of the jet are similar to x = 0.57d. This clearly indicates mixing enhancement due to the presence of
+the cross-flow. It is shown in Section 6 that on the windward side of the jet, “v-shape” vortices form and
+interact with span-wise rollers, which enhances turbulent mixing. At x = 5.7d, velocity fluctuations are
+accurately predicted near the TBP. In the far-field, the Reynolds stresses are well predicted by the LES.
+Additional comparisons of second-order turbulence statistics (concentration fluctuations and turbulent
+fluxes) are presented in Appendix. A.
+
+13
+
+y/d=14.25
+0.1
+
+ui’uj’ /v2∞ [ ]
+
+0
+y/d=8.55
+
+0.1
+0
+
+LES u’u’
+exp u’u’
+LES v’v’
+
+0.2
+
+exp v’v’
+
+y/d=5.7
+
+LES u’v’
+
+0
+
+exp u’v’
+y/d=2.85
+
+0.4
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=5.7
+
+x/d=8.55
+
+6 1
+5
+
+y/d [ ]
+
+4 0
+3
+2 −1
+
+−0.500.5
+
+1
+0
+−1
+−2
+0
+
+4
+
+0
+
+2
+
+0
+
+2
+
+0
+
+1
+
+ui’uj’ /v2∞ [ ]
+
+(a)
+Figure 10: Turbulent stress profiles in the jet center plane. The ‘exp’ label refers to the experiment of Su and Mungal [5].
+
+14
+
+C
+
+V
+Mean Max
+
+u’u’
+Mean Max
+
+v’v’
+Mean Max
+
+u’v’
+Mean Max
+
+Mean
+
+Max
+
+x/d = 0.57
+x/d = 2.85
+x/d = 5.70
+x/d = 8.55
+
+5
+8
+6
+11
+
+1
+9
+4
+21
+
+8
+2
+3
+5
+
+0
+4
+8
+12
+
+42
+29
+19
+14
+
+129
+48
+9
+19
+
+27
+54
+15
+15
+
+86
+94
+12
+6
+
+31
+55
+23
+22
+
+74
+83
+1
+26
+
+y/d = 2.85
+y/d = 5.70
+y/d = 8.55
+y/d = 14.25
+
+15
+22
+23
+16
+
+18
+28
+34
+9
+
+9
+10
+10
+11
+
+17
+16
+18
+21
+
+25
+30
+31
+42
+
+3
+3
+9
+74
+
+23
+17
+19
+9
+
+15
+16
+3
+61
+
+36
+39
+33
+58
+
+24
+11
+35
+37
+
+Table 1: Mean relative error and relative error at maximum between LES and experiment, expressed in percents.
+
+Table 1 quantifies the errors between LES and experiment at key locations. The mean relative error is
+defined as:
+N
+1 X
+|φLES (n) − φEXP (n)|.
+(12)
+Emean =
+N n=1
+where φ is the discrete profile of a quantity, and the LES and EXP subscripts indicate the simulated and
+measured profiles, respectively. Only N points within the region, where
+|φEXP | < α max(|φEXP |)
+
+(13)
+
+are considered. This discards regions where values are close to zero. The parameter α is set to an arbitrary
+value of 0.1. Decreasing the value of α tends to decrease Emean since it increases the number of points N
+without changing the sum in Eq. 12. This is because of the small values considered. For instance, choosing
+α = 0.01 (instead of α = 0.1) induces a mean relative error for C at x/d = 8.55 of 3% (instead of 11%). To
+enable a quantitative quantification of errors on peak levels in spite of possible deviations in jet penetration
+(which is sensitive to uncertainties in acetone concentration, as explained in Section 2), the relative error at
+maximum is defined as
+Emax = |max(|φLES |) − max(|φEXP |)|/max(|φEXP |).
+
+(14)
+
+In the near-field the mean relative error for concentration and velocity is below 10%, while the relative
+error at maximum is also below 10% for the three first x locations. At x/d = 8.55, the relative error at
+maximum for concentration is twice as large and reaches 20%. In the far-field, the mean relative error for the
+velocity is approximately 10%, while the relative error at maximum is less than 21%. For the concentration
+profile in the far-field, the mean relative error is between 15% to 23%, which is larger than the mean error on
+the velocity field. The relative error at maximum on the concentration in the far-field (≤ 34%) is also larger
+than that on the velocity field (≤ 21%). The reason for the larger error on the concentration field is not clear.
+Experimentally, two distinct diagnostics have been used (PIV and PLIF) to measure the concentration and
+velocity field, which might have different levels of accuracy. Numerically and experimentally, the penetration
+of the jet is sensitive to the injected acetone concentration, which could play a role in these errors, as detailed
+in Appendix. C.
+As expected, deviations for Reynolds stresses (second-order statistics) are overall larger than deviations
+for mean values (first-order statistics). Interestingly, however, the relative errors at maximum observed near
+injection (up to 129% for u0 u0 at x/d = 0.57), rapidly decrease with increasing distance from the nozzle.
+Both the mean relative error and the relative error at maximum for the three Reynolds stresses are below
+26% at x/d = 8.55. The differences in Reynolds stresses could be due to excessive filtering in the LES
+in the near-field, where turbulence structures exiting the pipe are small. However, qualitatively similar
+discrepancies were observed in the DNS of Muppidi and Mahesh [14], which tends to suggest limitations of
+the experimental resolution in the near-field. The additional second-order statistics presented in Appendix. A
+also support this possibility.
+15
+
+Figure 11: Volume rendering of the enstrophy field (vorticity squared) for increasing distances from injection.
+
+6. Qualitative analysis of coherent structures
+Having validated the LES results against experimental data in Section 5, we now extract complementary
+information not available from the experiment by analyzing the time-resolved three-dimensional concentration and velocity fields.
+Figure 11 shows the volume rendering of an instantaneous enstrophy field (= Ω2 , where Ω is the vorticity)
+for increasing distances from injection (y/d = 0.5, y/d = 10, y/d = 17, extending +/−1d in the y-direction).
+Close to injection, at y/d = 0.5, the vorticity layer originating from the pipe forms a wavy sheet. The presence
+of a sheet is due to the mean strain rate imposed by the jet velocity. The waviness is due to the fact that
+the jet is ‘free’ from solid boundaries and developing turbulence deforms the sheet. Far from injection,
+at y/d = 17, the flow topology is dominated by tube-like structures. In the far-field, even though the
+flow is globally inhomogeneous and anisotropic, the mean strain rate is small and turbulence is developed,
+which creates a qualitatively similar topology as observed in Homogeneous Isotropic Turbulence (HIT). For
+a review of the latter topology, see Antonia and Orlandi [37]. In between, at y/d = 10, a hybrid flow
+topology is observed with both sheet-like structures and tube-like structures. The intrinsic characteristics
+of turbulence thus change drastically between the near-field and the far-field in a JICF. This figure helps
+in understanding the need and challenge of quantifying turbulence scales in such a complex anisotropic and
+inhomogeneous three-dimensional flow.
+Experimental and numerical studies have enabled the observation of vortical structures in a JICF, e.g.,
+see [38, 39, 40]. Depending on the characteristic dimensionless numbers of a particular case (Reynolds
+number, velocity ratio, density ratio), certain classes of turbulent flow structures dominate others. Thus
+the main turbulent flow structures in the present configuration need to be identified. To do this, the “Qcriterion” [41] is applied to the LES instantaneous flow fields. The Q field is the second invariant of the
+16
+
+a)
+
+b)
+
+Figure 12: Instantaneous three-dimensional visualizations of the flow field. a) The blue isocontour is Q = 0.02, the red
+isocontour is C = 0.25, and the yellow isocontour is C = 0.01. b) Cutting planes are colored by ∇C. Red and yellow
+isocontours are the same as a).
+
+velocity gradient tensor. Neglecting the velocity divergence in the present low-Mach number flow, it is given
+by
+!
+ 2  2 
+2
+∂u
+∂v
+∂w
+∂u ∂w
+∂v ∂w
+∂u ∂v
+Q = −1/2
++2
++2
+/(u2j /d2 )
+(15)
++
++
++2
+∂x
+∂y
+∂z
+∂y ∂x
+∂z ∂x
+∂z ∂y
+By taking positive isosurfaces of Q, one identifies flow regions containing more vorticity than strain. This
+essentially filters out vorticity sheets in shear flows and reveals underlying coherent structures.
+Figure 12a shows an instantaneous visualization of the flow field with the Q-criterion. The Q = 0.02 isocontour is represented in blue, and two isocontours of concentration (C = 0.25 in red and C = 0.01 in yellow)
+locate the jet fluid. A wide range of turbulence scales are captured by the present high-resolution simulation,
+especially along the jet trajectory. Coherent structures also develop in the boundary layer downstream of the
+jet. This shows that even though the boundary layer is initially laminar, vortical structures develop in the
+disturbed portion downstream. Fig. 12b shows the same isocontours of concentration (C = 0.25 in red and
+C = 0.01 in yellow) with cutting planes at y/d = 20 and x/d = 7 colored by the gradient of concentration.
+The x/d = 7 plane has an inclination angle of 5◦ . This visualization shows regions of both molecular and
+subgrid-scale mixing. Strong gradients are observed in the near-field, especially at the interface between the
+jet and the cross-flow, which shows a convoluted shape. In the wake region, the footprint of the counterrotating vortex-pair is observed with two distinct alleys in the x/d = 7 plane (the two lobes of the kidney
+shape cross this plane). In the y/d = 20 plane, broadband mixing can be observed, with stronger gradients
+present at the outer envelope of the jet.
+We now focus on the near-field where coherent structures form and transition to turbulence. There are
+six main classes of vortices observed in the present configuration: (1) ring-vortices, (2) the counter-rotating
+vortex-pair, (3) v-shape vortices, (4) the horse-shoe vortex, (5) hair-pin vortices at the wall, and (6) far-field
+17
+
+Figure 13: Vortex rings where a) is a three-dimensional visualization with red being C = 0.5, yellow C = 0.01, blue Q=1 and
+b) is a schematic representation.
+
+Figure 14: Counter-rotating vortex pair where a) is a three-dimensional visualization with red being C = 0.5, yellow C = 0.01,
+blue Q=1 and b) is a schematic representation.
+
+18
+
+a)
+
+b)
+
+c)
+
+Figure 15: v-shape vortex where a) is a three-dimensional visualization with red being C = 0.5, yellow C = 0.01, blue Q=1. b)
+is a schematic representation, and c) is a schematic view of the fluid ejection mechanism by a v-shape vortex.
+
+vortices. Ring-vortices (also called “shear-layer vortices” or “span-wise rollers”) appear in the near-field of
+the jet shear-layer. Figure 13a shows a three-dimensional visualization of the ring-vortices, with a C = 0.5
+isocontour shown in red, a C = 0.01 isocontour shown in yellow, and a Q = 1 isocontour in blue. Ringvortices result from a Kelvin-Helmholtz (KH) instability in the shear-layer that surrounds the jet. This is
+shown schematically in Fig. 13b. This class of vortex has been observed in many experimental studies and
+their creation is well understood theoretically [38, 39, 40]. The second class of coherent structures is the
+large counter-rotating vortex-pair in the immediate wake of the jet [42, 43, 44]. The pair forms on each
+side of the jet in the shear-layer between the low speed zone behind the jet and the faster cross-flow. These
+vortices transport fluid from the edges of the jet back into the center plane, as visible with the C = 0.01
+isocontour on Fig. 14a and as previously observed in Fig. 6a. Further downstream, the two counter-rotating
+vortices are bent by the cross-flow. This makes their rotational axis almost parallel to the cross-flow far
+downstream. Figure 14a reveals that the vortex pair is actually a large collection of small vortical structures
+rotating in opposite direction.
+Another important class of coherent structures is generated by the growth of an azimuthal instability of
+the ring-vortices. These secondary instabilities are called v-shape vortices here, and produce couples of small
+counter-rotating vortex pairs with a rotational axis that is parallel to the jet axis, as shown in Fig. 15. Similar
+vortices have been observed in turbulent jets experimentally by Broze and Hussain [45], and numerically
+by Silva and Metais [46]. These jet-wise structures represent the first step of the dislocation of organized
+Kelvin-Helmoltz instabilities. In Yuan et al. [47], evidence of the presence of these vortices in a JICF is
+given as their fingerprint is observed on some components of vorticity. The high resolution of the current
+computation enables us to better understand the spatial structure of these vortices. Our analysis indicates
+that these vortices are responsible for ejection of jet fluid in the upstream cross-flow. This phenomenon is
+illustrated in Fig. 15c and explains the convoluted interface observed in Fig. 12b at the bottom location in
+the x/d = 7 plane.
+The horse-shoe vortex is a known coherent structure in this type of flow. This vortex is very stable and
+settles upstream of the base of the jet close to the wall. It is induced as a consequence of the adverse-pressure
+gradient generated by the varying stagnation pressure of the cross-flow on the jet surface [40]. Compared
+to other vortices, its circulation is weak. Its role in turbulent mixing is marginal at the present conditions.
+At the wall, quasi-streamwise (with respect to the cross-flow) vortices generated in the boundary layer [48]
+are disrupted by the presence of the jet and are lifted away from the wall surface, which creates hair-pin
+structures. They can be observed in Fig. 12a close to the wall. At the present conditions, where there is
+a large momentum-flux ratio, the jet penetrates deeply into the chamber, while these vortices remain in
+the vicinity of the wall without interacting with the jet. Similarly, wake vortices are sometimes observed
+but they are not dominant in the current case. This is due to the low Reynolds number associated with
+the cross-flow of air, which limits vortex shedding. Finally, broadband turbulence forms downstream of the
+TBP. These far-field vortices appear when the previous types of eddies have lost their regular arrangement
+19
+
+and lead to chaotic motions resulting in developed turbulence.
+7. Quantitative analysis of turbulence scales
+In this section, a quantitative evaluation of key turbulence scales is provided. We calculate the integral
+scale, Taylor microscale, turbulence spectra, and scalar gradient thicknesses, with emphasis on understanding
+the relationship between these physical scales and the relevant numerical scales. In addition to physical
+insights, the ensemble of results is useful for designing optimized grids that strike a balance between cost
+and precision.
+7.1. Integral scale
+Using dimensional analysis in fully-developed turbulence, one can construct the integral length scale lt
+based on the TKE k (Eq. 11) and its dissipation  (Eq. 17), as given by
+lt = C0 k 3/2 /
+
+(16)
+
+where C0 is a constant. The TKE dissipation is defined as
+ = (µ + µt ) Sij Sij ,
+
+(17)
+
+where the overline denotes long-time averaging (= 20 Tf t ), Sij is the strain rate tensor and is equal to
+Sij = (∂ui /∂xj + ∂uj /∂xi ) /2. Many experimental and numerical studies have focused on whether the
+magnitude of C0 is constant [49]. Here, we simply set C0 = 0.2, so that the integral scale is equal to one
+third of the jet diameter at the nozzle exit.
+Figure 16 shows two-dimensional maps of lt along a) the jet center plane and b) the transverse plane at
+y/d = 17. Note that the interrogation window in this figure is a close-up view focused on the jet plume, and
+is smaller than the computational domain D, which is of size (Lx /d, Ly /d, Lz /d) = (33, 33, 40). Figure 16a
+shows a global increase in lt with increasing distance from the nozzle exit, following the jet trajectory. Three
+distinct regions can be observed: 1) the boundary layer perturbed by the jet, 2) the wake region, which
+contains structures with large time and length scales, and 3) the counter-rotating vortex-pair region, which
+contains coherent structures as well as broadband turbulent mixing. Fig. 16a also shows a set of solid lines
+that indicate the trajectory of the jet center streamline, as well as trajectories on the windward and leeward
+sides of the jet defined by
+x
+rd
+Leeward side: A
+Windward side: A
+
+0.3
+y − y0
+= A
+r
+= 1.6, y0 = +0.5
+
+(18)
+
+2.2, y0 = −0.5
+
+(19)
+
+
+
+=
+
+where r = 5.7 is the velocity ratio. In Fig. 17, the integral scale is plotted against the curvilinear abscissa,
+s, along the trajectories defined by these curves. In the near-field, the integral scale grows at a near-linear
+rate before the location of maximum TKE (s/d = 4). Then, the integral scale appears to grow at a rate
+of (s/d)1/3 along the jet centerline. This is consistent with the growth rate of axisymmetric wake flows
+measured experimentally [50], and also observed in the far-field measurements of concentration by Smith
+and Mungal [35] and Su and Mungal [5]. On the windward side of the jet, the integral scale remains
+approximately constant (lt ≈ 1d). On the leeward side of the jet, the integral scale grows at a higher
+rate than (s/d)1/3 , and thus the integral scale is larger on this side. At s/d = 17, the integral scale is
+approximately 1.5d, 2d, and 3d on the windward, center, and leeward sides of the jet, respectively, which
+shows the strong inhomogeneity of turbulence.
+Figure 16b shows the map of integral scale in the transverse plane at y/d = 17. This enables one
+to understand the three-dimensional distribution of integral scales. On the outer-edge of the jet, small
+turbulence scales are generated. At the center of the jet, large-scale turbulence is observed. Below that,
+20
+
+a)
+
+b)
+Figure 16: Map of integral scale given by Eq. 16 in a) the jet center plane at z/d=0 and b) the transverse plane at y/d = 17.
+The time-averaging period is equal to 20 Tf t .
+
+21
+
+4
+
+center
+lee−side
+wind−side
+
+3.5
+3
+lt/d [ ]
+
+2.5
+
+1/3 power
+growth
+
+2
+
+1.5
+1
+0.5
+5
+
+10
+
+15
+
+20
+
+s/d [ ]
+Figure 17: Integral scale along the jet center, windward, and leeward lines defined in Fig. 16a.
+
+two lobes of large integral scales are present in the counter-rotating vortex-pair. A column of small-scale
+turbulence is also present between the jet and the wall, which is due to growing boundary layer vortices
+downstream of the jet (the hairpin and quasi-streamwise vortices shown in Section 6).
+Although the integral scale enables a quantification of the growth of turbulent flow structures in regions
+with developed turbulence, it cannot identify the size of developing coherent structures in the near-field.
+The two-point correlations in the following section do not require any constant and should be seen as a
+refinement of the one-point statistics presented above.
+7.2. Taylor microscales
+The Taylor microscale is often used in studies of turbulence. In HIT, this scale is proportional to the
+amount of dissipation, although it is much larger than the Kolmogorov scale. Thus, we can measure it with
+LES, without resolving the whole turbulence spectrum. The Taylor microscale λφ can be defined from the
+two-point correlation of a local fluctuating signal φ0 :
+x, r) =
+Cφ,i (x
+
+x, t)φ0 (x
+x + reei , t)
+φ0 (x
+02
+x
+φ (x , t)
+
+(20)
+
+where the overline denotes a long-time average (= 20 Tf t ), φ0 = φ−φ is a scalar fluctuation and ei is the unit
+vector in the ith direction. At a given location, 8 points are used in each direction (x, y, z), which corresponds
+to a total of more than 2-million simultaneous probes for each two-dimensional map that is shown in the
+following. The accessible resolution is 300 µm, as the procedure is performed at all grid points. Note that
+using this resolution level with a sufficiently large field of view is still a challenge for high-speed tomographic
+PIV [4], which shows the benefits of using LES to analyze the detailed characteristics of turbulence. Also
+x, t) = 0, the correlation is only computed where fluctuations
+note that since Eq. 20 is undefined where φ02 (x
+are significant, typically defining a region where fluctuations are equal to 0.1% of the maximum value. In
+the vicinity of r = 0 in HIT, the spatial correlation profile given by Eq. 20 has a parabolic shape. The ith
+component of the Taylor microscale λφ,i is defined as the location where this parabola crosses the horizontal
+axis
+q
+λφ,i = −2/ (∂ 2 Cφ,i /∂r2 )r=0
+(21)
+Even though the present flow is strongly inhomogeneous (as shown for instance with Fig. 16a), the spatial
+correlation profiles appear to have a parabolic shape in the vicinity of r = 0 in a large part of the computational domain. Thus, useful information can be extracted from the Taylor microscale. The current flow
+22
+
+is also non-isotropic and correlation scales have different values in all three directions. In order to provide
+a scalar mapping of correlation scales, we consider the norm of the three-dimensional vector:
+q
+(22)
+λφ = 0.5 λ2φ,x + λ2φ,y + λ2φ,z
+For vector fields (such as velocity), the average value of the components can be calculated. We thus define
+the Taylor microscale for the velocity field λk as:
+λk = (λu + λv + λw )/3
+
+(23)
+
+Figure 18 shows two-dimensional maps of λk in a) the jet center plane and b) the transverse plane at y/d =
+17. Small-scale structures are observed within the shear-layer near the jet exit, with a size approximately
+equal to 0.2d. These small-scale structures persist until the TBP. Then, turbulent flow structures grow
+with increasing distance from the jet nozzle following the jet trajectory. Small-scale structures are formed
+on the outer-edge of the jet due to a large velocity gradient between the bending jet and the accelerating
+cross-flow. On the inner-edge of the jet in the wake, turbulence structures are much larger than in the
+rest of the domain, with a characteristic length scale greater than 0.5d at y/d = 17. Near the wall, at the
+beginning of the boundary layer in the wake of the jet, a region with small-scale structures is observed. In
+this region, vortices are formed as a result of flow separation, which is a well known phenomenon for wake
+vortices generation [40]. Figure 18b shows the map of λk in the transverse plane at y/d = 17. This enables
+one to understand the three-dimensional distribution of turbulence scales in a JICF. On the outer-edge of
+the jet at the interface with the cross-flow, small turbulence scales are generated with a characteristic size
+as small as 0.2d. The region at the center of the jet and below contains turbulence with larger scales, which
+are in the 0.4d − 0.7d range. The wall turbulence shows larger characteristic sizes in the 0.6d-0.9d range.
+Figure 19a shows the Taylor microscale for the three velocity components along the jet centerline. A
+strong anisotropy is observed: λw < λv < λu . The correlation scale in the span-wise direction λw is
+clearly smaller than the two other velocity components along the jet centerline. Without additional postprocessing, it is difficult to relate this observation to the actual topology and orientation of the tube-like
+structures composing turbulence. In Fig. 19b, the Taylor microscale for the velocity field (Eq. 23) is plotted
+along the jet centerline, the windward side, and the leeward side. Far downstream, scales along the jet center
+and windward side are comparable, whereas they are larger on the leeward side of the jet. In the far-field, the
+(s/d)1/3 scaling agrees with the integral scale analysis presented in Section 7.1. In the near-field, however,
+the Taylor microscale indicates that the growth of turbulent flow structures is closer to being linear. The
+Taylor microscale is a more accurate representation of the size of the coherent structures in the near-field
+than a dimensional analysis.
+In order to compare scalar-fluctuation and velocity-fluctuation scales, the Taylor microscale of the scalar
+field λC is now determined using φ = C in Eqs. 20-22. Figure 20 shows two-dimensional maps of λC in a)
+the jet center plane and b) the transverse plane at y/d = 17. Figure 21 shows λC along the jet centerline,
+the windward side, and the leeward side. Comparing Figs 18 and 19 to Figs 20 and 21 reveals interesting
+similarities, as well as differences between velocity and scalar correlation scales. On the wind-side of the
+jet, the scalar and velocity correlation scales are similar in value and grow with increasing distance from
+injection. On the jet centerline and on the lee-side of the jet however, the scalar-fluctuation scales are smaller
+and grow at a lower rate than the velocity-fluctuation scales, especially downstream of the TBP. Because
+of the CVP, fresh air enters the jet through the lee-side. In the vicinity of the lee-side of the jet, scalar
+sheets are wrapped around tube-like vortical structures (see Figs. 11-12), which induces high-wavenumber
+oscillations of the scalar field, and subsequently, small correlation lengths. On the outer-edge of the jet,
+scalar and velocity Taylor microscales are correlated, as observed in a regular turbulent jet.
+
+23
+
+a)
+
+b)
+Figure 18: Map of Taylor microscale for the velocity field given by Eq. 23 in a) the jet center plane at z/d=0 and b) the
+transverse plane at y/d = 17. The time-averaging period is equal to 20 Tf t .
+
+24
+
+λu/d, λv/d or λw/d [ ]
+
+0.6
+
+λu
+
+0.5
+
+λv
+
+0.4
+
+λw
+
+0.3
+0.2
+0.1
+
+5
+
+10
+
+15
+
+20
+
+s/d [ ]
+
+a)
+0.6
+
+center
+lee−side
+
+0.5
+λk/d [ ]
+
+wind−side
+0.4
+
+1/3 power
+growth
+
+0.3
+0.2
+0.1
+
+b)
+
+5
+
+10
+
+15
+
+20
+
+s/d [ ]
+
+Figure 19: a) Taylor microscale using two-point correlations of u0 , v 0 , w0 (Eqs. 20-22) along the jet centerline. b) Taylor
+microscale for the velocity field (Eq. 23) along the jet center, windward, and leeward lines defined in Fig. 18a.
+
+25
+
+a)
+
+b)
+Figure 20: Map of Taylor microscale for scalar fluctuations (Eqs. 20-22) in a) the jet center plane at z/d=0 and b) the
+transverse plane at y/d = 17. The time-averaging period is equal to 20 Tf t .
+
+26
+
+0.6
+center
+lee−side
+
+0.5
+λ C /d [ ]
+
+wind−side
+0.4
+
+1/3 power
+growth
+
+0.3
+0.2
+0.1
+
+5
+
+10
+
+15
+
+20
+
+s/d [ ]
+Figure 21: Taylor microscale for the scalar field along the jet center, windward, and leeward lines defined in Fig. 20a.
+
+27
+
+center
+
+lee−side
+
+wind−side
+
+center
+
+lee−side
+
+wind−side
+
+−2
+
+10
+−3
+
+−5/3
+PSD [ ]
+
+PSD [ ]
+
+10
+
+−3
+
+10
+
+−4
+
+10
+
+(0.17, 0.34, 0.51)
+−5/3
+
+0.01
+
+−4
+
+10
+
+0.1
+
+1
+
+St = f d/uj [ ]
+
+a)
+
+0.01
+
+10
+
+b)
+−7
+
+−4
+
+10
+
+0.6
+
+−5
+
+−8
+
+k/u j [ ]
+
+−7
+
+10
+
+center
+lee−side
+
+√
+
+PSD [ ]
+
+10
+
+−6
+
+c)
+
+0.5
+0.4
+0.3
+0.2
+
+wind−side
+
+10
+
+0.01
+
+1
+
+−5/3
+
+−3
+
+10
+
+0.1
+St = f d/uj [ ]
+
+0.1
+0.1
+St = f d/uj [ ]
+
+0
+−100
+
+1
+
+−50
+
+0
+50
+(t − t 0 ) u j /d [ ]
+
+100
+
+d)
+
+Figure 22: Turbulent Kinetic Energy (TKE) versus dimensionless frequency along the jet center streamline at a) s/d = 2, b)
+s/d = 4 and c) s/d = 17; and d) square root of the TKE signal on the windward side of the jet at s/d = 2 versus time in the
+vicinity of a coherent structure accumulation event that correspond to the St = 0.2 peak in a).
+
+7.3. Turbulence spectra
+In this section, 200 time-resolved probes are analyzed. They are placed along the windward and leeward
+side curves as well as along the jet center streamline. Signal processing techniques are used to study
+turbulence spectra as a function of curvilinear distance from injection. The spectrum averaging procedure
+of Welch [51] is used to enable a deterministic Power Spectrum Density (PSD) estimate from a chaotic
+turbulent signal with finite length. Twenty Hamming windows are used. Local values of TKE are extracted
+from 800 three-dimensional snapshots acquired at a Strouhal number of St = f d/Uj = 2.3. Snapshots
+are stored every 8 time-steps, with dt Uj /d = 0.053. This enables a spectrum analysis up to the Nyquist
+frequency of St = 1.15. Extracting local values from snapshots allows one to precisely position the probes
+along the predicted jet trajectory.
+Figure 22 shows the TKE spectrum as a function of dimensionless frequency at a) s/d = 2, and b) s/d = 4
+in the near-field; and c) s/d = 17 in the far field. Figure 22a shows that at the jet center, the TKE spectrum
+corresponds to fully developed turbulence exiting the pipe, as a −5/3 slope is observed. In the absence
+of mean velocity gradient at the jet center, coherent structures do not develop at this location since no
+peak is present in the PSD. The integral of the PSD (the power of TKE) is smaller at the jet center than
+on the leeward side and the windward side of the jet. On the windward side of the jet, a strong increase
+of TKE is observed in comparison with the jet center streamline. This is due to strong KH instabilities
+developing at the interface between the jet and the cross-flow. The dominant dimensionless frequency on
+the windward side of the jet at s/d = 2 is St ≈ 0.2. Subharmonics at St ≈ 0.4, 0.6 and 0.8 are also
+observed. Analysis of the time-resolved evolution of coherent structures in the near-injector region shows
+that regular ring-vortices correspond to the subharmonics at St = 0.4, 0.6 and 0.8 and the large PSD peak
+at St = 0.2 correspond to less frequent amalgamation events, where several coherent structures gather and
+induce strong velocity fluctuations when crossing the probe on the windward side. An example of such an
+28
+
+event is shown in Fig. 22d. This figure shows the square root of the TKE signal recorded by the probe on the
+windward side at s/d = 2. At the instant noted, t0 , the velocity fluctuation is very large and equal to 0.6 uj .
+This corresponds to the presence of a very energetic vortex resulting from an amalgamation event. On the
+leeward side of the jet, the dominant Strouhal number is smaller than on the windward side and equal to
+St ≈ 0.15. Similarly to the windward side of the jet, subharmonics are observed at St ≈ 0.3, and 0.6. On
+both sides of the jet, TKE accumulates in the low-frequency range (large spatial scales) and the transfer to
+high-frequency range (small spatial scales) is not as effective as in fully-developed turbulence as the absolute
+value of the slope is larger than 5/3. At s/d = 2, the spectra thus correspond to a superimposition of the
+developed turbulence exiting from the pipe and the nascent coherent structures in the shear-layers.
+At s/d = 4, Fig. 22b shows a qualitatively similar spectrum on the windward side of the jet, with strong
+modes at St = 0.2, 0.3, 0.5, and a small transfer rate to high-frequencies. On the jet center streamline,
+strong modes are observed at St = 0.2, 0.35, 0.5, as well as a transfer rate to high-frequencies close to −5/3,
+even though peaks are observed instead of fully broadband mixing. The peak at St = 0.5 is particularly
+strong on the jet center streamline. Visual observation of the jet indicates that this is due to the staggered
+arrangement of the coherent structures in the range of St = 0.2 − 0.35 on the windward and leeward sides of
+the jet, which induces this higher frequency mode on the jet center streamline. On the leeward side of the
+jet, although modes are observed at St = 0.15, 0.3, 0.5, these modes are weak and TKE is overall weaker (the
+integral is smaller) and shows a transfer of energy to high-frequencies representative of developed turbulence.
+This is due to the recirculation zone existing in the wake of the jet (induced by the nascent counter-rotating
+vortex-pair), which recycles downstream turbulence back into the leeward side of the jet. This is also due to
+the coherent structures that form on the windward side of the jet, which are transported downstream and
+break down due to large-residence time. Thus, at s/d = 4, which corresponds to the TBP, both coherent
+structures and broadband turbulence are present. The modes observed in Fourier space correspond to the
+ring-vortices, counter-rotating vortex-pair and v-shape vortices in physical space. Figure 22c) shows that
+far downstream, at s/d = 17, both an inertial range (−5/3 slope) and a dissipation range (−7 slope) is
+resolved by the present simulation, consistently with the comparison of turbulence scales and grid resolution
+provided in Appendix. B. On the center streamline and on the windward side of the jet, weak modes can still
+be observed in the inertial range, which indicates that small-scale structures forms at the outer shear-layer
+between the jet and the cross-flow, even in the far-field region. This is consistent with the maps of turbulence
+scales provided in Figs. 16 and 18.
+Figure 23 shows a map of TKE spectrum as a function of dimensionless frequency and curvilinear distance
+defined along the a) windward side curve, b) center streamline, and c) leeward side curve. These plots were
+inspired by the experimental study of Megerian et al. [52], where similar maps are shown for the windward
+side of near-field of the jet, which enables a good understanding of the spatial evolution of turbulent time
+scales. For s/d ≤ 2, TKE develops on the windward and leeward sides of the jet whereas it is very small on the
+jet centerline. This corresponds to the development of coherent structures in the shear-layers, as explained
+previously with Fig. 22a. The maximum of TKE is located in the vicinity of s/d = 4 for the windward
+side of the jet and for the jet center streamline. This corresponds to the breakdown of coherent turbulent
+flow structures (in the vicinity of the TBP). On the leeward side of the jet, the breakdown of turbulence is
+slightly delayed and is located at s/d ≈ 5. After this breakdown of turbulence, a classical energy cascade is
+present for both sides of the jet, as well as for the jet center streamline. Further downstream at s/d ≥ 7, one
+can observe how the developed TKE spectra evolves with the jet trajectory. TKE progressively decreases
+with the distance from injection. Characteristic times of turbulence increase, and spatial scales grow as the
+spectra shifts toward smaller frequencies. This is due to amalgamation at large spatial scales and dissipation
+at small spatial scales, as well as a decrease in mean velocity. On the windward side of the jet, spatial scales
+do not grow as much and deterministic modes in the TKE spectrum are observed in the high-frequency
+range. This is consistent with the evolution of the integral scale in Fig. 16 and Taylor-microscale in Fig. 18,
+and is related to the generation of small-scale turbulent flow structures in the outer shear-layer between the
+jet and the cross-flow. On the leeward side of the jet, more TKE is present in the large spatial scales than
+on the jet center streamline and windward side of the jet, which is consistent with the maps of turbulence
+scales provided in Figs 16 and 18.
+Figure 24 compares the spectra of TKE and scalar fluctuations. Integral scales are similar between these
+29
+
+a) wind−side
+
+b) center−streamline
+
+c) lee−side
+
+20
+
+log10(PSD)
+
+15
+
+s/d [ ]
+
+−4
+10
+
+−6
+−8
+−2
+
+5
+
+−4
+−6
+0
+
+−8
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0
+
+St= f d/uj [ ]
+Figure 23: Turbulent Kinetic Energy spectrum as a function of dimensionless frequency and curvilinear distance defined along
+a) windward side curve, b) center streamline, and c) leeward side curve.
+
+−4
+
+PSD [ ]
+
+10
+
+−5/3
+−7
+
+−5
+
+10
+
+TKE
+
+−1
+
+−6
+
+10
+
+C’2
+−7
+
+10
+0.001
+
+0.01
+
+0.1
+
+1
+
+St [ ]
+
+Figure 24: Turbulent Kinetic Energy (TKE) and scalar fluctuations (C’2 ) versus dimensionless frequency along the jet center
+streamline at s/d = 17 (far-field).
+
+30
+
+a)
+
+b)
+1
+C/Cmax [ ] or
+∇ C/ ∇ Cmax[ ]
+
+∇ C/ ∇ Cmax
+
+0.5 ∇ Cmax
+
+0.8
+
+C/Cmax [ ]
+
+0.6
+0.4
+
+dmin
+
+0.2
+0
+−0.4
+
+−0.3
+
+−0.2
+
+−0.1
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+xn/d [ ]
+
+c)
+
+Figure 25: Post-processing technique to assess gradient thicknesses PDF as a function of vertical distance from injection y.
+a) Definition of V 3D(y0 ) and V (y0 ). b) High scalar gradient regions within V (y0 ) and sample normal one-dimensional cut.
+c) Scalar thickness (= 2dmin ) within a normal one-dimensional cut.
+
+fluctuations (St ≈ 0.06). The transfer rate of energy to high frequencies is smaller (larger absolute value of
+the slope) for the TKE than for the scalar fluctuations. The TKE spectrum shows a classical ‘-5/3’ slope in
+the inertial-range, as already detailed with Fig. 22c. In the scalar spectrum however, there is more energy
+distributed to high-frequencies, and the transfer rate is similar to the ‘-1 slope’ observed in studies of HIT,
+across the viscous-convective subrange [37]. It is situated between the inertial-convective subrange and the
+viscous-diffusive subrange for flows where Sc > 1 (here ScC3H6O ≈ 1.5, as shown in Fig. 3). This specific
+transfer is due to scalar sheets wrapped around tube-like turbulence structures, which creates large values
+of scalar gradient and subsequently high frequency oscillations [53, 37].
+7.4. Scalar gradient thickness
+In this section, we characterize how scalar gradients evolve with downstream distance from injection.
+Although it has been shown in Secs. 7.1-7.3 how turbulence scales evolve in the three-dimensional field, it is
+not straightforward to determine how resolved scalar gradient thicknesses are linked with turbulence scales.
+Indeed, on the very outer edge of the jet, persisting large concentration gradients are present between the
+jet and the cross-flow of air. Inside the jet, scalar gradients are smaller because jet fluid and engulfed air
+have been mixed by turbulence and diffusion.
+To determine the gradient thickness, we use the post-processing procedure summarized in Fig. 25. First,
+as indicated in Fig. 25a, we define a line length l and a three-dimensional volume V 3D(y0 ) centered on a given
+y0 between y = −3d and y = 17d, which is the observation window used in previous sections. The volume has
+the dimensions 20d×(1d+l)×l. A line length of l = 3d is chosen, which allows one to obtain sufficiently large
+31
+
+30
+25
+
+0.25
+
+y= 2.5d
+
+15
+
+y=15.5d
+
+10
+5
+
+0.2
+0
+
+a)
+
+y= 0.5d
+
+20
+PDF
+
+δ|∇ C|/d [ ]
+
+0.3
+
+5
+
+10
+y/d [ ]
+
+0
+0.1
+
+15
+
+b)
+
+0.2
+
+0.3
+δ|∇ C|/d [ ]
+
+0.4
+
+0.5
+
+Figure 26: a) Mean gradient thickness in V (y), where V (y) is the interrogation window defined in Fig. 25. b) PDF of gradient
+thickness within V (y) for 3 increasing values of y.
+
+one-dimensional cuts to determine the corresponding PDFs. The three-dimensional gradient of concentration
+is computed within V 3D(y0 ). Then, we define a two-dimensional sub-domain V (y0 ) centered on y0 and
+z/d = 0. This sub-domain is embedded within V 3D(y0 ) and has the dimensions 20d × 1d. Within V (y0 ),
+we identify the maximum value of the concentration gradient magnitude |∇C|max . Then, as represented
+in Fig. 25b, we define a high scalar gradient region where the local gradient of concentration is larger than
+|∇C|max /10. In this region, we make 200 one-dimensional cuts of length l along the three-dimensional
+gradient direction. These cuts are further analyzed to identify the gradient thickness, as represented in
+Fig. 25c. Within each cut, the maximum concentration gradient magnitude is identified, and the minimum
+distance dmin separating the location of this maximum value to location where half of this value is reached
+is determined. We finally define the gradient thickness as
+δ|∇C| = 2dmin
+
+(24)
+
+In the example show in Fig. 25c, dmin /d = 0.07, so that δ|∇C| /d = 0.14 (= 2 dx).
+Figure 26a shows the mean value of δ|∇C| in V (y) as a function of y. Near the injector exit, in the vicinity
+of y/d = 0, the mean gradient thickness is approximately equal to three LES filter widths (δ|∇C| = 0.18).
+Then, a linear increase is observed until y = 2.5d, where turbulent mixing starts to diffuse the concentration
+gradient. For y > 2.5d, the mean gradient thickness increases very slowly. The mean gradient thickness at
+y = 15.5d is equal to 0.3d, which is only 10% greater than the mean gradient thickness at y=2.5d (=0.28d).
+As air is regularly engulfed into the wake of the jet, scalar gradients are still strong at the outer edge of the
+jet, as shown previously in Fig. 12b.
+The PDF of gradient thickness within V (y) is shown for three increasing values of y/d in Fig. 26b.
+Although the mean value of the gradient thickness does not significantly increase after the TBP, the PDF
+shows that this distribution gets wider with increasing distance from injection. This is representative of the
+broadband turbulent mixing that occurs in the wake of the jet. Thus, in spite of the growth of turbulence
+scales, the smallest scalar gradient thickness stays approximately constant and equal to 0.25 d in the wake of
+the jet. This has important consequences in an engineering LES calculation, which typically employs coarser
+resolutions. If one stretches the mesh with a s/d1/3 rate to approximately follow growth of turbulence scales
+in the wake of the jet (see Sects. 7.1-7.2), this would probably only be sufficient to accurately resolve
+turbulence without concentration gradients. If a scalar is transported by the flow, scalar gradients would be
+more and more filtered and high-order statistics such as scalar fluctuations or scalar dissipation rate would
+be less accurately predicted. Since in a reacting flow case combustion occur far downstream of the injection
+point, where scalar-dissipation rates are on average smaller, the present gradient thickness analysis tends to
+indicate that mesh spacing should stay approximately constant in the wake of the jet to accurately predict
+scalar gradients and thus flame stabilization. This would require more computational resources than what is
+ordinary used in such flow computations. This might be an imperative constraint for calculation accuracy,
+32
+
+and this point will be the focus of further studies.
+8. Conclusions
+In the present work, we conducted a highly resolved Large Eddy Simulation (LES) of turbulent mixing
+in the Jet-In-Cross-Flow configuration studied experimentally by Su and Mungal [5]. LES and experimental
+measurements of mean velocity, mean concentration, Reynolds stress tensor, and the turbulent scalar flux
+have been compared and errors have been quantified. This extensive validation of LES results and the
+corresponding analysis confirmed that LES is a good instrument for predicting complex three-dimensional
+turbulent flows. The novelty of this work consists in the extended characterization of turbulence scales, their
+origin, and dynamic evolution in the flow. Measuring these types of quantities is still not attainable using
+experimental diagnostics due to constraints in resolution.
+Using the validated results from LES, we presented in detail the turbulent mixing phenomenology for
+the present configuration and how turbulence scales spatially evolve in a JICF. LES is used to perform
+the analysis since experimental measurements of time-resolved 3D fields is still in its infancy, and because
+sampling periods are generally limited with Direct Numerical Simulation. Four quantities were mapped: integral scales, Taylor microscales, turbulent energy spectra, and scalar gradient thicknesses. For the dynamic
+quantities (i.e., integral scales, Taylor microscales, turbulent energy spectra) a similar spatial evolution
+was observed. Scales first grow at various rates before breakdown of the jet turbulence, then a one-third
+power law is observed along the jet trajectory and consistently within the wake. For the scalar fluctuations
+and gradients, the trend is different. A sharp linear evolution of the gradient thickness occurs before the
+complete destabilization of the jet followed by a secondary, almost constant, evolution further downstream.
+This shows that a linear stretching of the mesh from the injection point to the far-field is excessive and will
+impact the far-field predictions of turbulent mixing by filtering out key turbulent flow structures present in
+the wake of the jet.
+Observations such as those made above can be used to design a computational grid that would optimally
+resolve turbulence. Based on the momentum flux ratio, the trajectory of the jet can be estimated first. An
+optimal initial grid size at the injector exit should be fine enough to resolve the vorticity thickness. Then,
+if scalar transport is not the dominant focal point, one may use a 1/3 power law to stretch the grid to
+make it consistent with the evolution of turbulent flow structures in the wake of the jet. If scalar transport
+is important and scalar gradients must be captured, we would recommend a stretching rate smaller than
+(y/d)1/3 to maintain good resolution of scalar fields. Smaller cells, however, should be placed at the outer
+edge of the jet (with dx = O(d/3)), to capture the interaction between the jet and the cross-flow, which
+gives rise to small vortical structures that inject energy in the TKE spectrum.
+Future work will focus on two aspects: 1) using coarser grid sizes, we will study the impact of filtering
+a posteriori on resolved scales of turbulence, their interaction, and the subsequent errors on turbulent
+mixing predictions; 2) we will devise an optimal mesh with local cell sizes following the spatial evolution of
+turbulence scales using the maps presented in the current work. This will enable one to determine whether
+the same level of accuracy can be obtained at a significantly lower cost. Similar analyses under reacting flow
+conditions would also bring crucial insights into the effects of LES filtering on prediction accuracy.
+Acknowledgment
+This material is based upon work supported by the U.S. Department of Energy, Office of Science, Office
+of Basic Energy Sciences, Division of Chemical Sciences, Geosciences, and Biosciences. Sandia National
+Laboratories is a multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin Company,
+for the United States Department of Energy under contract DE-AC04-94-AL85000. This research used
+resources of the National Energy Research Scientific Computing Center, a DOE Office of Science User
+Facility supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC0205CH11231. We thank Professors Su and Mungal for making their data available.
+
+33
+
+A. Scalar variance and turbulent scalar fluxes
+Mean concentration, mean velocity and Reynolds stress tensor profiles have been compared to experimental results in Section 5.2. Here, we show additional comparisons of second order statistics.
+Figure A.1a shows the scalar variance profiles in the near-field of the jet. At x = 0.57d, the scalar
+fluctuation levels are much more prevalent in the LES compared to the experiment. Note that in the DNS
+of Muppidi and Mahesh [54], the simulation results also exhibited much higher fluctuation levels than in the
+experiment. The maximum value of scalar fluctuation predicted by this DNS is C 0 C 0 = 0.1, which has the
+same order of magnitude as the present LES result, where C 0 C 0 = 0.16. Further downstream, the deviations
+decrease, although they are still present. To investigate this discrepancy, Muppidi and Mahesh [54] examined
+whether the spatial filtering induced by the finite-thickness of the laser sheet and/or the spatial resolution
+of the camera used in the experiment could impact the measured fluctuation levels. Although these levels
+were shown to diminish with increasing filtering, the levels obtained in the experiment were still much lower
+than the filtered DNS results and no definitive explanation was available for this discrepancy. Because our
+results have similar fluctuation levels as in Muppidi and Mahesh [54], it is possible that the experimental
+resolution in the near-field might not have been high enough to provide the correct levels of scalar variance.
+This is consistent with the fact that in the far-field, scalar variance profiles are comparable in the LES and
+experiment, as shown in Fig. A.1b. A similar observation was made from the errors in Reynolds stresses in
+Table 1. Similarly to the mean velocity profiles, a bifurcated structure with two local maxima is observed.
+This has also been observed in other numerical and experimental studies [6, 55]. Peak fluctuations at the
+outer edge of the jet are stronger than those located at the inner edge. The scalar variance at the inner
+edge is dominated by fluctuations that occur within the counter-rotating vortex pair in the wake of the
+jet, whereas the scalar variance at the outer edge is dominated by the interface between the jet and the
+cross-flow of air.
+Figure A.2 shows the time-averaged horizontal turbulent flux of concentration u0 C 0 . Figure A.2a shows
+that in the near-field, distinct peaks of positive correlation between concentration and horizontal velocity
+are present at the jet edges. The flow structures developing in the shear-layer induce turbulent transport of
+concentration. As was observed for the scalar variance profiles shown in Fig. A.1, experimental measurements
+in the near-field show much lower values of fluctuations than in the LES results. When comparing with
+the DNS of Muppidi and Mahesh [14], a qualitatively similar result is obtained, although fluctuation levels
+are larger in our case than in the DNS by approximately a factor of two. In the near-field, it appears
+that the LES results are not resolved enough to capture the small-scale turbulence developing within the
+shear-layer of the jet, and large fluctuations are predicted. Further downstream, however, good agreement is
+observed between LES, DNS, and the experiment. The agreement between LES and experimental profiles at
+x/d = 8.55 are very good, as well as at all cuts shown in Fig. A.2b. In this region, the largest turbulent fluxes
+of concentration are located at the outer edge of the jet, as indicated by the large peaks of u0 C 0 . This is
+related to the engulfment phenomena observed in Fig. 6a. Similar trends are observed for the time-averaged
+vertical turbulent flux of concentration v 0 C 0 , as shown in Figure A.3. In Figure A.3a, good agreement is
+observed between LES and experiment at x = 0.57d. The qualitative growth in magnitude and spatial
+extent of the vertical turbulent flux of concentration are well predicted between x = 2.85d and x = 8.55d.
+At x = 5.7d, similar fluctuation levels are observed in both DNS and LES. The profiles of Fig. A.3b show
+that a reasonable agreement between LES and experiment is obtained in the far-field.
+
+34
+
+y/d=14.25
+
+0.002
+0.001
+0
+
+C’2 [ ]
+
+y/d=8.55
+
+LES
+
+0.0025
+
+exp
+
+0
+y/d=5.7
+0.005
+0
+y/d=2.85
+
+0.01
+0.005
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=5.7
+
+x/d=8.55
+LES
+
+6
+
+exp
+
+1
+5
+
+y/d [ ]
+
+4
+
+M&M
+0
+
+3
+2
+
+−1
+0 .005
+
+1
+0
+−1
+−2
+0
+
+0.1
+
+0
+
+0.1
+
+0 0.025
+
+0
+
+0.01 0.02
+
+C’2 [ ]
+
+(a)
+Figure A.1:
+Scalar concentration variance profiles in the jet center plane. The ‘exp’ label refers to the experiment of
+Su and Mungal [5]. M&M refers to the numerical study of Muppidi and Mahesh [54].
+
+35
+
+y/d=14.25
+
+0.005
+0
+
+u’C’/u∞ [ ]
+
+LES
+
+y/d=8.55
+
+0.01
+
+exp
+
+0
+0.02
+
+y/d=5.7
+
+0
+
+0.04
+
+y/d=2.85
+
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=5.7
+
+x/d=8.55
+
+1
+
+6
+5
+
+y/d [ ]
+
+4
+
+0
+
+LES
+
+3
+
+exp
+
+−1
+2 −0.1
+
+M&M
+
+0
+
+1
+0
+−1
+−2
+0
+
+0.5
+
+0
+
+0.2
+
+0
+
+0.1
+
+0
+
+0.04
+
+u’C’ /v∞ [ ]
+
+(a)
+Figure A.2: Turbulent scalar flux profiles u0 C 0 in the jet center plane. The ‘exp’ label refers to the experiment of Su and Mungal [5]. M&M refers to the numerical study of Muppidi and Mahesh [54].
+
+36
+
+y/d=14.25
+0.002
+
+v’ C’/u∞ [ ]
+
+0
+LES
+
+y/d=8.55
+
+0.005
+
+exp
+
+0
+0.01
+
+y/d=5.7
+
+0
+0.04
+
+y/d=2.85
+
+0
+0
+
+5
+
+10
+
+15
+
+20
+
+x/d [ ]
+
+(b)
+7
+6
+
+x/d=0.57
+
+x/d=2.85
+
+x/d=5.7
+
+x/d=8.55
+
+1
+
+5
+0
+
+LES
+
+y/d [ ]
+
+4
+
+exp
+
+3 −1
+
+−0.02 0.02
+
+M&M
+
+2
+1
+0
+−1
+−2
+0
+
+0.1
+
+0 0.2
+
+0 0.1
+
+0 0.05
+
+v’C’ /v∞ [ ]
+
+(a)
+Figure A.3: Turbulent scalar flux profiles v 0 C 0 in the jet center plane. The ‘exp’ label refers to the experiment of Su and Mungal [5]. M&M refers to the numerical study of Muppidi and Mahesh [54].
+
+37
+
+1
+
+10
+
+lt
+
+0
+
+scale / d [ ]
+
+10
+
+η
+dx M&M
+
+−1
+
+10
+
+dx present
+−2
+
+10
+
+−3
+
+10
+
+−2
+
+10
+
+−1
+
+10
+
+10
+
+0
+
+1
+
+10
+
+s/d [ ]
+Figure B.1: Integral and Kolmogorov scales along the jet centerline, compared to the grid resolution dx used in the present
+study and in the study of Muppidi and Mahesh [14, 54] (M&M).
+
+B. Grid resolution and turbulence scales
+One can assess the Kolmogorov scale η assuming a TKE cascade at equilibrium. This yields the following
+relation:
+1/4
+η = C0 ν 3 /
+(B.1)
+where  is the TKE dissipation (Eq. 17). Figure B.1 shows the spatial evolution of the Kolmogorov scale and
+the integral scale (Eq. 16) along the jet centerline. The grid resolutions used in the present LES and in the
+DNS of Muppidi and Mahesh [14, 54] are also shown. At the pipe exit, the simulation of Muppidi and Mahesh
+uses fine grid resolution and resolve the dissipative range of the pipe turbulence, with dx=O(η), which is
+sufficient to reach DNS [56]. In the present LES simulation, the dynamic Smagorinsky model is used in the
+near-field to model turbulence dissipation. However, because the grid in Muppidi and Mahesh is stretched
+linearly with a factor of 5%, our grid is actually finer for s/d ≥ 1. In the far-field, the grid resolution in
+the present case is comparable to the Kolmogorov scale, which indicates DNS resolution. This is consistent
+with the fact that 11M cells are concentrated in the near-field region in Muppidi and Mahesh [14], whereas
+190M cells are evenly distributed in the whole flow field in the present case, allowing a characterization of
+the spatial evolution of turbulence scales from jet-like to wake-like turbulence. In the present simulation,
+the ratio of lt /dx is about 5 before the TBP (s/d ≤ 4) and is approximately 25 downstream of it, which
+allows a good resolution of the large scales of turbulence everywhere in the domain.
+C. Acetone concentration and jet penetration
+As explained in Section 2, Su and Mungal [5] state that the acetone concentration “slowly diminishes”
+over the course of an experimental run. The cost of running a parametric study on the acetone content
+using the full computational domain D (which is of size (Lx /d, Ly /d, Lz /d) = (33, 33, 40)) is prohibitive.
+However, to better assess the sensitivity of jet penetration to the acetone concentration in the pipe, we have
+performed two additional simulations using the smaller domain described in Section 4.1 (which is of size
+(Lx /d, Ly /d, Lz /d) = (23, 13, 6)).
+Figure C.1 shows the inner and outer-edge of the jet fluid (defined as the C = 0.05 isocontour) for the
+reference case (XC3H6O = 0.10) and for two other cases where the acetone concentration has been increased
+two-fold and four-fold (XC3H6O = 0.20 and XC3H6O = 0.40) at the pipe inlet. The acetone content has a
+notable effect on the jet penetration. Studies in the literature suggest that near-field trajectories scale as
+the square root of the momentum-flux ratio [44, 57]. In order to verify this dependency, we have also plotted
+dashed lines in Fig. C.1 corresponding to the trajectories defined by Eq. 19, with the ‘A’ constant scaled
+according to the square root of the density ratio (the velocity ratio is fixed here). The jet trajectories appear
+38
+
+8
+
+10%
+20%
+
+6
+y/d [ ]
+
+40%
+Scaled
+Eq.19
+
+4
+2
+0
+0
+
+5
+
+10
+x/d [ ]
+
+Figure C.1: Jet penetration as a function of the acetone concentration at the pipe inlet.
+
+to follow the square root scaling of the momentum-flux ratio. This supports the fact that the penetration
+of the jet is sensitive to acetone concentration variations in the pipe, which in turn might play a role in the
+observed deviations between experimental measurements and numerical results.
+
+39
+
+[1] R. J. Margason, Fifty years of jet in cross flow research, in: In AGARD, Computational and Experimental Assessment of
+Jets in Cross Flow 41 p (SEE N94-28003 07-34), Vol. 1, 1993.
+[2] A. R. Karagozian, Transverse jets and their control, Progress in Energy and Combustion Science 36 (5) (2010) 531 – 553.
+[3] K. Mahesh, The interaction of jets with crossflow, Annual Review of Fluid Mechanics 45 (2013) 379–407.
+[4] F. Scarano, Tomographic piv: principles and practice, Measurement Science and Technology 24 (1) (2013) 012001.
+[5] L. Su, M. Mungal, Simultaneous measurements of scalar and velocity field evolution in turbulent crossflowing jets, Journal
+of fluid mechanics 513 (1) (2004) 1–45.
+[6] L. L. Yuan, R. L. Street, Trajectory and entrainment of a round jet in crossflow, Physics of Fluids 10 (1998) 2323.
+[7] J. Schlüter, T. Schönfeld, Les of jets in cross flow and its application to a gas turbine burner, Flow, Turbulence and
+Combustion 65 (2) (2000) 177–203.
+[8] X. Guo, W. Schröder, M. Meinke, Large-eddy simulations of film cooling flows, Computers & Fluids 35 (6) (2006) 587 –
+606.
+[9] P. Renze, W. Schröder, M. Meinke, Large-eddy simulation of film cooling flows at density gradients, International Journal
+of Heat and Fluid Flow 29 (1) (2008) 18 – 34.
+[10] A. Rozati, D. K. Tafti, Large-eddy simulations of leading edge film cooling: Analysis of flow structures, effectiveness, and
+heat transfer coefficient, International Journal of Heat and Fluid Flow 29 (1) (2008) 1 – 17.
+[11] S. Mendez, F. Nicoud, et al., Large-eddy simulation of a bi-periodic turbulent flow with effusion, Journal of Fluid Mechanics
+598 (2008) 27–66.
+[12] J. Eggels, F. Unger, M. Weiss, J. Westerweel, R. Adrian, R. Friedrich, F. Nieuwstadt, Fully developed turbulent pipe flow:
+a comparison between direct numerical simulation and experiment, Journal of Fluid Mechanics 268 (1) (1994) 175–209.
+[13] M. Klein, A. Sadiki, J. Janicka, A digital filter based generation of inflow data for spatially developing direct numerical
+or large eddy simulations, Journal of Computational Physics 186 (2) (2003) 652–665.
+[14] S. Muppidi, K. Mahesh, Direct numerical simulation of round turbulent jets in crossflow, Journal of Fluid Mechanics 574
+(2007) 59–84.
+[15] U. Filobello-Nino, H. Vazquez-Leal, R. Castaneda-Sheissa, A. Yildirim, L. Hernandez-Martinez, D. Pereyra-Diaz, A. PerezSesma, C. Hoyos-Reyes, An approximate solution of blasius equation by using hpm method., Asian Journal of Mathematics
+& Statistics 5 (2).
+[16] J. C. Oefelein, Large eddy simulation of turbulent combustion processes in propulsion and power systems, Progress in
+Aerospace Sciences 42 (1) (2006) 2–37.
+[17] J. C. Oefelein, Thermophysical characteristics of LOX–H2 flames at supercritical pressure, Proceedings of the Combustion
+Institute 30 (2005) 2929–2937.
+[18] J. C. Oefelein, R. W. Schefer, R. W. Barlow, Toward validation of LES for turbulent combustion, AIAA Journal 44 (3)
+(2006) 418–433.
+[19] J. C. Oefelein, V. Sankaran, T. G. Drozda, Large eddy simulation of swirling particle-laden flow in a model axisymmetric
+combustor, Proceedings of the Combustion Institute 31 (2007) 2291–2299.
+[20] T. C. Williams, R. W. Schefer, J. C. Oefelein, C. R. Shaddix, Idealized gas turbine combustor for performance research and
+validation of large eddy simulations, Review of Scientific Instruments 78 (3) (2007) 035114–1–9, doi: 10.1063/1.27.12936.
+[21] G. Lacaze, J. C. Oefelein, A non-premixed combustion model based on flame structure analysis at supercritical pressures,
+Combustion and Flame 159 (6) (2012) 2087 – 2103.
+[22] G. Lacaze, A. Misdariis, A. Ruiz, J. C. Oefelein, Analysis of high-pressure diesel fuel injection processes using {LES} with
+real-fluid thermodynamics and transport, Proceedings of the Combustion Institute 35 (2) (2015) 1603 – 1611.
+[23] J. Oefelein, G. Lacaze, R. Dahms, A. Ruiz, A. Misdariis, Effects of real-fluid thermodynamics on high-pressure fuel
+injection processes, SAE Int. J. Engines 7 (3) (2014) 1125–1136.
+[24] G. Erlebacher, M. Y. Hussaini, C. G. Speziale, T. A. Zang, Toward the large eddy simulation of compressible turbulent
+flows, Journal of Fluid Mechanics 238 (1992) 155–185.
+[25] C. G. Speziale, Galilean invariance of subgrid-scale stress models in the large eddy simulation of turbulence, Journal of
+Fluid Mechanics 156 (1985) 55–62.
+[26] M. Germano, U. Piomelli, P. Moin, W. H. Cabot, A dynamic subgrid-scale eddy viscosity model, Physics of Fluids 3 (7)
+(1991) 1760–1765.
+[27] P. Moin, K. Squires, W. Cabot, S. Lee, A dynamic subgrid-scale model for compressible turbulence and scalar transport,
+Physics of Fluids 3 (11) (1991) 2746–2757.
+[28] D. K. Lilly, A proposed modification of the germano subgrid-scale closure method, Physics of Fluids 3 (11) (1992) 633–635.
+[29] Y. Zang, R. L. Street, J. R. Koseff, A dynamic mixed subgrid-scale model and its application to turbulent recirculating
+flows, Physics of Fluids 5 (12) (1993) 3186–3195.
+[30] B. Vreman, B. Geurts, H. Kuerten, On the formulation of the dynamic mixed subgrid-scale model, Physics of Fluids 6 (12)
+(1994) 4057–4059.
+[31] J. Smagorinsky, General circulation experiments with the primitive equations. I. The basic experiment, Monthly Weather
+Review 91 (1963) 99–164.
+[32] J. F. Ely, H. J. M. Hanley, Prediction of transport properties. 1. Viscosity of fluids and mixtures, Industrial and Engineering
+Chemistry Fundamentals 20 (4) (1981) 323–332.
+[33] R. B. Bird, W. E. Stewart, E. N. Lightfoot, Transport Phenomena, John Wiley and Sons, Incorporated, New York, New
+York, 1960.
+[34] J. O. Hirschfelder, C. F. Curtiss, R. B. Bird, Molecular Theory of Gases and Liquids, 2nd Edition, John Wiley and Sons,
+Incorporated, New York, New York, 1964.
+[35] S. Smith, M. Mungal, Mixing, structure and scaling of the jet in crossflow, Journal of Fluid Mechanics 357 (1) (1998)
+
+40
+
+83–122.
+[36] J. W. Shan, P. E. Dimotakis, Reynolds-number effects and anisotropy in transverse-jet mixing, Journal of Fluid Mechanics
+566 (2006) 47–96.
+[37] R. Antonia, P. Orlandi, Effect of schmidt number on small-scale passive scalar turbulence, Applied Mechanics Reviews
+56 (6) (2003) 615–632.
+[38] P. Freymuth, On transition in a separated laminar boundary layer, Journal of Fluid Mechanics 25 (04) (1966) 683–704.
+[39] H. Becker, T. Massaro, Vortex evolution in a round jet, Journal of fluid mechanics 31 (03) (1968) 435–448.
+[40] T. Fric, A. Roshko, Vortical structure in the wake of a transverse jet, Journal of Fluid Mechanics 279 (1994) 1–47.
+[41] J. Jeong, F. Hussain, On the identification of a vortex, Journal of Fluid Mechanics 285 (69) (1995) 69–94.
+[42] J. Keffer, W. Baines, The round turbulent jet in a cross-wind, Journal of Fluid Mechanics 15 (04) (1963) 481–496.
+[43] Y. Kamotani, I. Greber, Experiments on a turbulent jet in a cross flow, AIAA journal 10 (11) (1972) 1425–1429.
+[44] J. Broadwell, R. Breidenthal, Structure and mixing of a transverse jet in incompressible flow, Journal of Fluid Mechanics
+148 (1984) 405–412.
+[45] G. Broze, F. Hussain, Transitions to chaos in a forced jet: intermittency, tangent bifurcations and hysteresis, Journal of
+Fluid Mechanics 311 (1996) 37–71.
+[46] C. da SILVA, O. Métais, On the influence of coherent structures upon interscale interactions in turbulent plane jets,
+Journal of Fluid Mechanics 473 (2002) 103–145.
+[47] L. L. Yuan, R. L. Street, J. H. Ferziger, Large-eddy simulations of a round jet in crossflow, Journal of Fluid Mechanics
+379 (1999) 71–104.
+[48] J. Kim, P. Moin, R. Moser, Turbulence statistics in fully developed channel flow at low reynolds number, Journal of fluid
+mechanics 177 (1987) 133–166.
+[49] H. Abe, R. A. Antonia, Scaling of normalized mean energy and scalar dissipation rates in a turbulent channel flow, Physics
+of Fluids (1994-present) 23 (5) (2011) 055104.
+[50] M. S. Uberoi, P. Freymuth, Turbulent energy balance and spectra of the axisymmetric wake, Phys. Fluids 13 (9) (1970)
+2205–2210.
+[51] P. D. Welch, The use of fast fourier transform for the estimation of power spectra: a method based on time averaging over
+short, modified periodograms, IEEE Transactions on audio and electroacoustics 15 (2) (1967) 70–73.
+[52] S. Megerian, J. Davitian, L. de B Alves, A. Karagozian, Transverse-jet shear-layer instabilities. part 1. experimental
+studies, J. Fluid Mech. 593 (2007) 93–129.
+[53] R. M. Kerr, Higher-order derivative correlations and the alignment of small-scale structures in isotropic numerical turbulence, Journal of Fluid Mechanics 153 (1985) 31–58.
+[54] S. Muppidi, K. Mahesh, Direct numerical simulation of passive scalar transport in transverse jets, Journal of Fluid
+Mechanics 598 (2008) 335–360.
+[55] S. Sherif, R. Pletcher, Measurements of the thermal characteristics of heated turbulent jets in crossflow, Journal of heat
+transfer 111 (4) (1989) 897–903.
+[56] P. Moin, K. Mahesh, Direct numerical simulation: a tool in turbulence research, Annual Review of Fluid Mechanics 30 (1)
+(1998) 539–578.
+[57] E. F. Hasselbrink, M. Mungal, Transverse jets and jet flames. part 2. velocity and oh field imaging, Journal of Fluid
+Mechanics 443 (2001) 27–68.
+
+41
+
+

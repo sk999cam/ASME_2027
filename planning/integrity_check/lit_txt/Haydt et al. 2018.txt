@@ -1,0 +1,1719 @@
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+by ASME
+ASME
+Journal
+of Turbomachinery
+
+TURBO-17-1183
+
+ed
+ite
+d
+
+THE EFFECT OF AREA RATIO CHANGE VIA INCREASED HOLE LENGTH FOR
+SHAPED FILM COOLING HOLES WITH CONSTANT EXPANSION ANGLES
+
+tN
+
+ot
+
+Co
+
+INTRODUCTION
+Film cooling holes are a technology used in gas turbines to
+reduce the metal temperature and increase the durability of hot
+gas path components. Film cooling holes are drilled into the
+surface of these components, and coolant is ejected out of them
+to create a film over the surface. The addition of a diffuser to the
+outlet of a cylindrical hole is advantageous for film cooling
+performance [1]. The diffuser decreases the momentum of the
+coolant jet, decreases the ejection angle, and spreads the coolant
+laterally. Many parameters of the diffuser have been varied in
+order to find optimal performance.
+Some of those parameters are depicted in Figure 1, in the 77-7 baseline shaped hole developed by Schroeder and Thole [2].
+The shape and size of a diffuser are determined by its length
+(Ldiff/D), forward expansion angle (βfwd), and lateral expansion
+angle (βlat). An increase in these parameters results in a larger
+diffuser, the size of which can be defined by the area ratio (AR).
+AR is the ratio between the area at the exit plane of the diffuser
+and the area at the metering section, or cylindrical inlet of the
+hole, measured normal to the centerline of the cooling hole. By
+mass conservation, a larger area ratio results in a lower average
+velocity of the coolant jet as it leaves the hole.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+ABSTRACT
+Shaped film cooling holes are used as a cooling technology
+in gas turbines to reduce metal temperatures and improve
+durability, and they generally consist of a small metering section
+connected to a diffuser that expands in one or more directions.
+The area ratio of these holes is defined as the area at the exit of
+the diffuser, divided by the area at the metering section. A larger
+area ratio increases the diffusion of the coolant momentum,
+leading to lower average momentum of the coolant jet at the exit
+of the hole and generally better cooling performance. Cooling
+holes with larger area ratios are also more tolerant of high
+blowing ratio conditions, and the increased coolant diffusion
+typically better prevents jet liftoff from occurring. Higher area
+ratios have traditionally been accomplished by increasing the
+expansion angle of the diffuser while keeping the overall length
+of the hole constant. The present study maintains the diffuser
+expansion angles and instead increases the length of the diffuser,
+which results in longer holes. Various area ratios have been
+examined for two shaped holes: one with forward and lateral
+expansion angles of 7° (7-7-7 hole) and one with forward and
+lateral expansion angles of 12° (12-12-12 hole). Each hole shape
+was tested at numerous blowing ratios to capture trends across
+various flow rates. Adiabatic effectiveness measurements
+indicate that for the baseline 7-7-7 hole, a larger area ratio
+provides higher effectiveness, especially at higher blowing
+ratios. Measurements also indicate that for the 12-12-12 hole, a
+larger area ratio performs better at high blowing ratios but the
+hole experiences ingestion at low blowing ratios. Steady RANS
+simulations did not accurately predict the levels of adiabatic
+effectiveness, but did predict the trend of improving
+effectiveness with increasing area ratio for both hole shapes.
+Flowfield measurements with PIV were also performed at one
+downstream plane for a low and high area ratio case, and the
+results indicate an expected decrease in jet velocity due to a
+larger diffuser.
+
+Scott Lewis
+Turbine Durability
+United Technologies—Pratt & Whitney
+400 Main Street
+East Hartford, CT 06108, USA
+
+py
+
+Shane Haydt
+Stephen Lynch
+Mechanical and Nuclear Engineering Department
+The Pennsylvania State University
+University Park, PA, USA
+
+Figure 1: 7-7-7 baseline shaped film cooling hole,
+developed by Schroeder and Thole.
+
+TURBO-17-1183, Haydt
+
+1
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+ed
+ite
+d
+
+py
+
+Co
+
+ot
+
+sc
+rip
+
+REVIEW OF RELEVANT LITERATURE
+Shaped film cooling holes have been an important area of
+focus since the seminal study by Goldstein et al. [3] showed that
+they provide higher adiabatic effectiveness than cylindrical
+holes, especially at high blowing ratios. As outlined in the
+review of shaped hole literature by Bunker [1], the advantage of
+a shaped film cooling hole is that it reduces the momentum of
+the fluid while providing a wider surface coverage. A shaped
+hole that is laterally and/or forwardly expanded has reduced jet
+penetration into the mainstream, reduced velocity gradients, and
+reduced turbulence production downstream, as shown by Thole
+et al. [4].
+A canonical feature of all film cooling holes is the counterrotating vortex pair (CRVP), which was show by Peterson [5] to
+be formed by the shear layer between the coolant jet and the
+mainstream flow. If the strength of the shear layer is reduced,
+for example by reducing the momentum of the coolant jet, the
+strength of the CRVP is also reduced [1]. The CRVP promotes
+jet lift-off and entrainment of the mainstream flow towards the
+wall, and thus reducing the strength of the CRVP is a primary
+motivation for film cooling research [1]. Shaped holes with a
+large breakout width can also have a secondary feature called
+“anti-kidney vortices” which counteract the detrimental effects
+of the CRVP, as shown by Haven et al. [6]. The vorticity created
+by the hole’s leading edge boundary layer is initially aligned
+normal to the streamwise flow direction, but is realigned in the
+streamwise direction by entrainment of the mainstream flow [6].
+This vorticity creates intermittent “anti-kidney vortices”, sonamed because they act in opposition to the CRVP, also known
+as “kidney vortices”.
+Film cooling geometry design parameters can have a
+profound effect on film cooling effectiveness, and this has been
+a focus of much of the film cooling research for the past few
+decades. Gritsch et al. [7] examined 14 film cooling hole
+variations in order to isolate the effect of several parameters:
+L/D, P/D, t/P, and AR. They found that changing the L/D of
+shaped holes has a negligible effect on η̅, if AR and t/P remain
+constant. Also, η̅ increases with decreasing P/D, which is
+expected since the holes are spaced more closely together, but
+when η̅ is normalized by P/D, it was found that for low P/D the
+holes are too close to make efficient use of coolant per unit span.
+
+The coverage ratio, t/P, has little to no effect at low blowing
+ratios, but at high blowing ratios, the increased lateral diffusion
+due to higher t/P leads to higher η̅. Finally, Gritsch et al. found
+that when t/P remained constant, AR had no effect on η̅, for the
+range of AR=3.5-4.7.
+Another study by Saumweber and Schulz [8] showed the
+effect of the expansion angle, inclination angle, and meter length
+parameters. The effects of these parameters were negligible at
+low blowing ratios, but more significant at high blowing ratios.
+Decreasing inclination angle from 60°-30° and increasing
+expansion angle from 6°-14° lead to increased η. Increasing the
+metering section length slightly decreased η primarily at high M.
+Using the previously mentioned data sets, among others,
+Colban et al. [9] determined a shaped film cooling hole
+correlation using the parameters thought to be most important to
+the effectiveness: AR, P/D, M, t/P, and distance downstream.
+This correlation agreed well with data sets representing film
+cooling holes with AR/(M*P/D)=0.17-1.17, t/P=0.31-0.65, and
+M=0.2-2.5.
+It is important to note that in these aforementioned data sets,
+higher area ratios were achieved by increasing the forward and
+lateral expansion angles of the diffuser while maintaining the
+overall length of the film cooling hole. Therefore, the area ratio
+effect is not isolated, but conflated with the effect of expansion
+angle, and high area ratios were not achieved without
+prohibitively high expansion angles. Kohli and Bogard [10] and
+Thole et al. [4] have shown that if the expansion angle of a hole
+is too high, it can be detrimental to film cooling performance. At
+large expansion angles, separation can occur within the hole,
+which can cause higher turbulence levels at the hole outlet and
+also mainstream ingestion into the diffuser, both of which would
+reduce the performance of the jet [4, 10].
+Saumweber and Schulz [8] also noted a bimodal
+effectiveness pattern for holes with large expansion angles.
+From computation studies, such as Kohli and Thole [11], the
+existence of a separation region on the downstream wall of the
+diffuser is well-established. The spatial extent of the separation
+bubble is increased by increasing expansion, and thus the
+displacement of fluid towards the sidewalls is also increased.
+This velocity deficit is maintained downstream, occasionally
+creating a bimodal effectiveness pattern in extreme cases.
+To help explain the complicated parameter effects of a film
+cooling diffuser, it is instructive to learn from the wellestablished understanding of ideal conical diffusers. McDonald
+and Fox [12] investigated the pressure recovery and efficiency
+of conical diffusers of varying shapes and sizes. This study
+found that the pressure recovery and diffuser effectiveness scale
+with the cone half angle and the ratio between diffuser length and
+radius. Long and narrow diffusers with moderate cone half
+angles have the best pressure recovery, the analogous film
+cooling hole case being a hole with a long L-Lm and a moderate
+lateral and forward expansion angle.
+There are several notable differences between classical
+conical diffuser studies and a film cooling hole diffuser,
+primarily in the nonuniform inlet and outlet conditions
+experienced by a film hole. Klein [13] showed the strong
+influence that some inlet effects had on the pressure recovery,
+including an increase in pressure recovery for higher turbulence
+intensities. However, all velocity inlet profiles in that study were
+
+tN
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright Traditionally,
+(c) 2017 by ASME
+area ratio has been increased by increasing the
+expansion angles of the diffuser. The L/D of the hole is generally
+unchanged by this variation in area ratio, and in literature it tends
+to fall in the range of 2 < L/D < 10. For the present study, the
+expansion angles were maintained and the L/D of the diffuser
+was changed in order to vary AR from 2 to 6. This isolates the
+effect of increasing area ratio from the effect of expansion angle.
+Designers, manufacturers, and academics could benefit
+from a deeper understanding of the impact of area ratio on film
+cooling performance, beyond the range of what has traditionally
+been studied. This type of understanding might be applied to
+optimize the cooling in a region of a turbomachinery component
+that has a sufficiently thick wall to enable an optimally larger
+diffuser. Some examples of such regions where ample wall
+thickness often exists for potentially large film hole diffusers
+include a turbine blade platform or the lower (0-50%) spans of a
+turbine blade airfoil.
+
+TURBO-17-1183, Haydt
+
+2
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+
+py
+
+Figure 2. Schematic of the wind tunnel facility used in the current
+study.Flow for the secondary coolant loop is diverted from the
+
+tN
+
+ot
+
+Co
+
+mainstream flow by a hermetically sealed blower. The
+temperature of the coolant flow is lowered in a heat exchanger
+with liquid nitrogen, and then the gaseous nitrogen exiting the
+heat exchanger is also added to the flow. In order to avoid frost
+formation at these cryogenic temperatures, the air is first routed
+through a vent dryer filled with solid desiccant. Downstream of
+the heat exchanger and the re-injection of the gaseous nitrogen,
+the total coolant flow rate is measured by a venturi flow meter.
+As the flow enters the quiescent plenum, three flow conditioning
+screens are used to ensure uniformity at the inlet of the film
+cooling holes. Inside the plenum, several thermocouples and
+pressure taps measure the coolant temperature and plenum
+pressure. The coolant temperature is about 250 K, and the
+mainstream temperature is about 300 K, which provides a
+density ratio of DR=1.2.
+In order to approximate an adiabatic endwall condition,
+film cooling holes are machined from low conductivity Dow
+Styrofoam (k = 0.029 W/m-K). In each tested case, five holes
+are machined in the Styrofoam, each having a diameter of
+D=6.78 mm, a spanwise spacing of P/D=6, and an inclination
+angle of 30°. The 7-7-7 baseline hole used in this study was
+developed by Schroeder and Thole [2], and is shown in Figure 1.
+That hole was modified with larger expansion angles to create
+the 12-12-12 hole. The area ratio was modified by increasing the
+length of the diffuser, Ldiff, while maintaining expansion angles.
+The modified hole designs for the cases examined in this study
+are shown in Figure 3, where the nomenclature for the cases
+indicates the area ratio (e.g., AR2 has an area ratio of 2 between
+the outlet plane of the hole to the meter).
+A FLIR T650sc infrared camera was used to capture the
+surface temperature of the adiabatic Styrofoam endwall. An insitu calibration using surface copper block thermocouples was
+done in order to ensure the accuracy of the camera calibration for
+the range of temperatures tested. Adiabatic effectiveness
+measurements made by Eberly and Thole [20] for cylindrical
+holes in this facility showed good agreement with the literature.
+Flowfield measurements for this study were taken using a
+high-speed particle image velocimetry (PIV) system. The PIV
+system includes a dual-head Nd:YLF laser and two high speed
+
+Ma
+nu
+
+sc
+rip
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+ASME
+uniform,
+and by
+there
+was free discharge at the outlet. Wolf and
+Johnston [14] examined the effect of non-uniform velocity
+profiles and their effect on diffuser performance. It was found
+that diffusers with velocity profiles having a low velocity coreflow region near a wall had decreased pressure recovery as
+compared to a diffuser with uniform inlet conditions.
+Additionally, separation occurred at a lower value of AR (with
+fixed length to radius ratio) for these cases. This type of inlet
+velocity profile is more consistent with film cooling holes, due
+to the well-known separation region created in the metering
+section inlet.
+Leylek and Zerkle [15] computationally showed this
+separation region, which occurs when the coolant goes through
+a large turning angle from a quiescent plenum. The separation
+at the inlet leads to a jetting effect of the coolant on the opposite
+side of the meter section. This leads to the non-uniform velocity
+profile as described above. This separation region is also a
+feature of film cooling holes fed by crossflow, as shown by Thole
+et al. [16] and Saumweber and Schulz [17]. With moderate inline crossflow, the separation region on the downstream side of
+the meter inlet can be reduced, but with higher crossflow, the
+separation region appears on the upstream side of the inlet [16].
+Likewise, if the coolant has to undergo the large turning angle on
+the side of the inlet, due to crossflow, a separation region is
+created and jetting occurs on the opposite side of the meter [17].
+The separation region at the inlet, and the ensuing skewed
+velocity profile, was also observed experimentally inside a film
+hole by Coletti et al. [18] using magnetic resonance imaging
+(MRI).
+The in-hole understanding described in this section, and in
+the current study, are provided primarily by computational fluid
+dynamics (CFD) predictions. Aside from the aforementioned
+MRI technique, it is difficult to achieve in-hole pressure or
+velocity measurements. Haydt et al. [19] showed that the steady
+RANS realizable k-ε turbulence model was not able to accurately
+capture the exact levels of effectiveness, but was able to predict
+flow features in the hole that physically explained the trends of
+the experimental data.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+EXPERIMENTAL FACILITY
+A schematic of the wind tunnel facility used for the
+measurements in this study is shown in Figure 2. This closedloop wind tunnel has a high temperature, low density mainstream
+loop and a low temperature, high density coolant loop, both with
+air as the working fluid. The mainstream flow is held uniform at
+room temperature using a bank of electrical heating elements and
+a chilled water heat exchanger, and flow is kept at 10 m/s by an
+axial fan, with velocity measured by a Pitot probe. As the flow
+enters the test section, a suction loop removes the incoming
+mainstream boundary layer, and a new boundary layer develops
+on the Styrofoam endwall and is transitioned to turbulence by a
+trip wire located at x/D = -35. Boundary layer measurements for
+this test section were measured and reported by Schroeder and
+Thole [2] at low freestream turbulence of Tu = 0.5%. The
+turbulent boundary layer was measured at x/D = -4.7, and for at
+least five pitchwise locations. The average values were reported
+as θ/D = 0.14, H = 1.45, Reθ = 670, Re* = 315, ReD=4,300,
+Rec=5,000-30,000, and uτ = 0.5 m/s [2].
+
+TURBO-17-1183, Haydt
+
+3
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+
+py
+
+Co
+
+sc
+rip
+
+cameras in a stereo configuration, shown in Figure 4. The laser
+is capable of 20 mJ per pulse per head at a 1 kHz repetition rate
+with 170 ns pulse width. The cameras have 1280x1024 pixel
+resolution with a 105 mm lens and a capture frequency of 2,000
+frames per second at full resolution. The system was controlled
+by LaVision software and the calculation was done using DaVis
+8. For this study, the optimal time step between image pairs was
+30 μs, and the flowfield sampling rate was 500 Hz.
+The flowfield seeding particles used in these measurements
+was di-ethyl-hexyl-sebecat (DEHS), which was fed into the
+coolant loop of the tunnel via an aerosol generator which
+provided a mean particle diameter of 1 μm. The Stokes number
+based on this diameter, and based on a flow timescale of
+D/Uc=0.1 m/s for M=6.0, was 0.03, which is well below unity
+and thus indicates that the seed follows the flow. The tunnel is
+recirculating, so even though seed was only added in the coolant
+loop, the mainstream flow also had an appropriate particle
+density after a short period.
+
+ot
+
+Figure 3: Range of area ratios for the 7-7-7 and 12-12-12 holes.
+
+Uncertainty in blowing ratio was found to be ±5% for all
+blowing ratios, which is mostly due to the bias uncertainty in the
+mainstream Pitot probe pressure transducer and also the coolant
+Venturi flowmeter (±0.25% of full-scale flow and verified by
+separate tests with a laminar flow element in series). For density
+ratio, the uncertainty was less than ±0.01 for all cases. The total
+uncertainty in adiabatic effectiveness was estimated to be δη =
+±0.034, which is largely due to a high bias uncertainty of δηb =
+±0.027, which would be the same for each test. This bias
+uncertainty for effectiveness is based on a surface temperature
+uncertainty of ±1.31 ºC, which is caused by scatter in the in situ
+infrared camera calibration and also the bias uncertainty of the
+thermocouples.
+Repeatability was confirmed by retesting a case, including
+a case that had been removed and reinstalled. The maximum
+difference in area-averaged effectiveness was 0.012, and the
+maximum difference in laterally-averaged effectiveness was
+0.015. Periodicity was also very good for all cases, which is
+determined visually and quantitatively for the three holes over
+which the experimental results are averaged, as shown in Figure
+5. For both AR2 and AR6 at M=3.0, there is good agreement
+qualitatively in the contours of Holes 2, 3, and 4, and also in the
+laterally averaged effectiveness for all three. Only one hole’s
+contours is shown in the ensuing figures, but all holes have
+similarly good periodicity, so it is representative of all holes.
+Uncertainty in the PIV measurements was calculated for a
+previous study in this facility with the same setup [22], and the
+uncertainty in the through-plane velocity component was found
+to be ±4.8%, and the in-plane uncertainty was a maximum of
+±8%. These uncertainties were based on a conservative estimate
+of ±0.15 pixel instantaneous displacement uncertainty. A case
+was repeated for a slightly larger time step of 40 μs, and the timeaveraged results agreed within the above reported uncertainty.
+Also, statistical convergence of time-averaged images was found
+by averaging over 1000, 1500, and 2000 images, all with good
+agreement in the average velocity.
+
+tN
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright (c) 2017 by ASME
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+UNCERTAINTY ANALYSIS
+Using the propagation of measurement uncertainties
+analysis outlined by Figliola and Beasley [21], the experimental
+uncertainty was found for blowing ratio, density ratio, adiabatic
+effectiveness, and PIV flowfield measurements. All
+calculations were done using a confidence interval of 95%.
+
+COMPUTATIONAL SETUP
+The mesh used for the CFD cases was created using
+Pointwise, and was made using a method and cell size previously
+determined to be grid independent and to have y+<1 on all walls
+by Haydt et al. [19]. This domain is shown in Figure 6 with
+labeled boundary conditions. The inlet velocity profile was
+calculated using TEXSTAN based on a known approach length
+and matched to a measured boundary layer upstream of the holes.
+ANSYS Fluent was used to solve the conservation
+equations, using the realizable k-ε turbulence model. The cases
+were run for 1000 iterations with first order discretization, and
+then for 3000-5000 iterations with second order discretization.
+Convergence was ensured through laterally-averaged η monitors
+on the surface, and point temperature monitors slightly above the
+endwall, in a manner similar to Haydt et al. [19].
+
+Figure 4: PIV setup for measurements at an x/D=10 crossplane.
+
+TURBO-17-1183, Haydt
+
+4
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+DISCUSSION OF RESULTS
+First, for film cooling holes with a pre-determined blowing
+ratio, the effect of area ratio is shown. Next, for holes with a predetermined area ratio, the effect of blowing ratio is shown. For
+holes with a limited wall thickness, the effect of expansion angle
+is discussed. Next, the results are discussed in concert to
+determine an optimal design point for large area ratio film
+cooling holes. Finally, the adiabatic effectiveness measurements
+are explained via CFD predictions and PIV measurements.
+Effect of Area Ratio
+A desired location for a film cooling hole on an airfoil might
+have a pre-determined pressure difference between the internal
+and external flow, and thus an estimated blowing ratio range. In
+this section, the effect of area ratio on a moderate, high, and very
+high blowing ratio is discussed.
+Figure 7 shows measured adiabatic effectiveness contours
+for a moderate blowing ratio of M=1.0, for all tested area ratios
+of the 7-7-7 hole. Since the blowing ratio is determined based
+on the metering section area, all of these cases have an identical
+average velocity at the metering section. However, due to the
+relative diffuser sizes, the average velocities at the exit areas are
+much different. As the area ratio and diffuser footprint width get
+larger the contours widen, but the effectiveness level at the
+trailing edge of the hole decreases. This could be explained by
+mainstream ingestion and over-diffusion occurring in the
+diffusers of the large area ratio holes. As a result, the coolant
+exiting from the trailing edge of the holes with larger diffusers
+has a higher temperature than exists in the coolant plenum.
+Despite the lower levels of effectiveness immediately at the
+trailing edge for the higher area ratio holes, the larger breakout
+width of those diffusers provides a wider swath of coolant on the
+endwall, especially just downstream of the holes. Laterallyaveraged effectiveness curves in Figure 8 show that this larger
+coverage mostly offsets the detrimental mixing that occurs in the
+large diffusers, since the larger area ratio holes have higher
+laterally averaged effectiveness immediately downstream of the
+trailing edge.
+
+Ma
+nu
+
+sc
+rip
+
+tN
+
+ot
+
+Co
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright (c) 2017 by ASME
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Figure 5: 7-7-7 AR2 and AR6 holes both at M=3.0, showing
+periodicity within experimental uncertainty in the adiabatic
+effectiveness contours (a) and in the laterally averaged
+effectiveness plot (b).
+
+Figure 6. CFD domain with boundary conditions and a depiction of
+the centerline mesh resolution.
+Figure 7. Contours of measured adiabatic effectiveness for all 7-77 area ratios, all at M=1.0.
+
+TURBO-17-1183, Haydt
+
+5
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+
+py
+
+Co
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+At a higher blowing ratio of M=3.0, different patterns
+emerge in the measured effectiveness contours, shown in Figure
+9. In film cooling literature, M=3.0 is often one of the higher
+blowing ratios considered, since holes with more typical area
+ratios between 2 and 3 generally start to see decreased
+performance before this point [1] due to jet detachment. The
+narrowing of the effectiveness contours in Figure 9 for low area
+ratios (as compared to Figure 7) for this blowing ratio appear to
+support the trend of jet detachment above M=3.0 which is
+observed in the literature. The narrowing contour indicates the
+jet is penetrating further into the mainstream. However, this is
+not the case for the larger area ratio holes. These contours are
+wider than their lower blowing ratio counterparts from Figure 7,
+and the effectiveness levels extend much farther downstream.
+Also, the effectiveness levels immediately at the trailing edge for
+the larger area ratio holes are much higher than they were for the
+M=1.0 case, and they are only slightly lower than that of the
+lower area ratio cases. This suggests that less mainstream
+ingestion is occurring at the higher blowing ratios.
+
+Effect of Blowing Ratio
+For holes with a pre-determined area ratio, it would be
+helpful for designers to know how that type of hole will respond
+to a wide range of blowing ratios. This section examines the 77-7 at three area ratios and shows the effect that blowing ratio
+has on their adiabatic effectiveness.
+The smallest area ratio tested, the 7-7-7 AR2, was
+experimentally run at blowing ratios ranging from a moderate
+M=1.0, to a high M=4.0, to a very high M=6.0. The adiabatic
+effectiveness contours for these cases are shown in Figure 12.
+For this small area ratio, high blowing ratios result in
+increased mainstream penetration and poor effectiveness, which
+is consistent with what was observed by Schroeder [2] for a
+similarly shaped hole. Jet liftoff appears to occur by M=3.0,
+beyond which there is very little change in the contours.
+
+ot
+
+Figure 8. Laterally-averaged effectiveness for all 7-7-7 area ratios,
+all at M=1.0.
+
+At the highest blowing ratio of M=6.0, it is clear from the
+adiabatic effectiveness contours in Figure 10 that a low area ratio
+is a disadvantage at this blowing ratio. The contours for AR2
+and AR4 have both narrowed compared to Figure 9, while the
+contours of AR6 remain wide, and have contour levels extend
+even further downstream. Also, the effectiveness level right at
+the trailing edge of the AR6 hole is about the same for each case,
+which suggests that over-diffusion and mainstream ingestion is
+likely not occurring in the larger diffuser holes at this very high
+blowing ratio.
+The laterally-averaged effectiveness curves of Figure 11
+also confirm that the large area ratio holes have a clear advantage
+at this blowing ratio, since the effectiveness increases as area
+ratio increases. Also, there is a much larger spread in
+performance between the high blowing ratio case of Figure 11
+and the low blowing ratio case of Figure 8.
+
+tN
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright (c) 2017 by ASME
+
+Figure 9. Contours of measured adiabatic effectiveness for all 7-77 area ratios, all at M=3.0.
+
+TURBO-17-1183, Haydt
+
+Figure 10. Contours of measured adiabatic effectiveness for all 77-7 area ratios, all at M=6.0.
+
+6
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright (c) 2017 by ASME
+
+Figure 13. Contours of measured adiabatic effectiveness for the 77-7 AR4 case at all blowing ratios.
+
+tN
+
+ot
+
+For the AR6 case, the contours are all very wide due to the
+breakout width of the diffuser. As the blowing ratio increases,
+the levels of high effectiveness extend farther downstream,
+which indicates more coolant near the wall. This is obviously
+advantageous to film cooling effectiveness, as is shown by
+Figure 15. Laterally-averaged effectiveness plateaus at the
+highest blowing ratios, and any additional coolant beyond that
+point does not appear that it would significantly increase the
+effectiveness.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+When the area ratio is doubled to AR=4, high effectiveness
+is observed for high blowing ratios, since the longer diffuser can
+reduce the jet velocity more significantly. This can be seen from
+the adiabatic effectiveness contours in Figure 13. The contours
+indicate the performance of the AR4 hole peaks around M=3.0,
+then decreases slightly for very high blowing ratios. Therefore,
+for the AR4 hole, the effectiveness increases up to an optimal
+blowing ratio, but any additional coolant beyond that results in
+diminished or decreased returns.
+The largest area ratio case, 7-7-7 AR6, appears to constantly
+increase in cooling performance up to very high blowing ratios,
+as indicated by the contours in Figure 14 and the laterallyaveraged effectiveness curves in Figure 15.
+
+Co
+
+Figure 11. Laterally-averaged effectiveness for all 7-7-7 area
+ratios, all at M=6.0.
+
+Figure 12. Contours of measured adiabatic effectiveness for the 77-7 AR2 case at all blowing ratios.
+
+TURBO-17-1183, Haydt
+
+Figure 14. Contours of measured adiabatic effectiveness for the 77-7 AR6 case at all blowing ratios.
+
+7
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright (c) 2017 by ASME
+
+Co
+
+ot
+
+Even at the highest blowing ratio of M=6.0, the large 1212-12 diffusers still experience increased mixing-out of the
+coolant at the diffuser exit, as evidenced by the contours in
+Figure 18. However, due to the larger breakout width, the lateral
+coverage of the coolant is greater for the 12-12-12 hole than for
+the 7-7-7. On a laterally-averaged basis in Figure 19, it appears
+that the increased lateral coverage makes up for increased mixing
+that occurs in the larger 12-12-12 diffuser.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+Effect of Expansion Angle
+For film cooling holes in which there is a pre-determined
+wall thickness, a certain area ratio can be achieved via larger
+expansion angles. The following section compares a moderate
+and a large expansion angle at the same blowing ratios and area
+ratios. Since the area ratios are kept equal between the respective
+7-7-7 and 12-12-12 holes, that means the area at the exit plane
+of the diffuser, Aexit, is equal. Since the expansion angles are
+different, however, a 12-12-12 hole will have a shorter Ldiff/D
+and a larger breakout width than the 7-7-7.
+Figure 16 shows measured adiabatic effectiveness contours
+for three area ratios, AR2, AR4, and AR6, of the 7-7-7 and the
+12-12-12, all at a relatively high blowing ratio of M=3.0. For
+both hole types, it is clear that there is a trend of increasing
+effectiveness with increasing area ratio. The large holes
+however, despite their increased lateral coverage of coolant, have
+very low effectiveness levels immediately at the trailing edge of
+the hole. This is especially true for the 12-12-12 hole: Every area
+ratio case of the 12-12-12 has lower trailing edge effectiveness
+than its corresponding 7-7-7 case. Due to the larger expansion
+angles of the 12-12-12 hole, the size of the diffuser where it
+breaks out onto the surface is larger than the 7-7-7, even though
+the area ratio (defined in Figure 1) is equal. This means that the
+12-12-12 hole is more susceptible to mainstream ingestion and
+in-hole mixing, which is borne out by the effectiveness contours.
+The detrimental effect of over-diffusion and mainstream
+ingestion can be seen in the corresponding laterally-averaged
+effectiveness curves in Figure 17. Each 12-12-12 case has a
+slightly lower laterally-averaged effectiveness at x/D=0, with the
+smallest detriment at AR2, which would have the least amount
+of ingestion due to being the smallest diffuser. However, the
+penalties on effectiveness due to the mixing in the larger
+diffusers is offset by the larger lateral coverage of the 12-12-12
+coolant jet, at least for the AR2 and AR6 case, relative to the 77-7 hole.
+
+Figure 16. Adiabatic effectiveness comparison between AR2, AR4,
+and AR6 of the 7-7-7 (left) and 12-12-12 (right) holes, all at M=3.0.
+
+tN
+
+Figure 15. Laterally-averaged effectiveness for the largest and
+smallest area ratio at a range of blowing ratios.
+
+TURBO-17-1183, Haydt
+
+Figure 17. Laterally-averaged effectiveness for AR2, AR4, and
+AR6 of the 7-7-7 and 12-12-12 holes, all at M=3.0.
+
+No unsteadiness was observed in the experimental
+measurements of the 12-12-12 hole, so the mixing that occurs in
+the diffuser of the larger 12-12-12 holes is probably not due to
+large scale unsteadiness associated with the jet separating from
+the diffuser sidewalls. From the data presented in this section, it
+appears that the expansion angle of the diffuser has just a small
+
+8
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+blowing ratio of M=1.0, the effectiveness increases with
+increasing area ratio.
+The reason for the success of high area ratio holes which
+enable very high blowing ratios is two-fold:
+First, the large area ratio enabled by a long diffuser with
+moderate expansion angles is effective at smoothly reducing
+high hole inlet velocities. For a shorter diffuser with equal area
+ratio and more extreme expansion angles, it is likely that sidewall
+separation would occur, and the film cooling performance would
+degrade, as shown by Kohli and Thole [10]. Maintaining the
+moderate expansion angle and increasing the diffuser length has
+allowed the film cooling hole to operate more similarly to a
+classical conical diffuser. The coolant velocities associated with
+the very high blowing ratios being tested would traditionally
+result in jet separation, but the large, long diffusers of these film
+cooling holes reduce that velocity while still maintaining the
+high mass flow rate of coolant to the endwall.
+
+Co
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+2017the
+by laterally-averaged
+ASME
+effect(c) on
+effectiveness due to two
+competing trends: increased ingestion and mixing in a large
+diffuser, but increased lateral coverage of coolant.
+
+Ma
+nu
+
+sc
+rip
+
+tN
+
+ot
+
+Figure 18. Adiabatic effectiveness comparison between AR2, AR4,
+and AR6 of the 7-7-7 (left) and 12-12-12 (right) holes, all at M=6.0.
+
+Figure 20. Area-averaged effectiveness for all experimental cases vs.
+blowing ratio. 7-7-7 with solid symbols, 12-12-12 with open
+symbols.
+
+TURBO-17-1183, Haydt
+
+9
+
+pt
+
+ed
+Optimal Area Ratio Design
+From the data presented thus far, it seems that for a given
+area ratio, a hole has an optimal blowing ratio at which it gives
+its highest effectiveness, beyond which the effectiveness either
+plateaus or decreases. Figure 20 shows the area-averaged
+effectiveness for every case that was experimentally run versus
+the blowing ratio, in order to depict the optimal blowing ratio for
+the experimental cases. As the area ratio increases, the blowing
+ratio at which it experiences peak effectiveness also increases.
+Also, for any given blowing ratio, except perhaps the lowest
+
+Second, the large diffusers have very large breakout widths
+on the endwall surface, which significantly increases the lateral
+spread of coolant. As the area ratios increase and the diffusers
+get larger, the breakout width takes up an increasing percentage
+of the span of the film cooling hole, approaching that of an ideal
+film cooling slot. This is especially true for the 12-12-12 hole.
+Both of these advantageous effects can be accounted for by
+normalizing the data of Figure 20. First, the blowing ratio is
+normalized by the area ratio in order to created an “effective
+blowing ratio”, M/AR. Since the blowing ratio is defined by the
+metering section area, the average velocity in the metering
+section is identical between cases of like blowing ratio.
+However, due to the diffusion of the coolant, the average velocity
+at the exit plane of the hole is reduced, and can be approximated
+as reduced by a factor of the area ratio. Next, the area-averaged
+effectiveness is normalized by the percentage of the span that the
+
+Ac
+
+ce
+
+Figure 19. Laterally-averaged effectiveness for AR2, AR4, and
+AR6 of the 7-7-7 and 12-12-12 holes, all at M=6.0.
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+py
+
+Co
+
+Figure 22. Area-averaged effectiveness normalized by breakout
+width versus M/AR, including data from Gritsch et al. [7].
+
+ot
+
+Computational Predictions
+A CFD simulation was run for each experimental case, and
+even though the exact values of area-averaged effectiveness
+were not correctly predicted, the CFD did predict the trend of
+increasing effectiveness with increasing area ratio. There were
+several key elements of the experimental results that the CFD did
+not match, and that is made clear by comparing the adiabatic
+effectiveness contours in Figure 23.
+Based on these contours, it appears that there are several
+important differences between the CFD and the experiments.
+First, the effectiveness levels at the trailing edge for the CFD
+predictions are much higher than they actually are
+experimentally. This suggests that the CFD is not properly
+capturing the mixing and over-diffusion that is occuring in these
+large diffusers. Additionally, the CFD cases are run with an
+adiabatic surface material, whereas in the experiment it is only
+an approximation. So it is possible that some conduction losses
+are occuring in the hole experimentally, which is not accounted
+for by the CFD, and could also explain the lower trailing edge
+effectiveness. Second, the CFD contours are not as wide as the
+experimental cases, suggesting that the CFD is underpredicting
+the lateral diffusion of the coolant jet. Finally, the CFD is
+predicting that effectiveness levels extend much further
+downstream than they do experimentally, which shows that the
+CFD is underpredicting the mixing that occurs between the
+coolant jet and the mainstream flow. These mispredicitons are
+well-known, and consistent with previous comparisons made for
+this facility and for the 7-7-7 hole in particular [19].
+All of these underpredicted factors by the CFD result in
+local, laterally-averaged, and area-averaged effectiveness values
+that do not match the experimental results. However, the CFD
+was able to capture the important trends of this data, which can
+be seen from Figure 24. The CFD correctly predicts that as the
+area ratio increases, for a given blowing ratio, the effectiveness
+also increases. Also, the CFD predicted that each specific area
+ratio has an optimal blowing ratio at which it gets maximum
+cooling performance, and that this optimal blowing ratio
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+tN
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+by ASME
+breakout
+width
+takes up, or t/P. This accounts for the
+advantageous lateral spread of coolant by the holes with larger
+diffusers, and gives an idea of the kind of cooling a hole can
+provide on a “per unit wall” basis. This normalized experimental
+data is shown in Figure 21.
+On these nomalized axes, the 7-7-7 experimental data
+appear as curves with a common peak around M/AR=0.5. The
+data for the 12-12-12 hole does not collapse as well to this same
+peak, but this might be because of the increased in-hole mixing
+that occurred for the large diffusers of the 12-12-12 hole.
+The peak in the 7-7-7 data suggests that this is the optimal
+effective blowing ratio for the 7-7-7 hole. Designers can use this
+curve in order to find the optimal combination of blowing ratio
+and area ratio in order to get maximum effectiveness for a film
+cooling application. If the blowing ratio is pre-determined, an
+area ratio should be picked which will bring the effective
+blowing ratio at the exit plane down to around M/AR=0.5.
+However, as was previously stated, for the range of area ratios
+tested, increasing the area ratio always increased the
+effectiveness for any given blowing ratio except M=1.0.
+Alternately, if the area ratio is set, this curve can be used to find
+the optimal blowing ratio that will provide peak effectiveness or
+a point beyond which extra coolant will bring diminishing
+returns.
+
+ce
+
+Figure 21. Area-averaged effectiveness normalized by breakout
+width versus effective blowing ratio.
+
+Ac
+
+Figure 22 shows data from Gritsch et al. [7] that is
+normalized in the same way, and based on this plot, it appears
+that this data from literature also has a peak normalized areaaveraged effectiveness at around the same effective blowing
+ratio. In that study, blowing ratios as high as the ones in the
+current study were not tested, so the curve does not continue on
+to higher values of M/AR, but it does appear that beyond the
+same optimal M/AR for the 7-7-7 hole, the Gritsch et al. data
+begins to drop off in normalized performance.
+
+TURBO-17-1183, Haydt
+
+10
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+step further by also reducing the ejection angle of the coolant jet,
+due to the larger forward expansion angle. The reduction in the
+ejection angle provides an additional decrease to the upwards
+velocity component, and therefore keeps the coolant jet closer to
+the endwall as compared to the 7-7-7 hole at the same blowing
+ratio and area ratio.
+This reduced ejection angle and its ensuing effect on the
+film cooling effectiveness can be seen in Figure 25. Shown in
+this figure are centerline planes contoured by ϕ for the AR2 case
+at M=6.0. At this area ratio, even though the average velocity at
+the exit plane is roughly equal, the 12-12-12 has less mainstream
+jet penetration than the 7-7-7, which enables the coolant to
+remain close to the wall and spread laterally across the span.
+
+Co
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+by ratio
+ASME
+increaes
+as area
+increases. It did not, however, predict the
+correct optimal blowing ratio for each area ratio case. Also, the
+CFD predicts that the 12-12-12 significantly outperforms the 77-7, especially at low area ratios, which is not consistent with the
+experimental results from Figure 20. This can be explained by
+the poor capability to predict over-diffusion, which may be large
+factor in the performance of the 12-12-12 hole.
+
+ot
+
+Figure 25. Predictions of centerline planes contoured by
+nondimensional temperature, for AR2 cases at M=6.0.
+
+TURBO-17-1183, Haydt
+
+11
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+Figure 23. Predicted and measured adiabatic effectiveness
+contours for AR2, AR4, and AR6 of the 7-7-7 hole, all at M=3.0.
+
+tN
+
+As previously mentioned, these two holes have an identical
+mathematical exit area at each respective area ratio, and
+therefore the same “effective blowing ratio”, but the shapes of
+the diffusers are different beyond that exit plane due to the
+changed expansion angles. Decreasing the effective blowing
+ratio of a hole also decreases its mainstream penetration, which
+is advantageous to effectiveness, due to the reduction in the
+upwards component of velocity. The 12-12-12 hole takes this a
+
+The lowered ejection angle is presumably an advantage that
+the 12-12-12 has experimentally as well, but that advantageous
+effect is effectively negated by the overdiffusion in those holes,
+which the CFD does not seem to predict. The jet is likely
+remaining attached to the wall in the experiments, but so much
+mixing has occurred in the diffuser that even if the coolant is
+covering the entire span, it is doing so at very low effectiveness
+levels.
+Since the lowered ejection angle of the 12-12-12 is a
+secondary mechanism to keep the jet attached, it is reasonable to
+assume that the optimal effective blowing ratio will be different
+for the 12-12-12 and 7-7-7 holes, as predicted by CFD. This is
+clear from Figure 26, which plots the area-averaged
+effectiveness normalized by breakout width versus the effective
+blowing ratio. The CFD does predict a similar optimal effective
+blowing ratio for the 7-7-7 as was found from the experimental
+results, which is M/AR=0.5-0.75. The 12-12-12 predictions do
+not collapse to a curve, which the experimental data did not do
+either.
+To understand why an effective blowing ratio of about 0.6
+is optimal for the 7-7-7 hole, two cases were examined more
+closely: AR4 at M=2.0, which has an optimal M/AR=0.5, and
+AR4 at M=6.0, with a non-optimal M/AR=1.5. The exit planes
+for these two cases are shown in Figure 27 contoured by the jet
+velocity normal to the exit plane normalized by the mainstream
+velocity. In each case, there is a high velocity region near the
+top of the exit plane. Due to its position, this high velocity core
+region will be the first part of the jet to interact with the
+mainstream flow, creating a shear layer that will in turn form the
+counter rotating vortex pair (CRVP). In the high blowing ratio
+case, there is a large difference between the jet velocity and the
+mainstream velocity, so a strong shear layer will be formed.
+Alternately, in the M/AR=0.5 case, the high velocity core of the
+
+Ac
+
+Figure 24. Area-averaged effectiveness for the simulations of all
+area ratio cases of the 7-7-7 and 12-12-12 holes.
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Conical Diffuser Comparison
+As previously mentioned, the high velocity regions in the
+exit area are due to the non-uniform velocity profile in the
+metering section caused by jetting. These high velocity regions
+are impactful on the performance of the cooling hole, but in a
+broader sense, the reduced average velocity in the exit plane is
+also a factor in these large area ratio holes’ high performance,
+and that is a result of the shaped hole diffuser.
+A conical diffuser has a theoretical ideal pressure recovery,
+which is defined as 1 − (1⁄𝐴𝑅)2 . The efficiency of the diffuser
+is the ratio of the actual pressure recovery coefficient to the ideal
+one. The pressure recovery coefficient is defined as follows:
+(𝑃𝑒𝑥𝑖𝑡 − 𝑃𝑖𝑛𝑙𝑒𝑡 )
+𝑐𝑝 =
+1
+2
+𝜌𝑈
+2 𝑖𝑛𝑙𝑒𝑡
+A similar analysis of pressure recovery was performed in
+this study, using the computational predictions. The pressures
+here are defined as the area-weighted average static pressure at
+the exit plane and diffuser inlet plane, and the velocity is the
+area-weighted average velocity magnitude at the diffuser inlet.
+Of course, the comparison to a conical diffuser is not a
+perfect comparison since there are two important differences.
+First of all, the diffuser of the 7-7-7 and 12-12-12 holes is not
+conical, but rather a loft from a circle to a square with rounded
+edges. Second, for many conical diffuser studies, it is assumed
+that the inlet and exit conditions are uniform, whereas in the case
+of film cooling the inlet condition is non-uniform and the exit
+condition is into crossflow.
+Figure 28 shows the predicted diffuser efficiency for the 77-7 and 12-12-12 simulations for all blowing ratios and area
+ratios. The 7-7-7 hole has a much more efficient diffuser than
+the 12-12-12 at all blowing ratios. This means that the 7-7-7 is
+better able to stagnate the inlet velocity and convert it into static
+pressure at the exit plane. Cases with higher diffuser efficiencies
+and thus higher static pressure at the exit plane correlate to cases
+with less mainstream ingestion, as seen in the experimental
+contours. This suggests that a hole with a lower diffuser
+efficiency, such as the 12-12-12 hole, are more susceptible to
+unsteadiness and separation in the diffuser, and mainstream
+ingestion that could lower the centerline effectiveness.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+Figure 26. Normalized area-averaged effectiveness plotted versus
+effective blowing ratio for all simulated cases of the 7-7-7 and 1212-12 holes.
+
+tN
+
+ot
+
+Co
+
+py
+
+ed
+ite
+d
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+by ASME
+coolant
+jet has
+roughly the same velocity magnitude as the
+mainstream flow, and thus a weak shear layer will be formed,
+and therefore a weaker CRVP. A strong CRVP lifts the coolant
+jet up and away from the surface and is detrimental to film
+cooling performance. Since the data in Figure 26 is normalized
+by breakout width, the primary driver for relative performance
+on this curve is coolant jet attachment. Film cooling holes with
+M/AR=0.5 maintain jet attachment due in part to the weak CRVP
+formed by an ideal match between the coolant jet and
+mainstream velocity.
+
+Figure 27. Predicted contours of jet velocity at the exit plane for a
+case at the optimal effective blowing ratio of M/AR=0.5, and the
+same area ratio at a higher blowing ratio.
+
+Figure 28. Diffuser efficiency plotted versus blowing ratio for all
+simulated cases.
+
+TURBO-17-1183, Haydt
+
+12
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+
+shows the same for M=6.0, with a different contour scale.
+Similar to the AR2 low blowing ratio case, there is a velocity
+deficit due to the low-velocity coolant jet of the M=1.0, AR6
+case, which remains close to the wall and spreads over most of
+the span. Alternately, the M=6.0 case has a jet core with a
+velocity slightly higher than the freestream velocity that is
+indicating slight mainstream penetration, despite the increased
+diffusion of the AR6 hole. This jet core has much lower velocity
+than the corresponding high blowing ratio case for the AR2 hole,
+shown in Figure 29a.
+
+Ma
+nu
+
+sc
+rip
+
+tN
+
+ot
+
+Co
+
+py
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017
+by Velocimetry
+ASME
+Particle
+Image
+Flowfield Data
+Particle Image Velocimetry (PIV) data was collected for
+three blowing ratios (M=1.0, M=3.0, and M=6.0) for the lowest
+and highest area ratios, AR2 and AR6, all at a downstream plane
+normal to the mainstream flow direction located at x/D=10.
+Figure 29 (a) shows contours of the streamwise velocity
+component overlaid with vectors of in-plane velocity for the low
+blowing ratio of M=1.0 and AR2. Figure 29 (b) shows the same
+vectors and contours, with a different scale, for the highest
+blowing ratio of M=6.0, also at AR2. These two figures show
+the primary differences in the flowfield between the low and high
+blowing ratio cases. At the lowest blowing ratio, the velocity
+deficit due to the low velocity coolant jet is seen in the middle of
+the plane near the wall. Alternately, in the high blowing ratio
+case, the core has a much higher velocity than the mainstream
+flow, and has separated significantly from the wall.
+
+Figure 30. Downstream plane at x/D=10, contoured with x-velocity
+and overlaid with in-plane vectors, for the AR6 hole at (a) M=1.0
+and (b) M=6.0.
+
+The in-plane velocity vectors of these two cases also
+indicate the strength and size of the counter-rotating vortex pair
+(CRVP). For the low blowing ratio case, the in-plane velocity
+components are so small that the CRVP is not evident from the
+vectors. Alternately, in the high blowing ratio case, the CRVP is
+very large and dominates the extent of the measured flowfield.
+The flowfield for the AR6 hole is very different from that
+of the AR2 hole, due to the large difference in jet velocity leaving
+the diffuser. Due to the increased diffusion in the AR6 holes, and
+the ensuing low-velocity coolant jets, the in-plane velocity
+components are very small, and do not indicate strong coherent
+vortices in either case. Figure 30 (a) shows the plane at x/D=10
+contoured by normalized x-velocity and overlaid with in-plane
+velocity vectors for the AR6 hole at M=1.0, and Figure 30 (b)
+
+CONCLUSIONS
+Two shaped film cooling holes with different expansion
+angles were tested and simulated at a variety of area ratios and
+blowing ratios. The varying area ratios were created via
+extending the diffuser L/D while maintaining the diffuser
+expansion angles. Adiabatic effectiveness and particle image
+velocimetry measurements were collected, in addition to the
+cases being simulated in ANSYS Fluent using the realizable k-ε
+model.
+Simulations predicted, and experiments confirmed, that
+adiabatic effectiveness increases with increasing area ratio for
+each blowing ratio that was investigated, and this is true for both
+the 7-7-7 and 12-12-12 holes. Additionally, for a given area
+ratio, there exists an optimal blowing ratio, an increase beyond
+which results in either a decline or plateau in cooling
+effectiveness. It was found that for the 7-7-7 hole, both
+experimentally and computationally, all cases have a common
+peak in optimal effective blowing ratio, M/AR of approximately
+0.6. Further investigation via CFD yielded the conclusion that
+
+TURBO-17-1183, Haydt
+
+13
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Figure 29. Downstream plane at x/D=10, contoured with x-velocity
+and overlaid with in-plane vectors, for the AR2 hole at (a) M=1.0
+and (b) M=6.0.
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+urms
+uτ
+V
+x
+y
+z
+
+root mean squared velocity
+friction velocity, 𝑈∞ √𝑐𝑓 ⁄2
+velocity magnitude
+downstream distance measured from hole
+trailing edge
+vertical distance from surface
+spanwise distance measured from center
+hole
+
+tN
+
+ot
+
+Co
+
+py
+
+ed
+ite
+d
+
+Greek
+α
+hole injection angle
+β
+expansion angle for diffuser
+δ
+99% boundary layer thickness
+δη
+experimental uncertainty in effectiveness
+δηb
+bias uncertainty in effectiveness
+displacement thickness
+𝛿∗
+η
+local adiabatic effectiveness,
+(𝑇∞ − 𝑇𝑎𝑤 )⁄(𝑇∞ − 𝑇𝑐 )
+θ
+momentum thickness
+ν
+kinematic viscosity
+ρ
+fluid density
+φ
+non-dimensional fluid temperature,
+(𝑇∞ − 𝑇)⁄(𝑇∞ − 𝑇𝑐 )
+Subscripts
+aw
+adiabatic wall
+c
+coolant, at hole inlet
+CL
+centerline
+eff
+effective, at hole exit
+exit exit plane of the film cooling hole
+fwd forward expansion of diffuser
+inlet inlet plane of the film cooling hole
+lat
+lateral expansion of the diffuser
+m
+metering section
+∞
+mainstream
+Superscripts
+laterally-averaged
+̅
+area-averaged
+̿
+
+sc
+rip
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+2017the
+by coolant
+ASME jet core has similar velocity magnitude
+cases(c)where
+to the mainstream flow result in a weak shear layer, a weak
+counter-rotating vortex pair, and therefore optimal adiabatic
+effectiveness. Designers can use this information to target the
+optimal blowing ratio for a given area ratio.
+The 12-12-12 and 7-7-7 holes had relatively similar
+performance at the same blowing ratios and area ratios. The 1212-12 hole has a lower ejection angle, which keeps the coolant
+jet close to the endwall and increases lateral spreading.
+However, due to the larger diffuser and larger expansion angles,
+the pressure recovery inside the 12-12-12 hole was poor
+compared to the 7-7-7. This resulted in more over-diffusion and
+mainstream ingestion, and counteracted the positive benefit of
+the lowered injection angle. The CFD predicted the poor
+pressure recovery of the 12-12-12, but did not predict the ensuing
+over-diffusion, and therefore the CFD predictions for the 12-1212 adiabatic effectiveness were much higher than the
+experimental results.
+PIV measurements were taken at a downstream plane for
+the AR2 and AR6 cases, and showed the flowfield differences
+between a low and high blowing ratio, and low and high area
+ratio. At the high blowing ratio case of AR2, the jet was detached
+and exhibited a strong counter rotating vortex pair. Alternately,
+at the low blowing ratio for AR2, the CRVP was very weak.
+Consequently, the lower blowing ratio in this case had the
+highest effectiveness. For the AR6 cases, the CRVP was so weak
+as to not be observed in the in-plane velocity vectors. These
+flowfields also confirm that for an increased area ratio, the jet
+core velocity and mainstream penetration is decreased for a
+given blowing ratio.
+
+Ma
+nu
+
+ACKNOWLEDGMENTS
+The authors are grateful to Pratt & Whitney, a United
+Technologies Corp. company, for their generous support of this
+project. We also would like to thank Phil Irwin for his skilled
+machining of all of the film cooling holes used in this study.
+
+Ac
+
+ce
+
+pt
+
+ed
+
+NOMENCLATURE
+A
+hole cross-sectional area
+AR area ratio, Aexit/Ainlet
+skin friction coefficient
+𝑐𝑓
+D
+diameter of film cooling holes
+DR density ratio, 𝜌𝑐 ⁄𝜌∞
+H
+shape factor, 𝛿 ∗ ⁄𝜃
+2
+I
+momentum flux ratio, 𝜌𝑐 𝑈𝑐2 ⁄𝜌∞ 𝑈∞
+k
+thermal conductivity
+L
+hole length
+coolant mass flow rate
+ṁ𝑐
+M
+blowing ratio, 𝜌𝑐 𝑈𝑐 ⁄𝜌∞ 𝑈∞
+P
+pitch, lateral distance between holes
+Re
+Reynolds number
+(𝑅𝑒 ∗ = 𝛿 ∗ 𝑢𝜏 ⁄𝑣∞ , 𝑅𝑒𝜃 = 𝑈∞ ∗ 𝜃/𝜈∞ ,
+𝑅𝑒𝐷 = 𝑈∞ ∗ 𝐷/𝜈∞ , 𝑅𝑒𝑐 = 𝑈𝑐 ∗ 𝐷/𝜈𝑐 )
+t
+hole breakout width
+T
+temperature
+Tu
+freestream turbulence intensity, 𝑢𝑟𝑚𝑠 ⁄𝑈∞
+U∞
+mainstream mean velocity
+ujet
+coolant jet velocity in the direction of the
+metering section centerline
+
+TURBO-17-1183, Haydt
+
+REFERENCES
+[1] Bunker, R. S., 2005, "A Review of Shaped Hole Turbine
+Film-Cooling Technology," Journal of Heat Transfer, 127(4), p.
+441.
+[2] Schroeder, R. P., and Thole, K. A., 2014, "Adiabatic
+Effectiveness Measurements for a Baseline Shaped Film Cooling
+Hole," ASME Turbo Expo, Düsseldorf, Germany, p. 14.
+[3] Goldstein, R. J., and Eckert, E. R. G., 1974, "Effects of Hole
+Geometry and Density on Three-Dimensional Film Cooling,"
+Journal of Heat and Mass Transfer, 17, p. 13.
+[4] Thole, K., Gritsch, M., Schulz, A., and Wittig, S., 1998,
+"Flowfield Measurements for Film-Cooling Holes With
+Expanded Exits," ASME J. Turbomach., 120(2), pp. 327-336.
+[5] Peterson, S., and Plesniak, M., 2002, "Short-hole jet-incrossflow velocity field and its relationship to film-cooling
+performance," Experiments in Fluids, 33(6), pp. 889-898.
+[6] Haven, B. A., and Kurosaka, M., 1997, "Kidney and AntiKidney Vortices in Crossflow Jets," Journal of Fluid Mechanics,
+352, p. 38.
+
+14
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ed
+ite
+d
+py
+Co
+ot
+tN
+
+Ac
+
+ce
+
+pt
+
+ed
+
+Ma
+nu
+
+sc
+rip
+
+Journal of Turbomachinery. Received October 04, 2017;
+Accepted manuscript posted January 05, 2018. doi:10.1115/1.4038871
+Copyright
+(c) 2017M.,
+byColban,
+ASME W., Schär, H., and Döbbeling, K., 2005,
+[7] Gritsch,
+"Effect of Hole Geometry on the Thermal Performance of FanShaped Film Cooling Holes," ASME J. Turbomach., 127(4), pp.
+718-725.
+[8] Saumweber, C., and Schulz, A., 2012, "Effect of Geometry
+Variations on the Cooling Performance of Fan-Shaped Cooling
+Holes," ASME J. Turbomach., 134(6), p. 16.
+[9] Colban, W. F., Thole, K. A., and Bogard, D., 2011, "A FilmCooling Correlation for Shaped Holes on a Flat-Plate Surface,"
+ASME J. Turbomach., 133(1), p. 011002.
+[10] Kohli, A., and Bogard, D. G., 1999, "Effects of Hole Shape
+on Film Cooling With Large Angle Injection," ASME
+International Gas Turbine and Aeroengine Congress.
+[11] Kohli, A., and Thole, K. A., "Entrance Effects On Diffused
+Film-Cooling Holes," Proc. International Gas Turbine &
+Aeroengine Congress & Exhibition, p. 8.
+[12] McDonald, A. T., and Fox, R. W., 1965, "An Experimental
+Investigation of Incompressible Flow in Conical Diffusers,"
+International Journal of Mechanical Sciences, 8, pp. 125-139.
+[13] Klein, A., 1981, "Review: Effects of Inlet Conditions on
+Conical-Diffuser Performance," Journal of Fluids Engineering,
+103, p. 8.
+[14] Wolf, S., and Johnston, J. P., 1969, "Effects of Nonuniform
+Inlet Velocity Profiles on Flow Regimes and Performance in
+Two-Dimensional Diffusers," Journal of Basic Engineering,
+91(3), pp. 462-474.
+[15] Leylek, J. H., and Zerkle, R. D., 1994, "Discrete-Jet Film
+Cooling: A Comparison of Computational Results With
+Experiments," ASME J. Turbomach., 116(July 1994), p. 11.
+[16] Thole, K. A., Gritsch, M., Schulz, A., and Wittig, S., 1997,
+"Effect of a Crossflow at the Entrance to a Film-Cooling Hole,"
+Journal of Fluids Engineering, 119(3), pp. 533-540.
+[17] Saumweber, C., and Schulz, A., "Comparison the cooling
+performance of cylindrical and fan-shaped cooling holes with
+special emphasis on the effect of internal coolant cross-flow,"
+Proc. ASME Turbo Expo 2008: Power for Land, Sea, and Air,
+ASME, pp. 893-903.
+[18] Coletti, F., Elkins, C. J., and Eaton, J. K., 2013, "An inclined
+jet in crossflow under the effect of streamwise pressure
+gradients," Experiments in Fluids, 54(9).
+[19] Haydt, S., Lynch, S., and Lewis, S., 2017, "The Effect of a
+Meter-Diffuser Offset on Shaped Film Cooling Hole Adiabatic
+Effectiveness," ASME J. Turbomach., 139(9), pp. 091012091012-10.
+[20] Eberly, M. K., and Thole, K. A., 2013, "Time-Resolved
+Film-Cooling Flows at High and Low Density Ratios," ASME J.
+Turbomach., 136(6), p. 061003.
+[21] Figliola, R. S., and Beasley, D. E., 2006, Theory and design
+for mechanical measurements, John Wiley, Hoboken, N.J.
+[22] Schroeder, R. P., and Thole, K. A., 2016, "Effect of High
+Freestream Turbulence on Flowfields of Shaped Film Cooling
+Holes," ASME J. Turbomach, 138, p. 10.
+
+TURBO-17-1183, Haydt
+
+15
+
+Copyright © 2017 by ASME
+
+Downloaded From: http://turbomachinery.asmedigitalcollection.asme.org/ on 01/19/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+

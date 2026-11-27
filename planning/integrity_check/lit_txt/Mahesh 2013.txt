@@ -1,0 +1,2821 @@
+FL45CH16-Mahesh
+
+ARI
+
+ANNUAL
+REVIEWS
+
+16 November 2012
+
+14:58
+
+Further
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Click here for quick links to
+Annual Reviews content online,
+including:
+• Other articles in this volume
+• Top cited articles
+• Top downloaded articles
+• Our comprehensive search
+
+The Interaction of Jets
+with Crossﬂow
+Krishnan Mahesh
+Department of Aerospace Engineering and Mechanics, University of Minnesota, Minneapolis,
+Minnesota 55455; email: mahesh@aem.umn.edu
+
+Annu. Rev. Fluid Mech. 2013. 45:379–407
+
+Keywords
+
+First published online as a Review in Advance on
+October 5, 2012
+
+incompressible, supersonic, structure, entrainment, mixing
+
+The Annual Review of Fluid Mechanics is online at
+ﬂuid.annualreviews.org
+
+Abstract
+
+This article’s doi:
+10.1146/annurev-ﬂuid-120710-101115
+c 2013 by Annual Reviews.
+Copyright 
+All rights reserved
+
+It is common for jets of ﬂuid to interact with crossﬂow. This article reviews our understanding of the physical behavior of this important class of
+ﬂow in the incompressible and compressible regimes. Experiments have signiﬁcantly increased in sophistication over the past few decades, and recent
+experiments provide data on turbulence quantities and scalar mixing. Quantitative data at high speeds are less common, and visualization still forms
+an important component in estimating penetration and mixing. Simulations
+have progressed from the Reynolds-averaged methodology to large-eddy
+and hybrid methodologies. There is a general consensus on the qualitative
+structure of the ﬂow at low speeds; however, the ﬂow structure at lowvelocity ratios (jet speed/crossﬂow speed) might be fundamentally different
+from the common notion of shear-layer vortices, counter-rotating vortex
+pairs, wakes, and horseshoe vortices. Fluid in the near ﬁeld is strongly accelerated, which affects the jet trajectory, entrainment, and mixing behavior. At
+low speeds, mixing depends more on Reynolds number than the jet trajectory or spatial extent does. Turbulence kinetic energy budgets are discussed
+that reveal the considerable nonequilibrium nature of the ﬂow and the consequent challenges posed to time-averaged prediction methodologies. The
+parameter space at high speeds is fairly large, and even experimentally derived correlations for trajectories show signiﬁcant scatter. Coherent motions
+in high-speed jets are seen to entrain large amounts of crossﬂow ﬂuid but do
+not mix effectively in the near ﬁeld.
+
+379
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+1. INTRODUCTION
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+The term jet in crossﬂow refers to a jet of ﬂuid that exits an oriﬁce to interact with the surrounding
+ﬂuid that is ﬂowing across the oriﬁce. Figure 1a shows a schematic of the canonical jet in crossﬂow,
+in which a circular jet is interacting with a crossﬂow on a ﬂat plate. Also known as transverse jets,
+jets in crossﬂow are common in both nature and human-made devices. In gas-turbine combustors,
+jets of cool air exit dilution holes in the combustor (see Figure 1b), where they mix with the hot
+combustion products and yield more uniform exit temperatures. In the primary combustion zone,
+the dilution jets are used to change the ratio of air to fuel and thereby reduce nitrogen-oxide levels
+in the exhaust. The efﬁciency of gas-turbine engines increases with increasing temperatures at
+the inlet to the high-pressure turbine stage. As a result, inlet temperatures in modern engines can
+exceed the melting point of the turbine blade material. Turbine blades are therefore ﬁlm cooled;
+that is, arrays of low-velocity air jets exit holes in the turbine blades to cool the blades and protect
+them from the high-temperature crossﬂow. In contrast to dilution jets, for which it is desirable
+to have the jets aggressively spread and penetrate the crossﬂow, ﬁlm-cooling jets are required to
+penetrate less and adhere to the surface of the blades as much as possible.
+Figure 2a shows an image of the X-43A research vehicle, which in 2004 became the ﬁrst
+scramjet-engine-powered aircraft to successfully operate in ﬂight (McClinton 2006). The entry
+Mach number to a scramjet combustor is nominally one-third of the ﬂight Mach number; the ﬂow
+inside the combustor is therefore supersonic (less than Mach 5) for ﬂight Mach numbers less than
+15. The successful operation of high-speed propulsion systems depends critically on the efﬁcient
+mixing and combustion of fuel and air during the very short residence times inside the combustor.
+Transverse injection of the fuel jet into crossﬂowing air has shown promise in this regard. Another
+high-speed application of transverse jets is their use in thrust vector control. Figure 2b shows the
+launch abort system for the Orion space vehicle (NASA). The system has an abort motor with
+four downﬁring jets, an attitude-control motor with eight circumferentially arranged side-ﬁring
+jets, and a jettison motor. During an abort, the jets ﬁre simultaneously to control the accelerating
+vehicle. Interaction of the jet plumes with the subsonic/supersonic crossﬂow, each other, and the
+body of the vehicle impacts vehicle controllability.
+Volcanic eruptions can result in jet plumes (Figure 3a) that are transported by the crosswind to
+form deposits miles away from their source. The Fisher Tuff in Alaska is one such example, which
+has been widely studied for its unique deposits on the leeward side of a large mountain range,
+10–15 km away from the Fisher volcano (Gardner et al. 2007). Crosswind also affects the height
+to which the volcanic plume rises, which can be several miles, and how ash, smoke, and other
+volcanic matter are dispersed in both the atmosphere and surrounding areas. Crossﬂow similarly
+
+b
+
+a
+Crossflow
+
+Jet
+
+Dilution jet
+High
+
+Velocity
+magnitude
+Low
+
+Figure 1
+(a) A schematic of a circular jet issuing into crossﬂow over a ﬂat plate. (b) Instantaneous snapshot of contours of velocity magnitudes
+from large-eddy simulations in a gas-turbine combustor (Mahesh et al. 2004). Note the strong dilution jets at the top and bottom.
+380
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+
+Launch
+abort system
+
+Crew
+module
+
+Service
+module
+
+Figure 2
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+(a) Image of the X-43A research vehicle after separation from the Pegasus booster. Panel a taken from the NASA Dryden Flight
+Research Photo Collection. (b) Rendering of the Orion Launch Abort System during an abort test. Panel b courtesy of NASA.
+
+inﬂuences the trajectory and dispersal of plumes arising from ﬁres (Figure 3b), efﬂuent discharge,
+and smokestacks.
+A fascinating example of transverse jets in nature involves bivalve clams and blue crabs. Water
+passes through the clams, picks up waste metabolites, and issues out in a jet-like ﬂow. The jet
+interacts with the cross-stream to form a plume containing the metabolites, which are sensed by
+predators such as blue crabs, which then track the clams (Delavan & Webster 2011). Central venous
+catheters are used in hemodialysis to remove contaminated blood and replace it with processed
+blood. The catheters are typically placed in the superior vena cava, and the jet that exits a hole
+at the catheter tip interacts with the crossﬂow in the vena cava and the vena cava walls in a fairly
+unsteady and complex manner. This interaction has been linked to health-risk complications that
+occur during catheter use (Foust & Rockwell 2006).
+This article reviews our fundamental understanding of transverse jets in both incompressible
+and compressible regimes. It is restricted to single-phase, nonreacting jets injected ﬂush into the
+crossﬂow. Sections 2 and 3 discuss incompressible and compressible transverse jets, respectively.
+
+2. INCOMPRESSIBLE JETS IN CROSSFLOW
+2.1. Overview
+Using ρ j and ρ∞ to denote the densities of jet and crossﬂow ﬂuids, and Uj and U∞ to denote their
+mean velocities, one can describe the following nondimensional parameters for incompressible
+
+a
+
+b
+
+Figure 3
+(a) Plume from the Kirishima volcano in Japan on January 26, 2011. Photograph courtesy of the Associated
+Press. (b) Oil ﬁre plume. Photograph by Justin E. Stumberg, US Navy.
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+381
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+transverse jets,
+r = U j /U ∞ ,
+
+J = ρj U j2 /ρ∞ U ∞2 ,
+
+and
+
+Re j = U j d /νj ,
+
+(1)
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+where r is the velocity ratio, J denotes the momentum ﬂux ratio, and Rej is the jet Reynolds
+number. Additional parameters include the ratio of the crossﬂow boundary-layer thickness to
+the jet diameter δ/d , and the velocity proﬁles of the jet and crossﬂow boundary layer. Early
+studies were motivated by smokestack plumes and atmospheric dispersion (e.g., Sutton 1932,
+Bosanquet & Pearson 1936). Sutton (1932) discussed a model to predict/explain the observed
+wind distribution over Northern Europe. By deriving a formula for “concentration at ground
+level due to a line source of smoke/pollutant/mass at ﬁnite height,” Bosanquet & Pearson (1936)
+attempted to estimate the contaminants on the ground resulting from power-station chimneys.
+They concluded that for regions far away from the contamination source, the height of the
+chimney has no recognizable impact.
+The sophistication and detail of the experiments resolving this ﬂow ﬁeld have dramatically
+increased. Similarly, ﬂow simulations have progressed from Reynolds-averaged computations to
+direct numerical simulations (DNS) and large-eddy simulations (LES). The earliest experimental
+studies measured jet trajectories for different ﬂow conditions (e.g., Pratte & Baines 1967).
+Subsequent studies collected mean ﬂow and turbulence data using hot wires and laser Doppler
+anemometry, with Ramsey & Goldstein (1970) and Crabb et al. (1981) among the ﬁrst. Triplewire probes were used by Andreopoulos & Rodi (1984) to simultaneously measure all three
+velocity components. Other experimental techniques include hot ﬁlms (Sherif & Pletcher 1989),
+smoke illuminated by lasers (Fric & Roshko 1994), hydrogen bubbles (Kelso & Smits 1995),
+ﬂying hot wires (Kelso et al. 1996), and most recently particle image velocimetry and planar
+laser-induced ﬂuorescence (Haven & Kurosaka 1997, Smith & Mungal 1998, Su & Mungal 2004,
+Shan & Dimotakis 2006). The canonical transverse jet is round, but noncircular jets have been
+considered by some studies (e.g., Liscinsky et al. 1995, Haven & Kurosaka 1997, New et al. 2003,
+Gutmark et al. 2008).
+Early work on this problem examined what might be considered ﬁrst-order issues (i.e., scaling
+laws for the mean jet trajectory, and the decay of a passive scalar in the jet). Based on collected
+data, Pratte & Baines (1967) proposed a length scale rd to collapse the jet trajectory. Keffer &
+Baines (1963) proposed r2 d as a length scale to collapse jet trajectories for velocity ratios of six to
+ten up to eight diameters from the jet exit. These correlations are still used to scale jet trajectories
+(Margason 1993). Fewer studies have examined scalar mixing. Patrick (1967) appears to have been
+among the earliest, with Smith & Mungal (1998), Su & Mungal (2004), and Shan & Dimotakis
+(2006) more recent. Most other work on this problem has focused on the origin and behavior of
+coherent structures in this ﬂow (e.g., Moussa et al. 1977, Andreopoulos & Rodi 1984, Karagozian
+1986, Sykes et al. 1986, Coelho & Hunt 1989, Krothapalli et al. 1990, Kelso et al. 1996). Recent
+computational studies have used LES or DNS to predict the canonical jet in crossﬂow (e.g.,
+Yuan et al. 1999; Muppidi & Mahesh 2005, 2007, 2008; Iourokina & Lele 2006; Sau & Mahesh
+2010). Recent computational and experimental studies have demonstrated the utility of having
+three-dimensional unsteady data to examine the physics of the ﬂow.
+
+2.2. Qualitative Time-Averaged Behavior
+An indication of the time-averaged behavior of transverse jets is provided in Figure 4, which shows
+results from DNS (Muppidi & Mahesh 2007) of an Re j = 5,000, r = 5.7 jet. The simulations
+were performed under the same conditions as experiments by Su & Mungal (2004), with which
+they showed good agreement. The contours of the mean velocity demonstrate that the jet bends
+382
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+Center streamline
+
+High-curvature
+off-center
+streamlines
+
+Stages of CVP formation—
+cross-section deformation
+
+High
+
+Vertical
+velocity
+
+Downstream
+entrainment
+
+Y
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Z
+
+Low
+
+X
+
+Figure 4
+The mean ﬂow for an incompressible transverse jet. Contours of the vertical velocity are shown on the
+symmetry plane along with the center streamline. Jet cross sections at s = d, 4d, 10d, and 15d are shown
+using contours of us and streamlines of the in-plane velocity. Figure taken from Muppidi & Mahesh (2007).
+Abbreviation: CVP, counter-rotating vortex pair.
+
+in the direction of the crossﬂow and increases in width as it moves downstream. We note that
+the jet is wider toward the leeward side than toward the windward side of the center streamline.
+Moreover, the cross section of the jet evolves from its circular shape to form a counter-rotating
+vortex pair (CVP). The local mean vorticity is maximum at the CVP center, which lies below the
+center streamline. The jet trajectory based on the center streamline therefore penetrates deeper
+into the crossﬂow than a trajectory based on the vorticity, as noted by Fearn & Weston (1974).
+Similar behavior is displayed by jet trajectories based on maxima of the scalar concentration in the
+jet cross section (Kamotani & Greber 1972, Yuan et al. 1999, Su & Mungal 2004), as more of the
+scalar would be entrained and mixed toward the center of the CVP.
+
+2.3. Qualitative Instantaneous Behavior
+The instantaneous behavior of a jet is unsteady and violent. As the jet ﬂuid approaches the exit, it experiences an adverse pressure gradient on the windward side of the pipe owing to the high-pressure
+region created above the jet exit by the crossﬂow. As a result, the jet ﬂuid at the leading edge of the
+pipe decelerates at high-velocity ratios and separates inside the pipe at low-velocity ratios (Kelso
+et al. 1996, Muppidi & Mahesh 2005). Mass conservation therefore causes the exit velocity proﬁles
+of the jet to be skewed toward the leeward side. The crossﬂow boundary layer separates ahead of
+the jet and moves around the jet while attempting to accelerate the jet in the streamwise direction.
+The jet shear layer is therefore skewed and is not a constant pressure-gradient shear layer. Jet
+shear-layer vortices are typically observed on the windward side of the jet (Figure 5a). They bear
+resemblance to Kelvin-Helmholtz rollers in regular jets, are highly unsteady, and are not observed
+in the time-averaged solution. In general, both small-scale turbulence and large-scale coherent
+features are observed. Several coherent vortex systems have been identiﬁed and are discussed
+below.
+2.3.1. Counter-rotating vortex pairs. The CVP has long been considered a signature feature
+of jets in crossﬂow and persists far downstream. Indeed, thrust vectoring of projectiles using
+transverse jets can be adversely affected by the CVP interacting with solid surfaces on the projectile.
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+383
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+a
+
+c
+
+b
+
+2rd
+
+e
+
+r = 10
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+14:58
+
+d
+
+g
+
+f
+
+r = 10
+
+r = 15
+
+Figure 5
+Visualizations of instantaneous ﬂow structures. (a) Shear-layer vortices. Panel a taken from Kelso et al. (1996). (b) Tornado-like wake
+vortices. (c) Cross section of hairpin vortices upstream of the jet in the symmetry plane. (d ) Wall-parallel cross section, illustrating
+hairpin and wake vortices. Panels b–d taken from Fric & Roshko (1994). (e) Instantaneous counter-rotating vortex pair visualization of
+jet ﬂuid in a wake at ( f ) r = 10 and ( g) r = 15. Panels e–g taken from Smith & Mungal (1998).
+
+The CVP is highly unsteady and asymmetric instantaneously (Figure 5e). Early experiments that
+examined the jet cross section were those by Kamotani & Greber (1972), who observed how, far
+downstream, the original jet seemed to disappear while a pair of vortices dominated the ﬂow ﬁeld.
+CVP formation is delayed as the jet velocity ratio increases. Smith & Mungal’s (1998) experiments
+found that CVP formation is slower (based on the distance from the jet exit normalized with rd )
+at r = 20 compared with r = 10.
+Different mechanisms leading to the CVP have been suggested. Broadwell & Breidenthal
+(1984) viewed the jet as imparting an impulse to the crossﬂow, which yields a CVP similar to
+how tip vortices are produced behind ﬁnite lifting wings (Figure 6a). Although attractive in its
+elegance, and practical in its ability to yield a scaling law for the jet trajectory, this explanation is
+fundamentally different from the general consensus that CVP formation results from modiﬁcation
+of the jet vorticity by the crossﬂow and is initiated in the near ﬁeld (e.g., Moussa et al. 1977,
+Andreopoulos & Rodi 1984, Sykes, Lewellen & Parker 1986, Coelho & Hunt 1989). Based on
+observations from experiments at velocity ratios between 2.0 and 6.0, and Reynolds numbers
+between 440 and 6,200, Kelso et al. (1996) suggested schematically (Figure 6b) how “tilting and
+folding” of the jet shear layer contribute to the circulation of the CVP. Their proposal is in general
+agreement with the vortex-element simulations of Cortelezzi & Karagozian (2001) in a domain
+that does not include a pipe. Vortex-element simulations were also used by Marzouk & Ghoniem
+(2007) to suggest that initially planar vortex rings generated close to the jet exit stretch upward on
+the leeward side, which aligns the vorticity in the direction of the crossﬂow, yielding the CVP. A
+pressure-based explanation was proposed by Muppidi & Mahesh (2006) using a two-dimensional
+model problem (Figure 6c) in which a circular region of out-of-plane ﬂow interacts with an inplane crossﬂow. The circular region evolves into a CVP, which they explain in terms of the initial
+acceleration that the jet ﬂuid experiences in the direction of the crossﬂow. They suggest that the
+near ﬁeld of a transverse jet is pressure driven while the far ﬁeld is momentum driven. That the
+simulations described above yield a CVP in the absence of a pipe suggests that as far as CVP
+formation is concerned, the pipe might be important only to the extent that it provides the ﬂux of
+vorticity that is modiﬁed by the crossﬂow to yield a CVP.
+384
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+
+U∞
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Vj
+
+c
+
+Time
+Initial condition
+
+1.0
+
+1.0
+
+1.0
+
+1.0
+
+0
+
+0
+
+0
+
+0
+
+–1.0
+
+–1.0
+
+–1.0
+
+–1.0
+
+–1.0
+
+0
+
+1.0
+
+–1.0
+
+0
+
+1.0
+
+–1.0
+0
+
+0
+
+1.0
+
+–1.0
+
+1.0
+0
+–1.0
+0
+
+1.0
+
+3.0
+
+4.0
+
+5.0
+
+1
+
+Out-of-plane velocity
+Figure 6
+(a) Visualization of trailing vortices induced by aircraft. Panel a courtesy of AirTeamImages Limited (http://www.airteamimages.
+com). (b) Schematic of how a near-ﬁeld vortex ring is distorted to produce a counter-rotating vortex pair (CVP). Panel b taken from
+Kelso et al. (1996). (c) Evolution of circular region of out-of-plane velocity (color contours) into a CVP upon acceleration by crossﬂow.
+Panel c taken from Muppidi & Mahesh (2006).
+
+2.3.2. Horseshoe and wake vortices. Horseshoe vortices form upstream of the jet’s leading edge
+and persist downstream (Figure 5c,d ). These vortices form because the crossﬂow boundary layer
+encounters an adverse pressure gradient upstream of the jet, separates, and forms spanwise vortices
+(Figure 5c) that move around the jet. Krothapalli et al. (1990) studied horseshoe vortices upstream
+of a rectangular jet in crossﬂow and noted that the formation and rollup of the vortices can be
+periodic. Kelso & Smits (1995) showed that the vortex system can be steady, oscillate, or coalesce
+depending on the velocity ratio, r. Both studies note the similarity between the unsteadiness of
+the horseshoe vortex system and unsteadiness in the wake.
+Wake vortices are the upright vortices observed downstream of the jet, extending from the wall
+to the leeward side of the jet (Figure 5b,d ). When visualized in planes parallel to the wall, the
+vortices resemble the vortex street observed behind solid cylinders (Figure 5d ). However, as noted
+by Fric & Roshko (1994), the wake of a transverse jet is noticeably different from that of a circular
+cylinder at the same Reynolds number. By introducing smoke in the crossﬂow boundary layer,
+and from spectral measurements, they suggested that the wake vortices originate from separation
+events in the crossﬂow boundary layer downstream of the jet. Vortex-element simulations by
+Schlegel et al. (2011) showed similar behavior. However, ﬁlaments of jet ﬂuid have been observed
+in the jet wake (Figure 5f,g) by Smith & Mungal (1998) (r varies from 5 to 20), by Su & Mungal
+(2004) (r = 5.7) and by Shan & Dimotakis (2006) (r = 10, 32). Vorticity from the jet shear layer
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+385
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+a
+
+14:58
+
+b
+
+c
+Hydrogenbubble wire
+
+Y
+Z
+
+X
+
+Streamwise
+vortices
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+d
+
+e
+
+R = 0.7, Tu = 1%
+
+Jet exit
+
+Figure 7
+Visualization of hairpin vortices. (a) An r = 0.1 jet from a narrow rectangular slot. (b) An r = 1 round jet. (c) End view of the ﬂow.
+(d ) Vorticity contours in the symmetry plane. (e) Two-color PIV images in the symmetry plane. Panels a and c taken from Acarlar &
+Smith (1987), panels b and d taken from Sau & Mahesh (2008), and panel e taken from Gogineni et al. (1996).
+
+has also been observed in the jet wake at low-velocity ratios (r < 2) (Gopalan et al. 2004). The
+different vortex systems can interact. For example, Kelso et al. (1996) suggested that horseshoe
+vortices with the same sign of vorticity as that of the crossﬂow boundary layer extend along the
+wall and are incorporated into the wake vortex system. Those with the opposite sign lift away from
+the wall and are absorbed into the CVP.
+2.3.3. A different flow structure at low-velocity ratios. As discussed above, transverse jets
+generally comprise shear-layer vortices on the windward side, CVPs, horseshoe vortices, and wake
+vortices. However, their structure at low-velocity ratios (nominally less than 1) is different. In this
+regime, the interaction of the jet with the crossﬂow is dominated by hairpin vortices. Figure 7a
+shows a side view of the ﬂow downstream of injection, observed by Acarlar & Smith (1987) upon
+injecting ﬂuid into a laminar boundary layer from a narrow, streamwise-oriented rectangular slot.
+We note the train of hairpin vortices produced. In fact, the goal of the experiment was to produce
+hairpin vortices from low-momentum streaks near the wall. Acarlar & Smith’s velocity ratios
+were of the order of 0.1. Figure 7b shows results from simulations by Sau & Mahesh (2008) for a
+round jet with r = 1, demonstrating similar hairpins. The hairpins form because vorticity at the
+leading edge of the pipe exit has opposite sign to the vorticity of the crossﬂow boundary layer. At
+low-velocity ratios, the boundary-layer vorticity can overwhelm the leading-edge vorticity in the
+pipe, resulting in vorticity essentially being shed from the trailing edge. At low Reynolds numbers,
+the hairpin vortices are coherent and periodic; at higher Reynolds numbers, they become unstable
+as they evolve but are still visible. The hairpins are not apparent if the ﬂow is visualized in the
+symmetry plane and streamwise planes alone. As seen in Figure 7b,c, the streamwise plane shows
+what looks like a CVP but is in fact the ﬂow produced by the hairpin legs. Similarly, the symmetry
+plane shows what look like shear-layer vortices but are in fact a cross section of the hairpin heads
+(Figure 7d,e).
+
+386
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+2.4. Jet Trajectory
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+The mean jet trajectory describes the extent to which the jet penetrates into the crossﬂow. The
+jet trajectory can be deﬁned in different ways: as positions of local velocity maxima, local scalar
+maxima, vorticity maxima, or as the time-averaged streamline originating at the jet exit. As discussed in Section 2.2, different deﬁnitions can yield slightly different trajectories, especially in
+the far ﬁeld. Smith & Mungal (1998) found that their trajectories based on the maximum local
+velocity penetrate 5–10% deeper into the ﬂow than trajectories based on the maximum scalar
+concentration. Jet trajectories are most commonly scaled with rd; i.e.,
+ x B
+y
+,
+(2)
+=A
+rd
+rd
+where A and B are constants. Margason (1993) provided a list of experimental values for A and
+B, which shows 1.2 < A < 2.6 and 0.28 < B < 0.34. rd may be considered a global length scale
+(Broadwell & Breidenthal 1984) when a transverse jet is treated as a point source of momentum
+ﬂux and viewed from the far ﬁeld. Broadwell & Breidenthal (1984) modeled the far ﬁeld of the jet
+as a streamwise vortex pair that moves at free-stream velocity. The jet is treated as a point source
+of normal momentum; i.e., the jet mass ﬂow rate mj and jet diameter dj approach zero while Uj
+increases such that the jet momentum ﬂux mj U j remains constant. Dimensional arguments then
+yield the length scale
+
+
+mj U j 1/2
+.
+(3)
+l=
+ρ∞ U ∞2
+If the density of the jet and that of crossﬂow are equal, l is equal to (π/4)(1/2) rd . The vortices induce
+a velocity on each other, d y/d t ∝ /R, where 2R is the separation distance. Their circulation  is
+related to the impulse per unit length, P = mj U j /U ∞ ∝ ρ∞ r. The requirement of self-similarity
+in the far ﬁeld necessitates that r ∝ y, which allows dy/dt to be integrated to obtain the following
+insightful expressions:
+ x 1/3
+ x −1/3
+
+y
+∝
+∝
+,
+.
+(4)
+l
+l
+U ∞l
+l
+The assumptions made in Broadwell & Breidenthal’s analysis are reasonable in the far ﬁeld, in
+which the CVP is fully formed, and the jet does not experience any acceleration. In the near
+ﬁeld of the jet exit, the jet initially has negligible horizontal velocity; the crossﬂow therefore
+accelerates the jet ﬂuid in the horizontal direction, deforming its cross section in the process.
+What constitutes the far ﬁeld is unclear, although Smith & Mungal (1998) suggested a far-ﬁeld
+deﬁnition of x/r 2 d > 0.3. A velocity ratio of 10 therefore corresponds to the establishment of
+the far ﬁeld at 30 diameters. For internal ﬂows such as dilution jets or fuel-injection ports, the
+near-ﬁeld behavior is probably more relevant.
+Other scalings have been proposed. Keffer & Baines (1963) observed trajectories from their
+experiments to collapse with r2 d. Their data were in a region close to the jet exit (a maximum
+downstream distance of 4d ). Karagozian (1986) considered a vortex pair issuing from the jet oriﬁce
+into the crossﬂow. Numerical solution of the equations governing the evolution of this vortex pair
+yields
+ x γ
+y
+= αr β
+(5)
+d
+d
+for the trajectory, where α = 0.527, β = 1.178, and γ = 0.314. Smith & Mungal (1998)
+performed experiments at velocity ratios ranging from 5 to 25 and suggested that rd is preferable
+over d or r2 d to scale the trajectories. They suggested r2 d as a length scale that distinguishes
+near-ﬁeld and far-ﬁeld behavior. Hasselbrink & Mungal (2001) used similarity theory to
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+387
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+0.5
+2.5
+0
+s/d = 15
+s/d = 12
+s/d = 9
+
+2.0
+
+r = 3.9 (Kamotani & Greber 1972)
+r = 4.0 (Keffer & Baines 1963)
+r = 5 (Smith & Mungal 1998)
+r = 5.7 (Su & Mungal 2000)
+r = 5.81 (Chochua et al. 2000)
+r = 6.0 (Keffer & Baines 1963)
+r = 7.7 (Kamotani & Greber 1972)
+r = 10 (Smith & Mungal 1998)
+
+1.0
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+0.5
+
+0
+0
+
+1
+
+2
+
+3
+
+p
+
+y/rd
+
+–0.5
+1.5
+
+s/d = 6
+
+–1.0
+
+–1.5
+
+s/d = 3
+
+–2.0
+–5
+
+4
+
+0
+
+x/rd
+
+5
+
+10
+
+n/rd
+
+Figure 8
+(a) Jet trajectories from different experiments scaled by rd. Panel a from Muppidi & Mahesh (2005). (b) Proﬁles of mean pressure from
+DNS of Muppidi & Mahesh (2007), illustrating the pressure gradient across the jet in the near ﬁeld. n is the coordinate normal to the
+jet trajectory.
+
+suggest
+y
+=
+rd
+
+
+
+2 x
+c ej rd
+
+1/2
+and
+
+y
+=
+rd
+
+
+
+3 x
+c ew rd
+
+1/3
+(6)
+
+in the near ﬁeld and the far ﬁeld, respectively. Here cej and cew are the entrainment coefﬁcients in
+the jet region and the wake-like region, respectively.
+There is evidence that rd is not sufﬁcient to scale a wide range of data. Smith & Mungal’s (1998)
+scaled trajectories show noticeable variation for jets, with r varying from 5 to 20. In fact, the scatter
+appears comparable to trajectories scaled with r2 d. There can be considerable differences in scaled
+trajectories from experiments with fairly similar velocity ratios (e.g., 5.7 and 5.81) (see Figure 8a).
+A laminar jet penetrates more than a turbulent jet does with the same velocity ratio. Similarly,
+a thicker crossﬂow boundary layer allows the jet to penetrate more (Muppidi & Mahesh 2005).
+The trajectories of Su & Mungal’s (2004) (r = 5.7) experiment with a pipe-generated jet differ
+from those of Smith & Mungal’s (1998) (r = 5) nozzle-generated jet at fairly similar velocity
+ratios. Muppidi & Mahesh (2005) suggested that jet trajectory depends not just on the velocity
+or momentum ratio, but also on the distribution of momentum in both the jet and crossﬂow
+boundary layer. They suggest the scaling
+ x  B  h C
+y
+= A
+,
+(7)
+rd
+rd
+d
+where h is a near-ﬁeld length scale, which is given by
+h
+=
+d
+
+
+
+δ 2 d j2
+3
+πCm r 2 4
+4
+d
+
+1
+3
+
+d j2
+2δ
+π
+h
+=
++ Cm r 2 2
+d
+3d
+4
+d
+Here Cm is constant and
+388
+
+Mahesh
+
+u j2 d A =
+
+π dj2
+4
+
+U j2 .
+
+when
+
+when
+
+h ≤ δ,
+
+h ≥ δ.
+
+and
+
+(8)
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+2.5. Entrainment
+A transverse jet is better than a regular free jet at entraining and mixing with the surrounding
+ﬂuid. Compared to a free jet, the decay in the centerline velocity and jet ﬂuid concentration of a
+transverse jet is generally more rapid (Moussa et al. 1977, Smith & Mungal 1998) in the near ﬁeld
+and slower in the far ﬁeld. Smith & Mungal’s (1998) experiments, which seeded an air jet with
+acetone and used planar laser-induced ﬂuorescence imaging to measure the concentration, show
+that over a range of velocity ratios from 5 to 25, the peak jet ﬂuid concentration in the center
+plane initially remains constant and then decays at a rate proportional to s−1.3 in the near ﬁeld. In
+contrast, a free jet would decay at a rate s−1 .
+Broadwell & Breidenthal’s (1984) analysis suggests that the decay in the centerline concentration in the far ﬁeld of a transverse jet should be proportional to x−2/3 , which is less than that for
+a free jet. We note that far downstream, a transverse jet would have more of a wake-like proﬁle.
+Smith & Mungal’s (1998) data show the far-ﬁeld decay rate to be distinctly lower than s−1.3 ; however, the slopes are not necessarily −2/3 for all velocity ratios. Lower-velocity-ratio jets appear to
+exhibit this reduced decay rate earlier than the higher-velocity-ratio jets. This behavior appears to
+not be universal. For example, Su & Mungal’s r = 5.7 jet from a circular pipe exhibits a decay rate
+higher than −1 at rd = 0.5–0.9, near a −1 decay rate until rd = 2.5, and a signiﬁcantly higher
+decay rate beyond 2.5 until the end of the measurements.
+One conclusion drawn from this behavior is that scalar mixing is sensitive to the jet-exit
+conditions and near-ﬁeld behavior. However, such behavior could also result from the threedimensionality of the ﬂow and the impropriety of only using trajectories in the symmetry plane.
+A free jet is axisymmetric, and both the velocity and concentration are maximum at the axis of
+symmetry. In contrast, for a transverse jet, as the CVP fully forms, the maximum concentration
+levels move out of the symmetry plane; even in the symmetry plane, the peak concentration and
+velocity locations do not coincide. It is probably more appropriate therefore to use global measures
+such as the entrainment rate.
+The entrainment of a turbulent axisymmetric free jet is described by the Ricou-Spalding correlation (Ricou & Spalding 1961, Han & Mungal 2001, Babu & Mahesh 2004),
+s
+ṁ
+= 1 + 0.32 .
+d
+ṁ0
+
+(9)
+
+For transverse jets, assuming far-ﬁeld trajectories and considering the momentum transfer needed
+to attain the trajectory, Hasselbrink & Mungal (2001) proposed
+ṁ
+r  x 1−B
+=1+
+.
+AB rd
+ṁ0
+
+(10)
+
+Specifying r and comparing Equations 9 and 10 as functions of x, one can see that the transverse jet
+has higher mass ﬂow rates for the same initial m0 . Knowing the far-ﬁeld entrainment rate allows the
+mean scalar concentration in the far ﬁeld to be estimated (e.g., Shan & Dimotakis 2006) assuming
+u ∼ U ∞ , ṁ/ṁ0 ≈ 1/C. Muppidi & Mahesh (2008) computed entrainment from their DNS of Su
+& Mungal’s (1998) experiments. The jet ﬂuid is marked by a passive scalar, and the entrainment
+of the crossﬂow ﬂuid by the jet is estimated from the volume ﬂux of the scalar-carrying ﬂuid across
+the trajectory-normal planes. Figure 9a shows the variation of the volume ﬂux with distance from
+the jet exit along with the Ricou-Spalding correlation for a free jet. Entrainment in the transverse
+jet is signiﬁcantly larger than that in a regular jet. The transverse jet displays higher entrainment
+rates past 2d (i.e., in the near ﬁeld itself ), and at 6d, the mass ﬂow rate in the transverse jet is
+already approximately twice that in a regular jet.
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+389
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+b
+
+a
+12
+
+100
+80
+
+Percent
+
+Vs/V0
+
+9
+
+6
+
+3
+
+0
+
+40
+20
+0
+
+0
+
+2
+
+4
+
+6
+
+s/d
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+60
+
+8
+
+10
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+s/d
+
+Figure 9
+The entrainment rate of a transverse jet. (a) Variation of the volume ﬂux of a scalar-carrying ﬂuid along the
+length of the jet. The symbols represent data from Muppidi & Mahesh (2008), and the dashed line is the
+Ricou-Spalding (1961) correlation for a free jet. (b) Percentage contribution of the downstream side of the
+jet to the total entrainment. Figure taken from Muppidi & Mahesh (2007).
+
+Figure 9b shows the percentage contribution of the downstream side of the jet to the total
+entrainment. Close to the jet exit, both the downstream and upstream sides of the jet contribute
+about the same amount to the total entrainment, and in this region, the transverse jet’s entrainment
+is roughly the same as that of a regular jet (Figure 9a). Further downstream, the contribution
+of the downstream side increases signiﬁcantly. It appears that the increased entrainment of the
+transverse jet as compared with that of the regular jet past 2d corresponds to the increased contribution of the downstream side of the jet to the total entrainment. This behavior is explained
+by Muppidi & Mahesh (2008) as being caused by the crossﬂow going around the jet and impinging on the symmetry plane to produce the saddle node observed by Kelso et al. (1996). The
+resulting high pressure at the saddle node drives downstream ﬂuid into the jet. More data are
+needed to assess how these observations for r = 5.7 apply to other velocity ratios and jet-exit
+conditions.
+
+2.6. Mixing
+Entrainment of the crossﬂow ﬂuid produces sharp fronts in the concentration. Turbulent advection
+then increases the surface area of the fronts to a point at which viscosity consumes them. As noted
+above, mean concentration levels describe entrainment. Mixing is described by measures such as
+the probability density function (PDF) of the concentration. Moreover, mixed-ﬂuid concentrations
+appear more sensitive to Reynolds number than trajectories, the decay of the mean concentration
+on the centerline, and the spatial extent of the jet.
+Mixing in the near ﬁeld of transverse jets (at least for r ≥ 10) is quantitatively different from
+that in the far ﬁeld, as shown by the PDFs measured by Smith & Mungal (1998) for transverse air
+jets. Their data for r ≥ 10 show that in the near ﬁeld (Figure 10a), the PDFs of mixture fractions
+display a preferred concentration that does not signiﬁcantly vary along the radial width of the
+jet (between lines L1 and L2 in the ﬁgure), whereas the far-ﬁeld PDFs (Figure 10b) exhibit a
+preferred concentration that decreases (moves toward the free-stream concentration) as the PDF
+is measured further from the jet center.
+390
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+b
+
+a
+r = 10
+
+1.2rd
+
+r = 10
+
+3
+
+4rd
+
+1.5
+
+L2
+
+1.0
+
+0.5
+2.5 per contour
+0
+
+0
+
+5
+
+L1
+
+Distance, rd
+
+Distance, rd
+
+L1
+2
+
+L2
+
+1
+
+Conditional average
+Ensemble average
+10
+
+0
+
+0
+
+2
+
+Concentration, C (%)
+
+4
+
+6
+
+Concentration, C (%)
+
+Figure 10
+Probability density function of mixture fractions for an r = 10 transverse jet in the (a) near ﬁeld and (b) far ﬁeld. Figure taken from
+Smith & Mungal (1998).
+
+The Reynolds number dependence of scalar ﬂuctuations in regular turbulent jets has been
+summarized by Dimotakis (2000), who showed c rms /c¯ at the jet centerline as a function of jet
+Reynolds number for liquid-phase and gas-phase jets. The data show that c rms /c¯ at the jet centerline
+decreases with increasing Reynolds number and reaches an asymptotic value at sufﬁciently high
+Reynolds number. Gas-phase jets are observed to be less sensitive to Reynolds number than
+liquid-phase jets over the range of Reynolds numbers shown.
+Shan & Dimotakis (2006) performed concentration measurements using laser-induced ﬂuorescence in transverse water jets at r = 10 and 103 ≤ Re j ≤ 20 × 103 and studied the far-ﬁeld
+(50d ) concentration in detail. Figure 11 shows that for the same velocity ratio, increasing the
+Reynolds number makes the mixed-ﬂuid concentration more homogeneous. Such behavior is
+typical of passive scalar mixing and has also been observed in a variety of other ﬂows (Dimotakis
+2000). The spatial homogenization manifests itself in a preferred concentration (peak in the PDF),
+growing with increasing Reynolds number (Figure 11). Instantaneously, the concentration ﬁeld is
+
+a
+
+b
+
+c
+
+15
+Rej = 20 × 103
+Rej = 10 × 103
+Rej = 5.0 × 103
+Rej = 2.0 × 103
+Rej = 1.0 × 103
+
+10
+
+f(C)
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Conditional average
+Ensemble average
+
+4 per contour
+
+5
+
+0
+
+0
+
+0.05
+
+0.10
+
+0.15
+
+0.20
+
+0.25
+
+Concentration, C
+Figure 11
+Mixed-ﬂuid concentration in an r = 32 transverse jet at Rej of (a) 103 and (b) 104 . (c) The effect of Reynolds number on the probability
+density function of the mixed-ﬂuid concentration in the far ﬁeld. Figure taken from Shan & Dimotakis (2006).
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+391
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+intermittent, with regions of nearly constant concentration separated by fronts of large changes in
+concentration. Additionally, the concentration ﬁeld is measured to be anisotropic at the smallest
+scales over the range of Reynolds numbers considered.
+
+2.7. Nonequilibrium Nature of Flow and Modeling Implications
+The turbulence in a transverse jet is three dimensional and anisotropic and in nonequilibrium.
+The budget of the turbulence kinetic energy k = ui ui /2 is described by its governing equation,
+
+
+∂
+∂U i
+∂ui ∂ui
+∂
+k +Uj
+k = − ui uj
+−ν
+∂t
+∂ xj
+∂ xj
+∂ xj ∂ xj
+
+
+
+convection
+
+production
+
+dissipation
+
+(11)
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+1 ∂
+∂2
+1 ∂
+−
+ui ui uj + ν
+k −
+ui p .
+2 ∂ xj
+∂ xj ∂ xj
+ρ ∂ xi
+
+
+
+turbulent transport
+
+viscous diffusion
+
+pressure transport
+
+Muppidi & Mahesh (2007) computed the various terms in the above budget from their DNS of
+an r = 5.7, Re j = 5,000 jet. They found the production and dissipation terms to be generally
+dominant; however, the pressure transport term is generally nonnegligible and is dominant at
+some locations. Moreover, the relative values of terms at the jet exit differ signiﬁcantly from those
+in a regular pipe ﬂow. The ratio of the local rate of production of the turbulence kinetic energy
+to its local dissipation rate (P/ε) is a measure of the deviation from equilibrium. As shown in
+Table 1, P/ε in a transverse jet shows signiﬁcant variability, has regions where it is much greater
+than 1, and is noticeably different from its values in a free jet or channel ﬂow. The edges of the jet
+have P/ε values greater than 1.0, and P/ε is higher on the leading edge than at the trailing edge
+along the jet length. This suggests that the turbulence kinetic energy produced near the jet edges
+is transported toward the center of the jet at which P/ε < 1.0. The highest values of P/ε (over
+the entire domain) are observed at the leading edge of the jet at s = rd. This location corresponds
+to a signiﬁcant change in the direction of the jet ﬂuid. The relative locations of peak production
+and peak dissipation over the jet cross section display a sharp transition between the near and far
+ﬁelds (Figure 12). In the near ﬁeld, the peak production is located at the windward side of the jet,
+
+Table 1
+
+P/ε at select locations in an r = 5.7, Re j = 5,000 transverse jet
+P/ε
+
+Upstream of jet exit
+s/rd = 0.1
+
+s/rd = 1.0
+
+Near wall (x/d = −0.46)
+
+1.916
+
+Pipe center
+
+0.029
+
+Leading edge
+
+2.817
+
+Center streamline
+
+0.0255
+
+Trailing edge
+
+1.929
+
+Leading edge
+
+8.714
+
+Center streamline
+
+0.650
+
+Trailing edge
+
+1.883
+
+s/d = 15.0
+
+Center streamline
+
+0.452
+
+s/d = 20.0
+
+Center streamline
+
+0.483
+
+Other ﬂows
+
+Regular jet (r/r 1 = 0.7)
+
+0.8
+
+Channel ( y+ = 11.8)
+
+1.81
+
+2
+
+392
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+15
+
+s = 2d
+
+z/d
+10
+
+2
+
+0
+
+0
+–2
+
+y/d
+
+–2
+0
+
+–2
+
+–4
+
+2
+
+–2
+
+s = 10d
+5
+
+0
+
+0
+
+5
+
+10
+
+x/d
+
+z/d
+
+Maximum production rate
+Maximum dissipation rate
+Center streamline
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+s = 6d
+
+4
+
+2
+
+15
+
+0
+
+2
+
+4
+
+6
+
+s = 12d
+
+4
+
+4
+
+2
+
+2
+
+0
+
+0
+
+–2
+
+–2
+–4
+
+–4
+–2
+
+0
+
+2
+
+n/d
+
+4
+
+6
+
+–2 0
+
+2
+
+4
+
+6
+
+8
+
+n/d
+
+Figure 12
+(a) Nature of the turbulence kinetic energy budget for an incompressible transverse jet, comparing the
+trajectory of the maximum production rate (squares) over the jet cross section with the trajectory of the
+maximum dissipation rate (triangles). The center streamline trajectory is represented by the solid line.
+(b) Evolution of a jet cross section at s = 2d , 6d, 10d, and 12d. Figure taken from Muppidi & Mahesh (2007).
+
+while the peak dissipation is located toward the leeward side. In contrast, in the far ﬁeld, once the
+CVP has fully formed, the production is maximum on the leeward side of the jet, while the peak
+dissipation is located toward the windward side. This behavior is consistent with the upstream
+acceleration dominating the ﬂow in the near ﬁeld and CVP entrainment on the downstream side
+dominating the far ﬁeld.
+Such behavior poses challenges to time-averaged prediction methodologies. Hoda & Acharya
+(2000) conducted an extensive evaluation of several k-ε and k-ω models and concluded that
+existing models generally provide overly simplistic predictions of jets in crossﬂow. They found
+that the ε equation in k-ε models is inadequate in the jet region (which has large gradients in all
+directions) and suggested the need to optimize the ε budget, possibly using DNS. They noted
+that nonlinear models do not provide signiﬁcantly better predictions than linear models, possibly
+because coefﬁcients of the nonlinear models are obtained from simple wall-bounded ﬂows. Additionally, Acharya et al. (2001) provided a detailed review of the application of Reynolds-averaged
+Navier-Stokes (RANS) models to ﬁlm cooling. They noted that two equation models generally
+underpredict the lateral spread and mixing of the jet and overpredict the vertical penetration.
+The assumption of isotropic eddy viscosity is found inappropriate. Also Reynolds stress–transport
+model predictions are not substantially better than two-equation model predictions, despite
+modeling turbulence anisotropy. As seen in Muppidi & Mahesh’s (2007) budget, the pressure
+transport term, which is mostly ignored or modeled along with turbulent transport (Pope 2000),
+is quite signiﬁcant for transverse jets. The neglect or improper treatment of pressure transport
+is likely an additional source of error. The prediction of scalar mixing is even more challenging.
+Figure 13 shows scatter plots of the eddy diffusivity computed by Muppidi & Mahesh (2008)
+from their DNS. Not only is the eddy diffusivity not isotropic, but there also are regions of
+countergradient diffusion.
+There are also some numerical considerations. The ﬂow (intensities, k, ε, budget terms) contains steep gradients at the jet edges in the near ﬁeld. Grid convergence in the near ﬁeld is therefore
+especially important. As noted in Section 2.3, interaction with the crossﬂow affects the ﬂow inside
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+393
+
+FL45CH16-Mahesh
+
+–0.20
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+–0.4
+
+–0.15
+
+–0.02
+
+–0.10
+
+u'C'
+
+c
+
+–0.2
+
+–0.05
+
+0
+
+0
+0
+0.2
+
+0.05
+
+0.02
+0.10
+0.15
+
+0.4
+–5
+
+0
+
+5
+
+10
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+дC/дx
+
+–0.5
+
+0
+
+дC/дy
+
+0.5
+
+–1
+
+–0.5
+
+0
+
+0.5
+
+1.0
+
+дC/дz
+
+Figure 13
+The dependence of turbulent scalar ﬂuxes on the mean scalar gradient: (a) u  C  versus ∂ C̄/∂ x, (b) v  C  versus ∂ C̄/∂ y, and (c) w  C  versus
+∂ C̄/∂z. The thin lines show the least-squares ﬁt for (a) Dt1 , (b) Dt2 , and (c) Dt3 , respectively. The thick line in panel a shows the overall
+diffusivity Dt obtained by equating the measured and modeled production of the passive scalar variance. Figure taken from Muppidi &
+Mahesh (2008).
+
+the pipe/nozzle. Inclusion of the pipe/nozzle is therefore necessary for any transverse jet simulation
+(RANS, LES, or DNS), especially at low-velocity ratios. Film cooling in particular is known to depend on both pipe and plenum geometry (e.g., Peterson & Plesniak 2004). Moreover, the budgets
+at the jet exit differ considerably from their values for a turbulent pipe. Therefore, computations
+that do not include the pipe would have to prescribe fairly complex boundary conditions at the jet
+exit.
+
+2.8. Stability
+In Section 2.3 we discuss the shear-layer vortices that form on the windward side of the jet.
+Recent studies indicate that at jet-to-crossﬂow velocity ratios below 3–4, the onset of the shearlayer instability is driven by mechanisms that may be different from the typical Kelvin-Helmholtz
+instability. Camussi et al. (2002) showed that for this range of velocity ratios, there is a very
+strong oscillation or waving in the ﬂow, leading to “large scale, periodic” shear-layer rollup. The
+experiments of Megerian et al. (2007) and Davitian et al. (2010) explore the range 1.15 ≤ r <
+∞, at ﬁxed jet Reynolds numbers (2,000 and 3,000). For ∞ > r > 3.2, dominant shear-layer
+instabilities are observed through measured spectra to be strengthened, to move closer to the jet
+oriﬁce, and to increase in frequency as the crossﬂow velocity U ∞ increases for a ﬁxed jet Reynolds
+number.
+Figure 14 shows sample results for the evolving spectral characteristics along the jet shear
+layer (location along the jet trajectory denoted by s/d ). The shear-layer instabilities at higher
+r values (above 3.2) exhibit downstream frequency shifting along the jet shear layer for r =
+4.1 (Figure 14b). When r is reduced below approximately 3.2, single frequency instabilities are
+dramatically strengthened, forming almost immediately beyond the jet exit within the shear layer,
+without any evidence of frequency shifting (Figure 14c). The spectra in Figure 14a,b are typical
+of convectively unstable shear layers for which disturbances grow downstream of their initiation
+(Huerre & Monkewitz 1990). In contrast, the spectra in Figure 14c are typical of an absolutely
+unstable shear ﬂow for which disturbances also grow near their location of initiation. As a result,
+the ﬂow becomes self-excited. From a control standpoint, the transition affects the transverse
+394
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+14:58
+
+a
+
+−20
+
+b
+
+−20
+
+−40
+
+−40
+
+−60
+
+−60
+
+−60
+
+dB
+
+−40
+
+dB
+
+dB
+
+−20
+
+16 November 2012
+
+−80
+
+−80
+
+−80
+
+−100
+
+−100
+
+−100
+
+0.1
+
+0.3
+
+0.5
+
+0.7
+
+0.9
+
+1.1
+
+1.3
+
+1.5
+
+0.1
+
+0.3
+
+0.5
+
+0.9
+
+1.1
+
+1.3
+
+1.5
+
+0.1
+
+0.3
+
+0.5
+
+St
+
+St
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+0.7
+
+c
+
+s/D = 6.0
+
+s/D = 4.0
+
+s/D = 5.0
+
+s/D = 3.0
+
+0.7
+
+0.9
+
+1.1
+
+1.3
+
+1.5
+
+St
+s/D = 2.0
+
+s/D = 1.0
+
+s/D = 0.1
+
+Figure 14
+The nature of upstream shear-layer instabilities reﬂected in velocity spectra in the windward shear layer for an Re j = 2,000 transverse
+jet: (a) free jet, (b) r = 4.1, and (c) r = 2.0. Figure taken from Megerian et al. (2007).
+
+jet’s response to small-amplitude forcing. As shown by Megerian et al. (2007), when the jet is
+axisymmetrically forced at 1% of the mean velocity, the forcing frequency takes over the spectral
+character of the shear layer when r > 3.2, but it has little effect when r < 3.2 and the ﬂow is globally
+unstable. The globally unstable regime appears not to be very responsive to low-to-moderate ﬂow
+excitation; it only responds to strong square wave forcing.
+De B. Alves et al. (2008) performed linear stability analysis on a modiﬁed version of Coelho
+& Hunt’s (1989) solution for 4 ≤ r ≤ 10. Their analysis predicts that the most unstable mode
+is axisymmetric and that the Strouhal number decreases with increasing r, in agreement with
+experiment. In a linear stability analysis of an r = 3 transverse jet, Bagheri et al. (2009) considered
+a base ﬂow that was steady, obtained by selectively damping certain frequencies. The jet was
+prescribed to be parabolic at the inﬂow, and the steady solution had a CVP and horseshoe vortices
+near the wall. The analysis revealed higher-frequency unstable global eigenmodes associated with
+shear-layer instabilities on the CVP and lower-frequency modes associated with shedding vortices
+in the wake of the jet (Figure 15).
+
+a
+
+b
+
+Figure 15
+Modes from the stability analysis of Bagheri et al. (2009). (a) High-frequency modes (λ2 isocontour in red )
+along with the base ﬂow (λ2 isocontour in blue and u contours in gray). (b) Low-frequency spanwise velocity
+near the wall ( green and black correspond to negative and positive velocities, respectively) along with the base
+ﬂow as in panel a.
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+395
+
+ARI
+
+16 November 2012
+
+14:58
+
+Tu
+n
+
+ne
+
+l sh
+
+oc
+
+es
+
+s
+No
+
+Jet-generated
+shocks
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Boundarylayer
+buildup
+
+Nos
+es
+ho
+ck
+
+k
+
+c
+ho
+
+k
+
+c
+rse
+te
+n
+i
+
+gw
+tin
+
+Jet
+
+Hi
+Sep
+Separated
+boundary
+layer
+
+w
+do
+in
+
+ion
+enetrat
+Jet p
+cus
+nis
+Me
+s
+Shock
+
+Jet
+Mixing
+Suction
+
+Envelope shock from
+pressure gradients
+around expanding jet
+
+Jet
+sh
+inteock w
+rsec indo
+tion w
+
+FL45CH16-Mahesh
+
+High
+pressure
+
+Ceiling reflection of
+nose and jet shocks
+PrandtlMeyer flow
+Base wake
+
+gh
+
+p re s
+
+sure
+
+Slight underpressure
+
+Sh
+oc
+kle
+ts
+fro
+m
+
+Je
+ts
+ho
+ck
+pre
+ssu
+re
+
+wi
+nd
+ow
+
+gra
+die
+nts
+
+int
+er
+se
+c
+
+tio
+n
+
+on
+sid
+es
+
+Figure 16
+Schematic of the ﬂow ﬁeld in the interaction of a supersonic jet with a supersonic crossﬂow. Figure taken
+from Morkovin et al. (1952).
+
+3. COMPRESSIBLE JETS IN CROSSFLOW
+3.1. Overview
+Early studies of high-speed jets in crossﬂow mostly considered applications to thrust vectoring,
+whereas most recent studies consider scramjet combustors. Visualization remains an important
+component of experimental studies. Most computations have used the RANS methodology, and
+there have been several recent LES or hybrid RANS-LES simulations. Experiments at high speeds
+are not as common as those at low speeds, particularly if turbulence or mixing data are to be
+measured; quantitative data are hard to acquire at high velocities.
+A fairly detailed qualitative description of the ﬂow, especially from a gasdynamical perspective, is
+available from some early studies. For example, Figure 16 shows a sketch of the ﬂow ﬁeld described
+by Morkovin et al. (1952) based on their schlieren visualization and surface-pressure measurements
+of the ﬂow induced by supersonic injection from a cone-cylinder conﬁguration into a Mach 1.9
+crossﬂow. Such work examined the surface-pressure ﬁeld and the resulting forces and moments
+induced by the transverse jet. The experiments of Zukoski & Spaid (1964) show the importance
+of the ratio of stagnation pressure in the jet to the free-stream value on scaling jet penetration.
+Extensive experimental and modeling studies were performed by Schetz, Billig, and coworkers
+(e.g., Orth et al. 1969, Schetz & Billig 1987) to examine the effect of underexpanded versus perfectly
+expanded jets, injection angle, and multiple jets. The sophistication of the measurements has
+increased. However, fewer quantitative data are available compared to those for low-speed ﬂows.
+Velocity measurements of a jet interacting with supersonic crossﬂow have been performed using
+laser Doppler velocimetry for a sonic jet (Santiago & Dutton 1997), hot-ﬁlm anemometry for an
+396
+
+Mahesh
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+angled supersonic jet (McCann & Bowersox 1996), and particle image velocimetry for a jet issuing
+from a missile half-body (Mahmud & Bowersox 2003). Jet penetration into a supersonic ﬂow has
+been measured using schlieren imaging (Papamoschou & Hubbard 1993, Ben-Yakar et al. 2006),
+concentration measurements of differing ﬂuids (Orth & Funk 1967, Fuller et al. 1992), planar
+Mie scattering (Gruber et al. 1997a,b), and laser-induced ﬂuorescence (McDaniel & Graves 1988,
+Hollo et al. 1994, McMillin et al. 1994, Ben-Yakar et al. 2006). A series of experiments by Beresh
+et al. (2005a,b, 2006) provides detailed streamwise and crossplane PIV data for supersonic jets
+issuing into subsonic crossﬂow. These more detailed measurements have enabled insight into the
+overall structure of transverse jets and their penetration and mixing properties. Some experiments
+have also explored the dependence of the ﬂow on many possible parameters (e.g., Papamoschou
+& Hubbard 1993, Gruber et al. 1997b, Ben-Yakar et al. 2006).
+Most computations of high-speed injection ﬂow ﬁelds have used algebraic mixing-length and
+eddy-viscosity models. Chenault et al. (1999) noted that such models can yield estimates of the
+overall ﬂow structure but cannot correctly model secondary ﬂows or turbulent stresses associated
+with the injection. They evaluated a Reynolds-stress transport model, which yields signiﬁcantly
+better results. There have been several LES and hybrid RANS-LES simulations of underexpanded
+sonic jets (e.g., Peterson et al. 2006, Kawai & Lele 2009, Génin & Menon 2010, Boles et al. 2010,
+Chai & Mahesh 2011, Ferrante et al. 2011), most of which evaluate their particular numerical
+method or subgrid model for this class of problems.
+
+3.2. Qualitative Time-Averaged Behavior
+Here we consider two regimes. The ﬁrst (Figure 17a,c) has a sonic jet interacting with a supersonic
+free-stream ﬂow, as is the case in scramjet combustors. The second regime has a supersonic jet
+interacting with a subsonic crossﬂow (Figure 18a), as occurs in thrust vector control applications.
+Figures 17 and 18 are from the LES of Chai & Mahesh (2011) performed under conditions
+corresponding to the experiments of Santiago & Dutton (1997) and Beresh et al. (2005a,b, 2006),
+respectively.
+Figure 17a shows contours of the mean Mach number on the symmetry plane and a near-wall
+plane parallel to the wall, with the free-stream Mach number M ∞ = 1.6, the Reynolds number
+based on the free-stream velocity and jet diameter Re j = 2.4 × 105 , the density and pressure
+ratio between the nozzle chamber and crossﬂow ρ0 j /ρ∞ = 5.5 and p 0 j / p ∞ = 8.4, and the
+jet-to-crossﬂow momentum ﬂux ratio J = 1.7 (Santiago & Dutton 1997). Figure 17c shows the
+corresponding crossplane contours of the Mach number and pressure contours parallel to the wall.
+Similar to the behavior displayed by incompressible jets in crossﬂow, the upstream boundary layer
+separates to form a horseshoe vortex. There exists a near-ﬁeld pressure gradient in the streamwise
+direction, and the jet bends in the direction of the free stream in the near ﬁeld and forms a CVP in
+the far ﬁeld. Moreover, the crossﬂow accelerates around the jet, and a saddle node is observed on the
+symmetry plane. There also are signiﬁcant differences from incompressible transverse jets. A bow
+shock is observed ahead of the jet, barrel shocks are observed at its periphery, and the jet ﬂuid forms
+a Mach disk as it expands into and bends toward the crossﬂow. The pressure gradient at the jet exit
+makes it difﬁcult to precisely deﬁne the extent to which the jet is underexpanded. The wall pressure
+displays the footprint of the bow shock. Additionally, as the crossﬂow accelerates around the jet, it
+can become supersonic. Figure 18a shows contours of the mean Mach number when M ∞ = 0.8;
+M j = 3.73; J = 10.2; the density, pressure, and temperature ratio between the nozzle chamber
+and crossﬂow ρ0 j /ρ∞ = 47.1, p 0 j / p ∞ = 49.1, and T 0 j /T ∞ = 1.05; and Re j = 1.9 × 105 (Beresh
+et al. 2006). Here the ﬂow shows an even stronger resemblance to incompressible transverse jets,
+with one important difference being the shock cells that are observed within the jet.
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+397
+
+FL45CH16-Mahesh
+
+ARI
+
+a
+
+16 November 2012
+
+14:58
+
+b
+
+4
+3
+2 M
+1
+0
+
+Bow shock
+Crossflow
+
+Y
+
+Barrel shock
+Mach disk
+
+X
+Z
+Compression
+waves
+Recirculation
+
+Jet
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+M
+0
+
+c
+
+1
+
+2
+
+d
+
+1.2
+0.8
+
+Crossflow
+
+0.4 U
+0
+
+Y
+
+–0.4
+Z
+
+X
+Jet
+0.1 0.3 0.5 0.7
+
+P
+
+–5 –4 –3 –2 –1 0 1 2 3 4 5
+
+Ωx
+
+Figure 17
+Mean and instantaneous ﬂow in the interaction of a sonic jet with Mach 1.6 crossﬂow. (a) Mean Mach number (M) contours on central
+and horizontal planes (with different contour levels). (b) Instantaneous density-gradient magnitude on symmetry and wall-parallel
+planes. (c) Mean streamwise velocity contours on two downstream crossplanes and the mean pressure contour on the horizontal plane.
+(d ) Isosurface of the second invariant of the velocity-gradient tensor colored by the streamwise vorticity. Figure taken from Chai &
+Mahesh (2011).
+
+3.3. Qualitative Instantaneous Behavior
+The mean ﬂow conceals fairly complex instantaneous behavior. Let us consider the sonic jet
+interacting with a Mach 1.6 crossﬂow (Figure 17b,d ). The density-gradient contours show how
+the crossﬂow turbulent boundary layer decelerates in response to the jet and forms a bow shock.
+The adverse pressure gradient induces separation, which in turn yields a family of compression
+waves in front of the jet. Upon exiting the oriﬁce, the sonic jet tries to penetrate and expand into the
+crossﬂow and in the process forms an inclined barrel shock and Mach disk. The shear layer on the
+windward side of the jet rolls up, similar to its behavior at low speeds. The barrel shock and Mach
+disk are quite unsteady. The unsteadiness of the barrel shock appears to be related to acoustic
+waves propagating across the jet exit (e.g., Kawai & Lele 2009, Génin & Menon 2010). The
+Mach disk unsteadiness is such that a signiﬁcant portion of the high-velocity jet ﬂuid bypasses
+the upstream edge of the Mach disk during certain instants (VanLerberghe et al. 2000). This
+results in high shear downstream of the Mach disk and prominent large-scale coherent vortices
+(Figure 18). Such vortices are not observed in subsonic crossﬂow.
+398
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+
+b
+
+Y
+
+4
+3
+2 M
+1
+
+Z
+
+X
+Y
+X
+Z
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+M
+0
+
+0.4 0.8
+
+–2 –1 0 1
+Ωx
+
+2
+
+Figure 18
+Mean and instantaneous ﬂow for a supersonic jet interacting with subsonic crossﬂow: (a) mean Mach number (M) and (b) isosurface of
+the second invariant of the velocity-gradient tensor colored by the streamwise vorticity. Figure taken from Chai & Mahesh (2011).
+
+Figure 17d visualizes instantaneous vortical structures using the second invariant of the
+velocity-gradient tensor. The range of scales of motion is apparent. Moreover, the region downstream of the jet shows irrotational regions on either side of the jet. These regions correspond to
+the expansion and acceleration of the crossﬂow around the jet and also possess large density gradients (the horizontal plane in Figure 18b). The jet plume has a complex structure with streamwise
+vorticity of different signs on either side of the symmetry plane. With time-averaging, this yields
+a CVP. Incompressible transverse jets (Section 2.3) can separate inside the nozzle/pipe at low r.
+Such behavior has generally not been discussed for high-speed jets, an exception being Beresh
+et al. (2003), who noted how supersonic jets issuing into subsonic crossﬂow can separate inside
+the nozzle at low J, affecting the near-ﬁeld shock waves and the thrust vector as a result.
+
+3.4. Jet Trajectory
+The trajectory of incompressible transverse jets is most commonly scaled with rd, as discussed in Section 2.4. For ﬂuids of different density, r is related to the momentum ﬂux ratio,
+J = ρj U j2 /ρ∞ U ∞2 . At high-enough speeds that compressibility becomes important, jet penetration and trajectory can also depend on
+p j ρj T j
+,
+,
+; molecular weights M wj and M w∞ ; and Mach numbers M j and M ∞ .
+p ∞ ρ∞ T ∞
+In addition, the crossﬂow boundary layer, jet velocity proﬁle, and oriﬁce shape can also be important. Given this fairly large parameter space, it is perhaps not surprising that a variety of
+correlations and observations exist on jet penetration and trajectory. Most empirical correlations
+are based on visualization of the ﬂow. Additionally, most correlations are for cases in which the
+crossﬂow is supersonic. Different metrics to assess the jet penetration have been used. Early studies
+employing schlieren imaging used the height of the Mach disk as a measure (e.g., Zukoski & Spaid
+1964; Schetz et al. 1967, 1968; Hersch et al. 1970), whereas subsequent studies have used measures such as the visually observable upper edge of the jet from schlieren images (Ben-Yakar et al.
+2006), the edge of the ﬂuorescing plume at which the injectant mole fraction is approximately 1%
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+399
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+(McDaniel & Graves 1988), and the intensity of planar Rayleigh scattering images corresponding
+to 90% of the average intensity behind the bow shock.
+2
+. Moreover, for supersonic crossﬂow, the
+The momentum ratio J is equal to γj p j M j2 /γ∞ p ∞ M ∞
+near-ﬁeld crossﬂow pressure is that after the bow shock (denote by p ∞2 ). The Rankine-Hugoniot
+equations yield
+p ∞2
+2γ∞
+γ∞ − 1
+=
+M2 −
+,
+(12)
+p∞
+γ∞ + 1 ∞ γ∞ + 1
+which allows J to be expressed as
+
+J=
+
+γ∞ − 1
+2γ∞
+γj p j
+−
+.
+M2
+2 (γ + 1)
+γ∞ p ∞2 j γ∞ + 1
+M∞
+∞
+
+(13)
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+The crossﬂow Mach number therefore inﬂuences J by determining the pressure behind the bow
+shock. As noted by Papamoschou & Hubbard (1993), if p j / p ∞2 is held ﬁxed, J depends most
+strongly on Mj , while M ∞ has a much smaller effect. In the absence of crossﬂow, the jet-exit
+pressure determines the extent to which it is under-/overexpanded. Conversely, for a transverse
+jet, varying the exit pressure also varies the momentum ﬂux ratio. If J is held constant and the exit
+pressure is varied, the jet Mach number has to be correspondingly varied. This makes assessing
+the effect of the exit pressure solely in terms of its effect on jet expansion difﬁcult.
+An insightful estimate of the jet trajectory was performed by Schetz & Billig (1966), who
+considered the forces acting on a slug of jet ﬂuid, away from shock waves. An approximate force
+balance along and normal to the jet axis yielded an equation for the angle α(s ) made by the jet
+trajectory s with the horizontal direction (assuming vertical injection):
+C D h(α)ρ∞ U ∞2 sin2 α
+dα
+=−
+.
+ds
+2ρj U j2 [Aj2 /A(s )][ρj /ρ(s )]
+
+(14)
+
+Here h(s) denotes the jet width, CD a drag coefﬁcient, A(s) the local cross-sectional area, and ρ(s )
+the local jet density. The subscript j denotes quantities at the jet exit. Schetz & Billig used empirical
+expressions for h and Cd , an assumption of an elliptical cross section of prescribed ellipticity to
+obtain A, and a constant value for ρ to integrate the above equation to obtain the jet trajectory.
+Comparison to subsonic crossﬂow data in the near ﬁeld (up to 4d ) showed good agreement for
+J = 4.75 and signiﬁcant overprediction for J = 16.35. Despite the disagreement, the analysis is
+valuable, in particular for its intuitively appealing notion of effective back pressure to represent
+the complex pressure ﬁeld at the jet exit. The effective back pressure allows underexpanded jets
+to be considered; it determines the height of the ﬁrst Mach disk, beyond which Equation 14 for
+the trajectory is applied.
+Much experimental data have been gathered over the past few decades, and several correlations
+for jet trajectory have been proposed as a result. As seen from Table 2, the correlations either are a
+power law or involve a logarithmic ﬁt, and even correlations with similar functional form can have
+Table 2 A compilation of correlations for the trajectories of high-speed jets
+Trajectory
+Gruber et al. (1997b)
+McDaniel & Graves (1988)
+Rothstein & Wantuck (1992)
+Vranos & Nolan (1965)
+Rogers (1971)
+
+400
+
+Mahesh
+
+y
+/2 0.344
+= 1.20( x+d
+)
+dJ
+dJ
+y
+0.344 pj
+=
+ln[2.077(x/d
+2 p∞
+d
+M∞
+y
+d
+y
+d
+y
+d
+y
+d
+
+0.276
+
+= 2.173 J
+=J
+
+0.312
+
++ 2.059)]
+
+(x/d )0.281
+
+ln[4.704(x/d + 0.637)]
+
+= 1.68 J
+
+0.5
+
+(x/d )0.0866
+
+= 3.87 J
+
+0.3
+
+(x/d )0.143
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+a
+M∞ = 2
+
+y/d
+5
+4
+3
+2
+1
+0
+
+x/d = 0
+x/d = 4
+x/d = 8
+3
+
+b
+
+2
+
+1
+
+0 –1 –2 –3
+
+z/d
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+M∞ = 2
+
+y/d
+5
+4
+3
+2
+1
+0
+
+x/d = 0
+x/d = 4
+x/d = 8
+3
+
+2
+
+1
+
+0 –1 –2 –3
+
+z/d
+Figure 19
+Instantaneous end views from Gruber et al.’s experiments illustrating the difference between (a) air and
+(b) helium jets. Figure reprinted with permission from Gruber et al. (1997b). Copyright 1997, American
+Institute of Physics.
+
+signiﬁcantly different constants. There is experimental evidence that parameters other than J can
+be important. Papamoschou & Hubbard (1993) considered helium jets in crossﬂowing air at Mach
+2 to 3 and performed several experiments in which they varied J, Mj , and the jet pressure and density ratios. Deﬁning jet penetration visually from schlieren images, they concluded that penetration
+strongly depends on the momentum ratio and depends less on the free-stream Mach number, jet
+Mach number, pressure ratio, and density ratio. The experiments of Gruber et al. (1997b) use
+planar Rayleigh scattering to study sonic helium and air jets with the same momentum ﬂux ratio
+issuing into the same crossﬂow. They found that the difference in molecular weight does not
+affect the penetration; however, the dynamics of the large-scale structures is quite different. The
+large-scale motions were observed to break down in the air jet, whereas the helium jet stayed more
+coherent over longer distances (Figure 19). The authors explained this behavior by noting that an
+appropriate convective Mach number was three times larger for helium than for air. Another study
+by Ben-Yakar et al. (2006) used schlieren and OH planar laser-induced ﬂuorescence to contrast
+sonic hydrogen and ethylene jets with the same momentum ratio. Similar to Gruber et al., the
+lighter, and therefore faster, hydrogen jet stayed coherent for longer distances. However, in contrast to Gruber et al., who did not ﬁnd signiﬁcant differences in penetration between jets of different
+molecular weights, Ben-Yakar et al. found that the ethylene jet penetrated more. They attributed
+this behavior to the ethylene jet having lower velocities for the same J, which induces the coherent
+motions on the windward side to tilt in the crossﬂow direction, lose their coherence, and mix more.
+
+3.5. Mixing
+As discussed in Section 2.6, the near-ﬁeld mixing of incompressible transverse jets as reﬂected
+by scalar PDFs is different from that in the far ﬁeld. This difference is likely greater in
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+401
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+x/d = 2.3
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+4
+2
+0
+4
+y/d = 3.3
+2
+0
+4
+y/d = 2.9
+2
+0
+4
+y/d = 2.5
+2
+0
+4
+y/d = 2.0
+2
+Maximum in mean
+0
+image at y/d = 2.0
+4
+y/d = 1.6
+2
+0
+4
+y/d = 1.2
+2
+0
+0.2 0.4 0.6 0.8 1.0
+y/d = 3.8
+
+p(I/Imax)
+
+I/Imax
+
+x/d = 3.7
+
+p(I/Imax)
+
+4
+y/d = 3.5
+2
+0
+4
+y/d = 3.1
+2
+0
+4
+y/d = 2.6
+2
+0
+4
+y/d = 2.2
+2
+0
+4
+y/d = 1.8
+2
+Maximum in mean
+0
+image at y/d = 1.8
+4
+y/d = 1.3
+2
+0
+4
+y/d = 0.9
+2
+0
+0.2 0.4 0.6 0.8 1.0
+
+I/Imax
+
+Figure 20
+Scalar probability density functions of an underexpanded sonic jet injected into Mach 1.6 crossﬂow from
+VanLerberghe et al. (2000).
+
+high-speed jets. The experiments of VanLerberghe et al. (2000) used planar laser-induced ﬂuorescence from acetone molecules to study mixing in an underexpanded sonic jet injected into a
+Mach 1.6 crossﬂow. The authors used instantaneous images to extract PDFs of the image intensity
+to quantify mixing, as well as to develop a qualitative description of the entrainment process. The
+large coherent motions discussed in Section 3.3, along with mushroom-shaped plumes issuing
+out of the jet boundary, were observed to entrain large amounts of free-stream ﬂuid. As a result,
+mean concentrations were intermediate to their pure jet and crossﬂow values. However, the PDFs
+indicated large regions of unmixed ﬂuid. As seen from Figure 20, the most near-ﬁeld mixing was
+observed in the center of the wake region slightly below the jet centerline. Also the level of mixing
+improved with downstream distance from the Mach disk, as the ﬂow evolved into the CVP. Entrainment of crossﬂow ﬂuid by large windward coherent motions was also observed by Ben-Yakar
+et al. (2006), who contrasted sonic hydrogen and ethylene jets with the same momentum ratio in
+a Mach 3.38 crossﬂow. Visually deﬁning coherent motions, they constructed x-t diagrams from
+which they extracted convection velocities and inclination angles. Such analysis allowed estimation
+of the directional shear experienced by the coherent motions, which they found important in the
+ethylene jets losing their coherence and mixing more with the crossﬂow.
+
+4. SUMMARY
+This article reviews our fundamental understanding of single-phase, nonreacting transverse jets in
+incompressible and compressible regimes. As expected, more quantitative information is available
+at low speeds owing to the difﬁculties in performing experiments and turbulent simulations at
+high speeds. Much attention has been devoted to qualitative ﬂow structure, and there is a general
+consensus on the important elements. Perhaps the impact of low-velocity ratios on the ﬂow
+structure is less appreciated. It is known that different deﬁnitions of the jet trajectory yield different
+answers and that scaling of similarly deﬁned jet trajectories is not straightforward. The widely
+402
+
+Mahesh
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+used rd scaling has sound support in the far ﬁeld, but has less in the near ﬁeld, whose behavior
+affects the overall far-ﬁeld penetration. The parameter space at high speeds is fairly large, and
+even experimentally derived correlations for trajectories show signiﬁcant scatter. Transverse jets
+entrain free-stream ﬂuid at higher rates than regular jets. This behavior not only is displayed when
+the CVP is fully formed, but is also observed in the near ﬁeld, in which the jet ﬂuid is strongly
+accelerated. In contrast to a regular jet, the near ﬁeld of a transverse jet experiences strong pressure
+gradients in the crossﬂow direction. Higher pressures at the windward side of the jet also induce
+separation inside the jet nozzle/pipe at low-velocity ratios. Studies at low speeds show that mixing
+depends more on Reynolds number than jet trajectory or spatial extent does. Moreover, the PDFs
+of scalar concentrations in the near ﬁeld are qualitatively different from those in the far ﬁeld.
+Along with visualizations, PDFs measured in high-speed ﬂow show that coherent motions entrain
+large amounts of crossﬂow ﬂuid, but mixing in the near ﬁeld is not very effective. Turbulence
+kinetic energy budgets from DNS at low speeds reveal a ﬂow that is highly anisotropic and in
+nonequilibrium. The ratios of production to dissipation vary widely, and there even are regions
+in which pressure transport is signiﬁcant. Scalar transport is not well described by an isotropic
+eddy viscosity and even displays countergradient diffusion. Such behavior makes prediction using
+Reynolds-averaged methodologies difﬁcult. Low-speed transverse jets appear globally unstable at
+low-velocity ratios, which suggests an intriguing pathway for their control.
+
+DISCLOSURE STATEMENT
+The author is not aware of any biases that might be perceived as affecting the objectivity of this
+review.
+
+ACKNOWLEDGMENTS
+I am grateful to Dr. Suman Muppidi and Mr. Xiaochuan Chai for many useful discussions during
+the course of preparing this review. I am extremely thankful to the NSF, AFOSR, and ONR for
+support.
+
+LITERATURE CITED
+Acarlar MS, Smith CR. 1987. A study of hairpin vortices in a laminar boundary layer. Part 2. Hairpin vortices
+generated by ﬂuid injection. J. Fluid Mech. 175:43–83
+Acharya S, Tyagi M, Hoda A. 2001. Flow and heat transfer predictions for ﬁlm-cooling. Ann. N.Y. Acad. Sci.
+934:110–25
+Andreopoulos J, Rodi W. 1984. Experimental investigation of jets in cross-ﬂow. J. Fluid Mech. 138:93–127
+Babu PC, Mahesh K. 2004. Upstream entrainment in numerical simulations of spatially evolving round jets.
+Phys. Fluids 16:3699–705
+Bagheri S, Schlatter P, Schmid PJ, Henningson DS. 2009. Global stability of a jet in crossﬂow. J. Fluid Mech.
+624:33–44
+Ben-Yakar A, Mungal MG, Hanson RK. 2006. Time evolution and mixing characteristics of hydrogen and
+ethylene transverse jets in supersonic crossﬂows. Phys. Fluids 18:026101
+Beresh SJ, Henﬂing JF, Erven RJ. 2003. Flow separation inside a supersonic nozzle exhausting into a subsonic
+compressible crossﬂow. J. Propuls. Power 19:655–62
+Beresh SJ, Henﬂing JF, Erven RJ, Spillers RW. 2005a. Penetration of a transverse supersonic jet into a subsonic
+compressible crossﬂow. AIAA J. 43:379–89
+Beresh SJ, Henﬂing JF, Erven RJ, Spillers RW. 2005b. Turbulent characteristics of a transverse supersonic
+jet in a subsonic compressible crossﬂow. AIAA J. 43:2385–94
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+403
+
+ARI
+
+16 November 2012
+
+14:58
+
+Beresh SJ, Henﬂing JF, Erven RJ, Spillers RW. 2006. Crossplane velocimetry of a transverse supersonic jet
+in a transonic crossﬂow. AIAA J. 44:3051–61
+Boles JA, Edwards JR, Baurle RA. 2010. Large-eddy/Reynolds-averaged Navier-Stokes simulations of sonic
+injection into Mach 2 crossﬂow. AIAA J. 48:1444–56
+Bosanquet CH, Pearson JL. 1936. The spread of smoke and gases from chimneys. Trans. Faraday Soc. 32:1249–
+63
+Broadwell JE, Breidenthal RE. 1984. Structure and mixing of a transverse jet in incompressible ﬂow. J. Fluid
+Mech. 148:405–12
+Camussi R, Guj G, Stella A. 2002. Experimental study of a jet in a crossﬂow at very low Reynolds number.
+J. Fluid Mech. 454:113–44
+Chai X, Mahesh K. 2011. Simulations of high speed turbulent jets in cross ﬂows. Presented at AIAA Aerosp. Sci.
+Mett. New Horiz. Forum Aerosp. Expo., 49th, Orlando, FL, AIAA Pap. 2011-650
+Chenault CF, Beran PS, Bowersox RDW. 1999. Numerical investigation of supersonic injection using a
+Reynolds-stress turbulence model. AIAA J. 37:1257–69
+Chochua G, Shyy W, Thakur S, Brankovic A, Lienau K, et al. 2000. A computational and experimental
+investigation of turbulent jet and crossﬂow interaction. Numer. Heat Transf. A 38:557–72
+Coelho SLV, Hunt JCR. 1989. The dynamics of the near ﬁeld of strong jets in cross-ﬂow. J. Fluid Mech.
+200:95–120
+Cortelezzi L, Karagozian AR. 2001. On the formation of the counter-rotating vortex pair in transverse jets.
+J. Fluid. Mech. 446:347–74
+Crabb D, Durao DFG, Whitelaw JH. 1981. A round jet normal to a cross-ﬂow. Trans. ASME J. Fluids Eng.
+103:142–53
+Davitian J, Getsinger D, Hendrickson C, Karagozian AR. 2010. Transition to global instability in transverse
+jet shear layers. J. Fluid Mech. 661:294–315
+de B. Alves LS, Kelly RE, Karagozian AR. 2008. Transverse-jet shear-layer instabilities. Part 2. Linear analysis
+for large jet-to-crossﬂow velocity ratio. J. Fluid Mech. 602:383–401
+Delavan SK, Webster DR. 2011. Unsteadiness of bivalve clam jet ﬂow according to environmental conditions.
+Aquat. Biol. 13:175–91
+Dimotakis PE. 2000. Mixing transition in turbulent ﬂows. J. Fluid Mech. 409:69–98
+Fearn RL, Weston RP. 1974. Vorticity associated with a jet in crossﬂow. AIAA J. 12:1666–71
+Ferrante A, Matheou G, Dimotakis PE. 2011. LES of an inclined sonic jet into a turbulent crossﬂow at Mach
+3.6. J. Turbul. 12(2):1–32
+Foust J, Rockwell D. 2006. Structure of the jet from a generic catheter tip. Exp. Fluids 41:543–58
+Fric TF, Roshko A. 1994. Vortical structure in the wake of a transverse jet. J. Fluid Mech. 279:1–47
+Fuller EJ, Mays RB, Thomas RH, Schetz JA. 1992. Mixing studies of helium in air at high supersonic speeds.
+AIAA J. 30:2234–43
+Gardner JE, Burgisser A, Stelling P. 2007. Eruption and deposition of the Fisher Tuff (Alaska): evidence for
+the evolution of pyroclastic ﬂows. J. Geol. 115:417–36
+Génin F, Menon S. 2010. Dynamics of sonic jet injection into supersonic crossﬂow. J. Turbul. 11:1–13
+Gogineni S, Rivir R, Pestian D, Goss L. 1996. High free-stream turbulence inﬂuence on turbine ﬁlm-cooling
+ﬂows. Phys. Fluids 8(9):S4
+Gopalan S, Abraham BM, Katz J. 2004. The structure of a jet in cross ﬂow at low velocity ratios. Phys. Fluids
+16:2067–87
+Gruber MR, Nejad AS, Chen TH, Dutton JC. 1997a. Large structure convection velocity measurements in
+compressible transverse injection ﬂowﬁelds. Exp. Fluids 12:397–407
+Gruber MR, Nejad AS, Chen TH, Dutton JC. 1997b. Compressibility effects in supersonic transverse injection
+ﬂowﬁelds. Phys. Fluids 9:1448–61
+Gutmark EJ, Ibrahim IM, Murugappan S. 2008. Circular and noncircular subsonic jets in cross ﬂow.
+Phys. Fluids 20:075110
+Han D, Mungal MG. 2001. Direct measurement of entrainment in reacting/nonreacting turbulent jets.
+Combust. Flame 124:370–86
+Hasselbrink EF, Mungal MG. 2001. Transverse jets and jet ﬂames. Part 1. Scaling laws for strong transverse
+jets. J. Fluid Mech. 443:1–25
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+FL45CH16-Mahesh
+
+404
+
+Mahesh
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+Haven BA, Kurosaka M. 1997. Kidney and anti-kidney vortices in crossﬂow jets. J. Fluid Mech. 352:27–64
+Hersch M, Povinelli LA, Povinelli FP. 1970. Optical study of sonic and supersonic jet penetration from a ﬂat
+plate into a Mach 2 airstream. NASA TN D-5717, Glenn Res. Cent., Cleveland
+Hoda A, Acharya S. 2000. Predictions of a ﬁlm coolant jet in crossﬂow with different turbulent models.
+J. Turbomach. 122:558–69
+Hollo SD, McDaniel JC, Hartﬁeld RJ. 1994. Quantitative investigation of compressible mixing: staged transverse injection into Mach 2 ﬂow. AIAA J. 32:528–34
+Huerre P, Monkewitz PA. 1990. Local and global instabilities in spatially developing ﬂows. Annu. Rev. Fluid
+Mech. 22:473–537
+Iourokina IV, Lele SK. 2006. Large eddy simulation of ﬁlm cooling above a ﬂat plate from inclined cylindrical
+holes. ASME Conf. Proc. Symp. Adv. Numer. Model. Aerodyn. Hydrodyn. Turbomach., Pap. FEDSM200698282. New York: ASME
+Kamotani Y, Greber I. 1972. Experiments on turbulent jet in a crossﬂow. AIAA J. 10:1425–29
+Karagozian AR. 1986. An analytical model for the vorticity associated with a transverse jet. AIAA J. 24:429–36
+Kawai S, Lele SK. 2009. Dynamics and mixing of a sonic jet in a supersonic turbulent crossﬂow. In Center for
+Turbulence Research Annual Research Briefs, pp. 285–98. Stanford, CA: Cent. Turbul. Res.
+Keffer JF, Baines WD. 1963. The round turbulent jet in a cross-wind. J. Fluid Mech. 15:481–96
+Kelso RM, Lim TT, Perry AE. 1996. An experimental study of round jets in cross-ﬂow. J. Fluid Mech.
+306:111–44
+Kelso RM, Smits AJ. 1995. Horseshoe vortex systems resulting from the interaction of a laminar boundary
+layer and a transverse jet. Phys. Fluids 7:153–58
+Krothapalli A, Lourenco L, Buchlin JM. 1990. Separated ﬂow upstream of a jet in cross-ﬂow. AIAA J. 28:414–
+20
+Liscinsky DS, True B, Holdeman JD. 1995. Crossﬂow mixing of noncircular jets. J. Propuls. Power 12:225–30
+Mahesh K, Constantinescu G, Moin P. 2004. A numerical method for large-eddy simulation in complex
+geometries. J. Comput. Phys. 197:215–40
+Mahmud Z, Bowersox R. 2003. Supersonic missile body jet interaction ﬂowﬁelds at low momentum-parameter-ratio.
+Presented at Aerosp. Sci. Meet. Exhib., 41st, Reno, NV, AIAA Pap. 2003-1244
+Margason RJ. 1993. Fifty years of jet in cross ﬂow research. Comput. Exp. Assess. Jets Cross Flow, AGARD-CP
+534, Advis. Group Aeronaut. Res. Dev., Washington, DC
+Marzouk YM, Ghoniem AF. 2007. Vorticity structure and evolution in a transverse jet. J. Fluid. Mech. 575:267–
+305
+McCann G, Bowersox R. 1996. Experimental investigation of supersonic gaseous injection into a supersonic
+freestream. AIAA J. 34:317–23
+McClinton CR. 2006. X-43–Scramjet power breaks the hypersonic barrier: Dryden Lectureship in Research for 2006.
+Presented at AIAA Aerosp. Sci. Meet. Exhib., 44th, Reno, NV, AIAA Pap. 2006-1
+McDaniel JC, Graves J. 1988. Laser-induced ﬂuorescence visualization of transverse gaseous injection in a
+nonreacting supersonic combustor. J. Propuls. Power 4:591–97
+McMillin BK, Seitzman JM, Hanson RK. 1994. Comparison of NO and OH planar ﬂuorescence temperature
+measurements in scramjet model ﬂowﬁelds. AIAA J. 32:1945–52
+Megerian S, Davitian J, de B. Alves LS, Karagozian AR. 2007. Transverse jet shear-layer instabilities. Part 1.
+Experimental studies. J. Fluid. Mech. 593:93–129
+Morkovin MV, Pierce CA Jr, Craven CE. 1952. Interaction of a side jet with a supersonic main stream.
+Bull. 35, Eng. Res. Inst., Univ. Michigan
+Moussa ZM, Trischka JW, Eskinazi S. 1977. The near-ﬁeld in the mixing of a round jet with a cross-stream.
+J. Fluid Mech. 80:49–80
+Muppidi S, Mahesh K. 2005. Study of trajectories of jets in crossﬂow using direct numerical simulations.
+J. Fluid Mech. 530:81–100
+Muppidi S, Mahesh K. 2006. A model for the formation of the counter-rotating vortex pair in jets in crossﬂow.
+Phys. Fluids 18:085103
+Muppidi S, Mahesh K. 2007. Direct numerical simulation of round turbulent jets in crossﬂow. J. Fluid Mech.
+574:59–84
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+405
+
+ARI
+
+16 November 2012
+
+14:58
+
+Muppidi S, Mahesh K. 2008. Direct numerical simulation of passive scalar transport in transverse jets. J. Fluid
+Mech. 598:335–60
+New TH, Lim TT, Luo SC. 2003. Elliptic jets in cross-ﬂow. J. Fluid Mech. 494:119–40
+Orth RC, Funk JA. 1967. An experimental and comparative study of jet penetration in supersonic ﬂow.
+J. Spacecr. 4:1236–42
+Orth RC, Schetz JA, Billig FS. 1969. The interaction and penetration of gaseous jets in supersonic ﬂow. NASA
+CR-1386, NASA, Washington, DC
+Papamoschou D, Hubbard DG. 1993. Visual observations of supersonic transverse jets. Exp. Fluids 14:468–76
+Patrick MA. 1967. Experimental investigation of the mixing and penetration of a round turbulent jet injected
+perpendicularly into a transverse stream. J. Hydronaut. Div. ASCE 45:16–31
+Peterson SD, Plesniak MW. 2004. Evolution of jets emanating from short holes into crossﬂow. J. Fluid Mech.
+503:57–91
+Peterson DM, Subbareddy PK, Candler GV. 2006. Assessment of synthetic inﬂow generation for simulating
+injection into a supersonic crossﬂow. Presented at AIAA/AHI Space Planes Hypersonic Syst. Technol. Conf.,
+Canberra, Austr., AIAA Pap. 2006-8128
+Pope SB. 2000. Turbulent Flows. Cambridge, UK: Cambridge Univ. Press
+Pratte BD, Baines WD. 1967. Proﬁles of the round turbulent jet in a cross ﬂow. J. Hydraul. Div. ASCE
+92:53–64
+Ramsey JW, Goldstein RJ. 1970. Interaction of a heated jet with a deﬂecting stream. NASA Rep. HTL-TR 92,
+NASA Lewis Res. Cent., Cleveland, OH
+Ricou FP, Spalding DB. 1961. Measurements of entrainment by axisymmetrical turbulent jets. J. Fluid Mech.
+11:21–32
+Rogers RC. 1971. A study of the mixing of hydrogen injected normal to a supersonic airstream. NASA Rep.
+TN-D6114, NASA Langley Res. Cent., Hampton, VA
+Rothstein AD, Wantuck PJ. 1992. A study of the normal injection of hydrogen into a heated supersonic ﬂow using planar
+laser-induced ﬂuorescence. Presented at SAE, ASME, ASEE Joint Propuls. Conf. Exhib., 28th, Nashville,
+TN, AIAA Pap. 1992-3423
+Santiago JG, Dutton JC. 1997. Velocity measurements of a jet injected into a supersonic crossﬂow. J. Propuls.
+Power 13:264–73
+Sau R, Mahesh K. 2008. Dynamics and mixing of vortex rings in crossﬂow. J. Fluid Mech. 604:389–409
+Sau R, Mahesh K. 2010. Optimization of pulsed jets in crossﬂow. J. Fluid Mech. 653:365–90
+Schetz JA, Billig ES. 1966. Penetration of gaseous jet injected into a supersonic stream. J. Spacecr. 3:1658–65
+Schetz JA, Billig FS. 1987. Studies of scramjet ﬂowﬁelds. Presented at SAE, ASME, ASEE Joint Propuls. Conf.,
+23rd, San Diego, AIAA Pap. 1987-2161
+Schetz JA, Hawkins PF, Lehman H. 1967. Structure of highly underexpanded transverse jets in a supersonic
+stream. AIAA J. 5:882–84
+Schetz JA, Weinraub RA, Mahaffey RE. 1968. Supersonic transverse injection into a supersonic stream. AIAA
+J. 6:933–34
+Schlegel F, Wee D, Marzouk YM, Ghoniem AF. 2011. Contributions of the wall boundary layer to the
+formation of the counter-rotating vortex pair in transverse jets. J. Fluid Mech. 676:461–90
+Shan JW, Dimotakis PE. 2006. Reynolds-number effects and anisotropy in transverse-jet mixing. J. Fluid
+Mech. 566:47–96
+Sherif SA, Pletcher RH. 1989. Measurements of the ﬂow and turbulence characteristics of round jets in
+cross-ﬂow. Trans. ASME J. Fluids Eng. 111:165–71
+Smith SH, Mungal MG. 1998. Mixing, structure and scaling of the jet in cross-ﬂow. J. Fluid Mech. 357:83–122
+Su LK, Mungal MG. 2004. Simultaneous measurement of scalar and velocity ﬁeld evolution in turbulent
+crossﬂowing jets. J. Fluid Mech. 513:1–45
+Sutton OG. 1932 A theory of eddy diffusion in the atmosphere. Proc. R. Soc. A 135:143–65
+Sykes RI, Lewellen WS, Parker SF. 1986. On the vorticity dynamics of a turbulent jet in a cross-ﬂow. J. Fluid
+Mech. 168:393–413
+VanLerberghe WM, Santiago JG, Dutton JC, Lucht RP. 2000. Mixing of a sonic transverse jet injected into
+a supersonic ﬂow. AIAA J. 38:470–79
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+FL45CH16-Mahesh
+
+406
+
+Mahesh
+
+FL45CH16-Mahesh
+
+ARI
+
+16 November 2012
+
+14:58
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Vranos A, Nolan JJ. 1965. Supersonic mixing of a light gas and air. Presented at AIAA Joint Propuls. Spec. Conf.,
+Colorado Springs, CO
+Yuan LL, Street RL, Ferziger JL. 1999. Large-eddy simulations of a round jet in cross-ﬂow. J. Fluid Mech.
+379:71–104
+Zukoski EE, Spaid FW. 1964. Secondary injection of gases into a supersonic crossﬂow. AIAA J. 2:1689–996
+
+www.annualreviews.org • The Interaction of Jets with Crossflow
+
+407
+
+FL45-FrontMatter
+
+ARI
+
+29 November 2012
+
+21:15
+
+Contents
+
+Annual Review of
+Fluid Mechanics
+Volume 45, 2013
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Hans W. Liepmann, 1914–2009
+Roddam Narasimha, Anatol Roshko, and Morteza Gharib p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 1
+Philip G. Saffman
+D.I. Pullin and D.I. Meiron p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p19
+Available Potential Energy and Exergy in Stratiﬁed Fluids
+Rémi Tailleux p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p35
+The Fluid Dynamics of Tornadoes
+Richard Rotunno p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p59
+Nonstandard Inkjets
+Osman A. Basaran, Haijing Gao, and Pradeep P. Bhat p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p85
+Breaking Waves in Deep and Intermediate Waters
+Marc Perlin, Wooyoung Choi, and Zhigang Tian p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 115
+Balance and Spontaneous Wave Generation in Geophysical Flows
+J. Vanneste p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 147
+Wave Packets and Turbulent Jet Noise
+Peter Jordan and Tim Colonius p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 173
+Leidenfrost Dynamics
+David Quéré p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 197
+Ice-Sheet Dynamics
+Christian Schoof and Ian Hewitt p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 217
+Flow in Foams and Flowing Foams
+Sylvie Cohen-Addad, Reinhard Höhler, and Olivier Pitois p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 241
+Moving Contact Lines: Scales, Regimes, and Dynamical Transitions
+Jacco H. Snoeijer and Bruno Andreotti p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 269
+Growth of Cloud Droplets in a Turbulent Environment
+Wojciech W. Grabowski and Lian-Ping Wang p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 293
+The Fluid Mechanics of Cancer and Its Therapy
+Petros Koumoutsakos, Igor Pivkin, and Florian Milde p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 325
+
+v
+
+FL45-FrontMatter
+
+ARI
+
+29 November 2012
+
+21:15
+
+Analysis of Fluid Flows via Spectral Properties of the Koopman Operator
+Igor Mezić p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 357
+The Interaction of Jets with Crossﬂow
+Krishnan Mahesh p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 379
+Particle Image Velocimetry for Complex and Turbulent Flows
+Jerry Westerweel, Gerrit E. Elsinga, and Ronald J. Adrian p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 409
+Fluid Dynamics of Human Phonation and Speech
+Rajat Mittal, Byron D. Erath, and Michael W. Plesniak p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 437
+
+Annu. Rev. Fluid Mech. 2013.45:379-407. Downloaded from www.annualreviews.org
+Access provided by Australian Catholic University on 08/13/17. For personal use only.
+
+Sand Ripples and Dunes
+François Charru, Bruno Andreotti, and Philippe Claudin p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 469
+The Turbulent Flows of Supercritical Fluids with Heat Transfer
+Jung Yul Yoo p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 495
+Indexes
+Cumulative Index of Contributing Authors, Volumes 1–45 p p p p p p p p p p p p p p p p p p p p p p p p p p p p 527
+Cumulative Index of Chapter Titles, Volumes 1–45 p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p p 536
+Errata
+An online log of corrections to Annual Review of Fluid Mechanics articles may be found
+at http://ﬂuid.annualreviews.org/errata.shtml
+
+vi
+
+Contents
+
+

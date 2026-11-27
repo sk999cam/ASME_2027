@@ -1,0 +1,1228 @@
+Proceedings of ASME Turbo Expo 2018
+Turbomachinery Technical Conference and Exposition
+GT2018
+June 11-15, 2018, Oslo, Norway
+
+GT2018-75726
+COOLING EFFECTIVENESS FOR A SHAPED FILM COOLING HOLE AT A RANGE
+OF COMPOUND ANGLES
+Shane Haydt
+Stephen Lynch
+Mechanical and Nuclear Engineering Department
+The Pennsylvania State University
+University Park, PA, USA
+ABSTRACT
+Shaped film cooling holes are a well-established cooling
+technique used in gas turbines to keep component metal
+temperatures in an acceptable range. One of the goals of film
+cooling is to reduce the driving temperature for convection at the
+wall, the success of which is generally represented by the film
+cooling adiabatic effectiveness. However, the introduction of a
+film cooling jet-in-crossflow, especially if it is oriented at a
+compound angle, can augment the convective heat transfer
+coefficient and dominate the flowfield. The present work aims
+to understand the effect that a compound angle has on the
+flowfield and adiabatic effectiveness of a shaped film cooling
+hole. Five orientations of the public 7-7-7 shaped film cooling
+hole were tested, from a streamwise oriented hole (0° compound
+angle) to a 60° compound angle hole, in increments of 15°.
+Additionally, two pitchwise spacings of P/D=3 and 6 were tested
+to examine the effect of hole-to-hole interaction. All cases were
+tested at a density ratio of 1.2 and blowing ratios ranging from
+1.0 to 4.0. Experimental results show that increasing compound
+angle leads to increased lateral spread of coolant, and enables
+higher laterally-averaged effectiveness at high blowing ratios. A
+smaller pitchwise spacing leads to more complete coverage of
+the endwall, and has higher laterally averaged effectiveness even
+when normalized by coverage ratio, suggesting that hole to hole
+interaction is important for compound angled holes. Steady
+RANS CFD was not able to capture the exact effectiveness
+levels, but did predict many of the observed trends. The lateral
+motion of the coolant jet was also quantified, both from the
+experimental data and the CFD prediction, and as expected,
+holes with a higher compound angle and higher blowing ratio
+have greater lateral motion, which generally also promotes holeto-hole interaction.
+
+coolant jet and keeping it attached. There are many parameters
+of the shape of a film cooling hole that can be changed in order
+to achieve optimal adiabatic effectiveness. Another parameter
+that is often changed is the compound angle, or the angle that the
+centerline of the film cooling hole makes with the streamwise
+direction, shown in Figure 2. A large compound angle is
+particularly helpful in certain areas of the airfoil like the leading
+edge, where high surface curvature does not allow for
+sufficiently long film cooling holes oriented in the streamwise
+direction. Also, secondary flows around the airfoil can influence
+the local direction of the mainstream flow, which may result in a
+compound angled film cooling hole even though it is streamwise
+oriented with respect to airfoil coordinates.
+Additionally, the pitchwise spacing of film cooling holes,
+depicted in Figure 2, is an important consideration. A smaller
+
+INTRODUCTION
+The addition of a shaped diffuser to a film cooling hole,
+shown in Figure 1, helps achieve the goal of increased coolant
+concentration at the endwall by reducing the momentum of the
+
+Figure 1: 7-7-7 baseline shaped film cooling hole, developed by
+Schroeder and Thole [1]
+
+1
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+pitch means more film cooling holes in a given space and thus
+more mass flow, but also provides more complete wall coverage.
+The present study examines the 7-7-7 shaped film cooling
+hole (Figure 1, [1]) at a sweep of compound angles from 0°
+(CA0) to 60° (CA60) for two film cooling arrays with a
+pitchwise spacing of P/D=3 and 6. This work is intended to give
+a more complete understanding of the physics of a compound
+angled shaped film cooling hole, particularly at a wide range of
+compound angles and blowing ratios.
+
+c
+coolant, at hole inlet
+diff
+diffuser
+exit
+exit plane of the film cooling hole
+fwd
+forward expansion of diffuser
+inlet
+inlet plane of the film cooling hole
+lat
+lateral expansion of the diffuser
+m
+metering section
+∞
+mainstream
+Superscripts
+laterally-averaged
+̅
+area-averaged
+̿
+
+NOMENCLATURE
+A
+hole cross-sectional area
+AR
+area ratio, Aexit/Ainlet
+skin friction coefficient
+𝑐𝑓
+CASH compound angled shaped hole
+CRVP counter-rotating vortex pair
+D
+diameter of film cooling holes
+DR
+density ratio, 𝜌𝑐 ⁄𝜌∞
+H
+shape factor, 𝛿 ∗ ⁄𝜃
+k
+thermal conductivity
+L
+hole length
+coolant mass flow rate
+ṁ𝑐
+M
+blowing ratio, 𝜌𝑐 𝑈𝑐 ⁄𝜌∞ 𝑈∞
+P
+pitch, lateral distance between holes
+q
+q-criterion, second invariant of velocity
+gradient tensor, Eq. 1
+Re
+Reynolds number
+(𝑅𝑒 ∗ = 𝛿99 ∗ 𝑢𝜏 ⁄𝑣∞ , 𝑅𝑒𝜃 = 𝑈∞ ∗ 𝜃/𝜈∞ ,
+𝑅𝑒𝐷 = 𝑈∞ ∗ 𝐷/𝜈∞ , 𝑅𝑒𝑐 = 𝑈𝑐 ∗ 𝐷/𝜈𝑐 )
+t
+hole breakout width
+T
+temperature
+Tu
+freestream turbulence intensity, 𝑢𝑟𝑚𝑠 ⁄𝑈∞
+U∞
+mainstream mean velocity
+urms
+root mean squared velocity
+uτ
+friction velocity, 𝑈∞ √𝑐𝑓 ⁄2
+x
+downstream distance measured from hole
+trailing edge
+y
+vertical distance from surface
+z
+spanwise distance measured from center
+hole
+z’
+spanwise distance measured from the point
+of maximum effectiveness for each jet
+Greek
+α
+hole injection angle
+β
+compound angle
+δ
+expansion angle for diffuser
+δη
+experimental uncertainty in effectiveness
+δηb
+bias uncertainty in effectiveness
+displacement thickness
+𝛿∗
+99% boundary layer thickness
+𝛿99
+η
+local adiabatic effectiveness,
+(𝑇∞ − 𝑇𝑎𝑤 )⁄(𝑇∞ − 𝑇𝑐 )
+θ
+momentum thickness
+ν
+kinematic viscosity
+ρ
+fluid density
+Subscripts
+aw
+adiabatic wall
+b
+breakout
+
+REVIEW OF RELEVANT LITERATURE
+Decades of film cooling heat transfer and flowfield research
+have resulted in the well-established conclusion that film cooling
+holes with a shaped diffuser provide higher adiabatic
+effectiveness than cylindrical holes, particularly at high blowing
+ratios [3]. Additionally, there has been a significant amount of
+work showing that cylindrical holes with their centerline
+oriented at a compound angle to the mainstream flow have
+higher adiabatic effectiveness than those that are in-line [3-8].
+Goldstein and Jin showed that increasing the compound
+angle of a cylindrical hole helps the film cooling jet remain
+attached to the surface at higher blowing ratios, and also spreads
+out the coolant laterally, increasing the adiabatic effectiveness
+[7]. A prominent reason for this improved coolant spread on the
+endwall is the unique flowfield of a compound angled jet in
+crossflow. A streamwise-oriented film cooling hole that is
+interacting with the mainstream flow develops a canonical
+counter rotating vortex pair (CRVP) [3], the formation and
+effects of which are well known. When the jet is oriented at a
+compound angle, the mainstream flow wraps around the coolant
+jet, creating a weak windward vortex and a strong leeward
+vortex, which gains preponderance as the jet moves downstream
+[6]. The asymmetry of these vortices can be quantified by the
+circulation in downstream planes, where the vorticity of the
+leeward vortex is positive and windward is negative. Aga and
+
+Figure 2: A shaped film cooling hole oriented at different compound
+angles, left, and at different pitchwise spacings, right.
+
+2
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Abhari found that as compound angle is increased for a
+cylindrical hole, the circulation also increases, and decays in the
+streamwise direction with a momentum-ratio-scaled distance
+parameter [6]. While this vortex has the advantageous effect of
+spreading coolant laterally, it also impinges hot mainstream gas
+on the endwall surface. Therefore, as the streamwise vortex gets
+stronger and more asymmetric, the heat transfer coefficient
+augmentation increases. In fact, since there is little change in
+adiabatic effectiveness with increasing compound angle, but an
+increase of heat transfer coefficient augmentation, there is an
+overall increase in heat flux to the part (often described as a
+decrease in net heat flux reduction, NHFR) [6].
+Adding a shaped diffuser to a cylindrical hole oriented in
+the streamwise direction decreases jet penetration into the
+mainstream, increases lateral spread of coolant on the endwall,
+and decreases the strength of the CRVP [1, 3, 9, 10]. Haydt et
+al. showed that the adiabatic effectiveness of various shaped film
+cooling holes has a peak at a certain “optimal blowing ratio”,
+which occurs when the core of the film cooling jet has about the
+same velocity as the mainstream flow [11]. This leads to a weak
+shear layer between the jet and crossflow, and therefore a weaker
+CRVP.
+Since both a shaped diffuser and a compound angle are
+advantageous to film cooling effectiveness, the combination of
+the two (a compound angled shaped hole, CASH), is a natural
+area of concentration for designers and researchers. Most work
+in this area has concentrated on comparing a streamwise oriented
+shaped hole to a CASH at a large compound angle, with no
+smaller compound angles in between. Additionally, often only
+the adiabatic effectiveness is reported, without an accompanying
+study detailing the heat transfer augmentation, which Aga and
+Abhari showed was very important for compound angled holes
+[6]. A few studies have shown the adiabatic effectiveness of a
+CASH at a large compound angle [4, 12-14], and those that
+compared these results with a streamwise oriented shaped hole
+found that the CASH had slightly higher adiabatic effectiveness,
+particularly at higher blowing ratios where there was less
+tendency for mainstream penetration. Gao et al. found that
+adiabatic effectiveness increased over the range of M=0.4-1.5 for
+CASH [15]. Brauckmann and Wolfersdorf examined a shaped
+hole at compound angles of 0°, 30°, and 45° and found that as
+compound angle increased there was very little change in
+adiabatic effectiveness, but there was an increase in heat transfer
+augmentation [16]. Sen et al. also found that CASH have higher
+heat transfer augmentation, relative to a streamwise oriented
+cylindrical hole [17].
+Schmidt et al. [4] looked at the adiabatic effectiveness of a
+row of CASH at P/D=3 and 6. At P/D=3 there was very little
+change in adiabatic effectiveness over the range of momentum
+flux ratios tested. At the large pitch size, the CASH holes were
+able to maintain high effectiveness, relative to the baseline
+streamwise oriented cylindrical hole, but there was much less
+hole-to-hole interaction than there was with the smaller pitch [4].
+In the present study, the film cooling holes will be fed with
+a quiescent plenum condition, but in many applications in the gas
+turbine, film cooling holes are fed with a coolant crossflow
+supply. Dittmar et al. found that for a CASH with a large
+expansion angle of 14° oriented at a compound angle of 35°,
+coolant crossflow in-line with the compound angle direction is
+
+advantageous to film cooling effectiveness [18]. McClintic et al.
+came to the opposite conclusion using a more moderately
+expanded 7-7-7 film cooling hole (the hole shape used in the
+present study) oriented at a compound angle of 45° [19]. The 77-7 hole in a counter crossflow configuration had higher spatially
+averaged adiabatic effectiveness than for the in-line crossflow
+configurations, particularly at higher velocity ratios. The
+adiabatic effectiveness in both cases decreased as the crossflow
+velocity increased [19].
+The present study aims to fill a gap in the literature by
+providing adiabatic effectiveness for a CASH at a sweep of
+compound angles and two pitchwise spacings, so that the impact
+of increasing flow asymmetry on adiabatic effectiveness can be
+determined.
+EXPERIMENTAL FACILITY
+A schematic of the wind tunnel used for the present study is
+depicted in Figure 3, and was validated by Eberly et al. [20]. This
+closed-loop wind tunnel facility uses air as the working fluid,
+and consists of a low density mainstream loop and a high density
+coolant loop. The mainstream flow is driven by an axial fan and
+its temperature, which is measured by a thermocouple rake, is
+held uniformly at room temperature by a bank of electrical
+heating elements and a water chiller. The velocity of the
+mainstream flow is held constant at 10 m/s, and is measured by
+a Pitot probe. The secondary coolant loop draws air from the
+mainstream flow via a hermetically sealed blower. In order to
+avoid frost, the air in the tunnel is dried down to less than 0.5%
+relative humidity using a vent dryer filled with solid desiccant.
+The air in the coolant loop is run through a heat exchanger with
+liquid nitrogen in order to reduce the temperature and increase
+the density. Downstream of the heat exchanger, the evaporated
+nitrogen is added to the flow of air and then the total coolant flow
+rate is measured by a Venturi flow meter. The amount of added
+nitrogen is negligible in comparison to the mass fraction of
+nitrogen in the coolant air. After the flow meter, the coolant flow
+enters the quiescent plenum, and three flow conditioning screens
+are used to ensure flow uniformity at the film cooling hole inlets.
+Several thermocouples and pressure taps inside of the plenum
+are used to measure the temperature and pressure of the coolant.
+
+Figure 3: Closed-loop wind tunnel facility used in the present study.
+
+3
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+The test section consists of a low conductivity (k = 0.029
+W/m-K) Dow Styrofoam plate use to approximate an adiabatic
+endwall condition. As the mainstream flow enters the test
+section, a suction loop removes the incoming boundary layer,
+and a new boundary layer develops on the Styrofoam endwall
+and is transitioned to turbulence by a trip wire located 35
+diameters upstream of the film cooling hole trailing edge. The
+boundary layer for this test section was measured by Schroeder
+and Thole [1] at low freestream turbulence of Tu = 0.5%. The
+measurement of the turbulent boundary layer was at x/D = -5.4
+and the reported average values are θ/D = 0.16, H = 1.45, Reθ =
+670, Re* = 315, ReD=3,800, and uτ = 0.5 m/s [1].
+Depending on the pitch, five (P/D=6) or nine (P/D=3) holes
+are drilled into the hatches, which are then installed into the test
+section. Low-temperature silicone is used to seal the hatches in
+the endwall plate, and spackle is used to create an
+aerodynamically smooth surface on the seams. The diameter of
+the holes in the present study is 6.78 mm, a pitch of either P/D=3
+or 6, an inclination angle of 30°, L/D=6, and Lm/D=2.5. The
+baseline shaped 7-7-7 hole developed by Schroeder and Thole
+was used for this study [1], and is shown in Figure 1.
+Temperature is measured on the adiabatic Styrofoam
+endwall by a FLIR T650sc infrared camera. Images are taken at
+an angle through an infrared transmissible material in the lid of
+the test section, and are dewarped using an in-house Matlab
+script. Temperatures are corrected via an in-situ camera
+calibration using surface copper block thermocouples,
+performed for the range of temperatures tested.
+
+traditional method of calculating laterally- and area-averaged
+effectiveness in a rectangular, streamwise-oriented downstream
+region is ineffective at capturing the true performance of these
+compound angled holes. This occurs because of the finite width
+of the test section and the finite number of film cooling holes in
+an array, thus the lack of coolant at the edges of the test section
+corrupts the laterally-averaged effectiveness. Instead, the
+maximum effectiveness value was found for each downstream
+x/D location for each hole. This was defined as the “path” of each
+coolant jet. To generate a representative average coolant jet path,
+the paths of the center three holes were averaged. The laterallyaveraged effectiveness for a hole was then calculated by
+averaging the effectiveness over the width of a pitch centered at
+any given path location. Figure 4 depicts the two methods. The
+dashed white lines show the rectangles centered around a hole
+which are traditionally used as the regions to calculate averaged
+effectiveness. The solid black line is the path of the coolant jet,
+and the dashed black lines are each a half pitch on either side of
+the path, representing the area over which the results in this paper
+were averaged. The z/D direction indicated in white is the fixed
+spanwise direction relative to the hole trailing edge, while z’/D
+is a relative spanwise coordinate system in the same direction as
+z, but centered around the path of maximum effectiveness. In
+other words, z’/D=0 is at the point of maximum effectiveness for
+a given x/D location. Figure 5 shows a comparison between the
+two methods, where solid lines are calculated using the white
+lines from Figure 4 and dashed lines are calculated using the
+black lines. There is slightly better periodicity between the
+dashed lines especially downstream of x/D=15, within precision
+uncertainty of the measurements, because the effect of the
+
+UNCERTAINTY ANALYSIS
+The experimental uncertainty was found for blowing ratio,
+density ratio, and adiabatic effectiveness by using the
+propagation of measurement uncertainties analysis outlined by
+Figliola and Beasley [21]. All calculations were done using a
+confidence interval of 95%.
+Uncertainty in the blowing ratio is primarily driven by the
+bias uncertainty of the mainstream Pitot probe transducer and the
+Venturi flowmeter (±0.25% of full-scale flow, and verified by
+separate tests with a laminar flow element in series), and is ±5%
+for all blowing ratios. The uncertainty in the density ratio is less
+than ±0.01 for all cases, and is due to the experimental
+uncertainty of the plenum and mainstream thermocouples. The
+total uncertainty in adiabatic effectiveness was estimated to be
+δη = ±0.034. This is largely due to a bias uncertainty of δηb =
+±0.027, which is the same for each test, and which is caused by
+scatter in the in-situ infrared camera calibration and the bias
+uncertainty of the plenum thermocouples. The precision
+uncertainty for the tests is δηb = ±0.020.
+Repeatability was confirmed by retesting a hatch, and also
+by comparing two different hatches with an identical film
+cooling configuration. The maximum difference in areaaveraged effectiveness was 0.005, and the maximum difference
+in laterally-averaged effectiveness was 0.011, which is within the
+precision uncertainty of the measurement.
+Periodicity was good for all cases, but only when
+comparing individual coolant jets. Since there is significant
+lateral motion of the coolant jets in the spanwise direction, the
+
+Figure 4: The CA30 hole has good periodicity when averaged based
+on the path of the jet (black lines), rather than a rectangle (white
+lines).
+
+4
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 7: Grid independence study for the 60° compound angled
+hole at M=2.0.
+
+Figure 5: Laterally-averaged effectiveness for the case shown in
+Figure 4. Solid lines are rectangularly averaged, dashed lines are
+averaged based on the path of the coolant jet.
+
+All cases were run for 1000 iterations with first order
+discretization, and then for 3000-5000 iterations with second
+order discretization. Convergence was confirmed through
+laterally-averaged effectiveness monitors on the endwall surface,
+and point temperature monitors a diameter above the surface, in
+a manner similar to Haydt et al. [22]. A case was considered
+converged if the monitors held within 1% change over 500
+iterations.
+
+limited number of holes does not influence the averages. The
+laterally- and area-averaged effectiveness results shown in
+sections below are the result of an average of Holes 2, 3, and 4.
+COMPUTATIONAL SETUP
+Steady CFD simulations for the present study were run
+using the realizable k-ε turbulence model in ANSYS Fluent,
+using a computational mesh generated in Pointwise. The mesh
+is shown in Figure 6 with labeled boundary conditions. Due to
+the lateral motion of the compound angled jet, the side boundary
+conditions were periodic. The inlet velocity profile was
+calculated using TEXSTAN (to provide profiles of turbulent
+kinetic energy and dissipation rate) and was matched to the
+measured boundary layer upstream of the holes in the
+experimental test section. The mesh was found to be grid
+independent, and the results of the grid independence study are
+shown in Figure 7. A grid size of about 4 million cells and a
+y+<1 on all walls was used for all of the cases presented below.
+
+DISCUSSION OF RESULTS
+Constant Blowing Ratio, Varied Compound Angle
+In this section, the effect of compound angle variation is
+examined for the 7-7-7 hole held at a constant blowing ratio, all
+at DR=1.2 and P/D=6. Figure 8 shows the laterally-averaged
+effectiveness for all five compound angled cases at a low
+blowing ratio of M=1.0. At this blowing ratio, the CA30 case
+has the lowest effectiveness, and the CA45 and CA60 cases have
+the highest. However, the effectiveness for all cases is similar,
+suggesting that compound angle does not have a profound effect
+on laterally-averaged effectiveness at this low blowing ratio.
+The contours in Figure 9, however, show more clearly how a
+compound angle affects the local adiabatic effectiveness of the
+7-7-7 shaped hole.
+As the compound angle increases, the contour levels do not
+extend as far downstream, but the width of the jet increases. For
+the CA30 case, it appears that the jet width has not increased
+enough to counteract the lower contour levels downstream,
+which is why it has the lowest effectiveness. The CA45 and
+CA60 cases however are very wide, and show evidence of
+complete coolant coverage of the endwall due to jet-to-jet
+interaction. The non-zero contour levels upstream of and
+surrounding the hole outlet could be caused by conduction, or
+also by a secondary flow feature at the leading edge of the hole.
+The Styrofoam is very thin between the upstream wall of the film
+cooling hole diffuser and the endwall surface, which might cause
+
+Figure 6: Computational domain made in Pointwise for simulated
+cases run in ANSYS Fluent.
+
+5
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+increased, which might explain why there is a higher
+effectiveness level around the hole at the larger compound angle
+cases.
+The differences in the cases in Figure 9 can also be
+quantitatively shown by the pitchwise lateral spread of
+effectiveness at a given x/D location downstream. Figure 10
+shows this lateral spread for x/D=5, which is depicted as a white
+dashed line on Figure 9. This figure shows local adiabatic
+effectiveness, averaged over three holes, for each case versus the
+lateral distance z’/D, where z’/D=0 is defined as the maximum
+effectiveness location for each case, or the “path” depicted in
+Figure 4. This figure shows the advantage of a compound angle.
+As the compound angle increases, the peak in effectiveness
+decreases, but the profile becomes wider and therefore more
+spread out across the entire surface. This is especially clear at
+the midpitch (z/D = -3 and 3), where the CA0-CA30 cases have
+almost zero effectiveness, as compared to the increasing levels
+from CA45 to CA60.
+At a higher blowing ratio of M=3.0, the effect of compound
+angle on adiabatic effectiveness is more clear, as seen in the
+laterally-averaged effectiveness curves in Figure 11. At this
+blowing ratio, a streamwise-oriented CA0 7-7-7 hole has the
+lowest laterally-averaged effectiveness, and the effectiveness
+increases with compound angle, with CA45 and CA60 having
+about the same effectiveness. This is consistent with literature,
+which has shown that compound angled holes, either cylindrical
+or shaped, have higher effectiveness than streamwise-oriented
+holes at high blowing ratios.
+Once again, this increase in effectiveness at high compound
+angles is due to the widening of the jets and the jet-to-jet
+interaction promoted by the significant lateral motion. This can
+be seen from the adiabatic effectiveness contours in Figure 12.
+Many other trends from the M=1.0 cases are repeated here, such
+as increasing jet width, non-zero contour levels upstream of the
+holes, and contour levels that do not extend as far downstream
+as compound angle increases. One notable difference is that high
+contour levels for the CA15 case extend farther downstream than
+
+Figure 8: Laterally averaged effectiveness for all five compound
+angled cases at M=1.0.
+
+conduction in this region to be non-negligible. However, the
+obstruction created by the ejection of the film cooling jet often
+results in a horseshoe vortex at the leading edge of the hole,
+which would increase mixing right at the leading edge. A study
+by Wright et al. which compares IR thermography and pressure
+sensitive paint (PSP), found that there was a non-zero
+effectiveness upstream and surrounding the film cooling outlet
+even during an isothermal PSP measurement where there is no
+thermal conduction [23]. The size of this obstruction relative to
+the mainstream flow is increased as the compound angle is
+
+Figure 10: Local adiabatic effectiveness versus lateral distance,
+z’/D, for all compound angle cases at M=1.0.
+
+Figure 9: Adiabatic effectiveness contours for all compound angles
+at M=1.0.
+
+6
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 11: Laterally averaged effectiveness for all five compound
+angled cases at M=3.0.
+
+Figure 13: Local adiabatic effectiveness versus lateral distance,
+z’/D, for all compound angle cases at M=3.0.
+
+for the CA0 case, which is indicative of a coolant jet that is
+keeping coolant closer to the wall and remaining attached to the
+surface farther downstream. This shows that even a mild
+compound angle of CA15 can reduce jet liftoff at higher blowing
+ratios.
+As with the lower blowing ratio case, there is increased
+lateral spread of the coolant as the compound angle is increased,
+as shown in Figure 13. This figure shows local adiabatic
+effectiveness versus the lateral distance, where z’/D=0 is the
+location of the maximum effectiveness level. The data presented
+is at a downstream location of x/D=5, which is depicted with a
+
+white dashed line in Figure 12. A common trend for high
+compound angles at both blowing ratios is that despite lower
+maximum effectiveness, the coolant is more spread out across
+the surface and the effectiveness does not go to zero at the
+midpitch.
+Constant Compound Angle, Varied Blowing Ratio
+In this section, the effect of blowing ratio is examined on a
+7-7-7 shaped hole at a constant compound angle, all at DR=1.2
+and P/D=6. Figure 14 shows the effect of blowing ratio on two
+holes, the streamwise-oriented CA0 case and the largest
+compound angle CA60 case, in terms of laterally-averaged
+effectiveness. As was established by Schroeder and Thole [1]
+the effectiveness of the original 7-7-7 hole decreases as blowing
+
+Figure 12: Adiabatic effectiveness contours for all compound
+angles at M=3.0.
+
+Figure 14: Laterally-averaged effectiveness for all blowing ratios of
+the 0° (solid lines) and 60° (dashed lines) cases.
+
+7
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+ratio increases from M=1.0, shown in solid lines. The CA60 case
+does not have the same trend, showing once again that compound
+angled holes are able to maintain higher effectiveness than
+streamwise oriented holes at high blowing ratios. The
+effectiveness just downstream of the trailing edge decreases at
+higher blowing ratios, but due to jet-to-jet interaction and the
+lateral motion of the jets, the laterally-averaged effectiveness
+downstream increases as compared to M=1.0.
+The adiabatic effectiveness contours for the CA60 case,
+shown in Figure 15, further show the compound angled hole
+behavior with a change in blowing ratio. At each blowing ratio,
+there is that aforementioned region upstream of the film cooling
+hole outlet that has a non-zero effectiveness level. From these
+contours it appears that this region extends farther upstream as
+the blowing ratio increases. As blowing ratio increases, the size
+of the obstruction created by the coolant jet would also increase,
+promoting more mixing upstream of the hole. In the Wright et
+al. PSP study, the upstream region of non-zero effectiveness also
+grew with increasing blowing ratio [23].
+While the behavior of these jets might be similar upstream
+of the hole, downstream of the trailing edge there are some
+significant differences due to the blowing ratio. As blowing ratio
+increases, the jets narrow, especially as compared to M=1.0, and
+there is increased lateral motion. Since the blowing ratio is set
+based on the metering section diameter, the vector of the coolant
+velocity is in the direction of the compound angle. Thus, as the
+compound angle increases, there is a growing lateral component
+and a shrinking streamwise component to the coolant jet’s core
+velocity. Therefore, for a high compound angle, increasing
+blowing ratio does not significantly increase the streamwise
+component of the jet’s velocity, whereas it is directly related for
+streamwise-oriented holes.
+Lateral plots of the local adiabatic effectiveness, shown in
+Figure 16, also shows the narrowing of the film cooling jets at
+higher blowing ratios. These effectiveness curves are for each
+
+Figure 16: Local adiabatic effectiveness versus lateral distance,
+z/D, for all blowing ratio cases of the CA60 hole.
+
+blowing ratio case, and are plotted versus the lateral distance
+z’/D, where z’/D=0 is the location of maximum effectiveness at
+x/D=5. The maximum effectiveness peak is roughly the same
+for the lowest and highest blowing ratios. Also, despite the
+narrowing of the contours at high blowing ratios, the local
+effectiveness at the midpitch increases from M=2.0 to M=4.0.
+This suggests that the significant lateral motion of the coolant
+jets at high blowing ratios are encouraging jet-to-jet interaction,
+which leads to more complete coverage of the endwall in
+coolant.
+The behavior of the CA60 holes at high blowing ratios is
+especially stark when compared with the lateral local
+effectiveness plots for a streamwise-oriented hole (CA0), shown
+in Figure 17, also at x/D=5. As the blowing ratio increases, the
+
+Figure 17: Local adiabatic effectiveness versus lateral distance, z/D,
+for all blowing ratio cases of the streamwise-oriented 7-7-7 hole.
+
+Figure 15: Adiabatic effectiveness contours for the CA60 hole at all
+blowing ratios.
+
+8
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+jet becomes narrower and the peak effectiveness decreases due
+to increasing liftoff of the jet. Also, since there is no lateral
+motion of the jet, there is no interaction, and the effectiveness
+goes to zero at the midpitch. In terms of adiabatic effectiveness,
+the compound angled holes have a clear advantage at high
+blowing ratios. They have reduced jet liftoff at high blowing
+ratios, they spread coolant laterally, and they promote interaction
+between jets which leads to complete endwall coverage.
+The aforementioned benefits of compound angled holes at
+high blowing ratios have been established in literature, but in
+most of those studies, only one large compound angle was tested.
+Presumably there is a regime for holes with compound angles
+near 0° where effectiveness decreases with increasing blowing
+ratio (as for the axial 7-7-7 hole), and also a regime of holes with
+high compound angle which see increasing or similar
+effectiveness at high blowing ratios, but where does the
+transition occur?
+Figure 18 shows the area-averaged
+effectiveness for all of the P/D=6 holes tested, at all blowing
+ratios, and also the CA45 7-7-7 data from Anderson et al. [2].
+Area-averaged effectiveness is averaged from x/D=3 to 15, over
+the width of a pitch centered on the path of maximum
+effectiveness. Precision uncertainty is δη=±0.02, and is
+indicated in Figure 18 by error bars. The horizontal axis of
+Figure 18 is the streamwise component of blowing ratio, which
+is the blowing ratio multiplied by the cosine of the compound
+angle.
+From this plot, the transition between the two
+aforementioned regimes seems to occur somewhere between
+compound angles of 30° and 45°. In the “streamwise oriented
+regime” (CA0 to CA30), the effectiveness decreases with
+increasing blowing ratio, and in the “compound angled regime”
+(CA45 to CA60) the effectiveness remains more constant as
+blowing ratio increases.
+One reason why small compound angled holes might act
+similarly to a streamwise oriented hole is because so much of the
+coolant jet’s velocity is still oriented in the streamwise direction.
+When plotted via the streamwise component of blowing ratio,
+the streamwise oriented regime collapses to a downward sloping
+curve. This result is analogous to the optimal blowing ratio result
+shown in Haydt et al. [11], where the area-averaged effectiveness
+scaled with a blowing ratio that accounts for the shear
+interactions between the coolant jet and the mainstream flow. In
+this case, the effectiveness for the CA0, CA15, and CA30 holes
+
+is scaling with the shear interactions between the mainstream
+flow and streamwise component of the coolant jet velocity.
+Even when scaled in this manner, the large compound
+angles of CA45 and CA60 do not collapse to the curve and
+exhibit different behavior. Therefore, beyond CA30 there are
+prominent secondary effects that are changing the flowfield from
+what is traditionally expected from a film cooling jet in
+crossflow. These secondary effects are effective in spreading the
+coolant laterally and preventing jet liftoff at high blowing ratios.
+Effect of Pitchwise Spacing
+In addition to the cases tested at a more typical pitchwise
+spacing of P/D=6, a smaller pitch of P/D=3 was tested in order
+to understand the effect of pitchwise spacing on adiabatic
+effectiveness. Due to the size and orientation of the CA60 hole,
+a pitch of P/D=3 was not possible as it resulted in overlapping
+film cooling holes. Thus, the largest compound angle presented
+in this section is CA45.
+At a low blowing ratio of M=1.0, the laterally-averaged
+effectiveness is lower for the CA30 and CA45 cases as compared
+to the CA0 and CA15 cases, as shown in Figure 19. The
+adiabatic effectiveness contours for these cases are shown in
+Figure 20. The CA0 and CA15 contours show discrete jets with
+contour levels extending far downstream, while the CA30 and
+CA45 contours show full jet merging but contour levels that do
+not extend very far. These correspond to higher and lower
+laterally-averaged effectiveness, respectively. It is a surprising
+result, given the advantageous jet-to-jet interaction observed by
+the P/D=6 holes at high compound angles. However, with a
+smaller pitch, there is now a larger obstruction to the mainstream
+flow caused by the ejected coolant jets. For the CA30 and CA45
+cases, the coolant jets cover the entire area across the pitch
+normal to the mainstream flow direction. This increases the
+shear interaction with the mainstream flow and leads to greater
+mixing of the coolant. However, it should be noted that even
+though high contour levels do not extend very far downstream,
+the entire pitch is covered in coolant due to the jet interaction,
+
+Figure 19: Area-averaged effectiveness for all P/D=6 cases, and a
+CA45 case from Anderson et al. [2], plotted versus the streamwise
+component of blowing ratio.
+
+Figure 18: Laterally-averaged effectiveness for all P/D=3
+compound angle cases at M=1.0.
+
+9
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 20: Adiabatic effectiveness contours for all P/D=3 compound
+angle cases at M=1.0.
+
+Figure 22: Adiabatic effectiveness contours for all P/D=3 compound
+angle cases at M=3.0.
+
+and thus the laterally-averaged effectiveness is only 15% lower
+downstream. Also, even though these closely space holes cover
+a large lateral extent of the wall, the effectiveness is much lower
+than a slot flow at a similar blowing ratio, as measured by
+Bittlinger et al. [24].
+At a higher blowing ratio of M=3.0, the laterally-averaged
+effectiveness, shown in Figure 21, increases from CA0 to CA15
+and then decreases as compound angle increases further. This is
+also clear from adiabatic effectiveness contours shown in Figure
+22.
+
+Even at a small pitch, the streamwise-oriented CA0 hole has
+a tendency to separate at this higher blowing ratio. That
+tendency is reduced by the addition of a slight compound angle
+of 15° and that is why the laterally-averaged effectiveness
+increases, the contours widen, and the contour levels extend
+farther downstream. As compound angle increases beyond that,
+the aforementioned shear mixing occurs due to the large
+obstruction provided by the coolant jets. However, the
+effectiveness levels remain very high downstream thanks to the
+advantageous jet interaction, and also the increased amount of
+coolant near the endwall.
+Compound angled holes with the larger pitchwise spacing
+produced better lateral coolant coverage and jet attachment as
+blowing ratio increased. This is true for a smaller pitchwise
+spacing as well, as seen in the laterally-averaged effectiveness
+plots in Figure 23. For the streamwise-oriented hole (CA0), the
+effectiveness decreases immediately downstream of the trailing
+edge as the blowing ratio increases. This is consistent with the
+trend of the 7-7-7 hole at its design conditions [1]. However,
+CA0 has high effectiveness far downstream for high blowing
+ratios, perhaps a result of the interaction between the CRVPs
+driving the coolant back towards the surface. The CA45 hole,
+on the other hand, has increased effectiveness with increasing
+blowing ratio for the entire downstream distance. Adiabatic
+effectiveness contours for the CA45 hole, shown in Figure 24, at
+these four blowing ratios show why the increase in laterallyaveraged effectiveness is occurring. As blowing ratio increases,
+the lateral motion of the jets is increased, jet-to-jet interaction is
+increased, and the contour levels extend farther downstream due
+to the presence of more coolant near the endwall.
+Compound angled holes with this smaller pitchwise spacing
+of P/D=3 very clearly provide high levels of effectiveness at low
+and high blowing ratios, but practically speaking, there are
+disadvantages to closely spaced film cooling holes in a gas
+
+Figure 21: Laterally-averaged effectiveness for all P/D=3
+compound angle cases at M=3.0.
+
+10
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 25: Area-averaged effectiveness normalized by breakout
+width over pitch for all cases tested, plotted versus blowing ratio.
+Precision uncertainty is indicated by size of symbols.
+
+ratios. Also, effectiveness is much less of a function of blowing
+ratio for P/D=3 holes than for P/D=6.
+Figure 26 compares effect of pitchwise spacing on adiabatic
+effectiveness contours for three cases from Figure 25. These
+adiabatic effectiveness contours for the CA0 holes at M=1.0, and
+the CA45 holes at M=3.0, showcase two examples where the
+pitchwise spacing did not have a big influence on the normalized
+adiabatic effectiveness. The contours for the CA30 holes at
+M=4.0 show an example where pitchwise spacing significantly
+changed the relative performance.
+For the CA0 holes at M=1.0, both pitchwise spacings
+exhibit wide contour levels that extend far downstream,
+indicating good jet attachment. The CA45 holes at M=3.0 both
+show strong lateral motion of the jets, and good jet-to-jet
+interaction which leads to complete endwall coverage in both
+cases, albeit at different effectiveness levels.
+In both of these examples, both the low and high pitch
+spacings exhibited advantageous qualities that have been shown
+to lead to high effectiveness. Alternately, for the CA30 holes at
+M=4.0, only the smaller pitchwise spacing has jet-to-jet
+
+Figure 23: Laterally-averaged effectiveness for a CA0
+streamwise-oriented hole (solid lines) and a CA45 hole (dashed
+lines) at all blowing ratios, both with P/D=3.
+
+turbine. A smaller pitchwise spacing means more holes would
+ultimately exist on a film cooling array, which would increase
+cost of manufacture, increase the amount of cooling air required,
+and decrease the structural integrity of the part. Therefore, it is
+important to know how these smaller pitched holes perform
+relative to a hole array with large pitchwise spacing, on a per unit
+wall basis. In order to determine this, the area-averaged
+effectiveness can be scaled by the breakout width, tb (defined in
+Figure 2), divided by the pitch. This tb/P parameter shows how
+much physical space the film cooling outlet is taking up on the
+pitch. When this normalized area-averaged effectiveness is
+plotted for all considered hole cases versus blowing ratio, as seen
+in Figure 25, it is clear that P/D=3 holes are performing better
+than P/D=6 holes, on a relative basis, especially at high blowing
+
+Figure 26: Adiabatic effectiveness contours for selected examples
+with the same compound angle and blowing ratio, but different
+pitch.
+
+Figure 24: Adiabatic effectiveness contours for the P/D=3 CA45
+hole at all blowing ratios.
+
+11
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+interaction, which leads to it having much higher relative
+performance. This case is more representative of the comparison
+between large and small pitch, since many of the compound
+angled holes did not experience jet interaction and complete
+endwall coverage at a P/D=6, but every single hole with a P/D=3
+did. This is the clear advantage of a small pitchwise spacing for
+compound angled holes.
+Lateral Motion of Coolant Jets
+For streamwise oriented holes, the maximum effectiveness
+is generally coincident with the metering section centerline, with
+some exceptions for coolant supply crossflow or meter-diffuser
+offsets [22], for example. This is not the case for compound
+angles, since the spanwise component of coolant velocity ejected
+from the hole drives the coolant jet in a spanwise direction.
+Thus, the path of the coolant jet can be traced by finding the point
+of maximum adiabatic effectiveness for every downstream x/D
+location. The path of some of the P/D=6 compound angle cases
+is plotted in Figure 27 in terms of the lateral distance z/D versus
+the streamwise distance x/D. Note that here, z/D is fixed to the
+plate coordinate system. The extent of the plot’s y-axis is 12
+diameters, or two full pitches. The location of maximum
+effectiveness was found for the middle three holes (Holes 2, 3,
+and 4 from Figure 4) and those three paths were averaged and
+rounded to the nearest z/D location based on 0.1D intervals
+(0.1D was approximately the spatial resolution of the IR
+measurement). The paths in Figure 27 correspond to the
+contours shown in Figure 9 and Figure 12 for the M=1.0 and
+M=3.0 cases. As expected, the lateral motion of the coolant jets
+increases with increasing compound angle and increasing
+blowing ratio. For the M=3.0 case of the CA60 hole, the coolant
+jet travels more than a full pitch in the lateral direction over a
+streamwise distance of twenty-five diameters.
+The lateral motion of the holes with a smaller pitchwise
+spacing of P/D=3 was also determined in the same manner as
+outline above. The paths for these holes are plotted in Figure 28
+in terms of the lateral distance z/D versus the streamwise
+distance x/D. The y-axis has the same scale as Figure 27, but in
+this case represents four full pitches. Comparing Figure 28 to
+Figure 27 makes it clear that there is significantly more lateral
+motion for a smaller pitchwise spacing at the higher blowing
+ratio. The CA45 P/D=3 hole at x/D=20 has about twice the
+
+Figure 28: Paths of coolant jet maximum η for selected P/D=3 cases.
+
+lateral motion than the P/D=6 hole at the same location. Beyond
+that point, it leaves the field of view for the original IR image, so
+the path could not be calculated any further. The increase in
+lateral motion for a smaller pitchwise spacing could be a result
+of the complete obstruction of the mainstream flow at the leading
+edge of the film cooling holes. Since the mainstream has to flow
+over the top of the coolant jets instead of in-between at the
+midpitch, it has less influence on changing the direction of the
+jet. Thus, the lateral component of the jet velocity is better
+maintained as the jet moves downstream. This increased lateral
+motion is also responsible for the significant lateral spread and
+jet mixing that occurs for the smaller pitched holes.
+Comparison with CFD
+CFD simulations were also run for all of the tested cases,
+and some predictions are presented below. CFD was not able to
+capture the exact levels of local, laterally-averaged, or areaaveraged adiabatic effectiveness, but it did capture the major
+trends in the experimental data. A concurrent study by Haydt
+and Lynch [25],measured the flowfield for the same cases shown
+in the present study, and there was good agreement in the major
+flow features between the CFD and PIV measurements.
+Figure 29 shows CFD solutions for a sweep of compound
+angles, all at M=2.0. Walls are contoured with adiabatic
+effectiveness, and isosurfaces are shown for a q-criterion value
+of 5000. Q-criterion is the second invariant of the velocity
+gradient tensor, and is defined as,
+1
+𝜕𝑢 𝜕𝑣
+𝜕𝑢 𝜕𝑤
+𝜕𝑣 𝜕𝑤
+𝑞 = (−
+−
+−
+)
+2
+
+1
+
+𝜕𝑢 2
+
+𝜕𝑣 2
+
+2
+
+𝜕𝑥
+
+𝜕𝑦
+
+𝜕𝑦 𝜕𝑥
+
+− (( ) + ( ) + (
+
+𝜕𝑤 2
+𝜕𝑧
+
+𝜕𝑧 𝜕𝑥
+
+) +
+
+𝜕𝑢 𝜕𝑣
+𝜕𝑦 𝜕𝑥
+
+𝜕𝑧 𝜕𝑦
+
++
+
+𝜕𝑢 𝜕𝑤
+𝜕𝑧 𝜕𝑥
+
++
+
+𝜕𝑣 𝜕𝑤
+𝜕𝑧 𝜕𝑦
+
+)
+
+(1)
+
+where the first term in parentheses represents the swirl in the
+flow and second term represents the shear in the flow. A positive
+value for q-criterion shows a region of the flow where there is
+swirling motion, such as the core of a vortex (regardless of the
+direction of vorticity) and a negative q-criterion shows regions
+of shear. For clarity, a comparison between q-criterion and
+vorticity is shown in Figure 30 for the three cases depicted in
+Figure 29. This figure shows filled contours of normalized xvorticity overlaid with a line contour for q-criterion=5000. This
+level of q-criterion indicates the regions inside of the CA0,
+
+Figure 27: Paths of coolant jet maximum η for selected P/D=6 cases.
+
+12
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Figure 29: CFD simulations for a sweep of compound angles at M=2.0. Contours of adiabatic effectiveness and isosurfaces of q-criterion at a
+value of 5000.
+
+CA30, and CA60 jets where the flow is swirling due to the
+presence of vortices.
+In Figure 29 (a), the symmetric CRVP is visible for the CA0
+case at the edges of the jet. As the compound angle increases,
+the flowfield becomes more asymmetric, resulting in a single
+large region of swirling flow for the CA60 hole. Also visible
+from the q-criterion isosurfaces is the horseshoe vortex that
+forms at the leading edge of the film cooling hole due to the
+obstruction of the coolant jet. This is likely responsible for
+mixing the mainstream and coolant at the leading edge, resulting
+in non-zero effectiveness levels upstream of the hole.
+For the compound angled holes, it appears that the region
+of vorticity is formed right at the leading edge of the hole. Inside
+of a cooling hole, there is a separation region at the metering
+section inlet which leads to a strong jet at the top of the metering
+section. This high momentum jet is ejected from the hole at the
+
+leading edge, and is immediately wrapped up into the streamwise
+vortex. The core of the coolant jet is then lifted up and away
+from the surface by that vortex. Lower momentum coolant
+inside of the hole is ejected closer to the trailing edge, where it
+remains attached to the endwall. A secondary region of vorticity
+is formed due to this trailing edge coolant ejection, but that
+region of vorticity does not extend very far downstream.
+Figure 31 shows two CFD results for the CA15 and CA45
+holes at P/D=3 and M=1.0. This figure also shows contours of
+adiabatic effectiveness and an isosurface of q-criterion of 5000,
+in addition to streamtraces originating in the film cooling
+plenum. This figure shows why the larger compound angled
+
+Figure 30: CFD simulations for a sweep of compound angles at
+M=2.0, x/D=0. Contours of normalized x-vorticity overlaid with a
+line contour of q-criterion=5000.
+
+Figure 31: CFD simulations for the CA15 and CA45 holes at M=1.0,
+contoured with adiabatic effectiveness and with an isosurface at qcriterion of 5000.
+
+13
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+holes had slightly lower effectiveness at P/D=3. The CA45 hole,
+Figure 31 (a), creates a more complete obstruction to the
+mainstream flow. The complete obstruction is such that some
+coolant leaves the trailing edge of the hole and is not turned at
+all by the mainstream flow, but rather wrapped up in the
+neighboring hole’s streamwise vortex (see streamline paths from
+central hole in Figure 31 (a)). Alternately, the mainstream flow
+is able to flow around the CA15 jet and the swirling flow region
+does not extend as far downstream. The streamtraces for the
+CA15 hole indicate that the coolant is redirected downstream by
+the mainstream flow and remains close to the wall providing
+high effectiveness.
+
+Compound Angle Shaped Holes," ASME Turbo Expo
+2017Charlotte, NC, USA.
+[3] Bunker, R. S., 2005, "A Review of Shaped Hole Turbine
+Film-Cooling Technology," Journal of Heat Transfer, 127(4), p.
+441.
+[4] Schmidt, D. L., Sen, B., and Bogard, D. G., 1996, "Film
+Cooling With Compound Angle Holes: Adiabatic Effectiveness,"
+Journal of Turbomachinery, 118, pp. 807-814.
+[5] Aga, V., Rose, M., and Abhari, R. S., 2008, "Experimental
+Flow Structure Investigation of Compound Angled Film
+Cooling," Journal of Turbomachinery, 130(3), p. 031005.
+[6] Aga, V., and Abhari, R. S., 2011, "Influence of Flow Structure
+on Compound Angled Film Cooling Effectiveness and Heat
+Transfer," Journal of Turbomachinery, 133(3), pp. 031029031029.
+[7] Goldstein, R. J., and Jin, P., 2001, "Film Cooling
+Downstream of a Row of Discrete Holes With Compound
+Angle," Journal of Turbomachinery, 123, pp. 222-230.
+[8] Qin, Y., Li, X., Ren, J., and Jiang, H., 2015, "Effects of
+compound angle on film cooling effectiveness with different
+streamwise pressure gradient and convex curvature,"
+International Journal of Heat and Mass Transfer, 86, pp. 482491.
+[9] Thole, K., Gritsch, M., Schulz, A., and Wittig, S., 1998,
+"Flowfield Measurements for Film-Cooling Holes With
+Expanded Exits," Journal of Turbomachinery, 120(2), pp. 327336.
+[10] Schroeder, R. P., and Thole, K. A., 2016, "Effect of High
+Freestream Turbulence on Flowfields of Shaped Film Cooling
+Holes," Journal of Turbomachinery, 138, p. 10.
+[11] Haydt, S., Lynch, S., and Lewis, S. D., 2017, "The Effect of
+Area Ratio Change via Increased Hole Length for Shaped Film
+Cooling Holes with Constant Expansion Angles," ASME Turbo
+Expo 2017Charlotte, NC, USA, pp. 1-15.
+[12] Chen, A. F., Li, S. J., and Han, J.-C., 2014, "Film Cooling
+With Forward and Backward Injection for Cylindrical and FanShaped Holes Using PSP Measurement Technique," ASME
+Turbo Expo 2014: Turbine Technical Conference and
+Exposition, ASME, Dusseldorf, Germany, pp. 1-12.
+[13] Taslim, M. E., and Khanicheh, A., 2005, "Film
+Effectiveness Downstream of a Row of Compound Angle Film
+Holes," Journal of Heat Transfer, 127(4), pp. 434-440.
+[14] Bell, C. M., Hamakawa, H., and Ligrani, P. M., 2000, "Film
+Cooling From Shaped Holes," Journal of Turbomachinery, 122,
+p. 9.
+[15] Gao, Z., Narzary, D. P., and Han, J.-C., 2008, "Film-Cooling
+on a Gas Turbine Blade Pressure Side or Suction Side With
+Compound Angle Shaped Holes," Journal of Turbomachinery,
+131(1), pp. 011019-011019.
+[16] Brauckmann, D., and von Wolfersdorf, J., 2005, "Influence
+of Compound Angle on Adiabatic Film Cooling Effectiveness
+and Heat Transfer Coefficient for a Row of Shaped Film Cooling
+Holes," ASME Turbo Expo 2005: Power for Land, Sea, and Air,
+ASME, Reno-Tahoe, Nevada, USA, pp. 1-9.
+[17] Sen, B., Schmidt, D. L., and Bogard, D. G., 1996, "Film
+Cooling With Compound Angle Holes: Heat Transfer," Journal
+of Turbomachinery, 118, pp. 800-807.
+[18] Dittmar, J., Schulz, A., and Wittig, S., 2002, "Assessment of
+Various Film Cooling Configurations Including Shaped and
+
+CONCLUSIONS
+A sweep of compound angles was tested at a range of
+blowing ratios and two pitchwise spacings, with accompanying
+CFD simulations.
+Experimental results for adiabatic
+effectiveness indicate that an increasing compound angle
+increases the lateral spread of coolant on the endwall. At low
+blowing ratios, there is little change in the laterally-averaged
+effectiveness, but at a high blowing ratio, holes with a compound
+angle exhibit better attachment, increased lateral spread, and
+higher laterally-averaged effectiveness.
+Higher compound angles enable higher blowing ratios,
+since the streamwise component of blowing ratio is reduced. To
+this point, for holes with a compound angle less than or equal to
+CA30, area-averaged effectiveness decreases with an increasing
+streamwise component of blowing ratio, defined as the cosine of
+blowing ratio. The CA45 and CA60 holes’ area-averaged
+effectiveness was relatively insensitive to blowing ratio.
+A hole with a smaller pitch of P/D=3 has higher
+effectiveness than that same hole with a pitch of P/D=6, and this
+applies for all compound angles and blowing ratios, even when
+normalized by coverage ratio. This is due to the advantageous
+jet-to-jet interaction that occurs for the close spacing. Jet mixing
+downstream is also very advantageous to the P/D=6 holes.
+Of the P/D=3 cases, CA30 and CA45 had the lowest
+effectiveness, due to the coolant jets creating a complete
+obstruction to the mainstream flow, which resulted in a strong
+shear layer and significant mixing.
+CFD indicates the existence of a large region of high
+vorticity on the leeward (right) side of the coolant jet’s trace on
+the endwall. Further investigation into the heat transfer
+augmentation for these holes is very important in order to
+understand the net heat flux reduction.
+ACKNOWLEDGMENTS
+The authors are grateful to Pratt & Whitney, a United
+Technologies Corp. company, for their generous support of this
+project. We also would like to thank Phil Irwin for his skilled
+machining of all of the film cooling holes used in this study.
+REFERENCES
+[1] Schroeder, R. P., and Thole, K. A., 2014, "Adiabatic
+Effectiveness Measurements for a Baseline Shaped Film Cooling
+Hole," ASME Turbo ExpoDüsseldorf, Germany, p. 14.
+[2] Anderson, J. B., McClintic, J. W., Bogard, D. G., Dyson, T.
+E., and Webster, Z. D., 2017, "Freestream Flow Effects on Film
+Effectiveness and Heat Transfer Coefficient Augmentation for
+
+14
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+Compound Angle Holes Based on Large Scale Experiments,"
+ASME Turbo Expo 2002Amsterdam, The Netherlands.
+[19] McClintic, J. W., Anderson, J. B., Bogard, D. G., Dyson, T.
+E., and Webster, Z. D., "Effect of Internal Crossflow Velocity on
+Film Cooling Effectiveness - Part II: Compound Angle Shaped
+Holes," Proc. ASME Turbo Expo 2017.
+[20] Eberly, M. K., and Thole, K. A., 2013, "Time-Resolved
+Film-Cooling Flows at High and Low Density Ratios," Journal
+of Turbomachinery, 136(6), p. 061003.
+[21] Figliola, R. S., and Beasley, D. E., 2006, Theory and design
+for mechanical measurements, John Wiley, Hoboken, N.J.
+[22] Haydt, S., Lynch, S., and Lewis, S. D., 2016, "The Effect of
+a Meter-Diffuser Offset on Shaped Film Cooling Hole Adiabatic
+Effectiveness," ASME Turbo Expo 2016, ASME, Seoul, South
+Korea, pp. 1-13.
+[23] Wright, L. M., Gao, Z., Varvel, T. A., and Han, J. C., 2005,
+"Assessment of Steady State PSP, TSP, and IR Measurement
+Techniques for Flat Plate Film Cooling," ASME Summer Heat
+Transfer ConferenceSan Francisco, California, USA.
+[24] Bittlinger, G., Schulz, A., and Wittig, S., 1994, "Film
+Cooling Effectiveness and Heat Transfer Coefficients for Slot
+Injection at High Blowing Ratios," International Gas Turbine
+and Aeroengine Congress and Exposition, ASME, The Hague,
+Netherlands, p. 9.
+[25] Haydt, S., and Lynch, S., 2018, "Flowfield of a Shaped Film
+Cooling Hole over a Range of Compound Angles," ASME Turbo
+Expo 2018Lillestrom, Norway, p. 14.
+
+15
+
+Copyright © 2018 ASME
+
+Downloaded From: http://proceedings.asmedigitalcollection.asme.org/ on 09/25/2018 Terms of Use: http://www.asme.org/about-asme/terms-of-use
+
+
