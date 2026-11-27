@@ -51,24 +51,24 @@
 \keywords{film cooling, laidback fan-shaped hole, 7-7-7 database, direct numerical simulation, large-eddy simulation, RANS, turbulent Prandtl number}
 
 %%%%%  ABSTRACT (200 words or less)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Rewritten 2026-11-25 to match the results plan (planning/writeup_plan.pdf, Sections 4.1, 4.2).
-%% Provisional numbers, to be checked when W1 (e9, 3 Dec) and the classic Pr_t reads land: the Pr_t values
-%% (jet ~0.45, film ~0.75). The 4.3 a posteriori result (P1, P2, gamma = 1) is not yet in the abstract.
+%% Rewritten 2026-11-26 to the three-step story of plan 4.2 (owner 25b: no alpha_eff, classic Pr_t).
+%% Sources: F15 (fc W1 item 1, e8f02b9), F16 (plane Pr_t,R; volume values from W1 item 4, 27 Nov), F20,
+%% RANS sweep LP6 against 193M b010. The 4.3 runs (P1, P2, gamma = 1) are not yet in the abstract.
 %% The 2026-10-15 abstract (401 words) is kept below, commented out.
 \begin{abstract}
 Shaped-hole film cooling is designed with Reynolds-averaged Navier--Stokes (RANS) simulations, which
-under-predict the lateral spreading of coolant. Where the closure assumptions fail is known; the share of the
-error each failure carries is not. Here, the 7-7-7 laidback fan-shaped hole~\cite{schroeder2014} is
+under-predict lateral coolant spreading. Where the closure assumptions fail is known; the share of the
+error each failure carries is not. The 7-7-7 laidback fan-shaped hole~\cite{schroeder2014} is
 simulated at density ratio 1.5 and blowing ratio 1.5 with a laminar approach boundary layer ($\Reth\sim180$), a
 condition of small engine cores~\cite{kar2026}. One mesh family carries RANS (SST $k$--$\omega$,
 $\gamma$--$\Reth$) at 5M and 50M cells, a 20M-point large-eddy simulation and high-order simulations at 50M, 100M
-and 193M points. The RANS error in the turbulent stress and heat flux is split exactly into turbulence energy,
-length scale, alignment and turbulent Prandtl number ($\Pr_t$) terms. From 20M points upward, laterally averaged effectiveness agrees with the 193M reference to
+and 193M points. From 20M points upward, laterally averaged effectiveness agrees with the 193M reference
 within 0.008. The mesh-independent RANS is 29--33\,\% low beyond $x/D=7$, with a narrow film and a laminar
-mid-pitch layer. The length scale of the mixing motions carries most of the eddy-viscosity error.
-The reference $\Pr_t$ is $\sim$0.45 in the jet and 0.6--0.8 in the film, against the model's 0.9, and gradient
-diffusion fails for the heat flux in the film. Lowering $\Pr_t$ corrects the centreline effectiveness but not the
-lateral spread.
+mid-pitch layer. Split exactly into energy, length-scale and alignment terms, the RANS eddy viscosity in the film
+is 0.4--0.7 times the reference: the mixing length is about half, partly offset by misalignment the model ignores.
+The reference turbulent Prandtl number ($\Pr_t$) is 0.30 in the jet and 0.23--0.47 in the film, against the
+model's 0.9. At the film edges the RANS lateral heat diffusivity is 0.5--0.6 times the reference, mostly through
+the $\Pr_t$ setting. Lowering $\Pr_t$ corrects centreline effectiveness but not lateral spread.
 \end{abstract}
 
 %% Previous abstract (2026-10-15), superseded:
@@ -95,24 +95,21 @@ RANS is mesh-independent to about 1\% between 5M and 50M, yet it predicts a jet 
 \end{nomenclature}
 
 %%%%%  BODY  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Section outline follows 4dns_filmcooled/write_up/framework/paper_structure.tex.
+%% Section outline follows planning/writeup_plan.pdf (2026-11-26).
 
 \section{Introduction}\label{sec:intro}
 
-\section{Methods}\label{sec:methods}
-\subsection{Configuration and Operating Point}\label{sec:config}
-\subsection{The Simulation Ladder}\label{sec:ladder}
-\subsection{Validation}\label{sec:validation}
-\subsection{Statistics and Sampling}\label{sec:stats}
-\subsection{Analysis Method}\label{sec:analysis}
+\section{Research Aims}\label{sec:aims}
 
-\section{Results and Discussion}\label{sec:results}
-\subsection{Film-Cooling Performance Across the Ladder}\label{sec:performance}
-\subsection{Where the Modelled Turbulence Departs from the Resolved Turbulence}\label{sec:departures}
-\subsection{What Sets Each Departure: Energy, Length Scale and Alignment}\label{sec:causes}
-\subsection{Attribution to Flow Structures and Mechanisms}\label{sec:mechanisms}
-\subsection{Which Departures Matter for the Effectiveness}\label{sec:effectiveness}
-\subsection{Resolution Requirements and Cost}\label{sec:cost}
+\section{Methods}\label{sec:methods}
+\subsection{Simulation Configuration and Computational Methods}\label{sec:config}
+\subsection{Mesh Family and Coarsening Method}\label{sec:mesh}
+\subsection{Achieved Mesh Resolution}\label{sec:resolution}
+
+\section{Results}\label{sec:results}
+\subsection{Coolant Flow}\label{sec:coolant}
+\subsection{Breakdown of Model Differences}\label{sec:breakdown}
+\subsection{A Posteriori Tests}\label{sec:aposteriori}
 
 \section{Conclusions}\label{sec:conclusions}
 

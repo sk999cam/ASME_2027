@@ -1,33 +1,20 @@
-"""F15: regional split of ln(mu_eff / mu_eff,ref) into energy, length and alignment (paper Fig. F15, INTERIM).
+"""F15: regional split of ln(mu_R,RANS / mu_R,193), gradient-weighted least squares (mode C), two panels.
 
-Usage: python3 fig_meff_split.py
+Usage: python3 parse_meffR_log.py /home/sk999/Documents/ASME_2027/planning/maths_audit/estimator/estimator_modeC_x20.log
+       (once, writes data/meffR_modeC.txt and data/meffR_se.txt)
+       python3 fig_meff_split.py
 Output: /home/sk999/Documents/ASME_2027/figures/fig_meff_split.pdf
 
-Three panels, one y scale each (the RANS terms are about 10 times the scale-resolving terms):
-(a) RANS 50M against the 50M 3DNS, one bar per region;
-(b) jet, near film (x/D 3-10), far film (x/D 10-25) and (c) diffuser, exit, approach layer: 20M LES (against the
-50M 3DNS), 50M 3DNS and 100M 3DNS (against the 193M 3DNS), three bars per region.
-Stacked bars: energy 1/2 ln k, length ln L_eff, alignment ln cos(theta). Diamond (right of the bar): total with its
-full +-2 jackknife SE; the boxed number next to it is the total. The y limits of each panel contain every bar, marker
-and error bar, so no error bar is clipped. Segment numbers are printed inside the segment and dropped when the segment
-is shorter than the text.
-Total marker convention: FILLED diamond = |total| >= 2 SE (resolved at about 95 %); HOLLOW diamond = |total| < 2 SE
-(not resolved).
-The script prints value and SE of every rung/region/term and lists every case with |value| < 2 SE.
-
-INTERIM, the reference is not the 193M b010 for any rung. Data (analysis/ of /home/sk999/Documents/4dns_filmcooled/):
-  RANS 50M vs 50M 3DNS : meff_ransp0_c50b/results_pp/regions_se.txt   (stat3 b006; point-wise regions)
-  20M LES  vs 50M 3DNS : meff_c20bw_c50b/results_pp/regions_se.txt     (stat3 b006 of both; point-wise regions)
-  50M 3DNS vs 193M     : meff_c50b_c193b/results/regions_se.txt        (b006 vs C193b b005, 5.0 FT; index boxes)
-  100M 3DNS vs 193M    : meff_c100b_c193b/results/regions_se.txt       (same)
-Work spec W1 (analysis/meff_<rung>_c193b10/results_pp/regions_se.txt, reference 193M b010) is used automatically per
-rung if a file matching the glob in RUNGS exists (split_panels.pick); none existed on 2026-11-25. To point one rung at
-a new file by hand, change its path in RUNGS.
-The values cannot be chained between the rung groups (different point sets and selections). The density term is not
-drawn (|density| <= 0.03), so the total can differ from the bar sum by that.
-SE: delete-one-batch jackknife of both rungs in quadrature, (N-1)/N sum (t_i - mean)^2 (checked in
-meff_c50b_c100b/errorbars.py: no unit, variance or factor error). It rests on 5-6 batches, so it is itself uncertain.
-Style: set_mpl_params, Okabe-Ito term colours with a hatch per term (shared with fig_aeff_split.py), no title.
+Data: data/meffR_modeC.txt (from planning/maths_audit/estimator/estimator_modeC.log) and data/meffR_se.txt.
+The SE of the total is read from data/meffR_se.txt (columns region, SE; the line '# kind: ...' names the SE kind and
+goes into the legend), so a time-batch SE can replace the spatial-block one by overwriting that file.
+mu_R = gradient-weighted least squares, wall nodes excluded, z/D >= 0.3. Regions: jet x/D 0-3, near film 3-10, far
+film 10-20 (estimator_modeC_x20.log; table key film_10-25 is the log label). Shared y axis.
+(a) three grouped bars per region: energy (1/2 ln k), aligned length L_al, rest (density + strain weight); total as a
+    diamond with +-2 SE beside the group, its value printed next to it.
+(b) two grouped bars per region: L_eff and alignment ln cos(theta), each with its [min, max] attribution range over
+    the 120 orders; L_al = L_eff + align as a diamond (no error bar).
+Style: set_mpl_params, Okabe-Ito, no title, no hatching.
 """
 import sys
 
@@ -35,76 +22,105 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 from cycler import cycler
 
 sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 from functions import set_mpl_params
-from split_panels import A, pick, read_se, report, panel, term_handles
 
+DATA = '/home/sk999/Documents/ASME_2027/figures/code/data/'
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_meff_split.pdf'
 OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
-TERMS = [(r'energy $\frac{1}{2}\ln k$', '#56B4E9', ''), (r'length $\ln L_\mathrm{eff}$', '#E69F00', '///'),
-         (r'alignment $\ln\cos\theta$', '#CC79A7', '...')]
-COLS = [(c, h) for _, c, h in TERMS]
-# (tick label, reference, file)
-RUNGS = [('RANS 50M', 'vs 50M', pick(A + 'meff_ransp0_c50b/results_pp/regions_se.txt',
-                                     'meff_*rans*50*_c193b10/results_pp/regions_se.txt')),
-         ('20M LES', 'vs 50M', pick(A + 'meff_c20bw_c50b/results_pp/regions_se.txt',
-                                    'meff_c20b*_c193b10/results_pp/regions_se.txt')),
-         ('50M', 'vs 193M', pick(A + 'meff_c50b_c193b/results/regions_se.txt',
-                                 'meff_c50b_c193b10/results_pp/regions_se.txt')),
-         ('100M', 'vs 193M', pick(A + 'meff_c100b_c193b/results/regions_se.txt',
-                                  'meff_c100b_c193b10/results_pp/regions_se.txt'))]
-# (key in file, label)
-REGIONS = [('jet, x/D 0–3', r'jet, $x/D$ 0–3'), ('film, x/D 3–10', r'near film, $x/D$ 3–10'),
-           ('film, x/D 10–25', r'far film, $x/D$ 10–25'), ('hole, diffuser', 'diffuser'),
-           ('hole exit', 'exit'), ('approach boundary layer', 'approach layer')]
-YL = r'$\ln(\mu_\mathrm{eff}/\mu_\mathrm{eff,ref})$'
+REGIONS = [('jet_0-3', 'jet\n' r'$x/D$ 0–3'), ('film_3-10', 'near film\n' r'$x/D$ 3–10'),
+           ('film_10-25', 'far film\n' r'$x/D$ 10–20')]
+C_EN, C_AL, C_REST, C_LEFF, C_ANG = '#56B4E9', '#E69F00', '#009E73', '#D55E00', '#CC79A7'
+PITCH = 1.6
 
 
-def entry(x, row):
-    return (x, row[0], row[1], [row[2], row[4], row[6]])
+def fmt(v):
+    return f'{v:+.2f}'.replace('-', '−')
 
 
-data = [read_se(r[2]) for r in RUNGS]
-report('F15 ln(mu_eff ratio)', [r[0] for r in RUNGS], data, [k for k, _ in REGIONS],
-       [('total', 0), ('energy', 2), ('length', 4), ('align', 6)])
+def read_table(path):
+    kind, rows, hdr = '', {}, None
+    for ln in open(path, encoding='utf-8'):
+        if ln.startswith('# kind:'):
+            kind = ln.split(':', 1)[1].strip()
+        elif ln.startswith('#') or not ln.strip():
+            continue
+        elif hdr is None:
+            hdr = ln.split()
+        else:
+            p = ln.split()
+            rows[p[0]] = dict(zip(hdr[1:], [float(v) for v in p[1:]]))
+    return kind, rows
+
+
+_, T = read_table(DATA + 'meffR_modeC.txt')
+KIND, SE = read_table(DATA + 'meffR_se_time.txt')   # time-batch SE; spatial-block SE kept in meffR_se.txt
+
+print('region | total ± SE | energy L_al rest(rho+Swt) | sum-total | L_eff [min,max] | align [min,max] | L_eff+align-L_al')
+for k, _ in REGIONS:
+    t = T[k]
+    rest = t['density'] + t['Swt']
+    print(f"{k:11s} {t['total']:+.3f} ± {SE[k]['SE']:.3f} | {t['energy']:+.3f} {t['L_al']:+.3f} {rest:+.3f} | "
+          f"{t['energy'] + t['L_al'] + rest - t['total']:+.4f} | {t['L_eff']:+.3f} [{t['L_eff_min']:+.3f},"
+          f"{t['L_eff_max']:+.3f}] | {t['align']:+.3f} [{t['align_min']:+.3f},{t['align_max']:+.3f}] | "
+          f"{t['L_eff'] + t['align'] - t['L_al']:+.4f}")
 
 set_mpl_params(0.4, grid_on=True)
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
-fig, axs = plt.subplots(3, 1, figsize=(7.2, 8.4), gridspec_kw=dict(hspace=0.42))
-fig.subplots_adjust(left=0.1, right=0.995, top=0.925, bottom=0.07)
-axA, axB, axC = axs
+fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.2, 3.3), sharey=True, gridspec_kw=dict(wspace=0.06))
 
-# (a) RANS
-panel(axA, [entry(g, data[0][k]) for g, (k, _) in enumerate(REGIONS)], COLS, YL, '(a) RANS 50M vs 50M 3DNS')
-axA.set_xlim(-0.6, 6.0)
-axA.set_xticks(range(6))
-axA.set_xticklabels([n for _, n in REGIONS], fontsize=6.5)
+lo = hi = 0.0
+# (a)
+labs = []
+for g, (k, _) in enumerate(REGIONS):
+    t, se = T[k], SE[k]['SE']
+    x = g * PITCH
+    for dx, v, c in ((-0.28, t['energy'], C_EN), (0.0, t['L_al'], C_AL), (0.28, t['density'] + t['Swt'], C_REST)):
+        axa.bar(x + dx, v, 0.25, color=c, edgecolor='k', linewidth=0.4)
+        lo, hi = min(lo, v), max(hi, v)
+    xm, tot = x + 0.62, t['total']
+    axa.errorbar(xm, tot, yerr=2 * se, fmt='none', ecolor='k', capsize=1.8, lw=0.8, zorder=5)
+    axa.plot(xm, tot, 'D', ms=3.3, mfc='k', mec='k', zorder=6)
+    lo, hi = min(lo, tot - 2 * se), max(hi, tot + 2 * se)
+    labs.append((xm + 0.07, tot))
+# (b)
+for g, (k, _) in enumerate(REGIONS):
+    t = T[k]
+    x = g * PITCH
+    for dx, key, c in ((-0.17, 'L_eff', C_LEFF), (0.17, 'align', C_ANG)):
+        v, a, b = t[key], t[key + '_min'], t[key + '_max']
+        axb.bar(x + dx, v, 0.30, color=c, edgecolor='k', linewidth=0.4)
+        axb.errorbar(x + dx, 0.5 * (a + b), yerr=0.5 * (b - a), fmt='none', ecolor='k', capsize=2.0, lw=0.9,
+                     zorder=5)
+        lo, hi = min(lo, a, v), max(hi, b, v)
+    axb.plot(x + 0.55, t['L_al'], 'D', ms=3.3, mfc='k', mec='k', zorder=6)
+    lo, hi = min(lo, t['L_al']), max(hi, t['L_al'])
 
-# (b), (c): three rungs per region, bars at 4 g + j
-for ax, gs, letter in ((axB, range(0, 3), '(b)'), (axC, range(3, 6), '(c)')):
-    ent, ticks, labs = [], [], []
-    for gi, g in enumerate(gs):
-        k = REGIONS[g][0]
-        for j in range(3):
-            x = 4 * gi + j
-            ent.append(entry(x, data[j + 1][k]))
-            ticks.append(x)
-            labs.append(RUNGS[j + 1][0] + '\n' + RUNGS[j + 1][1])
-    panel(ax, ent, COLS, YL, letter)
-    ax.set_xlim(-0.6, 11.0)
-    ax.set_xticks(ticks)
-    ax.set_xticklabels(labs, fontsize=5.5)
-    for gi, g in enumerate(gs):
-        ax.annotate(REGIONS[g][1], (4 * gi + 1.15, 0), xycoords=('data', 'axes fraction'), textcoords='offset points',
-                    xytext=(0, -26), ha='center', va='top', fontsize=7)
-        if gi:
-            ax.axvline(4 * gi - 0.45, color='0.6', lw=0.6, ls='--')
+span = hi - lo
+axa.set_ylim(lo - 0.08 * span, hi + 0.12 * span)
+for xl, tot in labs:
+    axa.text(xl, tot, fmt(tot), ha='left', va='center', fontsize=6, zorder=7)
 
-handles = term_handles(TERMS)
-handles.append(Line2D([], [], marker='D', color='k', ls='', label=r'total, $\pm2$ SE'))
-handles.append(Line2D([], [], marker='D', color='k', mfc='white', ls='', label=r'total, $|\mathrm{total}|<2$ SE'))
-fig.legend(handles=handles, loc='lower center', ncol=3, bbox_to_anchor=(0.55, 0.935))
+for ax, letter in ((axa, '(a)'), (axb, '(b)')):
+    ax.axhline(0, color='k', lw=0.6)
+    ax.set_xticks([g * PITCH + 0.15 for g in range(len(REGIONS))])
+    ax.set_xticklabels([lab for _, lab in REGIONS], fontsize=6.5)
+    ax.set_xlim(-0.6, (len(REGIONS) - 1) * PITCH + 1.05)
+    ax.text(0.015, 0.985, letter, transform=ax.transAxes, ha='left', va='top', fontsize=8)
+axa.set_ylabel(r'$\ln(\mu_{R,\mathrm{RANS}}/\mu_{R,193})$')
+
+ha = [Patch(facecolor=C_EN, edgecolor='k', linewidth=0.4, label=r'energy $\frac{1}{2}\ln k$'),
+      Patch(facecolor=C_AL, edgecolor='k', linewidth=0.4, label=r'aligned length $\ln L_\mathrm{al}$'),
+      Patch(facecolor=C_REST, edgecolor='k', linewidth=0.4, label=r'rest ($\ln\rho$ + strain weight)'),
+      Line2D([], [], marker='D', color='k', ls='', label=r'total, $\pm2$ SE (' + KIND + ')')]
+hb = [Patch(facecolor=C_LEFF, edgecolor='k', linewidth=0.4, label=r'length $\ln L_\mathrm{eff}$'),
+      Patch(facecolor=C_ANG, edgecolor='k', linewidth=0.4, label=r'alignment $\ln\cos\theta$'),
+      Line2D([], [], marker='D', color='k', ls='', label=r'$\ln L_\mathrm{al}$ (sum)'),
+      Line2D([], [], color='k', marker='_', ls='', label='attribution range')]
+axa.legend(handles=ha, loc='lower center', ncol=2, bbox_to_anchor=(0.5, 1.0), fontsize=6)
+axb.legend(handles=hb, loc='lower center', ncol=2, bbox_to_anchor=(0.5, 1.0), fontsize=6)
 fig.savefig(OUT, bbox_inches='tight')
 print('wrote', OUT)

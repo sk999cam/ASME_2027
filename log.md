@@ -3,6 +3,36 @@
 Newest entry first. One entry per working session: date, what changed, files touched.
 For each added figure, record the source script and data in 4dns_filmcooled.
 
+## 2026-11-26 (2): split audit, least-squares estimator, plain plan
+
+- Maths audit (`planning/maths_audit/`): μ_eff identity exact; L_eff = L_al/cos θ, so length and alignment
+  share ln(1/cos θ); QCR term has zero contraction with S* (invisible to μ_eff).
+- Owner decisions: compensating-errors reading, neutral voice; regional gradient-weighted least squares (E13)
+  with exact Shapley split, L_al as the headline term; wall nodes excluded; z/D ≥ 0.3; F15 jet and film only;
+  QCR treated as the a⊥ test in 4.3.
+- F15 redrawn as two panels (`fig_meff_split.py`, data `figures/code/data/meffR_*.txt`).
+- Plan rewritten plain: figure entries WHY / HOW / WHAT; history, status and pending items moved to
+  `planning/tracking.md`. Abstract film numbers updated; bib: wu2018, mcconkey2022, schmitt2007.
+- Requested: 193M ε and per-batch fields (fc, 27 Nov 18:00); RANS ω/limiter and QCR exports (STAR session).
+
+## 2026-11-26: 25b annotations, linear story, F15/F16/F20 at 193M b010
+
+- Owner decision (25b): α_eff, tensor Pr_t,eff, heat-flux identity and R² tests removed. 4.2 is a three-step story:
+  μ_t (length), classic Pr_t setting, spanwise diffusion. Equations renumbered E10–E14. F14 backup map removed.
+- F15 (`fig_meff_split.py`): one panel, RANS 50M vs 193M b010, from fc W1 item 1
+  (`4dns_filmcooled/analysis/meff_rans50_c193b10/results_pp/regions_se.txt`, 12a8077, FINDINGS C25). Film volume
+  terms: length −0.93 to −0.96, alignment +0.57 to +0.81, energy −0.35. The alignment term offsets most of the
+  length term in the volume average; the centre-plane median cos θ is 0.83. Plan text corrected to state both.
+- F16 (`fig_prt_regions.py`, new): classic Pr_t,R 0.44 / 0.63 / 0.80 (jet / near / far film), 0.33 cross-plane.
+- F20 (`fig_prt_data.py`, rewritten): directional ratios at x/D 10 and 20 and the lateral heat-flux split; caches
+  and tables in `/mnt/Elements/DNS/analysis/asme2027_figs/prt_classes/`.
+- F7: 256-record segment estimate added, St ≤ 1.
+- Abstract rewritten (25 Nov); keywords updated. References added: kays1994, kohli2005, liu2008, liu2011,
+  lakehal2002, azzi2002, schlichting2017, rochhausen2015.
+- Gamma staging `.npy` files deleted from Elements.
+- Files: `planning/writeup_plan.tex/.pdf`, `manuscript/main_claude.tex`, `manuscript/references.bib`,
+  `figures/code/*`, `figures/*`.
+
 ## 2026-11-25 (3): figure fixes, Pr_t story set to a film/jet split
 
 - Redrawn at 193M b010: F5, F6 (now hole sections at s/D −2.3, −1.1, −0.5), F13, F14, F17, F18, F19.

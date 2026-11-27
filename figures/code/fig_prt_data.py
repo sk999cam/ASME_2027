@@ -5,8 +5,8 @@
       alpha_y/alpha_z = [sum(-rho v''T'' dT/dy) / sum(dT/dy)^2] / [sum(-rho w''T'' dT/dz) / sum(dT/dz)^2]  (heat)
     on the cross-planes x/D = 10 and 20 (x/D = 4 needs a 20 GB read, not done), for the classes: all points with
     z/D >= 0.3; plume centre |y|/D < 1 and z/D >= 0.3; flanks |y|/D >= 1.5 and z/D >= 0.3; wall layer z/D < 0.3.
-    Filled markers: batch b010 (10 FT), bars = 95 % block-bootstrap interval (0.5 D wide y bins, 1000 draws); hollow:
-    b006 (6 FT). Grey band: Kaszeta and Simon (2000) lateral/normal diffusivity ratio 1.5-4 (band as given in the
+    Markers: batch b010 (10 FT), bars = 95 % block-bootstrap interval (0.5 D wide y bins, 1000 draws).
+    Grey band: Kaszeta and Simon (2000) lateral/normal diffusivity ratio 1.5-4 (band as given in the
     brief); line at 1: isotropic eddy diffusivity of the RANS.
 (b) Lateral heat flux over the film edges, RANS 50M (p0dns, iteration 122 686) against the 193M, on the same plane
     points: edge = |y|/D >= 1 and z/D >= 0.3. Measure P_y = sum(-F_y dT/dy), F_y = lateral turbulent heat flux / c_p,
@@ -16,10 +16,10 @@
     193M (momentum, wall-normal), nu_y/nu_z the lateral to wall-normal momentum ratio, Pr_y,D = (nu_y)/(alpha_y) the
     193M lateral classic Pr_t, g = dT/dy. The four terms add to the total by construction; the script checks it.
     The RANS dT/dy is the finite difference of the plane temperature (spacing 0.01 D); the 193M dT/dy is the
-    gradient of the mean field. Stack: positive terms up, negative down; marker = total; hollow = 193M b006.
+    gradient of the mean field. Stack: positive terms up, negative down; marker = total (193M at b010).
     The mu_t term compares the RANS mu_t with the classic wall-normal momentum viscosity of the 193M. Triangle: the
     total without the gradient term, ln(alpha_y,R/alpha_y,D), the ratio of the lateral heat diffusivities.
-Data: /mnt/Elements/DNS/film_cooling/C193b_BR15, stat3_b006 and stat3_b010 through meff_planes_common.py and
+Data: /mnt/Elements/DNS/film_cooling/C193b_BR15, stat3_b010 through meff_planes_common.py and
 prt_corr_common.py (cache /mnt/Elements/DNS/analysis/asme2027_figs/prt_classes/); RANS fields from
 meff_planes_common.py (rans50_p0dns.npz, read-only). Complete for x/D = 10 and 20 when both caches exist.
 """
@@ -77,9 +77,9 @@ CLASSES = [('all, $z/D\\geq0.3$', lambda d: d['z'] >= 0.3),
 EDGE = lambda d: (d['z'] >= 0.3) & (np.abs(d['x']) >= 1.0)
 
 log = fc.log
-R = {b: dict(np.load(f'{mc.CACHE}/ref193_b{b:03d}.npz')) for b in (6, 10)}
+R = {b: dict(np.load(f'{mc.CACHE}/ref193_b{b:03d}.npz')) for b in (10,)}      # 193M at b010 only (owner rule 2026-11-26)
 RANS = dict(np.load(f'{mc.CACHE}/rans50_p0dns.npz'))
-planes = [p for p in ('x10', 'x20') if all(os.path.exists(os.path.join(cc.CORR_DIR, f'corr_{p}_b{b:03d}.npz')) for b in (6, 10))]
+planes = [p for p in ('x10', 'x20') if all(os.path.exists(os.path.join(cc.CORR_DIR, f'corr_{p}_b{b:03d}.npz')) for b in (10,))]
 log(f'planes available: {planes}; x4 not read (about 20 GB per batch)')
 
 # ---- (a) directional ratios
@@ -87,14 +87,13 @@ rows = []          # (plane, class label, dict)
 for p in planes:
     P = {b: fc.prep(R[b], fc.load_corr(p, b, R[b][f'{p}_A'].shape), p) for b in R}
     for lab, f in CLASSES:
-        S6, _ = fc.sums(P[6], f(P[6]))
         S10, n = fc.sums(P[10], f(P[10]))
-        r = dict(n=n, nu6=ratio(S6, NUR), nu10=ratio(S10, NUR), nuci=boot(S10, NUR),
-                 al6=ratio(S6, ALR), al10=ratio(S10, ALR), alci=boot(S10, ALR),
+        r = dict(n=n, nu10=ratio(S10, NUR), nuci=boot(S10, NUR),
+                 al10=ratio(S10, ALR), alci=boot(S10, ALR),
                  pry=ratio(S10, (LNM, LDM, LNA, LDA)), prz=ratio(S10, (CNM, CDM, CNA, CDA)))
         rows.append((p, lab, r))
-        log(f'{p} {lab.replace(chr(36), ""):28s} n={n:6d} nu_y/nu_z b006 {r["nu6"]:7.2f} b010 {r["nu10"]:7.2f} [{r["nuci"][0]:6.2f},{r["nuci"][1]:6.2f}] | '
-            f'alpha_y/alpha_z b006 {r["al6"]:7.2f} b010 {r["al10"]:7.2f} [{r["alci"][0]:6.2f},{r["alci"][1]:6.2f}] | Pr_y {r["pry"]:.2f} Pr_z {r["prz"]:.2f}')
+        log(f'{p} {lab.replace(chr(36), ""):28s} n={n:6d} nu_y/nu_z b010 {r["nu10"]:7.2f} [{r["nuci"][0]:6.2f},{r["nuci"][1]:6.2f}] | '
+            f'alpha_y/alpha_z b010 {r["al10"]:7.2f} [{r["alci"][0]:6.2f},{r["alci"][1]:6.2f}] | Pr_y {r["pry"]:.2f} Pr_z {r["prz"]:.2f}')
 
 # ---- (b) lateral flux split, RANS against 193M
 split = {}
@@ -104,7 +103,7 @@ for p in planes:
     dy = (RANS[f'{p}_A'][0, 1] - RANS[f'{p}_A'][0, 0])
     gR = (np.gradient(T, dy, axis=1)).ravel()
     mut = RANS[f'{p}_meff'].ravel()
-    for b in (10, 6):
+    for b in (10,):
         d = Pd[b]
         m = EDGE(d) & d['ok']
         S, n = fc.sums(d, EDGE(d))
@@ -141,7 +140,6 @@ for p in planes:
             lo, hi = r[f'{k}ci']
             axa.errorbar(x + dx, r[f'{k}10'], yerr=[[max(r[f'{k}10'] - lo, 0)], [max(hi - r[f'{k}10'], 0)]], color=c, marker=mk,
                          capsize=2, zorder=3)
-            axa.plot(x + dx + 0.12 * np.sign(dx), r[f'{k}6'], color=c, marker=mk, mfc='none', ls='none', zorder=3)
         ticks.append(x)
         tl.append(f'$x/D={p[1:]}$: ' + lab)
         x += 1
@@ -166,7 +164,6 @@ for i, p in enumerate(planes):
             axb.bar(i, v, bottom=neg, color=c, hatch=h, edgecolor='white', width=0.55, zorder=2)
             neg += v
     axb.plot(i, split[(p, 10)]['tot'], color='k', marker='D', ls='none', zorder=4)
-    axb.plot(i + 0.2, split[(p, 6)]['tot'], color='k', marker='D', mfc='none', ls='none', zorder=4)
     axb.plot(i - 0.2, split[(p, 10)]['tot'] - split[(p, 10)]['terms']['grad'], color='k', marker='v', ls='none', zorder=4)
 axb.axhline(0, color='k', lw=0.6)
 axb.set_xticks(range(len(planes)))
@@ -176,8 +173,7 @@ axb.set_ylabel(r'$\ln(P_{y,\mathrm{RANS}}/P_{y,\mathrm{193M}})$')
 axb.text(0.04, 0.95, '(b)', transform=axb.transAxes, va='top')
 h = [Line2D([], [], color='#D55E00', marker='o', ls='none', label=r'$\nu_y/\nu_z$ (momentum)'),
      Line2D([], [], color='#0072B2', marker='s', ls='none', label=r'$\alpha_y/\alpha_z$ (heat)'),
-     Line2D([], [], color='k', marker='o', ls='none', label='b010, 95 %'),
-     Line2D([], [], color='k', marker='o', mfc='none', ls='none', label='b006'),
+     Line2D([], [], color='k', marker='o', ls='none', label='193M, 95 % interval'),
      Line2D([], [], color='k', ls=':', label='RANS, isotropic 1'),
      Line2D([], [], color='0.85', lw=6, label='Kaszeta and Simon 1.5-4')]
 h += [plt.Rectangle((0, 0), 1, 1, fc=c, hatch=hh, ec='white', label=lab) for k, lab, c, hh in cols]

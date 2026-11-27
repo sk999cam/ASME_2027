@@ -80,7 +80,8 @@ def ls_terms(c):
 
 
 C1 = {b: load('full', b, G['y0_A'].shape) for b in (10, 6)}
-C2 = {b: load('x10', b, G['x10_A'].shape) for b in (10, 6)}
+SHOW_EXTRA = False     # True: also draw the removed panels (near-wall strip, x/D = 10 cross-planes) and the legend
+C2 = {b: (load('x10', b, G['x10_A'].shape) if SHOW_EXTRA else None) for b in (10, 6)}
 P1, K1 = classic(C1[10])
 have2 = C2[10] is not None
 if have2:
@@ -92,46 +93,64 @@ nz = Z1.shape[0]
 zrow = Z1[:, 0]
 xrow = X1[0]
 
-W, H = 7.2, 6.2
+W, H = 7.2, (6.2 if SHOW_EXTRA else 4.85)
 fig = plt.figure(figsize=(W, H))
-ax1 = fig.add_axes([0.7 / W, 5.05 / H, 6.3 / W, 6.3 * 3 / 22 / H])
-axs = fig.add_axes([0.7 / W, 3.75 / H, 6.3 / W, 0.9 / H])
-ax2 = fig.add_axes([0.7 / W, 1.55 / H, 2.0 / W, 1.0 / H])
-ax3 = fig.add_axes([3.0 / W, 1.55 / H, 2.0 / W, 1.0 / H])
-axe = fig.add_axes([5.65 / W, 1.2 / H, 1.35 / W, 2.1 / H])
-cax = fig.add_axes([1.6 / W, 0.40 / H, 2.8 / W, 0.14 / H])
 kw = dict(cmap='inferno', vmin=0.0, vmax=VMAX, shading='auto', rasterized=True)
 ckw = dict(levels=[0.5], colors='#56B4E9', linewidths=0.9, linestyles='--')
+LBL = dict(color='black', va='top', bbox=dict(fc='white', ec='none', pad=1.5))
+if SHOW_EXTRA:
+    ax1 = fig.add_axes([0.7 / W, 5.05 / H, 6.3 / W, 6.3 * 3 / 22 / H])
+    axs = fig.add_axes([0.7 / W, 3.75 / H, 6.3 / W, 0.9 / H])
+    ax2 = fig.add_axes([0.7 / W, 1.55 / H, 2.0 / W, 1.0 / H])
+    ax3 = fig.add_axes([3.0 / W, 1.55 / H, 2.0 / W, 1.0 / H])
+    axe = fig.add_axes([5.65 / W, 1.2 / H, 1.35 / W, 2.1 / H])
+    cax = fig.add_axes([1.6 / W, 0.40 / H, 2.8 / W, 0.14 / H])
+    EX = [(axs, r'(b) $y/D=0$, near wall (stretched)'), (ax2, r'(c) $x/D=10$'), (ax3, r'(d) $x/D=10$, lateral')]
+    LAB_A, LAB_E = r'(a) $y/D=0$', '(e)'
+else:
+    ax1 = fig.add_axes([0.7 / W, 3.85 / H, 6.3 / W, 6.3 * 3 / 22 / H])
+    axe = fig.add_axes([0.7 / W, 0.6 / H, 6.3 / W, 1.65 / H])
+    cax = fig.add_axes([0.7 / W, 3.1 / H, 6.3 / W, 0.13 / H])
+    EX = []
+    LAB_A, LAB_E = r'(a) $y/D=0$', '(b)'
 m = ax1.pcolormesh(X1, Z1, np.ma.masked_invalid(P1), **kw)
 ax1.contour(X1, Z1, K1.astype(float), **ckw)
-axs.pcolormesh(X1, Z1, np.ma.masked_invalid(P1), **kw)
-axs.contour(X1, Z1, K1.astype(float), **ckw)
-if have2:
-    for ax, P, K in ((ax2, P2, K2), (ax3, P3, K3)):
-        ax.pcolormesh(Y2, Z2, np.ma.masked_invalid(P), **kw)
-        ax.contour(Y2, Z2, K.astype(float), **ckw)
-for ax in (ax1, axs, ax2, ax3):
-    ax.set_facecolor('white')
-    ax.set_ylabel(r'$z/D$')
-for ax in (ax1, ax2, ax3):
-    ax.set_aspect('equal')
-    ax.set_yticks([0, 1, 2, 3])
-    ax.set_ylim(0, 3)
+if SHOW_EXTRA:
+    axs.pcolormesh(X1, Z1, np.ma.masked_invalid(P1), **kw)
+    axs.contour(X1, Z1, K1.astype(float), **ckw)
+    if have2:
+        for ax, P, K in ((ax2, P2, K2), (ax3, P3, K3)):
+            ax.pcolormesh(Y2, Z2, np.ma.masked_invalid(P), **kw)
+            ax.contour(Y2, Z2, K.astype(float), **ckw)
+    for ax in (axs, ax2, ax3):
+        ax.set_facecolor('white')
+        ax.set_ylabel(r'$z/D$')
+    for ax in (ax2, ax3):
+        ax.set_aspect('equal')
+        ax.set_yticks([0, 1, 2, 3])
+        ax.set_ylim(0, 3)
+    axs.set_xlim(0, 20)
+    axs.set_ylim(0, 0.3)
+    axs.set_yticks([0, 0.1, 0.2, 0.3])
+    ax2.set_xlim(-3, 3)
+    ax3.set_xlim(-3, 3)
+    axs.set_xlabel(r'$x/D$')
+    ax2.set_xlabel(r'$y/D$')
+    ax3.set_xlabel(r'$y/D$')
+    for ax, t in EX:
+        ax.text(0.012 if ax is axs else 0.03, 0.95, t, transform=ax.transAxes, **LBL)
+ax1.set_facecolor('white')
+ax1.set_ylabel(r'$z/D$')
+ax1.set_aspect('equal')
+ax1.set_yticks([0, 1, 2, 3])
+ax1.set_ylim(0, 3)
 ax1.set_xlim(-2, 20)
-axs.set_xlim(0, 20)
-axs.set_ylim(0, 0.3)
-axs.set_yticks([0, 0.1, 0.2, 0.3])
-ax2.set_xlim(-3, 3)
-ax3.set_xlim(-3, 3)
 ax1.set_xlabel(r'$x/D$')
-axs.set_xlabel(r'$x/D$')
-ax2.set_xlabel(r'$y/D$')
-ax3.set_xlabel(r'$y/D$')
-LBL = dict(color='black', va='top', bbox=dict(fc='white', ec='none', pad=1.5))
-ax1.text(0.012, 0.88, r'(a) $y/D=0$', transform=ax1.transAxes, **LBL)
-axs.text(0.012, 0.95, r'(b) $y/D=0$, near wall (stretched)', transform=axs.transAxes, **LBL)
-ax2.text(0.03, 0.95, r'(c) $x/D=10$', transform=ax2.transAxes, **LBL)
-ax3.text(0.03, 0.95, r'(d) $x/D=10$, lateral', transform=ax3.transAxes, **LBL)
+ax1.text(0.012, 0.88, LAB_A, transform=ax1.transAxes, **LBL)
+if not SHOW_EXTRA:
+    ax1.annotate('boundary of the well-defined region', xy=(14.0, 2.07), xytext=(14.0, 1.15),
+                 fontsize=8, ha='center', va='center', color='white',
+                 arrowprops=dict(arrowstyle='->', color='white', lw=0.8, shrinkA=1, shrinkB=1))
 cb = fig.colorbar(m, cax=cax, orientation='horizontal', extend='both')
 cb.set_ticks([0, 0.5, 0.9, 1.5, 2.0])
 cb.set_ticklabels(['0', '0.5', '0.9', '1.5', '2'])
@@ -164,18 +183,28 @@ for rn, x0, x1, c, ls in (('near film', 3, 10, '#0072B2', '-'), ('far film', 10,
             lo, hi = np.nanpercentile(bt, [2.5, 97.5], axis=0)
             axe.fill_betweenx(zrow[zz], np.clip(lo[zz], -0.5, 3), np.clip(hi[zz], -0.5, 3), color=c, alpha=0.2, lw=0)
             axe.plot(np.clip(pr[zz], -0.5, 3), zrow[zz], color=c, ls='-', label=f'{rn}, b010')
-        else:
-            axe.plot(np.clip(pr[zz], -0.5, 3), zrow[zz], color=c, ls='--', label=f'{rn}, b006')
-axe.axvline(0.9, color='k', ls=':', label='RANS 0.9')
-axe.axvline(2.0, color='0.5', ls='-.', label=r'K&B low FST, $\approx2$')
-axe.axvline(1.0, color='0.5', ls='--', label=r'K&B high FST, $\approx1$')
+axe.axvline(0.9, color='k', ls=':')
+axe.axvline(2.0, color='0.5', ls='-.')
+axe.axvline(1.0, color='0.5', ls='--')
 axe.set_xlim(-0.5, 3)
 axe.set_ylim(0, 0.5)
 axe.set_xlabel(r'$\mathrm{Pr}_{t,R}$')
 axe.set_ylabel(r'$z/D$')
-axe.text(0.97, 0.97, '(e)', transform=axe.transAxes, ha='right', va='top')
-hh, ll = axe.get_legend_handles_labels()
-fig.legend(hh, ll, loc='lower right', frameon=False, ncol=2, bbox_to_anchor=(1.0, 0.0))
+if SHOW_EXTRA:
+    axe.text(0.97, 0.97, LAB_E, transform=axe.transAxes, ha='right', va='top')
+else:
+    axe.text(0.015, 0.97, LAB_E, transform=axe.transAxes, ha='left', va='top')
+if SHOW_EXTRA:
+    hh, ll = axe.get_legend_handles_labels()
+    fig.legend(hh, ll, loc='lower right', frameon=False, ncol=2, bbox_to_anchor=(1.0, 0.0))
+else:
+    GR = dict(fontsize=8, ha='left', va='center', arrowprops=dict(arrowstyle='->', lw=0.7, shrinkA=1, shrinkB=1))
+    GR['annotation_clip'] = False
+    axe.annotate('RANS, 0.9', xy=(0.9, 0.5), xytext=(0.2, 0.56), color='k', **dict(GR, ha='center'))
+    axe.annotate('K&B high FST, 1', xy=(1.0, 0.30), xytext=(1.2, 0.30), color='0.35', **GR)
+    axe.annotate('K&B low FST, $\\approx2$', xy=(2.0, 0.22), xytext=(2.2, 0.22), color='0.35', **GR)
+    hh, ll = axe.get_legend_handles_labels()       # cases only
+    axe.legend(hh, ll, loc='upper right', frameon=False, ncol=2, columnspacing=1.2)
 fig.savefig(OUT, dpi=300)
 print('saved', OUT)
 

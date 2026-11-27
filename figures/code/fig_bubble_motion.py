@@ -1,26 +1,14 @@
-"""Motion of the diffuser separation bubble, 193M 3DNS (C193b) at batch b010 (paper Fig. F7, Results 4.1). COMPLETE.
+"""Bubble motion and its coherence with the coolant BR, 193M 3DNS (C193b) (paper Fig. F6, Results 4.1).
 
-Usage: python3 fig_bubble_motion.py   -> /home/sk999/Documents/ASME_2027/figures/fig_bubble_motion.pdf
+Usage: python3 fig_bubble_motion.py [SIGNAL]   SIGNAL in V (default), Vp, Vm, Vd
+Output: /home/sk999/Documents/ASME_2027/figures/fig_bubble_motion.pdf
 
-Data: /mnt/Tank/DNS/analysis/hole_discharge/bubble3d_c193b.npz (keys t, V, Vp, Vm; written by
-analysis/hole_discharge/bubble3d.py, 3-D diffuser field, reversed = u_s < 0, node-volume weighted). 1995 snapshots
-every 0.2 D/U over the b010 window 4.413-40.342 ms (99.97 % covered), in 13 gap-free stretches (job restarts).
-Coolant monitor /mnt/Elements/DNS/film_cooling/C193b_BR15/monitor_dns.dat (BR = mdot/3.664 g/s, averaged over each
-snapshot interval; bubble.coolant_br). Spectra and coherence use bubble.welch_pooled_n as bubble3d.analyse: Welch
-segments of 128 records = 25.6 D/U, 50 % overlap, Hann, constant detrend, taken inside each gap-free stretch only
-(no segment crosses a gap; stretches shorter than 128 records are skipped) and pooled; dSt = 0.039; nseg segments
-in total (printed by the script). Only the 193M is shown. Cached in
-/mnt/Elements/DNS/analysis/asme2027_figs/fig_bubble_motion/series_c193b.npz.
-(a) Time trace of the separated volume V (reversed-flow volume of the diffuser) and of the two corner lobes
-    V(y>0), V(y<0), in D^3, against t U_inf/D (t from the first record). Gaps between stretches are not bridged.
-The St axis of (b) and (c) is cut at St = 1: the premultiplied V spectrum holds a negligible share of its variance
-    above it (0.01 in St 0.4-1, 0.00 above; b0 summary).
-    Second estimate (dotted / dash-dot): Welch segments of 256 records = 51.2 D/U (dSt = 0.0195), 50 % overlap, inside
-    the gap-free stretches only. Only n = 4 segments fit (95 % level 1-0.05^(1/3) = 0.63): a coarse check.
-(b) Premultiplied spectra St*P(St), each normalised by its variance, of V and of BR, against St = f D / U_inf.
-(c) Magnitude-squared coherence of V and BR; dashed line = 95 % significance level 1 - 0.05^(1/(nseg-1)).
+Data (read only): /mnt/Elements/DNS/analysis/hole_discharge/bubble_br_long_c193b.npz, summary .txt beside it.
+Longest gap-free stretch, 519 records, 103.8 D/U at 0.2 D/U. Welch, Hann, 128 records per segment, 50 % overlap,
+7 segments (n_eq = 6.68). 95 % level of zero coherence = level95_eq.
+(a) BR (left axis) and bubble signal (right axis, D^3), raw values, against t U/D from the start of the stretch.
+(b) Magnitude-squared coherence of BR with the signal, St <= 1 (St = 0 excluded), levels marked where above the 95 % level.
 """
-import os
 import sys
 
 import numpy as np
@@ -31,89 +19,63 @@ from cycler import cycler
 
 sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 from functions import set_mpl_params
-sys.path.insert(0, '/home/sk999/Documents/4dns_filmcooled/analysis/hole_discharge')
-import bubble as B  # noqa: E402
 
-OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
-SRC = '/mnt/Tank/DNS/analysis/hole_discharge/bubble3d_c193b.npz'
-RUN = '/mnt/Elements/DNS/film_cooling/C193b_BR15'
-CACHE_DIR = '/mnt/Elements/DNS/analysis/asme2027_figs/fig_bubble_motion'
-CACHE = CACHE_DIR + '/series_c193b.npz'
+SIGNAL = sys.argv[1] if len(sys.argv) > 1 else "V"
+SRC = '/mnt/Elements/DNS/analysis/hole_discharge/bubble_br_long_c193b.npz'
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_bubble_motion.pdf'
-NPER = 128
-TU = B.TU
+OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
+LABEL = {'V': r'$V$', 'Vp': r'$V^{+}$', 'Vm': r'$V^{-}$', 'Vd': r'$V^{+}-V^{-}$'}
 
-if not os.path.exists(CACHE):
-    os.makedirs(CACHE_DIR, exist_ok=True)
-    Z = np.load(SRC)
-    t, V, Vp, Vm = Z['t'], Z['V'], Z['Vp'], Z['Vm']
-    st, dt = B.stretches(t)
-    br, _, _ = B.coolant_br(RUN, t, dt)
-    f, PVV, PBB, PVB, nseg = B.welch_pooled_n(V, br, st, dt, NPER)
-    np.savez(CACHE, t=t, V=V, Vp=Vp, Vm=Vm, br=br, st=np.array(st), dt=dt, f=f, PVV=PVV, PBB=PBB, PVB=PVB, nseg=nseg)
-C = np.load(CACHE)
-t, V, Vp, Vm, br, st = C['t'], C['V'], C['Vp'], C['Vm'], C['br'], C['st']
-f, PVV, PBB, PVB, nseg = C['f'], C['PVV'], C['PBB'], C['PVB'], int(C['nseg'])
-coh = np.abs(PVB) ** 2 / (PVV * PBB)
-lvl = 1 - 0.05 ** (1 / (nseg - 1))
-NL = 256                             # second estimate: 256 records = 51.2 D/U (4 segments fit; >= 4 required)
-f2, PVV2, PBB2, PVB2, nseg2 = B.welch_pooled_n(V, br, [tuple(x) for x in st], B.stretches(t)[1], NL)
-coh2 = np.abs(PVB2) ** 2 / (PVV2 * PBB2)
-lvl2 = 1 - 0.05 ** (1 / (nseg2 - 1))
-k2 = 1 + np.argmax((f2 * PVV2)[1:])
-i27 = np.argmin(abs(f2 - 0.27))
-print(f'long (256): nseg {nseg2}, dSt {f2[1]:.4f}, level {lvl2:.3f}; V peak St {f2[k2]:.3f}; coh at V peak {coh2[k2]:.3f}; '
-      f'coh at St {f2[i27]:.3f} {coh2[i27]:.3f}; max coh {coh2[1:].max():.3f} at St {f2[1 + np.argmax(coh2[1:])]:.3f}')
-print('long V premult (St, fP/sum):', [(round(a, 3), round(b, 4)) for a, b in zip(f2[1:12], (f2 * PVV2 / PVV2[1:].sum())[1:12])])
-tD = (t - t[0]) / TU
-print(f'V mean {V.mean():.4f} std {V.std():.4f}; Vp {Vp.mean():.4f}, Vm {Vm.mean():.4f}; BR {br.mean():.4f} +- {br.std():.4f}')
-print(f'{len(st)} stretches, {len(t)} records; BR spectrum peak St {f[1 + np.argmax((f * PBB)[1:])]:.3f}')
-k = 1 + np.argmax((f * PVV)[1:])
-print(f'spectrum peak St {f[k]:.3f}; coh at peak {coh[k]:.3f}; max coh {coh[1:].max():.3f} at St {f[1 + np.argmax(coh[1:])]:.3f};'
-      f' 95% level {lvl:.3f}; nseg {nseg}; corr lobes {np.corrcoef(Vp, Vm)[0, 1]:.3f}')
+Z = np.load(SRC)
+rec, BR, S = Z['rec'], Z['BR'], Z[SIGNAL]
+St, coh, lvl = Z['St'], Z['coh_' + SIGNAL], float(Z['level95_eq'])
+tu = (rec - rec[0]) * 0.2                       # t U/D, 0.2 D/U per record
 
-set_mpl_params(0.5, grid_on=True)
+m = (St > 0) & (St <= 1.0)
+Sm, Cm = St[m], coh[m]
+above = Cm > lvl
+ip = int(np.argmax(Cm))
+print(f'signal {SIGNAL}: BR mean {BR.mean():.4f} std {BR.std():.4f}; signal mean {S.mean():.4f} std {S.std():.4f} D^3')
+print(f'peak coherence {Cm[ip]:.3f} at St {Sm[ip]:.3f}; level {lvl:.3f}; bins below St 1: {m.sum()}')
+print('bins above level:', ', '.join(f'{s:.3f} ({c:.3f})' for s, c in zip(Sm[above], Cm[above])))
+for k in ('V', 'Vp', 'Vm', 'Vd'):
+    c = Z['coh_' + k][m]; j = int(np.argmax(c))
+    print(f'  {k}: peak {c[j]:.3f} at St {St[m][j]:.3f}')
+
+sf = 0.6
+set_mpl_params(sf, grid_on=True)
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
+c1, c2 = '#0072B2', '#D55E00'
 
-fig, axs = plt.subplots(3, 1, figsize=(5.0, 7.0))
-ax = axs[0]
-for a, b in st:                      # one line per gap-free stretch: no line across a gap
-    ax.plot(tD[a:b], V[a:b], color='#000000', ls='-', label='$V$' if a == st[0][0] else None)
-    ax.plot(tD[a:b], Vp[a:b], color='#D55E00', ls='--', label=r'$V(y>0)$' if a == st[0][0] else None)
-    ax.plot(tD[a:b], Vm[a:b], color='#0072B2', ls='-.', label=r'$V(y<0)$' if a == st[0][0] else None)
-ax.set_xlabel(r'$tU_\infty/D$')
-ax.set_ylabel(r'separated volume ($D^3$)')
-ax.set_xlim(0, tD[-1])
-ax.legend(loc='upper center', ncol=3, bbox_to_anchor=(0.5, 1.2), columnspacing=1.0, handlelength=1.6)
-ax.set_ylim(0.1, 1.1)
-ax.text(0.015, 0.86, '(a)', transform=ax.transAxes)
+fig, (ax, bx) = plt.subplots(2, 1, figsize=(7.0, 7.0), gridspec_kw=dict(height_ratios=[1, 1.1], hspace=0.32))
 
-ax = axs[1]
-m = f > 0
-m2 = f2 > 0
-r = len(f2) / len(f)                 # same area per unit log St is not needed; scale so both sum to 1 per bin count
-ax.semilogx(f[m], f[m] * PVV[m] / PVV[m].sum(), color='#D55E00', ls='-', label='$V$, 25.6 D/U')
-ax.semilogx(f[m], f[m] * PBB[m] / PBB[m].sum(), color='#0072B2', ls='--', label='BR, 25.6 D/U')
-ax.semilogx(f2[m2], f2[m2] * PVV2[m2] / PVV2[m2].sum() * r, color='#D55E00', ls=':', label='$V$, 51.2 D/U')
-ax.semilogx(f2[m2], f2[m2] * PBB2[m2] / PBB2[m2].sum() * r, color='#0072B2', ls='-.', label='BR, 51.2 D/U')
-ax.set_xlabel(r'$St=fD/U_\infty$')
-ax.set_ylabel(r'$St\,P(St)\,/\sum P$')
-ax.set_xlim(f[1], 1.0)
-ax.set_ylim(0, None)
-ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.0), fontsize='small')
-ax.text(0.015, 0.86, '(b)', transform=ax.transAxes)
+# (a)
+ax.plot(tu, BR, color=c1, ls='-')
+ax.set_xlim(0, tu[-1])
+ax.set_xlabel(r'$t\,U_\infty/D$')
+ax.set_ylabel(r'$BR$', color=c1)
+ax.tick_params(axis='y', colors=c1)
+ax2 = ax.twinx()
+ax2.grid(False)
+ax2.plot(tu, S, color=c2, ls='--')
+ax2.set_ylabel(LABEL[SIGNAL] + r' [$D^3$]', color=c2)
+ax2.tick_params(axis='y', colors=c2)
+ax.text(0.01, 0.97, '(a)', transform=ax.transAxes, va='top', ha='left')
 
-ax = axs[2]
-ax.semilogx(f[m], coh[m], color='#000000', ls='-', label='25.6 D/U')
-ax.semilogx(f2[m2], coh2[m2], color='#000000', ls=':', label='51.2 D/U')
-ax.axhline(lvl, color='0.4', ls='-', lw=0.8, label=f'95 % level, $n={nseg}$')
-ax.axhline(lvl2, color='0.4', ls=':', lw=0.8, label=f'95 % level, $n={nseg2}$')
-ax.legend(loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize='small', columnspacing=1.0)
-ax.set_xlabel(r'$St=fD/U_\infty$')
-ax.set_ylabel(r'coherence of $V$ and BR')
-ax.set_xlim(f[1], 1.0)
-ax.set_ylim(0, 1)
-ax.text(0.015, 0.86, '(c)', transform=ax.transAxes)
-fig.tight_layout()
+# (b)
+bx.plot(Sm, Cm, color='k', ls='-')
+bx.plot(Sm[above], Cm[above], color='k', ls='none', marker='o')
+bx.axhline(lvl, color=c2, ls='--', lw=1.2)
+bx.set_xscale('log')
+bx.set_xlim(Sm[0] * 0.9, 1.0)
+bx.set_ylim(0, 1.0)
+bx.set_xlabel(r'$St=fD/U_\infty$')
+bx.set_ylabel(r'$\gamma^2_{BR,' + LABEL[SIGNAL].strip('$') + r'}$')
+bx.annotate('95 % level', xy=(0.06, lvl), xytext=(0.06, lvl + 0.22), color=c2, ha='center',
+            arrowprops=dict(arrowstyle='->', color=c2))
+bx.annotate(f'$St$ = {Sm[ip]:.3f}', xy=(Sm[ip], Cm[ip]), xytext=(0.5, 0.97), ha='left', va='top',
+            arrowprops=dict(arrowstyle='->', color='k'))
+bx.text(0.01, 0.97, '(b)', transform=bx.transAxes, va='top', ha='left')
+
 fig.savefig(OUT, bbox_inches='tight')
-print('wrote', OUT)
+print('saved', OUT)

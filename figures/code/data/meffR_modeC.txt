@@ -1,0 +1,6 @@
+# parsed from estimator_modeC_x20.log (mode C: wall nodes excluded, z/D >= 0.3); ln(mu_R,RANS / mu_R,193)
+# 4-player Shapley: density, energy, L_al, S-wt; secondary 5-player L_eff, align with order ranges
+region total density energy L_al Swt L_eff L_eff_min L_eff_max align align_min align_max
+jet_0-3 -0.328 +0.019 -0.011 -0.367 +0.030 -0.557 -0.673 -0.432 +0.199 +0.154 +0.234
+film_3-10 -0.390 +0.045 -0.132 -0.285 -0.018 -0.632 -0.941 -0.460 +0.356 +0.238 +0.498
+film_10-25 -0.855 +0.019 -0.220 -0.423 -0.232 -0.803 -1.247 -0.538 +0.375 +0.270 +0.499

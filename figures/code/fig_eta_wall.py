@@ -1,4 +1,4 @@
-"""Adiabatic effectiveness eta on the plate, one pitch, x/D 0-25 (paper Fig. F12, Results 4.1).
+"""Adiabatic effectiveness eta on the plate, one pitch, x/D 0-20 (paper Fig. F12, Results 4.1).
 
 Usage: python3 fig_eta_wall.py       (no arguments; writes /home/sk999/Documents/ASME_2027/figures/fig_eta_wall.png)
 
@@ -16,7 +16,9 @@ Data
 Rendering: linear interpolation of the scattered wall points (scipy LinearNDInterpolator, Delaunay) on a 0.05 D grid. Pixels farther than
   0.25 D from the nearest wall point (the hole exit, where the plate export has no faces) are left white.
 
-Status: complete. The hole exit footprint (x/D about -1 to 2.4) is blank in every panel.
+Hole exit: the white polygon with a black border is the breakout outline on z = 0 (hole_exit_outline.py, from the RANS 50M
+  hole-wall rim, data/hole_exit_outline.txt), same in all panels; it hides the jagged edge of the data mask.
+Status: complete.
 """
 import os
 import sys
@@ -27,16 +29,18 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import cKDTree
+from matplotlib.patches import Polygon
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 import fig_eta_x as F  # noqa: E402
 from functions import set_mpl_params  # noqa: E402
+from hole_exit_outline import load as load_outline  # noqa: E402
 
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_eta_wall.png'
 CACHE = '/mnt/Elements/DNS/analysis/asme2027_figs/fig_eta_wall'
 VMAX = 0.8
-XG = np.arange(0.0, 25.0001, 0.05)
+XG = np.arange(-2.0, 20.0001, 0.05)      # owner rule 2026-11-26: nothing beyond x/D 20 is shown
 YG = np.arange(-3.0, 3.0001, 0.05)
 
 
@@ -76,7 +80,7 @@ def plate_points_b010():
 
 def grid_eta(x, y, e):
     """Fold the periodic edges (copy points within 0.3 D of y = +-3 to the other side), interpolate, mask the gaps."""
-    m = (x > -1.0) & (x < 26)
+    m = (x > -2.5) & (x < 20.5)
     x, y, e = x[m], y[m], e[m]
     lo, hi = y < -2.7, y > 2.7
     x = np.r_[x, x[lo], x[hi]]
@@ -94,13 +98,15 @@ def grid_eta(x, y, e):
 
 def main():
     set_mpl_params(0.5, grid_on=False)
+    HX, HY = load_outline()
     srcs = [('RANS 50M', F.rans_points('RANS 50M')), ('20M LES', F.plate_points('20M LES')),
             ('193M 3DNS', plate_points_b010())]
     fig, axs = plt.subplots(3, 1, figsize=(6.0, 5.6), sharex=True)
     for ax, lab, (n, (x, y, e)) in zip(axs, '(a) (b) (c)'.split(), srcs):
         Z = grid_eta(x, y, e)
         im = ax.pcolormesh(XG, YG, Z, cmap='jet', vmin=0, vmax=VMAX, shading='auto', rasterized=True)
-        ax.set_xlim(0, 25)
+        ax.add_patch(Polygon(np.c_[HX, HY], closed=True, fc='w', ec='k', lw=0.5, zorder=3))
+        ax.set_xlim(-2, 20)
         ax.set_ylim(-3, 3)
         ax.set_aspect('equal')
         ax.set_ylabel(r'$y/D$')
@@ -111,7 +117,7 @@ def main():
     axs[-1].set_xlabel(r'$x/D$')
     fig.tight_layout()
     fig.colorbar(im, ax=axs, label=r'$\eta$', pad=0.02, fraction=0.04, aspect=30)
-    fig.savefig(OUT, dpi=300)
+    fig.savefig(OUT, dpi=300, bbox_inches='tight')
 
 
 if __name__ == '__main__':

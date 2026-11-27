@@ -15,7 +15,7 @@ Data
     dns/python/plot_stat3.py (pictures_job3 / job9 / job9 / job18); panels (b), (c): the plate vertices, cached by plate_points().
   gamma_mid(x) of the 193M (panel (c), secondary axis, dashed grey): intermittency of the plane sampler z010 (z/D 0.1) of the
     b010 window, threshold 0.0385 U^2/D, averaged over the mid-pitch band |y/D| 2.81 to 3.0 (the band of the eta line,
-    |y/D| = 2.91 +- 0.1, as far as the sampler reaches), helper _gamma_extract.py, 0 to 20.5 D (the stat3 outlet buffer).
+    |y/D| = 2.91 +- 0.1, as far as the sampler reaches), helper _gamma_extract.py, 0 to 20 D.
   Experiment: ETA_CAzeroStudies, eta_SmoothHoles_lowFST_DR1p5_M1p5__id727 (7-7-7, DR 1.5, BR 1.5, Tu 0.5 %).
     (a) mean over the map rows (as validation_50M/eta.py); (b), (c) the three pitches folded onto one
     (holes at z/D 0, +-6), as far_film.py. Markers are every 8th point of the 0.1 D map.
@@ -60,7 +60,8 @@ DNS = {'20M LES': ('/mnt/Tank/DNS/film_cooling/C20bW_BR15', 'pictures_job3'),
        '100M': ('/mnt/Elements/DNS/film_cooling/C100b_BR15', 'pictures_job9'),
        '193M': ('/mnt/Elements/DNS/film_cooling/C193b_BR15', 'pictures_job18')}
 ORDER = ['RANS 5M', 'RANS 50M', '20M LES', '50M', '100M', '193M']
-XE = np.arange(-2.0, 25.05, 0.1)
+XMAX = 20.0           # owner rule 2026-11-26: nothing beyond x/D 20 is shown or reported
+XE = np.arange(-2.0, XMAX + 0.05, 0.1)
 WINDOWS = ((2.5, 7), (7, 15), (15, 20))
 
 
@@ -146,6 +147,12 @@ def window_means(x, e):
     return [np.nanmean(e[(x >= a) & (x <= b)]) for a, b in WINDOWS]
 
 
+def at(x, e, q):
+    """Mean of e about x/D q: +-0.26 D, except at the domain end (q = XMAX), where the window is 19.5-20.0 as in the STAR tables."""
+    m = (x >= XMAX - 0.5) & (x <= XMAX) if q >= XMAX else np.abs(x - q) < 0.26
+    return np.nanmean(e[m])
+
+
 def main():
     set_mpl_params(0.5, grid_on=True)
     plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
@@ -162,33 +169,33 @@ def main():
         x, y, e = rans_points(r) if r in RANS else plate_points(r)
         xc, cl_, mp_ = lines(x, y, e)
         xb, lat = lateral(r)
-        s = np.isfinite(lat) & (xb > 2.36) & (xb <= 25)
+        s = np.isfinite(lat) & (xb > 2.36) & (xb <= XMAX)
         axs[0].plot(xb[s], lat[s], color=c, ls=ls, label=r)
-        m = np.isfinite(cl_) & (xc > 2.36) & (xc <= 25)
+        m = np.isfinite(cl_) & (xc > 2.36) & (xc <= XMAX)
         axs[1].plot(xc[m], cl_[m], color=c, ls=ls)
-        m = np.isfinite(mp_) & (xc > 2.36) & (xc <= 25)
+        m = np.isfinite(mp_) & (xc > 2.36) & (xc <= XMAX)
         axs[2].plot(xc[m], mp_[m], color=c, ls=ls)
         mid[r] = (xc, mp_)
         out.append(f'{r:10s} ' + ' '.join(f'{v:.3f}' for v in window_means(xb, lat))
-                   + '   centreline x/D 10/20/25: ' + ' '.join(f'{np.nanmean(cl_[np.abs(xc - q) < 0.26]):.3f}' for q in (10, 20, 25))
-                   + '   mid-pitch x/D 10/20/25: ' + ' '.join(f'{np.nanmean(mp_[np.abs(xc - q) < 0.26]):.3f}' for q in (10, 20, 25)))
+                   + '   centreline x/D 10/20: ' + ' '.join(f'{at(xc, cl_, q):.3f}' for q in (10, 20))
+                   + '   mid-pitch x/D 10/20: ' + ' '.join(f'{at(xc, mp_, q):.3f}' for q in (10, 20)))
     out.append('exp id727  ' + ' '.join(f'{v:.3f}' for v in window_means(xe, ee))
-               + '   centreline x/D 10/20/25: ' + ' '.join(f'{np.nanmean(exp_lines[1][np.abs(exp_lines[0] - q) < 0.26]):.3f}' for q in (10, 20, 25))
-               + '   mid-pitch x/D 10/20/25: ' + ' '.join(f'{np.nanmean(exp_lines[2][np.abs(exp_lines[0] - q) < 0.26]):.3f}' for q in (10, 20, 25)))
+               + '   centreline x/D 10/20: ' + ' '.join(f'{at(exp_lines[0], exp_lines[1], q):.3f}' for q in (10, 20))
+               + '   mid-pitch x/D 10/20: ' + ' '.join(f'{at(exp_lines[0], exp_lines[2], q):.3f}' for q in (10, 20)))
     print('\n'.join(out))
     kw = dict(marker='o', ls='none', color='k', mfc='none', ms=3.5, label='experiment')
-    s = (xe >= 2.2) & (xe <= 25) & np.isfinite(ee)
+    s = (xe >= 2.2) & (xe <= XMAX) & np.isfinite(ee)
     axs[0].plot(xe[s][::8], ee[s][::8], **kw)
     for ax, i in ((axs[1], 1), (axs[2], 2)):
         xx, vv = exp_lines[0], exp_lines[i]
-        m = np.isfinite(vv) & (xx >= 2.2) & (xx <= 25)
+        m = np.isfinite(vv) & (xx >= 2.2) & (xx <= XMAX)
         ax.plot(xx[m][::4], vv[m][::4], **kw)
     # gamma_mid(x) of the 193M on a secondary axis of panel (c)
     G = GX.load_z010('c193b')['gamma'][0]                      # (x, y) at 0.0385 U^2/D
     jm = np.where(np.abs(GX.YG) >= 2.81 - 1e-9)[0]
     gmid = G[:, jm].mean(1)
     xg = GX.XG
-    ok = xg <= 20.5 + 1e-9
+    ok = xg <= XMAX + 1e-9
     ax2 = axs[2].twinx()
     ax2.plot(xg[ok], gmid[ok], color='0.5', ls='--', lw=axs[2].lines[0].get_linewidth(), label=r'$\gamma_{mid}$ (193M)')
     ax2.set_ylim(0, 1)
@@ -202,19 +209,19 @@ def main():
         mm = np.abs(xr - q) < 0.26
         print(f'  x/D {q}: eta_mid {np.nanmean(er[mm]):.4f}  gamma_mid {gmid[np.abs(xg - q) < 0.26].mean():.3f}  exp {np.nanmean(exp_lines[2][np.abs(exp_lines[0] - q) < 0.26]):.4f}')
     xi = np.interp(xr, xg[ok], gmid[ok])
-    sel = (xi > 0.8) & (xr <= 20.5) & np.isfinite(er)
+    sel = (xi > 0.8) & (xr <= XMAX) & np.isfinite(er)
     ex_i = np.interp(xr, exp_lines[0][np.isfinite(exp_lines[2])], exp_lines[2][np.isfinite(exp_lines[2])])
     if sel.any():
         diff = er[sel] - ex_i[sel]
         print(f'gamma_mid > 0.8 from x/D {xr[sel].min():.1f} to {xr[sel].max():.1f}: 3DNS minus experiment mid-pitch eta mean {diff.mean():.4f} (min {diff.min():.4f}, max {diff.max():.4f}); 3DNS {er[sel].mean():.4f}, exp {ex_i[sel].mean():.4f}')
     else:
-        print('gamma_mid never above 0.8 at x/D <= 20.5')
+        print('gamma_mid never above 0.8 at x/D <= 20')
     ls_ = np.where(gmid[ok] > 0.8)[0]
     print('gamma_mid first > 0.8 at x/D', xg[ok][ls_[0]] if len(ls_) else None)
     axs[0].set_ylim(0, 0.45)
     axs[1].set_ylim(0.2, 0.9)
     axs[2].set_ylim(0, 0.06)
-    axs[2].set_xlim(0, 25)
+    axs[2].set_xlim(0, XMAX)
     for ax, lab, yl in zip(axs, '(a) (b) (c)'.split(), (r'$\bar{\eta}$', r'$\eta$ (centreline)', r'$\eta$ (mid-pitch)')):
         ax.set_ylabel(yl)
         ax.text(0.02, 0.92, lab, transform=ax.transAxes, va='top', ha='left')

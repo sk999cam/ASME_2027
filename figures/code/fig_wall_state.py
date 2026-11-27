@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""F8 fig_wall_state: plan view of the wall layer at z/D = 0.1, x/D -3 to 20.5, one pitch (y/D -3 to 3).
+"""F8 fig_wall_state: plan view of the wall layer at z/D = 0.1, x/D -3 to 20, one pitch (y/D -3 to 3).
 
 Top row, near-wall k/U_inf^2 at z/D = 0.1: (a) RANS 50M, (b) 20M LES, (c) 193M 3DNS.
 Bottom row, intermittency gamma at z/D = 0.1: (d) RANS 50M (model variable of SST + gamma-Re_theta), (e) 20M LES,
@@ -18,7 +18,7 @@ Data
   the Otsu value of the 50M 3DNS (analysis/layer_state/layer_otsu.py); helper _gamma_extract.py, cache
   /mnt/Elements/DNS/analysis/asme2027_figs/gamma/.
 The 3DNS / LES stat3 plate blocks exclude the hole, so the hole exit region (x/D about -1 to 2.5, |y/D| < 1.5) is blank
-in the k maps of the 20M LES and 193M. 3DNS stat3 stops at x/D 20.5 (outlet buffer). RANS k is modelled, 3DNS / LES k is resolved.
+in the k maps of the 20M LES and 193M. The map stops at x/D 20 (x/D 20-25 is a buffer region, not shown). RANS k is modelled, 3DNS / LES k is resolved.
 usage: python3 fig_wall_state.py
 """
 import os
@@ -42,7 +42,7 @@ import _gamma_extract as GX  # noqa: E402
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_wall_state.png'
 SRC = '/mnt/Tank/STARCCM/film_cooling/rans_50M_Lm25b_BR15_FST_ZPG_p0dns/cells_rans_p0dns_full.csv'
 D, UINF = 0.00775, 86.2812
-XLIM = (-3.0, 20.5)
+XLIM = (-3.0, 20.0)       # owner rule 2026-11-26: nothing beyond x/D 20 is shown
 CACHE = BX.CACHE
 OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
 
@@ -139,7 +139,7 @@ def main():
     for nm, m in kmap.items():
         print(nm, 'k/U^2 median', np.nanmedian(m), 'p5', np.nanpercentile(m, 5), 'p95', np.nanpercentile(m, 95))
     for nm, m in gm.items():
-        print(nm, 'gamma mean (x/D -3..20.5)', np.nanmean(m))
+        print(nm, 'gamma mean (x/D -3..20)', np.nanmean(m))
 
 
 if __name__ == '__main__':

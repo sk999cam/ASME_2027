@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """F10 fig_bl_params: shape factor H and skin friction C_f along the plate, centreline (y/D 0) and mid-pitch (|y/D| = 3).
 
-Panels: (a) H centreline, (b) H mid-pitch, (c) C_f centreline, (d) C_f mid-pitch; x/D -5 to 20.5.
+Panels: (a) H centreline, (b) H mid-pitch, (c) C_f centreline, (d) C_f mid-pitch; x/D -5 to 20.
 Rungs: RANS 5M, RANS 50M, 20M LES, 50M 3DNS, 100M 3DNS, 193M 3DNS (all six exist for H and C_f).
 Grey lines: Blasius H = 2.59 and C_f = 0.664 / sqrt(Re_x); turbulent H = 1.4 and C_f = 0.0576 Re_x^-0.2.
   Re_x = Re_D (x/D - x0/D) with Re_D = U_inf D / nu from the RANS 50M approach layer (bl_summary.csv, x/D -5) and the virtual
@@ -15,8 +15,8 @@ Data
   RANS:       starccm/<case>/post_run1/bl_summary.csv (bl_post.py; probes bl_c at y/D 0 and bl_m at y/D 2.91, integer x/D,
               the hole gap x/D -1 to 2 has no probe). RANS edge rule is 1e-3 of the wall gradient, not 3e-2: the H values are
               of the same kind but not identical in the rule (layer_state README, method 2).
-The centreline of the 3DNS / LES is blank inside the hole exit region (x/D -1.3 to 2.7, no plate wall). The 3DNS / LES lines end
-at x/D 20.2 (C_f and H turn up in the last 0.3 D before the outlet buffer).
+The centreline of the 3DNS / LES is blank inside the hole exit region (x/D -1.3 to 2.7, no plate wall). All lines end
+at x/D 20 (x/D 20-25 is a buffer region and is not shown).
 usage: python3 fig_bl_params.py
 """
 import os
@@ -38,8 +38,8 @@ OUT = '/home/sk999/Documents/ASME_2027/figures/fig_bl_params.pdf'
 ST = '/home/sk999/Documents/4dns_filmcooled/starccm'
 D, UINF = 0.00775, 86.2812
 OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
-XMAX = 20.5
-XLINE = 20.2       # 3DNS / LES lines end here: C_f and H turn up in the last 0.3 D before the outlet buffer (stat3 tau_w = 0 from 20.58)
+XMAX = 20.0
+XLINE = 20.0       # all lines end at x/D 20 (owner rule 2026-11-26; x/D 20-25 is a buffer region, never shown)
 # label, colour, style  (fixed per rung, figure brief)
 RUNG = {'193M 3DNS': ('#000000', '-'), '100M 3DNS': ('#0072B2', '--'), '50M 3DNS': ('#D55E00', ':'),
         '20M LES': ('#E69F00', '-.'), 'RANS 50M': ('#009E73', '-'), 'RANS 5M': ('#CC79A7', '--')}
@@ -81,12 +81,40 @@ def gapped(x, v, gap):
 def rans_line(case, kind):
     d = pd.read_csv(f'{ST}/{case}/post_run1/bl_summary.csv')
     d = d[d['name'].str.startswith('bl_c' if kind == 'c' else 'bl_m')]
-    d = d[(d['xD'] >= -5.5) & (d['xD'] <= 24.5)].sort_values('xD')
+    d = d[(d['xD'] >= -5.5) & (d['xD'] <= 20.0)].sort_values('xD')
     return d
 
 
+GREY = '0.35'
+AKW = dict(fontsize=8.5, color=GREY, ha='center', va='center',
+           arrowprops=dict(arrowstyle='->', color=GREY, lw=0.7, shrinkA=1, shrinkB=1))
+
+
+def annotate(ax, xr, rex):
+    """Text and arrow labels for every item that is not a case (no legend entries)."""
+    for a in ax.ravel():                      # hole exit region, shaded
+        a.axvspan(-1.3, 2.7, color='0.85', alpha=0.5, lw=0, zorder=0)
+    ax[0, 0].annotate('hole exit region', xy=(0.7, 2.85), xytext=(0.7, 3.1), **AKW)
+    ax[0, 1].annotate('hole exit region', xy=(0.7, 2.85), xytext=(0.7, 3.1), **AKW)
+    ax[0, 0].annotate(r'laminar, $H=2.59$', xy=(13, 2.59), xytext=(13, 2.95), **AKW)
+    ax[0, 0].annotate(r'turbulent, $H=1.4$', xy=(13, 1.4), xytext=(13, 1.85), **AKW)
+    ax[0, 1].annotate(r'laminar, $H=2.59$', xy=(13, 2.59), xytext=(13, 2.95), **AKW)
+    ax[0, 1].annotate(r'turbulent, $H=1.4$', xy=(13, 1.4), xytext=(13, 1.1), **AKW)
+    for j in (0, 1):
+        cl = lambda xq: 0.664 / np.sqrt(ReD_EX[0] * (xq - ReD_EX[1])) * 1e3
+        ct = lambda xq: 0.0576 * (ReD_EX[0] * (xq - ReD_EX[1])) ** -0.2 * 1e3
+        xl, yl = (0.7, 4.3) if j == 0 else (5.5, 4.4)
+        xa = 0.7 if j == 0 else 8.0
+        ax[1, j].annotate(r'laminar, $0.664\,Re_x^{-1/2}$', xy=(xa, cl(xa)), xytext=(xl, yl), **AKW)
+        ax[1, j].annotate(r'turbulent, $0.0576\,Re_x^{-1/5}$', xy=(12, ct(12)), xytext=(12, 7.0), **AKW)
+        ax[1, j].annotate('hole exit region', xy=(0.7, 6.6), xytext=(0.7, 7.2), **AKW)
+
+
+ReD_EX = [None, None]
+
+
 def main():
-    set_mpl_params(0.7, grid_on=True)
+    set_mpl_params(0.48, grid_on=True)
     plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
     W = {k: BX.load(t) for k, t in TAG.items()}
     # reference: Re_D from the RANS 50M approach layer, virtual origin from the 50M 3DNS Re_theta at x/D -5
@@ -101,9 +129,10 @@ def main():
     x0 = -5.0 - rex0 / ReD
     xr = np.linspace(-5, XMAX, 300)
     rex = ReD * (xr - x0)
+    ReD_EX[0], ReD_EX[1] = ReD, x0
 
-    fig, ax = plt.subplots(2, 2, figsize=(13, 8.5), sharex=True)
-    lab = {(0, 0): '(a)', (0, 1): '(b)', (1, 0): '(c)', (1, 1): '(d)'}
+    fig, ax = plt.subplots(2, 2, figsize=(7.2, 7.4), sharex=True)
+    lab = {(0, 0): '(a) centreline', (0, 1): '(b) mid-pitch', (1, 0): '(c) centreline', (1, 1): '(d) mid-pitch'}
     for j, kind in enumerate(('c', 'm')):
         for k, (col, ls) in RUNG.items():
             if k in W:
@@ -122,30 +151,27 @@ def main():
                 d = rans_line(RANS[k], kind)
                 xh, hv = gapped(d['xD'].values, d['H'].values, 1.5)
                 xc, cv = gapped(d['xD'].values, d['cf'].values, 1.5)
-                ax[0, j].plot(xh, hv, color=col, ls=ls, marker='o', ms=4, label=k)
-                ax[1, j].plot(xc, cv * 1e3, color=col, ls=ls, marker='o', ms=4)
+                ax[0, j].plot(xh, hv, color=col, ls=ls, marker='o', ms=3, label=k)
+                ax[1, j].plot(xc, cv * 1e3, color=col, ls=ls, marker='o', ms=3)
         # references
         for a in (ax[0, j],):
             a.axhline(2.59, color='0.55', ls='-', lw=1.0)
             a.axhline(1.4, color='0.55', ls=':', lw=1.0)
         ax[1, j].plot(xr, 0.664 / np.sqrt(rex) * 1e3, color='0.55', ls='-', lw=1.0)
         ax[1, j].plot(xr, 0.0576 * rex ** -0.2 * 1e3, color='0.55', ls=':', lw=1.0)
-    ax[0, 0].plot([], [], color='0.55', ls='-', lw=1.0, label='Blasius')
-    ax[0, 0].plot([], [], color='0.55', ls=':', lw=1.0, label='turbulent correlation')
     for (i, j), t in lab.items():
         ax[i, j].text(0.02, 0.92, t, transform=ax[i, j].transAxes, ha='left', va='center')
         ax[i, j].set_xlim(-5, XMAX)
-    ax[0, 0].set_ylim(0.8, 3.4)
-    ax[0, 1].set_ylim(0.8, 3.4)
+    ax[0, 0].set_ylim(0.8, 3.6)
+    ax[0, 1].set_ylim(0.8, 3.6)
     for j in (0, 1):
-        ax[1, j].set_ylim(-1.5, 8)
+        ax[1, j].set_ylim(-1.5, 9)
         ax[1, j].set_xlabel(r'$x/D$')
     ax[0, 0].set_ylabel(r'$H$')
     ax[1, 0].set_ylabel(r'$C_f\times10^{3}$')
-    ax[0, 0].text(0.5, 1.04, 'centreline', transform=ax[0, 0].transAxes, ha='center')
-    ax[0, 1].text(0.5, 1.04, 'mid-pitch', transform=ax[0, 1].transAxes, ha='center')
     h, l = ax[0, 0].get_legend_handles_labels()
-    fig.legend(h, l, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.07))
+    fig.legend(h, l, loc='lower center', ncol=3, bbox_to_anchor=(0.5, -0.07))
+    annotate(ax, xr, rex)
     fig.tight_layout()
     fig.savefig(OUT, bbox_inches='tight')
     print(f'Re_D {ReD:.0f}, nu {nu:.3e}, Re_theta(-5) {ret0:.1f}, x0/D {x0:.2f}')

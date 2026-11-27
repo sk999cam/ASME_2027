@@ -1,0 +1,6 @@
+# kind: time-batch jackknife
+# SE of the total ln(mu_R,RANS / mu_R,193), delete-one over 10 flow-through batches (RANS fixed); source estimator_timejk.py
+region SE density_SE energy_SE L_al_SE Swt_SE
+jet_0-3 0.025 0.001 0.009 0.020 0.006
+film_3-10 0.023 0.001 0.008 0.022 0.009
+film_10-25 0.026 0.000 0.006 0.015 0.009

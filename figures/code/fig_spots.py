@@ -1,27 +1,18 @@
 #!/usr/bin/env python3
-"""F9 fig_spots: growth and merger of turbulent spots between the jets, 193M 3DNS, plane sampler z010 (z/D 0.1), b010 window.
+"""F9 fig_spots: turbulent spots between the jets, 193M 3DNS (b010, left column) and 20M LES (b006, right column).
 
-(a) Space-time diagram of the detector d = |du/dt| (smoothed over 1.1 D/U, as the intermittency gamma of F8) along the
-    mid-pitch sampler line y/D = +3 (the periodic line, same as y/D = -3): x/D -3 to 20.5 against t U_inf/D; white contour at
-    the global Otsu threshold 0.0385 U^2/D; the dashed vertical lines mark the times of the snapshots in (b); the light-blue
-    curve is the streamwise centroid of the spot tracked in (b).
-(b) Six plan views of d at chosen times (y/D 0 to 6, mid-pitch y/D = 3 in the centre, the jet wakes at the edges, folded through
-    the periodic boundary), with the Otsu contour (white) and the outline of ONE spot, tracked record by record from its birth
-    to its merger with a neighbour and after it (light blue).
-Spot tracking: in each record the patches of d > 0.0385 U^2/D in the between-jet band |y/D| >= 2 (8-connected, area >= 0.02 D^2,
-    as analysis/layer_state/layer_samp.py --spots) are linked to the patches of the previous record by overlap; the patch
-    that overlaps the largest earlier patch keeps its identity, the others end there (merger). A spot is the identity born as a
-    patch with no earlier overlap. The shown spot is chosen automatically: born at x/D 0.5 to 8 as a patch smaller than 0.1 D^2,
-    at least 6 D/U old, 0.5 D^2 large and clear of the band edge |y/D| = 2 (touching it in at most 2 % of the records) before it ends in a merger with a patch of at least 0.5 D^2 at x/D 5 to 14.
-Celerities (printed): in the x-t diagram of the line y/D = 3 each connected region (8-connected, d > 0.0385) that starts
-    narrower than 0.6 D at x/D 0 to 14 is one spot cut by the line; while it is narrower than 5 D, its leading edge (largest x)
-    and trailing edge (smallest x) are fitted by least squares x(t); the slope is the celerity over U_inf. Median and
-    inter-quartile range over the spots with at least 6 D/U of fit.
-Also printed: gamma_mid(x), the time fraction of d > threshold averaged over the band |y/D| 2.81 to 3.0 and at y/D 3 alone; the
-    spot birth rate from the tracker (identities born at x/D 0 to 6 in the band that live at least 5 D/U).
-Data: /mnt/Elements/DNS/film_cooling/C193b_BR15 samp_z010, the records inside the stat3 batch b010 window, via _gamma_extract.py
-    (cache /mnt/Elements/DNS/analysis/asme2027_figs/gamma/).
-usage: python3 fig_spots.py
+(a), (b) Space-time diagrams of the ESTIMATED wall skin friction C_f,est x 10^3 along the mid-pitch line y/D = 3, x/D -3 to 20,
+         t U_inf/D 150 to 190 (193M) and 272.8 to 312.8 (LES); one inferno scale (1st to 99th percentile of the shown data).
+         C_f,est = 2 mu u(z/D = 0.1) / (0.1 D) / (rho_inf U_inf^2) from the z/D 0.1 plane sampler (one-sided gradient, local
+         Sutherland mu from the sampler temperature); line y/D = +3 (identical to y/D = -3, periodic). Cached by
+         _spots_z010_extract.py; constants and the validation against the true wall C_f are in fig_spots_z010.py.
+         Dashed lines: hole-exit extent, dotted line: end of the wall data (x/D 14.9). Ticks t1..t4 at the right edge: times of the
+         plan views below.
+(c), (d) Plan views of the true wall C_f x 10^3 (first grid point above the wall, smoothed over 1.2 D/U) at t1..t4, y/D folded so
+         the mid-pitch line y/D = 3 is the centre; hole outline (white, black border) with its periodic copy; white outline: the
+         one spot tracked in time (n2_spots_cf). Wall data end at x/D 14.9, the axes run to x/D 20 so that the columns align.
+Data: /mnt/Elements/DNS/analysis/asme2027_figs/n2_spots_cf/ (plan views) and .../spots_z010/ (z/D 0.1 lines).
+The wall-only version of this figure is kept in fig_spots_wall.py. usage: python3 fig_spots.py
 """
 import os
 import sys
@@ -30,262 +21,133 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.colors import LogNorm  # noqa: E402
+from matplotlib.patches import Polygon  # noqa: E402
 from cycler import cycler  # noqa: E402
-from scipy.ndimage import label  # noqa: E402
 
 sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from functions import set_mpl_params  # noqa: E402
-import _gamma_extract as GX  # noqa: E402
+from hole_exit_outline import load as load_hole  # noqa: E402
+import fig_spots_z010 as Z  # noqa: E402
 
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_spots.png'
-TAG = 'c193b'
-TH = 0.0385
+DDIR = '/mnt/Elements/DNS/analysis/asme2027_figs/n2_spots_cf/'
 OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
-MARK = '#56B4E9'
-XG2 = -3.0 + 0.04 * np.arange(701)
-YG2 = -3.0 + 0.04 * np.arange(151)
-DA = 0.04 ** 2
-AMIN = 0.02
-JA = np.where(YG2 >= 2 - 1e-9)[0]                       # y 2 .. 3
-JB = np.where(YG2 <= -2 + 1e-9)[0][1:]                  # y -2.96 .. -2 -> y + 6 = 3.04 .. 4
-YB = np.concatenate([YG2[JA], YG2[JB] + 6.0])
+PMIN, PMAX = 0.0, 14.0         # plan views, C_f x 1e3
+XL = (-3.0, 20.0)
+XH = (-1.0, 2.35)
+XWALL = 14.9
+WIN = Z.WIN
+PICK = [1, 2, 3, 5]            # plan-view records shown (of the six saved)
+CASES = [('c193b', '193M 3DNS'), ('c20bw', '20M LES')]
+FW, FH = 7.2, 6.8             # figure size, in
+BG = dict(facecolor='k', edgecolor='none', pad=1.5, alpha=0.75)
 
 
-def band_labels(f):
-    m = np.concatenate([f[:, JA], f[:, JB]], 1) > TH
-    lab, n = label(m, structure=np.ones((3, 3), int))
-    if n:
-        sz = np.bincount(lab.ravel())
-        small = np.where(sz * DA < AMIN)[0]
-        small = small[small > 0]
-        if len(small):
-            lab[np.isin(lab, small)] = 0
-    return lab
-
-
-def track_all(det):
-    """identity of every patch through all records -> dict id: dict(r0, x0, a0, traj[(r, xc, area)], end, into, merges)."""
-    life = {}
-    prev = None
-    nid = 0
-    for r in range(det.shape[0]):
-        lab = band_labels(np.asarray(det[r], np.float32))
-        ids = [k for k in np.unique(lab) if k > 0]
-        pids = np.zeros(lab.max() + 1, int)
-        for k in ids:
-            mk = lab == k
-            area = mk.sum() * DA
-            xc = XG2[np.nonzero(mk)[0]].mean()
-            edge = bool(mk[:, 0].any() or mk[:, -1].any())
-            pred = []
-            if prev is not None:
-                pl, pi = prev
-                pred = sorted({pi[o] for o in np.unique(pl[mk]) if o > 0})
-            if not pred:
-                nid += 1
-                my = nid
-                life[my] = dict(r0=r, x0=xc, a0=area, traj=[], end=None, into=None, merges=[])
-            else:
-                my = max(pred, key=lambda p: life[p]['traj'][-1][2])
-                for p in pred:
-                    if p != my and life[p]['end'] is None:
-                        life[p]['end'], life[p]['into'] = r, my
-                        life[my]['merges'].append((r, xc, life[p]['traj'][-1][2], area))
-            life[my]['traj'].append((r, xc, area, edge))
-            pids[k] = my
-        prev = (lab, pids)
-    return life
-
-
-def choose(life, t):
-    best = None
-    for i, L in life.items():
-        if L['end'] is None or not (0.5 <= L['x0'] <= 8.0) or L['a0'] >= 0.1:
-            continue
-        tr = np.array(L['traj'])
-        rend = L['end']
-        life_d = t[int(tr[-1, 0])] - t[int(tr[0, 0])]
-        # partner: the patch that keeps its identity at the merger, its area in the record before
-        pt = [q for q in life[L['into']]['traj'] if q[0] < rend]
-        pa = pt[-1][2] if pt else 0
-        if tr[:-1, 3].mean() > 0.02:        # the patch touches the band edge |y/D| = 2: not a free spot
-            continue
-        if life_d < 6 or tr[:, 2].max() < 0.5 or pa < 0.5 or not (5 <= tr[-1, 1] <= 14):
-            continue
-        score = life_d
-        if best is None or score > best[0]:
-            best = (score, i)
-    return best[1] if best else None
-
-
-def follow(det, life, i, r_end):
-    """per-record masks (full 701 x 151 plan) of spot i from its birth to r_end, continuing through the merger."""
-    L = life[i]
-    r0 = L['r0']
-    masks = {}
-    lab = band_labels(np.asarray(det[r0], np.float32))
-    xs = np.array([[XG2[a], 0] for a in range(0)])
-    best, bd = None, 1e9
-    for k in np.unique(lab):
-        if k == 0:
-            continue
-        mk = lab == k
-        d = abs(XG2[np.nonzero(mk)[0]].mean() - L['x0'])
-        if d < bd:
-            best, bd = k, d
-    cur = lab == best
-    for r in range(r0, r_end + 1):
-        lab = band_labels(np.asarray(det[r], np.float32))
-        if r > r0:
-            ov = np.bincount(lab[cur], minlength=lab.max() + 1)
-            ov[0] = 0
-            if ov.max() == 0:
-                break
-            cur = lab == int(np.argmax(ov))
-        masks[r] = cur.copy()
-    return masks
-
-
-def to_plan(mask):
-    """band mask (701 x len(YB)) -> plan array (701 x 151) in the folded coordinate y' = y (y >= 0), y + 6 (y < 0)."""
-    full = np.zeros((701, 151), bool)
-    full[:, JA] = mask[:, :len(JA)]
-    full[:, JB] = mask[:, len(JA):]
-    return full
-
-
-def fold(a):
-    """plan array on y -3..3 -> folded y' 0..6 (mid-pitch y' = 3 in the centre)."""
-    pos = a[:, 75:]                      # y 0 .. 3
-    neg = a[:, 1:75]                     # y -2.96 .. -0.04 -> y' 3.04 .. 5.96
-    return np.concatenate([pos, neg], 1), np.concatenate([YG2[75:], YG2[1:75] + 6.0])
-
-
-def edge_celerities(det_line, t, x):
-    """leading and trailing edge slopes of the x-t regions on the line."""
-    m = det_line > TH
-    lab, n = label(m, structure=np.ones((3, 3), int))
-    out = []
-    for k in range(1, n + 1):
-        rr, ii = np.nonzero(lab == k)
-        rows = np.unique(rr)
-        if len(rows) < 30:
-            continue
-        le = np.array([x[ii[rr == r]].max() for r in rows])
-        te = np.array([x[ii[rr == r]].min() for r in rows])
-        if (le[0] - te[0]) > 0.6 or not (0.0 <= 0.5 * (le[0] + te[0]) <= 14.0):
-            continue
-        use = (le - te) < 5.0
-        # contiguous from the start
-        bad = np.where(~use)[0]
-        stop = bad[0] if len(bad) else len(rows)
-        if stop < 30:
-            continue
-        tt = t[rows[:stop]]
-        if tt[-1] - tt[0] < 6.0:
-            continue
-        cl = np.polyfit(tt, le[:stop], 1)[0]
-        ct = np.polyfit(tt, te[:stop], 1)[0]
-        out.append((rows[0], t[rows[0]], te[0], cl, ct, tt[-1] - tt[0]))
-    return np.array(out)
+def fold(y):
+    return np.where(y < 0, y + 6.0, y)
 
 
 def main():
-    z = GX.load_z010(TAG)
-    t = z['t']
-    det = np.load(os.path.join(GX.CACHE, f'{TAG}_z010_det2.npy'), mmap_mode='r')
-    x = GX.XG
-    line = z['det_y+3.00']
-    line_m = z['det_y-3.00']
-    print('records', len(t), 't', t[0], t[-1], 'D/U')
-    print('max |d(y=+3) - d(y=-3)|', np.abs(line - line_m).max(), '(periodic line check)')
-    G = z['gamma'][0]
-    okx = x <= 20.5 + 1e-9
-    jm = np.where(np.abs(GX.YG) >= 2.81 - 1e-9)[0]
-    print('gamma_mid (band |y| 2.81-3.0 | line y=+3), threshold 0.0385:')
-    for q in (2, 4, 6, 8, 10, 12, 14, 16, 18, 20):
-        k = int(round((q + 3) / 0.02))
-        print(f'  x/D {q}: {G[k, jm].mean():.3f} | {G[k, 300]:.3f}')
-
-    # --- celerities from (a)
-    ec = edge_celerities(line[:, okx], t, x[okx])
-    if len(ec):
-        for nm, col in (('leading edge', 3), ('trailing edge', 4)):
-            v = ec[:, col]
-            q = np.percentile(v, [25, 50, 75])
-            print(f'celerity {nm}: median {q[1]:.2f} U_inf, IQR {q[0]:.2f}-{q[2]:.2f}, mean {v.mean():.2f}, N {len(v)}')
-        print('fit duration median', np.median(ec[:, 5]), 'D/U; birth x/D median', np.median(ec[:, 2]))
-
-    # --- tracking
-    life = track_all(det)
-    sel = choose(life, t)
-    print('tracked identities', len(life), 'chosen', sel)
-    L = life[sel]
-    tr = np.array(L['traj'])
-    r_b, r_e = L['r0'], L['end']
-    print(f'spot: born t {t[r_b]:.1f} D/U x/D {L["x0"]:.2f}; merges at t {t[r_e]:.1f} D/U x/D {tr[-1, 1]:.2f}; max area {tr[:, 2].max():.2f} D^2')
-    nb = sum(1 for i, a in life.items() if 0 <= a['x0'] <= 6 and len(a['traj']) * 0.1 >= 5.0)
-    area_band = 6.0 * 2.0 / 2 * 1.0   # band |y| >= 2 is 2 D wide over x 0..6: 12 D^2
-    print(f'births x/D 0-6 (live >= 5 D/U): {nb} in {t[-1] - t[0]:.0f} D/U over 12 D^2 -> {nb / 12.0 / (t[-1] - t[0]) * 100:.3f} per D^2 per 100 D/U')
-    r_after = min(r_e + int(round(8 / np.median(np.diff(t)))), len(t) - 1)
-    masks = follow(det, life, sel, r_after)
-    rs_all = sorted(masks)
-    # snapshot records: birth, 3 growth, just before merger, just after
-    r_pre, r_post = r_e - 2, min(r_e + 10, rs_all[-1])
-    mid = [int(round(a)) for a in np.linspace(r_b, r_pre, 5)[1:4]]
-    rsnap = [r_b + 3, mid[0], mid[1], mid[2], r_pre, r_post]
-    rsnap = [r for r in rsnap if r in masks]
-    print('snapshots (record, t U/D, x/D of the spot centroid):')
-    for r in rsnap:
-        mk = masks[r]
-        xc = XG2[np.nonzero(mk)[0]].mean()
-        print(f'  {r}  t {t[r]:.1f}  x {xc:.2f}  area {mk.sum() * DA:.2f} D^2')
-
-    # --- figure
-    set_mpl_params(0.7, grid_on=False)
+    set_mpl_params(0.5, grid_on=False)
     plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
-    fig = plt.figure(figsize=(15.0, 10.5))
-    gs = fig.add_gridspec(3, 3, height_ratios=[1.9, 1, 1], hspace=0.28, wspace=0.12)
-    axa = fig.add_subplot(gs[0, :])
-    norm = LogNorm(1e-2, 3e-1)
-    tt = np.concatenate([[t[0] - 0.05], 0.5 * (t[1:] + t[:-1]), [t[-1] + 0.05]])
-    xe = np.concatenate([[x[0] - 0.01], 0.5 * (x[1:] + x[:-1]), [x[-1] + 0.01]])
-    ke = np.searchsorted(xe, 20.5)
-    im = axa.pcolormesh(tt, xe[:ke + 1], np.maximum(line[:, :ke].T, 1e-4), cmap='inferno', norm=norm, shading='flat', rasterized=True)
-    axa.contour(t, x[:ke], line[:, :ke].T, levels=[TH], colors='w', linewidths=0.5)
-    axa.plot(t[tr[:, 0].astype(int)], tr[:, 1], color=MARK, lw=1.6)
-    cols = ['#56B4E9']
-    for r in rsnap:
-        axa.axvline(t[r], color=MARK, ls='--', lw=0.8)
-    axa.set_xlim(t[0], t[-1])
-    axa.set_ylim(-3, 20.5)
-    axa.set_xlabel(r'$tU_\infty/D$')
-    axa.set_ylabel(r'$x/D$')
-    axa.text(0.006, 0.93, r'(a) $y/D=3$', transform=axa.transAxes, color='k', ha='left', va='center', bbox=dict(fc='w', ec='none', pad=1.5))
-    cb = fig.colorbar(im, ax=axa, pad=0.01, fraction=0.02)
-    cb.set_label(r'$|\partial u/\partial t|$ smoothed, $U_\infty^2/D$')
-    cb.ax.axhline(TH, color='w', lw=1)
+    HX, HY = load_hole()
+    V = {t: Z.load(t) for t, _ in CASES}
+    # one colour scale for the top row, from the data shown
+    shown = []
+    for tag, _ in CASES:
+        v = V[tag]
+        m = (v['t'] >= WIN[tag][0]) & (v['t'] <= WIN[tag][1])
+        shown.append((v['cfe'][m][:, v['x'] <= XL[1] + 1e-9] * 1e3).ravel())
+    vmin, vmax = np.percentile(np.concatenate(shown), [1, 99])
+    print(f'top-row colour range C_f,est x 1e3: {vmin:.2f} to {vmax:.2f}; plan views {PMIN} to {PMAX}')
 
-    for n, r in enumerate(rsnap):
-        a = fig.add_subplot(gs[1 + n // 3, n % 3])
-        f = np.asarray(det[r], np.float32)
-        ff, yf = fold(f)
-        a.pcolormesh(XG2, yf, np.maximum(ff.T, 1e-4), cmap='inferno', norm=norm, shading='auto', rasterized=True)
-        a.contour(XG2, yf, ff.T, levels=[TH], colors='w', linewidths=0.4)
-        mk, _ = fold(to_plan(masks[r]).astype(float))
-        a.contour(XG2, yf, mk.T, levels=[0.5], colors=MARK, linewidths=1.6)
-        a.set_xlim(-3, 20.5)
-        a.set_ylim(0, 6)
-        a.set_yticks([0, 3, 6])
-        a.set_aspect('auto')
-        a.text(0.012, 0.86, rf'({chr(98 + n)}) $tU_\infty/D={t[r]:.0f}$', transform=a.transAxes, color='k', ha='left', va='center', bbox=dict(fc='w', ec='none', pad=1.5))
-        if n // 3 == 1:
-            a.set_xlabel(r'$x/D$')
-        if n % 3 == 0:
-            a.set_ylabel(r'$y/D$')
+    fig = plt.figure(figsize=(FW, FH))
+    LM, RM, GAP = 0.075, 0.895, 0.06
+    W = (RM - LM - GAP) / 2
+    cols = [LM, LM + W + GAP]
+    inch = lambda a: a / FH
+    H_TOP, PH, PG = inch(1.75), inch(0.66), inch(0.20)
+    top0 = 1 - inch(0.08)
+    b_top = top0 - H_TOP
+    p_top = b_top - inch(0.2)
+    im = imp = None
+    for ci, (tag, name) in enumerate(CASES):
+        v = V[tag]
+        pv = np.load(DDIR + tag + '_planviews.npz')
+        t0, t1 = WIN[tag]
+        ax = fig.add_axes([cols[ci], b_top, W, H_TOP])
+        m = (v['t'] >= t0) & (v['t'] <= t1)
+        ix = v['x'] <= XL[1] + 1e-9
+        tt = v['t'][m]
+        dtm = np.median(np.diff(tt))
+        im = ax.imshow(v['cfe'][m][:, ix] * 1e3, origin='lower', aspect='auto', cmap='inferno', vmin=vmin, vmax=vmax,
+                       extent=[v['x'][0] - 0.01, v['x'][ix][-1] + 0.01, tt[0] - dtm / 2, tt[-1] + dtm / 2], interpolation='nearest')
+        ax.set_xlim(*XL)
+        ax.set_ylim(t0, t1)
+        for xh in XH:
+            ax.axvline(xh, color='w', ls='--', lw=0.9)
+        ax.axvline(XWALL, color='w', ls=':', lw=1.2)
+        ax.text(0.5 * sum(XH), t1 - 0.03 * (t1 - t0), 'hole\nexit', color='w', ha='center', va='top', fontsize=8)
+        ax.text(XWALL - 0.3, t1 - 0.03 * (t1 - t0), 'end of wall data', color='w', ha='right', va='top', fontsize=8)
+        ax.set_xticklabels([])
+        if ci == 0:
+            ax.set_ylabel(r'$tU_\infty/D$')
+        ax.text(0.012, 0.03, '(%s) %s' % ('ab'[ci], name), transform=ax.transAxes, color='w', ha='left', va='bottom',
+                fontsize=10, bbox=BG)
+        for k, tk in enumerate(pv['times'][PICK]):
+            ax.plot([XL[1] - 0.5, XL[1]], [tk, tk], color='w', lw=1.0)
+            ax.text(XL[1] - 0.7, tk, r'$t_%d$' % (k + 1), color='w', ha='right', va='center', fontsize=8, bbox=BG)
+        # plan views
+        for k, ip in enumerate(PICK):
+            top = p_top - k * (PH + PG)
+            ap = fig.add_axes([cols[ci], top - PH, W, PH])
+            c = pv['Cf_smooth_1p1'][ip]
+            y = pv['y']
+            yf = np.concatenate([y[y >= 0], y[y < 0] + 6.0])
+            cf = np.concatenate([c[:, y >= 0], c[:, y < 0]], axis=1)
+            o = np.argsort(yf)
+            yf, cf = yf[o], cf[:, o]
+            imp = ap.pcolormesh(pv['x'], yf, cf.T * 1e3, cmap='inferno', vmin=PMIN, vmax=PMAX, shading='nearest', rasterized=True)
+            for dy in (0.0, 6.0):
+                ap.add_patch(Polygon(np.c_[HX, HY + dy], closed=True, facecolor='w', edgecolor='k', lw=0.8, zorder=3))
+            so = pv['spot_outlines'][ip]
+            so = so[np.isfinite(so).all(1)]
+            if len(so):
+                ap.plot(so[:, 0], fold(so[:, 1]), color='w', lw=1.0, zorder=4)
+            ap.plot([XL[0], pv['x'][-1]], [3.0, 3.0], color=OKABE_ITO[2], ls='--', lw=0.9, zorder=5)
+            ap.axvline(XWALL, color='0.5', ls=':', lw=0.8, zorder=2)
+            ap.set_xlim(*XL)
+            ap.set_ylim(0, 6)
+            ap.set_yticks([0, 3, 6])
+            ap.text(0.012, 0.88, r'$t_%d$ = %.1f' % (k + 1, pv['times'][ip]), transform=ap.transAxes, color='w',
+                    ha='left', va='top', fontsize=8, zorder=6, bbox=BG)
+            if k == 0:
+                ap.text(0.012, 0.12, '(%s)' % 'cd'[ci], transform=ap.transAxes, color='w', ha='left', va='bottom',
+                        fontsize=10, zorder=6, bbox=BG)
+            if ci == 0:
+                ap.set_ylabel(r'$y/D$')
+            else:
+                ap.set_yticklabels([])
+            if k < len(PICK) - 1:
+                ap.set_xticklabels([])
+            else:
+                ap.set_xlabel(r'$x/D$')
+            if ci == 0 and k == 0:
+                ap.annotate(r'$y/D=3$ (mid-pitch)', xy=(11.5, 3.0), xytext=(8.0, 4.7), color='w', fontsize=8, ha='center',
+                            va='center', bbox=BG, arrowprops=dict(arrowstyle='->', color='w', lw=0.8), zorder=7)
+                ap.text(0.5 * (XWALL + XL[1]), 4.6, 'no wall\ndata', color='k', fontsize=8, ha='center', va='center', zorder=7)
+            if ci == 0 and k == 1:
+                ap.annotate('tracked spot', xy=(so[:, 0].max(), fold(so[:, 1]).mean()), xytext=(11.5, 4.9), color='w',
+                            fontsize=8, ha='center', va='center', bbox=BG,
+                            arrowprops=dict(arrowstyle='->', color='w', lw=0.8), zorder=7)
+    pb = p_top - 3 * (PH + PG) - PH
+    cax = fig.add_axes([RM + 0.012, b_top, 0.014, H_TOP])
+    fig.colorbar(im, cax=cax).set_label(r'$C_{f,\mathrm{est}}\times10^{3}$ ($z/D=0.1$)')
+    cax2 = fig.add_axes([RM + 0.012, pb, 0.014, p_top - pb])
+    fig.colorbar(imp, cax=cax2).set_label(r'$C_f\times10^{3}$ (wall)')
     fig.savefig(OUT, dpi=300, bbox_inches='tight')
+    print('wrote', OUT)
 
 
 if __name__ == '__main__':
