@@ -1,0 +1,32 @@
+# Classic least-squares Pr_t(x) of the 193M reference b010: slabs 1 D wide, centres every 0.25 D, span-summed.
+# Pr_t = nu_R/alpha_R from summed numerators/denominators; SE = delete-one jackknife (10 batches) of the ratio.
+# layer 1: z/D 0.02..z_x(x); layer 2: z_x(x)..2; layer 3: z/D >= 0.3 to 3. empty = share of empty 0.02 D bins in slab x layer.
+# x/D  layer  Pr_t  SE  alpha_R  SE(alpha_R)  empty  resolved
+  4.0  1   0.0325   0.0013   7.724e-03   2.292e-04   0.00  yes
+  4.0  2   0.4218   0.0154   1.159e-02   3.739e-04   0.12  yes
+  4.0  3   0.1779   0.0049   1.167e-02   3.752e-04   0.23  yes
+  5.0  1   0.0364   0.0021   6.506e-03   3.714e-04   0.00  yes
+  5.0  2   0.4729   0.0154   1.065e-02   3.977e-04   0.12  yes
+  5.0  3   0.2054   0.0058   1.063e-02   4.040e-04   0.23  yes
+  7.0  1   0.0510   0.0038   4.830e-03   3.726e-04   0.00  yes
+  7.0  2   0.6067   0.0125   9.145e-03   3.446e-04   0.12  yes
+  7.0  3   0.2570   0.0080   9.103e-03   3.518e-04   0.23  yes
+ 10.0  1   0.0626   0.0057   4.446e-03   4.507e-04   0.04  yes
+ 10.0  2   0.7616   0.0190   8.332e-03   2.491e-04   0.17  yes
+ 10.0  3   0.3295   0.0071   8.238e-03   2.497e-04   0.26  yes
+ 15.0  1   0.0484   0.0040   5.868e-03   4.724e-04   0.76  yes
+ 15.0  2   0.7552   0.0223   8.723e-03   3.578e-04   0.80  yes
+ 15.0  3   0.4693   0.0198   8.505e-03   3.257e-04   0.81  yes
+ 20.0  1   0.0426   0.0020   6.043e-03   2.817e-04   0.77  yes
+ 20.0  2   0.6520   0.0227   9.766e-03   3.115e-04   0.81  yes
+ 20.0  3   0.5635   0.0153   9.048e-03   2.539e-04   0.82  yes
+# gaps (alpha_R within 2 SE of zero or Pr_t not finite), x/D ranges of slab centres:
+#   near-wall layer: none
+#   layer above: none
+#   $z/D\geq0.3$: none
+# layer 3 regional fits (one fit over the region, same convention as fig_prt_regions.py, z/D >= 0.3):
+#   x/D 3-10: Pr_t 0.2211  SE 0.0047  (expected 0.225)
+#   mean of the slab values over centres 3-10: 0.2429 (for information)
+#   x/D 10-20: Pr_t 0.4470  SE 0.0127  (expected 0.454)
+#   mean of the slab values over centres 10-20: 0.4626 (for information)
+# empty-bin fraction per slab (layers 1, 2, 3) at the table positions is in the column "empty".

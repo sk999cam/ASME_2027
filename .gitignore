@@ -25,6 +25,9 @@ template/
 *.dvi
 *.bcf
 manuscript/main.pdf
+# local draft build of main_claude.tex (manuscript/build_claude.sh): stand-in class, not for Overleaf
+manuscript/main_claude.pdf
+manuscript/local_build/
 
 # Editors and OS
 *~
@@ -50,6 +53,9 @@ __pycache__/
 *.vtk
 *.vtu
 *.sim
+
+# Review previews, superseded pictures and figure backups: local only (53 MB, not needed by Overleaf)
+planning/review/
 
 # Local tooling
 git_sync.log

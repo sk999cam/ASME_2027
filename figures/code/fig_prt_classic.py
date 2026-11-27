@@ -132,8 +132,10 @@ if SHOW_EXTRA:
     axs.set_xlim(0, 20)
     axs.set_ylim(0, 0.3)
     axs.set_yticks([0, 0.1, 0.2, 0.3])
-    ax2.set_xlim(-3, 3)
-    ax3.set_xlim(-3, 3)
+    ax2.set_xlim(3, -3)                  # y/D increases to the left: plane seen looking downstream
+    ax3.set_xlim(3, -3)
+    ax2.set_xticks([3, 0, -3])
+    ax3.set_xticks([3, 0, -3])
     axs.set_xlabel(r'$x/D$')
     ax2.set_xlabel(r'$y/D$')
     ax3.set_xlabel(r'$y/D$')

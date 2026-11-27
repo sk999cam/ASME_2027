@@ -86,7 +86,7 @@ def rans_line(case, kind):
 
 
 GREY = '0.35'
-AKW = dict(fontsize=8.5, color=GREY, ha='center', va='center',
+AKW = dict(fontsize=9, color=GREY, ha='center', va='center',
            arrowprops=dict(arrowstyle='->', color=GREY, lw=0.7, shrinkA=1, shrinkB=1))
 
 
@@ -114,7 +114,8 @@ ReD_EX = [None, None]
 
 
 def main():
-    set_mpl_params(0.48, grid_on=True)
+    # Drawn at the printed size for full text width (7.5 in; figure* with width=\textwidth, scale 1); body text 10 pt.
+    set_mpl_params(10 / 22, grid_on=True)
     plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
     W = {k: BX.load(t) for k, t in TAG.items()}
     # reference: Re_D from the RANS 50M approach layer, virtual origin from the 50M 3DNS Re_theta at x/D -5
@@ -131,7 +132,7 @@ def main():
     rex = ReD * (xr - x0)
     ReD_EX[0], ReD_EX[1] = ReD, x0
 
-    fig, ax = plt.subplots(2, 2, figsize=(7.2, 7.4), sharex=True)
+    fig, ax = plt.subplots(2, 2, figsize=(7.5, 6.4), sharex=True)
     lab = {(0, 0): '(a) centreline', (0, 1): '(b) mid-pitch', (1, 0): '(c) centreline', (1, 1): '(d) mid-pitch'}
     for j, kind in enumerate(('c', 'm')):
         for k, (col, ls) in RUNG.items():
@@ -170,10 +171,11 @@ def main():
     ax[0, 0].set_ylabel(r'$H$')
     ax[1, 0].set_ylabel(r'$C_f\times10^{3}$')
     h, l = ax[0, 0].get_legend_handles_labels()
-    fig.legend(h, l, loc='lower center', ncol=3, bbox_to_anchor=(0.5, -0.07))
+    fig.legend(h, l, loc='lower center', ncol=len(l), fontsize=plt.rcParams['font.size'], handlelength=1.8,
+               columnspacing=1.2)
     annotate(ax, xr, rex)
-    fig.tight_layout()
-    fig.savefig(OUT, bbox_inches='tight')
+    fig.tight_layout(pad=0.3, rect=(0, 0.06, 1, 1))
+    fig.savefig(OUT)
     print(f'Re_D {ReD:.0f}, nu {nu:.3e}, Re_theta(-5) {ret0:.1f}, x0/D {x0:.2f}')
     # numbers
     for kind in ('c', 'm'):

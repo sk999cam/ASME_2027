@@ -1,0 +1,72 @@
+Table T2: a posteriori runs, RANS 50M against the 193M b010 (fig_aposteriori.py)
+eta = (T0,fs - T_w)/(T0,fs - T0,c). eta-bar: spanwise-weighted lateral mean (bl_post.lateral_mean), mean of the 0.1 D bins
+over x/D 2.5-7, 7-15, 15-20. Centreline |y/D| < 0.1, mid-pitch ||y/D| - 2.91| < 0.1, bins of 0.1 D in x; value at x/D 5, 10, 15
+= mean of the bins within +-0.26 D, at x/D 20 = bins 19.5-20.0 (fig_eta_x.at). Nothing beyond x/D 20.
+Difference = run - 193M b010. Iteration and residual from convergence/convergence.md (largest normalised residual of the
+nine equations at that iteration); BR from the same file.
+
+Values (eta)
+      run  bar2.5-7   bar7-15  bar15-20       cl5      cl10      cl15      cl20       mp5      mp10      mp15      mp20
+193M b010     0.304     0.237     0.208     0.804     0.567     0.456     0.387     0.004     0.007     0.014     0.024
+exp id727     0.293     0.243     0.212     0.758     0.599     0.491     0.419     0.037     0.033     0.033     0.035   (7-7-7, DR 1.5, BR 1.5, Tu 0.5 %; fig_eta_x definitions; no iteration/residual)
+base          0.272     0.168     0.138     0.848     0.668     0.560     0.497     0.005     0.005     0.006     0.006
+pr04          0.305     0.202     0.164     0.853     0.634     0.508     0.422     0.007     0.008     0.009     0.010
+pr05          0.297     0.195     0.160     0.868     0.658     0.539     0.460     0.006     0.007     0.008     0.008
+pr03          0.312     0.207     0.164     0.811     0.584     0.449     0.361     0.007     0.009     0.010     0.012
+qcr           0.319     0.221     0.185     0.914     0.729     0.604     0.524     0.005     0.005     0.006     0.006
+qcr04         0.340     0.241     0.198     0.885     0.658     0.518     0.426     0.007     0.007     0.009     0.010
+C             0.292     0.220     0.191     0.709     0.492     0.398     0.339     0.004     0.010     0.023     0.037
+B             0.262     0.204     0.178     0.483     0.332     0.266     0.227     0.004     0.010     0.020     0.035
+P2            0.287     0.211     0.183     0.831     0.564     0.434     0.360     0.005     0.011     0.021     0.031
+LES 20M       0.301     0.231     0.202     0.773     0.527     0.419     0.365     0.004     0.006     0.017     0.028   (20M LES C20bW stat3 b006, fig_eta_x definitions and plate-vertex cache; no iteration/residual)
+
+Differences from the 193M b010 (run - 193M)
+      run  bar2.5-7   bar7-15  bar15-20       cl5      cl10      cl15      cl20       mp5      mp10      mp15      mp20
+base         -0.032    -0.069    -0.070    +0.044    +0.100    +0.104    +0.110    +0.001    -0.001    -0.009    -0.019
+pr04         +0.001    -0.035    -0.043    +0.049    +0.067    +0.052    +0.036    +0.002    +0.001    -0.006    -0.015
+pr05         -0.006    -0.042    -0.047    +0.064    +0.090    +0.083    +0.073    +0.002    +0.000    -0.007    -0.016
+pr03         +0.008    -0.030    -0.043    +0.007    +0.016    -0.007    -0.026    +0.003    +0.002    -0.004    -0.012
+qcr          +0.015    -0.016    -0.023    +0.110    +0.161    +0.148    +0.138    +0.001    -0.001    -0.009    -0.018
+qcr04        +0.036    +0.005    -0.009    +0.081    +0.091    +0.062    +0.040    +0.002    +0.001    -0.006    -0.015
+C            -0.012    -0.016    -0.017    -0.095    -0.076    -0.058    -0.048    +0.000    +0.004    +0.009    +0.012
+B            -0.042    -0.033    -0.030    -0.321    -0.236    -0.189    -0.160    +0.000    +0.004    +0.006    +0.011
+P2           -0.017    -0.026    -0.025    +0.027    -0.004    -0.022    -0.027    +0.001    +0.004    +0.007    +0.007
+LES 20M      -0.003    -0.006    -0.006    -0.031    -0.041    -0.036    -0.021    -0.000    -0.000    +0.002    +0.004
+
+Lateral profile x/D 15-20 (panel c), max |run - 193M| over the 29 bins of |y/D| (eta):
+  base      0.159
+  pr04      0.088
+  pr05      0.105
+  pr03      0.073
+  qcr       0.141
+  qcr04     0.048
+  C         0.051
+  B         0.172
+  P2        0.043
+  LES 20M   0.029
+
+Convergence and what each run changes
+run       iteration max resid.      equation      BR  what the run changes
+base         122686   1.31e-04 Intermittency  1.5925  none (baseline)  | notes: -
+pr04         140417   1.34e-04 Intermittency  1.5945  Pr_t 0.4, whole domain  | notes: -
+pr05         142686   1.37e-04 Intermittency  1.5942  Pr_t 0.5, whole domain  | notes: -
+pr03         140856   1.31e-04 Intermittency  1.5945  Pr_t 0.3, whole domain  | notes: -
+qcr          140201   2.08e-04 Intermittency  1.5613  stress relation (QCR 2000)  | notes: -
+qcr04        158008   1.75e-04 Intermittency  1.5631  QCR and Pr_t 0.4, whole domain  | notes: -
+C            143186   1.55e-04 Intermittency  1.5868  50M 3DNS heat flux imposed, all regions  | notes: imposes 50M 3DNS inputs (C50b b006)
+B            142621   5.97e-04 Intermittency  1.4161  50M 3DNS stresses and heat flux imposed, all regions  | notes: imposes 50M 3DNS inputs (C50b b006); BR 1.416; T up to 303.6 K outside x/D 0-20; approach layer changed
+P2           140994   1.33e-04 Intermittency  1.5923  50M 3DNS heat flux imposed, x/D 3-25 only  | notes: imposes 50M 3DNS inputs (C50b b006)
+
+Run keys: base = rans_50M_Lm25b_BR15_FST_ZPG_p0dns; pr04/pr05/pr03 = _prt04/_prt05/_prt03; qcr = _qcr; qcr04 = _qcr_prt04;
+B = _substB (3DNS stresses and heat flux, 50M C50b b006); P2 = _substCfilm (3DNS heat flux in regions 5 and 6, x/D 3-25).
+C = _substC (3DNS heat flux, all regions). Runs A, gamma = 1 and P1 are not finished and are absent; the figure draws base, pr04, qcr04, P2 only.
+
+Flags
+1. Runs B and P2 impose stresses / heat flux from the 50M 3DNS (C50b b006), not the 193M; all differences are against the 193M b010.
+2. STAR tables (substB_eta_windows_x20.txt etc.) use mid-pitch ||y/D| - 2.91| < 0.15 and centreline |y/D| < 0.1, x/D 5 and 10 windows
+   +-0.25; this table follows fig_eta_x (mid-pitch +-0.1, x/D 5, 10, 15 windows +-0.26). Mid-pitch values differ by a few 1e-4 to 1e-3.
+3. qcr_prt04/compare/qcr_prt04_eta_windows.txt is an older table: its x/D 20 window differs (baseline centreline 0.4936 against
+   0.4969 in the x/D 19.5-20.0 tables). It is not used here; the QCR + Pr_t 0.4 values are recomputed from wall_plate.csv.
+4. QCR + Pr_t 0.4 has no STAR profile file; its profile is recomputed from wall_plate.csv with the STAR definition.
+5. Run B has BR 1.416 against 1.527 (193M) and 1.59 for the other runs (the stresses cut the discharge at fixed p0).
+6. Run B has T up to 303.6 K (cells above T0 at the wall, none in x/D 0-20); its approach layer differs (Re_theta 224 at x/D -2).

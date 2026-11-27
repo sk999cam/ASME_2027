@@ -19,11 +19,15 @@ N = 53120567
 Xc = np.load(f'{cm.C}/qcr/X.npy', mmap_mode='r')
 tot = {'num': 0.0, 'den': 0.0, 'res': 0.0, 'lin': 0.0, 'n': 0}
 rows_all = []
-for f in (0.15, 0.3, 0.45, 0.6, 0.75, 0.9):
+_i = np.arange(0, N, 20000)
+_x, _z = np.asarray(Xc[_i]) / cm.D, np.asarray(np.load(f'{cm.C}/qcr/Z.npy', mmap_mode='r')[_i]) / cm.D
+_film = _i[(_x >= 0) & (_x <= 20) & (_z >= 0.3) & (_z <= 2)]      # strided sample of the cache, locates film-dense row ranges
+FRACS = (_film[np.linspace(0, len(_film) - 1, 12).astype(int)] + 3000) / N
+for f in FRACS:
     off = int(f * fs)
     with open(F, 'rb') as fh:
         fh.seek(off)
-        raw = fh.read(40_000_000)
+        raw = fh.read(12_000_000)
     raw = raw[raw.index(b'\n') + 1: raw.rindex(b'\n')]
     df = pd.read_csv(io.BytesIO(raw), header=None, names=cols)
     x0 = df['X'].values[0]
@@ -43,10 +47,15 @@ for f in (0.15, 0.3, 0.45, 0.6, 0.75, 0.9):
     n = len(df)
     idx = np.arange(start, start + n)
     d = cm.load('qcr', cm.NAMES, idx)
-    chk = max(np.max(np.abs(d['X'] / df['X'].values - 1)), np.max(np.abs(d['k'] / df['k'].values - 1)))
+    kmatch = np.abs(d['k'] / df['k'].values - 1) < 1e-5            # row alignment per cell (k and |dX|/D)
+    xmatch = np.abs(d['X'] - df['X'].values) / cm.D < 1e-5
+    chk = 1.0 - float(np.mean(kmatch & xmatch))                       # fraction of misaligned rows
     G, S, Ss, W, gn = cm.tensors(d)
     z = d['Z'] / cm.D
-    ok = (d['k'] > 0) & (z >= 0.3) & (d['X'] / cm.D > -3)
+    ok = kmatch & xmatch & (d['k'] > 0) & (z >= 0.3) & (z <= 2) & (d['X'] / cm.D >= 0) & (d['X'] / cm.D <= 20)
+    if ok.sum() < 2000:
+        print(f'segment f={f:.3f}: rows {start}..{start + n - 1}, only {ok.sum()} film cells; skipped', flush=True)
+        continue
     aS = np.zeros((n, 3, 3))
     for (i, j), c in {(0, 0): 'uu', (0, 1): 'uv', (0, 2): 'uw', (1, 1): 'vv', (1, 2): 'vw', (2, 2): 'ww'}.items():
         aS[:, i, j] = aS[:, j, i] = df[c].values * df['rho'].values
@@ -63,10 +72,11 @@ for f in (0.15, 0.3, 0.45, 0.6, 0.75, 0.9):
     res = np.sqrt(np.einsum('nij,nij->', dlt - chat * cm_, dlt - chat * cm_) / np.einsum('nij,nij->', dlt, dlt))
     # per-cell c in cells with a sizeable QCR part
     pc = np.einsum('nij,nij->n', dlt, cm_) / np.maximum(np.einsum('nij,nij->n', cm_, cm_), 1e-300)
-    big = np.einsum('nij,nij->n', cm_, cm_) > np.quantile(np.einsum('nij,nij->n', cm_, cm_), 0.5)
-    print(f'segment f={f}: rows {start}..{start + n - 1}, order check max rel diff X,k = {chk:.1e}, cells used {ok.sum()}, '
+    cc = np.einsum('nij,nij->n', cm_, cm_)
+    big = cc > np.quantile(cc, 0.5)
+    print(f'segment f={f}: rows {start}..{start + n - 1}, misaligned row fraction (k, X) = {chk:.1e}, cells used {ok.sum()}, '
           f'c_cr1 fit = {chat:.4f}, rel. residual |dlt - c comm|/|dlt| = {res:.3f}, per-cell c median/p10/p90 = '
-          f'{np.median(pc[big & ok]):.4f}/{np.quantile(pc[big & ok], .1):.4f}/{np.quantile(pc[big & ok], .9):.4f}', flush=True)
+          f'{np.median(pc[big]):.4f}/{np.quantile(pc[big], .1):.4f}/{np.quantile(pc[big], .9):.4f}', flush=True)
     tot['num'] += num; tot['den'] += den; tot['n'] += int(ok.sum())
     # also: STAR a_qcr vs a_lin contraction; STAR stress trace check
     print('   (uu+vv+ww)/(2k) median', float(np.median((df['uu'] + df['vv'] + df['ww']).values[ok] / (2 * df['k'].values[ok]))),

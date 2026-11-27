@@ -11,9 +11,12 @@ Data
   20M LES (stat3 b006), 193M 3DNS (stat3 b010)  Favre mean U and resolved k = 1/2 (R_xx + R_yy + R_zz), helper _bl_extract.py; column nearest
             x/D 10 (within 0.15 D) of each y/D (+-1.5 and +-3 averaged; mid-pitch is the periodic line y/D = +-3).
   20M LES, 193M 3DNS gamma  plane sampler x10 (x/D 10, y/D -3..3, z/D 0..3), records of the b006 (20M) and b010 (193M) windows
-            (3 992 records for the 193M, see _gamma_extract.py); detector |du/dt| smoothed over 1.1 D/U, one global threshold
-            0.0385 U^2/D (Otsu of the 50M 3DNS); y/D 0, +-1.5 and +-3 (averaged, mid-pitch is the periodic line), blanked below
-            z/D 0.02 (cache /mnt/Elements/DNS/analysis/asme2027_figs/gamma/).
+            (3 992 records for the 193M, see _gamma_extract_v.py); detector d = (v - <v>_T)^2 / U_inf^2 (T = 2 D/U, smoothed
+            over 1 D/U), time fraction above the Otsu threshold of the 193M intermittent band |y/D| 2 to 3 of the z/D 0.1 plane (one value
+            for both runs); y/D 0, +-1.5
+            and +-3 (averaged, mid-pitch is the periodic line), blanked below z/D 0.02
+            (cache /mnt/Elements/DNS/analysis/asme2027_figs/gamma_v/; definition in planning/maths_audit/intermittency).
+            The old |du/dt| detector (_gamma_extract.py) is read only for the printed old-versus-new comparison.
 RANS k is the modelled k; 3DNS / LES k is resolved.
 usage: python3 fig_bl_profiles.py
 """
@@ -31,7 +34,8 @@ sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from functions import set_mpl_params  # noqa: E402
 import _bl_extract as BX  # noqa: E402
-import _gamma_extract as GX  # noqa: E402
+import _gamma_extract as GX  # noqa: E402      # old detector, printed comparison only
+import _gamma_extract_v as GV  # noqa: E402
 
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_bl_profiles.pdf'
 ST = '/home/sk999/Documents/4dns_filmcooled/starccm/rans_50M_Lm25b_BR15_FST_ZPG_p0dns/post_run1'
@@ -68,9 +72,16 @@ def dns_prof(tag, y):
     return dict(z=z, U=U, k=k, dist=max(p[k]['dist'] for k in ks))
 
 
-def gamma_dns(tag, y):
-    P = GX.load_x10(tag)
-    G = P['gamma'][0]                                   # (y, z) at threshold 0.0385
+def gamma_dns(tag, y, old=False):
+    if old == 'line':
+        P = GV.load_x10(tag, logth=GV.policy_logth(tag, 2.0, 'iii'))      # earlier line-pooled policy, printed comparison
+        G = P['gamma']
+    elif old:
+        P = GX.load_x10(tag)
+        G = P['gamma'][0]                               # (y, z) at threshold 0.0385
+    else:
+        P = GV.load_x10(tag)
+        G = P['gamma']                                  # (y, z) at the policy threshold
     ys = [0.0] if y == 0 else [y, -y]
     g = np.mean([G[int(np.argmin(np.abs(P['y'] - s)))] for s in ys], 0)
     m = P['z'] >= 0.02
@@ -117,7 +128,12 @@ def main():
             print(y, tag, 'dist', round(d['dist'], 3), 'k(z=0.1)', d['k'][j], 'U(z=0.1)', d['U'][j], 'kmax', d['k'].max())
         for tag in ('c20bw', 'c193b'):
             zg, gg = gamma_dns(tag, y)
-            print(y, tag, 'gamma z~0.1', gg[np.argmin(np.abs(zg - 0.1))], 'z~0.5', gg[np.argmin(np.abs(zg - 0.5))])
+            zo, go = gamma_dns(tag, y, old=True)
+            zl, gl_ = gamma_dns(tag, y, old='line')
+            print(f'y/D {y} {tag} gamma z~0.1: old {go[np.argmin(np.abs(zo - 0.1))]:.3f} -> line policy '
+                  f'{gl_[np.argmin(np.abs(zl - 0.1))]:.3f} -> band policy {gg[np.argmin(np.abs(zg - 0.1))]:.3f}'
+                  f' | z~0.5: old {go[np.argmin(np.abs(zo - 0.5))]:.3f} -> {gl_[np.argmin(np.abs(zl - 0.5))]:.3f}'
+                  f' -> {gg[np.argmin(np.abs(zg - 0.5))]:.3f}')
 
 
 if __name__ == '__main__':

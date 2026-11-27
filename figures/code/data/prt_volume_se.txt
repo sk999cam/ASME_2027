@@ -1,0 +1,7 @@
+# Volume Pr_t,R of the 193M b010 per region: full-record value +- 2 SE (delete-one jackknife over 10 flow-through records).
+# Source: /mnt/Elements/DNS/analysis/asme2027_figs/n8_lsq/prt_classic_c193b_b010_jk.npz
+# region (key), lower, upper. far film is x/D 10-20 (key wake_10_25 kept for the script).
+# values: jet 0.3004 (SE 0.0043), near film 0.2246 (SE 0.0048), far film 0.4536 (SE 0.0129)
+near_jet_0_3 0.291847 0.308901
+wake_3_10 0.215025 0.234223
+wake_10_25 0.427766 0.479350

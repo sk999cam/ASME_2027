@@ -29,28 +29,34 @@ RUNS = [('20M', '/mnt/Tank/DNS/film_cooling/C20bW_BR15/pictures_job3/stat3_b006'
         ('50M', '/mnt/Tank/DNS/film_cooling/C50b_BR15/pictures_job9/stat3_b006', OKABE_ITO[6], ':'),
         ('100M', '/mnt/Elements/DNS/film_cooling/C100b_BR15/pictures_job9/stat3_b006', OKABE_ITO[5], '--'),
         ('193M', '/mnt/Elements/DNS/film_cooling/C193b_BR15/pictures_job18/stat3_b010', OKABE_ITO[0], '-')]
-# diffuser, exit, near and far film, and the whole domain (metering left out, user 2026-11-24)
-REGIONS = [('hole_diffuser', 'diffuser'), ('exit', 'exit'),
-           ('wake_3_10', 'near film\n' + r'$x/D$ 3–10'), ('wake_10_25', 'far film\n' + r'$x/D$ 10–25'),
-           ('domain', 'whole domain')]
+# Near and far film only (audit 2026-11-27). The regions are block boxes of regions.txt: near film x/D 2.36-10.25
+# (key wake_3_10), far film x/D 10.25-25 (key wake_10_25). length_hist.npz holds one pooled histogram per region, no per-x
+# bins, so the far film cannot be cut at x/D 20 without a new stat3 read (length_scales.py run_means with an x mask).
+# Panels (owner 2026-11-27): whole domain (key domain) and film = near + far film pooled (volumes added, so the pooled curve is
+# volume weighted), x/D 2.36-25 (far-film data pooled to x/D 25).
+REGIONS = [(('domain',), 'whole domain'), (('wake_3_10', 'wake_10_25'), 'film\n' + r'$x/D$ 2.36–25')]
 
-set_mpl_params(0.5, grid_on=True)
+# Drawn at the printed size for one column (3.56 in; include width=\columnwidth, scale 1); body text 10 pt.
+set_mpl_params(10 / 22, grid_on=True)
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
 
-fig, axs = plt.subplots(1, 5, figsize=(10.0, 2.6), sharex=True, sharey=True)
+fig, axs = plt.subplots(1, 2, figsize=(3.56, 2.1), sharex=True, sharey=True)
 for n, (ax, (reg, name)) in enumerate(zip(axs, REGIONS)):
     for lab, path, c, ls in RUNS:
         d = np.load(path + '/kolmogorov/length_hist.npz')
-        h, e = d[reg + '_Delta_eta'], d['edges_Delta_eta']
+        h, e = sum(d[r_ + '_Delta_eta'] for r_ in reg), d['edges_Delta_eta']
         above = 1 - np.concatenate([[0], np.cumsum(h)]) / h.sum()   # volume fraction above the edge
         ax.plot(e, above, color=c, ls=ls, label=lab)
     ax.axvline(2, color='0.5', lw=0.8, ls='--')
-    ax.text(0.97, 0.95, f'({"abcde"[n]}) {name}', transform=ax.transAxes, ha='right', va='top')
+    ax.text(0.97, 0.95, f'({"ab"[n]}) {name}', transform=ax.transAxes, ha='right', va='top', linespacing=1.1)
     ax.set_xlim(0, 4)
-    ax.set_ylim(0, 1)
-    ax.set_xlabel(r'$\Delta_{mesh}/\eta_{K,193M}$')
-axs[0].set_ylabel(r'volume fraction above $\Delta_{mesh}/\eta_{K,193M}$')
-fig.tight_layout()
-fig.legend(*axs[0].get_legend_handles_labels(), loc='lower center', ncol=4, bbox_to_anchor=(0.5, 0.98))
-fig.savefig(OUT, bbox_inches='tight')
+    ax.set_xticks([0, 1, 2, 3, 4])
+    ax.set_ylim(0, 1.3)   # head room for the panel label
+    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+axs[0].set_ylabel(r'volume fraction above $\Delta/\eta$')
+fig.supxlabel(r'$\Delta_{mesh}/\eta_{K,193M}$', fontsize=plt.rcParams['font.size'])
+fig.tight_layout(pad=0.3, w_pad=0.4, rect=(0, 0, 1, 0.9))
+fig.legend(*axs[0].get_legend_handles_labels(), loc='upper center', ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0),
+           fontsize=plt.rcParams['font.size'] - 1, handlelength=1.6, columnspacing=0.9)
+fig.savefig(OUT)
 print('wrote', OUT)

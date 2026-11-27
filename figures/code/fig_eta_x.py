@@ -14,8 +14,9 @@ Data
     (pictures_job18/stat3_b010). Mean T at the plate vertices (k = ktip of the tip blocks). Panel (a): eta_lateral.txt of
     dns/python/plot_stat3.py (pictures_job3 / job9 / job9 / job18); panels (b), (c): the plate vertices, cached by plate_points().
   gamma_mid(x) of the 193M (panel (c), secondary axis, dashed grey): intermittency of the plane sampler z010 (z/D 0.1) of the
-    b010 window, threshold 0.0385 U^2/D, averaged over the mid-pitch band |y/D| 2.81 to 3.0 (the band of the eta line,
-    |y/D| = 2.91 +- 0.1, as far as the sampler reaches), helper _gamma_extract.py, 0 to 20 D.
+    b010 window, high-pass spanwise-stress detector (T = 2 D/U, Otsu threshold of the 193M intermittent band |y/D| 2 to 3, x/D 0 to 20; shaded: threshold x0.5 to x2), averaged over the mid-pitch band
+    |y/D| 2.81 to 3.0 (the band of the eta line, |y/D| = 2.91 +- 0.1, as far as the sampler reaches), helper
+    _gamma_extract_v.py (definition: planning/maths_audit/intermittency), 0 to 20 D.
   Experiment: ETA_CAzeroStudies, eta_SmoothHoles_lowFST_DR1p5_M1p5__id727 (7-7-7, DR 1.5, BR 1.5, Tu 0.5 %).
     (a) mean over the map rows (as validation_50M/eta.py); (b), (c) the three pitches folded onto one
     (holes at z/D 0, +-6), as far_film.py. Markers are every 8th point of the 0.1 D map.
@@ -36,7 +37,8 @@ from cycler import cycler
 sys.path.insert(0, '/home/sk999/Documents/3DNS_FP')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from functions import set_mpl_params
-import _gamma_extract as GX  # noqa: E402
+import _gamma_extract as GX  # noqa: E402      # old detector, printed comparison only
+import _gamma_extract_v as GV  # noqa: E402
 REPO = '/home/sk999/Documents/4dns_filmcooled'
 sys.path.insert(0, REPO + '/starccm/python')
 sys.path.insert(0, REPO + '/dns/python')
@@ -154,9 +156,11 @@ def at(x, e, q):
 
 
 def main():
-    set_mpl_params(0.5, grid_on=True)
+    # Drawn at the printed size (0.9 column = 3.2 in, include scale 1); body text 10 pt -> sf = 10/22.
+    set_mpl_params(10 / 22, grid_on=True)
     plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
-    fig, axs = plt.subplots(3, 1, figsize=(5.2, 7.2), sharex=True)
+    FS = plt.rcParams['font.size']
+    fig, axs = plt.subplots(3, 1, figsize=(3.2, 6.6), sharex=True)
     xe = np.loadtxt(EXP + 'x_D.txt')[0]
     ee = np.nanmean(np.loadtxt(EXP + EXP_FILE), axis=0)
     ex, ey, ev = exp_points()
@@ -191,13 +195,26 @@ def main():
         m = np.isfinite(vv) & (xx >= 2.2) & (xx <= XMAX)
         ax.plot(xx[m][::4], vv[m][::4], **kw)
     # gamma_mid(x) of the 193M on a secondary axis of panel (c)
-    G = GX.load_z010('c193b')['gamma'][0]                      # (x, y) at 0.0385 U^2/D
-    jm = np.where(np.abs(GX.YG) >= 2.81 - 1e-9)[0]
+    G = GV.load_z010('c193b')['gamma']                         # (x, y), high-pass v-stress detector, policy threshold
+    jm = np.where(np.abs(GV.YG) >= 2.81 - 1e-9)[0]
     gmid = G[:, jm].mean(1)
-    xg = GX.XG
+    xg = GV.XG
+    Go = GX.load_z010('c193b')['gamma'][0]                     # old |du/dt| detector, printed comparison only
+    gmid_old = Go[:, jm].mean(1)
+    xg_old = GX.XG
     ok = xg <= XMAX + 1e-9
     ax2 = axs[2].twinx()
     ax2.plot(xg[ok], gmid[ok], color='0.5', ls='--', lw=axs[2].lines[0].get_linewidth(), label=r'$\gamma_{mid}$ (193M)')
+    fr_ = GV.load('c193b', 'z010')['frac'][1]
+    lt_ = GV.policy_logth('c193b')
+    gb_ = [GV.gamma_at(fr_, lt_ + np.log10(f))[:, jm].mean(1) for f in GV.FAC]      # threshold x0.5 (upper), x2 (lower)
+    ax2.fill_between(xg[ok], gb_[1][ok], gb_[0][ok], color='0.5', alpha=0.25, lw=0)
+    for ge_ in gb_:
+        ax2.plot(xg[ok], ge_[ok], color='0.5', lw=0.5, alpha=0.8)
+    ax2.text(0.14, 0.97, 'band: threshold\nhalved / doubled', transform=ax2.transAxes,
+             fontsize=FS - 1, ha='left', va='top', color='0.3')
+    print('gamma_mid at threshold x0.5 / x2, x/D 5 10 15 20: ' + ' | '.join(
+        f'{np.interp(q, xg, gb_[0]):.3f} / {np.interp(q, xg, gb_[1]):.3f}' for q in (5, 10, 15, 20)))
     ax2.set_ylim(0, 1)
     ax2.set_ylabel(r'$\gamma_{mid}$ (193M)', color='0.35')
     ax2.tick_params(axis='y', colors='0.35')
@@ -207,7 +224,7 @@ def main():
     print('193M mid-pitch eta and gamma_mid (window +-0.26 D):')
     for q in (5, 10, 15, 20):
         mm = np.abs(xr - q) < 0.26
-        print(f'  x/D {q}: eta_mid {np.nanmean(er[mm]):.4f}  gamma_mid {gmid[np.abs(xg - q) < 0.26].mean():.3f}  exp {np.nanmean(exp_lines[2][np.abs(exp_lines[0] - q) < 0.26]):.4f}')
+        print(f'  x/D {q}: eta_mid {np.nanmean(er[mm]):.4f}  gamma_mid {gmid[np.abs(xg - q) < 0.26].mean():.3f} (old {gmid_old[np.abs(xg_old - q) < 0.26].mean():.3f})  exp {np.nanmean(exp_lines[2][np.abs(exp_lines[0] - q) < 0.26]):.4f}')
     xi = np.interp(xr, xg[ok], gmid[ok])
     sel = (xi > 0.8) & (xr <= XMAX) & np.isfinite(er)
     ex_i = np.interp(xr, exp_lines[0][np.isfinite(exp_lines[2])], exp_lines[2][np.isfinite(exp_lines[2])])
@@ -218,16 +235,19 @@ def main():
         print('gamma_mid never above 0.8 at x/D <= 20')
     ls_ = np.where(gmid[ok] > 0.8)[0]
     print('gamma_mid first > 0.8 at x/D', xg[ok][ls_[0]] if len(ls_) else None)
+    lo_ = np.where(gmid_old[xg_old <= XMAX + 1e-9] > 0.8)[0]
+    print('  old |du/dt| detector: first > 0.8 at x/D', xg_old[lo_[0]] if len(lo_) else None)
     axs[0].set_ylim(0, 0.45)
-    axs[1].set_ylim(0.2, 0.9)
+    axs[1].set_ylim(0.0, 0.9)         # lower limit lowered from 0.2 to make room for the body-size legend
     axs[2].set_ylim(0, 0.06)
     axs[2].set_xlim(0, XMAX)
     for ax, lab, yl in zip(axs, '(a) (b) (c)'.split(), (r'$\bar{\eta}$', r'$\eta$ (centreline)', r'$\eta$ (mid-pitch)')):
         ax.set_ylabel(yl)
         ax.text(0.02, 0.92, lab, transform=ax.transAxes, va='top', ha='left')
     axs[2].set_xlabel(r'$x/D$')
-    axs[1].legend(*axs[0].get_legend_handles_labels(), loc='lower left', frameon=False, ncol=2)
-    fig.tight_layout()
+    axs[1].legend(*axs[0].get_legend_handles_labels(), loc='lower left', frameon=False, ncol=2, fontsize=FS - 1,
+                  handlelength=1.5, columnspacing=0.8)
+    fig.tight_layout(pad=0.3)
     fig.savefig(OUT)
 
 

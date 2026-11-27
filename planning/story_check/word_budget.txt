@@ -1,0 +1,10 @@
+# words: current, budget (body budget = 6370 = current body 7642 x 15/18)
+Abstract              209    200     +9
+Introduction         1107    960   +147
+Aims                  128    130     -2
+Methods              1222   1020   +202
+Results lead-in       273    190    +83
+4.1 Coolant flow     1964   1720   +244
+4.2 Breakdown        1705   1400   +305
+4.3 A posteriori      865    700   +165
+Conclusions           378    250   +128

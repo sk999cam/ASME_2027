@@ -34,7 +34,7 @@ XS = [4, 10, 20]
 ETA_LEVELS = [0.1, 0.2, 0.3, 0.4]
 L_LOG = (0.01, 1.0)   # log colour limits of L_eff/D (193M 1st-99.5th percentile about 0.006-0.97)
 
-set_mpl_params(0.5, grid_on=False)
+set_mpl_params(10.0 / 22.0, grid_on=False)    # font 10 pt = body size; drawn at printed width (3.56 in), include scale 1
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
 
 DAT = {'RANS 50M': mc.load('rans'), '193M 3DNS': mc.load('ref')}
@@ -61,14 +61,18 @@ for q in ('k', 'L'):
     VMAX[q] = float(np.percentile(allv, 99.5))
 print('colour limits', VMAX)
 
-W, H = 7.9, 5.2
-pw, ph = 1.95, 0.98                      # axes size (in)
-x0, gx = 0.62, 0.22
-y0, gy, gm = 0.5, 0.12, 0.28
+W = 3.56
+x0, gx = 0.50, 0.06
+pw = (W - x0 - 0.08 - 2 * gx) / 3        # axes size (in), plane aspect 2:1
+ph = pw / 2
+y0, gy = 0.45, 0.06
+gm = 0.80                              # strip above each pair of rows for its horizontal colour bar
+H = y0 + 4 * ph + 3 * gy + 2 * gm + 0.02
 fig = plt.figure(figsize=(W, H))
 tags = 'abcdefghijkl'
 ims = {}
 ytop = [y0 + (3 - r) * (ph + gy) + (gm if r < 2 else 0) for r in range(4)]
+SHORT = {'RANS 50M': 'RANS', '193M 3DNS': '3DNS'}
 for r, (q, rung) in enumerate(rows):
     for c, x in enumerate(XS):
         p = f'x{x}'
@@ -84,25 +88,26 @@ for r, (q, rung) in enumerate(rows):
         e = mc.eta(d[f'{p}_T'].astype(float))
         ax.contour(Y, Z, np.ma.masked_invalid(e), levels=ETA_LEVELS, colors='white', linewidths=0.6)
         ax.set_aspect('equal')
-        ax.set_xlim(-3, 3)
+        ax.set_xlim(3, -3)               # y/D increases to the left: plane seen looking downstream
+        ax.set_xticks([2, 0, -2])
         ax.set_ylim(0, 3)
-        ax.set_yticks([0, 1, 2, 3])
-        ax.text(0.02, 0.94, f'({tags[r * 3 + c]}) $x/D={x}$', transform=ax.transAxes, color=('white' if q == 'k' else 'black'), va='top',
-                fontsize=9)
+        ax.set_yticks([0, 2])
+        ax.text(0.02, 0.94, f'({tags[r * 3 + c]}) $x/D={x}$', transform=ax.transAxes, color=('white' if q == 'k' else 'black'), va='top')
         if c == 0:
-            ax.set_ylabel(f'{rung}\n$z/D$', fontsize=9)
+            ax.set_ylabel(f'{SHORT[rung]}\n$z/D$', labelpad=1)
         else:
             ax.set_yticklabels([])
         if r == 3:
-            ax.set_xlabel(r'$y/D$')
+            ax.set_xlabel(r'$y/D$', labelpad=1)
         else:
             ax.set_xticklabels([])
         med = np.nanmedian(v)
         print(f'{q} {rung} x/D={x}: median {med:.4g}, p99 {np.nanpercentile(v, 99):.4g}, max {np.nanmax(v):.4g}')
-cx = (x0 + 3 * pw + 2 * gx + 0.15) / W
-for q, (ra, rb), lab in (('k', (0, 1), r'$k/U_\infty^2$'), ('L', (2, 3), r'$L_\mathrm{eff}/D$')):
-    cax = fig.add_axes([cx, ytop[rb] / H, 0.14 / W, (ytop[ra] + ph - ytop[rb]) / H])
-    cb = fig.colorbar(ims[q], cax=cax, extend=('both' if q == 'L' else 'max'))
-    cb.set_label(lab)
-fig.savefig(OUT, dpi=300)
+for q, ra, lab in (('k', 0, r'$k/U_\infty^2$'), ('L', 2, r'$L_\mathrm{eff}/D$')):
+    cax = fig.add_axes([x0 / W, (ytop[ra] + ph + 0.12) / H, (3 * pw + 2 * gx) / W, 0.1 / H])
+    cb = fig.colorbar(ims[q], cax=cax, orientation='horizontal', extend=('both' if q == 'L' else 'max'))
+    cax.xaxis.set_ticks_position('top')
+    cax.xaxis.set_label_position('top')
+    cb.set_label(lab, labelpad=5)
+fig.savefig(OUT, dpi=600)
 print('saved', OUT)

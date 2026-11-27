@@ -1,0 +1,161 @@
+Near-wall / far-wall split of the eddy-viscosity difference, RANS 50M SST against 193M reference (b010).
+Definitions
+  Point: mu_eff = -a:S*/(2|S*|^2) = rho k^1/2 L_eff cos(theta), L_al = L_eff cos(theta) (193M); RANS: mu_t = rho k^1/2 L_R, cos = 1.
+  Region value (route A): mu_R = sum V(-a:S*) / sum 2V|S*|^2, each side with its own |S*|. ln(mu_R,RANS/mu_R,193M) split exactly (Shapley, all orders)
+  over density, k^1/2, L_al, strain weights (4 players) and over density, k^1/2, L_eff, cos, strain weights (5 players). Terms in ln units, RANS/193M.
+  Route B: no weighting; volume-weighted quantiles (q25, median, q75) of each factor, ratio of medians RANS/193M.
+  Normalisation: rho_inf = 0.88918 kg/m3, U_inf = 86.2812 m/s, D = 7.75 mm; mu/(rho_inf U_inf D), k/U_inf^2, |S*| D/U_inf.
+  Sub-regions: near film x/D 3-10, far film x/D 10-20 (x/D <= 20 only); wall nodes excluded (k_193 = 0 or k_RANS <= 0, non-finite).
+  z_x(x): height where span-mean RANS mu_t = reference span-mean mu_eff; 0.62, 0.61, 0.72, 0.87, 0.94 D at x/D 3, 5, 10, 15, 20, linear interpolation per point.
+  Near wall (i): 0 < z < z_x. Near wall (ii): 0.3 D <= z < z_x. Far wall: z_x <= z <= 2 D. Whole region (check): z/D >= 0.3 (and <= 2 D).
+  Strain filter in route B: |S*_193M| D/U_inf > 0.05.
+
+====================================================================================================
+CHECK: unsplit regions (z/D >= 0.3), estimator_modeC_x20.log reference: near film -0.390, far film -0.855
+  near film  z>=0.3, no z cap: total -0.390  4-player rho +0.045 k -0.132 L_al -0.285 S -0.018   | with z<=2 cap: total -0.390
+  far film   z>=0.3, no z cap: total -0.855  4-player rho +0.019 k -0.220 L_al -0.423 S -0.232   | with z<=2 cap: total -0.855
+
+====================================================================================================
+A. Route A: regional least squares, exact Shapley split of ln(mu_R,RANS / mu_R,193M)
+sub-region                             total | 4-player    rho  k^1/2   L_al   S-wt | 5-player    rho  k^1/2  L_eff    cos   S-wt | L_eff+cos -L_al(4)    diff |    res4    res5 | mu_R,193 mu_R,RANS [Pa s]
+near film / near wall (i) 0<z<z_x     -0.686 |          +0.019 -0.515 -0.387 +0.197 |          +0.019 -0.532 -1.247 +0.879 +0.195 |    -0.368   -0.387  +0.019 |  +0e+00  -1e-16 | 3.179e-04 1.601e-04
+near film / near wall (ii) 0.3<=z<z_x  -0.594 |          +0.038 -0.300 -0.343 +0.010 |          +0.038 -0.314 -0.865 +0.529 +0.018 |    -0.336   -0.343  +0.007 |  -1e-16  +1e-15 | 1.744e-03 9.633e-04
+near film / far wall z_x<=z<=2        -0.147 |          +0.051 +0.013 -0.231 +0.019 |          +0.051 +0.012 -0.409 +0.177 +0.021 |    -0.232   -0.231  -0.001 |  +3e-17  -3e-17 | 6.242e-03 5.387e-03
+far film / near wall (i) 0<z<z_x      -0.773 |          -0.005 -0.713 -0.711 +0.656 |          -0.004 -0.726 -1.591 +0.921 +0.628 |    -0.670   -0.711  +0.041 |  -2e-16  -4e-15 | 2.988e-04 1.380e-04
+far film / near wall (ii) 0.3<=z<z_x  -1.352 |          +0.010 -0.439 -0.582 -0.341 |          +0.010 -0.443 -1.069 +0.478 -0.328 |    -0.591   -0.582  -0.010 |  +0e+00  +7e-16 | 3.537e-03 9.149e-04
+far film / far wall z_x<=z<=2         -0.021 |          +0.032 +0.086 -0.209 +0.070 |          +0.032 +0.086 -0.419 +0.208 +0.072 |    -0.210   -0.209  -0.001 |  -1e-17  +4e-16 | 6.704e-03 6.566e-03
+  res4/res5 = sum of terms minus total (exact additivity). diff = (L_eff + cos 5-player terms) minus 4-player L_al term (Shapley non-additivity).
+
+====================================================================================================
+B. Route B: plain point-wise, volume-weighted quantiles q25 / median / q75 (RANS | 193M) and ratio of medians
+--- near film / near wall (i) 0<z<z_x   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.002 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.008      1.017      1.227 |      1.011      1.064      1.188 |   0.956   -0.045
+    k         0.0007439   0.002443   0.007673 |   0.004415       0.01    0.01397 |   0.244   -1.410
+    Leff       0.003605    0.02151    0.05089 |    0.03983     0.0616    0.08546 |   0.349   -1.052
+    cos               1          1          1 |     0.1843     0.3749     0.6728 |   2.667   +0.981
+    Lal        0.003605    0.02151    0.05089 |   0.007491    0.02254    0.05682 |   0.954   -0.047
+    S            0.3405     0.5962      1.462 |     0.3522     0.6131      1.099 |   0.972   -0.028
+    mu        9.826e-05   0.001301   0.004481 |  0.0005337    0.00224   0.007076 |   0.581   -0.544
+    k^1/2 ratio of medians (sqrt of k ratio): 0.494
+--- near film / near wall (i) 0<z<z_x   filter: S>0.05   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.002 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.008      1.017      1.227 |      1.011      1.064      1.188 |   0.956   -0.045
+    k         0.0007439   0.002443   0.007673 |   0.004415       0.01    0.01397 |   0.244   -1.410
+    Leff       0.003605    0.02151    0.05089 |    0.03983     0.0616    0.08546 |   0.349   -1.052
+    cos               1          1          1 |     0.1843     0.3749     0.6728 |   2.667   +0.981
+    Lal        0.003605    0.02151    0.05089 |   0.007491    0.02254    0.05682 |   0.954   -0.047
+    S            0.3405     0.5962      1.462 |     0.3522     0.6131      1.099 |   0.972   -0.028
+    mu        9.826e-05   0.001301   0.004481 |  0.0005337    0.00224   0.007076 |   0.581   -0.544
+    k^1/2 ratio of medians (sqrt of k ratio): 0.494
+--- near film / near wall (ii) 0.3<=z<z_x   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.009      1.011       1.25 |      1.011      1.054      1.183 |   0.959   -0.041
+    k          0.002145   0.002725    0.01088 |   0.004312    0.00928     0.0149 |   0.294   -1.225
+    Leff        0.02079    0.04583    0.06074 |    0.05582    0.07792    0.09607 |   0.588   -0.531
+    cos               1          1          1 |     0.3064       0.56     0.7852 |   1.786   +0.580
+    Lal         0.02079    0.04583    0.06074 |    0.01702    0.04538    0.07273 |   1.010   +0.010
+    S            0.2727     0.3814     0.5766 |     0.2952     0.3794     0.6227 |   1.005   +0.005
+    mu        0.0009726   0.003088   0.007145 |   0.001072   0.004373    0.01035 |   0.706   -0.348
+    k^1/2 ratio of medians (sqrt of k ratio): 0.542
+--- near film / near wall (ii) 0.3<=z<z_x   filter: S>0.05   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.009      1.011       1.25 |      1.011      1.054      1.183 |   0.959   -0.041
+    k          0.002145   0.002725    0.01088 |   0.004312    0.00928     0.0149 |   0.294   -1.225
+    Leff        0.02079    0.04583    0.06074 |    0.05582    0.07792    0.09607 |   0.588   -0.531
+    cos               1          1          1 |     0.3064       0.56     0.7852 |   1.786   +0.580
+    Lal         0.02079    0.04583    0.06074 |    0.01702    0.04538    0.07273 |   1.010   +0.010
+    S            0.2727     0.3814     0.5766 |     0.2952     0.3794     0.6227 |   1.005   +0.005
+    mu        0.0009726   0.003088   0.007145 |   0.001072   0.004373    0.01035 |   0.706   -0.348
+    k^1/2 ratio of medians (sqrt of k ratio): 0.542
+--- near film / far wall z_x<=z<=2   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.317 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.011      1.012      1.017 |      1.012      1.012      1.029 |   1.000   -0.000
+    k          0.003955   0.004306   0.004587 |   0.001151   0.001368   0.002713 |   3.148   +1.147
+    Leff         0.1097     0.1877     0.2128 |     0.1128     0.1577     0.2288 |   1.190   +0.174
+    cos               1          1          1 |    -0.1317     0.3433     0.7772 |   2.913   +1.069
+    Lal          0.1097     0.1877     0.2128 |   -0.02362    0.05235    0.09606 |   3.586   +1.277
+    S           0.01083    0.02348    0.07147 |    0.02046    0.03229    0.08871 |   0.727   -0.319
+    mu         0.008956    0.01206    0.01406 | -0.0008353   0.001941   0.007033 |   6.214   +1.827
+    k^1/2 ratio of medians (sqrt of k ratio): 1.774
+--- near film / far wall z_x<=z<=2   filter: S>0.05   kept volume fraction 0.343   volume fraction mu_eff,193M <= 0: 0.041 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.012      1.039      1.153 |      1.025       1.06      1.129 |   0.980   -0.020
+    k          0.004021   0.006261    0.01337 |   0.002453   0.005235    0.01216 |   1.196   +0.179
+    Leff        0.06544    0.08431     0.1128 |    0.08922     0.1095     0.1321 |   0.770   -0.262
+    cos               1          1          1 |     0.6521      0.821     0.8804 |   1.218   +0.197
+    Lal         0.06544    0.08431     0.1128 |    0.06792    0.08778     0.1055 |   0.960   -0.040
+    S           0.06796     0.1668     0.3925 |    0.08368     0.1658     0.3102 |   1.006   +0.006
+    mu         0.006691   0.008342   0.009669 |   0.004427   0.008587     0.0107 |   0.971   -0.029
+    k^1/2 ratio of medians (sqrt of k ratio): 1.094
+--- far film / near wall (i) 0<z<z_x   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho            1.01      1.023      1.136 |      1.021      1.062      1.125 |   0.963   -0.038
+    k          0.001819   0.003025   0.005916 |   0.007848    0.01022    0.01184 |   0.296   -1.217
+    Leff       0.006652    0.04307    0.08152 |    0.07315     0.1016      0.127 |   0.424   -0.859
+    cos               1          1          1 |     0.3486     0.5707     0.7169 |   1.752   +0.561
+    Lal        0.006652    0.04307    0.08152 |    0.02537    0.05905    0.08824 |   0.729   -0.316
+    S            0.1879     0.2954      1.388 |     0.2153      0.334     0.6485 |   0.884   -0.123
+    mu        0.0002955   0.002812   0.006685 |   0.002689    0.00567   0.008952 |   0.496   -0.701
+    k^1/2 ratio of medians (sqrt of k ratio): 0.544
+--- far film / near wall (i) 0<z<z_x   filter: S>0.05   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho            1.01      1.023      1.136 |      1.021      1.062      1.125 |   0.963   -0.038
+    k          0.001819   0.003025   0.005916 |   0.007848    0.01022    0.01184 |   0.296   -1.217
+    Leff       0.006652    0.04307    0.08152 |    0.07315     0.1016      0.127 |   0.424   -0.859
+    cos               1          1          1 |     0.3486     0.5707     0.7169 |   1.752   +0.561
+    Lal        0.006652    0.04307    0.08152 |    0.02537    0.05905    0.08824 |   0.729   -0.316
+    S            0.1879     0.2954      1.388 |     0.2153      0.334     0.6485 |   0.884   -0.123
+    mu        0.0002955   0.002812   0.006685 |   0.002689    0.00567   0.008952 |   0.496   -0.701
+    k^1/2 ratio of medians (sqrt of k ratio): 0.544
+--- far film / near wall (ii) 0.3<=z<z_x   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.011      1.025      1.149 |       1.02      1.056      1.122 |   0.971   -0.030
+    k          0.002735   0.003462   0.007499 |   0.007299   0.009628    0.01122 |   0.360   -1.023
+    Leff         0.0409    0.07162    0.09072 |    0.09982     0.1166     0.1426 |   0.614   -0.488
+    cos               1          1          1 |     0.5639     0.6636     0.7745 |   1.507   +0.410
+    Lal          0.0409    0.07162    0.09072 |    0.05813    0.07612     0.1092 |   0.941   -0.061
+    S            0.1383     0.2172     0.3053 |     0.1876      0.243       0.34 |   0.894   -0.112
+    mu         0.002422   0.005357   0.008018 |   0.005451   0.007119    0.01269 |   0.752   -0.284
+    k^1/2 ratio of medians (sqrt of k ratio): 0.600
+--- far film / near wall (ii) 0.3<=z<z_x   filter: S>0.05   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.000 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.011      1.025      1.149 |       1.02      1.056      1.122 |   0.971   -0.030
+    k          0.002735   0.003462   0.007499 |   0.007299   0.009628    0.01122 |   0.360   -1.023
+    Leff         0.0409    0.07162    0.09072 |    0.09982     0.1166     0.1426 |   0.614   -0.488
+    cos               1          1          1 |     0.5639     0.6636     0.7745 |   1.507   +0.410
+    Lal          0.0409    0.07162    0.09072 |    0.05813    0.07612     0.1092 |   0.941   -0.061
+    S            0.1383     0.2172     0.3053 |     0.1876      0.243       0.34 |   0.894   -0.112
+    mu         0.002422   0.005357   0.008018 |   0.005451   0.007119    0.01269 |   0.752   -0.284
+    k^1/2 ratio of medians (sqrt of k ratio): 0.600
+--- far film / far wall z_x<=z<=2   filter: all   kept volume fraction 1.000   volume fraction mu_eff,193M <= 0: 0.229 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.012      1.016      1.053 |      1.013       1.02      1.055 |   0.996   -0.004
+    k          0.004122   0.004381    0.00689 |  0.0009949   0.001741   0.004895 |   2.516   +0.923
+    Leff         0.1143     0.1621     0.2013 |     0.1346     0.1621     0.2027 |   1.000   -0.000
+    cos               1          1          1 |    0.05356     0.6741     0.8191 |   1.484   +0.394
+    Lal          0.1143     0.1621     0.2013 |   0.009741    0.09427     0.1275 |   1.719   +0.542
+    S           0.01097    0.03007     0.1417 |     0.0192     0.0412     0.1357 |   0.730   -0.315
+    mu          0.01031    0.01176    0.01336 |  0.0003115     0.0044   0.009586 |   2.673   +0.983
+    k^1/2 ratio of medians (sqrt of k ratio): 1.586
+--- far film / far wall z_x<=z<=2   filter: S>0.05   kept volume fraction 0.467   volume fraction mu_eff,193M <= 0: 0.001 (of kept) 
+    factor     RANS q25        med        q75 |   193M q25        med        q75 |   ratio ln ratio
+    rho           1.029      1.059       1.12 |      1.036      1.059      1.095 |   1.000   +0.000
+    k          0.005005   0.007317    0.01082 |   0.003082   0.005349    0.00936 |   1.368   +0.313
+    Leff        0.09715     0.1121     0.1333 |     0.1252      0.145     0.1646 |   0.773   -0.258
+    cos               1          1          1 |     0.7743     0.8171     0.8547 |   1.224   +0.202
+    Lal         0.09715     0.1121     0.1333 |     0.1012     0.1191     0.1358 |   0.941   -0.061
+    S           0.06895     0.1557     0.2248 |    0.09239     0.1418     0.1857 |   1.098   +0.093
+    mu         0.009402    0.01037    0.01139 |   0.006855   0.009682    0.01294 |   1.071   +0.068
+    k^1/2 ratio of medians (sqrt of k ratio): 1.170
+
+====================================================================================================
+C. Volume and strain-weight share of each sub-region within its (z/D >= 0.3 -free) region (region = wall nodes excluded, z <= 2 D); mean z_x
+  near film  near wall (i) 0<z<z_x        volume share 0.317  strain-weight share 193M 0.979  RANS 0.976   mean z_x 0.646 D
+  near film  near wall (ii) 0.3<=z<z_x    volume share 0.177  strain-weight share 193M 0.074  RANS 0.094   mean z_x 0.648 D
+  near film  far wall z_x<=z<=2           volume share 0.683  strain-weight share 193M 0.021  RANS 0.024   mean z_x 0.644 D
+  near film  mean z_x over region 0.645 D
+  far film   near wall (i) 0<z<z_x        volume share 0.411  strain-weight share 193M 0.991  RANS 0.985   mean z_x 0.824 D
+  far film   near wall (ii) 0.3<=z<z_x    volume share 0.271  strain-weight share 193M 0.036  RANS 0.082   mean z_x 0.829 D
+  far film   far wall z_x<=z<=2           volume share 0.589  strain-weight share 193M 0.009  RANS 0.015   mean z_x 0.814 D
+  far film   mean z_x over region 0.821 D

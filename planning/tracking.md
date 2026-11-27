@@ -79,6 +79,23 @@
   (b010 only; 3,141,253 points; 10 delete-one time-batch fields). Far film to be cut at x/D 20. In use for the
   time-batch SE of the μ_t split (`planning/maths_audit/estimator/estimator_timejk.py`) and the dissipation-length
   check.
+- **Volume Pr_t for the paper (fc, 27 Nov, FINDINGS C26, db323bc), b010, x/D ≤ 20, jackknife SE over 10 records:**
+  jet 0.300 (0.004), near film 0.225 (0.005), far film 10–20 0.454 (0.013). The 10–25 value 0.471 is not for the
+  paper. Abstract updated to "0.23–0.45 in the film". Files `n8_lsq/prt_classic_c193b_b010_jk.npz`,
+  `n8_lsq/n8_lsq_c193b_b010_jk.npz` (per-batch span sums, band for the span figure).
+- **N7 wall-layer balance on the 193M b010 (fc, 27 Nov, FINDINGS WL4–WL6):** `asme2027_figs/wall_balance/`.
+  Residual test passed at h/D 0.5 (max 4.95 %, median 1.2 %; 50M had 13 of 41 stations above 5 %). Fluxes through
+  z = 0.5 D, g/s/m (SE): mean upwash / turbulent at x/D 2: 121.2 (1.4) / 37.2 (0.7); 5: 11.85 (0.27) / 11.99
+  (0.50); 10: 1.80 (0.32) / 3.84 (0.35); 20: 0.14 (0.17) / 3.22 (0.20). RANS/193M mean upwash 1.40, 1.90, 6.9 (1.3)
+  at x/D 2, 5, 10; RANS turbulent flux 0.38, 0.25 of the 193M at x/D 2, 5 and negative from x/D ≈ 7. Result
+  depends on h (at h/D 1.0 the RANS turbulent flux is 0.67–0.98 of the 193M). Owner to decide the use.
+- **Time-batch SE of the μ_t split (from the ε point file):** totals −0.328 (0.025), −0.390 (0.023), −0.855 (0.026);
+  `figures/code/data/meffR_se_time.txt`; `fig_meff_split.pdf` redrawn. Dissipation-length check: L_al/L_ε 0.042,
+  0.060, 0.069 (medians); volume-median RANS length / 193M L_eff 2.1, 1.15, 0.82 against 0.45–0.57 under the
+  strain weighting (owner to decide the abstract wording "about half").
+- **N5 final, N3/N4 (b0, S20):** `flow_features_c193b/` cross-planes, volume (now with omx and U), walls; F4 and F8
+  first versions drawn (`fig_overview_3d.png`, `fig_flow_features.png`), under owner review.
+- **F18 candidate:** `fig_budget_maps.png` (six panels, log10 P_k/ε), under owner review.
 - **STAR x/D 20 window:** all tables and `fig_eta_x.py` use x/D 19.5–20.0 (193M centreline 0.387, mid-pitch 0.024–0.025;
   RANS 0.497 / 0.006).
 - **η map (`fig_eta_wall.png`):** x/D −2 to 20; smooth hole outline with border and label.

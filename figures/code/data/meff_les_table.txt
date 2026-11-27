@@ -1,0 +1,23 @@
+# 20M LES against the 193M reference (b010): eddy-viscosity ratio in the near-wall layer (below z_x) and above z_x, x/D 4-20
+# ratio = sum(w mu_X) / sum(w mu_193), mu = cy_mu_mean (conditional, Delta-y-weighted span means, 193M |S*| D/U_inf > 0.05 mask point by point),
+# span_<case>.npz of meff_span rebinned to 0.1 D in x, on the 193M z levels; w = dx dz f, f = 193M valid fraction, f >= 0.2; z/D <= 2, wall row excluded;
+# slabs of 1 D in x (|x - centre| < 0.5 D); layer means over x/D 4-20 (one slab 16 D wide). z_x = data/near_wall_boundary_zx.txt.
+# LES mu_eff = resolved-stress effective viscosity + mean WALE stress. "RANS span" = RANS 50M by the same route as the LES (comparison).
+# "RANS point file" = RANS 50M by the paper route (_meff_split_nearfar: point-wise 3D mask, mesh-volume weights, 193M interpolated to the RANS points).
+
+BELOW z_x (near-wall layer): ln ratio / ratio
+        x/D          20M LES        RANS span  RANS point file    paper  RANS span - paper
+        5.0   -0.012 / 0.988   -0.410 / 0.664   -0.415 / 0.661   -0.415             +0.005
+       10.0   +0.077 / 1.080   -0.536 / 0.585   -0.548 / 0.578   -0.548             +0.012
+       19.5   +0.078 / 1.081   -0.562 / 0.570   -0.589 / 0.555   -0.589             +0.027
+  mean 4-20   +0.065 / 1.067   -0.537 / 0.584   -0.542 / 0.582
+
+ABOVE z_x (to the strain-mask edge, z/D <= 2): ln ratio / ratio
+        x/D          20M LES        RANS span  RANS point file  paper (RANS)
+        5.0   +0.077 / 1.080   +0.055 / 1.057   +0.072 / 1.074     1.00-1.12
+       10.0   +0.085 / 1.089   +0.003 / 1.003   +0.011 / 1.011     1.00-1.12
+       19.5   +0.209 / 1.233   +0.100 / 1.106   +0.103 / 1.109     1.00-1.12
+  mean 4-20   +0.134 / 1.143   +0.049 / 1.050   +0.054 / 1.056
+
+Range of the ratio over the slabs x/D 4.5-19.5 above z_x: 20M LES 1.051-1.249; RANS (same route) 1.001-1.111
+Range below z_x: 20M LES 0.977-1.091; RANS (same route) 0.565-0.683

@@ -35,10 +35,12 @@ RUNGS = [('c193b', '193M 3DNS', '#000000', '-'), ('c100b', '100M 3DNS', '#0072B2
          ('c50b', '50M 3DNS', '#D55E00', ':'), ('c20bw', '20M LES', '#E69F00', '-.'),
          ('rans50m', 'RANS 50M', '#009E73', '-'), ('rans5m', 'RANS 5M', '#CC79A7', '--')]
 
-set_mpl_params(0.5, grid_on=True)
+# Drawn at the printed size (0.92 column = 3.28 in, include scale 1); body text 10 pt -> sf = 10/22.
+set_mpl_params(10 / 22, grid_on=True)
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
+FS = plt.rcParams['font.size']
 
-fig, axs = plt.subplots(2, 1, figsize=(5.0, 5.2), sharex=True)
+fig, axs = plt.subplots(2, 1, figsize=(3.28, 4.9), sharex=True)
 for k, lab, c, ls in RUNGS:
     d = np.genfromtxt(SEC193 if k == 'c193b' else f'{RES}/sections_{k}.txt', delimiter=',', names=True)
     m = (d['s'] > -6.0) & (d['s'] < 0.0)
@@ -56,7 +58,7 @@ axs[1].set_ylabel('reversed-flow area fraction')
 axs[1].set_xlabel(r'$s/D$')
 axs[0].text(0.03, 0.06, '(a)', transform=axs[0].transAxes)
 axs[1].text(0.97, 0.88, '(b)', transform=axs[1].transAxes, ha='right')
-axs[1].legend(*axs[0].get_legend_handles_labels(), loc='upper left', bbox_to_anchor=(0.0, 0.92))
-fig.tight_layout()
-fig.savefig(OUT, bbox_inches='tight')
+axs[1].legend(*axs[0].get_legend_handles_labels(), loc='upper left', bbox_to_anchor=(0.0, 0.92), fontsize=FS, handlelength=1.6)
+fig.tight_layout(pad=0.3)
+fig.savefig(OUT)
 print('wrote', OUT)

@@ -1,0 +1,218 @@
+# F14 (fig_meff_maps): factor maps and exact factor split, RANS 50M SST against 193M (b010)
+BOUNDARY = strain005, WEIGHTING = mask
+Source of the span means of mu (map d): meff_span: span_RANS50.npz (RANS 50M mu_t) and span_C193b.npz (193M b010 mu_eff); plain mean over all grid points of the full pitch, wall nodes included (mu = 0 at the wall row); the two files (different bins) interpolated linearly onto one grid, x/D step 0.04, z/D step 0.01; z/D 0-3 available (maps drawn to z/D 2)
+Source of the span means of the factors (maps a-c): point file (pts.npz), interpolated as span_compute.py, plain mean over the points of the span line, complete span only (>= 119 of 121 points, x/D >= 2.8); cached span_factors.npz (_meff_factor_span.py).
+  Arrays to request from the other session (per rung, same bins as the mu files, plain span mean over all grid points of the pitch, wall nodes included, same N / N_nonfinite): rho, k^(1/2) (mean of the point-wise square root of k), L_eff (193M: k^(1/2)|b|/|S*|; RANS: mu_t/(rho k^(1/2))), cos(theta) (193M; RANS = 1), L_al = L_eff cos(theta) (193M), and k itself.
+  Lengths: 193M L_eff = L of the point file, mu_eff = rho k^(1/2) L_eff cos(theta); RANS L_R = mu_t/(rho_R k_R^(1/2)).
+Colour scale of the ratio maps: log10 ratio -1 to +1 (0.1 to 10); (c) is drawn as 1/cos(theta) (RANS cos = 1) so that the ratios multiply.
+
+z_x(x): lowest height where span-mean RANS mu_t reaches the 193M span-mean mu_eff (RANS lower below, higher above), z/D > 0, running median over +-0.25 x/D.
+  x/D            3.0     5.0    10.0    15.0    20.0
+  z_x/D, all cells (old)         0.707   0.540   0.663   0.803   0.889
+  z_x/D, defined cells (new)     0.707   0.540   0.663   0.803   0.889
+  table used by the strain-weighted split before: 0.62 0.61 0.72 0.87 0.94
+  max difference 0.087 D; strain-weighted split recomputed with the new z_x: yes.
+z_s(x): lowest height above the wall where the 193M span-mean |S*| D/U_inf falls below 0.05, running median over +-0.25 x/D.
+  z_s/D          1.205   1.184   1.507   1.627   1.667
+
+MASK = 3d, FMIN = 0.2, LAYOUT = row
+Method (MASK = 3d): the strain mask acts point by point in 3D before the span average. All fields are interpolated onto the regular (x, y, z) grid
+  (linear in (x, y) on the common z levels, linear in z, as span_compute.py); the mask is computed on that grid from the INTERPOLATED point-wise
+  193M |S*| D/U_inf, valid = interpolated strain > 0.05 (a threshold on the interpolated strain, no 0/1 flag is interpolated); same mask for both rungs.
+  At each (x, z) the conditional span mean is the mean over the valid points of the span line (finite for the field); f = valid / finite-strain points.
+  A cell is drawn where f >= 0.2 (complete span, >= 119 of 121 points); grey otherwise ("no mean strain") and where a mean is <= 0.
+Sensitivity to f_min (plotted area x/D 3-20, z/D 0-2, wall row excluded; upper edge = lowest z where f < f_min; nan = f stays >= f_min up to z/D 2):
+   f_min  grey area  edge x/D 5     10     15     20
+    0.02       4.6%   1.74   1.94    nan    nan
+    0.10       8.3%   1.56   1.78    nan    nan
+    0.20      11.8%   1.47   1.71   1.90    nan
+    0.25      15.2%   1.44   1.65   1.82    nan
+    0.30      20.1%   1.29   1.57   1.73   1.90
+    0.40      32.6%   1.11   1.27   1.47   1.69
+    0.42      34.8%   1.07   1.21   1.41   1.63
+    0.45      38.3%   1.01   1.15   1.32   1.55
+    0.50      44.3%   0.95   1.05   1.21   1.38
+  The f = 0.5 line (half the span strained) is drawn dashed on map (d); its height at x/D 5, 10, 15, 20: 0.95, 1.05, 1.21, 1.38
+Conditional against unconditional ratio maps (point-file span means) over the cells below the old z_s (span-mean strain boundary) with f >= FMIN:
+  mu     |ln(new/old)| median 0.000, 90th percentile 1.022 (47949 cells)
+  k^1/2  |ln(new/old)| median 0.000, 90th percentile 0.219 (47949 cells)
+  L      |ln(new/old)| median 0.000, 90th percentile 0.141 (47949 cells)
+  1/cos  |ln(new/old)| median 0.000, 90th percentile 0.891 (47949 cells)
+Height of the ratio = 1 line (lowest upward crossing, running median +-0.25 in x/D) at x/D 5, 10, 15, 20:
+  mu     new 0.611 0.723 0.869 0.942   old 0.611 0.723 0.869 0.942
+  k^1/2  new 0.593 0.732 0.864 0.994   old 0.593 0.732 0.864 0.994
+Bars (point-wise 3D mask on the 50M-grid points) against the maps (interpolated grid): same definition (|S*| D/U_inf > 0.05, 193M, both rungs).
+  Counts differ because the sets are different samplings (points of the mesh against grid points of the span lines); volume means:
+  near film: grid valid span points 1651934 of 2904000 (56.9 %); bars kept points 741132 (volume fraction 55.2 %)
+    mean mu_t/(rho_inf U_inf D): f-weighted conditional span means 0.00509, direct masked mean 0.00509, bars (volume mean) 0.00512
+    mean mu_eff/(rho_inf U_inf D): f-weighted 0.00588, direct 0.00588, bars 0.00575
+  far film: grid valid span points 3386176 of 4840000 (70.0 %); bars kept points 266718 (volume fraction 68.6 %)
+    mean mu_t/(rho_inf U_inf D): f-weighted conditional span means 0.00639, direct masked mean 0.00639, bars (volume mean) 0.00643
+    mean mu_eff/(rho_inf U_inf D): f-weighted 0.00786, direct 0.00786, bars 0.00790
+  f-weighted and direct masked means agree to rounding (same grid); the bars use mesh volumes as weights, hence the small difference.
+Product check: ln(rho x k^(1/2) x L x 1/cos ratios of the span means / ratio of the span-mean mu), point-file span means, x/D 3-20, 0 < z < z_s, cells with all ratios > 0 (56623 cells): median +0.013, median |.| 0.082, 90th percentile of |.| 0.408.
+
+Band where the span-mean mu ratio RANS/193M lies in 0.9-1.1 (cells below z_s; mean of the ratios over the band cells in the column):
+    x/D      z range  cells   k^1/2       L   1/cos     rho      mu
+      5  0.57-1.41       43    1.07    0.77    1.35   1.015    0.98
+     10  0.67-1.70       55    1.11    0.79    1.28   1.010    1.02
+     15  0.80-1.51       59    1.11    0.74    1.25   1.018    0.98
+     20  0.87-1.53       46    1.08    0.79    1.26   1.014    1.03
+
+Factor ratios through the height (span means, RANS/193M, nearest cell; product = rho x k^1/2 x L x 1/cos):
+  x/D 5:    z/D   k^1/2       L   1/cos     rho  product      mu  cos193
+           0.2    0.49    0.29    2.61   1.006     0.37    0.49    0.38
+           0.4    0.72    0.41    2.06   1.021     0.63    0.60    0.48
+           0.6    1.01    0.80    1.68   1.025     1.39    0.98    0.60
+           0.8    1.06    0.82    1.62   1.025     1.45    1.14    0.62
+           1.0    1.06    0.75    1.19   1.011     0.96    0.93    0.84
+           1.2    1.16    0.66    1.12   0.991     0.86    0.86    0.89
+  x/D 10:    z/D   k^1/2       L   1/cos     rho  product      mu  cos193
+           0.2    0.38    0.20    2.93   0.991     0.21    0.34    0.34
+           0.4    0.60    0.35    1.87   1.007     0.40    0.45    0.53
+           0.6    0.82    0.67    1.64   1.017     0.92    0.78    0.61
+           0.8    1.08    0.95    1.47   1.021     1.54    1.13    0.68
+           1.0    1.07    0.71    1.28   1.030     1.00    0.91    0.78
+           1.2    1.08    0.62    1.23   1.019     0.84    0.82    0.81
+  x/D 15:    z/D   k^1/2       L   1/cos     rho  product      mu  cos193
+           0.2    0.38    0.16    2.60   0.987     0.16    0.26    0.38
+           0.4    0.61    0.33    1.64   1.001     0.33    0.38    0.61
+           0.6    0.72    0.57    1.50   1.010     0.62    0.61    0.67
+           0.8    0.92    0.82    1.39   1.014     1.06    0.91    0.72
+           1.0    1.15    0.93    1.32   1.015     1.43    1.18    0.76
+           1.2    1.12    0.69    1.23   1.023     0.98    0.94    0.81
+  x/D 20:    z/D   k^1/2       L   1/cos     rho  product      mu  cos193
+           0.2    0.42    0.14    2.61   0.987     0.16    0.22    0.38
+           0.4    0.63    0.32    1.51   0.999     0.30    0.34    0.66
+           0.6    0.71    0.54    1.36   1.007     0.53    0.54    0.74
+           0.8    0.83    0.76    1.34   1.010     0.85    0.80    0.74
+           1.0    1.00    0.88    1.30   1.011     1.16    1.05    0.77
+           1.2    1.19    0.86    1.21   1.011     1.25    1.17    0.83
+
+====================================================================================================
+BARS, strain as a mask only (WEIGHTING = mask): cells with the point-wise 193M |S*| D/U_inf > 0.05 kept, plain volume weights, wall nodes excluded,
+z <= 2 D, x/D 3-10 near film, 10-20 far film. Primary: total = ln(sum V mu_t,RANS / sum V mu_eff,193M), exact Shapley split into rho, k^1/2, L_eff, cos
+(RANS: L_R = mu_t/(rho k^1/2), cos = 1). Residual = sum of terms minus total. Kept = volume fraction of the (wall-node-free) region or band kept by the mask;
+mean top = mean over x/D bins of 0.25 of the largest z of the kept points; fneg = volume share of the kept cells with mu_eff,193M <= 0.
+  region / band            total     rho   k^1/2   L_eff     cos  residual   kept  mean top   fneg    cells
+  near film / all         -0.115  +0.027  -0.030  -0.455  +0.343  +9.2e-16  0.552      1.75  0.018   741132
+  near film / z<0.6       -0.525  +0.037  -0.279  -0.743  +0.460  +2.2e-16  1.000      0.57  0.002   559910
+  near film / z>=0.6      +0.058  +0.023  +0.082  -0.326  +0.279  -1.7e-15  0.374      1.75  0.036   181222
+  far film / all          -0.206  +0.017  -0.040  -0.478  +0.294  +5.6e-16  0.686      1.99  0.001   266718
+  far film / z<0.6        -0.916  +0.012  -0.403  -1.014  +0.489  +8.9e-16  1.000      0.57  0.000   179608
+  far film / z>=0.6       -0.026  +0.019  +0.057  -0.337  +0.234  +2.4e-15  0.562      1.99  0.001    87110
+  whole film / all        -0.179  +0.020  -0.037  -0.471  +0.309  +1.4e-15  0.631      1.88  0.007  1007850
+  whole film / z<0.6      -0.763  +0.022  -0.354  -0.908  +0.477  +6.7e-16  1.000      0.57  0.001   739518
+  whole film / z>=0.6     -0.003  +0.020  +0.064  -0.334  +0.246  -1.8e-15  0.485      1.88  0.012   268332
+  (z/D < 0.6 and z/D >= 0.6 are sub-bands of the kept cells; their kept fraction refers to the volume of the band.)
+Secondary: volume mean of the point-wise ln ratios over the kept cells with mu_eff,193M > 0 (exactly additive term by term; excluded = fneg above),
+and ratios RANS/193M of the volume-weighted medians per factor (cos: 1/median cos):
+  region / band          ln mean: rho   k^1/2       L   1/cos     sum | median ratios: rho   k^1/2       L   1/cos      mu
+  near film / all               0.007  -0.349  -0.963   0.820  -0.485 |              0.968   0.735   0.694   1.646   1.098
+  near film / z<0.6             0.003  -0.785  -1.630   1.220  -1.193 |              0.955   0.469   0.260   2.993   0.435
+  near film / z>=0.6            0.012   0.127  -0.234   0.384   0.288 |              0.979   1.073   0.739   1.230   0.971
+  far film / all                0.004  -0.355  -0.934   0.579  -0.706 |              0.985   0.727   0.691   1.388   1.071
+  far film / z<0.6             -0.008  -0.925  -1.901   1.012  -1.822 |              0.956   0.490   0.187   2.157   0.207
+  far film / z>=0.6             0.012   0.047  -0.253   0.274   0.079 |              0.996   1.028   0.747   1.249   1.072
+  whole film / all              0.005  -0.353  -0.945   0.665  -0.628 |              0.980   0.721   0.657   1.439   1.000
+  whole film / z<0.6           -0.004  -0.867  -1.789   1.098  -1.563 |              0.956   0.479   0.215   2.392   0.256
+  whole film / z>=0.6           0.012   0.072  -0.247   0.308   0.144 |              0.992   1.035   0.765   1.244   1.053
+
+====================================================================================================
+Previous definition for the record (strain-squared weighted regional least squares, five players, layers by BOUNDARY):
+z_x(x): lowest height where span-mean RANS mu_t reaches the 193M span-mean mu_eff.
+Band ratios: ratio of band means (bin-area weighted mean of the RANS span mean / mean of the 193M span mean over the cells of the band; wall row excluded), x/D 3-10 near film, 10-20 far film; defined cells only (span-mean |S*| D/U_inf >= 0.05); "all cells" = no strain exclusion.
+  band                          mean RANS  mean 193M   ratio  all cells  cells
+  near film / near wall           0.00556    0.00329    1.69       1.70  22453
+  near film / near wall lower     0.00190    0.00309    0.61       0.61  10103
+  near film / near wall upper     0.00855    0.00345    2.48       2.49  12350
+  near film / far wall            0.01143    0.00258    4.44      22.29     48
+  far film / near wall            0.00711    0.00580    1.23       1.23  40100
+  far film / near wall lower      0.00334    0.00597    0.56       0.56  19919
+  far film / near wall upper      0.01082    0.00563    1.92       1.92  20181
+  far film / far wall             0.01218    0.00254    4.79       6.05      6
+
+Grey area of the maps (cells with span-mean |S*| D/U_inf < 0.05; owner exception to the no-masking rule, as for the Pr_t map); fraction of the plotted area of each layer (z <= 2 D, wall row excluded):
+  sub-region                    low strain   + mean<=0  alt. definition  criterion & alt.
+  near film / near wall               0.2%        0.2%            31.6%              0.2%
+  near film / near wall lower         0.0%        0.0%             0.0%              0.0%
+  near film / near wall upper         0.4%        0.4%            57.4%              0.4%
+  near film / far wall               99.6%       99.6%           100.0%             99.6%
+  far film / near wall                0.0%        0.0%            30.6%              0.0%
+  far film / near wall lower          0.0%        0.0%             0.0%              0.0%
+  far film / near wall upper          0.0%        0.0%            60.9%              0.0%
+  far film / far wall                99.9%       99.9%           100.0%             99.9%
+  alt. definition: fraction of span points with |S*| D/U_inf > 0.05 below one half (interpolated indicator).
+  x/D 3-20 plotted area: criterion 25.3 %, alternative 48.6 %, symmetric difference 23.3 %.
+
+Exact split (strain-squared weighted, Shapley over five factors), terms in ln(RANS/193M), wall nodes excluded, z <= 2 D:
+  sub-region                     total     rho   k^1/2   L_eff     cos    S-wt    resid
+  near film / near wall         -0.455  +0.030  -0.359  -0.974  +0.665  +0.183   -1e-15
+  near film / near wall lower   -0.744  +0.015  -0.571  -1.318  +0.928  +0.202   +2e-16
+  near film / near wall upper   -0.098  +0.055  -0.006  -0.413  +0.182  +0.084   -3e-17
+  near film / far wall          +0.250  -0.005  +0.200  -0.327  +0.291  +0.091   -5e-16
+  far film / near wall          -0.452  +0.005  -0.537  -1.319  +0.767  +0.633   +8e-16
+  far film / near wall lower    -0.796  -0.006  -0.746  -1.628  +0.940  +0.643   +2e-15
+  far film / near wall upper    -0.006  +0.035  +0.063  -0.428  +0.213  +0.111   +3e-16
+  far film / far wall           +0.195  +0.003  +0.222  -0.252  +0.194  +0.027   -3e-17
+
+Plain volume means (no weighting, no filter, same cells as the strain-weighted split), shares and zero-or-negative fraction:
+  sub-region                    ln plain   ratio  vol share  strain-wt share  vol frac mu_eff<=0    cells
+  near film / near wall           +0.255    1.29      0.627            0.999               0.104   823481
+  near film / near wall lower     -0.524    0.59      0.283            0.974               0.002   557071
+  near film / near wall upper     +0.566    1.76      0.344            0.025               0.188   266410
+  near film / far wall            +2.306   10.03      0.373            0.001               0.407   188664
+  far film / near wall            +0.106    1.11      0.787            0.999               0.080   292805
+  far film / near wall lower      -0.631    0.53      0.386            0.989               0.000   207083
+  far film / near wall upper      +0.511    1.67      0.401            0.010               0.157    85722
+  far film / far wall             +1.519    4.57      0.213            0.001               0.337    31871
+
+Ratio of volume-weighted medians of mu (RANS mu_t / 193M mu_eff, point-wise values); kept = volume fraction kept by the filter |S*|D/U > 0.05:
+  sub-region                    unfiltered  |S*|D/U>0.05   kept
+  near film / near wall              2.107         1.052  0.803
+  near film / near wall lower        0.425         0.425  1.000
+  near film / near wall upper        2.064         0.916  0.641
+  near film / far wall              16.228         1.118  0.130
+  far film / near wall               1.515         1.029  0.812
+  far film / near wall lower         0.420         0.420  1.000
+  far film / near wall upper         1.837         1.023  0.631
+  far film / far wall                8.046         1.172  0.221
+
+====================================================================================================
+NEAR-WALL LAYER (owner decision): z_x(x) = height where, going up from the wall, the ratio of the conditional span-mean eddy viscosity
+RANS/193M first reaches 1 (3D strain mask, valid fraction f >= 0.2); source: point file (pts.npz), conditional span means from _meff_factor_cond.py (meff_span conditional arrays not yet present); running median over +-0.1 D to remove cell-scale steps.
+  z_x/D at x/D      3      4      5      7     10     15     20
+    used (authority)   0.591  0.591  0.611  0.657  0.723  0.869  0.942
+    point file         0.620  0.591  0.611  0.657  0.723  0.869  0.942
+    meff_span         not available yet (no c_mu_mean in span_RANS50.npz / span_C193b.npz)
+    meff_span, unconditional full-pitch means (no mask, for reference)  0.707  0.533  0.540  0.569  0.663  0.803  0.889
+  f_min = 0.2 chosen as the smallest value (steps of the grid: 0.25, 0.3, 0.4, 0.42, 0.45, 0.5) at which the saturated top-left patch is gone from maps (b)-(d):
+   f_min    grey  cells with ratio >= 8 in x/D 3-5, z/D 1-1.8 (L, 1/cos, mu)
+    0.02    4.6%  {'L': 0, '1/cos': 239, 'mu': 562}
+    0.10    8.3%  {'L': 0, '1/cos': 51, 'mu': 272}
+    0.20   11.8%  {'L': 0, '1/cos': 36, 'mu': 200}
+    0.25   15.2%  {'L': 0, '1/cos': 18, 'mu': 169}
+    0.30   20.1%  {'L': 0, '1/cos': 6, 'mu': 126}
+    0.40   32.6%  {'L': 0, '1/cos': 0, 'mu': 8}
+    0.42   34.8%  {'L': 0, '1/cos': 0, 'mu': 0}
+    0.45   38.3%  {'L': 0, '1/cos': 0, 'mu': 0}
+    0.50   44.3%  {'L': 0, '1/cos': 0, 'mu': 0}
+Continuous split in the near-wall layer (wall nodes excluded, z < z_x), slabs of 1 D in x (|x - centre| < 0.5 D), centres every 0.25 D from 4.0 to 19.5 (x/D 3.5-20);
+point-wise 3D mask |S*| D/U_inf > 0.05, plain volume statistics; the x/D 20 row is the half slab 19.5-20.
+  max |sum of the four terms - total| over all slabs: 3.3e-15
+    x/D   total     rho   k^1/2   L_eff     cos   kept  mu_eff<=0  ratios of the volume means k^1/2, L, 1/cos
+    5.0  -0.415  +0.046  -0.215  -0.669  +0.424  1.000     0.0019  0.65  0.45  2.44
+    7.0  -0.440  +0.039  -0.243  -0.678  +0.443  1.000     0.0030  0.61  0.45  2.37
+   10.0  -0.548  +0.026  -0.301  -0.735  +0.462  1.000     0.0006  0.56  0.44  2.23
+   15.0  -0.543  +0.017  -0.266  -0.691  +0.397  1.000     0.0000  0.59  0.48  1.87
+   20.0  -0.590  +0.012  -0.276  -0.680  +0.354  1.000     0.0000  0.61  0.49  1.73
+  film mean x/D 3.5-20:  -0.542  +0.022  -0.268  -0.702  +0.407  1.000     0.0007
+  (rows above: point file, products exact per point, so the four terms close on the total; layer = wall to the full-pitch z_x of the table above.)
+  film mean above z_x, x/D 3.5-20 (point file): mu ratio 1.056, k^1/2 1.130, L_eff 0.800, 1/cos 1.290 (gap -1.3e-15)
+Layer above z_x (z >= z_x up to the strain-mask edge, z <= 2 D), slabs of 1 D (x/D 20: half slab):
+    5.0  +0.072  +0.018  +0.090  -0.314  +0.278  0.321     0.0459
+   10.0  +0.011  +0.024  +0.098  -0.339  +0.228  0.396     0.0102
+   15.0  +0.054  +0.018  +0.147  -0.315  +0.205  0.458     0.0000
+   20.0  +0.102  +0.014  +0.140  -0.262  +0.210  0.561     0.0000
+
+Source used: meff_span (RANS50 + C193b) with S_mean

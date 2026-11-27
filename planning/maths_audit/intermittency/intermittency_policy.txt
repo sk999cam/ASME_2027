@@ -1,0 +1,94 @@
+1. Otsu on log10 d, T = 2 D/U, two pooling domains (x/D 0..20)
+domain, run | log10 th | th | eta (between-class variance / total variance) | low-class fraction | valley/low-peak | histogram peaks (log10 d) | Sarle BC | skewness | excess kurtosis
+plane, 193M | -4.080 | 8.318e-05 | 0.723 | 0.242 | 0.999 | (-5.43, -2.88) | 0.608 | -0.993 | 0.268
+plane, 20M LES | -4.060 | 8.710e-05 | 0.688 | 0.260 | nan | (-3.02,) | 0.543 | -0.865 | 0.216
+line, 193M | -4.790 | 1.622e-05 | 0.756 | 0.594 | 0.977 | (-5.98, -4.48) | 0.558 | 0.404 | -0.917
+line, 20M LES | -4.840 | 1.445e-05 | 0.749 | 0.552 | 0.910 | (-5.93, -3.88) | 0.532 | 0.245 | -1.006
+band2, 193M | -4.510 | 3.090e-05 | 0.745 | 0.480 | 0.892 | (-5.62, -3.42) | 0.520 | -0.067 | -1.069
+band2, 20M LES | -4.570 | 2.692e-05 | 0.736 | 0.453 | 0.970 | (-5.62, -3.67) | 0.510 | -0.148 | -0.997
+band1.5, 193M | -4.350 | 4.467e-05 | 0.745 | 0.391 | 0.992 | (-5.48, -3.17) | 0.549 | -0.401 | -0.886
+band1.5, 20M LES | -4.400 | 3.981e-05 | 0.733 | 0.371 | nan | (-3.38,) | 0.538 | -0.451 | -0.762
+band2.5, 193M | -4.680 | 2.089e-05 | 0.755 | 0.558 | 0.917 | (-5.88, -3.73) | 0.542 | 0.235 | -1.052
+band2.5, 20M LES | -4.730 | 1.862e-05 | 0.750 | 0.529 | 0.864 | (-5.83, -3.78) | 0.527 | 0.133 | -1.069
+threshold ratio LES/193M: plane 1.047, line 0.891
+Sarle BC > 0.555 indicates bimodality (uniform distribution 0.555).
+
+2. mid-pitch gamma(x), line y/D = +-3, T = 2 D/U; x/D -2 5 10 15 20
+policy i (own plane), 193M (log10 th -4.080): 0.000 0.000 0.075 0.577 0.825
+policy i (own plane), 20M LES (log10 th -4.060): 0.000 0.000 0.069 0.538 0.845
+policy ii (193M plane th), 193M (log10 th -4.080): 0.000 0.000 0.075 0.577 0.825
+policy ii (193M plane th), 20M LES (log10 th -4.080): 0.000 0.000 0.071 0.549 0.851
+policy iii (193M line th), 193M (log10 th -4.790): 0.000 0.006 0.286 0.828 0.968
+policy iii (193M line th), 20M LES (log10 th -4.790): 0.000 0.002 0.324 0.870 0.979
+policy band (193M band |y| 2-3 th), 193M (log10 th -4.510): 0.000 0.002 0.184 0.744 0.937
+policy band (193M band |y| 2-3 th), 20M LES (log10 th -4.510): 0.000 0.000 0.173 0.770 0.942
+band |y/D| >= 2.81 mean (as fig_eta_x):
+policy i, 193M: 0.000 0.000 0.089 0.584 0.830
+policy i, 20M LES: 0.000 0.000 0.093 0.548 0.837
+policy ii, 193M: 0.000 0.000 0.089 0.584 0.830
+policy ii, 20M LES: 0.000 0.000 0.097 0.560 0.844
+policy iii, 193M: 0.000 0.010 0.308 0.842 0.970
+policy iii, 20M LES: 0.000 0.005 0.377 0.878 0.969
+policy band, 193M: 0.000 0.003 0.202 0.757 0.937
+policy band, 20M LES: 0.000 0.001 0.235 0.780 0.937
+
+3. required checks (x/D -3..-1.5, all y: gamma < 0.02; |y/D| < 1, x/D 5..20: gamma > 0.95)
+policy i, 193M: approach mean 0.0000, p99 0.0000, max 0.0000; core mean 0.969, min 0.881, p1 0.912, fraction of points > 0.95 0.799
+policy i, 20M LES: approach mean 0.0000, p99 0.0000, max 0.0000; core mean 0.922, min 0.729, p1 0.760, fraction of points > 0.95 0.436
+policy ii, 193M: approach mean 0.0000, p99 0.0000, max 0.0000; core mean 0.969, min 0.881, p1 0.912, fraction of points > 0.95 0.799
+policy ii, 20M LES: approach mean 0.0000, p99 0.0000, max 0.0000; core mean 0.926, min 0.741, p1 0.769, fraction of points > 0.95 0.454
+policy iii, 193M: approach mean 0.0038, p99 0.0388, max 0.0496; core mean 0.997, min 0.974, p1 0.987, fraction of points > 0.95 1.000
+policy iii, 20M LES: approach mean 0.0001, p99 0.0035, max 0.0176; core mean 0.991, min 0.931, p1 0.954, fraction of points > 0.95 0.996
+policy band, 193M: approach mean 0.0001, p99 0.0024, max 0.0058; core mean 0.993, min 0.954, p1 0.972, fraction of points > 0.95 1.000
+policy band, 20M LES: approach mean 0.0000, p99 0.0000, max 0.0000; core mean 0.977, min 0.879, p1 0.909, fraction of points > 0.95 0.857
+core gamma(x) along y/D = 0 and the |y/D| < 1 mean, policy ii vs iii, x/D 5 10 15 20:
+policy iii, 193M: y=0 0.999 0.999 0.995 0.995 | |y|<1 mean 1.000 0.999 0.996 0.994
+policy iii, 20M LES: y=0 0.990 0.998 0.984 0.965 | |y|<1 mean 0.999 0.998 0.981 0.978
+policy band, 193M: y=0 0.997 0.997 0.981 0.985 | |y|<1 mean 0.999 0.997 0.990 0.984
+policy band, 20M LES: y=0 0.980 0.991 0.962 0.898 | |y|<1 mean 0.996 0.994 0.958 0.949
+
+4. sensitivity to T (running-mean length); threshold of the same T from the policy named
+policy iii, T = 1 D/U, 193M: log10 th -5.310; 0.000 0.002 0.173 0.734 0.938 | core mean 0.997 min 0.971
+policy iii, T = 1 D/U, 20M LES: log10 th -5.310; 0.000 0.002 0.168 0.751 0.945 | core mean 0.980 min 0.870
+policy iii, T = 2 D/U, 193M: log10 th -4.790; 0.000 0.006 0.286 0.828 0.968 | core mean 0.997 min 0.974
+policy iii, T = 2 D/U, 20M LES: log10 th -4.790; 0.000 0.002 0.324 0.870 0.979 | core mean 0.991 min 0.931
+policy iii, T = 4 D/U, 193M: log10 th -4.240; 0.000 0.031 0.394 0.853 0.965 | core mean 0.993 min 0.964
+policy iii, T = 4 D/U, 20M LES: log10 th -4.240; 0.000 0.041 0.465 0.884 0.952 | core mean 0.985 min 0.914
+policy band, T = 1 D/U, 193M: log10 th -5.060; 0.000 0.000 0.108 0.639 0.892 | core mean 0.991 min 0.941
+policy band, T = 1 D/U, 20M LES: log10 th -5.060; 0.000 0.000 0.094 0.629 0.890 | core mean 0.958 min 0.796
+policy band, T = 2 D/U, 193M: log10 th -4.510; 0.000 0.002 0.184 0.744 0.937 | core mean 0.993 min 0.954
+policy band, T = 2 D/U, 20M LES: log10 th -4.510; 0.000 0.000 0.173 0.770 0.942 | core mean 0.977 min 0.879
+policy band, T = 4 D/U, 193M: log10 th -3.990; 0.000 0.013 0.275 0.778 0.935 | core mean 0.984 min 0.930
+policy band, T = 4 D/U, 20M LES: log10 th -3.990; 0.000 0.002 0.326 0.811 0.921 | core mean 0.969 min 0.868
+
+5. sensitivity to the threshold (T = 2 D/U, factor on the policy-iii and policy-ii threshold, applied to both runs)
+policy band x0.5 (log10 th -4.811), 193M: 0.000 0.007 0.293 0.833 0.970 | approach max 0.0525 | core mean 0.998 min 0.975
+policy band x0.5 (log10 th -4.811), 20M LES: 0.000 0.002 0.337 0.878 0.981 | approach max 0.0202 | core mean 0.991 min 0.935
+policy band x1 (log10 th -4.510), 193M: 0.000 0.002 0.184 0.744 0.937 | approach max 0.0058 | core mean 0.993 min 0.954
+policy band x1 (log10 th -4.510), 20M LES: 0.000 0.000 0.173 0.770 0.942 | approach max 0.0000 | core mean 0.977 min 0.879
+policy band x2 (log10 th -4.209), 193M: 0.000 0.000 0.102 0.626 0.868 | approach max 0.0000 | core mean 0.980 min 0.918
+policy band x2 (log10 th -4.209), 20M LES: 0.000 0.000 0.087 0.623 0.886 | approach max 0.0000 | core mean 0.947 min 0.793
+policy iii x0.5 (log10 th -5.091), 193M: 0.000 0.025 0.426 0.887 0.989 | approach max 0.1279 | core mean 0.999 min 0.986
+policy iii x0.5 (log10 th -5.091), 20M LES: 0.001 0.024 0.535 0.938 0.993 | approach max 0.1145 | core mean 0.997 min 0.962
+policy iii x1 (log10 th -4.790), 193M: 0.000 0.006 0.286 0.828 0.968 | approach max 0.0496 | core mean 0.997 min 0.974
+policy iii x1 (log10 th -4.790), 20M LES: 0.000 0.002 0.324 0.870 0.979 | approach max 0.0176 | core mean 0.991 min 0.931
+policy iii x2 (log10 th -4.489), 193M: 0.000 0.002 0.178 0.736 0.933 | approach max 0.0038 | core mean 0.992 min 0.953
+policy iii x2 (log10 th -4.489), 20M LES: 0.000 0.000 0.167 0.759 0.937 | approach max 0.0000 | core mean 0.976 min 0.875
+
+6. first x/D (0..20) at which the mid-pitch gamma exceeds 0.5, T = 2
+policy i, 193M: 14.18
+policy i, 20M LES: 14.00
+policy ii, 193M: 14.18
+policy ii, 20M LES: 13.72
+policy iii, 193M: 11.80
+policy iii, 20M LES: 10.82
+policy band, 193M: 12.78
+policy band, 20M LES: 11.52
+
+7. sensitivity to the band limits (T = 2 D/U; 193M band threshold applied to both runs): x/D 5 10 15 20
+band1.5 (log10 th -4.350), 193M: 0.001 0.141 0.679 0.905 | approach mean 0.0000 max 0.0010 | core mean 0.987 min 0.940
+band1.5 (log10 th -4.350), 20M LES: 0.000 0.124 0.705 0.913 | approach mean 0.0000 max 0.0000 | core mean 0.964 min 0.832
+band (log10 th -4.510), 193M: 0.002 0.184 0.744 0.937 | approach mean 0.0001 max 0.0058 | core mean 0.993 min 0.954
+band (log10 th -4.510), 20M LES: 0.000 0.173 0.770 0.942 | approach mean 0.0000 max 0.0000 | core mean 0.977 min 0.879
+band2.5 (log10 th -4.680), 193M: 0.005 0.251 0.796 0.957 | approach mean 0.0015 max 0.0303 | core mean 0.996 min 0.967
+band2.5 (log10 th -4.680), 20M LES: 0.001 0.263 0.838 0.969 | approach mean 0.0000 max 0.0102 | core mean 0.986 min 0.912

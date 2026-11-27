@@ -126,9 +126,10 @@ with open(os.path.join(cc.CORR_DIR, 'prt_data_tables.txt'), 'w') as fh:
     fh.write('\n'.join(fc.LINES) + '\n')
 
 # ---- figure
-set_mpl_params(0.5, grid_on=False)
+# Drawn at the printed size for full text width (7.5 in; figure* with width=\textwidth, scale 1); body text 10 pt.
+set_mpl_params(10 / 22, grid_on=False)
 plt.rcParams['axes.prop_cycle'] = cycler(color=OKABE_ITO)
-fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.2, 3.3), gridspec_kw=dict(width_ratios=[1.7, 1]))
+fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.5, 4.3), gridspec_kw=dict(width_ratios=[2.6, 1]))
 axa.axhspan(1.5, 4.0, color='0.85', zorder=0)
 axa.axhline(1.0, color='#000000', ls=':', zorder=1)
 x = 0
@@ -141,13 +142,14 @@ for p in planes:
             axa.errorbar(x + dx, r[f'{k}10'], yerr=[[max(r[f'{k}10'] - lo, 0)], [max(hi - r[f'{k}10'], 0)]], color=c, marker=mk,
                          capsize=2, zorder=3)
         ticks.append(x)
-        tl.append(f'$x/D={p[1:]}$: ' + lab)
+        tl.append(lab.replace(', ', '\n'))
         x += 1
+    axa.text(x - 2.5, -0.19, f'$x/D={p[1:]}$', transform=axa.get_xaxis_transform(), ha='center', va='top')
     x += 0.5
 axa.set_yscale('log')
 axa.set_ylim(0.3, 40)
 axa.set_xticks(ticks)
-axa.set_xticklabels([t.replace('x', '$x/D=') if False else t for t in tl], rotation=40, ha='right')
+axa.set_xticklabels(tl, fontsize=plt.rcParams['font.size'] - 1)
 axa.set_ylabel(r'lateral / wall-normal')
 axa.text(0.02, 0.95, '(a)', transform=axa.transAxes, va='top')
 # (b)
@@ -179,7 +181,8 @@ h = [Line2D([], [], color='#D55E00', marker='o', ls='none', label=r'$\nu_y/\nu_z
 h += [plt.Rectangle((0, 0), 1, 1, fc=c, hatch=hh, ec='white', label=lab) for k, lab, c, hh in cols]
 h += [Line2D([], [], color='k', marker='D', ls='none', label='total'),
       Line2D([], [], color='k', marker='v', ls='none', label=r'total without gradient ($\ln\alpha_{y,R}/\alpha_{y,D}$)')]
-fig.legend(handles=h, loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.01))
-fig.tight_layout(rect=(0, 0.2, 1, 1))
+fig.legend(handles=h, loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, -0.01), fontsize=plt.rcParams['font.size'] - 1,
+           handlelength=1.4, columnspacing=0.7)
+fig.tight_layout(pad=0.3, rect=(0, 0.19, 1, 1))
 fig.savefig(OUT)
 log(f'saved {OUT}')
