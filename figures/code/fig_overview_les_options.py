@@ -35,7 +35,10 @@ LAB = {1: '193M 3DNS', 0: 'RANS 50M', 2: '20M LES'}
 def les_planes():
     """Slices of the LES mean grid at x/D 2, 4, 10 (omega_x D/U_inf, V, W in m/s) on the (y, z) grid of the 193M fine planes."""
     from scipy.interpolate import RegularGridInterpolator as RGI
-    M = np.load(AS + 'mean_features/les20_mean_grid.npz')
+    P = np.load(AS + 'mean_features/les20_planes_b.npz')
+    if all(('om_x%d' % xp) in P.files for xp in (2, 4, 10)):          # fine planes (0.02 D) of the LES, same format as rans50_planes.npz
+        return {xp: (P['om_x%d' % xp], P['V_x%d' % xp], P['W_x%d' % xp], P['y'], P['z']) for xp in (2, 4, 10)}
+    M = np.load(AS + 'mean_features/les20_mean_grid.npz')           # fallback: slices of the 0.05 D grid
     n3 = np.load(O.N3)
     y, z = n3['y'], n3['z']
     Y, Z = np.meshgrid(y, z, indexing='ij')

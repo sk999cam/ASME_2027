@@ -33,7 +33,7 @@ import fig_swap_lateral as SL  # noqa: E402
 LAYOUT = '2x2'   # '2x2' (paper, owner 2026-11-27): 2 x 2 grid, 7.5 in wide (figure*, \textwidth); 'row': four near-square panels, 7.5 in wide. The chosen one goes to OUT.
 OUT = '/home/sk999/Documents/ASME_2027/figures/fig_coolant_budget.pdf'
 PNG = {'row': '/home/sk999/Documents/ASME_2027/planning/review/46_fig_coolant_budget_row.png',
-       '2x2': '/home/sk999/Documents/ASME_2027/planning/review/58_fig_coolant_budget_les.png'}
+       '2x2': '/home/sk999/Documents/ASME_2027/planning/review/59_fig_coolant_budget_les.png'}
 SIZE = {'row': (7.5, 2.0), '2x2': (7.5, 6.5)}
 OKABE_ITO = ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
 C193, CRANS = OKABE_ITO[0], OKABE_ITO[5]
@@ -310,10 +310,11 @@ def write_table(out, lvol, lpl, d, dl):
     for q in (4, 10, 20):
         a, b, c = gq(out['dns'], q), gq(out['rans'], q), gq(lvol, q)
         L.append(f'{q:5d} {a:8.4f} {b:8.4f} {c:8.4f} {c / a:9.3f} {b / a:10.3f}')
-    L += ['B. Fine planes (the quantities of panel a). The LES has fine planes at x/D 3, 5, 6, 8, 12, 15, 20 only (none at 2, 4, 10): "-" = no LES plane.',
+    L += ['B. Fine planes (the quantities of panel a), stations x/D 4-20 of the panel. LES planes read from les20_planes_b.npz: x/D ' +
+          ', '.join(str(s) for s in sorted(lpl)) + '; "-" = no plane of that run at the station (RANS WV: none beyond x/D 4).',
           f'{"x/D":>5s} {"CRVP 193M":>10s} {"RANS":>8s} {"LES":>8s} {"LES/193M":>9s} | {"WV 193M":>8s} {"RANS":>8s} {"LES":>8s} {"LES/193M":>9s}']
     W = out['wvp']
-    for q in (4, 5, 8, 10, 12, 15, 20):
+    for q in sorted(s for s in MF.STATIONS if s >= XMIN):
         def v(nm, kind):
             if nm == 'les':
                 if q not in lpl:

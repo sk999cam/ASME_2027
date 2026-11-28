@@ -1,0 +1,128 @@
+# 20M LES counterparts of the manuscript quantities (figures/code/les_counterparts_table.py). RANS = RANS 50M, 193M = C193b b010, LES = C20bW (b006).
+# Each block: manuscript values, same-route reproduction (route check), LES value, sources. "LES data not available" = needs data from the data session.
+
+==============================================================================================================
+a. CRVP core height (manuscript: the RANS cores lie ~0.1 D below those of the reference, not shown)
+   Route: fig_mean_features.py (analyse): omega_x, Gaussian SIG = (2, 3, 3) cells, vorticity-weighted centroid inside 0.5 of the peak, |y| < 1.5, z >= 0.05;
+   mean of the two sides; n4 grid (0.05 D). LES: same functions on mean_features/les20_mean_grid.npz (ResampleToImage of the b006 block means).
+     x/D   zc 193M   zc RANS    zc LES  RANS-193M  LES-193M  RANS/193M  LES/193M
+       4    0.4795    0.4698    0.4873     -0.010    +0.008      0.980     1.016
+       6    0.5617    0.4916    0.5597     -0.070    -0.002      0.875     0.996
+      10    0.6733    0.5603    0.6887     -0.113    +0.015      0.832     1.023
+      15    0.7216    0.6404    0.7482     -0.081    +0.027      0.887     1.037
+      20    0.7984    0.6929    0.7577     -0.105    -0.041      0.868     0.949
+   mean of (core height - 193M) over x/D 6-20: RANS -0.100 D (manuscript: ~0.1 D below, reproduced), LES +0.010 D
+   Sources: RANS/193M data/mean_features_table.txt (zc/D rows); LES mean_features/les20_mean_grid.npz.
+
+==============================================================================================================
+c. Centreline upwash at the core height and inward velocity at z/D 0.1 under the pair (manuscript: RANS 1.14-1.66 and 1.75-1.93 times the reference over x/D 4-20)
+   Route: fig_mean_features.cross_to: W/U on the centreline y = 0 interpolated at the mean core height zc; V/U inward = mean over the sides of the maximum inward V/U at z/D 0.1, |y| < 1.5.
+   upwash W/U at zc: ratio to 193M over x/D 4-20: RANS 1.05 to 1.66 (steps of 0.25 D); LES 0.69 to 1.18
+       x/D      193M      RANS       LES  RANS/193M  LES/193M
+         4    0.0490    0.0560    0.0474      1.143     0.968
+         6    0.0334    0.0389    0.0285      1.164     0.853
+        10    0.0225    0.0373    0.0245      1.656     1.088
+        15    0.0204    0.0263    0.0219      1.293     1.076
+        20    0.0155    0.0187    0.0107      1.203     0.688
+   inward V/U at z/D 0.1: ratio to 193M over x/D 4-20: RANS 1.74 to 1.94 (steps of 0.25 D); LES 0.87 to 1.08
+       x/D      193M      RANS       LES  RANS/193M  LES/193M
+         4    0.0377    0.0658    0.0329      1.745     0.873
+         6    0.0299    0.0575    0.0279      1.924     0.932
+        10    0.0176    0.0332    0.0165      1.886     0.938
+        15    0.0107    0.0196    0.0098      1.829     0.913
+        20    0.0067    0.0129    0.0072      1.934     1.082
+   Sources: data/mean_features_table.txt (RANS, 193M); LES: mean_features/les20_mean_grid.npz.
+
+==============================================================================================================
+d. Plume half-width and coolant-centroid height (manuscript: at x/D 20 the RANS half-width is 0.75 of the reference, the centroid height agrees within 12 %)
+   Route: fig_mean_features.cross_to: half-width = lateral half width at 0.5 of the centreline value of the column integral of theta (clipped at 0), mean of the two sides;
+   centroid = theta-weighted mean height of the plane.
+     x/D | half width: 193M     RANS      LES  RANS/193  LES/193 | centroid: 193M     RANS      LES  RANS/193  LES/193
+       4 |           0.9575   0.8703   0.9773     0.909    1.021 |         0.4656   0.4682   0.4714     1.006    1.013
+       6 |           0.9597   0.8269   0.9803     0.862    1.021 |         0.5455   0.5583   0.5528     1.023    1.013
+      10 |           1.0219   0.8148   1.0556     0.797    1.033 |         0.6410   0.6864   0.6532     1.071    1.019
+      15 |           1.1156   0.8525   1.1465     0.764    1.028 |         0.7224   0.7996   0.7336     1.107    1.015
+      20 |           1.2092   0.9072   1.2458     0.750    1.030 |         0.7914   0.8855   0.8007     1.119    1.012
+   Sources: data/mean_features_table.txt (RANS, 193M); LES: mean_features/les20_mean_grid.npz (theta).
+
+==============================================================================================================
+b. Vertical coolant flux through the planes z/D 0.25, 0.5, 1.0 (manuscript: RANS turbulent flux 0.67-0.99 of the reference through z/D 1.0, towards the wall through z/D 0.25;
+   ordering of the two parts held through the three planes)
+   Route: wall_balance/n7_series_c193b_b010_rans50.npz (keys h<h>_193_Jm/Jt, h<h>_rans_Jm/Jt; n7_summary.txt), g s^-1 m^-1, one pitch. LES: wall_balance/les_c50b/
+   balance_c20bw_b1.npz and _b2.npz (keys h<h>_Jm, h<h>_Jt, h<h>_Jsgs, kg s^-1 m^-1 x 1000; mean of the two batches; turbulent = resolved + mean SGS).
+   LIMIT: only two of the LES batches are available as plane series (batch-to-batch scatter of Jm 10-40 %, e.g. h 0.5, x/D 5: 11.7 and 10.2); the six-batch LES
+   series (SE, like the 193M ten-batch jackknife) needs the remaining batches from the data session. Values below are two-batch means without SE.
+   z/D = 0.25: ratio to 193M over x/D 4-20 (steps 0.25): turbulent flux RANS -1.71 to -0.16, LES 0.74 to 1.44; mean-flow flux RANS -122.81 to 232.10, LES -7.18 to 4.83
+      first x/D (>= 4) where turbulent > mean flux: 193M 8.00, RANS not in 4-20, LES 6.75; RANS turbulent flux negative (towards the wall) at 65 of 65 stations, LES 0
+        x/D  193M Jm      Jt  RANS Jm      Jt   LES Jm      Jt
+          5     6.20    3.84     8.67   -2.39     5.90    3.71
+         10     0.34    1.62     7.64   -2.34    -0.04    1.76
+         20    -0.33    1.69     2.27   -0.76    -0.96    1.40
+   z/D = 0.5: ratio to 193M over x/D 4-20 (steps 0.25): turbulent flux RANS -0.42 to 0.28, LES 0.92 to 1.42; mean-flow flux RANS 1.84 to 32.78, LES -9.08 to 1.75
+      first x/D (>= 4) where turbulent > mean flux: 193M 5.00, RANS not in 4-20, LES 4.25; RANS turbulent flux negative (towards the wall) at 53 of 65 stations, LES 0
+        x/D  193M Jm      Jt  RANS Jm      Jt   LES Jm      Jt
+          5    11.85   11.99    22.45    2.99    10.91   12.63
+         10     1.80    3.84    12.41   -1.51     1.12    5.45
+         20     0.14    3.22     4.32   -0.79    -1.25    3.09
+   z/D = 1.0: ratio to 193M over x/D 4-20 (steps 0.25): turbulent flux RANS 0.67 to 0.99, LES 0.96 to 1.25; mean-flow flux RANS 1.41 to 5.38, LES -0.70 to 1.01
+      first x/D (>= 4) where turbulent > mean flux: 193M 4.00, RANS not in 4-20, LES 4.00; RANS turbulent flux negative (towards the wall) at 0 of 65 stations, LES 0
+        x/D  193M Jm      Jt  RANS Jm      Jt   LES Jm      Jt
+          5    12.23   19.83    19.18   14.56    11.13   21.61
+         10     2.82    9.12    10.06    8.96     2.21    9.18
+         20     0.87    5.11     4.41    3.44    -0.61    5.86
+   Surface z = z_x: see coolant_budget_les_table.txt (six-batch LES, with SE).
+
+==============================================================================================================
+e. Plane-mean intermittency gamma at z/D 0.1, x/D -3 to 20, |y/D| < 3 (manuscript: reference 0.73, RANS 0.17; reference 0.726, RANS 0.175 as quoted by the coordinator)
+   Route (fig_wall_state.py main): gamma maps on the grid x/D -3..20 and |y/D| <= 3 in steps of 0.04 D, plain mean. RANS: Intermittency (SST gamma-Re_theta model variable) of the prism
+   layer z/D 0.098 (cells_rans_p0dns_full.csv through rans50_z010_cells.npz), regridded with fig_wall_state.regrid (mask distance 0.15 D). 193M and LES: high-pass spanwise-stress
+   detector, Otsu threshold pooled over the 193M band |y/D| 2-3, x/D 0-20 (one threshold for both), z010 plane sampler (_gamma_extract_v.load_z010).
+   Reproduction: RANS 0.1674 (manuscript 0.17), 193M 0.7240 (manuscript 0.73 / 0.726); also on the native detector grid (x <= 20, 0.02 D): 193M 0.7256
+   LES: 0.7263 on the same grid (native detector grid: 0.7278); LES - 193M = +0.0023
+   Sources: gamma_v/c193b_z010_v.npz, gamma_v/c20bw_z010_v.npz, gamma_v/thresholds.json; RANS: bl_extract/rans50_z010_cells.npz.
+
+==============================================================================================================
+f. Eddy-viscosity factor split, ratios to the 193M of k^1/2, L (L_eff) and 1/cos(theta) below and above z_x (fig_meff_split_film panels (b), (c) give them for the RANS)
+   Routes: RANS (paper, panels b, c): point file, 3D strain mask, mesh-volume weights (_meff_split_nearfar.compute_curve, vmean: k^1/2, L, 1/cos = 1/<cos_193>, RANS cos = 1).
+   RANS and LES by the span route: meff_span files, Delta-y weighted conditional means (cy), rebinned to 0.1 D, weights dx dz f (f >= 0.2), ratio of the layer means; 1/cos = <cos_193>/<cos_run>
+   (RANS cos = 1; LES cos is its own: cos = -a:S*/(|a||S*|) of the resolved stress plus mean WALE stress as in the README of meff_span). The point-file route has no LES counterpart.
+   Layer means over x/D 4-20 (one slab 16 D wide) and slabs of 1 D at x/D 5, 10, 19.5; layers: below z_x (wall to z_x), above z_x (to z/D 2 where f >= 0.2).
+    layer      x/D | RANS point file: k1/2      L  1/cos     mu |  RANS span: k1/2      L  1/cos     mu |  LES span: k1/2      L  1/cos     mu
+     near     4-20 |                 0.593  0.468  2.021  0.582 |            0.593  0.470  0.492  0.584 |           1.008  1.114  1.042  1.067
+     near        5 |                 0.646  0.445  2.443  0.661 |            0.642  0.442  0.399  0.664 |           0.991  0.976  0.970  0.988
+     near       10 |                 0.560  0.435  2.229  0.578 |            0.563  0.440  0.447  0.585 |           1.026  1.043  0.990  1.080
+     near     19.5 |                 0.608  0.494  1.734  0.555 |            0.615  0.506  0.580  0.570 |           1.000  1.166  1.080  1.081
+    above     4-20 |                 1.130  0.800  1.290  1.056 |            1.114  0.807  0.758  1.050 |           1.011  1.177  1.016  1.143
+    above        5 |                 1.102  0.828  1.427  1.074 |            1.067  0.820  0.663  1.057 |           1.022  1.082  1.000  1.080
+    above       10 |                 1.105  0.796  1.310  1.011 |            1.093  0.798  0.740  1.003 |           1.035  1.082  0.994  1.089
+    above     19.5 |                 1.147  0.817  1.234  1.109 |            1.140  0.823  0.808  1.106 |           0.999  1.257  1.009  1.233
+   Panel (b)/(c) ranges of the RANS over the slabs x/D 4.5-19.5 (point file): below z_x k^1/2 0.56-0.65, L 0.43-0.50, 1/cos 1.73-2.46; above z_x k^1/2 1.10-1.16, L 0.77-0.85, 1/cos 1.23-1.45
+   LES (span route) ranges over the same slabs: near k 0.99-1.03, L 0.96-1.19, icos 0.97-1.10; above k 0.99-1.04, L 1.04-1.29, icos 0.99-1.06
+   Sources: RANS point file: fig_meff_split_film.py (pts.npz via _meff_split_nearfar.py); span: meff_span/span_RANS50.npz, span_C20bW.npz, span_C193b.npz; z_x: data/near_wall_boundary_zx.txt.
+
+==============================================================================================================
+g. Cross-plane turbulence level and length scale (manuscript, near L706: on the x/D 4, 10, 20 planes the reference spreads near-wall turbulence from the jet to mid-pitch, the RANS has
+   little turbulence outside the jet, the short-length band along the wall is thicker in the RANS; no number is quoted)
+   Route (fig_cross_planes.py print): planewise median and 99th percentile of k/U_inf^2 and L_eff/D (RANS: mu_t/(rho k^1/2)) over the plane points (z/D 0-3).
+     x/D  quantity |  RANS median   RANS p99 |  193M median   193M p99 |  RANS/193M median
+       4         k |     0.004406    0.01726 |     0.001419    0.01904 |             3.105
+       4         L |       0.2107     0.2222 |       0.1533     0.7828 |             1.375
+      10         k |      0.00444     0.0163 |     0.001248    0.01659 |             3.558
+      10         L |       0.1861     0.2214 |       0.1433     0.5569 |             1.299
+      20         k |     0.004453     0.0107 |     0.002406    0.01322 |             1.850
+      20         L |        0.158     0.2203 |       0.1605     0.6331 |             0.984
+   LES data not available: needs k and L_eff = k^1/2 |b|/|S*| (stat3 correlations of C20bW b006, with the WALE stress added to the stress as for mu_eff) on the x/D 4, 10, 20 planes in the
+   format of meff_planes/ref193_b010.npz (keys x4_k, x4_L, x4_S, x4_T, x4_A, x4_B ...) from the data session. les20_mean_grid.npz has no k or Reynolds stress.
+
+==============================================================================================================
+h. Spanwise diffusivities (manuscript, near L746: alpha_y/alpha_z of the reference is 3.2 on the film flanks at x/D 10; nu_y/nu_z 0.7-1.1; the lateral heat diffusivity of the RANS at the film
+   edges is 0.5-0.6 times the reference)
+   Route: fig_prt_data.py (regional least squares of -rho v''T'' dT/dy etc. on the cross-planes x/D 10 and 20, flanks |y|/D >= 1.5, z/D >= 0.3, b010); table prt_classes/prt_data_tables.txt.
+   Manuscript values reproduced from that table: alpha_y/alpha_z flanks x/D 10 = 3.16 (3.2), nu_y/nu_z flanks 1.07 (x/D 10) and 0.71 (x/D 20) (0.7-1.1);
+   RANS/193M lateral heat diffusivity at the edges = exp(ln(P_R/P_D) - gradient term) = exp(0.041 - 0.658) = 0.54 (x/D 10), exp(0.191 - 0.650) = 0.63 (x/D 20) (0.5-0.6).
+   LES data not available: needs the plane correlations of fig_prt_data / prt_corr_common (sum of -rho u''v'' dU/dy, -rho u''w'' dU/dz, -rho v''T'' dT/dy, -rho w''T'' dT/dz, with the
+   mean gradients) for C20bW stat3 b006 on the planes x/D 10 and 20, with the SGS stress and heat flux added; no corr_*_C20bW file exists in prt_classes/.
+
+==============================================================================================================
+Items needing new data: b (the full six-batch LES plane series with SE; two batches exist), g (LES k and L_eff on the cross-planes x/D 4, 10, 20), h (LES plane correlations x/D 10, 20).
+Items computed for the LES: a, c, d (mean grid), e (gamma z010 planes), f (meff_span, span route only: the point-file route has no LES counterpart), b at reduced statistics.

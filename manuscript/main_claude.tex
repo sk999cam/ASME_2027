@@ -60,7 +60,7 @@
 
 \begin{document}
 
-%% TODO: confirm conference date and city from the Turbo Expo 2027 call.
+%% OPEN: confirm conference date and city from the Turbo Expo 2027 call (owner).
 \ConfName{Proceedings of ASME Turbo Expo 2027\linebreak Turbomachinery Technical Conference and Exposition}
 \ConfAcronym{GT2027}
 \ConfDate{June XX--XX, 2027}
@@ -69,7 +69,7 @@
 
 \title{Resolution Ladder for the 7-7-7 Laidback Fan-Shaped Film-Cooling Hole}% working title
 
-%% TODO: co-authors, affiliations and corresponding e-mail.
+%% OPEN: co-authors, affiliations and corresponding e-mail (owner).
 \SetAuthors{%
 	Soham Kar\affil{1}\CorrespondingAuthor{sk999@cam.ac.uk},
     Andrew P.S. Wheeler\affil{1},
@@ -88,15 +88,16 @@
 \begin{abstract}
 Reynolds-averaged Navier--Stokes (RANS) simulations of shaped film-cooling holes assume a constant turbulent
 Prandtl number ($\Pr_t$) and are known to give too strong a vortex pair, too narrow a plume, too high a
-centreline effectiveness and too little turbulent transport. Each is budgeted against one reference. The
-7-7-7 laidback fan-shaped hole is simulated at density and blowing ratios of 1.5 with a laminar approach layer,
-by SST RANS and scale-resolving simulations of 20M to 193M points on one mesh family. From 20M points the
-laterally averaged effectiveness agrees with the 193M reference within 0.008; that of the RANS is 29--34\,\% low. In the reference, turbulence carries more coolant off the wall than the mean flow from
-$x/D\sim4.5$; in the RANS it never does. The RANS velocity and its coolant distribution each alone raise the mean
-upwash flux by a similar factor, and a stronger inward mean sweep narrows the plume. Near the wall the RANS eddy
-viscosity is \muNearLow--\muNearHigh\ of the reference, mostly through a short length scale, and the 20M LES within
-10\,\%; the reference $\Pr_t$ in the film is 0.23--0.45. A lower $\Pr_t$ corrects the centreline, not the spread;
-a resolved film heat flux recovers the film shape.
+centreline effectiveness and too little turbulent transport. Their shares are budgeted against one reference.
+The 7-7-7 laidback fan-shaped hole is simulated at density and blowing ratios of 1.5 with a laminar approach
+layer, by SST RANS and scale-resolving simulations of 20M to 193M cells. From 20M
+cells the laterally averaged effectiveness agrees with the 193M reference within 0.008; that of the RANS is
+29--34\,\% low. In the reference, turbulence carries more coolant off the wall than the mean flow from
+$x/D\sim4.5$; in the RANS it never does. The RANS velocity and coolant distribution each raise the mean upwash
+flux by a similar factor, and the inward mean sweep is stronger. The near-wall RANS eddy viscosity is
+\muNearLow--\muNearHigh\ of the reference, mostly through a short length scale, and the 20M LES within 10\,\%; the
+reference $\Pr_t$ in the film is 0.23--0.45. A lower $\Pr_t$ corrects the centreline, not the spread, and a
+resolved film heat flux recovers the film shape, stated as design guidance for the conditions tested.
 \end{abstract}
 
 %%%%%  NOMENCLATURE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -190,7 +191,7 @@ resolution alone.
 
 Eddy-viscosity RANS under-predicts the lateral spreading of the coolant and over-predicts the centreline
 effectiveness~\cite{acharya2001,harrison2008,foroutan2014,stratton2019}. For the 7-7-7, steady RANS misses the
-level of $\eta$ and the trend with the meter--diffuser offset~\cite{haydt2017}, and the SST model over-predicts
+level of $\eta$ and the trend with the meter--diffuser offset~\cite{haydt2017}, and the shear-stress transport (SST) model over-predicts
 the centreline effectiveness by $\sim25$\,\% beyond $x/D=10$~\cite{laroche2023}. The errors are traced to two
 closure assumptions. The first is the Boussinesq relation,
 \begin{equation}\label{eq:boussinesq}
@@ -215,7 +216,7 @@ $\Pr_t$~\cite{liu2008,liu2011}, higher-order scalar-flux models~\cite{ling2015} 
 closures~\cite{milani2017,milani2020}.
 
 The transport of coolant away from the wall has been described in resolved flows. In implicit LES of the 7-7-7,
-Oliver et al.~\cite{oliver2017} found the peak turbulent heat flux at $x/d\le5$ to be $\sim15$\,\% of the peak
+Oliver et al.~\cite{oliver2017} found the peak turbulent heat flux at $x/D\le5$ to be $\sim15$\,\% of the peak
 mean convective flux, which the CRVP sets. Coletti et al.~\cite{coletti2013} found turbulent transport dominant
 over advection beyond $\sim3$ diameters behind an inclined round jet, and at the top of the 7-7-7 jet at a
 blowing ratio of 3 the coolant is carried mainly by the mean flow~\cite{schroeder2016b}. The evidence is not
@@ -331,8 +332,8 @@ model~\cite{menter1994} with the $\gamma$--$\Reth$ transition model~\cite{langtr
 the approach layer laminar. The maximum $y^+$ is 1.1, the residuals fall by 6--8 decades, and the RANS solutions on
 the 5M and 50M meshes agree to 0.06\,\% in $\BR$. The scale-resolving simulations were run with 3DNS, a high-order
 compressible finite-difference solver~\cite{wheeler2016}, with a seven-point dispersion-relation-preserving
-stencil~\cite{tam1993} and an eighth-order filter (Table~\ref{tab:rungs}); the 20M LES used the WALE subgrid
-model~\cite{nicoud1999}. All 3DNS runs used a Courant number of 1.0. The 50M 3DNS was started from the converged
+stencil~\cite{tam1993} and an eighth-order filter (Table~\ref{tab:rungs}); the 20M LES used the wall-adapting
+local eddy-viscosity (WALE) subgrid model~\cite{nicoud1999}. All 3DNS runs used a Courant number of 1.0. The 50M 3DNS was started from the converged
 RANS 50M field, the 100M and 193M 3DNS from the 50M 3DNS interpolated onto their meshes with the mass flux kept
 within 0.006\,\%, and the 20M LES from a 100M 3DNS field. Each simulation was flushed, for 3.35\,FT on the 50M
 3DNS and at least 1\,FT on the finer meshes, until the drift of $\BR$ over 0.5\,FT was below 1\,\%, and then
@@ -383,7 +384,7 @@ The resolution of each mesh is stated as the ratio of its grid size to the Kolmo
 \eta_{K,193}=\Big(\frac{\nu^3}{\varepsilon/\bar\rho}\Big)^{1/4},
 \end{equation}
 where $|J|$ is the cell volume, $\nu=\bar\mu/\bar\rho$ and $\varepsilon$ is the viscous dissipation of the
-fluctuations, both from the 193M 3DNS. The bound of 2 follows from $\kappa_{\max}\eta_K\ge1.5$ for spectral
+fluctuations, both from the 193M 3DNS. The bound of 2 follows from $\kappa_{\max}\eta_K\ge1.5$, with $\kappa_{\max}$ the largest resolved wavenumber, for spectral
 DNS~\cite{pope2000}, which gives $\Delta/\eta_K\le\pi/1.5\sim2.1$. One $\eta_K$ field is used for all meshes,
 mapped through the line-by-line correspondence of the family, so that differences come from the mesh alone.
 
@@ -393,9 +394,9 @@ Figure~\ref{fig:resolution} shows the fraction of the volume above a given $\det
 for the film (b), with the bound of 2 dashed. The film volume of panel (b) pools the near and far film over $x/D$
 of 2.36--25 and so includes the outlet buffer, the one exception to the range of Section~\ref{sec:config}. The
 193M mesh meets the criterion over almost all of the volume in both panels and the 100M mesh over about 0.9 of the
-film, while the 20M mesh exceeds it over about half of the film. Since the 20M LES nevertheless predicts $\etab$
-within 0.008 of the reference (Section~\ref{sec:coolant}), the criterion is stricter than $\etab$ requires; it is
-used here to show that the reference resolves the film. In the hole, the cross-section of the 100M and 193M meshes
+film, while the 20M mesh exceeds it over about half of the film. The 20M LES predicts $\etab$ within 0.008 of
+the reference (Section~\ref{sec:coolant}), so the criterion is stricter than $\etab$ requires; it is used to show
+that the reference resolves the film. In the hole, the cross-section of the 100M and 193M meshes
 is resolved to 0.4--2.5 wall units.
 %% OPEN: panel (b) of fig_resolution.pdf is pooled over x/D 2.36-25 (buffer included); histograms ending at
 %% x/D 20 and the 5M curve need a new computation (requested), after which the sentence on the pooled range is
@@ -413,7 +414,7 @@ $\deta=2$.}\label{fig:resolution}
 
 Section~\ref{sec:coolant} validates the reference and budgets the coolant transport of the RANS against it,
 Section~\ref{sec:breakdown} budgets the inputs of the RANS heat flux, and Section~\ref{sec:aposteriori} tests
-corrections. The lower simulations are averaged over 6\,FT and the reference over 10\,FT.
+corrections.
 %% OPEN: the change of the regional values of the reference between 6 and 10 FT (formerly "0.046 or less") has no
 %% source table in figures/code/data; add the table to restore the statement.
 
@@ -437,9 +438,9 @@ Figure~\ref{fig:overview} shows the mean vortices of the reference (a) and the R
 $Q$ criterion, the second invariant of the mean velocity gradient. In both, a horseshoe vortex (HV) wraps the
 hole, the CRVP leaves the exit, and outboard of the CRVP a near-wall vortex of the opposite sign, named here the
 wall vortex (WV), lies on the plate (insets at $x/D$ of 2 and 4). At $x/D=10$ the WV is present in the reference
-and absent in the RANS. The RANS pair is the stronger, with a circulation of 0.141 against 0.096 in units of
-$\Uinf D$ at $x/D=4$ (Figure~\ref{fig:budget}a). The budget below gives the circulation of the CRVP and the WV and the coolant that the mean
-flow and the turbulence carry across the film.
+and absent in the RANS. The RANS pair is the stronger, with a circulation on the cross-plane at $x/D=4$ of 0.141
+against 0.096 in units of $\Uinf D$, and 0.091 for the 20M LES (Section~\ref{sec:jet}). The budget below gives the
+circulation of the CRVP and the WV and the coolant that the mean flow and the turbulence carry across the film.
 
 \subsubsection{The Hole}
 
@@ -469,8 +470,10 @@ its mid-pitch $\eta$ stays near zero (panel c).
 The mid-pitch $\eta$ of the 3DNS is below the experiment, although $\etab$ agrees (panel c). With its turbulent
 approach layer, the experiment has a mid-pitch $\eta$ flat at $\sim0.035$ from $x/D=2$. The layer of the 3DNS is
 laminar, and its mid-pitch $\eta$ stays near zero to $x/D=9$ and then rises with the mid-pitch intermittency of
-the reference (grey, right axis; Section~\ref{sec:layer}). Since all scale-resolving simulations agree, the gap is
-attributed to the laminar approach layer of the configuration and not to the model or the resolution.
+the reference (grey, right axis; Section~\ref{sec:layer}). The experiment differs from the simulations in its
+turbulent approach layer, in $\Tu$ (0.5 against 5.5\,\%), in $\ReD$ (4960 against 2408) and in Mach number (0.03
+against 0.25). Since all scale-resolving simulations agree, the gap is attributed to these differences of
+configuration and not to the model or the resolution; no test isolates any one of them.
 
 \begin{figure}[t]
 \centering
@@ -488,7 +491,7 @@ $z_x$ through $|y|=0.5D$. Bands: range of the two sides (a) or one jackknife sta
 below the detection threshold; R: RANS; L: LES.}\label{fig:budget}
 \end{figure*}
 
-\subsubsection{The Jet and the Vortex Pair}
+\subsubsection{The Jet and the Vortex Pair}\label{sec:jet}
 
 The vorticity of the hole boundary layers and of the diffuser side walls leaves the exit as two streamwise
 vortices, which carry hot gas down at the flanks and coolant up on the
@@ -496,13 +499,16 @@ centreline~\cite{haven1997,fric1994,haydt2018}. In the reference the windward sh
 and breaks down by $x/D\sim3$. The anti-kidney pair of Haven and Kurosaka~\cite{haven1997} has the sign of the WV
 (Figure~\ref{fig:overview}) but lies above the jet.
 
-Figure~\ref{fig:budget}a gives the circulation ($\Gamma$) of the mean vortices, the integral of
-$\omega_x$ inside the contour at 0.2 of the peak; the band on the 193M spans its two sides. The circulation of the
-RANS pair (blue solid) is 1.5 times the reference at $x/D=4$ and decays to 1.2 times at $x/D=20$. The RANS
+Figure~\ref{fig:budget}a gives the circulation $\Gamma$ of each mean vortex, the integral of the unsmoothed
+$\omega_x$ over a cross-plane inside the contour at 0.2 of its peak, averaged over the two sides; the band spans
+the two sides of the reference. The circulation of the RANS pair (blue solid) is 1.5 times the reference at
+$x/D=4$ and 1.2 times at $x/D=20$. With $\omega_x$ smoothed by a Gaussian of $0.10$--$0.15D$ before the
+integration, the reference is unchanged and the RANS ratio is 1.14 at $x/D=4$ and 1.14--1.22 at $x/D$ of 4, 10
+and 20, so the ratio at $x/D=4$ is 1.14 or 1.47 depending on the definition. The RANS
 cores, taken as the vorticity-weighted centroid inside half the peak vorticity, lie $\sim0.1D$ below those of the
 reference (not shown). The WV of the reference (black dash-dot) holds its circulation from $x/D$ of 4 to 15, while
-that of the RANS is not detected from $x/D=5$. The LES pair (orange solid) has 0.89--0.96 of the reference
-circulation on the planes from $x/D=5$ to 20, the stations at which the LES has planes. A CRVP that is too strong in SST-type models has been
+that of the RANS is not detected from $x/D=5$. The LES pair (orange solid) has 0.89--0.99 of the reference
+circulation on the cross-planes from $x/D=4$ to 20, and its WV 0.70--1.23. A CRVP that is too strong in SST-type models has been
 reported from contours~\cite{laroche2023,stratton2019}; the ratio of circulations gives its size here.
 
 \begin{figure*}[t]
@@ -514,25 +520,27 @@ triangle: tracked patch.}\label{fig:spots}
 \end{figure*}
 
 \subsubsection{Coolant Budget}
-%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner), in the Pr_t comparison (data
-%% due), and its circulation at x/D 4 and 10 (planes requested).
+%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner) and in the Pr_t comparison
+%% (data due).
 
 The coolant is marked by the total enthalpy, $c=(h_{0,\infty}-h_0)/(h_{0,\infty}-h_{0,c})$, and its time-averaged
 flux splits as $\overline{\rho u_jc}=\bar\rho\tilde u_j\tilde c+\bar\rho\widetilde{u_j''c''}$ into a part carried
 by the mean flow and a turbulent part. The turbulent part is measured in the reference and modelled in the RANS as
 $-(\mu_t/\Pr_t)\,\partial\tilde c/\partial x_j$ with $\Pr_t=0.9$; in the LES it is the resolved flux plus the mean
-subgrid flux, whose part is 0.05\,g\,s$^{-1}$\,m$^{-1}$ or less. The vertical flux is integrated over one pitch
-through the top of the near-wall layer, $z=z_x(x)$, defined in Section~\ref{sec:breakdown} from the RANS and used
-for all three simulations; the streamwise flux
-that crosses this inclined surface is not included.
+subgrid flux, whose part is 0.05\,g\,s$^{-1}$\,m$^{-1}$ or less. The vertical flux $J_w$ is integrated over one
+pitch through the height $z_x(x)$ below which the RANS eddy viscosity is lower than that of the reference
+(Section~\ref{sec:breakdown}), the top of the near-wall layer; the same $z_x$ is used for all three simulations,
+and the streamwise flux that crosses this inclined surface is not included. The lateral flux $J_y$ is integrated
+below $z_x$; both are per unit length in $x$.
 
 Figure~\ref{fig:budget}b shows the two vertical parts, with a band of one standard error from the ten-batch
 jackknife on the reference. In the reference (black), the turbulent flux (dashed) exceeds the mean-flow flux
 (solid) from $x/D\sim4.5$; in the RANS (blue) it stays below it along the whole plate. Through this surface the
 RANS turbulent flux is 0.37--0.61 of the reference and its mean-flow flux 1.9--5.9 times the reference. In the LES
-(orange) the turbulent flux exceeds the mean-flow flux from $x/D=4.0$ and is 1.07--1.19 times the reference at the
-stations of 4 to 20, while its mean-flow flux is 0.92 and 0.88 of the reference at $x/D$ of 4 and 5, lies below it
-downstream and is slightly negative at $x/D=20$ ($-0.90$ against 0.85\,g\,s$^{-1}$\,m$^{-1}$). These ratios depend on the height of the surface: through the plane $z/D=1.0$ the
+(orange) the turbulent flux exceeds the mean-flow flux from $x/D=4.0$ and is 1.07--1.19 times the reference. Its
+mean-flow flux is 0.92 and 0.88 of the reference at $x/D$ of 4 and 5 and 0.39 at $x/D=10$, and is of opposite
+sign at $x/D=20$ ($-0.90$ against $+0.85$\,g\,s$^{-1}$\,m$^{-1}$), where both are small against the turbulent
+flux. The RANS ratios depend on the height of the surface: through the plane $z/D=1.0$ the
 RANS turbulent flux is 0.67--0.99 of the reference, and through $z/D=0.25$ it points towards the wall. The
 ordering of the two parts held through planes at $z/D$ of 0.25, 0.5 and 1.0. For the layer below $z/D=0.5$, the
 coolant balance of the reference closes within 5\,\% at every station, with a median residual of 1.2\,\%.
@@ -541,10 +549,9 @@ Figure~\ref{fig:budget}c separates the excess mean-flow flux of the RANS into it
 the mean velocity ($w$) of one simulation and the coolant field ($c$) of the other: colour gives the source of the
 velocity (black: reference, blue: RANS), and a line is dashed where the two fields come from different
 simulations. The two dashed lines lie close to each other, between the two solid lines. At $x/D=10$ the RANS
-velocity alone raises the flux by 2.7 times and the RANS coolant field alone by 2.65 times, against 5.2 times for
-the RANS itself. Each alone
-accounts for a similar part of the excess; their product exceeds the combined ratio, so the two effects are not
-independent. The excess mean upwash flux of the RANS hence comes from a stronger upwash velocity and from coolant
+velocity alone multiplies the flux of the reference by 2.7, the RANS coolant field alone by 2.7, and the two
+together by 5.2. The two factors are similar, and their product, 7.2, exceeds the combined 5.2, so the two effects
+overlap. The excess mean upwash flux of the RANS hence comes from a stronger upwash velocity and from coolant
 concentrated where the upwash is, in about equal measure. For the LES only the total is drawn (orange solid); it
 lies below the reference at every station.
 
@@ -553,10 +560,10 @@ of one jackknife standard error on the reference. In all three simulations the m
 towards the centreline (solid) and the turbulence carries it outwards (dashed). The inward mean flux of the RANS
 (blue solid) is larger than that of the reference at every station, 1.86 times at $x/D=5$, and its outward
 turbulent flux (blue dashed) is 0.29 of the reference at $x/D=4$ and reaches it only by $x/D$ of 15--20. Near the
-hole the narrow RANS plume is thus the result of a stronger inward mean sweep and a weaker turbulent spreading
-together; further downstream it is mainly the result of the inward sweep. The LES (orange) lies close to the
-reference: its inward mean flux is 0.85 of the reference at $x/D=5$, and its outward turbulent flux is within
-0.06\,g\,s$^{-1}$\,m$^{-1}$ of the reference at $x/D$ of 5 and 20.
+hole the net inward flux of the RANS exceeds that of the reference through both a stronger inward mean sweep and a
+weaker turbulent spreading; further downstream mainly through the inward sweep. The LES (orange) lies close to
+the reference: its inward mean flux is 0.85 of the reference at $x/D=5$, and its outward turbulent flux is
+0.90--1.03 of the reference over $x/D$ of 4--20, lowest at $x/D=10$.
 
 An inward sweep at the wall and an upwash on the centreline are the velocity pattern of the CRVP, whose
 circulation is higher in the RANS (Figure~\ref{fig:budget}a). The RANS centreline upwash at the core height
@@ -564,7 +571,7 @@ is 1.14--1.66 times the reference over $x/D$ of 4--20, and its inward velocity a
 1.75--1.93 times. The budgets are consistent with the stronger pair, but no test isolates it, since the swap
 exchanges the whole mean velocity field. The literature holds counter-evidence: a weaker pair in a $k$--$\varepsilon$
 model did not give more spreading~\cite{stratton2019}, and Reynolds-stress models did not widen the
-film~\cite{acharya2001,harrison2008}. The consequence is the narrow film of Figure~\ref{fig:etax}: by $x/D=20$ the
+film~\cite{acharya2001,harrison2008}. The budgets end in the narrow film of Figure~\ref{fig:etax}: by $x/D=20$ the
 RANS plume half-width is 0.75 of the reference, while the height of the coolant centroid agrees within 12\,\%.
 
 \subsubsection{The Layer Between the Jets}\label{sec:layer}
@@ -588,9 +595,10 @@ from the start $t_0$ of the record, shows turbulent streaks from $x/D\sim10$ tha
 $x/D=20$. The mid-pitch $\gamma$ of the reference exceeds 0.8 from $x/D=15.5$ (Figure~\ref{fig:etax}c). That of
 the LES differs from it by up to 0.145, at $x/D=11.7$, lies within 0.03 of it from $x/D=16$ and reaches 0.94 at
 $x/D=20$, while the model $\gamma$ of the RANS stays at 0.02. Over the plane $z/D=0.1$ from $x/D=-3$ to 20, the
-mean $\gamma$ of the RANS is 0.17, against 0.73 for the reference. With the triple decomposition of
-Lav et al.~\cite{lav2019}, with their filter width, the periodic share of the effective eddy viscosity of the
-reference is 0.03--0.06 in the hole, the jet and the film, so the mixing is mostly broadband turbulence, as expected at a velocity ratio near 1~\cite{fawcett2013}.
+mean $\gamma$ of the RANS is 0.17, against 0.73 for the reference. A triple decomposition after
+Lav et al.~\cite{lav2019}, with their filter width, gives a periodic share of 0.03--0.06 of the reference eddy
+viscosity in the hole, the jet and the film. The mixing is therefore mostly broadband turbulence, as expected at a
+velocity ratio near 1~\cite{fawcett2013}.
 
 \begin{figure*}[t]
 \centering
@@ -681,7 +689,7 @@ the terms of Equation~\ref{eq:logsplit}; the means are taken over the masked poi
 along $x$. The RANS eddy viscosity of the layer is \muNearLow--\muNearHigh\ times the
 reference over $x/D$ of \xEVstart--20. The length term (green dotted) is the largest: the RANS length is \Lnear\
 of the reference (panel b). The energy term (light blue) is smaller and the density term (pink dashed) is close to
-zero. The alignment term (vermilion) is positive: the perfect alignment that the RANS assumes gives back part of
+zero. The alignment term (vermilion) is positive: the exact alignment that the RANS assumes gives back part of
 the deficit, since $1/\cos\theta$ of the reference falls from \cosNearStart\ near the hole to \cosNearEnd\ at
 $x/D=20$ (panel b).
 
@@ -689,7 +697,7 @@ Above $z_x$ the RANS eddy viscosity is close to that of the reference (near whit
 1.06 times in the film mean over $x/D$ of \xEVstart--20, while its factors are not
 (Figure~\ref{fig:meffsplit}c): $k^{1/2}$ lies above the reference, the length is about 0.8 times the reference,
 and the assumed alignment raises the product by the $1/\cos\theta$ of the reference, 1.23--1.45. The factor
-errors cancel in the product. This holds for the strained part of the volume above $z_x$, 32--56\,\% of it, which passes the mask. An
+errors cancel in the product. This holds for the 32--56\,\% of the volume above $z_x$ that passes the strain mask. An
 SST eddy viscosity below the least-squares value from LES and a misalignment of stress and strain near the wall
 were reported for film cooling by Stratton and Shih~\cite{stratton2019}, and poor alignment near the wall for a
 trailing-edge slot~\cite{sandberg2018}; a cancellation of factor errors above the near-wall layer was not found
@@ -722,11 +730,10 @@ velocity or temperature gradient is below 0.05 in units of $\Uinf/D$ or $(T_{0,\
 grey where $\Pr_t$ is not resolved, that is where $|\Pr_t|$ is below twice its jackknife standard error or the
 denominator of Equation~\ref{eq:prtR} changes sign among the ten batches. Away from the wall the map is resolved,
 and almost the whole film lies below the mark of 0.9 on the colour bar, with the lowest values along the core of
-the jet. In the far-film wall layer ($x/D$ of 10--20, $z/D<0.2$), 46\,\% of the area is grey, and no map value
-is given there. Pooled over $x/D$ of 10--20 at each wall distance, $\Pr_t$ is not resolved up to $z^+\approx11$,
-where the adiabatic wall drives $\partial_z\tilde T$ to zero, and is 0.9--1.0, with standard errors of
-0.10--0.18, for $z^+$ of 13--30 ($z/D$ of 0.10--0.22), close to the setting of the RANS and twice the value of 0.45
-over the same $x/D$ range above $z/D=0.3$.
+the jet. In the viscous wall layer of the far film ($x/D$ of 10--20, $z/D<0.2$), 46\,\% of the area is grey, and
+no map value is given there. Pooled over $x/D$ of 10--20, $\Pr_t$ is not resolved below a wall distance in viscous
+units of $z^+\approx11$, where the adiabatic wall drives $\partial_z\tilde T$ to zero. For $z^+$ of 13--30 ($z/D$
+of 0.10--0.22) it is 0.9--1.0 ($\pm$0.10--0.18), close to the RANS setting and twice the value above $z/D=0.3$.
 
 \begin{figure*}[t]
 \centering
@@ -754,6 +761,42 @@ result of the lateral diffusivity alone, in line with the lateral budget of Sect
 confidence in this split is medium, since it depends on the definition of the edge and on finite-difference
 gradients of the RANS.
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_aposteriori.pdf}
+\caption{Corrected RANS 50M runs and the 20M LES: (a) $\etab$, (b) mid-pitch $\eta$, (c) lateral $\eta$ profile
+over $x/D$ of 15--20.}\label{fig:apost}
+\end{figure*}
+
+\begin{table*}[t]
+\caption{A posteriori runs on the RANS 50M, and the 20M LES, against the 193M 3DNS. $^a$\,$\BR=1.416$ and a
+different approach layer; $^b$\,share of the RANS deficit absent with no correction.}\label{tab:apost}
+\centering{%
+\begin{tabular}{@{}l l c c c c@{}}
+\toprule
+Run & Input changed & Recovered & Centreline $\eta$ & Mid-pitch $\eta$ & $\etab$ \\
+ & & $x/D$ 7--20 & $x/D=20$ & $x/D=20$ & $x/D$ 15--20 \\
+\midrule
+SST, $\Pr_t=0.9$ (base) & none & 0\,\% & 0.497 & 0.006 & 0.138 \\
+$\Pr_t=0.5$ & $\Pr_t$, whole domain & 36\,\% & 0.460 & 0.008 & 0.160 \\
+$\Pr_t=0.4$ & $\Pr_t$, whole domain & 44\,\% & 0.422 & 0.010 & 0.164 \\
+$\Pr_t=0.3$ & $\Pr_t$, whole domain & 48\,\% & 0.361 & 0.012 & 0.164 \\
+$\Pr_t=0.4$ near the hole & $\Pr_t$, $x/D<7.5$ & 34\,\% & 0.469 & 0.008 & 0.157 \\
+QCR & stress relation & 72\,\% & 0.524 & 0.006 & 0.185 \\
+QCR, $\Pr_t=0.4$ & both, whole domain & 97\,\% & 0.426 & 0.010 & 0.198 \\
+QCR, $\Pr_t=0.4$ near the hole & both & 96\,\% & 0.475 & 0.008 & 0.200 \\
+Resolved heat flux & heat flux, all regions & 76\,\% & 0.339 & 0.037 & 0.191 \\
+Resolved heat flux in the film & heat flux, $x/D\geq3$ & 63\,\% & 0.360 & 0.031 & 0.183 \\
+Resolved stresses and heat flux$^a$ & both, all regions & 54\,\% & 0.227 & 0.035 & 0.178 \\
+\midrule
+20M LES & none (no correction) & 91\,\%$^b$ & 0.365 & 0.028 & 0.202 \\
+193M 3DNS & & & 0.387 & 0.024 & 0.208 \\
+Experiment~\cite{schroeder2014} & & & 0.419 & 0.035 & 0.212 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
 \subsection{A Posteriori Tests}\label{sec:aposteriori}
 
 Each remedy in the literature targets one input: a lower or variable $\Pr_t$~\cite{liu2008,liu2011,lakehal2002},
@@ -776,42 +819,6 @@ as the next rung of the ladder.
 %% 3DNS stresses imposed alone, and gamma = 1 downstream of the hole. The recovered shares of the last two rows
 %% are computed from the window means of figures/code/data/aposteriori_table.txt (7-15 and 15-20, weighted by
 %% length). The two "near the hole" rows are not in the data table.
-
-\begin{table*}[t]
-\caption{A posteriori runs on the RANS 50M, and the 20M LES, against the 193M 3DNS. $^a$\,$\BR=1.416$ and a
-different approach layer.}\label{tab:apost}
-\centering{%
-\begin{tabular}{@{}l l c c c c@{}}
-\toprule
-Run & Input changed & Recovered & Centreline $\eta$ & Mid-pitch $\eta$ & $\etab$ \\
- & & $x/D$ 7--20 & $x/D=20$ & $x/D=20$ & $x/D$ 15--20 \\
-\midrule
-SST, $\Pr_t=0.9$ (base) & none & 0\,\% & 0.497 & 0.006 & 0.138 \\
-$\Pr_t=0.5$ & $\Pr_t$, whole domain & 36\,\% & 0.460 & 0.008 & 0.160 \\
-$\Pr_t=0.4$ & $\Pr_t$, whole domain & 44\,\% & 0.422 & 0.010 & 0.164 \\
-$\Pr_t=0.3$ & $\Pr_t$, whole domain & 48\,\% & 0.361 & 0.012 & 0.164 \\
-$\Pr_t=0.4$ near the hole & $\Pr_t$, $x/D<7.5$ & 34\,\% & 0.469 & 0.008 & 0.157 \\
-QCR & stress relation & 72\,\% & 0.524 & 0.006 & 0.185 \\
-QCR, $\Pr_t=0.4$ & both, whole domain & 97\,\% & 0.426 & 0.010 & 0.198 \\
-QCR, $\Pr_t=0.4$ near the hole & both & 96\,\% & 0.475 & 0.008 & 0.200 \\
-Resolved heat flux & heat flux, all regions & 76\,\% & 0.339 & 0.037 & 0.191 \\
-Resolved heat flux in the film & heat flux, $x/D\geq3$ & 63\,\% & 0.360 & 0.031 & 0.183 \\
-Resolved stresses and heat flux$^a$ & both, all regions & 54\,\% & 0.227 & 0.035 & 0.178 \\
-\midrule
-20M LES & none (no correction) & -- & 0.365 & 0.028 & 0.202 \\
-193M 3DNS & & & 0.387 & 0.024 & 0.208 \\
-Experiment~\cite{schroeder2014} & & & 0.419 & 0.035 & 0.212 \\
-\bottomrule
-\end{tabular}
-}
-\end{table*}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_aposteriori.pdf}
-\caption{Corrected RANS 50M runs and the 20M LES: (a) $\etab$, (b) mid-pitch $\eta$, (c) lateral $\eta$ profile
-over $x/D$ of 15--20.}\label{fig:apost}
-\end{figure*}
 
 \subsubsection{The Turbulent Prandtl Number Setting}
 
@@ -861,14 +868,14 @@ structures may carry more of the mixing~\cite{fawcett2013}, and to curved or acc
 Within these conditions, the tests give the following guidance. A lower $\Pr_t$
 of 0.3--0.5 brings the centreline $\eta$ to the reference but recovers less than half of the deficit in $\etab$
 and none of the mid-pitch coolant; it informs the peak centreline temperature and not the coverage between the
-holes. In the wall layer over $x/D$ of 10--20, at $z^+$ of 13--30, the $\Pr_t$ of the reference is 0.9--1.0, so a lower
+holes. In the viscous wall layer over $x/D$ of 10--20, at $z^+$ of 13--30, the $\Pr_t$ of the reference is 0.9--1.0, so a lower
 $\Pr_t$ applied down to the wall is not supported by the reference there. The QCR with $\Pr_t=0.4$ matches $\etab$ with a film that is too narrow, so agreement in a span mean alone
 does not show that a corrected RANS predicts the coverage; the centreline and mid-pitch values need to be checked
 as well. Of the inputs tested, the turbulent heat flux in the film is the one whose correction recovers the shape
 of the film, with the mean flow of the RANS unchanged; no model of that flux was tested. The 20M LES, with no
 correction, reproduces $\etab$ within 0.006 and the eddy viscosity below $z_x$ within about 10\,\%, while no
-corrected RANS run matches both $\etab$ and the centreline; where coverage between the holes matters, the LES rung
-is the closest to the reference of the simulations tested. No run changes the
+corrected RANS run matches both $\etab$ and the centreline; against the corrected RANS runs, the LES is closer to
+the reference in the lateral profile, within 0.029 against 0.043, and in $\etab$, within 0.006. No run changes the
 turbulence length scale alone, and the imposed fields are those of the 50M 3DNS and not of the reference. Three
 runs are not complete: a $\Pr_t$ of 0.4 in the film only, the resolved stresses imposed alone, and an
 intermittency of 1 downstream of the hole exit, which tests the laminar mid-pitch layer of the RANS against the
@@ -880,18 +887,18 @@ turbulent mid-pitch layer of the reference (Figure~\ref{fig:spots}).
 The 7-7-7 shaped hole was simulated at a density ratio of 1.5 and a blowing ratio of 1.5 with a laminar approach
 layer under free-stream turbulence, on one mesh family from 5 to 193 million cells, with RANS (SST with
 $\gamma$--$\Reth$), LES and high-order simulations at the same plenum pressure. Known deficiencies of the RANS were
-budgeted against the 193M reference, averaged over ten flow-through times. The key outcomes are:
+budgeted against the 193M reference, averaged over ten flow-through times. The outcomes are:
 \begin{enumerate}
-\item From 20M points upward, $\etab$ agrees with the reference within 0.008 and with the experiment, although the
+\item From 20M cells upward, $\etab$ agrees with the reference within 0.008 and with the experiment, although the
   20M mesh does not meet the Kolmogorov criterion over much of the film. The RANS is independent of the mesh and
   29--34\,\% low beyond $x/D=7$, with a centreline effectiveness that is too high.
 \item In the reference, turbulence carries more coolant off the near-wall layer than the mean flow from
   $x/D\sim4.5$; in the RANS it never does. The RANS velocity field and its coolant distribution each account for a
   similar part of its excess mean upwash flux. Below that layer the RANS inward mean sweep is stronger along the
-  whole plate and its outward turbulent flux is weaker near the hole, which leaves a plume of 0.75 of the
-  reference width at $x/D=20$. These budgets are consistent with a CRVP of 1.2--1.5 times the reference
-  circulation. In the 20M LES the turbulent flux off the layer is 1.07--1.19 times the reference and exceeds the
-  mean-flow flux from $x/D=4.0$, and the pair has 0.89--0.96 of the reference circulation.
+  whole plate and its outward turbulent flux is weaker near the hole, with a plume of 0.75 of the reference
+  width at $x/D=20$. These budgets are consistent with a CRVP of 1.1--1.5 times the reference circulation,
+  depending on the definition. In the 20M LES the turbulent flux off the layer is 1.07--1.19 times the reference and exceeds the
+  mean-flow flux from $x/D=4.0$, and the pair has 0.89--0.99 of the reference circulation.
 \item In the near-wall layer the RANS eddy viscosity is \muNearLow--\muNearHigh\ of the reference over $x/D$ of
   \xEVstart--20, the length the
   largest deficit and the assumed alignment offsetting part of it; above that layer the factor errors cancel. The
@@ -899,13 +906,16 @@ budgeted against the 193M reference, averaged over ten flow-through times. The k
   classic $\Pr_t$ of the reference is 0.23--0.45 in the film, against the setting of 0.9.
 \item A lower $\Pr_t$ corrects the centreline and not the spread; the QCR with $\Pr_t=0.4$ matches $\etab$ with a
   film that is too narrow; a resolved heat flux imposed in the film recovers the shape of the film. Agreement in
-  $\etab$ alone is therefore not sufficient evidence that a corrected RANS predicts the coverage. The 20M LES,
+  $\etab$ alone is therefore not sufficient evidence that a corrected RANS predicts the coverage. For design use,
+  a lower $\Pr_t$ informs the peak centreline temperature and not the coverage between the holes, and a span-mean
+  match does not show a correct film. The 20M LES,
   with no correction, matches $\etab$ within 0.006 and the lateral profile within 0.029, with a centreline up to
   0.04 low.
 \end{enumerate}
 
-\section*{Acknowledgments}
-%% TODO: funding, computing resources.
+%% OPEN: Acknowledgments (funding, computing resources) to be written by the owner; the heading is commented out
+%% until then.
+%% \section*{Acknowledgments}
 
 %%%%%  REFERENCES  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{asmeconf}% ASME conference format, do not change

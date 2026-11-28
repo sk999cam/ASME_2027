@@ -53,8 +53,8 @@ EXP = '/mnt/Tank/777_Film_Cooling_Database/ETA_CAzeroStudies/'
 EXP_FILE = 'eta_SmoothHoles_lowFST_DR1p5_M1p5__id727.txt'
 
 # label, colour, style
-STYLE = {'193M': ('#000000', '-'), '100M': ('#0072B2', '--'), '50M': ('#D55E00', ':'),
-         '20M LES': ('#E69F00', '-.'), 'RANS 50M': ('#009E73', '-'), 'RANS 5M': ('#CC79A7', '--')}
+STYLE = {'193M': ('#000000', '-'), '100M': ('#009E73', '--'), '50M': ('#D55E00', ':'),      # RANS 50M is #0072B2 in all paper figures; 100M takes the freed green
+         '20M LES': ('#E69F00', '-.'), 'RANS 50M': ('#0072B2', '-'), 'RANS 5M': ('#CC79A7', '--')}
 RANS = {'RANS 5M': REPO + '/starccm/rans_5M_Lm25_BR15_FST_ZPG_p0dns',
         'RANS 50M': REPO + '/starccm/rans_50M_Lm25b_BR15_FST_ZPG_p0dns'}
 DNS = {'20M LES': ('/mnt/Tank/DNS/film_cooling/C20bW_BR15', 'pictures_job3'),
@@ -249,6 +249,7 @@ def main():
                   handlelength=1.5, columnspacing=0.8)
     fig.tight_layout(pad=0.3)
     fig.savefig(OUT)
+    fig.savefig('/home/sk999/Documents/ASME_2027/planning/review/60_fig_eta_x.png', dpi=200)
 
 
 if __name__ == '__main__':
