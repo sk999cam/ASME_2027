@@ -64,7 +64,7 @@ F1 & 3.1 & (a) domain and regions above the plate, to scale; (b) hole regions; h
 F2 & 3.3 & volume fraction above $\deta$: (a) whole domain, (b) film (near and far film pooled, $x/D$ 2.36--25); 20M, 50M, 100M, 193M; one column [resolution] & \texttt{fig\_resolution.pdf} & \texttt{fig\_resolution.py} \\
 F3 & 4.1 & mean flow in 3D, two views, (a) 193M 3DNS, (b) RANS 50M; $6.5\times8.6$\,in at natural size: isosurface $Q(D/U_\infty)^2=0.005$ (grey), plate coloured by $\eta$, cross-planes and insets at $x/D$ 2, 4, 10 ($\bar\omega_x$, in-plane streamlines, looking downstream); labels CRVP, HV, WV; full width [overview] & \texttt{fig\_overview\_3d.png} & \texttt{fig\_overview\_3d.py} \\
 F4 & 4.1 & $\etab$, centreline and mid-pitch $\eta$ against $x/D$, six simulations and experiment; 193M mid-pitch $\gamma$ [etax] & \texttt{fig\_eta\_x.pdf} & \texttt{fig\_eta\_x.py} \\
-F5 & 4.1 & coolant budget, RANS 50M against 193M, $x/D$ 4--20, linear axes, $2\times2$ grid at full width: (a) top left, circulation of the CRVP and the WV; (b) top right, vertical coolant flux through $z_x$, mean-flow and turbulent parts, 0--50\,g\,s$^{-1}$\,m$^{-1}$; (c) bottom left, swap test of the mean-flow vertical flux, same range; (d) bottom right, lateral coolant flux below $z_x$ through $|y|=0.5D$ [budget] & \texttt{fig\_coolant\_budget.pdf} & \texttt{fig\_coolant\_budget.py} \\
+F5 & 4.1 & coolant budget, RANS 50M and 20M LES (orange) against 193M, $z_x$ of the RANS for all three, $x/D$ 4--20, linear axes, $2\times2$ grid at full width: (a) top left, circulation of the CRVP and the WV; (b) top right, vertical coolant flux through $z_x$, mean-flow and turbulent parts, 0--50\,g\,s$^{-1}$\,m$^{-1}$; (c) bottom left, swap test of the mean-flow vertical flux for the RANS, with the LES total only, same range; (d) bottom right, lateral coolant flux below $z_x$ through $|y|=0.5D$ [budget] & \texttt{fig\_coolant\_budget.pdf} & \texttt{fig\_coolant\_budget.py} \\
 F6 & 4.1 & 193M detector $\log_{10}d$ at $z/D=0.1$: plan views at $t_1$ and $t_2$ and a space-time diagram in $(t-t_0)U_\infty/D$ on the mid-pitch line; dotted: hole exit; full width [spots] & \texttt{fig\_spots.png} & \texttt{fig\_spots.py} \\
 F7 & 4.2 & ratio maps of the eddy viscosity to the 193M, (a) RANS 50M, (b) 20M LES, same scale, $7.5\times3.8$\,in, $x/D$ 4--20, $z_x$ of the RANS on both, with $z_x(x)$, the strain mask and a hand-masked wedge at the upstream top corner (19 cells); vertical scale doubled; full width [meff] & \texttt{fig\_meff\_maps.png} & \texttt{fig\_meff\_maps.py} \\
 F8 & 4.2 & one row of three: (a) exact log split of the RANS eddy-viscosity ratio below $z_x$, with the 20M LES total dash-dot; RANS factor ratios (b) below and (c) above $z_x$; full width [meffsplit] & \texttt{fig\_meff\_split\_film.pdf} & \texttt{fig\_meff\_split\_film.py} \\
@@ -243,7 +243,8 @@ $\sim$0.035.}{Schroeder and Thole 2014, 2015.}
 wall vortices far downstream, the RANS loses them.}{F5a (CRVP solid, WV dash-dot; band: range of the two sides of
 the 193M; open markers: below the detection threshold), F3}{circulation at $x/D=4$: RANS 0.141, 193M 0.096 (ratio
 1.5), ratio 1.2 at $x/D=20$; cores $\sim0.1D$ lower (text); WV held over $x/D$ 4--15 (reference), lost by $x/D=5$
-(RANS).}{Haven and Kurosaka 1997; Fric and Roshko 1994; Haydt 2018 (origin of the pair); Laroche 2023; Stratton and
+(RANS); LES CRVP 0.89--0.96 of the reference on the planes $x/D$ 5--20 (0.92, 0.95, 0.96, 0.90, 0.89 at 5, 8, 12,
+15, 20; no LES plane at 4 or 10).}{Haven and Kurosaka 1997; Fric and Roshko 1994; Haydt 2018 (origin of the pair); Laroche 2023; Stratton and
 Shih 2019 (pair too strong in SST, from contours).}
 
 \blk{Wall-normal coolant budget}{Through $z_x(x)$ the reference carries more coolant off the wall by turbulence than
@@ -252,21 +253,25 @@ three heights; the reference coolant balance closes.}{F5b (linear axis; black 19
 dashed turbulent; band: one jackknife standard error)}{crossing of the 193M curves between $x/D$ 4.0 and 4.5; RANS
 turbulent flux 0.37--0.61 of the reference; RANS mean-flow flux 1.9--5.9 times; at $z/D=1.0$ RANS turbulent flux
 0.67--0.99, at $z/D=0.25$ towards the wall; balance below $z/D=0.5$ within 5\,\%, median 1.2\,\%; jackknife over ten
-batches.}{Oliver 2017 (ratio of maxima $\sim$0.15, $x/d\le5$); Coletti 2013; Schroeder and Thole 2016b; Foroutan and
+batches; LES (turbulent = resolved + mean subgrid, subgrid $\le0.05$\,g\,s$^{-1}$\,m$^{-1}$): turbulent above mean
+from $x/D=4.0$, turbulent 1.07--1.19 times the reference at $x/D$ 4--20, mean 0.92 and 0.88 at $x/D$ 4 and 5, $-0.90$
+against 0.85 at $x/D=20$.}{Oliver 2017 (ratio of maxima $\sim$0.15, $x/d\le5$); Coletti 2013; Schroeder and Thole 2016b; Foroutan and
 Yavuzkurt 2014 (point comparison, small difference).}
 
 \blk{Swap test}{The RANS velocity field alone and the RANS coolant distribution alone each raise the mean-flow
 vertical flux by a similar factor, so the excess is shared about equally between a stronger upwash and coolant
 concentrated where the upwash is; the two effects are not multiplicative.}{F5c (linear axis; colour: source of the
 velocity; solid: same run, dashed: swapped)}{over $x/D$ 4--20: velocity alone 1.2--3.2 times, coolant alone
-1.4--2.8 times; at $x/D=10$: velocity alone 2.71, coolant alone 2.65, both 5.23.}{none found}
+1.4--2.8 times; at $x/D=10$: velocity alone 2.71, coolant alone 2.65, both 5.23; LES total below the reference at every
+station.}{none found}
 
-\blk{Lateral budget}{Below $z_x$ the mean flow carries coolant inward in both runs, more in the RANS at every
+\blk{Lateral budget}{Below $z_x$ the mean flow carries coolant inward in all three runs, more in the RANS at every
 station; the RANS outward turbulent flux is low near the hole and reaches the reference only by $x/D$ 15--20; so
 the narrow plume comes near the hole from a stronger inward sweep and weaker turbulent spreading, and further
 downstream mainly from the inward sweep.}{F5d (black 193M, blue RANS; solid mean flow, dashed turbulent)}{at
 $|y|=0.5D$ over $x/D$ 4--20: inward mean 1.3--1.9 times (1.86 at $x/D=5$); outward turbulent 0.29 at $x/D=4$
-rising to 1.06 at $x/D=20$.}{Acharya 2001; Harrison and Bogard 2008 (narrow film attributed to lateral
+rising to 1.06 at $x/D=20$; LES inward mean 0.85 of the reference at $x/D=5$, outward turbulent within 0.06 at $x/D$ 5
+and 20.}{Acharya 2001; Harrison and Bogard 2008 (narrow film attributed to lateral
 diffusion).}
 
 \blk{Attribution and consequence}{Inward sweep at the wall and upwash at the centre are the velocity pattern of the
@@ -296,7 +301,7 @@ values for $z/D\ge0.3$.}{Wu 2018; McConkey 2022; Kohli and Bogard 2005.}
 \planfig{fig_overview_3d.png}{1.0}{F3. Mean flow of (a) the 193M 3DNS and (b) the RANS 50M: isosurface $Q(D/U_\infty)^2=0.005$ (grey) over the
 plate coloured by $\eta$; insets: $\bar\omega_xD/U_\infty$ and in-plane streamlines at $x/D$ 2, 4, 10, looking downstream.}
 \planfig{fig_eta_x.pdf}{0.42}{F4. (a) $\etab$, (b) centreline $\eta$, (c) mid-pitch $\eta$ with the 193M mid-pitch $\gamma$.}
-\planfig{fig_coolant_budget.pdf}{1.0}{F5. Coolant budget: (a) circulation of the CRVP and the WV, (b) vertical
+\planfig{fig_coolant_budget.pdf}{1.0}{F5. Coolant budget of the RANS 50M and the 20M LES against the 193M: (a) circulation of the CRVP and the WV, (b) vertical
 coolant flux through $z_x$, (c) its mean-flow part with fields swapped, (d) lateral flux below $z_x$ through
 $|y|=0.5D$.}
 \planfig{fig_spots.png}{1.0}{F6. Detector $\log_{10}d$ of the 193M at $z/D=0.1$: plan views at $t_1$ and $t_2$ and
@@ -417,7 +422,8 @@ One paragraph of setup, then four outcomes mirroring the aims:
   centreline (F2, F4).
 \item Coolant budget: turbulent above mean-flow flux in the reference from $x/D\sim4.5$, never in the RANS;
   mean-flow excess shared between velocity and coolant distribution; inward sweep stronger; plume 0.75 wide at
-  $x/D=20$; consistent with a CRVP of 1.2--1.5 times the reference circulation (F3, F5).
+  $x/D=20$; consistent with a CRVP of 1.2--1.5 times the reference circulation; 20M LES turbulent flux 1.07--1.19
+  times the reference, above its mean-flow flux from $x/D=4.0$, CRVP 0.89--0.96 (F3, F5).
 \item Closure budget: near-wall eddy viscosity 0.55--0.67 over $x/D$ 4--20, length the largest deficit; close
   above $z_x$ through cancelling factors; 20M LES within about 10\,\% below $z_x$, 1.14 above; $\Pr_t$ 0.23--0.45
   against 0.9 (F7, F8, F9).

@@ -482,9 +482,10 @@ axis).}\label{fig:etax}
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{fig_coolant_budget.pdf}
-\caption{Coolant budget: (a) circulation of the CRVP and the WV, (b) vertical coolant flux through $z_x$, (c) its
-mean-flow part with fields swapped, (d) lateral flux below $z_x$ through $|y|=0.5D$. Grey: range of the two sides
-(a) or one jackknife standard error (b--d); open markers: below the detection threshold; R: RANS.}\label{fig:budget}
+\caption{Coolant budget of the RANS 50M and the 20M LES against the 193M 3DNS: (a) circulation of the CRVP and the
+WV, (b) vertical coolant flux through $z_x$, (c) its mean-flow part with fields swapped, (d) lateral flux below
+$z_x$ through $|y|=0.5D$. Bands: range of the two sides (a) or one jackknife standard error (b--d); open markers:
+below the detection threshold; R: RANS; L: LES.}\label{fig:budget}
 \end{figure*}
 
 \subsubsection{The Jet and the Vortex Pair}
@@ -500,7 +501,8 @@ $\omega_x$ inside the contour at 0.2 of the peak; the band on the 193M spans its
 RANS pair (blue solid) is 1.5 times the reference at $x/D=4$ and decays to 1.2 times at $x/D=20$. The RANS
 cores, taken as the vorticity-weighted centroid inside half the peak vorticity, lie $\sim0.1D$ below those of the
 reference (not shown). The WV of the reference (black dash-dot) holds its circulation from $x/D$ of 4 to 15, while
-that of the RANS is not detected from $x/D=5$. A CRVP that is too strong in SST-type models has been
+that of the RANS is not detected from $x/D=5$. The LES pair (orange solid) has 0.89--0.96 of the reference
+circulation on the planes from $x/D=5$ to 20, the stations at which the LES has planes. A CRVP that is too strong in SST-type models has been
 reported from contours~\cite{laroche2023,stratton2019}; the ratio of circulations gives its size here.
 
 \begin{figure*}[t]
@@ -512,20 +514,25 @@ triangle: tracked patch.}\label{fig:spots}
 \end{figure*}
 
 \subsubsection{Coolant Budget}
-%% OPEN: the 20M LES is to be added to the coolant budget (circulation, vertical flux, swap test, lateral flux),
-%% to the 3D overview and to the Pr_t comparison; the data are pending.
+%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner), in the Pr_t comparison (data
+%% due), and its circulation at x/D 4 and 10 (planes requested).
 
 The coolant is marked by the total enthalpy, $c=(h_{0,\infty}-h_0)/(h_{0,\infty}-h_{0,c})$, and its time-averaged
 flux splits as $\overline{\rho u_jc}=\bar\rho\tilde u_j\tilde c+\bar\rho\widetilde{u_j''c''}$ into a part carried
 by the mean flow and a turbulent part. The turbulent part is measured in the reference and modelled in the RANS as
-$-(\mu_t/\Pr_t)\,\partial\tilde c/\partial x_j$ with $\Pr_t=0.9$. The vertical flux is integrated over one pitch
-through the top of the near-wall layer, $z=z_x(x)$, defined in Section~\ref{sec:breakdown}; the streamwise flux
+$-(\mu_t/\Pr_t)\,\partial\tilde c/\partial x_j$ with $\Pr_t=0.9$; in the LES it is the resolved flux plus the mean
+subgrid flux, whose part is 0.05\,g\,s$^{-1}$\,m$^{-1}$ or less. The vertical flux is integrated over one pitch
+through the top of the near-wall layer, $z=z_x(x)$, defined in Section~\ref{sec:breakdown} from the RANS and used
+for all three simulations; the streamwise flux
 that crosses this inclined surface is not included.
 
 Figure~\ref{fig:budget}b shows the two vertical parts, with a band of one standard error from the ten-batch
 jackknife on the reference. In the reference (black), the turbulent flux (dashed) exceeds the mean-flow flux
 (solid) from $x/D\sim4.5$; in the RANS (blue) it stays below it along the whole plate. Through this surface the
-RANS turbulent flux is 0.37--0.61 of the reference and its mean-flow flux 1.9--5.9 times the reference. These ratios depend on the height of the surface: through the plane $z/D=1.0$ the
+RANS turbulent flux is 0.37--0.61 of the reference and its mean-flow flux 1.9--5.9 times the reference. In the LES
+(orange) the turbulent flux exceeds the mean-flow flux from $x/D=4.0$ and is 1.07--1.19 times the reference at the
+stations of 4 to 20, while its mean-flow flux is 0.92 and 0.88 of the reference at $x/D$ of 4 and 5, lies below it
+downstream and is slightly negative at $x/D=20$ ($-0.90$ against 0.85\,g\,s$^{-1}$\,m$^{-1}$). These ratios depend on the height of the surface: through the plane $z/D=1.0$ the
 RANS turbulent flux is 0.67--0.99 of the reference, and through $z/D=0.25$ it points towards the wall. The
 ordering of the two parts held through planes at $z/D$ of 0.25, 0.5 and 1.0. For the layer below $z/D=0.5$, the
 coolant balance of the reference closes within 5\,\% at every station, with a median residual of 1.2\,\%.
@@ -538,15 +545,18 @@ velocity alone raises the flux by 2.7 times and the RANS coolant field alone by 
 the RANS itself. Each alone
 accounts for a similar part of the excess; their product exceeds the combined ratio, so the two effects are not
 independent. The excess mean upwash flux of the RANS hence comes from a stronger upwash velocity and from coolant
-concentrated where the upwash is, in about equal measure.
+concentrated where the upwash is, in about equal measure. For the LES only the total is drawn (orange solid); it
+lies below the reference at every station.
 
 Figure~\ref{fig:budget}d gives the lateral budget below $z_x$ through the planes $|y|=0.5D$, positive away from the centreline, with grey bands
-of one jackknife standard error on the reference. In both simulations the mean flow carries coolant
+of one jackknife standard error on the reference. In all three simulations the mean flow carries coolant
 towards the centreline (solid) and the turbulence carries it outwards (dashed). The inward mean flux of the RANS
 (blue solid) is larger than that of the reference at every station, 1.86 times at $x/D=5$, and its outward
 turbulent flux (blue dashed) is 0.29 of the reference at $x/D=4$ and reaches it only by $x/D$ of 15--20. Near the
 hole the narrow RANS plume is thus the result of a stronger inward mean sweep and a weaker turbulent spreading
-together; further downstream it is mainly the result of the inward sweep.
+together; further downstream it is mainly the result of the inward sweep. The LES (orange) lies close to the
+reference: its inward mean flux is 0.85 of the reference at $x/D=5$, and its outward turbulent flux is within
+0.06\,g\,s$^{-1}$\,m$^{-1}$ of the reference at $x/D$ of 5 and 20.
 
 An inward sweep at the wall and an upwash on the centreline are the velocity pattern of the CRVP, whose
 circulation is higher in the RANS (Figure~\ref{fig:budget}a). The RANS centreline upwash at the core height
@@ -880,7 +890,8 @@ budgeted against the 193M reference, averaged over ten flow-through times. The k
   similar part of its excess mean upwash flux. Below that layer the RANS inward mean sweep is stronger along the
   whole plate and its outward turbulent flux is weaker near the hole, which leaves a plume of 0.75 of the
   reference width at $x/D=20$. These budgets are consistent with a CRVP of 1.2--1.5 times the reference
-  circulation.
+  circulation. In the 20M LES the turbulent flux off the layer is 1.07--1.19 times the reference and exceeds the
+  mean-flow flux from $x/D=4.0$, and the pair has 0.89--0.96 of the reference circulation.
 \item In the near-wall layer the RANS eddy viscosity is \muNearLow--\muNearHigh\ of the reference over $x/D$ of
   \xEVstart--20, the length the
   largest deficit and the assumed alignment offsetting part of it; above that layer the factor errors cancel. The

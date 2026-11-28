@@ -1,0 +1,83 @@
+# 20M LES in the coolant budget (fig_coolant_budget.py). Fluxes g s^-1 m^-1, per metre of x, one pitch; z = z_x(x) (near_wall_boundary_zx.txt).
+# Vertical flux through z_x: mean-flow (Jm_w) and turbulent (Jt_w); LES turbulent = resolved + mean SGS (les20_Jt_w_tot; the SGS part is <= 0.05).
+# SE = jackknife over the case batches (193M 10, LES 6; LES SE is that of the resolved part, the SGS part has no SE). 50M 3DNS = c50b (not plotted).
+# Each ratio uses the 193M of its own file (identical to the RANS-file 193M at x/D >= 3.5 within 0.1 %; differences at x/D 3: 1.1 in Jm_w).
+
+VERTICAL FLUX
+  x/D      case     Jm_w     SE     Jt_w     SE  Jm/Jm193  Jt/Jt193
+  4.0      193M    24.34   0.39    22.33   0.65      1.00      1.00
+  4.0  RANS 50M    45.54      -     8.36      -      1.87      0.37
+  4.0   20M LES    22.38   0.54    23.84   0.50      0.92      1.07
+  4.0  50M 3DNS    22.62   0.81    23.83   0.55      0.93      1.07
+  5.0      193M    13.74   0.26    15.79   0.53      1.00      1.00
+  5.0  RANS 50M    27.38      -     6.48      -      1.99      0.41
+  5.0   20M LES    12.10   0.30    17.56   0.49      0.88      1.11
+  5.0  50M 3DNS    12.73   0.38    16.85   0.62      0.93      1.07
+  7.0      193M     5.61   0.31     9.21   0.28      1.00      1.00
+  7.0  RANS 50M    16.67      -     4.31      -      2.97      0.47
+  7.0   20M LES     3.87   0.31    10.59   0.49      0.69      1.15
+  7.0  50M 3DNS     4.50   0.33    10.03   0.30      0.80      1.09
+ 10.0      193M     2.40   0.34     6.41   0.37      1.00      1.00
+ 10.0  RANS 50M    12.52      -     2.89      -      5.22      0.45
+ 10.0   20M LES     0.94   0.27     7.47   0.25      0.39      1.17
+ 10.0  50M 3DNS     1.67   0.24     7.02   0.42      0.70      1.10
+ 15.0      193M     1.29   0.22     5.51   0.27      1.00      1.00
+ 15.0  RANS 50M     7.27      -     3.21      -      5.62      0.58
+ 15.0   20M LES     0.90   0.12     6.08   0.22      0.69      1.10
+ 15.0  50M 3DNS     0.55   0.22     5.33   0.26      0.42      0.97
+ 20.0      193M     0.85   0.22     4.87   0.15      1.00      1.00
+ 20.0  RANS 50M     4.59      -     2.82      -      5.38      0.58
+ 20.0   20M LES    -0.90   0.16     5.81   0.32     -1.05      1.19
+ 20.0  50M 3DNS    -1.02   0.21     5.67   0.24     -1.19      1.16
+
+x/D (from 3.0, steps of 0.25) where the turbulent flux first exceeds the mean-flow flux (Jt_w > Jm_w):
+  193M      4.50
+  RANS 50M  not before x/D 20
+  20M LES   4.00
+  50M 3DNS  4.00
+
+SWAP TEST: mean-flow flux through z_x with the velocity w from one run and the coolant c from the other, J[w, c]
+  x/D  J[193,193] |  J[R,193]  J[193,R]   J[R,R] |  J[L,193]  J[193,L]   J[L,L] | J[50,193] J[193,50] J[50,50]
+  4.0       24.18 |     31.85     34.00    45.29 |     23.90     22.48    22.29 |     24.03     22.54    22.46
+  5.0       13.71 |     16.95     21.89    27.30 |     13.05     12.65    12.07 |     13.65     12.77    12.73
+  7.0        5.59 |      8.79     11.60    16.64 |      4.52      4.80     3.85 |      5.08      4.94     4.48
+ 10.0        2.39 |      6.47      6.34    12.52 |      1.33      1.92     0.93 |      2.20      1.89     1.68
+ 15.0        1.29 |      3.87      3.42     7.27 |      1.07      1.11     0.90 |      0.74      1.04     0.54
+ 20.0        0.86 |      2.52      2.11     4.59 |     -0.74      0.64    -0.89 |     -0.86      0.63    -1.01
+
+LATERAL FLUX through |y| = 0.5 D and 1.0 D below z_x, mean-flow (m) and turbulent (t; LES: resolved + mean SGS), + away from the centreline
+  x/D  |y|/D   193 m   193 t  RANS m  RANS t   LES m   LES t   50M m   50M t
+  4.0    0.5   -7.43    2.70  -11.68    0.78   -6.34    2.48   -6.65    2.76
+  4.0      1   -3.83    4.15   -6.63    2.70   -3.38    3.94   -3.72    3.99
+  5.0    0.5   -7.40    2.65  -13.77    1.02   -6.30    2.59   -6.92    2.76
+  5.0      1   -3.90    3.26   -6.09    2.54   -3.68    3.09   -4.04    3.17
+  7.0    0.5   -5.88    2.37  -10.49    1.33   -5.33    2.44   -5.31    2.43
+  7.0      1   -2.83    2.35   -3.73    2.23   -2.65    2.40   -3.04    2.35
+ 10.0    0.5   -4.15    2.00   -6.49    1.40   -4.05    1.80   -3.72    1.81
+ 10.0      1   -1.81    1.74   -2.18    1.94   -1.61    1.92   -1.79    1.82
+ 15.0    0.5   -2.23    1.47   -3.30    1.42   -2.37    1.37   -2.02    1.48
+ 15.0      1   -1.10    1.71   -1.35    1.75   -0.91    1.54   -0.89    1.75
+ 20.0    0.5   -1.55    1.14   -2.03    1.22   -1.25    1.13   -1.03    1.08
+ 20.0      1   -0.77    1.38   -0.99    1.42   -0.49    1.30   -0.48    1.23
+
+CIRCULATION, CRVP and wall vortex (WV), Gamma/(U_inf D), mean of the two sides.
+A. Volume analysis (fig_mean_features.analyse; omega_x smoothed SIG, contour 0.2 of the local peak), n4 grid, all three runs, same definition:
+  x/D     193M     RANS      LES  LES/193M  RANS/193M
+    4   0.0960   0.1097   0.0900     0.938      1.142
+   10   0.0658   0.0801   0.0652     0.990      1.217
+   20   0.0408   0.0465   0.0362     0.886      1.138
+B. Fine planes (the quantities of panel a). The LES has fine planes at x/D 3, 5, 6, 8, 12, 15, 20 only (none at 2, 4, 10): "-" = no LES plane.
+  x/D  CRVP 193M     RANS      LES  LES/193M |  WV 193M     RANS      LES  LES/193M
+    4     0.0960   0.1414        -         - |   0.0153   0.0211        -         -
+    5     0.0914   0.1257   0.0843     0.923 |   0.0182        -   0.0128     0.701
+    8     0.0747   0.0981   0.0706     0.945 |   0.0208        -   0.0177     0.850
+   10     0.0660   0.0851        -         - |   0.0244        -        -         -
+   12     0.0636   0.0745   0.0611     0.961 |   0.0150        -   0.0175     1.166
+   15     0.0573   0.0626   0.0515     0.898 |   0.0211        -   0.0181     0.856
+   20     0.0408   0.0475   0.0362     0.887 |   0.0118        -   0.0113     0.958
+
+CHECK against the coordinator values (x/D 5 / 10 / 20, g s^-1 m^-1), this script:
+  LES mean flux      12.10 / 0.94 / -0.90   (quoted 12.1 / 0.9 / -0.9); 193M 13.74 / 2.40 / 0.85 (13.7 / 2.4 / 0.85)
+  LES turbulent flux 17.56 / 7.47 / 5.81   (quoted 17.5 / 7.5 / 5.8); 193M 15.79 / 6.41 / 4.87 (15.8 / 6.4 / 4.9)
+  swap J[L,193]      13.05 / 1.33 / -0.74   (quoted 13.1 / 1.3 / -0.7);  J[193,L] 12.65 / 1.92 / 0.64 (12.7 / 1.9 / 0.6)
+  lateral 0.5 D mean -6.30 / -4.05 / -1.25   (quoted -6.3 / -4.1 / -1.3);  turbulent 2.59 / 1.80 / 1.13 (quoted 2.6 / 1.8 / 1.1)
