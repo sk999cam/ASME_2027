@@ -206,7 +206,7 @@ gradient-diffusion hypothesis for the turbulent heat flux,
 \end{equation}
 with a constant turbulent Prandtl number ($\Pr_t$) of 0.85--0.9. With these assumptions the counter-rotating
 vortex pair (CRVP) of the jet is too strong~\cite{azzi2002,laroche2023}. The sign depends on the model: the SST
-model over-predicts the strength of the pair and $k$--$\varepsilon$ models under-predict
+model over-predicts the strength of the CRVP and $k$--$\varepsilon$ models under-predict
 it~\cite{stratton2019,coletti2013}. Measurements and scale-resolving simulations show that the eddy viscosity and
 diffusivity are non-uniform and anisotropic~\cite{kaszeta2000,kohli2005,coletti2013}, that the Boussinesq relation
 does not hold in the hole, along the wall and on the lee side of the jet~\cite{ling2016,stratton2019}, and that
@@ -225,7 +225,7 @@ that of a detached-eddy simulation on the centre plane, with a RANS that missed 
 blowing ratio of 1.5, and Milani et al.~\cite{milani2020} found that isotropic gradient diffusion over-spreads the
 scalar when the LES velocity is held fixed. These studies give the direction of each deficiency, point by point or
 plane by plane. In the literature reviewed, no study compares the mean-flow and turbulent coolant transport of a
-RANS with a resolved reference as a budget through a surface, or gives the circulation of the vortex pair as a
+RANS with a resolved reference as a budget through a surface, or gives the circulation of the CRVP as a
 ratio to a reference. The share of the RANS error that each known deficiency carries is therefore not quantified.
 
 Jets in crossflow carry, besides the CRVP, a horseshoe vortex and wake vortices, and their instantaneous flow
@@ -384,7 +384,7 @@ The resolution of each mesh is stated as the ratio of its grid size to the Kolmo
 \eta_{K,193}=\Big(\frac{\nu^3}{\varepsilon/\bar\rho}\Big)^{1/4},
 \end{equation}
 where $|J|$ is the cell volume, $\nu=\bar\mu/\bar\rho$ and $\varepsilon$ is the viscous dissipation of the
-fluctuations, both from the 193M 3DNS. The bound of 2 follows from $\kappa_{\max}\eta_K\ge1.5$, with $\kappa_{\max}$ the largest resolved wavenumber, for spectral
+fluctuations, both from the reference. The bound of 2 follows from $\kappa_{\max}\eta_K\ge1.5$, with $\kappa_{\max}$ the largest resolved wavenumber, for spectral
 DNS~\cite{pope2000}, which gives $\Delta/\eta_K\le\pi/1.5\sim2.1$. One $\eta_K$ field is used for all meshes,
 mapped through the line-by-line correspondence of the family, so that differences come from the mesh alone.
 
@@ -438,7 +438,7 @@ Figure~\ref{fig:overview} shows the mean vortices of the reference (a) and the R
 $Q$ criterion, the second invariant of the mean velocity gradient. In both, a horseshoe vortex (HV) wraps the
 hole, the CRVP leaves the exit, and outboard of the CRVP a near-wall vortex of the opposite sign, named here the
 wall vortex (WV), lies on the plate (insets at $x/D$ of 2 and 4). At $x/D=10$ the WV is present in the reference
-and absent in the RANS. The RANS pair is the stronger, with a circulation on the cross-plane at $x/D=4$ of 0.141
+and absent in the RANS. The RANS CRVP is the stronger, with a circulation on the cross-plane at $x/D=4$ of 0.141
 against 0.096 in units of $\Uinf D$, and 0.091 for the 20M LES (Section~\ref{sec:jet}). The budget below gives the
 circulation of the CRVP and the WV and the coolant that the mean flow and the turbulence carry across the film.
 
@@ -501,13 +501,13 @@ and breaks down by $x/D\sim3$. The anti-kidney pair of Haven and Kurosaka~\cite{
 
 Figure~\ref{fig:budget}a gives the circulation $\Gamma$ of each mean vortex, the integral of the unsmoothed
 $\omega_x$ over a cross-plane inside the contour at 0.2 of its peak, averaged over the two sides; the band spans
-the two sides of the reference. The circulation of the RANS pair (blue solid) is 1.5 times the reference at
+the two sides of the reference. The circulation of the RANS CRVP (blue solid) is 1.5 times the reference at
 $x/D=4$ and 1.2 times at $x/D=20$. With $\omega_x$ smoothed by a Gaussian of $0.10$--$0.15D$ before the
 integration, the reference is unchanged and the RANS ratio is 1.14 at $x/D=4$ and 1.14--1.22 at $x/D$ of 4, 10
 and 20, so the ratio at $x/D=4$ is 1.14 or 1.47 depending on the definition. The RANS
 cores, taken as the vorticity-weighted centroid inside half the peak vorticity, lie $\sim0.1D$ below those of the
-reference (not shown). The WV of the reference (black dash-dot) holds its circulation from $x/D$ of 4 to 15, while
-that of the RANS is not detected from $x/D=5$. The LES pair (orange solid) has 0.89--0.99 of the reference
+reference over $x/D$ of 6--20, and the LES cores within $0.01D$ (not shown). The WV of the reference (black dash-dot) holds its circulation from $x/D$ of 4 to 15, while
+that of the RANS is not detected from $x/D=5$. The LES CRVP (orange solid) has 0.89--0.99 of the reference
 circulation on the cross-planes from $x/D=4$ to 20, and its WV 0.70--1.23. A CRVP that is too strong in SST-type models has been
 reported from contours~\cite{laroche2023,stratton2019}; the ratio of circulations gives its size here.
 
@@ -520,8 +520,9 @@ triangle: tracked patch.}\label{fig:spots}
 \end{figure*}
 
 \subsubsection{Coolant Budget}
-%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner) and in the Pr_t comparison
-%% (data due).
+%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner), in the Pr_t comparison
+%% (data due), the vertical fluxes through the planes z/D 0.25, 0.5 and 1.0 (six-batch series), the cross-plane
+%% turbulence and length scale, and the spanwise diffusivities (data requested).
 
 The coolant is marked by the total enthalpy, $c=(h_{0,\infty}-h_0)/(h_{0,\infty}-h_{0,c})$, and its time-averaged
 flux splits as $\overline{\rho u_jc}=\bar\rho\tilde u_j\tilde c+\bar\rho\widetilde{u_j''c''}$ into a part carried
@@ -567,12 +568,13 @@ the reference: its inward mean flux is 0.85 of the reference at $x/D=5$, and its
 
 An inward sweep at the wall and an upwash on the centreline are the velocity pattern of the CRVP, whose
 circulation is higher in the RANS (Figure~\ref{fig:budget}a). The RANS centreline upwash at the core height
-is 1.14--1.66 times the reference over $x/D$ of 4--20, and its inward velocity at $z/D=0.1$ under the pair
-1.75--1.93 times. The budgets are consistent with the stronger pair, but no test isolates it, since the swap
-exchanges the whole mean velocity field. The literature holds counter-evidence: a weaker pair in a $k$--$\varepsilon$
+is 1.14--1.66 times the reference over $x/D$ of 4--20, and its inward velocity at $z/D=0.1$ under the CRVP
+1.75--1.93 times; those of the LES are 0.69--1.09 times, lowest at $x/D=20$, and 0.87--1.08 times. The budgets are consistent with the stronger CRVP, but no test isolates it, since the swap
+exchanges the whole mean velocity field. The literature holds counter-evidence: a weaker CRVP in a $k$--$\varepsilon$
 model did not give more spreading~\cite{stratton2019}, and Reynolds-stress models did not widen the
 film~\cite{acharya2001,harrison2008}. The budgets end in the narrow film of Figure~\ref{fig:etax}: by $x/D=20$ the
-RANS plume half-width is 0.75 of the reference, while the height of the coolant centroid agrees within 12\,\%.
+RANS plume half-width is 0.75 of the reference, while the height of the coolant centroid agrees within 12\,\%;
+the LES half-width and centroid height are 1.03 and 1.01 of the reference.
 
 \subsubsection{The Layer Between the Jets}\label{sec:layer}
 
@@ -595,7 +597,7 @@ from the start $t_0$ of the record, shows turbulent streaks from $x/D\sim10$ tha
 $x/D=20$. The mid-pitch $\gamma$ of the reference exceeds 0.8 from $x/D=15.5$ (Figure~\ref{fig:etax}c). That of
 the LES differs from it by up to 0.145, at $x/D=11.7$, lies within 0.03 of it from $x/D=16$ and reaches 0.94 at
 $x/D=20$, while the model $\gamma$ of the RANS stays at 0.02. Over the plane $z/D=0.1$ from $x/D=-3$ to 20, the
-mean $\gamma$ of the RANS is 0.17, against 0.73 for the reference. A triple decomposition after
+mean $\gamma$ of the RANS is 0.17, against 0.73 for both the reference and the LES. A triple decomposition after
 Lav et al.~\cite{lav2019}, with their filter width, gives a periodic share of 0.03--0.06 of the reference eddy
 viscosity in the hole, the jet and the film. The mixing is therefore mostly broadband turbulence, as expected at a
 velocity ratio near 1~\cite{fawcett2013}.
@@ -709,13 +711,15 @@ route that reproduces the RANS layer means within 0.03 in $\ln$ ratio. Below $z_
 eddy viscosity is 1.07 times the reference over $x/D$ of \xEVstart--20 and within about 10\,\% at every slab
 (dash-dot in Figure~\ref{fig:meffsplit}a), where the RANS is 33--45\,\% low. Above $z_x$ the LES lies further from
 the reference than the RANS, 1.14 times in the mean over $x/D$ of \xEVstart--20 and 1.23 times at $x/D=19.5$,
-against 1.06 for the RANS.
+against 1.06 for the RANS. In the span-mean layer means, the LES $k^{1/2}$ is 1.01 times the reference in both
+layers and its $\cos\theta$ 0.96 and 0.98 times that of the reference, while its length is 1.11 times below $z_x$
+and 1.18 times above, so the LES excess above $z_x$ comes through the length scale.
 
 Across the span, on cross-planes at $x/D$ of 4, 10 and 20 (not shown), the near-wall turbulence of the reference
 spreads from the jet to mid-pitch, while the RANS has little turbulence outside the jet, and the band of short
 length along the wall is thicker in the RANS. For the SST model, $\mu_t/(\bar\rho k^{1/2})$ equals the
 dissipation length $C_\mu k^{3/2}/\varepsilon$ where its limiter is inactive, and the two agree within 5\,\% in the
-film of the RANS 50M, so the short length of the RANS is a short dissipation length.
+film of the RANS, so the short length of the RANS is a short dissipation length.
 %% OPEN: the comparison of L_eff with the dissipation length on the centreline of the reference (formerly "within
 %% 7 %") has no source in the scripts or tables; add the value with its source to restore it.
 
@@ -731,7 +735,8 @@ grey where $\Pr_t$ is not resolved, that is where $|\Pr_t|$ is below twice its j
 denominator of Equation~\ref{eq:prtR} changes sign among the ten batches. Away from the wall the map is resolved,
 and almost the whole film lies below the mark of 0.9 on the colour bar, with the lowest values along the core of
 the jet. In the viscous wall layer of the far film ($x/D$ of 10--20, $z/D<0.2$), 46\,\% of the area is grey, and
-no map value is given there. Pooled over $x/D$ of 10--20, $\Pr_t$ is not resolved below a wall distance in viscous
+no map value is given there; the record is final at ten flow-through times, and a standard error of 0.1 per cell
+would need about eleven times the record. Pooled over $x/D$ of 10--20, $\Pr_t$ is not resolved below a wall distance in viscous
 units of $z^+\approx11$, where the adiabatic wall drives $\partial_z\tilde T$ to zero. For $z^+$ of 13--30 ($z/D$
 of 0.10--0.22) it is 0.9--1.0 ($\pm$0.10--0.18), close to the RANS setting and twice the value above $z/D=0.3$.
 
@@ -808,7 +813,7 @@ in design can be judged. It is shown that a lower $\Pr_t$ corrects the centrelin
 raises the span mean with a film of the wrong shape, and that a resolved heat flux imposed in the film recovers the
 shape of the film with the mean flow of the RANS unchanged. The uncorrected 20M LES is shown for comparison.
 
-Every run starts from the converged RANS 50M and changes one input (Table~\ref{tab:apost}). Four measures are
+Every run starts from the converged RANS and changes one input (Table~\ref{tab:apost}). Four measures are
 reported against the reference: the recovered share of the deficit in $\etab$ over $x/D$ of 7--20, which measures
 the amount of coolant at the wall, and the centreline and mid-pitch $\eta$ at $x/D=20$ and $\etab$ over $x/D$ of
 15--20, which measure where it is. A run is counted as matching the reference only if all four agree. The blowing
@@ -898,7 +903,7 @@ budgeted against the 193M reference, averaged over ten flow-through times. The o
   whole plate and its outward turbulent flux is weaker near the hole, with a plume of 0.75 of the reference
   width at $x/D=20$. These budgets are consistent with a CRVP of 1.1--1.5 times the reference circulation,
   depending on the definition. In the 20M LES the turbulent flux off the layer is 1.07--1.19 times the reference and exceeds the
-  mean-flow flux from $x/D=4.0$, and the pair has 0.89--0.99 of the reference circulation.
+  mean-flow flux from $x/D=4.0$, and its CRVP has 0.89--0.99 of the reference circulation.
 \item In the near-wall layer the RANS eddy viscosity is \muNearLow--\muNearHigh\ of the reference over $x/D$ of
   \xEVstart--20, the length the
   largest deficit and the assumed alignment offsetting part of it; above that layer the factor errors cancel. The

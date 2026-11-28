@@ -60,7 +60,9 @@ P('c. Centreline upwash at the core height and inward velocity at z/D 0.1 under 
 P('   Route: fig_mean_features.cross_to: W/U on the centreline y = 0 interpolated at the mean core height zc; V/U inward = mean over the sides of the maximum inward V/U at z/D 0.1, |y| < 1.5.')
 for key, nm in (('W/U centre at zc', 'upwash W/U at zc'), ('V/U inward z=0.1', 'inward V/U at z/D 0.1')):
     rr, ll = q['RANS 50M'][key] / q['193M'][key], q['20M LES'][key] / q['193M'][key]
-    P(f'   {nm}: ratio to 193M over x/D 4-20: RANS {rng(rr, m420)} (steps of 0.25 D); LES {rng(ll, m420)}')
+    st = [ix(x) for x in (4, 6, 10, 15, 20)]
+    P(f'   {nm}: ratio to 193M over the stations x/D 4, 6, 10, 15, 20: RANS {np.min(rr[st]):.2f} to {np.max(rr[st]):.2f}; LES {np.min(ll[st]):.2f} to {np.max(ll[st]):.2f}'
+      f' (all steps of 0.25 D over x/D 4-20: RANS {rng(rr, m420)}, LES {rng(ll, m420)})')
     P(f'     {"x/D":>5s} {"193M":>9s} {"RANS":>9s} {"LES":>9s} {"RANS/193M":>10s} {"LES/193M":>9s}')
     for x in (4, 6, 10, 15, 20):
         a, r, l_ = (q[k][key][ix(x)] for k in ('193M', 'RANS 50M', '20M LES'))
@@ -130,7 +132,8 @@ for tag in ('c193b', 'c20bw'):
 P('   Route (fig_wall_state.py main): gamma maps on the grid x/D -3..20 and |y/D| <= 3 in steps of 0.04 D, plain mean. RANS: Intermittency (SST gamma-Re_theta model variable) of the prism')
 P('   layer z/D 0.098 (cells_rans_p0dns_full.csv through rans50_z010_cells.npz), regridded with fig_wall_state.regrid (mask distance 0.15 D). 193M and LES: high-pass spanwise-stress')
 P('   detector, Otsu threshold pooled over the 193M band |y/D| 2-3, x/D 0-20 (one threshold for both), z010 plane sampler (_gamma_extract_v.load_z010).')
-P(f'   Reproduction: RANS {g_r:.4f} (manuscript 0.17), 193M {res["c193b"][0]:.4f} (manuscript 0.73 / 0.726); also on the native detector grid (x <= 20, 0.02 D): 193M {res["c193b"][1]:.4f}')
+P(f'   Reproduction: RANS {g_r:.4f} (manuscript 0.17; the value 0.175 is NOT reproduced: variants of the regrid give 0.167-0.180, mask distance 0.05 D gives 0.180),')
+P(f'   193M {res["c193b"][0]:.4f} on the 0.04 D grid (manuscript 0.73) and {res["c193b"][1]:.4f} on the native 0.02 D detector grid (x <= 20; the quoted 0.726)')
 P(f'   LES: {res["c20bw"][0]:.4f} on the same grid (native detector grid: {res["c20bw"][1]:.4f}); LES - 193M = {res["c20bw"][0] - res["c193b"][0]:+.4f}')
 P('   Sources: gamma_v/c193b_z010_v.npz, gamma_v/c20bw_z010_v.npz, gamma_v/thresholds.json; RANS: bl_extract/rans50_z010_cells.npz.')
 
@@ -164,12 +167,12 @@ def span_ratios(G, lay, xc, width):
     m = slab & ok
     w = (G['area'] * np.where(np.isfinite(G['f']), G['f'], 0.0))[m]
     mean = lambda a: (w * a[m]).sum() / w.sum()      # noqa: E731
-    return dict(k=mean(G['R']['k']) / mean(G['D']['k']), L=mean(G['R']['L']) / mean(G['D']['L']), icos=mean(G['D']['c']) / mean(G['R']['c']),
+    return dict(k=mean(G['R']['k']) / mean(G['D']['k']), L=mean(G['R']['L']) / mean(G['D']['L']), icos=mean(G['R']['c']) / mean(G['D']['c']),
                 mu=mean(G['R']['mu']) / mean(G['D']['mu']))
 
 
 P('   Routes: RANS (paper, panels b, c): point file, 3D strain mask, mesh-volume weights (_meff_split_nearfar.compute_curve, vmean: k^1/2, L, 1/cos = 1/<cos_193>, RANS cos = 1).')
-P('   RANS and LES by the span route: meff_span files, Delta-y weighted conditional means (cy), rebinned to 0.1 D, weights dx dz f (f >= 0.2), ratio of the layer means; 1/cos = <cos_193>/<cos_run>')
+P('   RANS and LES by the span route: meff_span files, Delta-y weighted conditional means (cy), rebinned to 0.1 D, weights dx dz f (f >= 0.2), ratio of the layer means; the 1/cos column is <cos_run>/<cos_193> (= 1/<cos_193> for the RANS)')
 P('   (RANS cos = 1; LES cos is its own: cos = -a:S*/(|a||S*|) of the resolved stress plus mean WALE stress as in the README of meff_span). The point-file route has no LES counterpart.')
 P('   Layer means over x/D 4-20 (one slab 16 D wide) and slabs of 1 D at x/D 5, 10, 19.5; layers: below z_x (wall to z_x), above z_x (to z/D 2 where f >= 0.2).')
 P(f'   {"layer":>6s} {"x/D":>8s} | {"RANS point file: k1/2":>21s} {"L":>6s} {"1/cos":>6s} {"mu":>6s} | {"RANS span: k1/2":>16s} {"L":>6s} {"1/cos":>6s} {"mu":>6s} | {"LES span: k1/2":>15s} {"L":>6s} {"1/cos":>6s} {"mu":>6s}')

@@ -17,14 +17,14 @@ a. CRVP core height (manuscript: the RANS cores lie ~0.1 D below those of the re
 ==============================================================================================================
 c. Centreline upwash at the core height and inward velocity at z/D 0.1 under the pair (manuscript: RANS 1.14-1.66 and 1.75-1.93 times the reference over x/D 4-20)
    Route: fig_mean_features.cross_to: W/U on the centreline y = 0 interpolated at the mean core height zc; V/U inward = mean over the sides of the maximum inward V/U at z/D 0.1, |y| < 1.5.
-   upwash W/U at zc: ratio to 193M over x/D 4-20: RANS 1.05 to 1.66 (steps of 0.25 D); LES 0.69 to 1.18
+   upwash W/U at zc: ratio to 193M over the stations x/D 4, 6, 10, 15, 20: RANS 1.14 to 1.66; LES 0.69 to 1.09 (all steps of 0.25 D over x/D 4-20: RANS 1.05 to 1.66, LES 0.69 to 1.18)
        x/D      193M      RANS       LES  RANS/193M  LES/193M
          4    0.0490    0.0560    0.0474      1.143     0.968
          6    0.0334    0.0389    0.0285      1.164     0.853
         10    0.0225    0.0373    0.0245      1.656     1.088
         15    0.0204    0.0263    0.0219      1.293     1.076
         20    0.0155    0.0187    0.0107      1.203     0.688
-   inward V/U at z/D 0.1: ratio to 193M over x/D 4-20: RANS 1.74 to 1.94 (steps of 0.25 D); LES 0.87 to 1.08
+   inward V/U at z/D 0.1: ratio to 193M over the stations x/D 4, 6, 10, 15, 20: RANS 1.74 to 1.93; LES 0.87 to 1.08 (all steps of 0.25 D over x/D 4-20: RANS 1.74 to 1.94, LES 0.87 to 1.08)
        x/D      193M      RANS       LES  RANS/193M  LES/193M
          4    0.0377    0.0658    0.0329      1.745     0.873
          6    0.0299    0.0575    0.0279      1.924     0.932
@@ -77,27 +77,28 @@ e. Plane-mean intermittency gamma at z/D 0.1, x/D -3 to 20, |y/D| < 3 (manuscrip
    Route (fig_wall_state.py main): gamma maps on the grid x/D -3..20 and |y/D| <= 3 in steps of 0.04 D, plain mean. RANS: Intermittency (SST gamma-Re_theta model variable) of the prism
    layer z/D 0.098 (cells_rans_p0dns_full.csv through rans50_z010_cells.npz), regridded with fig_wall_state.regrid (mask distance 0.15 D). 193M and LES: high-pass spanwise-stress
    detector, Otsu threshold pooled over the 193M band |y/D| 2-3, x/D 0-20 (one threshold for both), z010 plane sampler (_gamma_extract_v.load_z010).
-   Reproduction: RANS 0.1674 (manuscript 0.17), 193M 0.7240 (manuscript 0.73 / 0.726); also on the native detector grid (x <= 20, 0.02 D): 193M 0.7256
+   Reproduction: RANS 0.1674 (manuscript 0.17; the value 0.175 is NOT reproduced: variants of the regrid give 0.167-0.180, mask distance 0.05 D gives 0.180),
+   193M 0.7240 on the 0.04 D grid (manuscript 0.73) and 0.7256 on the native 0.02 D detector grid (x <= 20; the quoted 0.726)
    LES: 0.7263 on the same grid (native detector grid: 0.7278); LES - 193M = +0.0023
    Sources: gamma_v/c193b_z010_v.npz, gamma_v/c20bw_z010_v.npz, gamma_v/thresholds.json; RANS: bl_extract/rans50_z010_cells.npz.
 
 ==============================================================================================================
 f. Eddy-viscosity factor split, ratios to the 193M of k^1/2, L (L_eff) and 1/cos(theta) below and above z_x (fig_meff_split_film panels (b), (c) give them for the RANS)
    Routes: RANS (paper, panels b, c): point file, 3D strain mask, mesh-volume weights (_meff_split_nearfar.compute_curve, vmean: k^1/2, L, 1/cos = 1/<cos_193>, RANS cos = 1).
-   RANS and LES by the span route: meff_span files, Delta-y weighted conditional means (cy), rebinned to 0.1 D, weights dx dz f (f >= 0.2), ratio of the layer means; 1/cos = <cos_193>/<cos_run>
+   RANS and LES by the span route: meff_span files, Delta-y weighted conditional means (cy), rebinned to 0.1 D, weights dx dz f (f >= 0.2), ratio of the layer means; the 1/cos column is <cos_run>/<cos_193> (= 1/<cos_193> for the RANS)
    (RANS cos = 1; LES cos is its own: cos = -a:S*/(|a||S*|) of the resolved stress plus mean WALE stress as in the README of meff_span). The point-file route has no LES counterpart.
    Layer means over x/D 4-20 (one slab 16 D wide) and slabs of 1 D at x/D 5, 10, 19.5; layers: below z_x (wall to z_x), above z_x (to z/D 2 where f >= 0.2).
     layer      x/D | RANS point file: k1/2      L  1/cos     mu |  RANS span: k1/2      L  1/cos     mu |  LES span: k1/2      L  1/cos     mu
-     near     4-20 |                 0.593  0.468  2.021  0.582 |            0.593  0.470  0.492  0.584 |           1.008  1.114  1.042  1.067
-     near        5 |                 0.646  0.445  2.443  0.661 |            0.642  0.442  0.399  0.664 |           0.991  0.976  0.970  0.988
-     near       10 |                 0.560  0.435  2.229  0.578 |            0.563  0.440  0.447  0.585 |           1.026  1.043  0.990  1.080
-     near     19.5 |                 0.608  0.494  1.734  0.555 |            0.615  0.506  0.580  0.570 |           1.000  1.166  1.080  1.081
-    above     4-20 |                 1.130  0.800  1.290  1.056 |            1.114  0.807  0.758  1.050 |           1.011  1.177  1.016  1.143
-    above        5 |                 1.102  0.828  1.427  1.074 |            1.067  0.820  0.663  1.057 |           1.022  1.082  1.000  1.080
-    above       10 |                 1.105  0.796  1.310  1.011 |            1.093  0.798  0.740  1.003 |           1.035  1.082  0.994  1.089
-    above     19.5 |                 1.147  0.817  1.234  1.109 |            1.140  0.823  0.808  1.106 |           0.999  1.257  1.009  1.233
+     near     4-20 |                 0.593  0.468  2.021  0.582 |            0.593  0.470  2.031  0.584 |           1.008  1.114  0.959  1.067
+     near        5 |                 0.646  0.445  2.443  0.661 |            0.642  0.442  2.506  0.664 |           0.991  0.976  1.030  0.988
+     near       10 |                 0.560  0.435  2.229  0.578 |            0.563  0.440  2.235  0.585 |           1.026  1.043  1.010  1.080
+     near     19.5 |                 0.608  0.494  1.734  0.555 |            0.615  0.506  1.725  0.570 |           1.000  1.166  0.926  1.081
+    above     4-20 |                 1.130  0.800  1.290  1.056 |            1.114  0.807  1.320  1.050 |           1.011  1.177  0.984  1.143
+    above        5 |                 1.102  0.828  1.427  1.074 |            1.067  0.820  1.508  1.057 |           1.022  1.082  1.000  1.080
+    above       10 |                 1.105  0.796  1.310  1.011 |            1.093  0.798  1.351  1.003 |           1.035  1.082  1.006  1.089
+    above     19.5 |                 1.147  0.817  1.234  1.109 |            1.140  0.823  1.238  1.106 |           0.999  1.257  0.991  1.233
    Panel (b)/(c) ranges of the RANS over the slabs x/D 4.5-19.5 (point file): below z_x k^1/2 0.56-0.65, L 0.43-0.50, 1/cos 1.73-2.46; above z_x k^1/2 1.10-1.16, L 0.77-0.85, 1/cos 1.23-1.45
-   LES (span route) ranges over the same slabs: near k 0.99-1.03, L 0.96-1.19, icos 0.97-1.10; above k 0.99-1.04, L 1.04-1.29, icos 0.99-1.06
+   LES (span route) ranges over the same slabs: near k 0.99-1.03, L 0.96-1.19, icos 0.91-1.03; above k 0.99-1.04, L 1.04-1.29, icos 0.95-1.01
    Sources: RANS point file: fig_meff_split_film.py (pts.npz via _meff_split_nearfar.py); span: meff_span/span_RANS50.npz, span_C20bW.npz, span_C193b.npz; z_x: data/near_wall_boundary_zx.txt.
 
 ==============================================================================================================
