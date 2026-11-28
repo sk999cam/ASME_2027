@@ -85,30 +85,34 @@ P('')
 P('=' * 110)
 P('b. Vertical coolant flux through the planes z/D 0.25, 0.5, 1.0 (manuscript: RANS turbulent flux 0.67-0.99 of the reference through z/D 1.0, towards the wall through z/D 0.25;')
 P('   ordering of the two parts held through the three planes)')
-P('   Route: wall_balance/n7_series_c193b_b010_rans50.npz (keys h<h>_193_Jm/Jt, h<h>_rans_Jm/Jt; n7_summary.txt), g s^-1 m^-1, one pitch. LES: wall_balance/les_c50b/')
-P('   balance_c20bw_b1.npz and _b2.npz (keys h<h>_Jm, h<h>_Jt, h<h>_Jsgs, kg s^-1 m^-1 x 1000; mean of the two batches; turbulent = resolved + mean SGS).')
-P('   LIMIT: only two of the LES batches are available as plane series (batch-to-batch scatter of Jm 10-40 %, e.g. h 0.5, x/D 5: 11.7 and 10.2); the six-batch LES')
-P('   series (SE, like the 193M ten-batch jackknife) needs the remaining batches from the data session. Values below are two-batch means without SE.')
+P('   Route: wall_balance/n7_series_c193b_b010_rans50.npz (keys h<h>_193_Jm/Jt, h<h>_rans_Jm/Jt; n7_summary.txt), g s^-1 m^-1, one pitch, x/D 2-20 every 0.25 D. LES: wall_balance/')
+P('   n7_series_c193b_b010_les20.npz (keys h<h>_les20_Jm, _Jt, _Jsgs and _se, six-batch jackknife of the LES; turbulent = resolved Jt + mean SGS Jsgs, the SGS part has no SE;')
+P('   the SE quoted for the LES turbulent flux is that of the resolved part). Same stations as the 193M and RANS series, no interpolation.')
 s = np.load(AS + 'wall_balance/n7_series_c193b_b010_rans50.npz')
-b1 = np.load(AS + 'wall_balance/les_c50b/balance_c20bw_b1.npz')
-b2 = np.load(AS + 'wall_balance/les_c50b/balance_c20bw_b2.npz')
-xs, xl = s['x_D'], b1['xs']
+ls_ = np.load(AS + 'wall_balance/n7_series_c193b_b010_les20.npz')
+xs = s['x_D']
+assert np.allclose(xs, ls_['x_D'])
 mx = (xs >= 4 - 1e-9) & (xs <= 20 + 1e-9)
 for h in ('0.25', '0.5', '1.0'):
     j193m, j193t = s[f'h{h}_193_Jm'], s[f'h{h}_193_Jt']
     jrm, jrt = s[f'h{h}_rans_Jm'], s[f'h{h}_rans_Jt']
-    jlm = 1e3 * 0.5 * (b1[f'h{h}_Jm'] + b2[f'h{h}_Jm'])
-    jlt = 1e3 * 0.5 * (b1[f'h{h}_Jt'] + b2[f'h{h}_Jt'] + b1[f'h{h}_Jsgs'] + b2[f'h{h}_Jsgs'])
-    jlm_i, jlt_i = np.interp(xs, xl, jlm), np.interp(xs, xl, jlt)
+    jlm = ls_[f'h{h}_les20_Jm']
+    jlt = ls_[f'h{h}_les20_Jt'] + ls_[f'h{h}_les20_Jsgs']
+    jlm_i, jlt_i = jlm, jlt
+    se193m, se193t = s[f'h{h}_193_Jm_se'], s[f'h{h}_193_Jt_se']
+    selm, selt = ls_[f'h{h}_les20_Jm_se'], ls_[f'h{h}_les20_Jt_se']
     first = lambda a, b: (f'{xs[mx][np.where(a[mx] > b[mx])[0][0]]:.2f}' if (a[mx] > b[mx]).any() else 'not in 4-20')      # noqa: E731
     P(f'   z/D = {h}: ratio to 193M over x/D 4-20 (steps 0.25): turbulent flux RANS {rng(jrt / j193t, mx)}, LES {rng(jlt_i / j193t, mx)}; '
       f'mean-flow flux RANS {rng(jrm / j193m, mx)}, LES {rng(jlm_i / j193m, mx)}')
     P(f'      first x/D (>= 4) where turbulent > mean flux: 193M {first(j193t, j193m)}, RANS {first(jrt, jrm)}, LES {first(jlt_i, jlm_i)}; '
       f'RANS turbulent flux negative (towards the wall) at {int((jrt[mx] < 0).sum())} of {int(mx.sum())} stations, LES {int((jlt_i[mx] < 0).sum())}')
-    P(f'      {"x/D":>5s} {"193M Jm":>8s} {"Jt":>7s} {"RANS Jm":>8s} {"Jt":>7s} {"LES Jm":>8s} {"Jt":>7s}')
+    P(f'      LES turbulent flux negative at {int((jlt[mx] < 0).sum())} of {int(mx.sum())} stations; LES mean flux negative at {int((jlm[mx] < 0).sum())} (first at x/D '
+      f'{xs[mx][np.where(jlm[mx] < 0)[0][0]]:.2f})' if (jlm[mx] < 0).any() else f'      LES turbulent flux negative at {int((jlt[mx] < 0).sum())} of {int(mx.sum())} stations; LES mean flux never negative in x/D 4-20')
+    P(f'      {"x/D":>5s} | {"193M Jm (SE)":>16s} {"193M Jt (SE)":>16s} | {"RANS Jm":>8s} {"RANS Jt":>8s} | {"LES Jm (SE)":>16s} {"LES Jt (SE)":>16s}')
     for x in (5, 10, 20):
         i = int(np.argmin(np.abs(xs - x)))
-        P(f'      {x:5d} {j193m[i]:8.2f} {j193t[i]:7.2f} {jrm[i]:8.2f} {jrt[i]:7.2f} {jlm_i[i]:8.2f} {jlt_i[i]:7.2f}')
+        P(f'      {x:5d} | {j193m[i]:8.2f} ({se193m[i]:5.2f}) {j193t[i]:8.2f} ({se193t[i]:5.2f}) | {jrm[i]:8.2f} {jrt[i]:8.2f} | '
+          f'{jlm_i[i]:8.2f} ({selm[i]:5.2f}) {jlt_i[i]:8.2f} ({selt[i]:5.2f})')
 P('   Surface z = z_x: see coolant_budget_les_table.txt (six-batch LES, with SE).')
 
 # ------------------------------------------------------------------------------------------------ e. gamma
@@ -206,7 +210,7 @@ P('=' * 110)
 P('g. Cross-plane turbulence level and length scale (manuscript, near L706: on the x/D 4, 10, 20 planes the reference spreads near-wall turbulence from the jet to mid-pitch, the RANS has')
 P('   little turbulence outside the jet, the short-length band along the wall is thicker in the RANS; no number is quoted)')
 import meff_planes_common as mc  # noqa: E402
-DAT = {'RANS 50M': mc.load('rans'), '193M': mc.load('ref')}
+DAT = {'RANS 50M': mc.load('rans'), '193M': mc.load('ref'), '20M LES': np.load(AS + 'meff_planes/les20_b006.npz', allow_pickle=True)}
 
 
 def fld(qn, rung, p):
@@ -218,13 +222,13 @@ def fld(qn, rung, p):
 
 
 P('   Route (fig_cross_planes.py print): planewise median and 99th percentile of k/U_inf^2 and L_eff/D (RANS: mu_t/(rho k^1/2)) over the plane points (z/D 0-3).')
-P(f'   {"x/D":>5s} {"quantity":>9s} | {"RANS median":>12s} {"RANS p99":>10s} | {"193M median":>12s} {"193M p99":>10s} | {"RANS/193M median":>17s}')
+P('   LES: meff_planes/les20_b006.npz (C20bW stat3 b006, same keys and plane points as rans50_p0dns.npz; k and L_eff as for mu_eff with the mean WALE stress added), same field() as fig_cross_planes.')
+P(f'   {"x/D":>5s} {"qty":>4s} | {"RANS med":>10s} {"RANS p99":>10s} | {"193M med":>10s} {"193M p99":>10s} | {"LES med":>10s} {"LES p99":>10s} | {"RANS/193M med":>14s} {"p99":>6s} | {"LES/193M med":>13s} {"p99":>6s}')
 for x in (4, 10, 20):
     for qn in ('k', 'L'):
-        a, b = fld(qn, 'RANS 50M', f'x{x}'), fld(qn, '193M', f'x{x}')
-        P(f'   {x:5d} {qn:>9s} | {np.nanmedian(a):12.4g} {np.nanpercentile(a, 99):10.4g} | {np.nanmedian(b):12.4g} {np.nanpercentile(b, 99):10.4g} | {np.nanmedian(a) / np.nanmedian(b):17.3f}')
-P('   LES data not available: needs k and L_eff = k^1/2 |b|/|S*| (stat3 correlations of C20bW b006, with the WALE stress added to the stress as for mu_eff) on the x/D 4, 10, 20 planes in the')
-P('   format of meff_planes/ref193_b010.npz (keys x4_k, x4_L, x4_S, x4_T, x4_A, x4_B ...) from the data session. les20_mean_grid.npz has no k or Reynolds stress.')
+        a, b, c_ = fld(qn, 'RANS 50M', f'x{x}'), fld(qn, '193M', f'x{x}'), fld(qn, '20M LES', f'x{x}')
+        P(f'   {x:5d} {qn:>4s} | {np.nanmedian(a):10.4g} {np.nanpercentile(a, 99):10.4g} | {np.nanmedian(b):10.4g} {np.nanpercentile(b, 99):10.4g} | {np.nanmedian(c_):10.4g} {np.nanpercentile(c_, 99):10.4g} | '
+          f'{np.nanmedian(a) / np.nanmedian(b):14.3f} {np.nanpercentile(a, 99) / np.nanpercentile(b, 99):6.3f} | {np.nanmedian(c_) / np.nanmedian(b):13.3f} {np.nanpercentile(c_, 99) / np.nanpercentile(b, 99):6.3f}')
 P('')
 P('=' * 110)
 P('h. Spanwise diffusivities (manuscript, near L746: alpha_y/alpha_z of the reference is 3.2 on the film flanks at x/D 10; nu_y/nu_z 0.7-1.1; the lateral heat diffusivity of the RANS at the film')
@@ -232,12 +236,87 @@ P('   edges is 0.5-0.6 times the reference)')
 P('   Route: fig_prt_data.py (regional least squares of -rho v\'\'T\'\' dT/dy etc. on the cross-planes x/D 10 and 20, flanks |y|/D >= 1.5, z/D >= 0.3, b010); table prt_classes/prt_data_tables.txt.')
 P('   Manuscript values reproduced from that table: alpha_y/alpha_z flanks x/D 10 = 3.16 (3.2), nu_y/nu_z flanks 1.07 (x/D 10) and 0.71 (x/D 20) (0.7-1.1);')
 P('   RANS/193M lateral heat diffusivity at the edges = exp(ln(P_R/P_D) - gradient term) = exp(0.041 - 0.658) = 0.54 (x/D 10), exp(0.191 - 0.650) = 0.63 (x/D 20) (0.5-0.6).')
-P('   LES data not available: needs the plane correlations of fig_prt_data / prt_corr_common (sum of -rho u\'\'v\'\' dU/dy, -rho u\'\'w\'\' dU/dz, -rho v\'\'T\'\' dT/dy, -rho w\'\'T\'\' dT/dz, with the')
-P('   mean gradients) for C20bW stat3 b006 on the planes x/D 10 and 20, with the SGS stress and heat flux added; no corr_*_C20bW file exists in prt_classes/.')
+import prt_corr_common as cc  # noqa: E402
+import fig_prt_classes as fc  # noqa: E402
+Rr = {'193M': dict(np.load(f'{mc.CACHE}/ref193_b010.npz')), '20M LES': dict(np.load(f'{mc.CACHE}/les20_b006.npz', allow_pickle=True))}
+RANSd = dict(np.load(f'{mc.CACHE}/rans50_p0dns.npz'))
+IX = {k: i for i, k in enumerate(fc.KEYS)}
+NUR = (IX['lnm'], IX['ldm'], IX['cnm'], IX['cdm'])         # nu_y/nu_z, as fig_prt_data
+ALR = (IX['lna'], IX['lda'], IX['cna'], IX['cda'])         # alpha_y/alpha_z
+ratio = lambda S, spec: (S[spec[0]].sum() / S[spec[1]].sum()) / (S[spec[2]].sum() / S[spec[3]].sum())      # noqa: E731
+rg = np.random.default_rng(5)
+
+
+def boot(S, spec, nb=1000):
+    have = np.nonzero(S[IX['cdm']] > 0)[0]
+    Sh = S[:, have]
+    w = rg.multinomial(len(have), np.ones(len(have)) / len(have), size=nb).astype(float)
+    v = ((w @ Sh[spec[0]]) / (w @ Sh[spec[1]])) / ((w @ Sh[spec[2]]) / (w @ Sh[spec[3]]))
+    v = v[np.isfinite(v)]
+    return np.percentile(v, [2.5, 97.5])
+
+
+def load_corr_tag(p, tag, shape):
+    """as fig_prt_classes.load_corr, with the file name of the LES (corr_<plane>_c20bw_b006.npz)."""
+    z = dict(np.load(os.path.join(cc.CORR_DIR, tag.format(p=p))))
+    out = {}
+    for qq in cc.FIELDS:
+        a = np.full(int(np.prod(shape)), np.nan, np.float32)
+        a[z['idx']] = z[qq]
+        out[qq] = a.astype(float)
+    return out
+
+
+FILES = {'193M': 'corr_{p}_b010.npz', '20M LES': 'corr_{p}_c20bw_b006.npz'}
+EDGE = lambda d: (d['z'] >= 0.3) & (np.abs(d['x']) >= 1.0)      # noqa: E731
+CL = [('all, z/D >= 0.3', lambda d: d['z'] >= 0.3), ('centre |y|/D < 1', lambda d: (d['z'] >= 0.3) & (np.abs(d['x']) < 1)),
+      ('flanks |y|/D >= 1.5', lambda d: (d['z'] >= 0.3) & (np.abs(d['x']) >= 1.5)), ('wall z/D < 0.3', lambda d: d['z'] < 0.3)]
+P('   Route (fig_prt_data.py, functions of fig_prt_classes.py: prep, sums): per-plane sums of -rho u\'\'v\'\' dU/dy, (dU/dy)^2, -rho u\'\'w\'\' dU/dz, (dU/dz)^2 and the heat analogues over the')
+P('   points of a class, ratio of the sums; 95 % interval from the block bootstrap over 0.5 D y bins (1000 draws, seed 5; the same code for both runs). LES: corr_x10/x20_c20bw_b006.npz')
+P('   (SGS parts added to the fluxes and shear stresses) with meff_planes/les20_b006.npz where the 193M uses ref193_b010.npz; 193M: corr_x10/x20_b010.npz.')
+P('   Route differences forced by the LES files: none in the formulas. The LES is one batch (b006, 6 FT) against the 193M b010 (10 FT); intervals are bootstrap over y bins for both (no')
+P('   jackknife over batches exists for either); the LES planes are the same 600 x 300 trilinear samples of the (coarser) 20M mesh, so neighbouring plane points are more strongly')
+P('   correlated than for the 193M and the bootstrap interval of the LES is optimistic by an unquantified factor (mesh spacing against plane spacing not checked here).')
+res = {}
+for p in ('x10', 'x20'):
+    for nm in ('193M', '20M LES'):
+        Rn = Rr[nm]
+        Pd = fc.prep(Rn, load_corr_tag(p, FILES[nm], Rn[f'{p}_A'].shape), p)
+        res[(p, nm)] = Pd
+P(f'   {"plane":>5s} {"class":>20s} | {"nu_y/nu_z 193M":>15s} {"[95 %]":>15s} {"LES":>7s} {"[95 %]":>15s} | {"alpha_y/alpha_z 193M":>20s} {"[95 %]":>15s} {"LES":>7s} {"[95 %]":>15s}')
+for p in ('x10', 'x20'):
+    for lab, f in CL:
+        row = []
+        for nm in ('193M', '20M LES'):
+            S, n = fc.sums(res[(p, nm)], f(res[(p, nm)]))
+            row.append((ratio(S, NUR), boot(S, NUR), ratio(S, ALR), boot(S, ALR)))
+        a, b = row
+        P(f'   {p:>5s} {lab:>20s} | {a[0]:15.2f} [{a[1][0]:5.2f},{a[1][1]:6.2f}] {b[0]:7.2f} [{b[1][0]:5.2f},{b[1][1]:6.2f}] | {a[2]:20.2f} [{a[3][0]:5.2f},{a[3][1]:6.2f}] {b[2]:7.2f} [{b[3][0]:5.2f},{b[3][1]:6.2f}]')
+P('   Reproduction of the manuscript values from this code (193M): alpha_y/alpha_z flanks x/D 10 and nu_y/nu_z flanks x/D 10, 20 are the 193M entries of the flanks rows above (manuscript 3.2; 0.7-1.1;')
+P('   table prt_classes/prt_data_tables.txt: 3.16, 1.07, 0.71).')
+P('')
+P('   Lateral heat diffusivity at the film edges (|y|/D >= 1, z/D >= 0.3): alpha_y = sum(-rho v\'\'T\'\' dT/dy) / sum (dT/dy)^2 over the edge points; RANS: sum(mu_t/0.9 (dT/dy)^2) / sum (dT/dy)^2')
+P('   with dT/dy the finite difference of the RANS plane temperature (fig_prt_data part b; ratio RANS/193M = exp(ln(P_R/P_D) - gradient term)); LES: same sums as the 193M from its correlations.')
+P(f'   {"plane":>5s} | {"RANS/193M (manuscript 0.5-0.6)":>31s} | {"LES/193M":>9s} | {"alpha_y 193M":>13s} {"RANS":>11s} {"LES":>11s} (kg m^-1 s^-1 per K-gradient sums; mu_t/0.9 for RANS)')
+for p in ('x10', 'x20'):
+    d = res[(p, '193M')]
+    m = EDGE(d) & d['ok']
+    S, n = fc.sums(d, EDGE(d))
+    aD = S[IX['lna']].sum() / S[IX['lda']].sum()
+    T = RANSd[f'{p}_T']
+    dy = RANSd[f'{p}_A'][0, 1] - RANSd[f'{p}_A'][0, 0]
+    gR = np.gradient(T, dy, axis=1).ravel()
+    mut = RANSd[f'{p}_meff'].ravel()
+    aR = np.sum((mut[m] / 0.9) * gR[m] ** 2) / np.sum(gR[m] ** 2)
+    dl = res[(p, '20M LES')]
+    Sl, nl = fc.sums(dl, EDGE(dl))
+    aL = Sl[IX['lna']].sum() / Sl[IX['lda']].sum()
+    P(f'   {p:>5s} | {aR / aD:31.3f} | {aL / aD:9.3f} | {aD:13.3e} {aR:11.3e} {aL:11.3e}   (points: 193M {n}, LES {nl})')
+P('   Reproduction: RANS/193M 0.54 (x/D 10) and 0.63 (x/D 20) from the table of the manuscript route; compare the RANS/193M column.')
 P('')
 P('=' * 110)
-P('Items needing new data: b (the full six-batch LES plane series with SE; two batches exist), g (LES k and L_eff on the cross-planes x/D 4, 10, 20), h (LES plane correlations x/D 10, 20).')
-P('Items computed for the LES: a, c, d (mean grid), e (gamma z010 planes), f (meff_span, span route only: the point-file route has no LES counterpart), b at reduced statistics.')
+P('Items needing new data from the data session: none of a-h is left open. Limits: b LES series SE excludes the SGS part; h LES is one batch (b006) and the bootstrap interval is optimistic (see above);')
+P('f has the span route only for the LES (the point-file route has no LES counterpart); e: the RANS 0.175 quoted by the coordinator is not reproduced (0.167 by the fig_wall_state route).')
 open(TAB, 'w').write('\n'.join(L) + '\n')
 print('\n'.join(L))
 print('saved', TAB)

@@ -520,9 +520,7 @@ triangle: tracked patch.}\label{fig:spots}
 \end{figure*}
 
 \subsubsection{Coolant Budget}
-%% OPEN: 20M LES still pending: in the 3D overview (layout to be chosen by the owner), in the Pr_t comparison
-%% (data due), the vertical fluxes through the planes z/D 0.25, 0.5 and 1.0 (six-batch series), the cross-plane
-%% turbulence and length scale, and the spanwise diffusivities (data requested).
+%% OPEN: 20M LES still pending in the 3D overview (layout to be chosen by the owner).
 
 The coolant is marked by the total enthalpy, $c=(h_{0,\infty}-h_0)/(h_{0,\infty}-h_{0,c})$, and its time-averaged
 flux splits as $\overline{\rho u_jc}=\bar\rho\tilde u_j\tilde c+\bar\rho\widetilde{u_j''c''}$ into a part carried
@@ -542,7 +540,9 @@ RANS turbulent flux is 0.37--0.61 of the reference and its mean-flow flux 1.9--5
 mean-flow flux is 0.92 and 0.88 of the reference at $x/D$ of 4 and 5 and 0.39 at $x/D=10$, and is of opposite
 sign at $x/D=20$ ($-0.90$ against $+0.85$\,g\,s$^{-1}$\,m$^{-1}$), where both are small against the turbulent
 flux. The RANS ratios depend on the height of the surface: through the plane $z/D=1.0$ the
-RANS turbulent flux is 0.67--0.99 of the reference, and through $z/D=0.25$ it points towards the wall. The
+RANS turbulent flux is 0.67--0.99 of the reference and that of the LES 0.95--1.17; through $z/D=0.25$ the RANS
+flux points towards the wall, while that of the LES is positive at every station and 0.91--1.50 times the
+reference (1.04--1.48 through $z/D=0.5$). The
 ordering of the two parts held through planes at $z/D$ of 0.25, 0.5 and 1.0. For the layer below $z/D=0.5$, the
 coolant balance of the reference closes within 5\,\% at every station, with a median residual of 1.2\,\%.
 
@@ -717,7 +717,8 @@ and 1.18 times above, so the LES excess above $z_x$ comes through the length sca
 
 Across the span, on cross-planes at $x/D$ of 4, 10 and 20 (not shown), the near-wall turbulence of the reference
 spreads from the jet to mid-pitch, while the RANS has little turbulence outside the jet, and the band of short
-length along the wall is thicker in the RANS. For the SST model, $\mu_t/(\bar\rho k^{1/2})$ equals the
+length along the wall is thicker in the RANS; on these planes the median $k$ of the LES is 1.05--1.11 times the
+reference and its median length 1.14--1.26 times. For the SST model, $\mu_t/(\bar\rho k^{1/2})$ equals the
 dissipation length $C_\mu k^{3/2}/\varepsilon$ where its limiter is inactive, and the two agree within 5\,\% in the
 film of the RANS, so the short length of the RANS is a short dissipation length.
 %% OPEN: the comparison of L_eff with the dissipation length on the centreline of the reference (formerly "within
@@ -748,7 +749,8 @@ Dashed: boundary of the region where $\Pr_t$ is defined; grey: not defined or no
 \end{figure*}
 
 Over the volume for $z/D\geq0.3$, $\Pr_{t,R}$ of the reference is 0.23 over $x/D$ of 3--10 and 0.45 over $x/D$
-of 10--20, both below the setting and below the free-shear value. Kohli and Bogard~\cite{kohli2005} measured $\Pr_t\sim2$ at
+of 10--20, both below the setting and below the free-shear value. The 20M LES gives $0.21\pm0.01$ and
+$0.46\pm0.02$; the second lies within one standard error of the reference value, the first 0.01 below it. Kohli and Bogard~\cite{kohli2005} measured $\Pr_t\sim2$ at
 low FST and $\sim1$ at high FST behind round holes, and low and varying values were found in
 simulations~\cite{ling2015,liu2008,liu2011,stratton2019}; a $\Pr_t$ of 0.9 under-predicts the lateral spread of
 temperature in a planar jet by $\sim20$\,\%~\cite{rochhausen2015}.
@@ -756,11 +758,12 @@ temperature in a planar jet by $\sim20$\,\%~\cite{rochhausen2015}.
 \subsubsection{Spanwise Diffusion}
 
 On the cross-planes at $x/D$ of 10 and 20 (not shown), the ratio of the lateral to the wall-normal heat
-diffusivity of the reference, $\alpha_y/\alpha_z$, is 3.2 on the film flanks at $x/D=10$, while the momentum ratio
-$\nu_y/\nu_z$ is 0.7--1.1, below the 1.5--4 that Kaszeta and Simon~\cite{kaszeta2000} measured for the same ratio
+diffusivity of the reference, $\alpha_y/\alpha_z$, is 3.2 on the film flanks at $x/D=10$ and 1.71 at $x/D=20$; in
+the LES it is 1.9 and 1.66, the bootstrap intervals overlapping at $x/D=10$ (one LES batch). The momentum ratio
+$\nu_y/\nu_z$ is 0.7--1.1 in the reference and 0.75--0.98 in the LES, below the 1.5--4 that Kaszeta and Simon~\cite{kaszeta2000} measured for the same ratio
 near the jet core at $x/D=2.5$ behind cylindrical holes. The heat anisotropy of the reference therefore does not
 follow from its momentum diffusivity. At the film edges the lateral heat diffusivity of the RANS is 0.5--0.6 times
-the reference; the $\Pr_t$ setting is the larger contribution to this deficit at $x/D=20$, while at $x/D=10$ the
+the reference and that of the LES 1.10 and 1.06 times at $x/D$ of 10 and 20; the $\Pr_t$ setting is the larger contribution to the RANS deficit at $x/D=20$, while at $x/D=10$ the
 anisotropy of the reference contributes slightly more. The steeper lateral gradients of the RANS offset most of this deficit in the lateral heat flux. The narrow film is hence not the
 result of the lateral diffusivity alone, in line with the lateral budget of Section~\ref{sec:coolant}. The
 confidence in this split is medium, since it depends on the definition of the edge and on finite-difference
@@ -908,7 +911,8 @@ budgeted against the 193M reference, averaged over ten flow-through times. The o
   \xEVstart--20, the length the
   largest deficit and the assumed alignment offsetting part of it; above that layer the factor errors cancel. The
   20M LES is within about 10\,\% of the reference in that layer and 1.14 times the reference above it. The
-  classic $\Pr_t$ of the reference is 0.23--0.45 in the film, against the setting of 0.9.
+  classic $\Pr_t$ of the reference is 0.23--0.45 in the film (0.21--0.46 in the 20M LES), against the setting
+  of 0.9.
 \item A lower $\Pr_t$ corrects the centreline and not the spread; the QCR with $\Pr_t=0.4$ matches $\etab$ with a
   film that is too narrow; a resolved heat flux imposed in the film recovers the shape of the film. Agreement in
   $\etab$ alone is therefore not sufficient evidence that a corrected RANS predicts the coverage. For design use,

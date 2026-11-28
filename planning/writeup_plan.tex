@@ -260,7 +260,8 @@ viscosity is lower than the reference (defined here at first use), the same $z_x
 $z_x$, both per unit length in $x$.}{F5b (linear axis; black 193M, blue RANS; solid mean flow,
 dashed turbulent; band: one jackknife standard error)}{crossing of the 193M curves between $x/D$ 4.0 and 4.5; RANS
 turbulent flux 0.37--0.61 of the reference; RANS mean-flow flux 1.9--5.9 times; at $z/D=1.0$ RANS turbulent flux
-0.67--0.99, at $z/D=0.25$ towards the wall; balance below $z/D=0.5$ within 5\,\%, median 1.2\,\%; jackknife over ten
+0.67--0.99 (LES 0.95--1.17), at $z/D=0.25$ towards the wall (LES positive at every station, 0.91--1.50 times the
+reference; 1.04--1.48 through $z/D=0.5$); balance below $z/D=0.5$ within 5\,\%, median 1.2\,\%; jackknife over ten
 batches; LES (turbulent = resolved + mean subgrid, subgrid $\le0.05$\,g\,s$^{-1}$\,m$^{-1}$): turbulent above mean
 from $x/D=4.0$, turbulent 1.07--1.19 times the reference, mean 0.92 and 0.88 at $x/D$ 4 and 5, 0.39 at
 $x/D=10$, of opposite sign at $x/D=20$ ($-0.90$ against $+0.85$), where both are small against the turbulent
@@ -351,7 +352,8 @@ the RANS.}{none}
 \blk{Where in the span}{The reference near-wall turbulence spreads to mid-pitch, the RANS has little outside the jet;
 the short RANS length is a short dissipation length.}{text (cross-planes not shown)}{RANS
 $\mu_t/(\bar\rho k^{1/2})$ within 5\,\% of $C_\mu k^{3/2}/\varepsilon$ in the film (fig\_budget\_lines.py); the
-reference centreline value has no source (open).}{none}
+reference centreline value has no source (open); LES median $k$ on the planes $x/D$ 4, 10, 20 1.05--1.11 times
+the reference, median length 1.14--1.26 times.}{none}
 
 \blk{Turbulent Prandtl number}{The reference mixes heat faster than momentum in the film; regional values are below
 the setting of 0.9 and below the free-shear value; away from the wall the map is resolved; the viscous wall layer
@@ -359,7 +361,9 @@ over $x/D$ 10--20 has no map value (record final at ten flow-through times; a st
 would need about eleven times the record, stated in the text); pooled over $x/D$ 10--20, $\Pr_t$ is not resolved up to $z^+\approx11$
 (adiabatic wall) and is 0.9--1.0 at $z^+$ 13--30, close to the RANS setting.}{F9, text}{map from every 193M grid point, cells $\sim0.1D$ by the mesh levels, volume-weighted sums;
 grey where not defined (gradient below 0.05) or not resolved ($|\Pr_t|$ below twice its jackknife standard error,
-or a sign change of the denominator among the ten batches); volume, $z/D\ge0.3$: $x/D$ 3--10 0.226, $x/D$ 10--20 0.450 (not the region boundaries of 3.1); viscous wall
+or a sign change of the denominator among the ten batches); volume, $z/D\ge0.3$: $x/D$ 3--10 0.226, $x/D$ 10--20 0.450 (not the region boundaries of 3.1); 20M LES (same definition,
+six-batch jackknife, subgrid part under 0.001) $0.214\pm0.007$ and $0.460\pm0.022$: the second within one standard
+error of the reference, the first 0.01 below it; viscous wall
 layer ($x/D$ 10--20, $z/D<0.2$) 46\,\% of the area not resolved; record final (ten batches, 10\,FT; a standard error of 0.1 per cell
 would need $\sim$11 times the record; merging cells to 0.5--1$D$ leaves 0.45 unresolved); pooled over $x/D$
 10--20: not resolved up to $z^+=10.7$ ($z/D$ 0.08; $\partial_z T\to0$ at the adiabatic wall, denominator changes
@@ -372,8 +376,9 @@ Shih 2019; Rochhausen 2015.}
 isotropic and below the measured momentum band; the RANS lateral heat diffusivity at the film edges is low, the
 $\Pr_t$ setting the larger contribution at $x/D=20$ and the reference anisotropy slightly larger at $x/D=10$; the
 steeper RANS lateral gradients offset most of it in the flux; the narrow film is not the result of this diffusivity
-alone.}{text (not shown)}{$\alpha_y/\alpha_z$ 3.2 at $x/D=10$; $\nu_y/\nu_z$ 0.7--1.1 against 1.5--4 for the
-same momentum ratio measured near the jet core at $x/D=2.5$ behind cylindrical holes; RANS lateral heat diffusivity 0.5--0.6; confidence
+alone.}{text (not shown)}{$\alpha_y/\alpha_z$ 3.2 at $x/D=10$ and 1.71 at 20, LES 1.9 and 1.66 (bootstrap intervals overlap at 10, one LES
+batch); $\nu_y/\nu_z$ 0.7--1.1, LES 0.75--0.98, against 1.5--4 for the
+same momentum ratio measured near the jet core at $x/D=2.5$ behind cylindrical holes; RANS lateral heat diffusivity 0.5--0.6, LES 1.10 and 1.06 at $x/D$ 10 and 20; confidence
 medium.}{Kaszeta and Simon 2000 (momentum diffusivity ratio).}
 
 \planfig{fig_meff_maps.png}{1.0}{F7. Ratio to the 193M of the conditional span mean of the eddy viscosity: (a) RANS
@@ -438,7 +443,7 @@ One paragraph of setup, then four outcomes mirroring the aims:
   times the reference, above its mean-flow flux from $x/D=4.0$, CRVP 0.89--0.99 (F3, F5).
 \item Closure budget: near-wall eddy viscosity 0.55--0.67 over $x/D$ 4--20, length the largest deficit; close
   above $z_x$ through cancelling factors; 20M LES within about 10\,\% below $z_x$, 1.14 above; $\Pr_t$ 0.23--0.45
-  against 0.9 (F7, F8, F9).
+  (0.21--0.46 in the 20M LES) against 0.9 (F7, F8, F9).
 \item Tested corrections: lower $\Pr_t$ fixes the centreline; QCR raises the mean with the wrong shape; film heat
   flux recovers the shape; span-mean agreement is not sufficient evidence; for design use a lower $\Pr_t$ informs
   the peak centreline temperature, not the coverage; the uncorrected 20M LES matches $\etab$
