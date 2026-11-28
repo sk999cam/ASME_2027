@@ -18,6 +18,7 @@
 \newcommand*{\BR}{\mathit{BR}}
 \newcommand*{\Reth}{\mathit{Re}_\theta}
 \newcommand*{\ReD}{\mathit{Re}_D}
+\newcommand*{\Tu}{\mathit{Tu}}
 \newcommand*{\Leff}{L_{\mathrm{eff}}}
 \newcommand*{\etab}{\bar\eta}
 \newcommand*{\deta}{\Delta_{\mathrm{mesh}}/\eta_{K,193}}
@@ -271,6 +272,109 @@ Line & Content \\ \midrule
 \bottomrule
 \end{tabular}
 \end{table}
+
+\clearpage
+\section*{Re-run, 28 November 2026}
+
+\textbf{Status: PASS WITH FINDINGS.} One mismatch and two rounding differences remain among the new or changed
+items. All twelve findings of the first check are resolved as written.
+
+\textbf{Population.} Every number and every source-attributed claim in \texttt{main\_claude.tex} that is new or
+changed since commit 47891ec (\texttt{git diff 47891ec}, read-only; HEAD 3865fed). Sources:
+\texttt{coolant\_budget\_les\_table.txt}, \texttt{les\_counterparts\_table.txt}, \texttt{meff\_les\_table.txt},
+\texttt{aposteriori\_table.txt} (all in \texttt{figures/code/data}), \texttt{n8\_lsq/prt\_classic\_c20bw\_b006\_jk.json},
+the stored Schroeder PDFs and the outputs of the first check. Line numbers refer to the current file.
+
+\begin{center}
+\begin{tabular}{@{}l r r r r r r@{}}
+\toprule
+Population (re-run) & checked & match & rounding & mismatch & no source & not checkable \\
+\midrule
+A attributed claims, new or changed & 6 & 6 & -- & 0 & 0 & 0 \\
+B numbers, new or changed & 70 & 67 & 2 & 1 & 0 & 0 \\
+First-check findings (6 NS, 6 MM) & 12 & 12 resolved & -- & 0 & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Re-run findings}
+{\footnotesize
+\begin{longtable}{@{}P{9mm} P{9mm} P{42mm} P{55mm} P{44mm}@{}}
+\toprule
+Sev. & Line & Quoted text & Source and value & Proposed correction \\ \midrule\endhead
+low & 509 & ``and the LES cores within $0.01D$ (not shown)''
+ & \texttt{les\_counterparts\_table.txt} a: mean of (LES $-$ 193M) core height over $x/D$ 6--20 is $+0.010D$;
+   per station $-0.002$, $+0.015$, $+0.027$, $-0.041D$ at $x/D$ 6, 10, 15, 20. \vMM{} (mean quoted as a bound).
+ & ``and the LES cores $0.01D$ above on average (within $0.04D$ at every station)''. Plan L252 carries the same
+   wording. \\
+low & 599--600 & ``the mean $\gamma$ of the RANS is 0.17, against 0.73 for both the reference and the LES''
+ & Two grids. 0.04\,$D$ grid (\texttt{fig\_wall\_state} route): RANS 0.167, reference 0.724, LES 0.726. Native
+   0.02\,$D$ detector grid: reference 0.7256, LES 0.7278; RANS 0.175 by layer interpolation (first check), not
+   reproduced by the other route (variants 0.167--0.180). \vM, route note.
+ & ``0.17'' is safe for 0.167 and is a truncation of 0.175 (0.18 by rounding). Same-grid pair: ``0.17 against 0.72''
+   (0.04\,$D$), or ``0.17--0.18 against 0.73''. \\
+low & 553 & ``the RANS coolant field alone by 2.7''
+ & \texttt{swap\_lateral\_table.txt}: 2.65 at $x/D=10$. \vR. & None needed; 2.65 rounds to 2.7. \\
+low & 601--602 & ``periodic share of 0.03--0.06''
+ & \texttt{lav\_probes\_c193b.txt}, $\sigma$ of Lav: 0.025--0.055 (hole 0.030, jet 0.055, film 0.025--0.048). \vR.
+ & None needed. \\
+\bottomrule
+\end{longtable}}
+
+\textbf{Still without a source (unchanged since 47891ec, outside the re-run population).} L676 ``19 cells, four of them
+with a ratio of 3 or more''. The 0.046 (L418), the 7\,\% (L724) and the Table~1 cell counts (L310) are now under
+\texttt{\%\% OPEN:} markers.
+
+\subsection*{Point 1: 20M LES numbers}
+All match their sources. Coolant budget (\texttt{coolant\_budget\_les\_table.txt}): turbulent flux above mean-flow
+flux from $x/D=4.0$; turbulent 1.07--1.19 of the reference at the six stations; mean-flow 0.92, 0.88 ($x/D$ 4, 5),
+0.39 ($x/D$ 10), $-0.90$ against $+0.85$ ($x/D$ 20); SGS part $\le0.05$\,g\,s$^{-1}$\,m$^{-1}$; LES total below the
+reference at every station; lateral inward mean 0.85 ($x/D$ 5), outward turbulent 0.90--1.03, lowest at $x/D=10$;
+CRVP circulation 0.887--0.986 (0.89--0.99), WV 0.701--1.225 (0.70--1.23); 0.0905 at $x/D=4$ (0.091).
+Fixed-height planes (\texttt{les\_counterparts\_table.txt} b): $z/D=1.0$ 0.95--1.17, 0.25 0.91--1.50, 0.5 1.04--1.48,
+LES turbulent flux positive at all 65 stations. Upwash 0.69--1.09 (lowest at $x/D$ 20), inward velocity 0.87--1.08,
+half-width 1.030, centroid 1.012. Eddy viscosity (f, g): $k^{1/2}$ 1.008 and 1.011, $\cos\theta$ ratio 0.959 and
+0.984, length 1.114 and 1.177; cross-plane median $k$ 1.05--1.11, median length 1.14--1.26; layer means 1.067 and
+1.143 (\texttt{meff\_les\_table.txt}). $\Pr_t$ (json, total = resolved + SGS): $0.2142\pm0.0068$, $0.4595\pm0.0218$;
+reference 0.226 and 0.450, so ``within one standard error'' and ``0.01 below'' hold. Diffusivities (h):
+$\alpha_y/\alpha_z$ 1.88 and 1.66, intervals overlapping at $x/D=10$ ([2.34, 4.70] against [1.58, 3.47]);
+$\nu_y/\nu_z$ 0.98, 0.75; lateral heat diffusivity 1.102, 1.059. Table~2 LES row: 0.365, 0.028, 0.202; the 91\,\%
+cell is $1-(0.2259-0.2199)/(0.2259-0.1565)=91.4$\,\% from the window means weighted 8:5, as footnote $b$ defines.
+
+\subsection*{Point 2: first-check findings}
+\begin{itemize}\itemsep0pt
+\item L763 Kaszeta: ``\dots\ below the 1.5--4 that Kaszeta and Simon measured for the same ratio near the jet core at
+  $x/D=2.5$ behind cylindrical holes.'' \vS{} (p.~5, Fig.~8; p.~1--2: 35°, $I=1$, DR~1, $Tu\approx12$\,\%).
+\item L462--463: ``$\Reth\approx670$; \dots\ $\pm0.024$ \dots\ \cite{schroeder2014} and $\pm4.5$\,\% in $\BR$ at a
+  blowing ratio of 1.5~\cite{schroeder2015}.'' \vS{} (2014 p.~4, p.~5; 2015 p.~3).
+\item L451--452: ``RANS has been found not to capture the mixing in large diffusers~\cite{haydt2018}.'' \vS{} (p.~10).
+\item L189: \texttt{saumweber2003} removed. Resolved.
+\item L597--599: ``exceeds 0.8 from $x/D=15.5$ \dots\ differs from it by up to 0.145, at $x/D=11.7$, lies within 0.03 of
+  it from $x/D=16$ and reaches 0.94''. \vM.
+\item L582: ``within 0.03 of the Blasius value of 2.59 for $x/D<-6$ and rises to 2.67''. \vM. L543: 0.67--0.99 \vM.
+  \verb|\Lnear| 0.43--0.50 \vM. L601: 0.03--0.06 \vR.
+\item L739--742: ten flow-through times; ``about eleven times the record'' ($(0.332/0.1)^2=11.0$, median SE of the
+  strip); not resolved below $z^+\approx11$ (flagged to 10.7); ``$z^+$ of 13--30 ($z/D$ 0.10--0.22) it is 0.9--1.0
+  ($\pm$0.10--0.18)'': $0.98\pm0.18$ (13.4), $0.89\pm0.10$ (26.8), $0.88\pm0.10$ (29.5). \vM.
+\item L505--507 circulation: smoothing $\sigma=(2,3,3)$ cells of $0.05D$ = 0.10--0.15$D$; reference 0.0960, 0.0658,
+  0.0408 in both analyses; RANS/193M 1.142, 1.217, 1.138 smoothed and 1.47 on the fine planes. Conclusion L907
+  ``1.1--1.5 times'' covers 1.14--1.47. \vM.
+\end{itemize}
+
+\subsection*{Point 3: verification-pass statements}
+L474 ``in $\Tu$ (0.5 against 5.5\,\%), in $\ReD$ (4960 against 2408) and in Mach number (0.03 against 0.25)'': the
+first value of each pair is the experiment, the second the simulations. Experiment: $Tu=0.5$\,\%
+(\texttt{schroeder2014} p.~5); $U_\infty=10$\,m\,s$^{-1}$, 295\,K, $D=7.75$\,mm (\texttt{schroeder2015} p.~2), which
+gives $\ReD\approx5000$ and Mach 0.029. Simulations: L285--288 (Mach 0.25, $Tu$ 5.5\,\%, $\ReD=2408$). \vM. The
+``ten flow-through times'' and ``about eleven times the record'' are confirmed under Point 2.
+
+\subsection*{Point 4: internal consistency and plan}
+Each quantity carries one value wherever it appears: LES circulation 0.89--0.99 (L510, L909; plan L252, L443); LES
+$\Pr_t$ 0.21--0.46 (L752--753, L914; plan L365, L446); LES eddy viscosity within about 10\,\% and 1.14 (L711--713,
+L884, L913; plan L347--349, L422, L445); $\etab$ within 0.006 (L864, L884, L886, L921; plan L416, L421, L450); lateral
+profile 0.029 against 0.043 (L865--866, L886, L921; plan L417, L423); RANS deficit 29--34\,\% (L95, L466, L902; plan
+L111, L242, L439); wall-layer $\Pr_t$ (L741--742, L879; plan L362, L425). The plan repeats the L509 core wording
+(finding above). Plan-only detail with no conflict: LES $\Pr_t$ SGS part under 0.001 (json: 0.0003 and 0.0005).
 
 \clearpage
 \appendix
